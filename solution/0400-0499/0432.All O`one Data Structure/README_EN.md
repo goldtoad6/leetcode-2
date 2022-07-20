@@ -1,4 +1,4 @@
-# [432. All O one Data Structure](https://leetcode.com/problems/all-oone-data-structure)
+# [432. All O`one Data Structure](https://leetcode.com/problems/all-oone-data-structure)
 
 [中文文档](/solution/0400-0499/0432.All%20O%60one%20Data%20Structure/README.md)
 
@@ -15,6 +15,8 @@
 	<li><code>getMaxKey()</code> Returns one of the keys with the maximal count. If no element exists, return an empty string <code>&quot;&quot;</code>.</li>
 	<li><code>getMinKey()</code> Returns one of the keys with the minimum count. If no element exists, return an empty string <code>&quot;&quot;</code>.</li>
 </ul>
+
+<p><strong>Note</strong> that each function must run in <code>O(1)</code> average time complexity.</p>
 
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>

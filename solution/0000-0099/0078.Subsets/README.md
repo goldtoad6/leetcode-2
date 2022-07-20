@@ -40,6 +40,10 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：回溯**
+
+**方法二：二进制枚举**
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -60,6 +64,19 @@ class Solution:
 
         ans = []
         dfs(0, [])
+        return ans
+```
+
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        for mask in range(1 << len(nums)):
+            t = []
+            for i, v in enumerate(nums):
+                if (mask >> i) & 1:
+                    t.append(v)
+            ans.append(t)
         return ans
 ```
 
@@ -92,6 +109,25 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int mask = 0; mask < 1 << n; ++mask) {
+            List<Integer> t = new ArrayList<>();
+            for (int i = 0; i < n; ++i) {
+                if (((mask >> i) & 1) == 1) {
+                    t.add(nums[i]);
+                }
+            }
+            ans.add(t);
+        }
+        return ans;
+    }
+}
+```
+
 ### **C++**
 
 ```cpp
@@ -118,6 +154,30 @@ public:
 };
 ```
 
+```cpp
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> t;
+        int n = nums.size();
+        for (int mask = 0; mask < 1 << n; ++mask)
+        {
+            t.clear();
+            for (int i = 0; i < n; ++i)
+            {
+                if ((mask >> i) & 1)
+                {
+                    t.push_back(nums[i]);
+                }
+            }
+            ans.push_back(t);
+        }
+        return ans;
+    }
+};
+```
+
 ### **Go**
 
 ```go
@@ -140,27 +200,63 @@ func subsets(nums []int) [][]int {
 }
 ```
 
+```go
+func subsets(nums []int) [][]int {
+	var ans [][]int
+	n := len(nums)
+	for mask := 0; mask < 1<<n; mask++ {
+		t := []int{}
+		for i, v := range nums {
+			if ((mask >> i) & 1) == 1 {
+				t = append(t, v)
+			}
+		}
+		ans = append(ans, t)
+	}
+	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function subsets(nums: number[]): number[][] {
+    const n = nums.length;
+    const t: number[] = [];
+    const res: number[][] = [];
+    const dfs = (i: number) => {
+        if (i === n) {
+            res.push([...t]);
+            return;
+        }
+        dfs(i + 1);
+        t.push(nums[i]);
+        dfs(i + 1);
+        t.pop();
+    };
+    dfs(0);
+    return res;
+}
+```
+
 ### **Rust**
 
 ```rust
 impl Solution {
-    fn dfs(nums: &Vec<i32>, res: &mut Vec<Vec<i32>>, i: usize, base: &mut Vec<i32>) {
-        let n = nums.len();
-        if i == n {
+    fn dfs(i: usize, t: &mut Vec<i32>, res: &mut Vec<Vec<i32>>, nums: &Vec<i32>) {
+        if i == nums.len() {
+            res.push(t.clone());
             return;
         }
-        for j in i..n {
-            base.push(nums[j]);
-            res.push(base.clone());
-            Self::dfs(nums, res, j + 1, base);
-            base.pop();
-        }
+        Self::dfs(i + 1, t, res, nums);
+        t.push(nums[i]);
+        Self::dfs(i + 1, t, res, nums);
+        t.pop();
     }
 
     pub fn subsets(nums: Vec<i32>) -> Vec<Vec<i32>> {
-        let mut base = vec![];
-        let mut res = vec![vec![]];
-        Self::dfs(&nums, &mut res, 0, &mut base);
+        let mut res = Vec::new();
+        Self::dfs(0, &mut Vec::new(), &mut res, &nums);
         res
     }
 }

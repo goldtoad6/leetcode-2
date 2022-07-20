@@ -1,4 +1,4 @@
-# [2178. 拆分成最多数目的偶整数之和](https://leetcode.cn/problems/maximum-split-of-positive-even-integers)
+# [2178. 拆分成最多数目的正偶数之和](https://leetcode.cn/problems/maximum-split-of-positive-even-integers)
 
 [English Version](/solution/2100-2199/2178.Maximum%20Split%20of%20Positive%20Even%20Integers/README_EN.md)
 
@@ -57,6 +57,8 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：贪心**
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -64,7 +66,18 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
-
+class Solution:
+    def maximumEvenSplit(self, finalSum: int) -> List[int]:
+        if finalSum % 2:
+            return []
+        i = 2
+        ans = []
+        while i <= finalSum:
+            ans.append(i)
+            finalSum -= i
+            i += 2
+        ans[-1] += finalSum
+        return ans
 ```
 
 ### **Java**
@@ -72,7 +85,56 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    public List<Long> maximumEvenSplit(long finalSum) {
+        List<Long> ans = new ArrayList<>();
+        if (finalSum % 2 == 1) {
+            return ans;
+        }
+        for (long i = 2; i <= finalSum; i += 2) {
+            ans.add(i);
+            finalSum -= i;
+        }
+        ans.add(ans.remove(ans.size() - 1) + finalSum);
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<long long> maximumEvenSplit(long long finalSum) {
+        vector<long long> ans;
+        if (finalSum % 2) return ans;
+        for (long long i = 2; i <= finalSum; i += 2)
+        {
+            ans.push_back(i);
+            finalSum -= i;
+        }
+        ans.back() += finalSum;
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func maximumEvenSplit(finalSum int64) []int64 {
+	ans := []int64{}
+	if finalSum%2 == 1 {
+		return ans
+	}
+	for i := int64(2); i <= finalSum; i += 2 {
+		ans = append(ans, i)
+		finalSum -= i
+	}
+	ans[len(ans)-1] += finalSum
+	return ans
+}
 ```
 
 ### **TypeScript**

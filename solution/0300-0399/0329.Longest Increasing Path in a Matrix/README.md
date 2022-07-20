@@ -49,7 +49,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-记忆化搜索。
+**方法一：记忆化搜索**
+
+时间复杂度 $O(mn)$。
+
+相似题目：[2328. 网格图中递增路径的数目](/solution/2300-2399/2328.Number%20of%20Increasing%20Paths%20in%20a%20Grid/README.md)。
 
 <!-- tabs:start -->
 
@@ -60,7 +64,7 @@
 ```python
 class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
-        @lru_cache(None)
+        @cache
         def dfs(i, j):
             ans = 1
             for a, b in [[-1, 0], [1, 0], [0, 1], [0, -1]]:

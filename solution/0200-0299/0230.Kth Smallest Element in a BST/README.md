@@ -44,6 +44,16 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：中序遍历**
+
+由于二叉搜索树的性质，中序遍历一定能得到升序序列，因此可以采用中序遍历找出第 k 小的元素。
+
+**方法二：预处理结点数**
+
+预处理每个结点作为根节点的子树的节点数。
+
+这种算法可以用来优化频繁查找第 k 个树、而二叉搜索树本身不被修改的情况。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -59,19 +69,58 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        def dfs(root):
+        stk = []
+        while root or stk:
             if root:
-                nonlocal k, ans
-                dfs(root.left)
+                stk.append(root)
+                root = root.left
+            else:
+                root = stk.pop()
                 k -= 1
                 if k == 0:
-                    ans = root.val
-                    return
-                dfs(root.right)
+                    return root.val
+                root = root.right
+```
 
-        ans = -1
-        dfs(root)
-        return ans
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+class BST:
+    def __init__(self, root):
+        self.cnt = Counter()
+        self.root = root
+        self.count(root)
+
+    def kthSmallest(self, k):
+        node = self.root
+        while node:
+            if self.cnt[node.left] == k - 1:
+                return node.val
+            if self.cnt[node.left] < k - 1:
+                k -= (self.cnt[node.left] + 1)
+                node = node.right
+            else:
+                node = node.left
+        return 0
+
+    def count(self, root):
+        if root is None:
+            return 0
+        n = 1 + self.count(root.left) + self.count(root.right)
+        self.cnt[root] = n
+        return n
+
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        bst = BST(root)
+        return bst.kthSmallest(k)
 ```
 
 ### **Java**
@@ -95,25 +144,21 @@ class Solution:
  * }
  */
 class Solution {
-    private int k;
-    private int ans;
-
     public int kthSmallest(TreeNode root, int k) {
-        this.k = k;
-        dfs(root);
-        return ans;
-    }
-
-    private void dfs(TreeNode root) {
-        if (root == null) {
-            return;
+        Deque<TreeNode> stk = new ArrayDeque<>();
+        while (root != null || !stk.isEmpty()) {
+            if (root != null) {
+                stk.push(root);
+                root = root.left;
+            } else {
+                root = stk.pop();
+                if (--k == 0) {
+                    return root.val;
+                }
+                root = root.right;
+            }
         }
-        dfs(root.left);
-        if (--k == 0) {
-            ans = root.val;
-            return;
-        }
-        dfs(root.right);
+        return 0;
     }
 }
 ```
@@ -136,35 +181,44 @@ class Solution {
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        int ans = -1;
-        while (root != null) {
-            if (root.left == null) {
-                --k;
-                if (k == 0) {
-                    ans = root.val;
-                    return ans;
-                }
-                root = root.right;
+        BST bst = new BST(root);
+        return bst.kthSmallest(k);
+    }
+}
+
+class BST {
+    private TreeNode root;
+    private Map<TreeNode, Integer> cnt = new HashMap<>();
+
+    public BST(TreeNode root) {
+        this.root = root;
+        count(root);
+    }
+
+    public int kthSmallest(int k) {
+        TreeNode node = root;
+        while (node != null) {
+            int v = node.left == null ? 0 : cnt.get(node.left);
+            if (v == k - 1) {
+                return node.val;
+            }
+            if (v < k - 1) {
+                node = node.right;
+                k -= (v + 1);
             } else {
-                TreeNode pre = root.left;
-                while (pre.right != null && pre.right != root) {
-                    pre = pre.right;
-                }
-                if (pre.right == null) {
-                    pre.right = root;
-                    root = root.left;
-                } else {
-                    --k;
-                    if (k == 0) {
-                        ans = root.val;
-                        return ans;
-                    }
-                    pre.right = null;
-                    root = root.right;
-                }
+                node = node.left;
             }
         }
-        return ans;
+        return 0;
+    }
+
+    private int count(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int n = 1 + count(root.left) + count(root.right);
+        cnt.put(root, n);
+        return n;
     }
 }
 ```
@@ -185,24 +239,79 @@ class Solution {
  */
 class Solution {
 public:
-    int k;
-    int ans;
-
     int kthSmallest(TreeNode* root, int k) {
-        this->k = k;
-        dfs(root);
-        return ans;
+        stack<TreeNode*> stk;
+        while (root || !stk.empty())
+        {
+            if (root)
+            {
+                stk.push(root);
+                root = root->left;
+            }
+            else
+            {
+                root = stk.top();
+                stk.pop();
+                if (--k == 0) return root->val;
+                root = root->right;
+            }
+        }
+        return 0;
+    }
+};
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class BST {
+public:
+    BST(TreeNode* root) : root(root) {
+        count(root);
     }
 
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        dfs(root->left);
-        if (--k == 0)
+    int kthSmallest(int k) {
+        TreeNode* node = root;
+        while (node)
         {
-            ans = root->val;
-            return;
+            int v = !node->left ? 0 : cnt[node->left];
+            if (v == k - 1) return node->val;
+            if (v < k - 1)
+            {
+                node = node->right;
+                k -= (v + 1);
+            }
+            else node = node->left;
         }
-        dfs(root->right);
+        return 0;
+    }
+
+private:
+    TreeNode* root;
+    unordered_map<TreeNode*, int> cnt;
+
+    int count(TreeNode* root) {
+        if (!root) return 0;
+        int n = 1 + count(root->left) + count(root->right);
+        cnt[root] = n;
+        return n;
+    }
+};
+
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        BST bst(root);
+        return bst.kthSmallest(k);
     }
 };
 ```
@@ -219,23 +328,77 @@ public:
  * }
  */
 func kthSmallest(root *TreeNode, k int) int {
-	var ans int
-
-	var dfs func(root *TreeNode)
-	dfs = func(root *TreeNode) {
+	stk := []*TreeNode{}
+	for root != nil || len(stk) > 0 {
 		if root != nil {
-			dfs(root.Left)
+			stk = append(stk, root)
+			root = root.Left
+		} else {
+			root = stk[len(stk)-1]
+			stk = stk[:len(stk)-1]
 			k--
 			if k == 0 {
-				ans = root.Val
-				return
+				return root.Val
 			}
-			dfs(root.Right)
+			root = root.Right
 		}
 	}
+	return 0
+}
+```
 
-	dfs(root)
-	return ans
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+type BST struct {
+	cnt  map[*TreeNode]int
+	root *TreeNode
+}
+
+func newBST(root *TreeNode) *BST {
+	var count func(*TreeNode) int
+	cnt := map[*TreeNode]int{}
+	count = func(root *TreeNode) int {
+		if root == nil {
+			return 0
+		}
+		n := 1 + count(root.Left) + count(root.Right)
+		cnt[root] = n
+		return n
+	}
+	count(root)
+	return &BST{cnt, root}
+}
+
+func (bst *BST) kthSmallest(k int) int {
+	node := bst.root
+	for node != nil {
+		v := 0
+		if node.Left != nil {
+			v = bst.cnt[node.Left]
+		}
+		if v == k-1 {
+			return node.Val
+		}
+		if v < k-1 {
+			k -= (v + 1)
+			node = node.Right
+		} else {
+			node = node.Left
+		}
+	}
+	return 0
+}
+
+func kthSmallest(root *TreeNode, k int) int {
+	bst := newBST(root)
+	return bst.kthSmallest(k)
 }
 ```
 

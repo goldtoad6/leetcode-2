@@ -1,21 +1,20 @@
 impl Solution {
-    fn dfs(nums: &Vec<i32>, paths: &mut Vec<i32>, res: &mut Vec<Vec<i32>>) {
-        if paths.len() == nums.len() {
-            res.push(paths.clone());
+    fn dfs(i: usize, nums: &mut Vec<i32>, res: &mut Vec<Vec<i32>>) {
+        let n = nums.len();
+        if i == n {
+            res.push(nums.clone());
             return;
         }
-        for i in nums.iter() {
-            if !paths.contains(i) {
-                paths.push(*i);
-                Self::dfs(nums, paths, res);
-                paths.pop();
-            }
+        for j in i..n {
+            nums.swap(i, j);
+            Self::dfs(i + 1, nums, res);
+            nums.swap(i, j);
         }
     }
 
-    pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+    pub fn permute(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
         let mut res = vec![];
-        Self::dfs(&nums, &mut vec![], &mut res);
+        Self::dfs(0, &mut nums, &mut res);
         res
     }
 }

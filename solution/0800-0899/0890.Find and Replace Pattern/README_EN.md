@@ -48,13 +48,12 @@ class Solution:
     def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:
         def match(s, t):
             m1, m2 = [0] * 128, [0] * 128
-            for i in range(n):
-                if m1[ord(s[i])] != m2[ord(t[i])]:
+            for i, (a, b) in enumerate(zip(s, t), 1):
+                if m1[ord(a)] != m2[ord(b)]:
                     return False
-                m1[ord(s[i])] = m2[ord(t[i])] = i + 1
+                m1[ord(a)] = m2[ord(b)] = i
             return True
 
-        n = len(pattern)
         return [word for word in words if match(word, pattern)]
 ```
 
@@ -138,6 +137,53 @@ func findAndReplacePattern(words []string, pattern string) []string {
 		}
 	}
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function findAndReplacePattern(words: string[], pattern: string): string[] {
+    return words.filter(word => {
+        const map1 = new Map<string, number>();
+        const map2 = new Map<string, number>();
+        for (let i = 0; i < word.length; i++) {
+            if (map1.get(word[i]) !== map2.get(pattern[i])) {
+                return false;
+            }
+            map1.set(word[i], i);
+            map2.set(pattern[i], i);
+        }
+        return true;
+    });
+}
+```
+
+### **Rust**
+
+```rust
+use std::collections::HashMap;
+impl Solution {
+    pub fn find_and_replace_pattern(words: Vec<String>, pattern: String) -> Vec<String> {
+        let pattern = pattern.as_bytes();
+        let n = pattern.len();
+        words
+            .into_iter()
+            .filter(|word| {
+                let word = word.as_bytes();
+                let mut map1 = HashMap::new();
+                let mut map2 = HashMap::new();
+                for i in 0..n {
+                    if map1.get(&word[i]).unwrap_or(&n) != map2.get(&pattern[i]).unwrap_or(&n) {
+                        return false;
+                    }
+                    map1.insert(word[i], i);
+                    map2.insert(pattern[i], i);
+                }
+                true
+            })
+            .collect()
+    }
 }
 ```
 

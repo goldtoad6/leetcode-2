@@ -6,10 +6,8 @@
 
 <p>Given a string containing digits from <code>2-9</code> inclusive, return all possible letter combinations that the number could represent. Return the answer in <strong>any order</strong>.</p>
 
-<p>A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
-
-<p><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0017.Letter%20Combinations%20of%20a%20Phone%20Number/images/200px-Telephone-keypad2.svg.png" style="width: 200px; height: 162px;" /></p>
-
+<p>A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
+<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0017.Letter%20Combinations%20of%20a%20Phone%20Number/images/1200px-telephone-keypad2svg.png" style="width: 300px; height: 243px;" />
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>
 
@@ -290,6 +288,42 @@ impl Solution {
             &map,
             &mut res,
         );
+        res
+    }
+}
+```
+
+```rust
+impl Solution {
+    fn dfs(i: usize, digits: &[u8], map: &Vec<Vec<char>>, s: &mut String, res: &mut Vec<String>) {
+        if i == digits.len() {
+            res.push(s.clone());
+            return;
+        }
+        for c in map[(digits[i] - b'2') as usize].iter() {
+            s.push(*c);
+            Self::dfs(i + 1, digits, map, s, res);
+            s.pop();
+        }
+    }
+
+    pub fn letter_combinations(digits: String) -> Vec<String> {
+        if digits.is_empty() {
+            return Vec::new();
+        }
+        let digits = digits.as_bytes();
+        let map = vec![
+            vec!['a', 'b', 'c'],
+            vec!['d', 'e', 'f'],
+            vec!['g', 'h', 'i'],
+            vec!['j', 'k', 'l'],
+            vec!['m', 'n', 'o'],
+            vec!['p', 'q', 'r', 's'],
+            vec!['t', 'u', 'v'],
+            vec!['w', 'x', 'y', 'z'],
+        ];
+        let mut res = Vec::new();
+        Self::dfs(0, digits, &map, &mut String::new(), &mut res);
         res
     }
 }

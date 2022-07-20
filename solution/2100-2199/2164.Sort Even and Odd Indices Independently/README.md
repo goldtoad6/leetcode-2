@@ -10,6 +10,7 @@
 
 <ol>
 	<li>按 <strong>非递增</strong> 顺序排列 <code>nums</code> <strong>奇数下标</strong> 上的所有值。
+
     <ul>
     	<li>举个例子，如果排序前 <code>nums = [4,<em><strong>1</strong></em>,2,<em><strong>3</strong></em>]</code> ，对奇数下标的值排序后变为 <code>[4,<em><strong>3</strong></em>,2,<em><strong>1</strong></em>]</code> 。奇数下标 <code>1</code> 和 <code>3</code> 的值按照非递增顺序重排。</li>
     </ul>
@@ -69,7 +70,13 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
-
+class Solution:
+    def sortEvenOdd(self, nums: List[int]) -> List[int]:
+        a = sorted(nums[::2])
+        b = sorted(nums[1::2], reverse=True)
+        nums[::2] = a
+        nums[1::2] = b
+        return nums
 ```
 
 ### **Java**
@@ -77,7 +84,83 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    public int[] sortEvenOdd(int[] nums) {
+        int n = nums.length;
+        int[] a = new int[(n + 1) >> 1];
+        int[] b = new int[n >> 1];
+        for (int i = 0, j = 0; j < n >> 1; i += 2, ++j) {
+            a[j] = nums[i];
+            b[j] = nums[i + 1];
+        }
+        if (n % 2 == 1) {
+            a[a.length - 1] = nums[n - 1];
+        }
+        Arrays.sort(a);
+        Arrays.sort(b);
+        int[] ans = new int[n];
+        for (int i = 0, j = 0; j < a.length; i += 2, ++j) {
+            ans[i] = a[j];
+        }
+        for (int i = 1, j = b.length - 1; j >= 0; i += 2, --j) {
+            ans[i] = b[j];
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<int> sortEvenOdd(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> a;
+        vector<int> b;
+        for (int i = 0; i < n; ++i)
+        {
+            if (i % 2 == 0) a.push_back(nums[i]);
+            else b.push_back(nums[i]);
+        }
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end(), greater<int>());
+        vector<int> ans(n);
+        for (int i = 0, j = 0; j < a.size(); i += 2, ++j) ans[i] = a[j];
+        for (int i = 1, j = 0; j < b.size(); i += 2, ++j) ans[i] = b[j];
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func sortEvenOdd(nums []int) []int {
+	n := len(nums)
+	var a []int
+	var b []int
+	for i, v := range nums {
+		if i%2 == 0 {
+			a = append(a, v)
+		} else {
+			b = append(b, v)
+		}
+	}
+	ans := make([]int, n)
+	sort.Ints(a)
+	sort.Slice(b, func(i, j int) bool {
+		return b[i] > b[j]
+	})
+	for i, j := 0, 0; j < len(a); i, j = i+2, j+1 {
+		ans[i] = a[j]
+	}
+	for i, j := 1, 0; j < len(b); i, j = i+2, j+1 {
+		ans[i] = b[j]
+	}
+	return ans
+}
 ```
 
 ### **TypeScript**

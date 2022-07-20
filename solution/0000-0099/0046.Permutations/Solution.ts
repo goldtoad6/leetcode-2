@@ -1,16 +1,16 @@
 function permute(nums: number[]): number[][] {
+    const n = nums.length;
     const res: number[][] = [];
-    const dfs = (paths: number[]) => {
-        if (paths.length === nums.length) {
-            res.push(paths);
-            return;
+    const dfs = (i: number) => {
+        if (i === n) {
+            res.push([...nums]);
         }
-        for (const num of nums) {
-            if (!paths.includes(num)) {
-                dfs(paths.concat(num));
-            }
+        for (let j = i; j < n; j++) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+            dfs(i + 1);
+            [nums[i], nums[j]] = [nums[j], nums[i]];
         }
     };
-    dfs([]);
+    dfs(0);
     return res;
 }

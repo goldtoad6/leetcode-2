@@ -1,4 +1,4 @@
-# [2015. Average Height of Buildings in Each Segment](https://leetcode.cn/problems/average-height-of-buildings-in-each-segment)
+# [2015. 每段建筑物的平均高度](https://leetcode.cn/problems/average-height-of-buildings-in-each-segment)
 
 [English Version](/solution/2000-2099/2015.Average%20Height%20of%20Buildings%20in%20Each%20Segment/README_EN.md)
 
@@ -17,7 +17,6 @@
     	<li>从 5 到 10 ，只有第二栋建筑的平均高度为 <code>4 / 1 = 4</code> 。</li>
     </ul>
     </li>
-
 </ul>
 
 <p>给定&nbsp;<code>buildings</code> ，返回如上所述的二维整数矩阵<em>&nbsp;</em><code>street</code><em>&nbsp;</em>（ <strong>不包括</strong> 街道上没有建筑物的任何区域）。您可以按 <strong>任何顺序</strong> 返回数组。<br />

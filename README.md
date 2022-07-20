@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/doocs/leetcode"><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/leetcode-doocs.png" alt="LeetCode-GitHub-Doocs"></a>
+  <a href="https://github.com/doocs/leetcode"><img src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/leetcode@main/images/leetcode-doocs.png" alt="LeetCode-GitHub-Doocs"></a>
 </p>
 
 <p align="center">
@@ -14,18 +14,19 @@
 
 ## 介绍
 
-本项目包含 LeetCode、《剑指 Offer（第 2 版）》、《剑指 Offer（专项突击版）》、《程序员面试金典（第 6 版）》等题目的相关题解。所有题解均由多种编程语言实现，包括但不限于：Java、Python、C++、JavaScript、C#、Go，日常更新。欢迎 Star 🌟 关注[本项目](https://github.com/doocs/leetcode)，获取项目最新动态。
+本项目包含 LeetCode、《剑指 Offer（第 2 版）》、《剑指 Offer（专项突击版）》、《程序员面试金典（第 6 版）》等题目的相关题解。所有题解均由多种编程语言实现，包括但不限于：Java、Python、C++、Go、TypeScript、Rust，日常更新。欢迎 Star 🌟 关注[本项目](https://github.com/doocs/leetcode)，获取项目最新动态。
 
 [English Version](/README_EN.md)
 
 ## 站点
 
--   Gitee Pages: https://doocs.gitee.io/leetcode
+-   Vercel: https://doocs-leetcode.vercel.app
 -   GitHub Pages: https://doocs.github.io/leetcode
 
 ## 算法全解
 
 -   [LeetCode](/solution/README.md)
+-   [往期竞赛合集](/solution/CONTEST_README.md)
 -   [剑指 Offer（第 2 版）](/lcof/README.md)
 -   [剑指 Offer（专项突击版）](/lcof2/README.md)
 -   [程序员面试金典（第 6 版）](/lcci/README.md)
@@ -57,6 +58,8 @@
 -   [下一个更大元素 I](/solution/0400-0499/0496.Next%20Greater%20Element%20I/README.md) - `单调栈`
 -   [每日温度](/solution/0700-0799/0739.Daily%20Temperatures/README.md) - `单调栈`
 -   [子数组的最小值之和](/solution/0900-0999/0907.Sum%20of%20Subarray%20Minimums/README.md) - `单调栈`
+-   [最大宽度坡](/solution/0900-0999/0962.Maximum%20Width%20Ramp/README.md) - `单调栈`
+-   [最多能完成排序的块 II](/solution/0700-0799/0768.Max%20Chunks%20To%20Make%20Sorted%20II/README.md) - `单调栈`
 -   [子数组范围和](/solution/2100-2199/2104.Sum%20of%20Subarray%20Ranges/README.md) - `单调栈`
 -   [子数组最小乘积的最大值](/solution/1800-1899/1856.Maximum%20Subarray%20Min-Product/README.md) - `单调栈`
 -   [滑动窗口最大值](/solution/0200-0299/0239.Sliding%20Window%20Maximum/README.md) - `单调队列`
@@ -86,9 +89,20 @@
 -   [访问所有节点的最短路径](/solution/0800-0899/0847.Shortest%20Path%20Visiting%20All%20Nodes/README.md) - `BFS`、`最小步数模型`、`A* 算法`
 -   [为高尔夫比赛砍树](/solution/0600-0699/0675.Cut%20Off%20Trees%20for%20Golf%20Event/README.md) - `BFS`、`A* 算法`
 -   [使网格图至少有一条有效路径的最小代价](/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/README.md) - `双端队列 BFS`
+-   [到达角落需要移除障碍物的最小数目](/solution/2200-2299/2290.Minimum%20Obstacle%20Removal%20to%20Reach%20Corner/README.md) - `双端队列 BFS`
 -   [迷宫](/solution/0400-0499/0490.The%20Maze/README.md) - `DFS`、`连通性模型`、`Flood Fill 算法`
 -   [单词搜索](/solution/0000-0099/0079.Word%20Search/README.md) - `DFS`、`搜索顺序`、`回溯`
 -   [黄金矿工](/solution/1200-1299/1219.Path%20with%20Maximum%20Gold/README.md) - `DFS`、`搜索顺序`、`回溯`
+-   [火柴拼正方形](/solution/0400-0499/0473.Matchsticks%20to%20Square/README.md) - `DFS`、`回溯`、`剪枝`
+-   [划分为 k 个相等的子集](/solution/0600-0699/0698.Partition%20to%20K%20Equal%20Sum%20Subsets/README.md) - `DFS`、`回溯`、`剪枝`
+-   [完成所有工作的最短时间](/solution/1700-1799/1723.Find%20Minimum%20Time%20to%20Finish%20All%20Jobs/README.md) - `DFS`、`回溯`、`剪枝`
+-   [公平分发饼干](/solution/2300-2399/2305.Fair%20Distribution%20of%20Cookies/README.md) - `DFS`、`回溯`、`剪枝`
+-   [矩阵中的最长递增路径](/solution/0300-0399/0329.Longest%20Increasing%20Path%20in%20a%20Matrix/README.md) - `DFS`、`记忆化搜索`
+-   [网格图中递增路径的数目](/solution/2300-2399/2328.Number%20of%20Increasing%20Paths%20in%20a%20Grid/README.md) - `DFS`、`记忆化搜索`
+-   [翻转游戏 II](/solution/0200-0299/0294.Flip%20Game%20II/README.md) - `DFS`、`状态压缩`、`记忆化搜索`
+-   [统计所有可行路径](/solution/1500-1599/1575.Count%20All%20Possible%20Routes/README.md) - `DFS`、`记忆化搜索`
+-   [切披萨的方案数](/solution/1400-1499/1444.Number%20of%20Ways%20of%20Cutting%20a%20Pizza/README.md) - `DFS`、`记忆化搜索`
+
 <!-- DFS 待补充 -->
 
 ### 4. 动态规划（DP）
@@ -111,6 +125,7 @@
 -   [最后一块石头的重量 II](/solution/1000-1099/1049.Last%20Stone%20Weight%20II/README.md) - `0-1 背包问题`
 -   [零钱兑换](/solution/0300-0399/0322.Coin%20Change/README.md) - `完全背包问题`
 -   [组合总和 Ⅳ](/solution/0300-0399/0377.Combination%20Sum%20IV/README.md) - `完全背包问题`
+-   [从栈中取出 K 个硬币的最大面值和](/solution/2200-2299/2218.Maximum%20Value%20of%20K%20Coins%20From%20Piles/README.md) - `分组背包问题`
 <!-- 背包问题、状态机模型、状压DP、区间DP、树形DP、数位DP 待补充 -->
 
 ### 5. 高级数据结构
@@ -143,6 +158,7 @@
 ### 6. 图论
 
 -   [网络延迟时间](/solution/0700-0799/0743.Network%20Delay%20Time/README.md) - `最短路`、`Dijkstra 算法`、`Bellman Ford 算法`、`SPFA 算法`
+-   [得到要求路径的最小带权子图](/solution/2200-2299/2203.Minimum%20Weighted%20Subgraph%20With%20the%20Required%20Paths/README.md) - `最短路`、`Dijkstra 算法`
 -   [连接所有点的最小费用](/solution/1500-1599/1584.Min%20Cost%20to%20Connect%20All%20Points/README.md) - `最小生成树`、`Prim 算法`、`Kruskal 算法`
 -   [最低成本联通所有城市](/solution/1100-1199/1135.Connecting%20Cities%20With%20Minimum%20Cost/README.md) - `最小生成树`、`Kruskal 算法`、`并查集`
 -   [水资源分配优化](/solution/1100-1199/1168.Optimize%20Water%20Distribution%20in%20a%20Village/README.md) - `最小生成树`、`Kruskal 算法`、`并查集`
@@ -166,7 +182,7 @@
 1. 你也可以参考帮助文档 https://help.github.com/cn 了解更多细节。
 
 <p align="center">
-  <a href="https://github.com/doocs/leetcode"><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/how-to-contribute.svg" alt="how-to-contribute"></a>
+  <a href="https://github.com/doocs/leetcode"><img src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/leetcode@main/images/how-to-contribute.svg" alt="how-to-contribute"></a>
 </p>
 
 [Gitpod.io](https://www.gitpod.io) 是一个免费的在线开发环境，你也可以使用它参与本项目。
@@ -175,10 +191,12 @@
 
 ## Stars 趋势
 
-<a href="https://github.com/doocs/leetcode/stargazers" target="_blank"><img src="https://starchart.cc/doocs/leetcode.svg" alt="Stargazers over time" /></a>
+<!-- 使用 https://starchart.cc/ 自动刷新 stars 数据，若有问题，可以使用 GitHub Action: starcharts.yml -->
+<!-- <a href="https://github.com/doocs/leetcode/stargazers" target="_blank"><img src="https://starchart.cc/doocs/leetcode.svg" alt="Stargazers over time" /></a> -->
 
-<!-- 这里先使用 https://starchart.cc/ 自动刷新 stars 数据，之后若有问题，可以使用 GitHub Action: starcharts.yml -->
-<!-- <a href="https://github.com/doocs/leetcode/stargazers" target="_blank"><img src="./images/starcharts.svg" alt="Stargazers over time" /></a> -->
+<!-- [![Star History Chart](https://api.star-history.com/svg?repos=doocs/leetcode&type=Date)](https://star-history.com/#doocs/leetcode) -->
+
+<a href="https://github.com/doocs/leetcode/stargazers" target="_blank"><img src="./images/starcharts.svg" alt="Stargazers over time" /></a>
 
 ## 贡献者
 
@@ -200,7 +218,7 @@
 
 知名互联网科技博主 [@爱可可-爱生活](https://weibo.com/fly51fly) 微博推荐。
 
-<a href="https://weibo.com/fly51fly" target="_blank"><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/recommender-fly51fly.png"></a>
+<a href="https://weibo.com/fly51fly" target="_blank"><img src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/leetcode@main/images/recommender-fly51fly.png"></a>
 
 ## 许可证
 

@@ -54,12 +54,12 @@ rangeModule.queryRange(16, 17); 返回 true （尽管执行了删除操作，区
 
 **方法一：线段树**
 
-线段树将整个区间分割为多个不连续的子区间，子区间的数量不超过 `log(width)`。更新某个元素的值，只需要更新 `log(width)` 个区间，并且这些区间都包含在一个包含该元素的大区间内。区间修改时，需要使用**懒标记**保证效率。
+线段树将整个区间分割为多个不连续的子区间，子区间的数量不超过 $log(width)$。更新某个元素的值，只需要更新 $log(width)$ 个区间，并且这些区间都包含在一个包含该元素的大区间内。区间修改时，需要使用**懒标记**保证效率。
 
 -   线段树的每个节点代表一个区间；
--   线段树具有唯一的根节点，代表的区间是整个统计范围，如 `[1, N]`；
--   线段树的每个叶子节点代表一个长度为 1 的元区间 `[x, x]`；
--   对于每个内部节点 `[l, r]`，它的左儿子是 `[l, mid]`，右儿子是 `[mid + 1, r]`, 其中 `mid = ⌊(l + r) / 2⌋` (即向下取整)。
+-   线段树具有唯一的根节点，代表的区间是整个统计范围，如 $[1,N]$；
+-   线段树的每个叶子节点代表一个长度为 $1$ 的元区间 $[x,x]$；
+-   对于每个内部节点 $[l,r]$，它的左儿子是 $[l,mid]$，右儿子是 $[mid+1,r]$, 其中 $mid=⌊(l+r)/2⌋$ (即向下取整)。
 
 <!-- tabs:start -->
 
@@ -264,7 +264,44 @@ class RangeModule {
 ### **C++**
 
 ```cpp
-class Node {
+template <class T>
+class CachedObj {
+public:
+    void *operator new(size_t s)
+    {
+        if (!head)
+        {
+            T *a = new T[SIZE];
+            for (size_t i = 0; i < SIZE; ++i)
+                add(a + i);
+        }
+        T *p = head;
+        head = head->CachedObj<T>::next;
+        return p;
+    }
+    void operator delete(void *p, size_t)
+    {
+        if (p) add(static_cast<T *>(p));
+    }
+    virtual ~CachedObj() {}
+
+protected:
+    T *next;
+
+private:
+    static T *head;
+    static const size_t SIZE;
+    static void add(T *p)
+    {
+        p->CachedObj<T>::next = head;
+        head = p;
+    }
+};
+template <class T>
+T *CachedObj<T>::head = 0;
+template <class T>
+const size_t CachedObj<T>::SIZE = 10000;
+class Node : public CachedObj<Node> {
 public:
     Node* left;
     Node* right;
@@ -356,6 +393,112 @@ public:
  * obj->addRange(left,right);
  * bool param_2 = obj->queryRange(left,right);
  * obj->removeRange(left,right);
+ */
+```
+
+### **Go**
+
+```go
+const N int = 1e9
+
+type node struct {
+	lch   *node
+	rch   *node
+	added bool
+	lazy  int
+}
+
+type segmentTree struct {
+	root *node
+}
+
+func newSegmentTree() *segmentTree {
+	return &segmentTree{
+		root: new(node),
+	}
+}
+
+func (t *segmentTree) update(n *node, l, r, i, j, x int) {
+	if l >= i && r <= j {
+		n.added = x == 1
+		n.lazy = x
+		return
+	}
+	t.pushdown(n)
+	m := int(uint(l+r) >> 1)
+	if i <= m {
+		t.update(n.lch, l, m, i, j, x)
+	}
+	if j > m {
+		t.update(n.rch, m+1, r, i, j, x)
+	}
+	t.pushup(n)
+}
+
+func (t *segmentTree) query(n *node, l, r, i, j int) bool {
+	if l >= i && r <= j {
+		return n.added
+	}
+	t.pushdown(n)
+	v := true
+	m := int(uint(l+r) >> 1)
+	if i <= m {
+		v = v && t.query(n.lch, l, m, i, j)
+	}
+	if j > m {
+		v = v && t.query(n.rch, m+1, r, i, j)
+	}
+	return v
+}
+
+func (t *segmentTree) pushup(n *node) {
+	n.added = n.lch.added && n.rch.added
+}
+
+func (t *segmentTree) pushdown(n *node) {
+	if n.lch == nil {
+		n.lch = new(node)
+	}
+	if n.rch == nil {
+		n.rch = new(node)
+	}
+	if n.lazy != 0 {
+		n.lch.added = n.lazy == 1
+		n.rch.added = n.lazy == 1
+		n.lch.lazy = n.lazy
+		n.rch.lazy = n.lazy
+		n.lazy = 0
+	}
+}
+
+type RangeModule struct {
+	t *segmentTree
+}
+
+func Constructor() RangeModule {
+	return RangeModule{
+		t: newSegmentTree(),
+	}
+}
+
+func (this *RangeModule) AddRange(left int, right int) {
+	this.t.update(this.t.root, 1, N, left, right-1, 1)
+}
+
+func (this *RangeModule) QueryRange(left int, right int) bool {
+	return this.t.query(this.t.root, 1, N, left, right-1)
+}
+
+func (this *RangeModule) RemoveRange(left int, right int) {
+	this.t.update(this.t.root, 1, N, left, right-1, -1)
+}
+
+/**
+ * Your RangeModule object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AddRange(left,right);
+ * param_2 := obj.QueryRange(left,right);
+ * obj.RemoveRange(left,right);
  */
 ```
 
