@@ -4,14 +4,12 @@
 
 ## Description
 
-<p>Given two strings <code>s</code> and <code>t</code> of lengths <code>m</code> and <code>n</code> respectively, return <em>the <strong>minimum window substring</strong> of </em><code>s</code><em> such that every character in </em><code>t</code><em> (<strong>including duplicates</strong>) is included in the window. If there is no such substring</em><em>, return the empty string </em><code>&quot;&quot;</code><em>.</em></p>
+<p>Given two strings <code>s</code> and <code>t</code> of lengths <code>m</code> and <code>n</code> respectively, return <em>the <strong>minimum window</strong></em> <span data-keyword="substring-nonempty"><strong><em>substring</em></strong></span><em> of </em><code>s</code><em> such that every character in </em><code>t</code><em> (<strong>including duplicates</strong>) is included in the window</em>. If there is no such substring, return <em>the empty string </em><code>&quot;&quot;</code>.</p>
 
 <p>The testcases will be generated such that the answer is <strong>unique</strong>.</p>
 
-<p>A <strong>substring</strong> is a contiguous sequence of characters within the string.</p>
-
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;ADOBECODEBANC&quot;, t = &quot;ABC&quot;
@@ -19,7 +17,7 @@
 <strong>Explanation:</strong> The minimum window substring &quot;BANC&quot; includes &#39;A&#39;, &#39;B&#39;, and &#39;C&#39; from string t.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;a&quot;, t = &quot;a&quot;
@@ -27,7 +25,7 @@
 <strong>Explanation:</strong> The entire string s is the minimum window.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;a&quot;, t = &quot;aa&quot;
@@ -42,12 +40,12 @@ Since the largest window of s only has one &#39;a&#39;, return empty string.
 <ul>
 	<li><code>m == s.length</code></li>
 	<li><code>n == t.length</code></li>
-	<li><code>1 &lt;= m, n&nbsp;&lt;= 10<sup>5</sup></code></li>
+	<li><code>1 &lt;= m, n &lt;= 10<sup>5</sup></code></li>
 	<li><code>s</code> and <code>t</code> consist of uppercase and lowercase English letters.</li>
 </ul>
 
 <p>&nbsp;</p>
-<strong>Follow up:</strong> Could you find an algorithm that runs in <code>O(m + n)</code> time?
+<p><strong>Follow up:</strong> Could you find an algorithm that runs in <code>O(m + n)</code> time?</p>
 
 ## Solutions
 
@@ -64,7 +62,7 @@ class Solution:
             return ans
         need = Counter(t)
         window = Counter()
-        i, cnt, mi = 0, 0, float('inf')
+        i, cnt, mi = 0, 0, inf
         for j, c in enumerate(s):
             window[c] += 1
             if need[c] >= window[c]:
@@ -72,7 +70,7 @@ class Solution:
             while cnt == n:
                 if j - i + 1 < mi:
                     mi = j - i + 1
-                    ans = s[i: j + 1]
+                    ans = s[i : j + 1]
                 c = s[i]
                 if need[c] >= window[c]:
                     cnt -= 1
@@ -87,10 +85,10 @@ class Solution:
 class Solution {
     public String minWindow(String s, String t) {
         Map<Character, Integer> mp = new HashMap<>();
-        int begin = 0, end = 0, counter = t.length(), minLen = Integer.MAX_VALUE, minStart = 0, size = s.length();
+        int begin = 0, end = 0, counter = t.length(), minLen = Integer.MAX_VALUE, minStart = 0,
+            size = s.length();
 
-        for (char c : s.toCharArray())
-            mp.put(c, 0);
+        for (char c : s.toCharArray()) mp.put(c, 0);
         for (char c : t.toCharArray()) {
             if (mp.containsKey(c))
                 mp.put(c, mp.get(c) + 1);
@@ -99,8 +97,7 @@ class Solution {
         }
 
         while (end < size) {
-            if (mp.get(s.charAt(end)) > 0)
-                counter--;
+            if (mp.get(s.charAt(end)) > 0) counter--;
 
             mp.put(s.charAt(end), mp.get(s.charAt(end)) - 1);
 
@@ -176,10 +173,10 @@ function minWindow(s: string, t: string): string {
 ```cpp
 class Solution {
 public:
-    string minWindow(string s, string t){
+    string minWindow(string s, string t) {
         unordered_map<char, int> m;
         int begin = 0, end = 0, minlen = INT_MAX, minStart = 0, size = s.size(), counter = t.size();
-        for (auto c: t)
+        for (auto c : t)
             m[c]++;
 
         while (end < size) {

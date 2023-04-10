@@ -9,21 +9,21 @@
 <p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0445.Add%20Two%20Numbers%20II/images/sumii-linked-list.jpg" style="width: 523px; height: 342px;" />
 <pre>
 <strong>Input:</strong> l1 = [7,2,4,3], l2 = [5,6,4]
 <strong>Output:</strong> [7,8,0,7]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> l1 = [2,4,3], l2 = [5,6,4]
 <strong>Output:</strong> [8,0,7]
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> l1 = [0], l2 = [0]
@@ -130,15 +130,12 @@ public:
         for (; l2; l2 = l2->next) s2.push(l2->val);
         int carry = 0;
         ListNode* dummy = new ListNode();
-        while (!s1.empty() || !s2.empty() || carry)
-        {
-            if (!s1.empty())
-            {
+        while (!s1.empty() || !s2.empty() || carry) {
+            if (!s1.empty()) {
                 carry += s1.top();
                 s1.pop();
             }
-            if (!s2.empty())
-            {
+            if (!s2.empty()) {
                 carry += s2.top();
                 s2.pop();
             }

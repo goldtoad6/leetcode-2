@@ -63,7 +63,7 @@
 
 用数组 $g$ 记录在火星字典中的字母先后关系，$g[i][j] = true$ 表示字母 $i + 'a'$ 在字母 $j + 'a'$ 的前面；用数组 $s$ 记录当前字典出现过的字母，$cnt$ 表示出现过的字母数。
 
-一个很简单的想法是遍历每一个单词，比较该单词和其后的所有单词，把所有的先后关系更新进数组 $g$，这样遍历时间复杂度为 $O(n^3)$；但是我们发现其实比较相邻的两个单词就可以了，比如 $a < b < c$ 则比较 $a < b$ 和 $b < c$， $a$ 和 $c$ 的关系便确定了。因此算法可以优化成比较相邻两个单词，时间复杂度为 $O(n²)$。
+一个很简单的想法是遍历每一个单词，比较该单词和其后的所有单词，把所有的先后关系更新进数组 $g$，这样遍历时间复杂度为 $O(n^3)$；但是我们发现其实比较相邻的两个单词就可以了，比如 $a < b < c$ 则比较 $a < b$ 和 $b < c$， $a$ 和 $c$ 的关系便确定了。因此算法可以优化成比较相邻两个单词，时间复杂度为 $O(n^2)$。
 
 出现矛盾的情况：
 
@@ -219,7 +219,6 @@ class Solution {
         return ans.length() < cnt ? "" : ans.toString();
     }
 }
-
 ```
 
 ### **C++**
@@ -232,21 +231,17 @@ public:
         vector<bool> s(26);
         int cnt = 0;
         int n = words.size();
-        for (int i = 0; i < n - 1; ++i)
-        {
-            for (char c : words[i])
-            {
+        for (int i = 0; i < n - 1; ++i) {
+            for (char c : words[i]) {
                 if (cnt == 26) break;
                 c -= 'a';
-                if (!s[c])
-                {
+                if (!s[c]) {
                     ++cnt;
                     s[c] = true;
                 }
             }
             int m = words[i].size();
-            for (int j = 0; j < m; ++j)
-            {
+            for (int j = 0; j < m; ++j) {
                 if (j >= words[i + 1].size()) return "";
                 char c1 = words[i][j], c2 = words[i + 1][j];
                 if (c1 == c2) continue;
@@ -255,12 +250,10 @@ public:
                 break;
             }
         }
-        for (char c : words[n - 1])
-        {
+        for (char c : words[n - 1]) {
             if (cnt == 26) break;
             c -= 'a';
-            if (!s[c])
-            {
+            if (!s[c]) {
                 ++cnt;
                 s[c] = true;
             }
@@ -275,8 +268,7 @@ public:
             if (s[i] && indegree[i] == 0)
                 q.push(i);
         string ans = "";
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int t = q.front();
             ans += (t + 'a');
             q.pop();

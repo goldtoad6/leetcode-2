@@ -15,7 +15,7 @@
 <p>Return <code>true</code> <em>if </em><code>s</code><em> is a <strong>valid</strong> string, otherwise, return</em> <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aabcbc&quot;
@@ -24,7 +24,7 @@
 &quot;&quot; -&gt; &quot;<u>abc</u>&quot; -&gt; &quot;a<u>abc</u>bc&quot;
 Thus, &quot;aabcbc&quot; is valid.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcabcababcc&quot;
@@ -34,7 +34,7 @@ Thus, &quot;aabcbc&quot; is valid.</pre>
 Thus, &quot;abcabcababcc&quot; is valid.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abccba&quot;
@@ -57,13 +57,84 @@ Thus, &quot;abcabcababcc&quot; is valid.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if len(s) % 3:
+            return False
+        stk = []
+        for c in s:
+            if c == 'c' and len(stk) > 1 and stk[-2] == 'a' and stk[-1] == 'b':
+                stk = stk[:-2]
+            else:
+                stk.append(c)
+        return not stk
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean isValid(String s) {
+        if (s.length() % 3 > 0) {
+            return false;
+        }
+        StringBuilder stk = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            int n = stk.length();
+            if (c == 'c' && n > 1 && stk.charAt(n - 2) == 'a' && stk.charAt(n - 1) == 'b') {
+                stk.deleteCharAt(n - 1);
+                stk.deleteCharAt(n - 2);
+            } else {
+                stk.append(c);
+            }
+        }
+        return stk.length() == 0;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        if (s.size() % 3) {
+            return false;
+        }
+        string stk;
+        for (char c : s) {
+            int n = stk.size();
+            if (c == 'c' && n > 1 && stk[n - 2] == 'a' && stk[n - 1] == 'b') {
+                stk.pop_back();
+                stk.pop_back();
+            } else {
+                stk.push_back(c);
+            }
+        }
+        return stk.empty();
+    }
+};
+```
+
+### **Go**
+
+```go
+func isValid(s string) bool {
+	if len(s)%3 > 0 {
+		return false
+	}
+	stk := []rune{}
+	for _, c := range s {
+		n := len(stk)
+		if c == 'c' && n > 1 && stk[n-2] == 'a' && stk[n-1] == 'b' {
+			stk = stk[:n-2]
+		} else {
+			stk = append(stk, c)
+		}
+	}
+	return len(stk) == 0
+}
 ```
 
 ### **...**

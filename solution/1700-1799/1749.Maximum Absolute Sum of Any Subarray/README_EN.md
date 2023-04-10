@@ -16,7 +16,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,-3,2,3,-4]
@@ -24,7 +24,7 @@
 <strong>Explanation:</strong> The subarray [2,3] has absolute sum = abs(2+3) = abs(5) = 5.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,-5,1,-4,3,-2]
@@ -47,13 +47,85 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def maxAbsoluteSum(self, nums: List[int]) -> int:
+        f = g = 0
+        ans = 0
+        for x in nums:
+            f = max(f, 0) + x
+            g = min(g, 0) + x
+            ans = max(ans, f, abs(g))
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int maxAbsoluteSum(int[] nums) {
+        int f = 0, g = 0;
+        int ans = 0;
+        for (int x : nums) {
+            f = Math.max(f, 0) + x;
+            g = Math.min(g, 0) + x;
+            ans = Math.max(ans, Math.max(f, Math.abs(g)));
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int maxAbsoluteSum(vector<int>& nums) {
+        int f = 0, g = 0;
+        int ans = 0;
+        for (int& x : nums) {
+            f = max(f, 0) + x;
+            g = min(g, 0) + x;
+            ans = max({ans, f, abs(g)});
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func maxAbsoluteSum(nums []int) (ans int) {
+	var f, g int
+	for _, x := range nums {
+		f = max(f, 0) + x
+		g = min(g, 0) + x
+		ans = max(ans, max(f, abs(g)))
+	}
+	return
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

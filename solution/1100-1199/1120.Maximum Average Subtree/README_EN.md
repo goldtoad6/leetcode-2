@@ -11,7 +11,7 @@
 <p>The <strong>average</strong> value of a tree is the sum of its values, divided by the number of nodes.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1120.Maximum%20Average%20Subtree/images/1308_example_1.png" style="width: 132px; height: 123px;" />
 <pre>
 <strong>Input:</strong> root = [5,6,1]
@@ -23,7 +23,7 @@ For the node with value = 1 we have an average of 1 / 1 = 1.
 So the answer is 6 which is the maximum.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = [0,null,1]
@@ -52,14 +52,14 @@ So the answer is 6 which is the maximum.
 #         self.left = left
 #         self.right = right
 class Solution:
-    def maximumAverageSubtree(self, root: TreeNode) -> float:
+    def maximumAverageSubtree(self, root: Optional[TreeNode]) -> float:
         def dfs(root):
             if root is None:
                 return 0, 0
             ls, ln = dfs(root.left)
             rs, rn = dfs(root.right)
-            s = ls + root.val + rs
-            n = ln + 1 + rn
+            s = root.val + ls + rs
+            n = 1 + ln + rn
             nonlocal ans
             ans = max(ans, s / n)
             return s, n
@@ -91,21 +91,20 @@ class Solution {
     private double ans;
 
     public double maximumAverageSubtree(TreeNode root) {
-        ans = 0;
         dfs(root);
         return ans;
     }
 
     private int[] dfs(TreeNode root) {
         if (root == null) {
-            return new int[]{0, 0};
+            return new int[2];
         }
-        int[] l = dfs(root.left);
-        int[] r = dfs(root.right);
-        int s = l[0] + root.val + r[0];
-        int n = l[1] + 1 + r[1];
+        var l = dfs(root.left);
+        var r = dfs(root.right);
+        int s = root.val + l[0] + r[0];
+        int n = 1 + l[1] + r[1];
         ans = Math.max(ans, s * 1.0 / n);
-        return new int[]{s, n};
+        return new int[] {s, n};
     }
 }
 ```
@@ -126,22 +125,21 @@ class Solution {
  */
 class Solution {
 public:
-    double ans;
-
     double maximumAverageSubtree(TreeNode* root) {
-        ans = 0;
+        double ans = 0;
+        function<pair<int, int>(TreeNode*)> dfs = [&](TreeNode* root) -> pair<int, int> {
+            if (!root) {
+                return {0, 0};
+            }
+            auto [ls, ln] = dfs(root->left);
+            auto [rs, rn] = dfs(root->right);
+            int s = root->val + ls + rs;
+            int n = 1 + ln + rn;
+            ans = max(ans, s * 1.0 / n);
+            return {s, n};
+        };
         dfs(root);
         return ans;
-    }
-
-    pair<int, int> dfs(TreeNode* root) {
-        if (!root) return {0, 0};
-        auto l = dfs(root->left);
-        auto r = dfs(root->right);
-        int s = l.first + root->val + r.first;
-        int n = l.second + 1 + r.second;
-        ans = max(ans, s * 1.0 / n);
-        return {s, n};
     }
 };
 ```
@@ -157,21 +155,20 @@ public:
  *     Right *TreeNode
  * }
  */
-func maximumAverageSubtree(root *TreeNode) float64 {
-	var ans float64
-	var dfs func(root *TreeNode) []int
-	dfs = func(root *TreeNode) []int {
+func maximumAverageSubtree(root *TreeNode) (ans float64) {
+	var dfs func(*TreeNode) [2]int
+	dfs = func(root *TreeNode) [2]int {
 		if root == nil {
-			return []int{0, 0}
+			return [2]int{}
 		}
 		l, r := dfs(root.Left), dfs(root.Right)
-		s := l[0] + root.Val + r[0]
-		n := l[1] + 1 + r[1]
+		s := root.Val + l[0] + r[0]
+		n := 1 + l[1] + r[1]
 		ans = math.Max(ans, float64(s)/float64(n))
-		return []int{s, n}
+		return [2]int{s, n}
 	}
 	dfs(root)
-	return ans
+	return
 }
 ```
 

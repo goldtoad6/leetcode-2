@@ -42,13 +42,17 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-前序序列的第一个结点 `preorder[0]` 为根节点，我们在中序序列中找到根节点的位置 i，可以将中序序列划分为左子树 `inorder[:i]` 、右子树 `inorder[i+1:]`。
+**方法一：递归**
 
-通过左右子树的区间，可以计算出左、右子树节点的个数，假设为 m、n。然后在前序节点中，从根节点往后的 m 个节点为左子树，再往后的 n 个节点为右子树。
+前序序列的第一个结点 $preorder[0]$ 为根节点，我们在中序序列中找到根节点的位置 $i$，可以将中序序列划分为左子树 $inorder[0..i]$ 、右子树 $inorder[i+1..]$。
+
+通过左右子树的区间，可以计算出左、右子树节点的个数，假设为 $m$ 和 $n$。然后在前序节点中，从根节点往后的 $m$ 个节点为左子树，再往后的 $n$ 个节点为右子树。
 
 递归求解即可。
 
 > 前序遍历：先遍历根节点，再遍历左右子树；中序遍历：先遍历左子树，再遍历根节点，最后遍历右子树。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。
 
 <!-- tabs:start -->
 
@@ -64,15 +68,38 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if not preorder:
             return None
         v = preorder[0]
         root = TreeNode(val=v)
         i = inorder.index(v)
-        root.left = self.buildTree(preorder[1:1 + i], inorder[:i])
-        root.right = self.buildTree(preorder[1 + i:], inorder[i + 1:])
+        root.left = self.buildTree(preorder[1 : 1 + i], inorder[:i])
+        root.right = self.buildTree(preorder[1 + i :], inorder[i + 1 :])
         return root
+```
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        def dfs(i, j, n):
+            if n <= 0:
+                return None
+            v = preorder[i]
+            k = d[v]
+            root = TreeNode(v)
+            root.left = dfs(i + 1, j, k - j)
+            root.right = dfs(i + 1 + k - j, k + 1, n - k + j - 1)
+            return root
+
+        d = {v: i for i, v in enumerate(inorder)}
+        return dfs(0, 0, len(preorder))
 ```
 
 ### **Java**
@@ -259,6 +286,42 @@ impl Solution {
         Self::to_tree(&preorder[..], &inorder[..])
     }
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function (preorder, inorder) {
+    function dfs(i, j, n) {
+        if (n <= 0) {
+            return null;
+        }
+        const v = preorder[i];
+        const k = d[v];
+        const root = new TreeNode(v);
+        root.left = dfs(i + 1, j, k - j);
+        root.right = dfs(i + 1 + k - j, k + 1, n - k + j - 1);
+        return root;
+    }
+    const d = new Map();
+    for (const [i, v] of inorder.entries()) {
+        d[v] = i;
+    }
+    return dfs(0, 0, inorder.length);
+};
 ```
 
 ### **...**

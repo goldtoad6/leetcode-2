@@ -7,7 +7,7 @@
 <p>Given a string <code>s</code>, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abab&quot;
@@ -15,14 +15,14 @@
 <strong>Explanation:</strong> It is the substring &quot;ab&quot; twice.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aba&quot;
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcabcabcabc&quot;
@@ -45,7 +45,9 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        return (s + s).index(s, 1) < len(s)
 ```
 
 ### **Java**
@@ -56,6 +58,25 @@ class Solution {
         String str = s + s;
         return str.substring(1, str.length() - 1).contains(s);
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        return (s + s).find(s, 1) < s.size();
+    }
+};
+```
+
+### **Go**
+
+```go
+func repeatedSubstringPattern(s string) bool {
+	return strings.Index(s[1:]+s, s) < len(s)-1
 }
 ```
 

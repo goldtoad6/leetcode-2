@@ -82,7 +82,11 @@ class Solution:
         dirs = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
         for i in range(m):
             for j in range(n):
-                cnt = sum(cb[i + a][j + b] for a, b in dirs if 0 <= i + a < m and 0 <= j + b < n)
+                cnt = sum(
+                    cb[i + a][j + b]
+                    for a, b in dirs
+                    if 0 <= i + a < m and 0 <= j + b < n
+                )
                 if cb[i][j] == 1 and (cnt < 2 or cnt > 3):
                     board[i][j] = 0
                 elif cb[i][j] == 0 and (cnt == 3):
@@ -152,13 +156,15 @@ class Solution {
 class Solution {
     public void gameOfLife(int[][] board) {
         int m = board.length, n = board[0].length;
-        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        int[][] dirs
+            = new int[][] {{0, -1}, {0, 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 int cnt = 0;
                 for (int[] dir : dirs) {
                     int x = i + dir[0], y = j + dir[1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && (board[x][y] == 1 || board[x][y] == 2)) {
+                    if (x >= 0 && x < m && y >= 0 && y < n
+                        && (board[x][y] == 1 || board[x][y] == 2)) {
                         ++cnt;
                     }
                 }
@@ -190,19 +196,18 @@ public:
             for (int j = 0; j < n; ++j)
                 cb[i][j] = board[i][j];
 
-        vector<vector<int>> dirs = {{0, 1}, {0, - 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 int cnt = 0;
-                for (auto& dir : dirs)
-                {
+                for (auto& dir : dirs) {
                     int x = i + dir[0], y = j + dir[1];
                     if (x >= 0 && x < m && y >= 0 && y < n) cnt += cb[x][y];
                 }
-                if (cb[i][j] == 1 && (cnt < 2 || cnt > 3)) board[i][j] = 0;
-                else if (cb[i][j] == 0 && cnt == 3) board[i][j] = 1;
+                if (cb[i][j] == 1 && (cnt < 2 || cnt > 3))
+                    board[i][j] = 0;
+                else if (cb[i][j] == 0 && cnt == 3)
+                    board[i][j] = 1;
             }
         }
     }
@@ -214,19 +219,18 @@ class Solution {
 public:
     void gameOfLife(vector<vector<int>>& board) {
         int m = board.size(), n = board[0].size();
-        vector<vector<int>> dirs = {{0, 1}, {0, - 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 int cnt = 0;
-                for (auto& dir : dirs)
-                {
+                for (auto& dir : dirs) {
                     int x = i + dir[0], y = j + dir[1];
                     if (x >= 0 && x < m && y >= 0 && y < n && (board[x][y] == 1 || board[x][y] == 2)) ++cnt;
                 }
-                if (board[i][j] == 1 && (cnt < 2 || cnt > 3)) board[i][j] = 2;
-                else if (board[i][j] == 0 && cnt == 3) board[i][j] = 3;
+                if (board[i][j] == 1 && (cnt < 2 || cnt > 3))
+                    board[i][j] = 2;
+                else if (board[i][j] == 0 && cnt == 3)
+                    board[i][j] = 3;
             }
         }
         for (int i = 0; i < m; ++i)

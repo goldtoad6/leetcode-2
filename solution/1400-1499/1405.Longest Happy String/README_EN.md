@@ -19,7 +19,7 @@
 <p>A <strong>substring</strong> is a contiguous sequence of characters within a string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> a = 1, b = 1, c = 7
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> &quot;ccbccacc&quot; would also be a correct answer.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> a = 7, b = 1, c = 0
@@ -78,7 +78,6 @@ class Solution:
                     cur[0] += 1
                     heappush(h, cur)
 
-
         return ''.join(ans)
 ```
 
@@ -89,13 +88,13 @@ class Solution {
     public String longestDiverseString(int a, int b, int c) {
         Queue<int[]> pq = new PriorityQueue<>((x, y) -> y[1] - x[1]);
         if (a > 0) {
-            pq.offer(new int[]{'a', a});
+            pq.offer(new int[] {'a', a});
         }
         if (b > 0) {
-            pq.offer(new int[]{'b', b});
+            pq.offer(new int[] {'b', b});
         }
         if (c > 0) {
-            pq.offer(new int[]{'c', c});
+            pq.offer(new int[] {'c', c});
         }
 
         StringBuilder sb = new StringBuilder();

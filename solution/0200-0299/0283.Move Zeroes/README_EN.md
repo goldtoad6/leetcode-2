@@ -9,10 +9,10 @@
 <p><strong>Note</strong> that you must do this in-place without making a copy of the array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> nums = [0,1,0,3,12]
 <strong>Output:</strong> [1,3,12,0,0]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> nums = [0]
 <strong>Output:</strong> [0]
 </pre>
@@ -72,8 +72,7 @@ public:
     void moveZeroes(vector<int>& nums) {
         int left = 0, n = nums.size();
         for (int right = 0; right < n; ++right) {
-            if (nums[right] != 0)
-            {
+            if (nums[right] != 0) {
                 swap(nums[left], nums[right]);
                 ++left;
             }
@@ -145,6 +144,26 @@ var moveZeroes = function (nums) {
 };
 ```
 
+### **TypeScript**
+
+```ts
+/**
+ Do not return anything, modify nums in-place instead.
+ */
+function moveZeroes(nums: number[]): void {
+    const n = nums.length;
+    let i = 0;
+    for (let j = 0; j < n; j++) {
+        if (nums[j]) {
+            if (j > i) {
+                [nums[i], nums[j]] = [nums[j], 0];
+            }
+            i++;
+        }
+    }
+}
+```
+
 ### **Rust**
 
 ```rust
@@ -153,12 +172,29 @@ impl Solution {
         let mut i = 0;
         for j in 0..nums.len() {
             if nums[j] != 0 {
-                if i != j {
+                if j > i {
                     nums[i] = nums[j];
                     nums[j] = 0;
                 }
                 i += 1;
             }
+        }
+    }
+}
+```
+
+### **C**
+
+```c
+void moveZeroes(int *nums, int numsSize) {
+    int i = 0;
+    for (int j = 0; j < numsSize; j++) {
+        if (nums[j] != 0) {
+            if (j > i) {
+                nums[i] = nums[j];
+                nums[j] = 0;
+            }
+            i++;
         }
     }
 }

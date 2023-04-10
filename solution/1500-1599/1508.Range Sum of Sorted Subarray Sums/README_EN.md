@@ -9,7 +9,7 @@
 <p><em>Return the sum of the numbers from index </em><code>left</code><em> to index </em><code>right</code> (<strong>indexed from 1</strong>)<em>, inclusive, in the new array. </em>Since the answer can be a huge number return it modulo <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4], n = 4, left = 1, right = 5
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> All subarray sums are 1, 3, 6, 10, 2, 5, 9, 3, 7, 4. After sorting them in non-decreasing order we have the new array [1, 2, 3, 3, 4, 5, 6, 7, 9, 10]. The sum of the numbers from index le = 1 to ri = 5 is 1 + 2 + 3 + 3 + 4 = 13. 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4], n = 4, left = 3, right = 4
@@ -25,7 +25,7 @@
 <strong>Explanation:</strong> The given array is the same as example 1. We have the new array [1, 2, 3, 3, 4, 5, 6, 7, 9, 10]. The sum of the numbers from index le = 3 to ri = 4 is 3 + 3 = 6.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4], n = 4, left = 1, right = 10
@@ -58,40 +58,63 @@ class Solution:
                 s += nums[j]
                 arr.append(s)
         arr.sort()
-        MOD = 10**9 + 7
-        return sum(arr[left - 1: right]) % MOD
+        mod = 10**9 + 7
+        return sum(arr[left - 1: right]) % mod
 ```
 
 ### **Java**
 
 ```java
 class Solution {
-    private static final int MOD = (int) 1e9 + 7;
-
     public int rangeSum(int[] nums, int n, int left, int right) {
         int[] arr = new int[n * (n + 1) / 2];
-        int idx = 0;
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0, k = 0; i < n; ++i) {
             int s = 0;
             for (int j = i; j < n; ++j) {
                 s += nums[j];
-                arr[idx++] = s;
+                arr[k++] = s;
             }
         }
         Arrays.sort(arr);
         int ans = 0;
+        final int mod = (int) 1e9 + 7;
         for (int i = left - 1; i < right; ++i) {
-            ans = (ans + arr[i]) % MOD;
+            ans = (ans + arr[i]) % mod;
         }
         return ans;
     }
 }
 ```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+        int arr[n * (n + 1) / 2];
+        for (int i = 0, k = 0; i < n; ++i) {
+            int s = 0;
+            for (int j = i; j < n; ++j) {
+                s += nums[j];
+                arr[k++] = s;
+            }
+        }
+        sort(arr, arr + n * (n + 1) / 2);
+        int ans = 0;
+        const int mod = 1e9 + 7;
+        for (int i = left - 1; i < right; ++i) {
+            ans = (ans + arr[i]) % mod;
+        }
+        return ans;
+    }
+};
+```
+
 ### **Go**
 
 ```go
-func rangeSum(nums []int, n int, left int, right int) int {
+func rangeSum(nums []int, n int, left int, right int) (ans int) {
 	var arr []int
 	for i := 0; i < n; i++ {
 		s := 0
@@ -101,12 +124,11 @@ func rangeSum(nums []int, n int, left int, right int) int {
 		}
 	}
 	sort.Ints(arr)
-	mod := int(1e9) + 7
-	ans := 0
-	for i := left - 1; i < right; i++ {
-		ans = (ans + arr[i]) % mod
+	const mod int = 1e9 + 7
+	for _, x := range arr[left-1 : right] {
+		ans = (ans + x) % mod
 	}
-	return ans
+	return
 }
 ```
 

@@ -11,7 +11,7 @@
 <p>Return <i>the number of hills and valleys in </i><code>nums</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,4,1,1,6,5]
@@ -26,7 +26,7 @@ At index 5: There is no non-equal neighbor of 5 on the right, so index 5 is neit
 There are 3 hills and valleys so we return 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [6,6,5,5,4,1]
@@ -64,7 +64,10 @@ class Solution:
         for v in nums[1:]:
             if v != arr[-1]:
                 arr.append(v)
-        return sum((arr[i] < arr[i - 1]) == (arr[i] < arr[i + 1]) for i in range(1, len(arr) - 1))
+        return sum(
+            (arr[i] < arr[i - 1]) == (arr[i] < arr[i + 1])
+            for i in range(1, len(arr) - 1)
+        )
 ```
 
 ```python
@@ -114,8 +117,7 @@ class Solution {
 public:
     int countHillValley(vector<int>& nums) {
         int ans = 0;
-        for (int i = 1, j = 0; i < nums.size() - 1; ++i)
-        {
+        for (int i = 1, j = 0; i < nums.size() - 1; ++i) {
             if (nums[i] == nums[i + 1]) continue;
             if (nums[i] > nums[j] && nums[i] > nums[i + 1]) ++ans;
             if (nums[i] < nums[j] && nums[i] < nums[i + 1]) ++ans;

@@ -52,7 +52,13 @@
 
 ## 解法
 
-`n & (n - 1)` 会消除 n 中最后一位中的 1。
+**方法一：位运算**
+
+由于 `n & (n - 1)` 会消除 $n$ 的二进制表示中的最后一个 $1$，因此对 $n$ 重复该操作，直到 $n$ 变成 $0$，此时的操作次数即为 $n$ 的二进制表示中的 $1$ 的个数。
+
+或者，我们可以用 `lowbit` 函数来获取 $n$ 的二进制表示中的最后一个 $1$，然后将 $n$ 减去这个 $1$，再重复该操作，直到 $n$ 变成 $0$，此时的操作次数即为 $n$ 的二进制表示中的 $1$ 的个数。`lowbit(x)=x&(-x)`。
+
+时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。其中 $n$ 为输入的整数。
 
 <!-- tabs:start -->
 
@@ -61,9 +67,25 @@
 ```python
 class Solution:
     def hammingWeight(self, n: int) -> int:
+        return n.bit_count()
+```
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
         ans = 0
         while n:
             n &= n - 1
+            ans += 1
+        return ans
+```
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        ans = 0
+        while n:
+            n -= n & (-n)
             ans += 1
         return ans
 ```
@@ -84,6 +106,72 @@ public class Solution {
 }
 ```
 
+```java
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int ans = 0;
+        while (n != 0) {
+            n -= n & -n;
+            ++ans;
+        }
+        return ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int ans = 0;
+        while (n) {
+            n &= n - 1;
+            ++ans;
+        }
+        return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int ans = 0;
+        while (n != 0) {
+            n -= n & -n;
+            ++ans;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func hammingWeight(num uint32) (ans int) {
+	for num != 0 {
+		num &= num - 1
+		ans++
+	}
+	return
+}
+```
+
+```go
+func hammingWeight(num uint32) (ans int) {
+	for num != 0 {
+		num -= num & -num
+		ans++
+	}
+	return
+}
+```
+
 ### **JavaScript**
 
 ```js
@@ -101,34 +189,19 @@ var hammingWeight = function (n) {
 };
 ```
 
-### **Go**
+### **C#**
 
-```go
-func hammingWeight(num uint32) int {
-	ans := 0
-	for num != 0 {
-		num &= num - 1
-		ans++
-	}
-	return ans
-}
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int hammingWeight(uint32_t n) {
+```cs
+public class Solution {
+    public int HammingWeight(uint n) {
         int ans = 0;
-        while (n)
-        {
-            n &= n - 1;
+        while (n != 0) {
+            n &= (n - 1);
             ++ans;
         }
         return ans;
     }
-};
+}
 ```
 
 ### **...**

@@ -44,6 +44,16 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：哈希表**
+
+我们用哈希表存放最近遍历到的数以及对应的下标。
+
+遍历数组 `nums`，对于当前遍历到的元素 $nums[i]$，如果在哈希表中存在，并且下标与当前元素的下标之差不超过 $k$，则返回 `true`，否则将当前元素加入哈希表中。
+
+遍历结束后，返回 `false`。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `nums` 的长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -87,8 +97,7 @@ class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
         unordered_map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i)
-        {
+        for (int i = 0; i < nums.size(); ++i) {
             if (mp.count(nums[i]) && i - mp[nums[i]] <= k) return true;
             mp[nums[i]] = i;
         }
@@ -130,6 +139,22 @@ public class Solution {
         }
         return false;
     }
+}
+```
+
+### **TypeScript**
+
+```ts
+function containsNearbyDuplicate(nums: number[], k: number): boolean {
+    const map = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        const t = nums[i];
+        if (map.has(t) && i - map.get(t) <= k) {
+            return true;
+        }
+        map.set(t, i);
+    }
+    return false;
 }
 ```
 

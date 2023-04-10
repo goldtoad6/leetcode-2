@@ -16,7 +16,7 @@
 <p>It is <strong>guaranteed</strong> that every call to <code>ping</code> uses a strictly larger value of <code>t</code> than the previous call.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -50,7 +50,6 @@ recentCounter.ping(3002);  // requests = [1, <u>100</u>, <u>3001</u>, <u>3002</u
 
 ```python
 class RecentCounter:
-
     def __init__(self):
         self.q = deque()
 
@@ -114,7 +113,6 @@ class RecentCounter {
     private int idx;
 
     public RecentCounter() {
-
     }
 
     public int ping(int t) {
@@ -151,7 +149,6 @@ public:
     queue<int> q;
 
     RecentCounter() {
-
     }
 
     int ping(int t) {

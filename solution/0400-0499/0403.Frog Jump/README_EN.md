@@ -11,7 +11,7 @@
 <p>If the frog&#39;s last jump was <code>k</code> units, its next jump must be either <code>k - 1</code>, <code>k</code>, or <code>k + 1</code> units. The frog can only jump in the forward direction.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [0,1,3,5,6,8,12,17]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> The frog can jump to the last stone by jumping 1 unit to the 2nd stone, then 2 units to the 3rd stone, then 2 units to the 4th stone, then 3 units to the 6th stone, 4 units to the 7th stone, and 5 units to the 8th stone.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [0,1,2,3,4,8,9,11]
@@ -39,9 +39,13 @@
 
 ## Solutions
 
+**Approach 1: Dynamic Programming**
+
 DP, use `dp[i][k]` to indicate whether `i` can be reached when the last jump was `k` units, and define the base case as `dp[0][0] = True` (starting point is at index 0).
 
 Because "the frog's last jump was `k` units, its next jump must be either `k - 1`, `k`, or `k + 1` units", so if any of `dp[j][k-1], dp[j][k], dp[j][k + 1]` is true, frog can jump from `j` to `i`.
+
+**Approach 2: Backtracking**
 
 <!-- tabs:start -->
 
@@ -55,7 +59,7 @@ class Solution:
         dp[0][0] = True
         for i in range(1, n):
             for j in range(i):
-                k = stones[i] - stones[j];
+                k = stones[i] - stones[j]
                 if k > j + 1:
                     continue
                 dp[i][k] = dp[j][k - 1] or dp[j][k] or dp[j][k + 1]
@@ -86,6 +90,67 @@ class Solution {
         }
         return false;
     }
+}
+```
+
+### **Go**
+
+dp:
+
+```go
+func canCross(stones []int) bool {
+	n := len(stones)
+	dp := make([][]bool, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([]bool, n)
+	}
+	dp[0][0] = true
+
+	for i := 1; i < n; i++ {
+		for j := 0; j < i; j++ {
+			k := stones[i] - stones[j]
+			if k > j+1 {
+				continue
+			}
+			dp[i][k] = dp[j][k-1] || dp[j][k] || dp[j][k+1]
+			if i == n-1 && dp[i][k] {
+				return true
+			}
+		}
+	}
+	return false
+}
+```
+
+dfs:
+
+```go
+func canCross(stones []int) bool {
+	n := len(stones)
+	help := make(map[int]map[int]bool)
+	var dfs func(start, step int) bool
+
+	dfs = func(start, step int) bool {
+		if start >= n-1 {
+			return true
+		}
+
+		if _, ok := help[start]; !ok {
+			help[start] = make(map[int]bool)
+		}
+		if v, ok := help[start][step]; ok {
+			return v
+		}
+		for i := start + 1; i < n; i++ {
+			if stones[start]+step == stones[i] {
+				help[start][step] = dfs(i, step-1) || dfs(i, step) || dfs(i, step+1)
+				return help[start][step]
+			}
+		}
+		help[start][step] = false
+		return false
+	}
+	return dfs(0, 1)
 }
 ```
 

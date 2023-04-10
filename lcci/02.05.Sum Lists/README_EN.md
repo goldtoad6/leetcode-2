@@ -43,6 +43,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         dummy = cur = ListNode(0)
@@ -74,8 +75,7 @@ class Solution {
         ListNode dummy = new ListNode(-1);
         ListNode cur = dummy;
         while (l1 != null || l2 != null || carry != 0) {
-            int s =
-                (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry;
+            int s = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry;
             carry = s / 10;
             cur.next = new ListNode(s % 10);
             cur = cur.next;
@@ -104,9 +104,8 @@ public:
         ListNode* dummy = new ListNode(0);
         ListNode* cur = dummy;
         int carry = 0;
-        while (l1 || l2 || carry)
-        {
-            carry += (!l1 ? 0 : l1-> val) + (!l2 ? 0 : l2->val);
+        while (l1 || l2 || carry) {
+            carry += (!l1 ? 0 : l1->val) + (!l2 ? 0 : l2->val);
             cur->next = new ListNode(carry % 10);
             cur = cur->next;
             carry /= 10;

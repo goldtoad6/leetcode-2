@@ -9,7 +9,7 @@
 <p>Return <code>true</code><em> if it is possible to assign integers to variable names so as to satisfy all the given equations, or </em><code>false</code><em> otherwise</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> equations = [&quot;a==b&quot;,&quot;b!=a&quot;]
@@ -18,7 +18,7 @@
 There is no way to assign the variables to satisfy both equations.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> equations = [&quot;b==a&quot;,&quot;a==b&quot;]
@@ -111,13 +111,11 @@ public:
     bool equationsPossible(vector<string>& equations) {
         p.resize(26);
         for (int i = 0; i < 26; ++i) p[i] = i;
-        for (auto& e : equations)
-        {
+        for (auto& e : equations) {
             int a = e[0] - 'a', b = e[3] - 'a';
             if (e[1] == '=') p[find(a)] = find(b);
         }
-        for (auto& e : equations)
-        {
+        for (auto& e : equations) {
             int a = e[0] - 'a', b = e[3] - 'a';
             if (e[1] == '!' && find(a) == find(b)) return false;
         }
@@ -159,6 +157,51 @@ func equationsPossible(equations []string) bool {
 		}
 	}
 	return true
+}
+```
+
+### **TypeScript**
+
+```ts
+class UnionFind {
+    private parent: number[];
+
+    constructor() {
+        this.parent = Array.from({ length: 26 }).map((_, i) => i);
+    }
+
+    find(index: number) {
+        if (this.parent[index] === index) {
+            return index;
+        }
+        this.parent[index] = this.find(this.parent[index]);
+        return this.parent[index];
+    }
+
+    union(index1: number, index2: number) {
+        this.parent[this.find(index1)] = this.find(index2);
+    }
+}
+
+function equationsPossible(equations: string[]): boolean {
+    const uf = new UnionFind();
+    for (const [a, s, _, b] of equations) {
+        if (s === '=') {
+            const index1 = a.charCodeAt(0) - 'a'.charCodeAt(0);
+            const index2 = b.charCodeAt(0) - 'a'.charCodeAt(0);
+            uf.union(index1, index2);
+        }
+    }
+    for (const [a, s, _, b] of equations) {
+        if (s === '!') {
+            const index1 = a.charCodeAt(0) - 'a'.charCodeAt(0);
+            const index2 = b.charCodeAt(0) - 'a'.charCodeAt(0);
+            if (uf.find(index1) === uf.find(index2)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 ```
 

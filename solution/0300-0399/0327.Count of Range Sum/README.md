@@ -48,7 +48,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 本题中，对于每个下标 j，以 j 为右端点的下标对的数量，就等于 `preSum[1..j]` 中的所有整数，出现在区间 `[preSum[j] - upper, preSum[j] - lower]` 的次数。
 
@@ -359,11 +359,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -371,8 +372,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -391,8 +391,7 @@ public:
         vector<long long> preSum(n + 1);
         for (int i = 0; i < n; ++i) preSum[i + 1] = preSum[i] + nums[i];
         set<long long> alls;
-        for (auto& s : preSum)
-        {
+        for (auto& s : preSum) {
             alls.insert(s);
             alls.insert(s - upper);
             alls.insert(s - lower);
@@ -402,8 +401,7 @@ public:
         for (auto& v : alls) m[v] = idx++;
         BinaryIndexedTree* tree = new BinaryIndexedTree(m.size());
         int ans = 0;
-        for (auto& s : preSum)
-        {
+        for (auto& s : preSum) {
             int i = m[s - upper], j = m[s - lower];
             ans += tree->query(j) - tree->query(i - 1);
             tree->update(m[s], 1);

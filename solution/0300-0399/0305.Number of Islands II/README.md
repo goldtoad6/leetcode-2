@@ -72,6 +72,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -178,7 +179,8 @@ class Solution {
             for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k];
                 int y = j + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j)) {
+                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1
+                    && find(x * n + y) != find(i * n + j)) {
                     p[find(x * n + y)] = find(i * n + j);
                     --cnt;
                 }
@@ -211,21 +213,17 @@ public:
         vector<int> ans;
         int cnt = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (auto& pos : positions)
-        {
+        for (auto& pos : positions) {
             int i = pos[0], j = pos[1];
-            if (grid[i][j] == 1)
-            {
+            if (grid[i][j] == 1) {
                 ans.push_back(cnt);
                 continue;
             }
             grid[i][j] = 1;
             ++cnt;
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j))
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j)) {
                     p[find(x * n + y)] = find(i * n + j);
                     --cnt;
                 }

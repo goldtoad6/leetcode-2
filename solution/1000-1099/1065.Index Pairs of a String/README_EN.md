@@ -9,14 +9,14 @@
 <p>Return the pairs <code>[i, j]</code> in sorted order (i.e., sort them by their first coordinate, and in case of ties sort them by their second coordinate).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;thestoryofleetcodeandme&quot;, words = [&quot;story&quot;,&quot;fleet&quot;,&quot;leetcode&quot;]
 <strong>Output:</strong> [[3,7],[9,13],[10,17]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;ababa&quot;, words = [&quot;aba&quot;,&quot;ab&quot;]
@@ -46,7 +46,9 @@ class Solution:
     def indexPairs(self, text: str, words: List[str]) -> List[List[int]]:
         words = set(words)
         n = len(text)
-        return [[i, j] for i in range(n) for j in range(i, n) if text[i: j + 1] in words]
+        return [
+            [i, j] for i in range(n) for j in range(i, n) if text[i : j + 1] in words
+        ]
 ```
 
 ```python
@@ -121,7 +123,7 @@ class Solution {
                 }
                 node = node.children[idx];
                 if (node.isEnd) {
-                    ans.add(new int[]{i, j});
+                    ans.add(new int[] {i, j});
                 }
             }
         }
@@ -144,8 +146,7 @@ public:
 
     void insert(string word) {
         Trie* node = this;
-        for (char c : word)
-        {
+        for (char c : word) {
             c -= 'a';
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
@@ -161,11 +162,9 @@ public:
         for (auto w : words) trie->insert(w);
         int n = text.size();
         vector<vector<int>> ans;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             Trie* node = trie;
-            for (int j = i; j < n; ++j)
-            {
+            for (int j = i; j < n; ++j) {
                 int idx = text[j] - 'a';
                 if (!node->children[idx]) break;
                 node = node->children[idx];

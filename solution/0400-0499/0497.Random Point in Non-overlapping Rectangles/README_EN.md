@@ -18,7 +18,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0497.Random%20Point%20in%20Non-overlapping%20Rectangles/images/lc-pickrandomrec.jpg" style="width: 419px; height: 539px;" />
 <pre>
 <strong>Input</strong>
@@ -59,7 +59,6 @@ solution.pick(); // return [0, 0]
 
 ```python
 class Solution:
-
     def __init__(self, rects: List[List[int]]):
         self.rects = rects
         self.s = [0] * len(rects)
@@ -108,7 +107,8 @@ class Solution {
             }
         }
         int[] rect = rects[left - 1];
-        return new int[]{rect[0] + random.nextInt(rect[2] - rect[0] + 1), rect[1] + random.nextInt(rect[3] - rect[1] + 1)};
+        return new int[] {rect[0] + random.nextInt(rect[2] - rect[0] + 1),
+            rect[1] + random.nextInt(rect[3] - rect[1] + 1)};
     }
 }
 

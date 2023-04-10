@@ -18,7 +18,7 @@
 <p>Return <em>an array</em> <code>ans</code> <em>of length</em> <code>n</code>, <em>where</em> <code>ans[i]</code> <em>is the length of the <strong>longest obstacle course</strong> for index</em> <code>i</code><em> as described above</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> obstacles = [1,2,3,2]
@@ -30,7 +30,7 @@
 - i = 3: [<u>1</u>,<u>2</u>,3,<u>2</u>], [1,2,2] has length 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> obstacles = [2,2,1]
@@ -41,7 +41,7 @@
 - i = 2: [2,2,<u>1</u>], [1] has length 1.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> obstacles = [3,1,5,6,4,2]
@@ -174,11 +174,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int val) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] = max(c[x], val);
             x += lowbit(x);
         }
@@ -186,8 +187,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s = max(s, c[x]);
             x -= lowbit(x);
         }
@@ -199,7 +199,6 @@ public:
     }
 };
 
-
 class Solution {
 public:
     vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
@@ -210,8 +209,7 @@ public:
         BinaryIndexedTree* tree = new BinaryIndexedTree(m.size());
         int n = obstacles.size();
         vector<int> ans(n);
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int v = obstacles[i];
             int x = m[v];
             ans[i] = 1 + tree->query(x);

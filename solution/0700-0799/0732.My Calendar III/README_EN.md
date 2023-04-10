@@ -6,17 +6,17 @@
 
 <p>A <code>k</code>-booking happens when <code>k</code> events have some non-empty intersection (i.e., there is some time that is common to all <code>k</code> events.)</p>
 
-<p>You are given some events <code>[start, end)</code>, after each given event, return an integer <code>k</code> representing the maximum <code>k</code>-booking between all the previous events.</p>
+<p>You are given some events <code>[startTime, endTime)</code>, after each given event, return an integer <code>k</code> representing the maximum <code>k</code>-booking between all the previous events.</p>
 
 <p>Implement the <code>MyCalendarThree</code> class:</p>
 
 <ul>
 	<li><code>MyCalendarThree()</code> Initializes the object.</li>
-	<li><code>int book(int start, int end)</code> Returns an integer <code>k</code> representing the largest integer such that there exists a <code>k</code>-booking in the calendar.</li>
+	<li><code>int book(int startTime, int endTime)</code> Returns an integer <code>k</code> representing the largest integer such that there exists a <code>k</code>-booking in the calendar.</li>
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -27,19 +27,20 @@
 
 <strong>Explanation</strong>
 MyCalendarThree myCalendarThree = new MyCalendarThree();
-myCalendarThree.book(10, 20); // return 1, The first event can be booked and is disjoint, so the maximum k-booking is a 1-booking.
-myCalendarThree.book(50, 60); // return 1, The second event can be booked and is disjoint, so the maximum k-booking is a 1-booking.
-myCalendarThree.book(10, 40); // return 2, The third event [10, 40) intersects the first event, and the maximum k-booking is a 2-booking.
-myCalendarThree.book(5, 15); // return 3, The remaining events cause the maximum K-booking to be only a 3-booking.
+myCalendarThree.book(10, 20); // return 1
+myCalendarThree.book(50, 60); // return 1
+myCalendarThree.book(10, 40); // return 2
+myCalendarThree.book(5, 15); // return 3
 myCalendarThree.book(5, 10); // return 3
 myCalendarThree.book(25, 55); // return 3
+
 </pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
 
 <ul>
-	<li><code>0 &lt;= start &lt; end &lt;= 10<sup>9</sup></code></li>
+	<li><code>0 &lt;= startTime &lt; endTime &lt;= 10<sup>9</sup></code></li>
 	<li>At most <code>400</code> calls will be made to <code>book</code>.</li>
 </ul>
 
@@ -113,7 +114,6 @@ class SegmentTree:
 
 
 class MyCalendarThree:
-
     def __init__(self):
         self.tree = SegmentTree()
 
@@ -149,7 +149,6 @@ class SegmentTree {
     private Node root = new Node(1, (int) 1e9 + 1);
 
     public SegmentTree() {
-
     }
 
     public void modify(int l, int r, int v) {
@@ -223,12 +222,11 @@ class MyCalendarThree {
     private SegmentTree tree = new SegmentTree();
 
     public MyCalendarThree() {
-
     }
 
     public int book(int start, int end) {
         tree.modify(start + 1, end, 1);
-        return tree.query(1, (int) 1e9 +1);
+        return tree.query(1, (int) 1e9 + 1);
     }
 }
 
@@ -274,10 +272,9 @@ public:
         modify(l, r, v, root);
     }
 
-    void modify(int l, int r,int v, Node* node) {
+    void modify(int l, int r, int v, Node* node) {
         if (l > r) return;
-        if (node->l >= l && node->r <= r)
-        {
+        if (node->l >= l && node->r <= r) {
             node->v += v;
             node->add += v;
             return;
@@ -294,7 +291,7 @@ public:
 
     int query(int l, int r, Node* node) {
         if (l > r) return 0;
-        if (node->l >= l && node-> r <= r) return node->v;
+        if (node->l >= l && node->r <= r) return node->v;
         pushdown(node);
         int v = 0;
         if (l <= node->mid) v = max(v, query(l, r, node->left));
@@ -309,8 +306,7 @@ public:
     void pushdown(Node* node) {
         if (!node->left) node->left = new Node(node->l, node->mid);
         if (!node->right) node->right = new Node(node->mid + 1, node->r);
-        if (node->add)
-        {
+        if (node->add) {
             Node* left = node->left;
             Node* right = node->right;
             left->v += node->add;

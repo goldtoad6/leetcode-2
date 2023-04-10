@@ -6,7 +6,7 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给定两个大小相等的数组&nbsp;<code>nums1</code>&nbsp;和&nbsp;<code>nums2</code>，<code>nums1</code>&nbsp;相对于 <code>nums</code>&nbsp;的<em>优势</em>可以用满足&nbsp;<code>nums1[i] &gt; nums2[i]</code>&nbsp;的索引 <code>i</code>&nbsp;的数目来描述。</p>
+<p>给定两个大小相等的数组&nbsp;<code>nums1</code>&nbsp;和&nbsp;<code>nums2</code>，<code>nums1</code>&nbsp;相对于 <code>nums2</code> 的<em>优势</em>可以用满足&nbsp;<code>nums1[i] &gt; nums2[i]</code>&nbsp;的索引 <code>i</code>&nbsp;的数目来描述。</p>
 
 <p>返回 <font color="#c7254e" face="Menlo, Monaco, Consolas, Courier New, monospace" size="1"><span style="background-color: rgb(249, 242, 244);">nums1</span></font>&nbsp;的<strong>任意</strong>排列，使其相对于 <code>nums2</code>&nbsp;的优势最大化。</p>
 
@@ -56,8 +56,7 @@
 class Solution:
     def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
         nums1.sort()
-        t = [(v, i) for i, v in enumerate(nums2)]
-        t.sort()
+        t = sorted((v, i) for i, v in enumerate(nums2))
         n = len(nums2)
         ans = [0] * n
         i, j = 0, n - 1
@@ -81,7 +80,7 @@ class Solution {
         int n = nums1.length;
         int[][] t = new int[n][2];
         for (int i = 0; i < n; ++i) {
-            t[i] = new int[]{nums2[i], i};
+            t[i] = new int[] {nums2[i], i};
         }
         Arrays.sort(t, (a, b) -> a[0] - b[0]);
         Arrays.sort(nums1);
@@ -112,10 +111,11 @@ public:
         sort(nums1.begin(), nums1.end());
         int i = 0, j = n - 1;
         vector<int> ans(n);
-        for (int v : nums1)
-        {
-            if (v <= t[i].first) ans[t[j--].second] = v;
-            else ans[t[i++].second] = v;
+        for (int v : nums1) {
+            if (v <= t[i].first)
+                ans[t[j--].second] = v;
+            else
+                ans[t[i++].second] = v;
         }
         return ans;
     }
@@ -147,6 +147,57 @@ func advantageCount(nums1 []int, nums2 []int) []int {
 		}
 	}
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function advantageCount(nums1: number[], nums2: number[]): number[] {
+    const n = nums1.length;
+    const idx = Array.from({ length: n }, (_, i) => i);
+    idx.sort((i, j) => nums2[i] - nums2[j]);
+    nums1.sort((a, b) => a - b);
+
+    const ans = new Array(n).fill(0);
+    let left = 0;
+    let right = n - 1;
+    for (let i = 0; i < n; i++) {
+        if (nums1[i] > nums2[idx[left]]) {
+            ans[idx[left]] = nums1[i];
+            left++;
+        } else {
+            ans[idx[right]] = nums1[i];
+            right--;
+        }
+    }
+    return ans;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn advantage_count(mut nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let n = nums1.len();
+        let mut idx = (0..n).collect::<Vec<usize>>();
+        idx.sort_by(|&i, &j| nums2[i].cmp(&nums2[j]));
+        nums1.sort();
+        let mut res = vec![0; n];
+        let mut left = 0;
+        let mut right = n - 1;
+        for &num in nums1.iter() {
+            if num > nums2[idx[left]] {
+                res[idx[left]] = num;
+                left += 1;
+            } else {
+                res[idx[right]] = num;
+                right -= 1;
+            }
+        }
+        res
+    }
 }
 ```
 

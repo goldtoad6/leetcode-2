@@ -122,8 +122,7 @@ class Solution {
 public:
     int findLengthOfLCIS(vector<int>& nums) {
         int res = 1;
-        for (int i = 1, f = 1; i < nums.size(); ++i)
-        {
+        for (int i = 1, f = 1; i < nums.size(); ++i) {
             f = 1 + (nums[i - 1] < nums[i] ? f : 0);
             res = max(res, f);
         }
@@ -170,6 +169,27 @@ function findLengthOfLCIS(nums: number[]): number {
         }
     }
     return Math.max(res, n - i);
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function findLengthOfLCIS($nums) {
+        $tmp = $max = 1;
+        for ($i = 0; $i < count($nums) - 1; $i++) {
+            if ($nums[$i] < $nums[$i + 1]) {
+                $tmp++;
+                $max = max($max, $tmp);
+            } else $tmp = 1;
+        }
+        return $max;
+    }
 }
 ```
 

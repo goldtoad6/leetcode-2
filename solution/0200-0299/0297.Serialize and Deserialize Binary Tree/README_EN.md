@@ -8,17 +8,17 @@
 
 <p>Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.</p>
 
-<p><strong>Clarification:</strong> The input/output format is the same as <a href="/faq/#binary-tree" target="_blank">how LeetCode serializes a binary tree</a>. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.</p>
+<p><strong>Clarification:</strong> The input/output format is the same as <a href="https://support.leetcode.com/hc/en-us/articles/360011883654-What-does-1-null-2-3-mean-in-binary-tree-representation-" target="_blank">how LeetCode serializes a binary tree</a>. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0200-0299/0297.Serialize%20and%20Deserialize%20Binary%20Tree/images/serdeser.jpg" style="width: 442px; height: 324px;" />
 <pre>
 <strong>Input:</strong> root = [1,2,3,null,null,4,5]
 <strong>Output:</strong> [1,2,3,null,null,4,5]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = []
@@ -47,8 +47,8 @@
 #         self.left = None
 #         self.right = None
 
-class Codec:
 
+class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
 
@@ -71,7 +71,6 @@ class Codec:
         preorder(root)
         return ''.join(res)
 
-
     def deserialize(self, data):
         """Decodes your encoded data to tree.
 
@@ -89,6 +88,7 @@ class Codec:
             return TreeNode(int(first), inner(), inner())
 
         return inner()
+
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
@@ -176,7 +176,6 @@ public class Codec {
  */
 class Codec {
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if (!root) return "";
@@ -186,9 +185,9 @@ public:
     }
 
     void preorder(TreeNode* root, string& s) {
-        if (!root) s += "# ";
-        else
-        {
+        if (!root)
+            s += "# ";
+        else {
             s += to_string(root->val) + " ";
             preorder(root->left, s);
             preorder(root->right, s);

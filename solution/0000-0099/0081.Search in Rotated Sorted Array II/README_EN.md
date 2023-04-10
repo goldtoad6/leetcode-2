@@ -13,10 +13,10 @@
 <p>You must decrease the overall operation steps as much as possible.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> nums = [2,5,6,0,0,1,2], target = 0
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> nums = [2,5,6,0,0,1,2], target = 3
 <strong>Output:</strong> false
 </pre>
@@ -72,12 +72,17 @@ class Solution {
             int mid = (l + r) >>> 1;
             if (nums[mid] == target) return true;
             if (nums[mid] < nums[r] || nums[mid] < nums[l]) {
-                if (target > nums[mid] && target <= nums[r]) l = mid + 1;
-                else r = mid - 1;
+                if (target > nums[mid] && target <= nums[r])
+                    l = mid + 1;
+                else
+                    r = mid - 1;
             } else if (nums[mid] > nums[l] || nums[mid] > nums[r]) {
-                if (target < nums[mid] && target >= nums[l]) r = mid - 1;
-                else l = mid + 1;
-            } else r--;
+                if (target < nums[mid] && target >= nums[l])
+                    r = mid - 1;
+                else
+                    l = mid + 1;
+            } else
+                r--;
         }
         return false;
     }
@@ -97,12 +102,17 @@ public:
             int mid = (l + r) >> 1;
             if (nums[mid] == target) return true;
             if (nums[mid] < nums[r] || nums[mid] < nums[l]) {
-                if (target > nums[mid] && target <= nums[r]) l = mid + 1;
-                else r = mid - 1;
+                if (target > nums[mid] && target <= nums[r])
+                    l = mid + 1;
+                else
+                    r = mid - 1;
             } else if (nums[mid] > nums[l] || nums[mid] > nums[r]) {
-                if (target < nums[mid] && target >= nums[l]) r = mid - 1;
-                else l = mid + 1;
-            } else r--;
+                if (target < nums[mid] && target >= nums[l])
+                    r = mid - 1;
+                else
+                    l = mid + 1;
+            } else
+                r--;
         }
         return false;
     }

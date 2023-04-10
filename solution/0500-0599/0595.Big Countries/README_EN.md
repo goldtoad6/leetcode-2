@@ -14,7 +14,7 @@
 | continent   | varchar |
 | area        | int     |
 | population  | int     |
-| gdp         | int     |
+| gdp         | bigint  |
 +-------------+---------+
 name is the primary key column for this table.
 Each row of this table gives information about the name of a country, the continent to which it belongs, its area, the population, and its GDP value.
@@ -36,7 +36,7 @@ Each row of this table gives information about the name of a country, the contin
 <p>The query result format is in the following example.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> 

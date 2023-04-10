@@ -11,7 +11,7 @@
 <p>Return <em>the <strong>number of steps</strong> in the shortest path from the </em><code>entrance</code><em> to the nearest exit, or </em><code>-1</code><em> if no such path exists</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1926.Nearest%20Exit%20from%20Entrance%20in%20Maze/images/nearest1-grid.jpg" style="width: 333px; height: 253px;" />
 <pre>
 <strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;,&quot;.&quot;]], entrance = [1,2]
@@ -24,7 +24,7 @@ It is impossible to reach [2,3] from the entrance.
 Thus, the nearest exit is [0,2], which is 1 step away.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1926.Nearest%20Exit%20from%20Entrance%20in%20Maze/images/nearesr2-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;]], entrance = [1,0]
@@ -36,7 +36,7 @@ Initially, you are at the entrance cell [1,0].
 Thus, the nearest exit is [1,2], which is 2 steps away.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1926.Nearest%20Exit%20from%20Entrance%20in%20Maze/images/nearest3-grid.jpg" style="width: 173px; height: 93px;" />
 <pre>
 <strong>Input:</strong> maze = [[&quot;.&quot;,&quot;+&quot;]], entrance = [0,0]
@@ -111,7 +111,7 @@ class Solution {
                         if (x == 0 || x == m - 1 || y == 0 || y == n - 1) {
                             return ans;
                         }
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                         maze[x][y] = '+';
                     }
                 }
@@ -129,22 +129,18 @@ class Solution {
 public:
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
         int m = maze.size(), n = maze[0].size();
-        queue<vector<int>> q{{entrance}};
+        queue<vector<int>> q {{entrance}};
         maze[entrance[0]][entrance[1]] = '+';
         int ans = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int k = q.size(); k > 0; --k)
-            {
+            for (int k = q.size(); k > 0; --k) {
                 auto p = q.front();
                 q.pop();
-                for (int l = 0; l < 4; ++l)
-                {
+                for (int l = 0; l < 4; ++l) {
                     int x = p[0] + dirs[l], y = p[1] + dirs[l + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.')
-                    {
+                    if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.') {
                         if (x == 0 || x == m - 1 || y == 0 || y == n - 1) return ans;
                         q.push({x, y});
                         maze[x][y] = '+';

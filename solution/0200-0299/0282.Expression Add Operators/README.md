@@ -69,14 +69,18 @@ class Solution:
             for i in range(u, len(num)):
                 if i != u and num[u] == '0':
                     break
-                next = int(num[u: i+1])
+                next = int(num[u : i + 1])
                 if u == 0:
                     dfs(i + 1, next, next, path + str(next))
                 else:
-                    dfs(i + 1,  next, curr + next, path + "+" + str(next))
+                    dfs(i + 1, next, curr + next, path + "+" + str(next))
                     dfs(i + 1, -next, curr - next, path + "-" + str(next))
-                    dfs(i + 1, prev * next, curr - prev +
-                        prev * next, path + "*" + str(next))
+                    dfs(
+                        i + 1,
+                        prev * next,
+                        curr - prev + prev * next,
+                        path + "*" + str(next),
+                    )
 
         dfs(0, 0, 0, "")
         return ans
@@ -104,7 +108,7 @@ class Solution {
     private void dfs(int u, long prev, long curr, String path) {
         if (u == num.length()) {
             if (curr == target) ans.add(path);
-            return ;
+            return;
         }
         for (int i = u; i < num.length(); i++) {
             if (i != u && num.charAt(u) == '0') {
@@ -114,7 +118,7 @@ class Solution {
             if (u == 0) {
                 dfs(i + 1, next, next, path + next);
             } else {
-                dfs(i + 1,  next, curr + next, path + "+" + next);
+                dfs(i + 1, next, curr + next, path + "+" + next);
                 dfs(i + 1, -next, curr - next, path + "-" + next);
                 dfs(i + 1, prev * next, curr - prev + prev * next, path + "*" + next);
             }

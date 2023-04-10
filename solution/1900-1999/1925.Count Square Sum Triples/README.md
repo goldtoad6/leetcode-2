@@ -50,9 +50,9 @@ class Solution:
         res = 0
         for a in range(1, n + 1):
             for b in range(1, n + 1):
-                t = a ** 2 + b ** 2
+                t = a**2 + b**2
                 c = int(sqrt(t))
-                if c <= n and c ** 2 == t:
+                if c <= n and c**2 == t:
                     res += 1
         return res
 ```
@@ -89,7 +89,7 @@ public:
         for (int a = 1; a <= n; ++a) {
             for (int b = 1; b <= n; ++b) {
                 int t = a * a + b * b;
-                int c = (int) sqrt(t);
+                int c = (int)sqrt(t);
                 if (c <= n && c * c == t) {
                     ++res;
                 }

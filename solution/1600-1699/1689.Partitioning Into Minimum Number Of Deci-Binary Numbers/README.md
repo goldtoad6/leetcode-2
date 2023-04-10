@@ -45,7 +45,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：脑筋急转弯**
+
 题目等价于找字符串中的最大数。
+
+时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为字符串长度。
 
 <!-- tabs:start -->
 
@@ -66,12 +70,38 @@ class Solution:
 ```java
 class Solution {
     public int minPartitions(String n) {
-        int res = 0;
-        for (char c : n.toCharArray()) {
-            res = Math.max(res, c - '0');
+        int ans = 0;
+        for (int i = 0; i < n.length(); ++i) {
+            ans = Math.max(ans, n.charAt(i) - '0');
         }
-        return res;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minPartitions(string n) {
+        int ans = 0;
+        for (char& c : n) ans = max(ans, c - '0');
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minPartitions(n string) (ans int) {
+	for _, c := range n {
+		if t := int(c - '0'); ans < t {
+			ans = t
+		}
+	}
+	return
 }
 ```
 
@@ -85,33 +115,32 @@ function minPartitions(n: string): number {
 }
 ```
 
-### **C++**
+### **Rust**
 
-```cpp
-class Solution {
-public:
-    int minPartitions(string n) {
-        int res = 0;
-        for (auto& c : n) {
-            res = max(res, c - '0');
+```rust
+impl Solution {
+    pub fn min_partitions(n: String) -> i32 {
+        let mut ans = 0;
+        for c in n.as_bytes() {
+            ans = ans.max((c - b'0') as i32);
         }
-        return res;
+        ans
     }
-};
+}
 ```
 
-### **Go**
+### **C**
 
-```go
-func minPartitions(n string) int {
-	res := 0
-	for _, c := range n {
-		t := int(c - '0')
-		if t > res {
-			res = t
-		}
-	}
-	return res
+```c
+int minPartitions(char *n) {
+    int ans = 0;
+    for (int i = 0; n[i]; i++) {
+        int v = n[i] - '0';
+        if (v > ans) {
+            ans = v;
+        }
+    }
+    return ans;
 }
 ```
 

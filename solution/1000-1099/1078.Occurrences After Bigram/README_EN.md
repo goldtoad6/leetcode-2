@@ -9,10 +9,10 @@
 <p>Return <em>an array of all the words</em> <code>third</code> <em>for each occurrence of</em> <code>&quot;first second third&quot;</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> text = "alice is a good girl she is a good student", first = "a", second = "good"
 <strong>Output:</strong> ["girl","student"]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> text = "we will we will rock you", first = "we", second = "will"
 <strong>Output:</strong> ["we","rock"]
 </pre>
@@ -36,8 +36,11 @@
 ```python
 class Solution:
     def findOcurrences(self, text: str, first: str, second: str) -> List[str]:
-        words = text.split(' ')
-        return [words[i + 2] for i in range(len(words) - 2) if words[i] == first and words[i + 1] == second]
+        ws = text.split()
+        n = len(ws)
+        return [
+            ws[i + 2] for i in range(n - 2) if ws[i] == first and ws[i + 1] == second
+        ]
 ```
 
 ### **Java**
@@ -56,7 +59,6 @@ class Solution {
         return ans.toArray(new String[0]);
     }
 }
-
 ```
 
 ### **C++**

@@ -21,7 +21,7 @@
 由于&nbsp;<code>2</code> 是一位数，所以返回 2。
 </pre>
 
-<p><strong>示例 1:</strong></p>
+<p><strong>示例 2:</strong></p>
 
 <pre>
 <strong>输入:</strong> num =<strong> </strong>0
@@ -80,7 +80,6 @@ class Solution {
         return (num - 1) % 9 + 1;
     }
 }
-
 ```
 
 ### **C++**

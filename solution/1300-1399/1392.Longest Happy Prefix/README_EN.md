@@ -9,7 +9,7 @@
 <p>Given a string <code>s</code>, return <em>the <strong>longest happy prefix</strong> of</em> <code>s</code>. Return an empty string <code>&quot;&quot;</code> if no such prefix exists.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;level&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> s contains 4 prefix excluding itself (&quot;l&quot;, &quot;le&quot;, &quot;lev&quot;, &quot;leve&quot;), and suffix (&quot;l&quot;, &quot;el&quot;, &quot;vel&quot;, &quot;evel&quot;). The largest prefix which is also suffix is given by &quot;l&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;ababab&quot;
@@ -93,13 +93,11 @@ public:
         ULL h[n + 10];
         p[0] = 1;
         h[0] = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             p[i + 1] = p[i] * base;
             h[i + 1] = h[i] * base + s[i];
         }
-        for (int l = n - 1; l > 0; --l)
-        {
+        for (int l = n - 1; l > 0; --l) {
             ULL prefix = h[l];
             ULL suffix = h[n] - h[n - l] * p[l];
             if (prefix == suffix) return s.substr(0, l);

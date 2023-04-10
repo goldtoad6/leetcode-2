@@ -78,6 +78,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -194,11 +195,9 @@ public:
         int n = graph.size();
         p.resize(n);
         for (int i = 0; i < n; ++i) p[i] = i;
-        for (int u = 0; u < n; ++u)
-        {
+        for (int u = 0; u < n; ++u) {
             auto& g = graph[u];
-            for (int v : g)
-            {
+            for (int v : g) {
                 if (find(u) == find(v)) return 0;
                 p[find(v)] = find(g[0]);
             }

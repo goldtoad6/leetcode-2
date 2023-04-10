@@ -10,9 +10,15 @@
 
 <pre>
 
+
+
 <strong> Input</strong>: A = 29 (0b11101), B = 15 (0b01111)
 
+
+
 <strong> Output</strong>: 2
+
+
 
 </pre>
 
@@ -20,9 +26,15 @@
 
 <pre>
 
+
+
 <strong> Input</strong>: A = 1，B = 2
 
+
+
 <strong> Output</strong>: 2
+
+
 
 </pre>
 
@@ -39,7 +51,11 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def convertInteger(self, A: int, B: int) -> int:
+        A &= 0xFFFFFFFF
+        B &= 0xFFFFFFFF
+        return (A ^ B).bit_count()
 ```
 
 ### **Java**
@@ -49,6 +65,26 @@ class Solution {
     public int convertInteger(int A, int B) {
         return Integer.bitCount(A ^ B);
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int convertInteger(int A, int B) {
+        unsigned int c = A ^ B;
+        return __builtin_popcount(c);
+    }
+};
+```
+
+### **Go**
+
+```go
+func convertInteger(A int, B int) int {
+	return bits.OnesCount32(uint32(A ^ B))
 }
 ```
 
@@ -81,6 +117,7 @@ impl Solution {
 ### **...**
 
 ```
+
 
 ```
 

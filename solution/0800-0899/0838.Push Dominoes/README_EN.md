@@ -23,7 +23,7 @@
 <p>Return <em>a string representing the final state</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> dominoes = &quot;RR.L&quot;
@@ -31,7 +31,7 @@
 <strong>Explanation:</strong> The first domino expends no additional force on the second domino.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0838.Push%20Dominoes/images/domino.png" style="height: 196px; width: 512px;" />
 <pre>
 <strong>Input:</strong> dominoes = &quot;.L.R...LR..L..&quot;
@@ -182,10 +182,9 @@ public:
     string pushDominoes(string dominoes) {
         int n = dominoes.size();
         queue<int> q;
-        vector<int> time(n, - 1);
+        vector<int> time(n, -1);
         vector<string> force(n);
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             if (dominoes[i] == '.') continue;
             q.emplace(i);
             time[i] = 0;
@@ -193,25 +192,21 @@ public:
         }
 
         string ans(n, '.');
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int i = q.front();
             q.pop();
-            if (force[i].size() == 1)
-            {
+            if (force[i].size() == 1) {
                 char f = force[i][0];
                 ans[i] = f;
                 int j = (f == 'L') ? (i - 1) : (i + 1);
-                if (j >= 0 && j < n)
-                {
+                if (j >= 0 && j < n) {
                     int t = time[i];
-                    if (time[j] == -1)
-                    {
+                    if (time[j] == -1) {
                         q.emplace(j);
                         time[j] = t + 1;
                         force[j].push_back(f);
-                    }
-                    else if(time[j] == t + 1) force[j].push_back(f);
+                    } else if (time[j] == t + 1)
+                        force[j].push_back(f);
                 }
             }
         }

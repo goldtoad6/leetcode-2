@@ -9,15 +9,19 @@
 <p>A region is <strong>captured</strong> by flipping all <code>&#39;O&#39;</code>s into <code>&#39;X&#39;</code>s in that surrounded region.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0130.Surrounded%20Regions/images/xogrid.jpg" style="width: 550px; height: 237px;" />
 <pre>
 <strong>Input:</strong> board = [[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;O&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;O&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;X&quot;,&quot;X&quot;]]
 <strong>Output:</strong> [[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;X&quot;,&quot;X&quot;,&quot;X&quot;],[&quot;X&quot;,&quot;O&quot;,&quot;X&quot;,&quot;X&quot;]]
-<strong>Explanation:</strong> Surrounded regions should not be on the border, which means that any &#39;O&#39; on the border of the board are not flipped to &#39;X&#39;. Any &#39;O&#39; that is not on the border and it is not connected to an &#39;O&#39; on the border will be flipped to &#39;X&#39;. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+<strong>Explanation:</strong> Notice that an &#39;O&#39; should not be flipped if:
+- It is on the border, or
+- It is adjacent to an &#39;O&#39; that should not be flipped.
+The bottom &#39;O&#39; is on the border, so it is not flipped.
+The other three &#39;O&#39; form a surrounded region, so they are flipped.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> board = [[&quot;X&quot;]]
@@ -48,6 +52,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
+
         def dfs(i, j):
             board[i][j] = '.'
             for a, b in [[0, -1], [0, 1], [1, 0], [-1, 0]]:
@@ -58,7 +63,9 @@ class Solution:
         m, n = len(board), len(board[0])
         for i in range(m):
             for j in range(n):
-                if board[i][j] == 'O' and (i == 0 or i == m - 1 or j == 0 or j == n - 1):
+                if board[i][j] == 'O' and (
+                    i == 0 or i == m - 1 or j == 0 or j == n - 1
+                ):
                     dfs(i, j)
         for i in range(m):
             for j in range(n):
@@ -298,12 +305,12 @@ public:
             for (int j = 0; j < n; ++j)
                 if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O')
                     dfs(board, i, j);
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (board[i][j] == '.') board[i][j] = 'O';
-                else if (board[i][j] == 'O') board[i][j] = 'X';
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == '.')
+                    board[i][j] = 'O';
+                else if (board[i][j] == 'O')
+                    board[i][j] = 'X';
             }
         }
     }
@@ -311,8 +318,7 @@ public:
     void dfs(vector<vector<char>>& board, int i, int j) {
         board[i][j] = '.';
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i + dirs[k], y = j + dirs[k + 1];
             if (x >= 0 && x < board.size() && y >= 0 && y < board[0].size() && board[x][y] == 'O')
                 dfs(board, x, y);

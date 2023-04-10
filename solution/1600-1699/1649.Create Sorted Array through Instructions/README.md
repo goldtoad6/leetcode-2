@@ -81,7 +81,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 树状数组最基本的功能就是求比某点 x 小的点的个数（这里的比较是抽象的概念，可以是数的大小、坐标的大小、质量的大小等等）。
 
@@ -353,11 +353,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -365,8 +366,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -385,8 +385,7 @@ public:
         int mod = 1e9 + 7;
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         int ans = 0;
-        for (int num : instructions)
-        {
+        for (int num : instructions) {
             int a = tree->query(num - 1);
             int b = tree->query(n) - tree->query(num);
             ans += min(a, b);

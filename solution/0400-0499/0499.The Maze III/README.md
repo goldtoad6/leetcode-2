@@ -70,7 +70,7 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-BFS。
+**方法一：BFS**
 
 <!-- tabs:start -->
 
@@ -80,12 +80,14 @@ BFS。
 
 ```python
 class Solution:
-    def findShortestWay(self, maze: List[List[int]], ball: List[int], hole: List[int]) -> str:
+    def findShortestWay(
+        self, maze: List[List[int]], ball: List[int], hole: List[int]
+    ) -> str:
         m, n = len(maze), len(maze[0])
         r, c = ball
         rh, ch = hole
         q = deque([(r, c)])
-        dist = [[float('inf')] * n for _ in range(m)]
+        dist = [[inf] * n for _ in range(m)]
         dist[r][c] = 0
         path = [[None] * n for _ in range(m)]
         path[r][c] = ''
@@ -93,10 +95,17 @@ class Solution:
             i, j = q.popleft()
             for a, b, d in [(-1, 0, 'u'), (1, 0, 'd'), (0, -1, 'l'), (0, 1, 'r')]:
                 x, y, step = i, j, dist[i][j]
-                while 0 <= x + a < m and 0 <= y + b < n and maze[x + a][y + b] == 0 and (x != rh or y != ch):
+                while (
+                    0 <= x + a < m
+                    and 0 <= y + b < n
+                    and maze[x + a][y + b] == 0
+                    and (x != rh or y != ch)
+                ):
                     x, y = x + a, y + b
                     step += 1
-                if dist[x][y] > step or (dist[x][y] == step and path[i][j] + d < path[x][y]):
+                if dist[x][y] > step or (
+                    dist[x][y] == step and path[i][j] + d < path[x][y]
+                ):
                     dist[x][y] = step
                     path[x][y] = path[i][j] + d
                     if x != rh or y != ch:
@@ -116,7 +125,7 @@ class Solution {
         int r = ball[0], c = ball[1];
         int rh = hole[0], ch = hole[1];
         Deque<int[]> q = new LinkedList<>();
-        q.offer(new int[]{r, c});
+        q.offer(new int[] {r, c});
         int[][] dist = new int[m][n];
         for (int i = 0; i < m; ++i) {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
@@ -133,16 +142,18 @@ class Solution {
                 String d = String.valueOf((char) (dir[2]));
                 int x = i, y = j;
                 int step = dist[i][j];
-                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0 && (x != rh || y != ch)) {
+                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0
+                    && (x != rh || y != ch)) {
                     x += a;
                     y += b;
                     ++step;
                 }
-                if (dist[x][y] > step || (dist[x][y] == step && (path[i][j] + d).compareTo(path[x][y]) < 0)) {
+                if (dist[x][y] > step
+                    || (dist[x][y] == step && (path[i][j] + d).compareTo(path[x][y]) < 0)) {
                     dist[x][y] = step;
                     path[x][y] = path[i][j] + d;
                     if (x != rh || y != ch) {
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                     }
                 }
             }
@@ -168,25 +179,21 @@ public:
         dist[r][c] = 0;
         vector<vector<string>> path(m, vector<string>(n, ""));
         vector<vector<int>> dirs = {{-1, 0, 'u'}, {1, 0, 'd'}, {0, -1, 'l'}, {0, 1, 'r'}};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
             int i = p.first, j = p.second;
-            for (auto& dir : dirs)
-            {
+            for (auto& dir : dirs) {
                 int a = dir[0], b = dir[1];
-                char d = (char) dir[2];
+                char d = (char)dir[2];
                 int x = i, y = j;
                 int step = dist[i][j];
-                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0 && (x != rh || y != ch))
-                {
+                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0 && (x != rh || y != ch)) {
                     x += a;
                     y += b;
                     ++step;
                 }
-                if (dist[x][y] > step || (dist[x][y] == step && (path[i][j] + d < path[x][y])))
-                {
+                if (dist[x][y] > step || (dist[x][y] == step && (path[i][j] + d < path[x][y]))) {
                     dist[x][y] = step;
                     path[x][y] = path[i][j] + d;
                     if (x != rh || y != ch) q.push({x, y});

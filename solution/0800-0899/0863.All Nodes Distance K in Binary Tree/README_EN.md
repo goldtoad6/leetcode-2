@@ -9,7 +9,7 @@
 <p>You can return the answer in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0863.All%20Nodes%20Distance%20K%20in%20Binary%20Tree/images/sketch0.png" style="width: 500px; height: 429px;" />
 <pre>
 <strong>Input:</strong> root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2
@@ -17,7 +17,7 @@
 Explanation: The nodes that are a distance 2 from the target node (with value 5) have values 7, 4, and 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = [1], target = 1, k = 3
@@ -49,6 +49,7 @@ Explanation: The nodes that are a distance 2 from the target node (with value 5)
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
         def parents(root, prev):
@@ -76,6 +77,40 @@ class Solution:
         ans = []
         vis = set()
         dfs(target, k)
+        return ans
+```
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        def dfs1(root, fa):
+            if root is None:
+                return
+            p[root] = fa
+            dfs1(root.left, root)
+            dfs1(root.right, root)
+
+        def dfs2(root, fa, k):
+            if root is None:
+                return
+            if k == 0:
+                ans.append(root.val)
+                return
+            for nxt in (root.left, root.right, p[root]):
+                if nxt != fa:
+                    dfs2(nxt, root, k - 1)
+
+        p = {}
+        dfs1(root, None)
+        ans = []
+        dfs2(target, None, k)
         return ans
 ```
 
@@ -164,8 +199,7 @@ public:
     void dfs(TreeNode* root, int k) {
         if (!root || vis.count(root->val)) return;
         vis.insert(root->val);
-        if (k == 0)
-        {
+        if (k == 0) {
             ans.push_back(root->val);
             return;
         }

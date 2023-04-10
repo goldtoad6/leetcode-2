@@ -19,7 +19,7 @@
 <p>Notice that you can not jump outside of the array at any time.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [100,-23,-23,404,100,23,23,23,3,404]
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> You need three jumps from index 0 --&gt; 4 --&gt; 3 --&gt; 9. Note that index 9 is the last index of the array.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [7]
@@ -35,7 +35,7 @@
 <strong>Explanation:</strong> Start index is the last index. You do not need to jump.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [7,6,9,6,9,6,9,7]
@@ -97,7 +97,7 @@ class Solution {
         Deque<int[]> q = new LinkedList<>();
         Set<Integer> vis = new HashSet<>();
         vis.add(0);
-        q.offer(new int[]{0, 0});
+        q.offer(new int[] {0, 0});
         while (!q.isEmpty()) {
             int[] e = q.pollFirst();
             int i = e[0], step = e[1];
@@ -109,17 +109,17 @@ class Solution {
             for (int j : idx.getOrDefault(v, new ArrayList<>())) {
                 if (!vis.contains(j)) {
                     vis.add(j);
-                    q.offer(new int[]{j, step});
+                    q.offer(new int[] {j, step});
                 }
             }
             idx.remove(v);
             if (i + 1 < n && !vis.contains(i + 1)) {
                 vis.add(i + 1);
-                q.offer(new int[]{i + 1, step});
+                q.offer(new int[] {i + 1, step});
             }
             if (i - 1 >= 0 && !vis.contains(i - 1)) {
                 vis.add(i - 1);
-                q.offer(new int[]{i - 1, step});
+                q.offer(new int[] {i - 1, step});
             }
         }
         return -1;
@@ -140,33 +140,27 @@ public:
         q.emplace(0, 0);
         unordered_set<int> vis;
         vis.insert(0);
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto e = q.front();
             q.pop();
             int i = e.first, step = e.second;
             if (i == n - 1) return step;
             int v = arr[i];
             ++step;
-            if (idx.count(v))
-            {
-                for (int j : idx[v])
-                {
-                    if (!vis.count(j))
-                    {
+            if (idx.count(v)) {
+                for (int j : idx[v]) {
+                    if (!vis.count(j)) {
                         vis.insert(j);
                         q.emplace(j, step);
                     }
                 }
                 idx.erase(v);
             }
-            if (i + 1 < n && !vis.count(i + 1))
-            {
+            if (i + 1 < n && !vis.count(i + 1)) {
                 vis.insert(i + 1);
                 q.emplace(i + 1, step);
             }
-            if (i - 1 >= 0 && !vis.count(i - 1))
-            {
+            if (i - 1 >= 0 && !vis.count(i - 1)) {
                 vis.insert(i - 1);
                 q.emplace(i - 1, step);
             }

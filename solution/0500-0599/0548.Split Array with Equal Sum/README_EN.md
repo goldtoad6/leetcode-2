@@ -12,7 +12,7 @@
 </ul>
 A subarray <code>(l, r)</code> represents a slice of the original array starting from the element indexed <code>l</code> to the element indexed <code>r</code>.
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,1,2,1,2,1]
@@ -25,7 +25,7 @@ sum(j + 1, k - 1) = sum(4, 4) = 1
 sum(k + 1, n - 1) = sum(6, 6) = 1
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,1,2,1,2,1,2]
@@ -102,8 +102,7 @@ public:
         int n = nums.size();
         vector<int> s(n + 1);
         for (int i = 0; i < n; ++i) s[i + 1] = s[i] + nums[i];
-        for (int j = 3; j < n - 3; ++j)
-        {
+        for (int j = 3; j < n - 3; ++j) {
             unordered_set<int> seen;
             for (int i = 1; i < j - 1; ++i)
                 if (s[i] == s[j] - s[i + 1])

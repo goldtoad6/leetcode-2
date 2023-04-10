@@ -33,7 +33,7 @@ class Solution:
         a.sort()
         b.sort()
         i = j = 0
-        res = float('inf')
+        res = inf
         while i < len(a) and j < len(b):
             res = min(res, abs(a[i] - b[j]))
             if a[i] > b[j]:
@@ -79,8 +79,10 @@ public:
         long res = LONG_MAX;
         while (i < a.size() && j < b.size()) {
             res = min(res, abs((long)a[i] - (long)b[j]));
-            if (a[i] > b[j]) ++j;
-            else ++i;
+            if (a[i] > b[j])
+                ++j;
+            else
+                ++i;
         }
         return res;
     }

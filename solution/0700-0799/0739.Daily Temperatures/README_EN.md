@@ -7,13 +7,13 @@
 <p>Given an array of integers <code>temperatures</code> represents the daily temperatures, return <em>an array</em> <code>answer</code> <em>such that</em> <code>answer[i]</code> <em>is the number of days you have to wait after the</em> <code>i<sup>th</sup></code> <em>day to get a warmer temperature</em>. If there is no future day for which this is possible, keep <code>answer[i] == 0</code> instead.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> temperatures = [73,74,75,71,69,72,76,73]
 <strong>Output:</strong> [1,1,4,2,1,1,0,0]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> temperatures = [30,40,50,60]
 <strong>Output:</strong> [1,1,1,0]
-</pre><p><strong>Example 3:</strong></p>
+</pre><p><strong class="example">Example 3:</strong></p>
 <pre><strong>Input:</strong> temperatures = [30,60,90]
 <strong>Output:</strong> [1,1,0]
 </pre>
@@ -112,14 +112,12 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    vector<int> dailyTemperatures(vector<int> &temperatures) {
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
         int n = temperatures.size();
         vector<int> ans(n);
         stack<int> stk;
-        for (int i = 0; i < n; ++i)
-        {
-            while (!stk.empty() && temperatures[stk.top()] < temperatures[i])
-            {
+        for (int i = 0; i < n; ++i) {
+            while (!stk.empty() && temperatures[stk.top()] < temperatures[i]) {
                 ans[stk.top()] = i - stk.top();
                 stk.pop();
             }
@@ -184,6 +182,33 @@ func dailyTemperatures(temperatures []int) []int {
 }
 ```
 
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} temperatures
+ * @return {number[]}
+ */
+var dailyTemperatures = function (temperatures) {
+    const n = temperatures.length;
+    const ans = new Array(n).fill(0);
+    const stk = [];
+    for (let i = n - 1; i >= 0; --i) {
+        while (
+            stk.length &&
+            temperatures[stk[stk.length - 1]] <= temperatures[i]
+        ) {
+            stk.pop();
+        }
+        if (stk.length) {
+            ans[i] = stk[stk.length - 1] - i;
+        }
+        stk.push(i);
+    }
+    return ans;
+};
+```
+
 ### **Rust**
 
 ```rust
@@ -201,6 +226,29 @@ impl Solution {
         }
         res
     }
+}
+```
+
+### **TypeScript**
+
+```ts
+function dailyTemperatures(temperatures: number[]): number[] {
+    const n = temperatures.length;
+    const ans = new Array(n).fill(0);
+    const stk: number[] = [];
+    for (let i = n - 1; i >= 0; --i) {
+        while (
+            stk.length &&
+            temperatures[stk[stk.length - 1]] <= temperatures[i]
+        ) {
+            stk.pop();
+        }
+        if (stk.length) {
+            ans[i] = stk[stk.length - 1] - i;
+        }
+        stk.push(i);
+    }
+    return ans;
 }
 ```
 

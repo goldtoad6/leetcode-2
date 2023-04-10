@@ -134,10 +134,13 @@ def generate_summary(result):
 def refresh(result):
     """update problems"""
     pattern = re.compile("src=\"(.*?)\"")
+    skip_question_ids = {3, 33, 34, 1599}
 
     for question in result:
         front_question_id = question['frontend_question_id']
         print(front_question_id)
+        if int(front_question_id) in skip_question_ids:
+            continue
         title = question['title_cn']
         title_en = question['title_en']
 
@@ -219,4 +222,4 @@ if __name__ == '__main__':
     generate_readme(res)
     generate_question_readme(res)
     generate_summary(res)
-    # refresh(res)
+    refresh(res)

@@ -15,7 +15,7 @@
 <p>Given the <code>head</code> of a linked list with even length, return <em>the <strong>maximum twin sum</strong> of the linked list</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2130.Maximum%20Twin%20Sum%20of%20a%20Linked%20List/images/eg1drawio.png" style="width: 250px; height: 70px;" />
 <pre>
 <strong>Input:</strong> head = [5,4,2,1]
@@ -26,7 +26,7 @@ There are no other nodes with twins in the linked list.
 Thus, the maximum twin sum of the linked list is 6. 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2130.Maximum%20Twin%20Sum%20of%20a%20Linked%20List/images/eg2drawio.png" style="width: 250px; height: 70px;" />
 <pre>
 <strong>Input:</strong> head = [4,2,2,3]
@@ -38,7 +38,7 @@ The nodes with twins present in this linked list are:
 Thus, the maximum twin sum of the linked list is max(7, 4) = 7. 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2130.Maximum%20Twin%20Sum%20of%20a%20Linked%20List/images/eg3drawio.png" style="width: 200px; height: 88px;" />
 <pre>
 <strong>Input:</strong> head = [1,100000]
@@ -332,7 +332,109 @@ func max(a, b int) int {
 ### **TypeScript**
 
 ```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 
+function pairSum(head: ListNode | null): number {
+    const arr = [];
+    let node = head;
+    while (node) {
+        arr.push(node.val);
+        node = node.next;
+    }
+    const n = arr.length;
+    let ans = 0;
+    for (let i = 0; i < n >> 1; i++) {
+        ans = Math.max(ans, arr[i] + arr[n - 1 - i]);
+    }
+    return ans;
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function pairSum(head: ListNode | null): number {
+    let fast = head;
+    let slow = head;
+    while (fast) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    let prev = null;
+    while (slow) {
+        const next = slow.next;
+        slow.next = prev;
+        prev = slow;
+        slow = next;
+    }
+    let left = head;
+    let right = prev;
+    let ans = 0;
+    while (left && right) {
+        ans = Math.max(ans, left.val + right.val);
+        left = left.next;
+        right = right.next;
+    }
+    return ans;
+}
+```
+
+### **Rust**
+
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn pair_sum(head: Option<Box<ListNode>>) -> i32 {
+        let mut arr = Vec::new();
+        let mut node = &head;
+        while node.is_some() {
+            let t = node.as_ref().unwrap();
+            arr.push(t.val);
+            node = &t.next;
+        }
+        let n = arr.len();
+        let mut ans = 0;
+        for i in 0..n >> 1 {
+            ans = ans.max(arr[i] + arr[n - 1 - i]);
+        }
+        ans
+    }
+}
 ```
 
 ### **...**

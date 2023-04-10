@@ -31,7 +31,7 @@ Each row of this table indicates the ID, name, and salary of an employee. It als
 | id          | int     |
 | name        | varchar |
 +-------------+---------+
-id is the primary key column for this table.
+id is the primary key column for this table. It is guaranteed that department name is not <code>NULL.</code>
 Each row of this table indicates the ID of a department and its name.
 </pre>
 
@@ -44,7 +44,7 @@ Each row of this table indicates the ID of a department and its name.
 <p>The query result format is in the following example.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> 

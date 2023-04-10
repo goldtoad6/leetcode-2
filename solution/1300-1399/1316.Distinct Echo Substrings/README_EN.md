@@ -7,7 +7,7 @@
 <p>Return the number of <strong>distinct</strong> non-empty substrings of <code>text</code>&nbsp;that can be written as the concatenation of some string with itself (i.e. it can be written as <code>a + a</code>&nbsp;where <code>a</code> is some string).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;abcabcabc&quot;
@@ -15,7 +15,7 @@
 <b>Explanation: </b>The 3 substrings are &quot;abcabc&quot;, &quot;bcabca&quot; and &quot;cabcab&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;leetcodeleetcode&quot;
@@ -114,17 +114,14 @@ public:
         vector<ull> p(n + 10);
         vector<ull> h(n + 10);
         p[0] = 1;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int t = text[i] - 'a' + 1;
             p[i + 1] = p[i] * base;
             h[i + 1] = h[i] * base + t;
         }
         unordered_set<ull> vis;
-        for (int i = 0; i < n - 1; ++i)
-        {
-            for (int j = i + 1; j < n; j += 2)
-            {
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; j += 2) {
                 int k = (i + j) >> 1;
                 ull a = get(i + 1, k + 1, p, h);
                 ull b = get(k + 2, j + 1, p, h);

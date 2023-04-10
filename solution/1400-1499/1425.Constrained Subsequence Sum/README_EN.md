@@ -9,7 +9,7 @@
 <p>A <em>subsequence</em> of an array is obtained by deleting some number of elements (can be zero) from the array, leaving the remaining elements in their original order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,2,-10,5,20], k = 2
@@ -17,7 +17,7 @@
 <b>Explanation:</b> The subsequence is [10, 2, 5, 20].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-1,-2,-3], k = 1
@@ -25,7 +25,7 @@
 <b>Explanation:</b> The subsequence must be non-empty, so we choose the largest number.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,-2,-10,-5,20], k = 2
@@ -52,7 +52,7 @@ class Solution:
     def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
         n = len(nums)
         dp = [0] * n
-        ans = float('-inf')
+        ans = -inf
         q = deque()
         for i, v in enumerate(nums):
             if q and i - q[0] > k:
@@ -100,8 +100,7 @@ public:
         vector<int> dp(n);
         int ans = INT_MIN;
         deque<int> q;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             if (!q.empty() && i - q.front() > k) q.pop_front();
             dp[i] = max(0, q.empty() ? 0 : dp[q.front()]) + nums[i];
             ans = max(ans, dp[i]);

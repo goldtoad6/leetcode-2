@@ -71,6 +71,18 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：递归**
+
+我们设计一个递归函数 $dfs(exp)$，用于处理表达式 $exp$，并将结果存入集合 $s$ 中。
+
+对于表达式 $exp$，我们首先找到第一个右花括号的位置 $j$，如果找不到，说明 $exp$ 中没有右花括号，即 $exp$ 为单一元素，直接将 $exp$ 加入集合 $s$ 中即可。
+
+否则，我们从位置 $j$ 开始往左找到第一个左花括号的位置 $i$，此时 $exp[:i]$ 和 $exp[j + 1:]$ 分别为 $exp$ 的前缀和后缀，记为 $a$ 和 $c$。而 $exp[i + 1: j]$ 为 $exp$ 中花括号内的部分，即 $exp$ 中的子表达式，我们将其按照逗号分割成多个字符串 $b_1, b_2, \cdots, b_k$，然后对每个 $b_i$，我们将 $a + b_i + c$ 拼接成新的表达式，递归调用 $dfs$ 函数处理新的表达式，即 $dfs(a + b_i + c)$。
+
+最后，我们将集合 $s$ 中的元素按照字典序排序，即可得到答案。
+
+时间复杂度约为 $O(n \times 2^{n / 4})$，其中 $n$ 为表达式 $expression$ 的长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -78,7 +90,21 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
+class Solution:
+    def braceExpansionII(self, expression: str) -> List[str]:
+        def dfs(exp):
+            j = exp.find('}')
+            if j == -1:
+                s.add(exp)
+                return
+            i = exp.rfind('{', 0, j - 1)
+            a, c = exp[:i], exp[j + 1:]
+            for b in exp[i + 1: j].split(','):
+                dfs(a + b + c)
 
+        s = set()
+        dfs(expression)
+        return sorted(s)
 ```
 
 ### **Java**
@@ -86,7 +112,110 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    private TreeSet<String> s = new TreeSet<>();
 
+    public List<String> braceExpansionII(String expression) {
+        dfs(expression);
+        return new ArrayList<>(s);
+    }
+
+    private void dfs(String exp) {
+        int j = exp.indexOf('}');
+        if (j == -1) {
+            s.add(exp);
+            return;
+        }
+        int i = exp.lastIndexOf('{', j);
+        String a = exp.substring(0, i);
+        String c = exp.substring(j + 1);
+        for (String b : exp.substring(i + 1, j).split(",")) {
+            dfs(a + b + c);
+        }
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<string> braceExpansionII(string expression) {
+        dfs(expression);
+        return vector<string>(s.begin(), s.end());
+    }
+
+private:
+    set<string> s;
+
+    void dfs(string exp) {
+        int j = exp.find_first_of('}');
+        if (j == string::npos) {
+            s.insert(exp);
+            return;
+        }
+        int i = exp.rfind('{', j);
+        string a = exp.substr(0, i);
+        string c = exp.substr(j + 1);
+        stringstream ss(exp.substr(i + 1, j - i - 1));
+        string b;
+        while (getline(ss, b, ',')) {
+            dfs(a + b + c);
+        }
+    }
+};
+```
+
+### **Go**
+
+```go
+func braceExpansionII(expression string) []string {
+	s := map[string]struct{}{}
+	var dfs func(string)
+	dfs = func(exp string) {
+		j := strings.Index(exp, "}")
+		if j == -1 {
+			s[exp] = struct{}{}
+			return
+		}
+		i := strings.LastIndex(exp[:j], "{")
+		a, c := exp[:i], exp[j+1:]
+		for _, b := range strings.Split(exp[i+1:j], ",") {
+			dfs(a + b + c)
+		}
+	}
+	dfs(expression)
+	ans := make([]string, 0, len(s))
+	for k := range s {
+		ans = append(ans, k)
+	}
+	sort.Strings(ans)
+	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function braceExpansionII(expression: string): string[] {
+    const dfs = (exp: string) => {
+        const j = exp.indexOf('}');
+        if (j === -1) {
+            s.add(exp);
+            return;
+        }
+        const i = exp.lastIndexOf('{', j);
+        const a = exp.substring(0, i);
+        const c = exp.substring(j + 1);
+        for (const b of exp.substring(i + 1, j).split(',')) {
+            dfs(a + b + c);
+        }
+    };
+    const s: Set<string> = new Set();
+    dfs(expression);
+    return Array.from(s).sort();
+}
 ```
 
 ### **...**

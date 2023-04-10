@@ -66,7 +66,11 @@ class Solution:
     def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:
         rmx = [max(row) for row in grid]
         cmx = [max(col) for col in zip(*grid)]
-        return sum((min(rmx[i], cmx[j]) - grid[i][j]) for i in range(len(grid)) for j in range(len(grid[0])))
+        return sum(
+            (min(rmx[i], cmx[j]) - grid[i][j])
+            for i in range(len(grid))
+            for j in range(len(grid[0]))
+        )
 ```
 
 ### **Java**
@@ -130,10 +134,8 @@ public:
         int m = grid.size(), n = grid[0].size();
         vector<int> rmx(m, 0);
         vector<int> cmx(n, 0);
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 rmx[i] = max(rmx[i], grid[i][j]);
                 cmx[j] = max(cmx[j], grid[i][j]);
             }

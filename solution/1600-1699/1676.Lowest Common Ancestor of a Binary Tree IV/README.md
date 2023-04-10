@@ -73,8 +73,11 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', nodes: 'List[TreeNode]') -> 'TreeNode':
+    def lowestCommonAncestor(
+        self, root: 'TreeNode', nodes: 'List[TreeNode]'
+    ) -> 'TreeNode':
         def dfs(root):
             if root is None or root.val in s:
                 return root
@@ -144,21 +147,53 @@ class Solution {
  */
 class Solution {
 public:
-    unordered_set<int> s;
-
-    TreeNode* lowestCommonAncestor(TreeNode* root, vector<TreeNode*> &nodes) {
+    TreeNode* lowestCommonAncestor(TreeNode* root, vector<TreeNode*>& nodes) {
+        unordered_set<int> s;
         for (auto node : nodes) s.insert(node->val);
+        function<TreeNode*(TreeNode*)> dfs = [&](TreeNode* root) -> TreeNode* {
+            if (!root || s.count(root->val)) return root;
+            auto left = dfs(root->left);
+            auto right = dfs(root->right);
+            if (!left) return right;
+            if (!right) return left;
+            return root;
+        };
         return dfs(root);
     }
+};
+```
 
-    TreeNode* dfs(TreeNode* root) {
-        if (!root || s.count(root->val)) return root;
-        auto left = dfs(root->left);
-        auto right = dfs(root->right);
-        if (!left) return right;
-        if (!right) return left;
-        return root;
+### **JavaScript**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode[]} nodes
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, nodes) {
+    const s = new Set();
+    for (const node of nodes) {
+        s.add(node.val);
     }
+    function dfs(root) {
+        if (!root || s.has(root.val)) {
+            return root;
+        }
+        const [left, right] = [dfs(root.left), dfs(root.right)];
+        if (left && right) {
+            return root;
+        }
+        return left || right;
+    }
+    return dfs(root);
 };
 ```
 

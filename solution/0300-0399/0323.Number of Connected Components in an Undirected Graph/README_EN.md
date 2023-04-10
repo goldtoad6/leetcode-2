@@ -9,14 +9,14 @@
 <p>Return <em>the number of connected components in the graph</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0323.Number%20of%20Connected%20Components%20in%20an%20Undirected%20Graph/images/conn1-graph.jpg" style="width: 382px; height: 222px;" />
 <pre>
 <strong>Input:</strong> n = 5, edges = [[0,1],[1,2],[3,4]]
 <strong>Output:</strong> 2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0323.Number%20of%20Connected%20Components%20in%20an%20Undirected%20Graph/images/conn2-graph.jpg" style="width: 382px; height: 222px;" />
 <pre>
 <strong>Input:</strong> n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]
@@ -93,26 +93,21 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    vector<int> p;
-
     int countComponents(int n, vector<vector<int>>& edges) {
-        p.resize(n);
+        vector<int> p(n);
+        iota(p.begin(), p.end(), 0);
         for (int i = 0; i < n; ++i) p[i] = i;
-        for (auto& e : edges)
-        {
+        function<int(int)> find = [&](int x) -> int {
+            if (p[x] != x) p[x] = find(p[x]);
+            return p[x];
+        };
+        for (auto& e : edges) {
             int a = e[0], b = e[1];
             p[find(a)] = find(b);
         }
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-            if (i == find(i))
-                ++ans;
+        for (int i = 0; i < n; ++i) ans += i == find(i);
         return ans;
-    }
-
-    int find(int x) {
-        if (p[x] != x) p[x] = find(p[x]);
-        return p[x];
     }
 };
 ```
@@ -120,12 +115,12 @@ public:
 ### **Go**
 
 ```go
-func countComponents(n int, edges [][]int) int {
+func countComponents(n int, edges [][]int) (ans int) {
 	p := make([]int, n)
 	for i := range p {
 		p[i] = i
 	}
-	var find func(x int) int
+	var find func(int) int
 	find = func(x int) int {
 		if p[x] != x {
 			p[x] = find(p[x])
@@ -136,13 +131,12 @@ func countComponents(n int, edges [][]int) int {
 		a, b := e[0], e[1]
 		p[find(a)] = find(b)
 	}
-	ans := 0
 	for i := 0; i < n; i++ {
 		if i == find(i) {
 			ans++
 		}
 	}
-	return ans
+	return
 }
 ```
 

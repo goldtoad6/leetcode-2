@@ -18,7 +18,7 @@
 <p>A <strong>subarray</strong> is a contiguous sequence of elements within an array. <code>arr[left...right]</code> denotes the subarray that contains the elements of <code>nums</code> between indices <code>left</code> and <code>right</code> (<strong>inclusive</strong>).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -51,12 +51,10 @@ rangeFreqQuery.query(0, 11, 33); // return 2. The value 33 occurs 2 times in the
 
 ```python
 class RangeFreqQuery:
-
     def __init__(self, arr: List[int]):
         self.mp = defaultdict(list)
         for i, x in enumerate(arr):
             self.mp[x].append(i)
-
 
     def query(self, left: int, right: int, value: int) -> int:
         if value not in self.mp:

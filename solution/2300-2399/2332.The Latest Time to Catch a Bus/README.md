@@ -73,7 +73,9 @@
 
 ```python
 class Solution:
-    def latestTimeCatchTheBus(self, buses: List[int], passengers: List[int], capacity: int) -> int:
+    def latestTimeCatchTheBus(
+        self, buses: List[int], passengers: List[int], capacity: int
+    ) -> int:
         buses.sort()
         passengers.sort()
         j = 0
@@ -125,8 +127,7 @@ public:
         sort(buses.begin(), buses.end());
         sort(passengers.begin(), passengers.end());
         int j = 0, c = 0;
-        for (int t : buses)
-        {
+        for (int t : buses) {
             c = capacity;
             while (c && j < passengers.size() && passengers[j] <= t) --c, ++j;
         }

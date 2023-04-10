@@ -56,7 +56,9 @@
 
 **方法一：二分查找**
 
-二分枚举速度值，找到能在 h 小时内吃完所有香蕉的最小速度值。
+二分枚举速度值，找到能在 $h$ 小时内吃完所有香蕉的最小速度值。
+
+时间复杂度 $O(n\log m)$，空间复杂度 $O(1)$。其中 $n$ 是 `piles` 的长度，而 $m$ 是 `piles` 中的最大值。
 
 <!-- tabs:start -->
 
@@ -110,13 +112,14 @@ class Solution {
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
         int left = 1, right = 1e9;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             int s = 0;
-            for (int& x : piles)  s += (x + mid - 1) / mid;
-            if (s <= h) right = mid;
-            else left = mid + 1;
+            for (int& x : piles) s += (x + mid - 1) / mid;
+            if (s <= h)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }
@@ -127,20 +130,38 @@ public:
 
 ```go
 func minEatingSpeed(piles []int, h int) int {
-	left, right := 1, int(1e9)
-	for left < right {
-		mid := (left + right) >> 1
+	return sort.Search(1e9, func(i int) bool {
+		if i == 0 {
+			return false
+		}
 		s := 0
 		for _, x := range piles {
-			s += (x + mid - 1) / mid
+			s += (x + i - 1) / i
 		}
-		if s <= h {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	return left
+		return s <= h
+	})
+}
+```
+
+### **TypeScript**
+
+```ts
+function minEatingSpeed(piles: number[], h: number): number {
+    let left = 1;
+    let right = Math.max(...piles);
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        let s = 0;
+        for (const x of piles) {
+            s += Math.ceil(x / mid);
+        }
+        if (s <= h) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
 ```
 

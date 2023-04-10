@@ -16,7 +16,7 @@
 <p>Return the number of teams you can form given the conditions. (soldiers can be part of multiple teams).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> rating = [2,5,3,4,1]
@@ -24,7 +24,7 @@
 <strong>Explanation:</strong> We can form three teams given the conditions. (2,3,4), (5,4,1), (5,3,1). 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> rating = [2,1,3]
@@ -32,7 +32,7 @@
 <strong>Explanation:</strong> We can&#39;t form any team given the conditions.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> rating = [1,2,3,4]
@@ -115,18 +115,19 @@ class Solution {
 public:
     int numTeams(vector<int>& rating) {
         int n = rating.size(), ans = 0;
-        for (int j = 1; j < n - 1; ++j)
-        {
+        for (int j = 1; j < n - 1; ++j) {
             int ia = 0, ib = 0, ka = 0, kb = 0;
-            for (int i = 0; i < j; ++i)
-            {
-                if (rating[i] < rating[j]) ++ia;
-                else if (rating[i] > rating[j]) ++ib;
+            for (int i = 0; i < j; ++i) {
+                if (rating[i] < rating[j])
+                    ++ia;
+                else if (rating[i] > rating[j])
+                    ++ib;
             }
-            for (int k = j + 1; k < n; ++k)
-            {
-                if (rating[j] < rating[k]) ++ka;
-                else if (rating[j] > rating[k]) ++kb;
+            for (int k = j + 1; k < n; ++k) {
+                if (rating[j] < rating[k])
+                    ++ka;
+                else if (rating[j] > rating[k])
+                    ++kb;
             }
             ans += ia * ka + ib * kb;
         }

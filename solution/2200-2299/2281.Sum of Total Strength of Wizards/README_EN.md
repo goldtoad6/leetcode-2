@@ -18,7 +18,7 @@
 <p>A <strong>subarray</strong> is a contiguous <strong>non-empty</strong> sequence of elements within an array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> strength = [1,3,1,2]
@@ -37,7 +37,7 @@
 The sum of all the total strengths is 1 + 9 + 1 + 4 + 4 + 4 + 3 + 5 + 6 + 7 = 44.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> strength = [5,4,6]
@@ -160,15 +160,13 @@ public:
         vector<int> left(n, -1);
         vector<int> right(n, n);
         stack<int> stk;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             while (!stk.empty() && strength[stk.top()] >= strength[i]) stk.pop();
             if (!stk.empty()) left[i] = stk.top();
             stk.push(i);
         }
         stk = stack<int>();
-        for (int i = n - 1; i >= 0; --i)
-        {
+        for (int i = n - 1; i >= 0; --i) {
             while (!stk.empty() && strength[stk.top()] > strength[i]) stk.pop();
             if (!stk.empty()) right[i] = stk.top();
             stk.push(i);
@@ -179,15 +177,14 @@ public:
         vector<int> ss(n + 2);
         for (int i = 0; i < n + 1; ++i) ss[i + 1] = (ss[i] + s[i]) % mod;
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int v = strength[i];
             int l = left[i] + 1, r = right[i] - 1;
-            long a = (long) (i - l + 1) * (ss[r + 2] - ss[i + 1]);
-            long b = (long) (r - i + 1) * (ss[i + 1] - ss[l]);
+            long a = (long)(i - l + 1) * (ss[r + 2] - ss[i + 1]);
+            long b = (long)(r - i + 1) * (ss[i + 1] - ss[l]);
             ans = (ans + v * ((a - b) % mod)) % mod;
         }
-        return (int) (ans + mod) % mod;
+        return (int)(ans + mod) % mod;
     }
 };
 ```

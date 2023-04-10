@@ -117,10 +117,10 @@ class Solution {
         }
 
         if (area != (long) (maxX - minX) * (maxY - minY)
-                || cnt.getOrDefault(new Pair(minX, minY), 0) != 1
-                || cnt.getOrDefault(new Pair(minX, maxY), 0) != 1
-                || cnt.getOrDefault(new Pair(maxX, maxY), 0) != 1
-                || cnt.getOrDefault(new Pair(maxX, minY), 0) != 1) {
+            || cnt.getOrDefault(new Pair(minX, minY), 0) != 1
+            || cnt.getOrDefault(new Pair(minX, maxY), 0) != 1
+            || cnt.getOrDefault(new Pair(maxX, maxY), 0) != 1
+            || cnt.getOrDefault(new Pair(maxX, minY), 0) != 1) {
             return false;
         }
 
@@ -164,6 +164,9 @@ class Solution {
 ### **C++**
 
 ```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
     bool isRectangleCover(vector<vector<int>>& rectangles) {
@@ -188,9 +191,7 @@ public:
             ++cnt[{r[2], r[1]}];
         }
 
-        if (area != (long long)(maxX - minX) * (maxY - minY) ||
-            cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 ||
-            cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
+        if (area != (long long)(maxX - minX) * (maxY - minY) || cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 || cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
             return false;
         }
 

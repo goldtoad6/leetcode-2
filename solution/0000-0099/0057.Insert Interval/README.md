@@ -76,7 +76,9 @@
 
 ```python
 class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+    def insert(
+        self, intervals: List[List[int]], newInterval: List[int]
+    ) -> List[List[int]]:
         def merge(intervals):
             intervals.sort()
             ans = []
@@ -103,7 +105,8 @@ class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> list = new LinkedList<>();
         int i = 0;
-        while ((i < intervals.length) && (intervals[i][1] < newInterval[0])) list.add(intervals[i++]);
+        while ((i < intervals.length) && (intervals[i][1] < newInterval[0]))
+            list.add(intervals[i++]);
         while ((i < intervals.length) && (intervals[i][0] <= newInterval[1])) {
             newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
             newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
@@ -130,15 +133,13 @@ public:
         sort(intervals.begin(), intervals.end());
         int st = intervals[0][0], ed = intervals[0][1];
         vector<vector<int>> ans;
-        for (int i = 1; i < intervals.size(); ++i)
-        {
+        for (int i = 1; i < intervals.size(); ++i) {
             int s = intervals[i][0], e = intervals[i][1];
-            if (ed < s)
-            {
+            if (ed < s) {
                 ans.push_back({st, ed});
                 st = s, ed = e;
-            }
-            else ed = max(ed, e);
+            } else
+                ed = max(ed, e);
         }
         ans.push_back({st, ed});
         return ans;

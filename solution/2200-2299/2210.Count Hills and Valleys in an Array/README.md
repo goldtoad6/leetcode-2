@@ -91,7 +91,10 @@ class Solution:
         for v in nums[1:]:
             if v != arr[-1]:
                 arr.append(v)
-        return sum((arr[i] < arr[i - 1]) == (arr[i] < arr[i + 1]) for i in range(1, len(arr) - 1))
+        return sum(
+            (arr[i] < arr[i - 1]) == (arr[i] < arr[i + 1])
+            for i in range(1, len(arr) - 1)
+        )
 ```
 
 ```python
@@ -141,8 +144,7 @@ class Solution {
 public:
     int countHillValley(vector<int>& nums) {
         int ans = 0;
-        for (int i = 1, j = 0; i < nums.size() - 1; ++i)
-        {
+        for (int i = 1, j = 0; i < nums.size() - 1; ++i) {
             if (nums[i] == nums[i + 1]) continue;
             if (nums[i] > nums[j] && nums[i] > nums[i + 1]) ++ans;
             if (nums[i] < nums[j] && nums[i] < nums[i + 1]) ++ans;

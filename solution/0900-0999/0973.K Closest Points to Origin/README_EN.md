@@ -11,7 +11,7 @@
 <p>You may return the answer in <strong>any order</strong>. The answer is <strong>guaranteed</strong> to be <strong>unique</strong> (except for the order that it is in).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0900-0999/0973.K%20Closest%20Points%20to%20Origin/images/closestplane1.jpg" style="width: 400px; height: 400px;" />
 <pre>
 <strong>Input:</strong> points = [[1,3],[-2,2]], k = 1
@@ -23,7 +23,7 @@ Since sqrt(8) &lt; sqrt(10), (-2, 2) is closer to the origin.
 We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> points = [[3,3],[5,-1],[-2,4]], k = 2
@@ -46,50 +46,50 @@ We only want the closest k = 1 points from the origin, so the answer is just [[-
 ### **Python3**
 
 ```python
-
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        points.sort(key=lambda p: p[0] * p[0] + p[1] * p[1])
+        return points[:k]
 ```
 
 ### **Java**
 
 ```java
-import java.util.*;
-
-/**
- * @author Furaha Damien
- */
-
 class Solution {
-
-    // Helper inner class
-    public class Point {
-        int x;
-        int y;
-        int distance;
-
-        public Point(int x, int y, int distance) {
-            this.x = x;
-            this.y = y;
-            this.distance = distance;
-        }
+    public int[][] kClosest(int[][] points, int k) {
+        Arrays.sort(points, (a, b) -> {
+            int d1 = a[0] * a[0] + a[1] * a[1];
+            int d2 = b[0] * b[0] + b[1] * b[1];
+            return d1 - d2;
+        });
+        return Arrays.copyOfRange(points, 0, k);
     }
+}
+```
 
-    public int[][] kClosest(int[][] points, int K) {
+### **C++**
 
-        PriorityQueue<Point> que = new PriorityQueue<Point>((a, b) -> (a.distance - b.distance));
-        int[][] res = new int[K][2];
-
-        for (int[] temp : points) {
-            int dist = (temp[0] * temp[0] + temp[1] * temp[1]);
-            que.offer(new Point(temp[0], temp[1], dist));
-        }
-        for (int i = 0; i < K; i++) {
-            Point curr = que.poll();
-            res[i][0] = curr.x;
-            res[i][1] = curr.y;
-        }
-        return res;
-
+```cpp
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        sort(points.begin(), points.end(), [](const vector<int>& a, const vector<int>& b) {
+            return a[0] * a[0] + a[1] * a[1] < b[0] * b[0] + b[1] * b[1];
+        });
+        return vector<vector<int>>(points.begin(), points.begin() + k);
     }
+};
+```
+
+### **Go**
+
+```go
+func kClosest(points [][]int, k int) [][]int {
+	sort.Slice(points, func(i, j int) bool {
+		a, b := points[i], points[j]
+		return a[0]*a[0]+a[1]*a[1] < b[0]*b[0]+b[1]*b[1]
+	})
+	return points[:k]
 }
 ```
 

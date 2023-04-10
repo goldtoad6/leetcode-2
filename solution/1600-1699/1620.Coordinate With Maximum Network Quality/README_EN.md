@@ -27,7 +27,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1600-1699/1620.Coordinate%20With%20Maximum%20Network%20Quality/images/untitled-diagram.png" style="width: 176px; height: 176px;" />
 <pre>
 <strong>Input:</strong> towers = [[1,2,5],[2,1,7],[3,1,9]], radius = 2
@@ -38,7 +38,7 @@
 - Quality of 9 from (3, 1) results in &lfloor;9 / (1 + sqrt(1)&rfloor; = &lfloor;4.5&rfloor; = 4
 No other coordinate has a higher network quality.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> towers = [[23,11,21]], radius = 9
@@ -46,7 +46,7 @@ No other coordinate has a higher network quality.</pre>
 <strong>Explanation:</strong> Since there is only one tower, the network quality is highest right at the tower&#39;s location.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> towers = [[1,2,13],[2,1,7],[0,1,9]], radius = 2
@@ -71,13 +71,101 @@ No other coordinate has a higher network quality.</pre>
 ### **Python3**
 
 ```python
-
+class Solution:
+    def bestCoordinate(self, towers: List[List[int]], radius: int) -> List[int]:
+        mx = 0
+        ans = [0, 0]
+        for i in range(51):
+            for j in range(51):
+                t = 0
+                for x, y, q in towers:
+                    d = ((x - i) ** 2 + (y - j) ** 2) ** 0.5
+                    if d <= radius:
+                        t += floor(q / (1 + d))
+                if t > mx:
+                    mx = t
+                    ans = [i, j]
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int[] bestCoordinate(int[][] towers, int radius) {
+        int mx = 0;
+        int[] ans = new int[] {0, 0};
+        for (int i = 0; i < 51; ++i) {
+            for (int j = 0; j < 51; ++j) {
+                int t = 0;
+                for (var e : towers) {
+                    double d = Math.sqrt((i - e[0]) * (i - e[0]) + (j - e[1]) * (j - e[1]));
+                    if (d <= radius) {
+                        t += Math.floor(e[2] / (1 + d));
+                    }
+                }
+                if (mx < t) {
+                    mx = t;
+                    ans = new int[] {i, j};
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<int> bestCoordinate(vector<vector<int>>& towers, int radius) {
+        int mx = 0;
+        vector<int> ans = {0, 0};
+        for (int i = 0; i < 51; ++i) {
+            for (int j = 0; j < 51; ++j) {
+                int t = 0;
+                for (auto& e : towers) {
+                    double d = sqrt((i - e[0]) * (i - e[0]) + (j - e[1]) * (j - e[1]));
+                    if (d <= radius) {
+                        t += floor(e[2] / (1 + d));
+                    }
+                }
+                if (mx < t) {
+                    mx = t;
+                    ans = {i, j};
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func bestCoordinate(towers [][]int, radius int) []int {
+	ans := []int{0, 0}
+	mx := 0
+	for i := 0; i < 51; i++ {
+		for j := 0; j < 51; j++ {
+			t := 0
+			for _, e := range towers {
+				d := math.Sqrt(float64((i-e[0])*(i-e[0]) + (j-e[1])*(j-e[1])))
+				if d <= float64(radius) {
+					t += int(float64(e[2]) / (1 + d))
+				}
+			}
+			if mx < t {
+				mx = t
+				ans = []int{i, j}
+			}
+		}
+	}
+	return ans
+}
 ```
 
 ### **...**

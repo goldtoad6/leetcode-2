@@ -17,7 +17,7 @@
 <p>Tests are generated such that the answer will not exceed <code>10<sup>7</sup></code> and <code>hour</code> will have <strong>at most two digits after the decimal point</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> dist = [1,3,2], hour = 6
@@ -29,7 +29,7 @@
 - You will arrive at exactly the 6 hour mark.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> dist = [1,3,2], hour = 2.7
@@ -41,7 +41,7 @@
 - You will arrive at the 2.66667 hour mark.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> dist = [1,3,2], hour = 1.9
@@ -113,14 +113,9 @@ class Solution:
                 res += (d / speed) if i == len(dist) - 1 else math.ceil(d / speed)
             return res <= hour
 
-        left, right = 1, 10 ** 7
-        while left < right:
-            mid = (left + right) >> 1
-            if check(mid):
-                right = mid
-            else:
-                left = mid + 1
-        return left if check(left) else -1
+        r = 10**7 + 1
+        ans = bisect_left(range(1, r), True, key=check) + 1
+        return -1 if ans == r else ans
 ```
 
 ### **Java**
@@ -180,6 +175,28 @@ public:
 };
 ```
 
+### **Go**
+
+```go
+func minSpeedOnTime(dist []int, hour float64) int {
+	n := len(dist)
+	const mx int = 1e7
+	x := sort.Search(mx, func(s int) bool {
+		s++
+		var cost float64
+		for _, v := range dist[:n-1] {
+			cost += math.Ceil(float64(v) / float64(s))
+		}
+		cost += float64(dist[n-1]) / float64(s)
+		return cost <= hour
+	})
+	if x == mx {
+		return -1
+	}
+	return x + 1
+}
+```
+
 ### **JavaScript**
 
 ```js
@@ -214,36 +231,6 @@ function arriveOnTime(dist, speed, hour) {
         res += cost;
     }
     return res <= hour;
-}
-```
-
-### **Go**
-
-```go
-func minSpeedOnTime(dist []int, hour float64) int {
-	n := len(dist)
-	left, right := 1, int(1e7)
-	check := func(speed float64) bool {
-		var cost float64
-		for _, v := range dist[:n-1] {
-			cost += math.Ceil(float64(v) / speed)
-		}
-		cost += float64(dist[n-1]) / speed
-		return cost <= hour
-
-	}
-	for left < right {
-		mid := (left + right) >> 1
-		if check(float64(mid)) {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	if check(float64(left)) {
-		return left
-	}
-	return -1
 }
 ```
 

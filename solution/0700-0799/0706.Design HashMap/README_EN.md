@@ -16,7 +16,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -53,7 +53,6 @@ myHashMap.get(2);    // return -1 (i.e., not found), The map is now [[1,1]]
 
 ```python
 class MyHashMap:
-
     def __init__(self):
         self.data = [-1] * 1000001
 
@@ -142,22 +141,22 @@ class MyHashMap {
 ```cpp
 class MyHashMap {
 public:
-    int hash[1000010];
+    int data[1000001];
 
     MyHashMap() {
-        memset(hash, -1, sizeof hash);
+        memset(data, -1, sizeof data);
     }
 
     void put(int key, int value) {
-        hash[key] = value;
+        data[key] = value;
     }
 
     int get(int key) {
-        return hash[key];
+        return data[key];
     }
 
     void remove(int key) {
-        hash[key] = -1;
+        data[key] = -1;
     }
 };
 
@@ -167,6 +166,42 @@ public:
  * obj->put(key,value);
  * int param_2 = obj->get(key);
  * obj->remove(key);
+ */
+```
+
+### **Go**
+
+```go
+type MyHashMap struct {
+	data []int
+}
+
+func Constructor() MyHashMap {
+	data := make([]int, 1000010)
+	for i := range data {
+		data[i] = -1
+	}
+	return MyHashMap{data}
+}
+
+func (this *MyHashMap) Put(key int, value int) {
+	this.data[key] = value
+}
+
+func (this *MyHashMap) Get(key int) int {
+	return this.data[key]
+}
+
+func (this *MyHashMap) Remove(key int) {
+	this.data[key] = -1
+}
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Put(key,value);
+ * param_2 := obj.Get(key);
+ * obj.Remove(key);
  */
 ```
 

@@ -60,13 +60,13 @@ $v$ 作为当前连通块的最小值，当前连通块的大小为 $size[find(i
 
 时间复杂度 $O(nlogn)$。
 
-类似题目：[1562. 查找大小为 M 的最新分组](/solution/1500-1599/1562.Find%20Latest%20Group%20of%20Size%20M/README.md)
+相似题目：[1562. 查找大小为 M 的最新分组](/solution/1500-1599/1562.Find%20Latest%20Group%20of%20Size%20M/README.md)
 
 **方法二：单调栈**
 
 利用单调栈，得到以当前元素 $nums[i]$ 作为最小元素的左右边界 $left[i]$（左边第一个比 $nums[i]$ 小的元素的位置）, $right[i]$（右边第一个比 $nums[i]$ 小的元素的位置）。
 
-那么对于当前元素 $nums[i]$，$k=right[i]-left[i]-1$，若 $nums[i]>\frac{\text{threshold}}{k}$，说明找到了满足条件的子数组，返回 $true$。
+那么对于当前元素 $nums[i]$，有 $k=right[i]-left[i]-1$，若 $nums[i]>\frac{\text{threshold}}{k}$，说明找到了满足条件的子数组，返回 $true$。
 
 否则遍历结束，返回 $-1$。
 
@@ -255,8 +255,7 @@ public:
         for (int i = 0; i < n; ++i) arr[i] = {nums[i], i};
         sort(arr.begin(), arr.end());
         vector<bool> vis(n);
-        for (int j = n - 1; ~j; --j)
-        {
+        for (int j = n - 1; ~j; --j) {
             int v = arr[j].first, i = arr[j].second;
             if (i && vis[i - 1]) merge(i, i - 1);
             if (j < n - 1 && vis[i + 1]) merge(i, i + 1);

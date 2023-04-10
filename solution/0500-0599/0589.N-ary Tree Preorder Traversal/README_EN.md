@@ -9,7 +9,7 @@
 <p>Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0589.N-ary%20Tree%20Preorder%20Traversal/images/narytreeexample.png" style="width: 100%; max-width: 300px;" /></p>
 
@@ -18,7 +18,7 @@
 <strong>Output:</strong> [1,3,5,6,2,4]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0589.N-ary%20Tree%20Preorder%20Traversal/images/sample_4_964.png" style="width: 296px; height: 241px;" /></p>
 
@@ -142,8 +142,7 @@ public:
         vector<int> ans;
         stack<Node*> stk;
         stk.push(root);
-        while (!stk.empty())
-        {
+        while (!stk.empty()) {
             Node* node = stk.top();
             ans.push_back(node->val);
             stk.pop();
@@ -232,16 +231,52 @@ function preorder(root: Node | null): number[] {
  */
 
 function preorder(root: Node | null): number[] {
-    if (root == null) {
-        return [];
+    const ans = [];
+    const dfs = (root: Node | null) => {
+        if (root == null) {
+            return;
+        }
+        ans.push(root.val);
+        for (const node of root.children) {
+            dfs(node);
+        }
+    };
+    dfs(root);
+    return ans;
+}
+```
+
+### **C**
+
+```c
+/**
+ * Definition for a Node.
+ * struct Node {
+ *     int val;
+ *     int numChildren;
+ *     struct Node** children;
+ * };
+ */
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+void dfs(struct Node *root, int *ans, int *i) {
+    if (!root) {
+        return;
     }
-    const { val, children } = root;
-    return [
-        val,
-        ...children
-            .map(node => preorder(node))
-            .reduce((p, v) => p.concat(v), []),
-    ];
+    ans[(*i)++] = root->val;
+    for (int j = 0; j < root->numChildren; j++) {
+        dfs(root->children[j], ans, i);
+    }
+}
+
+int *preorder(struct Node *root, int *returnSize) {
+    int *ans = malloc(sizeof(int) * 10000);
+    *returnSize = 0;
+    dfs(root, ans, returnSize);
+    return ans;
 }
 ```
 

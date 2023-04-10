@@ -15,7 +15,7 @@
 <p>A <strong>digit string</strong> is a string consisting of digits <code>0</code> through <code>9</code> that may contain leading zeros.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1
@@ -23,14 +23,14 @@
 <strong>Explanation:</strong> The good numbers of length 1 are &quot;0&quot;, &quot;2&quot;, &quot;4&quot;, &quot;6&quot;, &quot;8&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 4
 <strong>Output:</strong> 400
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 50
@@ -53,7 +53,7 @@
 ```python
 class Solution:
     def countGoodNumbers(self, n: int) -> int:
-        mod = 10 ** 9 + 7
+        mod = 10**9 + 7
 
         def myPow(x, n):
             res = 1
@@ -99,7 +99,7 @@ int MOD = 1000000007;
 class Solution {
 public:
     int countGoodNumbers(long long n) {
-        return (int) (myPow(5, (n + 1) >> 1) * myPow(4, n >> 1) % MOD);
+        return (int)(myPow(5, (n + 1) >> 1) * myPow(4, n >> 1) % MOD);
     }
 
 private:

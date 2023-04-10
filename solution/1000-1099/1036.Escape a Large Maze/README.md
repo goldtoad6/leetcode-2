@@ -61,10 +61,16 @@
 
 ```python
 class Solution:
-    def isEscapePossible(self, blocked: List[List[int]], source: List[int], target: List[int]) -> bool:
+    def isEscapePossible(
+        self, blocked: List[List[int]], source: List[int], target: List[int]
+    ) -> bool:
         def dfs(source, target, seen):
             x, y = source
-            if not (0 <= x < 10**6 and 0 <= y < 10**6) or (x, y) in blocked or (x, y) in seen:
+            if (
+                not (0 <= x < 10**6 and 0 <= y < 10**6)
+                or (x, y) in blocked
+                or (x, y) in seen
+            ):
                 return False
             seen.add((x, y))
             if len(seen) > 20000 or source == target:
@@ -85,7 +91,7 @@ class Solution:
 
 ```java
 class Solution {
-    private int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    private int[][] dirs = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private static final int N = (int) 1e6;
     private Set<Integer> blocked;
 
@@ -100,7 +106,8 @@ class Solution {
     private boolean dfs(int[] source, int[] target, Set<Integer> seen) {
         int sx = source[0], sy = source[1];
         int tx = target[0], ty = target[1];
-        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N || blocked.contains(sx * N + sy) || seen.contains(sx * N + sy)) {
+        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N
+            || blocked.contains(sx * N + sy) || seen.contains(sx * N + sy)) {
             return false;
         }
         seen.add(sx * N + sy);
@@ -108,7 +115,7 @@ class Solution {
             return true;
         }
         for (int[] dir : dirs) {
-            if (dfs(new int[]{sx + dir[0], sy + dir[1]}, target, seen)) {
+            if (dfs(new int[] {sx + dir[0], sy + dir[1]}, target, seen)) {
                 return true;
             }
         }
@@ -130,7 +137,7 @@ public:
 
     bool isEscapePossible(vector<vector<int>>& blocked, vector<int>& source, vector<int>& target) {
         this->blocked.clear();
-        for (auto& b : blocked) this->blocked.insert((ULL) b[0] * N + b[1]);
+        for (auto& b : blocked) this->blocked.insert((ULL)b[0] * N + b[1]);
         unordered_set<ULL> s1;
         unordered_set<ULL> s2;
         return dfs(source, target, s1) && dfs(target, source, s2);
@@ -139,11 +146,10 @@ public:
     bool dfs(vector<int>& source, vector<int>& target, unordered_set<ULL>& seen) {
         int sx = source[0], sy = source[1];
         int tx = target[0], ty = target[1];
-        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N || blocked.count((ULL) sx * N + sy) || seen.count((ULL) sx * N + sy)) return 0;
-        seen.insert((ULL) sx * N + sy);
+        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N || blocked.count((ULL)sx * N + sy) || seen.count((ULL)sx * N + sy)) return 0;
+        seen.insert((ULL)sx * N + sy);
         if (seen.size() > 20000 || (sx == target[0] && sy == target[1])) return 1;
-        for (auto& dir : dirs)
-        {
+        for (auto& dir : dirs) {
             vector<int> next = {sx + dir[0], sy + dir[1]};
             if (dfs(next, target, seen)) return 1;
         }

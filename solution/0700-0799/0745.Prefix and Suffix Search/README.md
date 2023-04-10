@@ -60,7 +60,6 @@ wordFilter.f("a", "e"); // 返回 0 ，因为下标为 0 的单词：前缀 pref
 
 ```python
 class WordFilter:
-
     def __init__(self, words: List[str]):
         self.d = {}
         for k, w in enumerate(words):
@@ -85,7 +84,7 @@ class Trie:
     def __init__(self):
         self.children = [None] * 26
         self.indexes = []
-    
+
     def insert(self, word, i):
         node = self
         for c in word:
@@ -94,7 +93,7 @@ class Trie:
                 node.children[idx] = Trie()
             node = node.children[idx]
             node.indexes.append(i)
-    
+
     def search(self, pref):
         node = self
         for c in pref:
@@ -156,7 +155,7 @@ class WordFilter {
             }
         }
     }
-    
+
     public int f(String pref, String suff) {
         return d.getOrDefault(pref + "." + suff, -1);
     }
@@ -210,7 +209,7 @@ class WordFilter {
             s.insert(new StringBuilder(w).reverse().toString(), i);
         }
     }
-    
+
     public int f(String pref, String suff) {
         suff = new StringBuilder(suff).reverse().toString();
         List<Integer> a = p.search(pref);
@@ -249,22 +248,19 @@ public:
     unordered_map<string, int> d;
 
     WordFilter(vector<string>& words) {
-        for (int k = 0; k < words.size(); ++k)
-        {
+        for (int k = 0; k < words.size(); ++k) {
             string w = words[k];
             int n = w.size();
-            for (int i = 0; i <= n; ++i)
-            {
+            for (int i = 0; i <= n; ++i) {
                 string a = w.substr(0, i);
-                for (int j = 0; j <= n; ++j)
-                {
+                for (int j = 0; j <= n; ++j) {
                     string b = w.substr(j, n - j);
                     d[a + "." + b] = k;
                 }
             }
         }
     }
-    
+
     int f(string pref, string suff) {
         string key = pref + "." + suff;
         if (d.count(key)) return d[key];

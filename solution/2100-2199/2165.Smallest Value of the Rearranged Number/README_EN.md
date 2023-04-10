@@ -11,7 +11,7 @@
 <p>Note that the sign of the number does not change after rearranging the digits.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 310
@@ -20,7 +20,7 @@
 The arrangement with the smallest value that does not contain any leading zeros is 103.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = -7605
@@ -124,24 +124,19 @@ public:
         vector<int> cnt(10);
         bool neg = num < 0;
         num = abs(num);
-        while (num)
-        {
+        while (num) {
             cnt[num % 10]++;
             num /= 10;
         }
         long long ans = 0;
-        if (neg)
-        {
+        if (neg) {
             for (int i = 9; i >= 0; --i)
                 while (cnt[i]--) ans = ans * 10 + i;
             return -ans;
         }
-        if (cnt[0])
-        {
-            for (int i = 1; i < 10; ++i)
-            {
-                if (cnt[i])
-                {
+        if (cnt[0]) {
+            for (int i = 1; i < 10; ++i) {
+                if (cnt[i]) {
                     ans = ans * 10 + i;
                     cnt[i]--;
                     break;

@@ -13,7 +13,7 @@
 <p>Return <em>the <strong>maximum number of points</strong> you can earn by applying the above operation some number of times</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,4,2]
@@ -24,7 +24,7 @@
 You earn a total of 6 points.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,2,3,3,3,4]
@@ -70,7 +70,7 @@ nonSelect[i] = Math.max(select[i-1], nonSelect[i-1]);
 ```python
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        mx = float('-inf')
+        mx = -inf
         for num in nums:
             mx = max(mx, num)
         total = [0] * (mx + 1)

@@ -7,7 +7,7 @@
 <p>Given a string array <code>words</code>, return <em>the maximum value of</em> <code>length(word[i]) * length(word[j])</code> <em>where the two words do not share common letters</em>. If no such two words exist, return <code>0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;abcw&quot;,&quot;baz&quot;,&quot;foo&quot;,&quot;bar&quot;,&quot;xtfn&quot;,&quot;abcdef&quot;]
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> The two words can be &quot;abcw&quot;, &quot;xtfn&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;ab&quot;,&quot;abc&quot;,&quot;d&quot;,&quot;cd&quot;,&quot;bcd&quot;,&quot;abcd&quot;]
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> The two words can be &quot;ab&quot;, &quot;cd&quot;.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;aa&quot;,&quot;aaa&quot;,&quot;aaaa&quot;]
@@ -102,7 +102,7 @@ public:
         for (int i = 0; i < n - 1; ++i)
             for (int j = i + 1; j < n; ++j)
                 if (!(mask[i] & mask[j]))
-                    ans = max(ans, (int) (words[i].size() * words[j].size()));
+                    ans = max(ans, (int)(words[i].size() * words[j].size()));
         return ans;
     }
 };

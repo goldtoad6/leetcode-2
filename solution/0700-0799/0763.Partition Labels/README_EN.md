@@ -11,7 +11,7 @@
 <p>Return <em>a list of integers representing the size of these parts</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;ababcbacadefegdehijhklij&quot;
@@ -22,7 +22,7 @@ This is a partition so that each letter appears in at most one part.
 A partition like &quot;ababcbacadefegde&quot;, &quot;hijhklij&quot; is incorrect, because it splits s into less parts.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;eccbbbbdec&quot;
@@ -46,13 +46,11 @@ A partition like &quot;ababcbacadefegde&quot;, &quot;hijhklij&quot; is incorrect
 ```python
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        last = [0] * 26
-        for i, c in enumerate(s):
-            last[ord(c) - ord('a')] = i
+        last = {c: i for i, c in enumerate(s)}
         ans = []
         left = right = 0
         for i, c in enumerate(s):
-            right = max(right, last[ord(c) - ord('a')])
+            right = max(right, last[c])
             if i == right:
                 ans.append(right - left + 1)
                 left = right + 1
@@ -82,44 +80,19 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function partitionLabels(s: string): number[] {
-    const n = s.length;
-    let last = new Array(26);
-    for (let i = 0; i < n; i++) {
-        last[s.charCodeAt(i) - 'a'.charCodeAt(0)] = i;
-    }
-    let ans = [];
-    let left = 0,
-        right = 0;
-    for (let i = 0; i < n; i++) {
-        right = Math.max(right, last[s.charCodeAt(i) - 'a'.charCodeAt(0)]);
-        if (i == right) {
-            ans.push(right - left + 1);
-            left = right + 1;
-        }
-    }
-    return ans;
-}
-```
-
 ### **C++**
 
 ```cpp
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        vector<int> last(26);
+        int last[26] = {0};
         int n = s.size();
         for (int i = 0; i < n; ++i) last[s[i] - 'a'] = i;
         vector<int> ans;
-        for (int i = 0, left = 0, right = 0; i < n; ++i)
-        {
+        for (int i = 0, left = 0, right = 0; i < n; ++i) {
             right = max(right, last[s[i] - 'a']);
-            if (i == right)
-            {
+            if (i == right) {
                 ans.push_back(right - left + 1);
                 left = right + 1;
             }
@@ -157,6 +130,29 @@ func max(a, b int) int {
 }
 ```
 
+### **TypeScript**
+
+```ts
+function partitionLabels(s: string): number[] {
+    const n = s.length;
+    let last = new Array(26);
+    for (let i = 0; i < n; i++) {
+        last[s.charCodeAt(i) - 'a'.charCodeAt(0)] = i;
+    }
+    let ans = [];
+    let left = 0,
+        right = 0;
+    for (let i = 0; i < n; i++) {
+        right = Math.max(right, last[s.charCodeAt(i) - 'a'.charCodeAt(0)]);
+        if (i == right) {
+            ans.push(right - left + 1);
+            left = right + 1;
+        }
+    }
+    return ans;
+}
+```
+
 ### **Rust**
 
 ```rust
@@ -181,6 +177,33 @@ impl Solution {
         res
     }
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {string} s
+ * @return {number[]}
+ */
+var partitionLabels = function (s) {
+    const n = s.length;
+    let last = new Array(26);
+    for (let i = 0; i < n; i++) {
+        last[s.charCodeAt(i) - 'a'.charCodeAt(0)] = i;
+    }
+    let ans = [];
+    let left = 0,
+        right = 0;
+    for (let i = 0; i < n; i++) {
+        right = Math.max(right, last[s.charCodeAt(i) - 'a'.charCodeAt(0)]);
+        if (i == right) {
+            ans.push(right - left + 1);
+            left = right + 1;
+        }
+    }
+    return ans;
+};
 ```
 
 ### **...**

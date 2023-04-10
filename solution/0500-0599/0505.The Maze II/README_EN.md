@@ -13,7 +13,7 @@
 <p>You may assume that <strong>the borders of the maze are all walls</strong> (see examples).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0505.The%20Maze%20II/images/maze1-1-grid.jpg" style="width: 573px; height: 573px;" />
 <pre>
 <strong>Input:</strong> maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]
@@ -22,7 +22,7 @@
 The length of the path is 1 + 1 + 3 + 1 + 2 + 2 + 2 = 12.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0505.The%20Maze%20II/images/maze1-2-grid.jpg" style="width: 573px; height: 573px;" />
 <pre>
 <strong>Input:</strong> maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]
@@ -30,7 +30,7 @@ The length of the path is 1 + 1 + 3 + 1 + 2 + 2 + 2 = 12.
 <strong>Explanation:</strong> There is no way for the ball to stop at the destination. Notice that you can pass through the destination but you cannot stop there.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], start = [4,3], destination = [0,1]
@@ -47,8 +47,8 @@ The length of the path is 1 + 1 + 3 + 1 + 2 + 2 + 2 = 12.
 	<li><code>maze[i][j]</code> is <code>0</code> or <code>1</code>.</li>
 	<li><code>start.length == 2</code></li>
 	<li><code>destination.length == 2</code></li>
-	<li><code>0 &lt;= start<sub>row</sub>, destination<sub>row</sub> &lt;= m</code></li>
-	<li><code>0 &lt;= start<sub>col</sub>, destination<sub>col</sub> &lt;= n</code></li>
+	<li><code>0 &lt;= start<sub>row</sub>, destination<sub>row</sub> &lt; m</code></li>
+	<li><code>0 &lt;= start<sub>col</sub>, destination<sub>col</sub> &lt; n</code></li>
 	<li>Both the ball and the destination exist in an empty space, and they will not be in the same position initially.</li>
 	<li>The maze contains <strong>at least 2 empty spaces</strong>.</li>
 </ul>
@@ -63,11 +63,13 @@ BFS.
 
 ```python
 class Solution:
-    def shortestDistance(self, maze: List[List[int]], start: List[int], destination: List[int]) -> int:
+    def shortestDistance(
+        self, maze: List[List[int]], start: List[int], destination: List[int]
+    ) -> int:
         m, n = len(maze), len(maze[0])
         rs, cs = start
         rd, cd = destination
-        dist = [[float('inf')] * n for _ in range(m)]
+        dist = [[inf] * n for _ in range(m)]
         dist[rs][cs] = 0
         q = deque([(rs, cs)])
         while q:
@@ -79,7 +81,7 @@ class Solution:
                 if step < dist[x][y]:
                     dist[x][y] = step
                     q.append((x, y))
-        return -1 if dist[rd][cd] == float('inf') else dist[rd][cd]
+        return -1 if dist[rd][cd] == inf else dist[rd][cd]
 ```
 
 ### **Java**
@@ -103,18 +105,21 @@ class Solution {
             for (int k = 0; k < 4; ++k) {
                 int x = i, y = j, step = dist[i][j];
                 int a = dirs[k], b = dirs[k + 1];
-                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
+                while (
+                    x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
                     x += a;
                     y += b;
                     ++step;
                 }
                 if (step < dist[x][y]) {
                     dist[x][y] = step;
-                    q.offer(new int[]{x, y});
+                    q.offer(new int[] {x, y});
                 }
             }
         }
-        return dist[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : dist[destination[0]][destination[1]];
+        return dist[destination[0]][destination[1]] == Integer.MAX_VALUE
+            ? -1
+            : dist[destination[0]][destination[1]];
     }
 }
 ```
@@ -129,25 +134,21 @@ public:
         int n = maze[0].size();
         vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
         dist[start[0]][start[1]] = 0;
-        queue<vector<int>> q{{start}};
+        queue<vector<int>> q {{start}};
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
             int i = p[0], j = p[1];
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = i, y = j, step = dist[i][j];
                 int a = dirs[k], b = dirs[k + 1];
-                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0)
-                {
+                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
                     x += a;
                     y += b;
                     ++step;
                 }
-                if (step < dist[x][y])
-                {
+                if (step < dist[x][y]) {
                     dist[x][y] = step;
                     q.push({x, y});
                 }

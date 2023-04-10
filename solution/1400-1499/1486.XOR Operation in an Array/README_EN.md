@@ -11,7 +11,7 @@
 <p>Return <em>the bitwise XOR of all elements of</em> <code>nums</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5, start = 0
@@ -20,7 +20,7 @@
 Where &quot;^&quot; corresponds to bitwise XOR operator.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 4, start = 3
@@ -46,23 +46,55 @@ Where &quot;^&quot; corresponds to bitwise XOR operator.
 ```python
 class Solution:
     def xorOperation(self, n: int, start: int) -> int:
-        res = 0
+        ans = 0
         for i in range(n):
-            res ^= (start + (i << 1))
-        return res
+            ans ^= start + 2 * i
+        return ans
+```
+
+```python
+class Solution:
+    def xorOperation(self, n: int, start: int) -> int:
+        return reduce(xor, ((start + 2 * i) for i in range(n)))
 ```
 
 ### **Java**
 
 ```java
 class Solution {
-  public int xorOperation(int n, int start) {
-    int ret = start;
-    for (int i = 1; i < n; i++) {
-      ret = ret ^ (start + (i << 1));
+    public int xorOperation(int n, int start) {
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans ^= start + 2 * i;
+        }
+        return ans;
     }
-    return ret;
-  }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int xorOperation(int n, int start) {
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans ^= start + 2 * i;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func xorOperation(n int, start int) (ans int) {
+	for i := 0; i < n; i++ {
+		ans ^= start + 2*i
+	}
+	return
 }
 ```
 

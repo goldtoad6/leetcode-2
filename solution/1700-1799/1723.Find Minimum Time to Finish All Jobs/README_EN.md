@@ -11,7 +11,7 @@
 <p><em>Return the <strong>minimum</strong> possible <strong>maximum working time</strong> of any assignment. </em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> jobs = [3,2,3], k = 3
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> By assigning each person one job, the maximum time is 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> jobs = [1,2,4,7,8], k = 2
@@ -135,8 +135,7 @@ public:
             ans = min(ans, *max_element(cnt.begin(), cnt.end()));
             return;
         }
-        for (int j = 0; j < k; ++j)
-        {
+        for (int j = 0; j < k; ++j) {
             if (cnt[j] + jobs[i] >= ans) continue;
             cnt[j] += jobs[i];
             dfs(i + 1, k, jobs, cnt);

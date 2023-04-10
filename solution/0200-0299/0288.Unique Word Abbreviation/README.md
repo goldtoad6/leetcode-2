@@ -77,7 +77,6 @@ validWordAbbr.isUnique("cake"); // 返回 true，因为 "cake" 已经存在于�
 
 ```python
 class ValidWordAbbr:
-
     def __init__(self, dictionary: List[str]):
         self.words = defaultdict(set)
         for word in dictionary:
@@ -141,8 +140,7 @@ public:
     unordered_map<string, unordered_set<string>> words;
 
     ValidWordAbbr(vector<string>& dictionary) {
-        for (auto word : dictionary)
-        {
+        for (auto word : dictionary) {
             auto abbr = wordAbbr(word);
             words[abbr].insert(word);
         }

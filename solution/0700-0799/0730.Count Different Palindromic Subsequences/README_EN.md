@@ -13,7 +13,7 @@
 <p>Two sequences <code>a<sub>1</sub>, a<sub>2</sub>, ...</code> and <code>b<sub>1</sub>, b<sub>2</sub>, ...</code> are different if there is some <code>i</code> for which <code>a<sub>i</sub> != b<sub>i</sub></code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;bccb&quot;
@@ -22,7 +22,7 @@
 Note that &#39;bcb&#39; is counted only once, even though it occurs twice.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba&quot;
@@ -86,7 +86,8 @@ class Solution {
                 for (char c = 'a'; c <= 'd'; ++c) {
                     int k = c - 'a';
                     if (s.charAt(i) == c && s.charAt(j) == c) {
-                        dp[i][j][k] = 2 + dp[i + 1][j - 1][0] + dp[i + 1][j - 1][1] + dp[i + 1][j - 1][2] + dp[i + 1][j - 1][3];
+                        dp[i][j][k] = 2 + dp[i + 1][j - 1][0] + dp[i + 1][j - 1][1]
+                            + dp[i + 1][j - 1][2] + dp[i + 1][j - 1][3];
                         dp[i][j][k] %= MOD;
                     } else if (s.charAt(i) == c) {
                         dp[i][j][k] = dp[i][j - 1][k];
@@ -119,23 +120,24 @@ public:
         int n = s.size();
         vector<vector<vector<ll>>> dp(n, vector<vector<ll>>(n, vector<ll>(4)));
         for (int i = 0; i < n; ++i) dp[i][i][s[i] - 'a'] = 1;
-        for (int l = 2; l <= n; ++l)
-        {
-            for (int i = 0; i + l <= n; ++i)
-            {
+        for (int l = 2; l <= n; ++l) {
+            for (int i = 0; i + l <= n; ++i) {
                 int j = i + l - 1;
-                for (char c = 'a'; c <= 'd'; ++c)
-                {
+                for (char c = 'a'; c <= 'd'; ++c) {
                     int k = c - 'a';
-                    if (s[i] == c && s[j] == c) dp[i][j][k] = 2 + accumulate(dp[i + 1][j - 1].begin(), dp[i + 1][j - 1].end(), 0ll) % mod;
-                    else if (s[i] == c) dp[i][j][k] = dp[i][j - 1][k];
-                    else if (s[j] == c) dp[i][j][k] = dp[i + 1][j][k];
-                    else dp[i][j][k] = dp[i + 1][j - 1][k];
+                    if (s[i] == c && s[j] == c)
+                        dp[i][j][k] = 2 + accumulate(dp[i + 1][j - 1].begin(), dp[i + 1][j - 1].end(), 0ll) % mod;
+                    else if (s[i] == c)
+                        dp[i][j][k] = dp[i][j - 1][k];
+                    else if (s[j] == c)
+                        dp[i][j][k] = dp[i + 1][j][k];
+                    else
+                        dp[i][j][k] = dp[i + 1][j - 1][k];
                 }
             }
         }
         ll ans = accumulate(dp[0][n - 1].begin(), dp[0][n - 1].end(), 0ll);
-        return (int) (ans % mod);
+        return (int)(ans % mod);
     }
 };
 ```

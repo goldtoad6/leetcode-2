@@ -78,7 +78,13 @@ class Solution:
                 if c.isdigit() or (c in '!.,' and i < len(token) - 1):
                     return False
                 if c == '-':
-                    if hyphen or i == 0 or i == len(token) - 1 or not token[i - 1].islower() or not token[i + 1].islower():
+                    if (
+                        hyphen
+                        or i == 0
+                        or i == len(token) - 1
+                        or not token[i - 1].islower()
+                        or not token[i + 1].islower()
+                    ):
                         return False
                     hyphen = True
             return True
@@ -114,7 +120,8 @@ class Solution {
                 return false;
             }
             if (c == '-') {
-                if (hyphen || i == 0 || i == n - 1 || !Character.isLetter(token.charAt(i - 1)) || !Character.isLetter(token.charAt(i + 1))) {
+                if (hyphen || i == 0 || i == n - 1 || !Character.isLetter(token.charAt(i - 1))
+                    || !Character.isLetter(token.charAt(i + 1))) {
                     return false;
                 }
                 hyphen = true;

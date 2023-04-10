@@ -7,7 +7,7 @@
 <p>Given a non-negative integer <code>c</code>, decide whether there&#39;re two integers <code>a</code> and <code>b</code> such that <code>a<sup>2</sup> + b<sup>2</sup> = c</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> c = 5
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> 1 * 1 + 2 * 2 = 5
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> c = 3
@@ -103,13 +103,14 @@ function judgeSquareSum(c: number): boolean {
 class Solution {
 public:
     bool judgeSquareSum(int c) {
-        long a = 0, b = (long) sqrt(c);
-        while (a <= b)
-        {
+        long a = 0, b = (long)sqrt(c);
+        while (a <= b) {
             long s = a * a + b * b;
             if (s == c) return true;
-            if (s < c) ++a;
-            else --b;
+            if (s < c)
+                ++a;
+            else
+                --b;
         }
         return false;
     }

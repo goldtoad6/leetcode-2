@@ -9,7 +9,7 @@
 <p>Given an integer array <code>hand</code> where <code>hand[i]</code> is the value written on the <code>i<sup>th</sup></code> card and an integer <code>groupSize</code>, return <code>true</code> if she can rearrange the cards, or <code>false</code> otherwise.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> hand = [1,2,3,6,2,3,4,7,8], groupSize = 3
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> Alice&#39;s hand can be rearranged as [1,2,3],[2,3,4],[6,7,8]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> hand = [1,2,3,4,5], groupSize = 4
@@ -43,6 +43,21 @@
 <!-- tabs:start -->
 
 ### **Python3**
+
+```python
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        cnt = Counter(hand)
+        for v in sorted(hand):
+            if cnt[v]:
+                for x in range(v, v + groupSize):
+                    if cnt[x] == 0:
+                        return False
+                    cnt[x] -= 1
+                    if cnt[x] == 0:
+                        cnt.pop(x)
+        return True
+```
 
 ```python
 from sortedcontainers import SortedDict
@@ -71,6 +86,32 @@ class Solution:
 ```
 
 ### **Java**
+
+```java
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        Map<Integer, Integer> cnt = new HashMap<>();
+        for (int v : hand) {
+            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
+        }
+        Arrays.sort(hand);
+        for (int v : hand) {
+            if (cnt.containsKey(v)) {
+                for (int x = v; x < v + groupSize; ++x) {
+                    if (!cnt.containsKey(x)) {
+                        return false;
+                    }
+                    cnt.put(x, cnt.get(x) - 1);
+                    if (cnt.get(x) == 0) {
+                        cnt.remove(x);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
+```
 
 ```java
 class Solution {
@@ -106,17 +147,41 @@ class Solution {
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
+        unordered_map<int, int> cnt;
+        for (int& v : hand) ++cnt[v];
+        sort(hand.begin(), hand.end());
+        for (int& v : hand) {
+            if (cnt.count(v)) {
+                for (int x = v; x < v + groupSize; ++x) {
+                    if (!cnt.count(x)) {
+                        return false;
+                    }
+                    if (--cnt[x] == 0) {
+                        cnt.erase(x);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
         if (hand.size() % groupSize != 0) return false;
         map<int, int> mp;
         for (int& h : hand) mp[h] += 1;
-        while (!mp.empty())
-        {
+        while (!mp.empty()) {
             int v = mp.begin()->first;
-            for (int i = v; i < v + groupSize; ++i)
-            {
+            for (int i = v; i < v + groupSize; ++i) {
                 if (!mp.count(i)) return false;
-                if (mp[i] == 1) mp.erase(i);
-                else mp[i] -= 1;
+                if (mp[i] == 1)
+                    mp.erase(i);
+                else
+                    mp[i] -= 1;
             }
         }
         return true;
@@ -125,6 +190,30 @@ public:
 ```
 
 ### **Go**
+
+```go
+func isNStraightHand(hand []int, groupSize int) bool {
+	cnt := map[int]int{}
+	for _, v := range hand {
+		cnt[v]++
+	}
+	sort.Ints(hand)
+	for _, v := range hand {
+		if _, ok := cnt[v]; ok {
+			for x := v; x < v+groupSize; x++ {
+				if _, ok := cnt[x]; !ok {
+					return false
+				}
+				cnt[x]--
+				if cnt[x] == 0 {
+					delete(cnt, x)
+				}
+			}
+		}
+	}
+	return true
+}
+```
 
 ```go
 func isNStraightHand(hand []int, groupSize int) bool {

@@ -49,6 +49,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def removeDuplicateNodes(self, head: ListNode) -> ListNode:
         if head is None or head.next is None:
@@ -151,8 +152,8 @@ public:
             return head;
         }
         unordered_set<int> cache = {head->val};
-        ListNode *cur = head;
-        for (ListNode *p = head->next; p != nullptr; p = p->next) {
+        ListNode* cur = head;
+        for (ListNode* p = head->next; p != nullptr; p = p->next) {
             if (!cache.count(p->val)) {
                 cur->next = p;
                 cur = cur->next;

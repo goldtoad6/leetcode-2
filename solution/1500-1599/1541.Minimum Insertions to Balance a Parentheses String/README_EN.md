@@ -22,7 +22,7 @@
 <p>Return <em>the minimum number of insertions</em> needed to make <code>s</code> balanced.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;(()))&quot;
@@ -30,7 +30,7 @@
 <strong>Explanation:</strong> The second &#39;(&#39; has two matching &#39;))&#39;, but the first &#39;(&#39; has only &#39;)&#39; matching. We need to add one more &#39;)&#39; at the end of the string to be &quot;(())))&quot; which is balanced.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;())&quot;
@@ -38,7 +38,7 @@
 <strong>Explanation:</strong> The string is already balanced.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;))())(&quot;
@@ -61,13 +61,110 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minInsertions(self, s: str) -> int:
+        ans = x = 0
+        i, n = 0, len(s)
+        while i < n:
+            if s[i] == '(':
+                x += 1
+            else:
+                if i < n - 1 and s[i + 1] == ')':
+                    i += 1
+                else:
+                    ans += 1
+                if x == 0:
+                    ans += 1
+                else:
+                    x -= 1
+            i += 1
+        ans += x << 1
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int minInsertions(String s) {
+        int ans = 0, x = 0;
+        int n = s.length();
+        for (int i = 0; i < n; ++i) {
+            if (s.charAt(i) == '(') {
+                ++x;
+            } else {
+                if (i < n - 1 && s.charAt(i + 1) == ')') {
+                    ++i;
+                } else {
+                    ++ans;
+                }
+                if (x == 0) {
+                    ++ans;
+                } else {
+                    --x;
+                }
+            }
+        }
+        ans += x << 1;
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minInsertions(string s) {
+        int ans = 0, x = 0;
+        int n = s.size();
+        for (int i = 0; i < n; ++i) {
+            if (s[i] == '(') {
+                ++x;
+            } else {
+                if (i < n - 1 && s[i + 1] == ')') {
+                    ++i;
+                } else {
+                    ++ans;
+                }
+                if (x == 0) {
+                    ++ans;
+                } else {
+                    --x;
+                }
+            }
+        }
+        ans += x << 1;
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minInsertions(s string) int {
+	ans, x, n := 0, 0, len(s)
+	for i := 0; i < n; i++ {
+		if s[i] == '(' {
+			x++
+		} else {
+			if i < n-1 && s[i+1] == ')' {
+				i++
+			} else {
+				ans++
+			}
+			if x == 0 {
+				ans++
+			} else {
+				x--
+			}
+		}
+	}
+	ans += x << 1
+	return ans
+}
 ```
 
 ### **...**

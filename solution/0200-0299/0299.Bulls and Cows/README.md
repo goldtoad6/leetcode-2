@@ -118,12 +118,11 @@ public:
         int x = 0, y = 0;
         vector<int> cnt1(10);
         vector<int> cnt2(10);
-        for (int i = 0; i < secret.size(); ++i)
-        {
+        for (int i = 0; i < secret.size(); ++i) {
             int a = secret[i] - '0', b = guess[i] - '0';
-            if (a == b) ++x;
-            else
-            {
+            if (a == b)
+                ++x;
+            else {
                 ++cnt1[a];
                 ++cnt2[b];
             }
@@ -161,6 +160,34 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param String $secret
+     * @param String $guess
+     * @return String
+     */
+    function getHint($secret, $guess) {
+        $cntA = 0;
+        $cntB = 0;
+        $len = strlen($secret);
+        for ($i = 0; $i < $len; $i++) {
+            if ($secret[$i] == $guess[$i]) $cntA++;
+            else $hashtable[$secret[$i]] += 1;
+        }
+        for ($i = 0; $i < $len; $i++) {
+            if ($secret[$i] != $guess[$i] && $hashtable[$guess[$i]] > 0) {
+                $cntB++;
+                $hashtable[$guess[$i]] -= 1;
+            }
+        }
+        return $cntA."A".$cntB."B";
+    }
 }
 ```
 

@@ -119,6 +119,7 @@
 #
 #
 
+
 class Solution(object):
     def findShortestPath(self, master: 'GridMaster') -> int:
         def dfs(i, j):
@@ -134,13 +135,13 @@ class Solution(object):
 
         target = (-1, -1)
         N = 200
-        INF = 0x3f3f3f3f
+        INF = 0x3F3F3F3F
         g = [[-1] * N for _ in range(N)]
         dirs = {
             'U': (-1, 0, 'D'),
             'D': (1, 0, 'U'),
             'L': (0, -1, 'R'),
-            'R': (0, 1, 'L')
+            'R': (0, 1, 'L'),
         }
         dfs(100, 100)
         if target == (-1, -1):
@@ -154,7 +155,12 @@ class Solution(object):
                 return w
             for a, b, _ in dirs.values():
                 x, y = i + a, j + b
-                if 0 <= x < N and 0 <= y < N and g[x][y] != -1 and dist[x][y] > w + g[x][y]:
+                if (
+                    0 <= x < N
+                    and 0 <= y < N
+                    and g[x][y] != -1
+                    and dist[x][y] > w + g[x][y]
+                ):
                     dist[x][y] = w + g[x][y]
                     heappush(q, (dist[x][y], x, y))
         return 0
@@ -186,7 +192,7 @@ class Solution {
     private int[] target;
 
     public int findShortestPath(GridMaster master) {
-        target = new int[]{-1, -1};
+        target = new int[] {-1, -1};
         for (int i = 0; i < N; ++i) {
             Arrays.fill(g[i], -1);
             Arrays.fill(dist[i], INF);
@@ -196,7 +202,7 @@ class Solution {
             return -1;
         }
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        q.offer(new int[]{0, 100, 100});
+        q.offer(new int[] {0, 100, 100});
         dist[100][100] = 0;
         while (!q.isEmpty()) {
             int[] p = q.poll();
@@ -206,9 +212,10 @@ class Solution {
             }
             for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 && x < N && y >= 0 && y < N && g[x][y] != -1 && dist[x][y] > w + g[x][y]) {
+                if (x >= 0 && x < N && y >= 0 && y < N && g[x][y] != -1
+                    && dist[x][y] > w + g[x][y]) {
                     dist[x][y] = w + g[x][y];
-                    q.offer(new int[]{dist[x][y], x, y});
+                    q.offer(new int[] {dist[x][y], x, y});
                 }
             }
         }
@@ -217,7 +224,7 @@ class Solution {
 
     private void dfs(int i, int j, GridMaster master) {
         if (master.isTarget()) {
-            target = new int[]{i, j};
+            target = new int[] {i, j};
         }
         for (int k = 0; k < 4; ++k) {
             char d = dir[k], nd = ndir[k];

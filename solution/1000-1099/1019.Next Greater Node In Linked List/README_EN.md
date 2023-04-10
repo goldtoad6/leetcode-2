@@ -11,14 +11,14 @@
 <p>Return an integer array <code>answer</code> where <code>answer[i]</code> is the value of the next greater node of the <code>i<sup>th</sup></code> node (<strong>1-indexed</strong>). If the <code>i<sup>th</sup></code> node does not have a next greater node, set <code>answer[i] = 0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1000-1099/1019.Next%20Greater%20Node%20In%20Linked%20List/images/linkedlistnext1.jpg" style="width: 304px; height: 133px;" />
 <pre>
 <strong>Input:</strong> head = [2,1,5]
 <strong>Output:</strong> [5,5,0]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1000-1099/1019.Next%20Greater%20Node%20In%20Linked%20List/images/linkedlistnext2.jpg" style="width: 500px; height: 113px;" />
 <pre>
 <strong>Input:</strong> head = [2,7,4,3,5]
@@ -43,23 +43,25 @@
 ```python
 # Definition for singly-linked list.
 # class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def nextLargerNodes(self, head: ListNode) -> List[int]:
+    def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:
         nums = []
         while head:
             nums.append(head.val)
             head = head.next
-        s = []
-        larger = [0] * len(nums)
-        for i, num in enumerate(nums):
-            while s and nums[s[-1]] < num:
-                larger[s.pop()] = num
-            s.append(i)
-        return larger
+        stk = []
+        n = len(nums)
+        ans = [0] * n
+        for i in range(n - 1, -1, -1):
+            while stk and stk[-1] <= nums[i]:
+                stk.pop()
+            if stk:
+                ans[i] = stk[-1]
+            stk.append(nums[i])
+        return ans
 ```
 
 ### **Java**
@@ -70,26 +72,100 @@ class Solution:
  * public class ListNode {
  *     int val;
  *     ListNode next;
- *     ListNode(int x) { val = x; }
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
         List<Integer> nums = new ArrayList<>();
-        while (head != null) {
+        for (; head != null; head = head.next) {
             nums.add(head.val);
-            head = head.next;
         }
-        Deque<Integer> s = new ArrayDeque<>();
-        int[] larger = new int[nums.size()];
-        for (int i = 0; i < nums.size(); ++i) {
-            while (!s.isEmpty() && nums.get(s.peek()) < nums.get(i)) {
-                larger[s.pop()] = nums.get(i);
+        Deque<Integer> stk = new ArrayDeque<>();
+        int n = nums.size();
+        int[] ans = new int[n];
+        for (int i = n - 1; i >= 0; --i) {
+            while (!stk.isEmpty() && stk.peek() <= nums.get(i)) {
+                stk.pop();
             }
-            s.push(i);
+            if (!stk.isEmpty()) {
+                ans[i] = stk.peek();
+            }
+            stk.push(nums.get(i));
         }
-        return larger;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> nextLargerNodes(ListNode* head) {
+        vector<int> nums;
+        for (; head; head = head->next) {
+            nums.push_back(head->val);
+        }
+        stack<int> stk;
+        int n = nums.size();
+        vector<int> ans(n);
+        for (int i = n - 1; ~i; --i) {
+            while (!stk.empty() && stk.top() <= nums[i]) {
+                stk.pop();
+            }
+            if (!stk.empty()) {
+                ans[i] = stk.top();
+
+            }
+            stk.push(nums[i]);
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func nextLargerNodes(head *ListNode) []int {
+	nums := []int{}
+	for ; head != nil; head = head.Next {
+		nums = append(nums, head.Val)
+	}
+	stk := []int{}
+	n := len(nums)
+	ans := make([]int, n)
+	for i := n - 1; i >= 0; i-- {
+		for len(stk) > 0 && stk[len(stk)-1] <= nums[i] {
+			stk = stk[:len(stk)-1]
+		}
+		if len(stk) > 0 {
+			ans[i] = stk[len(stk)-1]
+		}
+		stk = append(stk, nums[i])
+	}
+	return ans
 }
 ```
 
@@ -98,9 +174,9 @@ class Solution {
 ```js
 /**
  * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
  * }
  */
 /**
@@ -108,26 +184,59 @@ class Solution {
  * @return {number[]}
  */
 var nextLargerNodes = function (head) {
-    let nums = [];
-    while (head != null) {
+    const nums = [];
+    while (head) {
         nums.push(head.val);
         head = head.next;
     }
+    const stk = [];
     const n = nums.length;
-    let larger = new Array(n).fill(0);
-    let stack = [];
-    for (let i = 0; i < n; i++) {
-        let num = nums[i];
-        while (stack.length > 0 && nums[stack[stack.length - 1]] < num) {
-            larger[stack.pop()] = num;
+    const ans = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; --i) {
+        while (stk.length && stk[stk.length - 1] <= nums[i]) {
+            stk.pop();
         }
-        stack.push(i);
+        ans[i] = stk.length ? stk[stk.length - 1] : 0;
+        stk.push(nums[i]);
     }
-    return larger;
+    return ans;
 };
 ```
 
 ### **TypeScript**
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function nextLargerNodes(head: ListNode | null): number[] {
+    const nums: number[] = [];
+    while (head) {
+        nums.push(head.val);
+        head = head.next;
+    }
+    const stk: number[] = [];
+    const n = nums.length;
+    const ans: number[] = new Array(n).fill(0);
+    for (let i = n - 1; ~i; --i) {
+        while (stk.length && stk[stk.length - 1] <= nums[i]) {
+            stk.pop();
+        }
+        ans[i] = stk.length ? stk[stk.length - 1] : 0;
+        stk.push(nums[i]);
+    }
+    return ans;
+}
+```
 
 ```ts
 /**

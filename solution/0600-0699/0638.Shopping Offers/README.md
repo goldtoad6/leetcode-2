@@ -63,7 +63,9 @@
 
 ```python
 class Solution:
-    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+    def shoppingOffers(
+        self, price: List[int], special: List[List[int]], needs: List[int]
+    ) -> int:
         def total(price, needs):
             return sum(price[i] * needs[i] for i in range(len(needs)))
 
@@ -77,8 +79,7 @@ class Solution:
                     break
                 t.append(needs[j] - offer[j])
             if t:
-                ans = min(ans, offer[-1] +
-                          self.shoppingOffers(price, special, t))
+                ans = min(ans, offer[-1] + self.shoppingOffers(price, special, t))
         return ans
 ```
 
@@ -88,7 +89,8 @@ class Solution:
 
 ```java
 class Solution {
-    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+    public int shoppingOffers(
+        List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
         int ans = total(price, needs);
         List<Integer> t = new ArrayList<>();
         for (List<Integer> offer : special) {
@@ -101,7 +103,8 @@ class Solution {
                 t.add(needs.get(j) - offer.get(j));
             }
             if (!t.isEmpty()) {
-                ans = Math.min(ans, offer.get(offer.size() - 1) + shoppingOffers(price, special, t));
+                ans = Math.min(
+                    ans, offer.get(offer.size() - 1) + shoppingOffers(price, special, t));
             }
         }
         return ans;
@@ -125,13 +128,10 @@ public:
     int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
         int ans = total(price, needs);
         vector<int> t;
-        for (auto& offer : special)
-        {
+        for (auto& offer : special) {
             t.clear();
-            for (int j = 0; j < needs.size(); ++j)
-            {
-                if (offer[j] > needs[j])
-                {
+            for (int j = 0; j < needs.size(); ++j) {
+                if (offer[j] > needs[j]) {
                     t.clear();
                     break;
                 }

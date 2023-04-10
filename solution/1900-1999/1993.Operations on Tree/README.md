@@ -86,7 +86,6 @@ lockingTree.lock(0, 1);    // 返回 false ，因为节点 0 已经被上锁了�
 
 ```python
 class LockingTree:
-
     def __init__(self, parent: List[int]):
         self.nums = {}
         self.parent = parent
@@ -150,9 +149,7 @@ class LockingTree {
         this.parent = parent;
         int n = parent.length;
         children = new List[n];
-        for (int i = 0; i < n; ++i) {
-            children[i] = new ArrayList<>();
-        }
+        Arrays.setAll(children, k -> new ArrayList<>());
         for (int i = 0; i < n; ++i) {
             if (parent[i] != -1) {
                 children[parent[i]].add(i);
@@ -255,10 +252,8 @@ public:
     }
 
     void dfs(int num, bool& find) {
-        for (int child : children[num])
-        {
-            if (nums.count(child))
-            {
+        for (int child : children[num]) {
+            if (nums.count(child)) {
                 nums.erase(child);
                 find = true;
             }

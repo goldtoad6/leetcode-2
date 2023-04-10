@@ -13,10 +13,10 @@
 <p>Return <em>an integer array <code>answer</code></em><em> of size </em><code>n</code><em>, where </em><code>answer[i]</code><em> is the <strong>minimum</strong> distance between the </em><code>i<sup>th</sup></code><em> node and <strong>any</strong> node in the cycle.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2204.Distance%20to%20a%20Cycle%20in%20Undirected%20Graph/images/image-20220315154238-1.png" style="width: 350px; height: 237px;" />
 <pre>
-<strong>Input:</strong> n = 7, edges = [[1,2],[2,3],[3,4],[4,1],[0,1],[5,2],[6,5]]
+<strong>Input:</strong> n = 7, edges = [[1,2],[2,4],[4,3],[3,1],[0,1],[5,2],[6,5]]
 <strong>Output:</strong> [1,0,0,0,0,1,2]
 <strong>Explanation:</strong>
 The nodes 1, 2, 3, and 4 form the cycle.
@@ -29,10 +29,10 @@ The distance from 5 to 2 is 1.
 The distance from 6 to 2 is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2204.Distance%20to%20a%20Cycle%20in%20Undirected%20Graph/images/image-20220315154634-1.png" style="width: 400px; height: 297px;" />
 <pre>
-<strong>Input:</strong> n = 9, edges = [[0,1],[1,2],[0,2],[2,6],[6,7],[6,8],[1,3],[3,4],[3,5]]
+<strong>Input:</strong> n = 9, edges = [[0,1],[1,2],[0,2],[2,6],[6,7],[6,8],[0,3],[3,4],[3,5]]
 <strong>Output:</strong> [0,0,0,1,2,2,1,2,2]
 <strong>Explanation:</strong>
 The nodes 0, 1, and 2 form the cycle.

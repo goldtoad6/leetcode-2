@@ -20,21 +20,21 @@
 <p>For custom testing purposes, the input will be the entire binary matrix <code>mat</code>. You will not have access to the binary matrix directly.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1428.Leftmost%20Column%20with%20at%20Least%20a%20One/images/untitled-diagram-5.jpg" style="width: 81px; height: 81px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0],[1,1]]
 <strong>Output:</strong> 0
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1428.Leftmost%20Column%20with%20at%20Least%20a%20One/images/untitled-diagram-4.jpg" style="width: 81px; height: 81px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0],[0,1]]
 <strong>Output:</strong> 1
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1428.Leftmost%20Column%20with%20at%20Least%20a%20One/images/untitled-diagram-3.jpg" style="width: 81px; height: 81px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0],[0,0]]
@@ -65,9 +65,10 @@ Binary search.
 # This is BinaryMatrix's API interface.
 # You should not implement it, or speculate about its implementation
 # """
-#class BinaryMatrix(object):
+# class BinaryMatrix(object):
 #    def get(self, row: int, col: int) -> int:
 #    def dimensions(self) -> list[]:
+
 
 class Solution:
     def leftMostColumnWithOne(self, binaryMatrix: 'BinaryMatrix') -> int:
@@ -144,7 +145,7 @@ class Solution {
 
 class Solution {
 public:
-    int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
+    int leftMostColumnWithOne(BinaryMatrix& binaryMatrix) {
         vector<int> scale = binaryMatrix.dimensions();
         int rows = scale[0], cols = scale[1];
         int res = -1;

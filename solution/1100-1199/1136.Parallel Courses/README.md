@@ -55,6 +55,14 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：拓扑排序**
+
+我们可以先将课程之间的先修关系建立图 $g$，并统计每个课程的入度 $indeg$。
+
+然后我们将入度为 $0$ 的课程入队，然后开始进行拓扑排序。每次从队列中取出一个课程，将其出队，并将其出度的课程的入度减 $1$，如果减 $1$ 后入度为 $0$，则将该课程入队。当队列为空时，如果还有课程没有修完，则说明无法修完所有课程，返回 $-1$。否则返回修完所有课程所需的学期数。
+
+时间复杂度 $O(n + m)$，空间复杂度 $O(n + m)$。其中 $n$ 和 $m$ 分别为课程数和先修关系数。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -62,7 +70,26 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
-
+class Solution:
+    def minimumSemesters(self, n: int, relations: List[List[int]]) -> int:
+        g = defaultdict(list)
+        indeg = [0] * n
+        for prev, nxt in relations:
+            prev, nxt = prev - 1, nxt - 1
+            g[prev].append(nxt)
+            indeg[nxt] += 1
+        q = deque(i for i, v in enumerate(indeg) if v == 0)
+        ans = 0
+        while q:
+            ans += 1
+            for _ in range(len(q)):
+                i = q.popleft()
+                n -= 1
+                for j in g[i]:
+                    indeg[j] -= 1
+                    if indeg[j] == 0:
+                        q.append(j)
+        return -1 if n else ans
 ```
 
 ### **Java**
@@ -70,7 +97,147 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+        List<Integer>[] g = new List[n];
+        Arrays.setAll(g, k -> new ArrayList<>());
+        int[] indeg = new int[n];
+        for (var r : relations) {
+            int prev = r[0] - 1, nxt = r[1] - 1;
+            g[prev].add(nxt);
+            ++indeg[nxt];
+        }
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; ++i) {
+            if (indeg[i] == 0) {
+                q.offer(i);
+            }
+        }
+        int ans = 0;
+        while (!q.isEmpty()) {
+            ++ans;
+            for (int k = q.size(); k > 0; --k) {
+                int i = q.poll();
+                --n;
+                for (int j : g[i]) {
+                    if (--indeg[j] == 0) {
+                        q.offer(j);
+                    }
+                }
+            }
+        }
+        return n == 0 ? ans : -1;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minimumSemesters(int n, vector<vector<int>>& relations) {
+        vector<vector<int>> g(n);
+        vector<int> indeg(n);
+        for (auto& r : relations) {
+            int prev = r[0] - 1, nxt = r[1] - 1;
+            g[prev].push_back(nxt);
+            ++indeg[nxt];
+        }
+        queue<int> q;
+        for (int i = 0; i < n; ++i) {
+            if (indeg[i] == 0) {
+                q.push(i);
+            }
+        }
+        int ans = 0;
+        while (!q.empty()) {
+            ++ans;
+            for (int k = q.size(); k; --k) {
+                int i = q.front();
+                q.pop();
+                --n;
+                for (int& j : g[i]) {
+                    if (--indeg[j] == 0) {
+                        q.push(j);
+                    }
+                }
+            }
+        }
+        return n == 0 ? ans : -1;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minimumSemesters(n int, relations [][]int) (ans int) {
+	g := make([][]int, n)
+	indeg := make([]int, n)
+	for _, r := range relations {
+		prev, nxt := r[0]-1, r[1]-1
+		g[prev] = append(g[prev], nxt)
+		indeg[nxt]++
+	}
+	q := []int{}
+	for i, v := range indeg {
+		if v == 0 {
+			q = append(q, i)
+		}
+	}
+	for len(q) > 0 {
+		ans++
+		for k := len(q); k > 0; k-- {
+			i := q[0]
+			q = q[1:]
+			n--
+			for _, j := range g[i] {
+				indeg[j]--
+				if indeg[j] == 0 {
+					q = append(q, j)
+				}
+			}
+		}
+	}
+	if n == 0 {
+		return
+	}
+	return -1
+}
+```
+
+### **TypeScript**
+
+```ts
+function minimumSemesters(n: number, relations: number[][]): number {
+    const g = Array.from({ length: n }, () => []);
+    const indeg = new Array(n).fill(0);
+    for (const [prev, nxt] of relations) {
+        g[prev - 1].push(nxt - 1);
+        indeg[nxt - 1]++;
+    }
+    const q: number[] = [];
+    for (let i = 0; i < n; ++i) {
+        if (indeg[i] === 0) {
+            q.push(i);
+        }
+    }
+    let ans = 0;
+    while (q.length) {
+        ++ans;
+        for (let k = q.length; k; --k) {
+            const i = q.shift()!;
+            --n;
+            for (const j of g[i]) {
+                if (--indeg[j] === 0) {
+                    q.push(j);
+                }
+            }
+        }
+    }
+    return n === 0 ? ans : -1;
+}
 ```
 
 ### **...**

@@ -11,21 +11,21 @@
 <p>Return <em>the head of the merged linked list</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0021.Merge%20Two%20Sorted%20Lists/images/merge_ex1.jpg" style="width: 662px; height: 302px;" />
 <pre>
 <strong>Input:</strong> list1 = [1,2,4], list2 = [1,3,4]
 <strong>Output:</strong> [1,1,2,3,4,4]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> list1 = [], list2 = []
 <strong>Output:</strong> []
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> list1 = [], list2 = [0]
@@ -54,7 +54,9 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(
+        self, list1: Optional[ListNode], list2: Optional[ListNode]
+    ) -> Optional[ListNode]:
         if list1 is None or list2 is None:
             return list1 or list2
         if list1.val <= list2.val:
@@ -168,13 +170,10 @@ public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         if (!list1) return list2;
         if (!list2) return list1;
-        if (list1->val <= list2->val)
-        {
+        if (list1->val <= list2->val) {
             list1->next = mergeTwoLists(list1->next, list2);
             return list1;
-        }
-        else
-        {
+        } else {
             list2->next = mergeTwoLists(list1, list2->next);
             return list2;
         }
@@ -198,15 +197,11 @@ public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         ListNode* dummy = new ListNode();
         ListNode* curr = dummy;
-        while (list1 && list2)
-        {
-            if (list1->val <= list2->val)
-            {
+        while (list1 && list2) {
+            if (list1->val <= list2->val) {
                 curr->next = list1;
                 list1 = list1->next;
-            }
-            else
-            {
+            } else {
                 curr->next = list2;
                 list2 = list2->next;
             }

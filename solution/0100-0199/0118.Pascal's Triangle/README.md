@@ -53,8 +53,10 @@ class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         ans = []
         for i in range(numRows):
-            t = [1 if j == 0 or j == i else ans[-1][j] + ans[-1][j - 1]
-                 for j in range(i + 1)]
+            t = [
+                1 if j == 0 or j == i else ans[-1][j] + ans[-1][j - 1]
+                for j in range(i + 1)
+            ]
             ans.append(t)
         return ans
 ```
@@ -106,8 +108,7 @@ class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>> ans;
-        for (int i = 0; i < numRows; ++i)
-        {
+        for (int i = 0; i < numRows; ++i) {
             vector<int> t(i + 1, 1);
             for (int j = 1; j < i; ++j) t[j] = ans[i - 1][j] + ans[i - 1][j - 1];
             ans.push_back(t);

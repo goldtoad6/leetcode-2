@@ -11,7 +11,7 @@
 <p>Return <em>an array</em> <code>lengths</code> <em>of length </em><code>k</code><em> where</em> <code>lengths[i]</code> <em>is the <strong>length</strong> of the <strong>longest substring</strong> of </em><code>s</code><em> consisting of <strong>only one repeating</strong> character <strong>after</strong> the</em> <code>i<sup>th</sup></code> <em>query</em><em> is performed.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;babacc&quot;, queryCharacters = &quot;bcb&quot;, queryIndices = [1,3,3]
@@ -24,7 +24,7 @@
 Thus, we return [3,3,4].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abyzz&quot;, queryCharacters = &quot;aa&quot;, queryIndices = [2,1]
@@ -133,7 +133,9 @@ class SegmentTree:
 
 
 class Solution:
-    def longestRepeating(self, s: str, queryCharacters: str, queryIndices: List[int]) -> List[int]:
+    def longestRepeating(
+        self, s: str, queryCharacters: str, queryIndices: List[int]
+    ) -> List[int]:
         tree = SegmentTree(s)
         k = len(queryIndices)
         ans = []
@@ -290,8 +292,7 @@ public:
     void build(int u, int l, int r) {
         tr[u]->l = l;
         tr[u]->r = r;
-        if (l == r)
-        {
+        if (l == r) {
             tr[u]->lmx = tr[u]->rmx = tr[u]->mx = tr[u]->size = 1;
             tr[u]->lc = tr[u]->rc = s[l - 1];
             return;
@@ -303,14 +304,15 @@ public:
     }
 
     void modify(int u, int x, char v) {
-        if (tr[u]->l == x && tr[u]->r == x)
-        {
+        if (tr[u]->l == x && tr[u]->r == x) {
             tr[u]->lc = tr[u]->rc = v;
             return;
         }
         int mid = (tr[u]->l + tr[u]->r) >> 1;
-        if (x <= mid) modify(u << 1, x, v);
-        else modify(u << 1 | 1, x, v);
+        if (x <= mid)
+            modify(u << 1, x, v);
+        else
+            modify(u << 1 | 1, x, v);
         pushup(u);
     }
 
@@ -335,8 +337,7 @@ public:
         root->lmx = left->lmx;
         root->rmx = right->rmx;
 
-        if (left->rc == right->lc)
-        {
+        if (left->rc == right->lc) {
             if (left->lmx == left->size) root->lmx += right->lmx;
             if (right->rmx == right->size) root->rmx += left->rmx;
             root->mx = max(root->mx, left->rmx + right->lmx);
@@ -354,8 +355,7 @@ public:
         SegmentTree* tree = new SegmentTree(s);
         int k = queryCharacters.size();
         vector<int> ans(k);
-        for (int i = 0; i < k; ++i)
-        {
+        for (int i = 0; i < k; ++i) {
             int x = queryIndices[i] + 1;
             tree->modify(1, x, queryCharacters[i]);
             ans[i] = tree->query(1, 1, s.size())->mx;

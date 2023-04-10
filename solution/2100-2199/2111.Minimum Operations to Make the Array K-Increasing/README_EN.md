@@ -25,7 +25,7 @@
 <p>Return <em>the <strong>minimum number of operations</strong> required to make the array K-increasing for the given </em><code>k</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [5,4,3,2,1], k = 1
@@ -37,7 +37,7 @@ It is suboptimal to change the array to, for example, [<u><strong>6</strong></u>
 It can be shown that we cannot make the array K-increasing in less than 4 operations.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [4,1,5,2,6,2], k = 2
@@ -47,7 +47,7 @@ This is the same example as the one in the problem description.
 Here, for every index i where 2 &lt;= i &lt;= 5, arr[i-2] &lt;=<b> </b>arr[i].
 Since the given array is already K-increasing, we do not need to perform any operations.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [4,1,5,2,6,2], k = 3
@@ -141,8 +141,7 @@ class Solution {
 public:
     int kIncreasing(vector<int>& arr, int k) {
         int ans = 0, n = arr.size();
-        for (int i = 0; i < k; ++i)
-        {
+        for (int i = 0; i < k; ++i) {
             vector<int> t;
             for (int j = i; j < n; j += k) t.push_back(arr[j]);
             ans += lis(t);
@@ -152,11 +151,12 @@ public:
 
     int lis(vector<int>& arr) {
         vector<int> t;
-        for (int x : arr)
-        {
+        for (int x : arr) {
             auto it = upper_bound(t.begin(), t.end(), x);
-            if (it == t.end()) t.push_back(x);
-            else *it = x;
+            if (it == t.end())
+                t.push_back(x);
+            else
+                *it = x;
         }
         return arr.size() - t.size();
     }

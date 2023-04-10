@@ -79,18 +79,13 @@ class Solution {
         }
         List<Integer> ans = new ArrayList<>();
         counter.forEach((k, v) -> {
-            if (
-                v == 1 &&
-                !counter.containsKey(k - 1) &&
-                !counter.containsKey(k + 1)
-            ) {
+            if (v == 1 && !counter.containsKey(k - 1) && !counter.containsKey(k + 1)) {
                 ans.add(k);
             }
         });
         return ans;
     }
 }
-
 ```
 
 ### **C++**
@@ -102,8 +97,7 @@ public:
         unordered_map<int, int> counter;
         for (int num : nums) ++counter[num];
         vector<int> ans;
-        for (auto& e : counter)
-        {
+        for (auto& e : counter) {
             int k = e.first, v = e.second;
             if (v == 1 && !counter.count(k - 1) && !counter.count(k + 1)) ans.push_back(k);
         }

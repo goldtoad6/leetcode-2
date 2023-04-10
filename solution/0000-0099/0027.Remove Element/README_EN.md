@@ -4,13 +4,14 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code> and an integer <code>val</code>, remove all occurrences of <code>val</code> in <code>nums</code> <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank"><strong>in-place</strong></a>. The relative order of the elements may be changed.</p>
+<p>Given an integer array <code>nums</code> and an integer <code>val</code>, remove all occurrences of <code>val</code> in <code>nums</code> <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank"><strong>in-place</strong></a>. The order of the elements may be changed. Then return <em>the number of elements in </em><code>nums</code><em> which are not equal to </em><code>val</code>.</p>
 
-<p>Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the <strong>first part</strong> of the array <code>nums</code>. More formally, if there are <code>k</code> elements after removing the duplicates, then the first <code>k</code> elements of <code>nums</code> should hold the final result. It does not matter what you leave beyond the first <code>k</code> elements.</p>
+<p>Consider the number of elements in <code>nums</code> which are not equal to <code>val</code> be <code>k</code>, to get accepted, you need to do the following things:</p>
 
-<p>Return <code>k</code><em> after placing the final result in the first </em><code>k</code><em> slots of </em><code>nums</code>.</p>
-
-<p>Do <strong>not</strong> allocate extra space for another array. You must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank">in-place</a></strong> with O(1) extra memory.</p>
+<ul>
+	<li>Change the array <code>nums</code> such that the first <code>k</code> elements of <code>nums</code> contain the elements which are not equal to <code>val</code>. The remaining elements of <code>nums</code> are not important as well as the size of <code>nums</code>.</li>
+	<li>Return <code>k</code>.</li>
+</ul>
 
 <p><strong>Custom Judge:</strong></p>
 
@@ -34,7 +35,7 @@ for (int i = 0; i &lt; actualLength; i++) {
 <p>If all assertions pass, then your solution will be <strong>accepted</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,2,2,3], val = 3
@@ -43,7 +44,7 @@ for (int i = 0; i &lt; actualLength; i++) {
 It does not matter what you leave beyond the returned k (hence they are underscores).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,1,2,2,3,0,4,2], val = 2
@@ -87,8 +88,10 @@ class Solution {
     public int removeElement(int[] nums, int val) {
         int cnt = 0, n = nums.length;
         for (int i = 0; i < n; ++i) {
-            if (nums[i] == val) ++cnt;
-            else nums[i - cnt] = nums[i];
+            if (nums[i] == val)
+                ++cnt;
+            else
+                nums[i - cnt] = nums[i];
         }
         return n - cnt;
     }
@@ -103,8 +106,10 @@ public:
     int removeElement(vector<int>& nums, int val) {
         int cnt = 0, n = nums.size();
         for (int i = 0; i < n; ++i) {
-            if (nums[i] == val) ++cnt;
-            else nums[i - cnt] = nums[i];
+            if (nums[i] == val)
+                ++cnt;
+            else
+                nums[i - cnt] = nums[i];
         }
         return n - cnt;
     }
@@ -159,6 +164,26 @@ impl Solution {
             }
         }
         len as i32
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $val
+     * @return Integer
+     */
+    function removeElement(&$nums, $val) {
+        for ($i = count($nums) - 1; $i >= 0; $i--) {
+            if ($nums[$i] == $val) {
+                array_splice($nums, $i, 1);
+            }
+        }
     }
 }
 ```

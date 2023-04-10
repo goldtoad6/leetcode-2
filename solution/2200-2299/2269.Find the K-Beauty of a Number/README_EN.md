@@ -23,7 +23,7 @@
 <p>A <strong>substring</strong> is a contiguous sequence of characters in a string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 240, k = 2
@@ -34,7 +34,7 @@
 Therefore, the k-beauty is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 430043, k = 2
@@ -65,13 +65,13 @@ Therefore, the k-beauty is 2.
 ```python
 class Solution:
     def divisorSubstrings(self, num: int, k: int) -> int:
-        cnt = 0
+        ans = 0
         s = str(num)
         for i in range(len(s) - k + 1):
-            tmp = int(s[i: i + k])
-            if tmp != 0 and num % tmp == 0:
-                cnt += 1
-        return cnt
+            t = int(s[i : i + k])
+            if t and num % t == 0:
+                ans += 1
+        return ans
 ```
 
 ### **Java**
@@ -79,23 +79,66 @@ class Solution:
 ```java
 class Solution {
     public int divisorSubstrings(int num, int k) {
-        int cnt = 0;
-        String s = String.valueOf(num);
-        for (int i = 0; i <= s.length() - k; i++) {
-            int tmp = Integer.parseInt(s.substring(i, i + k));
-            if (tmp != 0 && num % tmp == 0) {
-                cnt++;
+        int ans = 0;
+        String s = "" + num;
+        for (int i = 0; i < s.length() - k + 1; ++i) {
+            int t = Integer.parseInt(s.substring(i, i + k));
+            if (t != 0 && num % t == 0) {
+                ++ans;
             }
         }
-        return cnt;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int divisorSubstrings(int num, int k) {
+        int ans = 0;
+        string s = to_string(num);
+        for (int i = 0; i < s.size() - k + 1; ++i) {
+            int t = stoi(s.substr(i, k));
+            ans += t && num % t == 0;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func divisorSubstrings(num int, k int) int {
+	ans := 0
+	s := strconv.Itoa(num)
+	for i := 0; i < len(s)-k+1; i++ {
+		t, _ := strconv.Atoi(s[i : i+k])
+		if t > 0 && num%t == 0 {
+			ans++
+		}
+	}
+	return ans
 }
 ```
 
 ### **TypeScript**
 
 ```ts
-
+function divisorSubstrings(num: number, k: number): number {
+    let ans = 0;
+    const s = num.toString();
+    for (let i = 0; i < s.length - k + 1; ++i) {
+        const t = parseInt(s.substring(i, i + k));
+        if (t !== 0 && num % t === 0) {
+            ++ans;
+        }
+    }
+    return ans;
+}
 ```
 
 ### **...**

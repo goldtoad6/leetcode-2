@@ -36,7 +36,7 @@
 <p>There is exactly one <code>-1</code> and <code>2</code> in <code>grid</code>. Remember that you will <strong>not</strong> have this information in your code.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[1,2],[-1,0]]
@@ -58,14 +58,14 @@ The robot is initially standing on cell (1, 0), denoted by the -1.
 We now know that the target is the cell (0, 1), and the shortest path to the target cell is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[0,0,-1],[1,1,1],[2,0,0]]
 <strong>Output:</strong> 4
 <strong>Explanation:</strong>&nbsp;The minimum distance between the robot and the target cell is 4.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[-1,0],[0,2]]
@@ -106,6 +106,7 @@ We now know that the target is the cell (0, 1), and the shortest path to the tar
 #
 #
 
+
 class Solution(object):
     def findShortestPath(self, master: 'GridMaster') -> int:
         def dfs(i, j):
@@ -122,8 +123,12 @@ class Solution(object):
 
         target = None
         s = set()
-        dirs = [['U', 'D', -1, 0], ['D', 'U', 1, 0],
-                ['L', 'R', 0, -1], ['R', 'L', 0, 1]]
+        dirs = [
+            ['U', 'D', -1, 0],
+            ['D', 'U', 1, 0],
+            ['L', 'R', 0, -1],
+            ['R', 'L', 0, 1],
+        ]
         dfs(0, 0)
         if target is None:
             return -1
@@ -175,7 +180,7 @@ class Solution {
         }
         s.remove(0);
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0});
+        q.offer(new int[] {0, 0});
         int ans = -1;
         while (!q.isEmpty()) {
             ++ans;
@@ -189,7 +194,7 @@ class Solution {
                     int x = i + dirs[k], y = j + dirs[k + 1];
                     if (s.contains(x * N + y)) {
                         s.remove(x * N + y);
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                     }
                 }
             }
@@ -199,7 +204,7 @@ class Solution {
 
     private void dfs(int i, int j, GridMaster master) {
         if (master.isTarget()) {
-            target = new int[]{i, j};
+            target = new int[] {i, j};
         }
         for (int k = 0; k < 4; ++k) {
             char d = dir[k], nd = ndir[k];

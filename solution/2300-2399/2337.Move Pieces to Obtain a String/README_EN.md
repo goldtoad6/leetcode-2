@@ -14,7 +14,7 @@
 <p>Return <code>true</code> <em>if it is possible to obtain the string</em> <code>target</code><em> by moving the pieces of the string </em><code>start</code><em> <strong>any</strong> number of times</em>. Otherwise, return <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> start = &quot;_L__R__R_&quot;, target = &quot;L______RR&quot;
@@ -26,7 +26,7 @@
 Since it is possible to get the string target from start, we return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> start = &quot;R_L_&quot;, target = &quot;__LR&quot;
@@ -35,7 +35,7 @@ Since it is possible to get the string target from start, we return true.
 After that, no pieces can move anymore, so it is impossible to obtain the string target from start.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> start = &quot;_R&quot;, target = &quot;R_&quot;
@@ -78,38 +78,21 @@ class Solution:
 class Solution:
     def canChange(self, start: str, target: str) -> bool:
         n = len(start)
-        a = []
-        b = []
-        for i in range(n):
-            if start[i] != '_':
-                a.append(start[i])
-            if target[i] != '_':
-                b.append(target[i])
-        if a != b:
-            return False
-        i = j = n - 1
-        start = list(start)
-        target = list(target)
-        while j >= 0:
-            if target[j] == 'R':
-                i = min(i, j)
-                while i >= 0 and start[i] == '_':
-                    i -= 1
-                if i < 0 or start[i] != 'R':
-                    return False
-                start[i] = '_'
-            j -= 1
         i = j = 0
-        while j < n:
-            if target[j] == 'L':
-                i = max(i, j)
-                while i < n and start[i] == '_':
-                    i += 1
-                if i >= n or start[i] != 'L':
-                    return False
-                start[i] = '_'
-            j += 1
-        return True
+        while 1:
+            while i < n and start[i] == '_':
+                i += 1
+            while j < n and target[j] == '_':
+                j += 1
+            if i >= n and j >= n:
+                return True
+            if i >= n or j >= n or start[i] != target[j]:
+                return False
+            if start[i] == 'L' and i < j:
+                return False
+            if start[i] == 'R' and i > j:
+                return False
+            i, j = i + 1, j + 1
 ```
 
 ### **Java**
@@ -142,12 +125,40 @@ class Solution {
         List<int[]> res = new ArrayList<>();
         for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == 'L') {
-                res.add(new int[]{1, i});
+                res.add(new int[] {1, i});
             } else if (s.charAt(i) == 'R') {
-                res.add(new int[]{2, i});
+                res.add(new int[] {2, i});
             }
         }
         return res;
+    }
+}
+```
+
+```java
+class Solution {
+    public boolean canChange(String start, String target) {
+        int n = start.length();
+        int i = 0, j = 0;
+        while (true) {
+            while (i < n && start.charAt(i) == '_') {
+                ++i;
+            }
+            while (j < n && target.charAt(j) == '_') {
+                ++j;
+            }
+            if (i == n && j == n) {
+                return true;
+            }
+            if (i == n || j == n || start.charAt(i) != target.charAt(j)) {
+                return false;
+            }
+            if (start.charAt(i) == 'L' && i < j || start.charAt(i) == 'R' && i > j) {
+                return false;
+            }
+            ++i;
+            ++j;
+        }
     }
 }
 ```
@@ -163,8 +174,7 @@ public:
         auto a = f(start);
         auto b = f(target);
         if (a.size() != b.size()) return false;
-        for (int i = 0; i < a.size(); ++i)
-        {
+        for (int i = 0; i < a.size(); ++i) {
             auto x = a[i], y = b[i];
             if (x.first != y.first) return false;
             if (x.first == 1 && x.second < y.second) return false;
@@ -175,12 +185,33 @@ public:
 
     vector<pair<int, int>> f(string s) {
         vector<pii> res;
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (s[i] == 'L') res.push_back({1, i});
-            else if (s[i] == 'R') res.push_back({2, i});
+        for (int i = 0; i < s.size(); ++i) {
+            if (s[i] == 'L')
+                res.push_back({1, i});
+            else if (s[i] == 'R')
+                res.push_back({2, i});
         }
         return res;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    bool canChange(string start, string target) {
+        int n = start.size();
+        int i = 0, j = 0;
+        while (true) {
+            while (i < n && start[i] == '_') ++i;
+            while (j < n && target[j] == '_') ++j;
+            if (i == n && j == n) return true;
+            if (i == n || j == n || start[i] != target[j]) return false;
+            if (start[i] == 'L' && i < j) return false;
+            if (start[i] == 'R' && i > j) return false;
+            ++i;
+            ++j;
+        }
     }
 };
 ```
@@ -221,10 +252,69 @@ func canChange(start string, target string) bool {
 }
 ```
 
+```go
+func canChange(start string, target string) bool {
+	n := len(start)
+	i, j := 0, 0
+	for {
+		for i < n && start[i] == '_' {
+			i++
+		}
+		for j < n && target[j] == '_' {
+			j++
+		}
+		if i == n && j == n {
+			return true
+		}
+		if i == n || j == n || start[i] != target[j] {
+			return false
+		}
+		if start[i] == 'L' && i < j {
+			return false
+		}
+		if start[i] == 'R' && i > j {
+			return false
+		}
+		i, j = i+1, j+1
+	}
+}
+```
+
 ### **TypeScript**
 
 ```ts
-
+function canChange(start: string, target: string): boolean {
+    if (
+        [...start].filter(c => c !== '_').join('') !==
+        [...target].filter(c => c !== '_').join('')
+    ) {
+        return false;
+    }
+    const n = start.length;
+    let i = 0;
+    let j = 0;
+    while (i < n || j < n) {
+        while (start[i] === '_') {
+            i++;
+        }
+        while (target[j] === '_') {
+            j++;
+        }
+        if (start[i] === 'R') {
+            if (i > j) {
+                return false;
+            }
+        }
+        if (start[i] === 'L') {
+            if (i < j) {
+                return false;
+            }
+        }
+        i++;
+        j++;
+    }
+    return true;
+}
 ```
 
 ### **...**

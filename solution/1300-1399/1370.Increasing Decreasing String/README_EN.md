@@ -21,7 +21,7 @@
 <p>Return <em>the result string after sorting </em><code>s</code><em> with this algorithm</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aaaabbbbcccc&quot;
@@ -33,7 +33,7 @@ After steps 1, 2 and 3 of the second iteration, result = &quot;abccbaabc&quot;
 After steps 4, 5 and 6 of the second iteration, result = &quot;abccbaabccba&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;rat&quot;
@@ -112,20 +112,15 @@ public:
         vector<int> counter(26);
         for (char c : s) ++counter[c - 'a'];
         string ans = "";
-        while (ans.size() < s.size())
-        {
-            for (int i = 0; i < 26; ++i)
-            {
-                if (counter[i])
-                {
+        while (ans.size() < s.size()) {
+            for (int i = 0; i < 26; ++i) {
+                if (counter[i]) {
                     ans += (i + 'a');
                     --counter[i];
                 }
             }
-            for (int i = 25; i >= 0; --i)
-            {
-                if (counter[i])
-                {
+            for (int i = 25; i >= 0; --i) {
+                if (counter[i]) {
                     ans += (i + 'a');
                     --counter[i];
                 }

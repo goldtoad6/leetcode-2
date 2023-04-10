@@ -19,7 +19,7 @@
 <p>Return <em>the <strong>minimum</strong> number of operations needed to convert </em><code>x = start</code><em> into </em><code>goal</code><em>, and </em><code>-1</code><em> if it is not possible</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,4,12], start = 2, goal = 12
@@ -29,7 +29,7 @@
 - 14 - 2 = 12
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,5,7], start = 0, goal = -4
@@ -40,7 +40,7 @@
 Note that the last operation sets x out of the range 0 &lt;= x &lt;= 1000, which is valid.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,8,16], start = 0, goal = 1
@@ -286,7 +286,7 @@ class Solution {
 public:
     int minimumOperations(vector<int>& nums, int start, int goal) {
         using pii = pair<int, int>;
-        vector<function<int(int, int)>> ops{
+        vector<function<int(int, int)>> ops {
             [](int x, int y) { return x + y; },
             [](int x, int y) { return x - y; },
             [](int x, int y) { return x ^ y; },

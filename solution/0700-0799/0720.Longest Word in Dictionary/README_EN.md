@@ -8,8 +8,10 @@
 
 <p>If there is more than one possible answer, return the longest word with the smallest lexicographical order. If there is no answer, return the empty string.</p>
 
+<p>Note that the word should be built from left to right with each additional character being added to the end of a previous word.&nbsp;</p>
+
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;w&quot;,&quot;wo&quot;,&quot;wor&quot;,&quot;worl&quot;,&quot;world&quot;]
@@ -17,7 +19,7 @@
 <strong>Explanation:</strong> The word &quot;world&quot; can be built one character at a time by &quot;w&quot;, &quot;wo&quot;, &quot;wor&quot;, and &quot;worl&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;banana&quot;,&quot;app&quot;,&quot;appl&quot;,&quot;ap&quot;,&quot;apply&quot;,&quot;apple&quot;]
@@ -150,17 +152,14 @@ public:
         unordered_set<string> s(words.begin(), words.end());
         int cnt = 0;
         string ans = "";
-        for (auto w : s)
-        {
+        for (auto w : s) {
             int n = w.size();
-            if (check(w, s))
-            {
-                if (cnt < n)
-                {
+            if (check(w, s)) {
+                if (cnt < n) {
                     cnt = n;
                     ans = w;
-                }
-                else if (cnt == n && w < ans) ans = w;
+                } else if (cnt == n && w < ans)
+                    ans = w;
             }
         }
         return ans;

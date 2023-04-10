@@ -44,7 +44,15 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：迭代**
+
 设置虚拟头节点 dummy，pre 指针初始指向 dummy，遍历链表，每次交换 pre 后面的两个节点即可。
+
+时间复杂度为 $O(n)$，空间复杂度为 $O(1)$，其中 $n$ 是链表的长度。
+
+**方法二：递归**
+
+时间复杂度为 $O(n)$，空间复杂度为 $O(n)$，其中 $n$ 是链表的长度。
 
 <!-- tabs:start -->
 
@@ -149,10 +157,10 @@ var swapPairs = function (head) {
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        ListNode *dummy = new ListNode(0, head);
+        ListNode* dummy = new ListNode(0, head);
         ListNode *pre = dummy, *cur = head;
         while (cur != nullptr && cur->next != nullptr) {
-            ListNode *t = cur->next;
+            ListNode* t = cur->next;
             cur->next = t->next;
             t->next = cur;
             pre->next = t;
@@ -165,6 +173,8 @@ public:
 ```
 
 ### **Go**
+
+迭代：
 
 ```go
 /**
@@ -186,6 +196,27 @@ func swapPairs(head *ListNode) *ListNode {
         cur = cur.Next
     }
     return dummy.Next
+}
+```
+
+递归：
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func swapPairs(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	res := swapPairs(head.Next.Next)
+	p := head.Next
+	p.Next, head.Next = head, res
+	return p
 }
 ```
 

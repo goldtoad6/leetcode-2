@@ -7,7 +7,7 @@
 <p>You are given the <code>root</code> of a binary search tree (BST), where the values of <strong>exactly</strong> two nodes of the tree were swapped by mistake. <em>Recover the tree without changing its structure</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0099.Recover%20Binary%20Search%20Tree/images/recover1.jpg" style="width: 422px; height: 302px;" />
 <pre>
 <strong>Input:</strong> root = [1,3,null,null,2]
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> 3 cannot be a left child of 1 because 3 &gt; 1. Swapping 1 and 3 makes the BST valid.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0099.Recover%20Binary%20Search%20Tree/images/recover2.jpg" style="width: 581px; height: 302px;" />
 <pre>
 <strong>Input:</strong> root = [3,1,4,null,null,2]
@@ -53,16 +53,16 @@ class Solution:
         Do not return anything, modify root in-place instead.
         """
         def dfs(root):
+            if root is None:
+                return
             nonlocal prev, first, second
-            if root:
-                dfs(root.left)
-                if prev:
-                    if first is None and root.val < prev.val:
-                        first = prev
-                    if first and root.val < prev.val:
-                        second = root
-                prev = root
-                dfs(root.right)
+            dfs(root.left)
+            if prev and prev.val > root.val:
+                if first is None:
+                    first = prev
+                second = root
+            prev = root
+            dfs(root.right)
 
         prev = first = second = None
         dfs(root)
@@ -104,13 +104,11 @@ class Solution {
             return;
         }
         dfs(root.left);
-        if (prev != null) {
-            if (first == null && prev.val > root.val) {
+        if (prev != null && prev.val > root.val) {
+            if (first == null) {
                 first = prev;
             }
-            if (first != null && prev.val > root.val) {
-                second = root;
-            }
+            second = root;
         }
         prev = root;
         dfs(root.right);
@@ -134,25 +132,22 @@ class Solution {
  */
 class Solution {
 public:
-    TreeNode* prev;
-    TreeNode* first;
-    TreeNode* second;
-
     void recoverTree(TreeNode* root) {
+        TreeNode* prev = nullptr;
+        TreeNode* first = nullptr;
+        TreeNode* second = nullptr;
+        function<void(TreeNode* root)> dfs = [&](TreeNode* root) {
+            if (!root) return;
+            dfs(root->left);
+            if (prev && prev->val > root->val) {
+                if (!first) first = prev;
+                second = root;
+            }
+            prev = root;
+            dfs(root->right);
+        };
         dfs(root);
         swap(first->val, second->val);
-    }
-
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        dfs(root->left);
-        if (prev)
-        {
-            if (!first && prev->val > root->val) first = prev;
-            if (first && prev->val > root->val) second = root;
-        }
-        prev = root;
-        dfs(root->right);
     }
 };
 ```
@@ -169,28 +164,22 @@ public:
  * }
  */
 func recoverTree(root *TreeNode) {
-	var prev *TreeNode
-	var first *TreeNode
-	var second *TreeNode
-
-	var dfs func(root *TreeNode)
+	var prev, first, second *TreeNode
+	var dfs func(*TreeNode)
 	dfs = func(root *TreeNode) {
 		if root == nil {
 			return
 		}
 		dfs(root.Left)
-		if prev != nil {
-			if first == nil && prev.Val > root.Val {
+		if prev != nil && prev.Val > root.Val {
+			if first == nil {
 				first = prev
 			}
-			if first != nil && prev.Val > root.Val {
-				second = root
-			}
+			second = root
 		}
 		prev = root
 		dfs(root.Right)
 	}
-
 	dfs(root)
 	first.Val, second.Val = second.Val, first.Val
 }
@@ -223,23 +212,18 @@ public class Solution {
     }
 
     private void dfs(TreeNode root) {
-        if (root != null)
-        {
-            dfs(root.left);
-            if (prev != null)
-            {
-                if (first == null && prev.val > root.val)
-                {
-                    first = prev;
-                }
-                if (first != null && prev.val > root.val)
-                {
-                    second = root;
-                }
-            }
-            prev = root;
-            dfs(root.right);
+        if (root == null) {
+            return;
         }
+        dfs(root.left);
+        if (prev != null && prev.val > root.val) {
+            if (first == null) {
+                first = prev;
+            }
+            second = root;
+        }
+        prev = root;
+        dfs(root.right);
     }
 }
 ```
@@ -259,34 +243,28 @@ public class Solution {
  * @param {TreeNode} root
  * @return {void} Do not return anything, modify root in-place instead.
  */
-const recoverTree = root => {
-    const data = {
-        prev: null,
-        first: null,
-        second: null,
-    };
-    let tmp = 0;
-
-    helper(root, data);
-
-    tmp = data.first.val;
-    data.first.val = data.second.val;
-    data.second.val = tmp;
-};
-
-const helper = (root, data) => {
-    if (!root) return;
-
-    helper(root.left, data);
-
-    if (data.prev && data.prev.val >= root.val) {
-        if (!data.first) data.first = data.prev;
-        data.second = root;
+var recoverTree = function (root) {
+    let prev = null;
+    let first = null;
+    let second = null;
+    function dfs(root) {
+        if (!root) {
+            return;
+        }
+        dfs(root.left);
+        if (prev && prev.val > root.val) {
+            if (!first) {
+                first = prev;
+            }
+            second = root;
+        }
+        prev = root;
+        dfs(root.right);
     }
-
-    data.prev = root;
-
-    helper(root.right, data);
+    dfs(root);
+    const t = first.val;
+    first.val = second.val;
+    second.val = t;
 };
 ```
 

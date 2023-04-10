@@ -13,7 +13,7 @@
 <p><strong>Note:</strong> The input is always valid. You may assume that evaluating the queries will not result in division by zero and that there is no contradiction.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> equations = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;]], values = [2.0,3.0], queries = [[&quot;a&quot;,&quot;c&quot;],[&quot;b&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;e&quot;],[&quot;a&quot;,&quot;a&quot;],[&quot;x&quot;,&quot;x&quot;]]
@@ -24,14 +24,14 @@ queries are: <em>a / c = ?</em>, <em>b / a = ?</em>, <em>a / e = ?</em>, <em>a /
 return: [6.0, 0.5, -1.0, 1.0, -1.0 ]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> equations = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;bc&quot;,&quot;cd&quot;]], values = [1.5,2.5,5.0], queries = [[&quot;a&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;b&quot;],[&quot;bc&quot;,&quot;cd&quot;],[&quot;cd&quot;,&quot;bc&quot;]]
 <strong>Output:</strong> [3.75000,0.40000,5.00000,0.20000]
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> equations = [[&quot;a&quot;,&quot;b&quot;]], values = [0.5], queries = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;c&quot;],[&quot;x&quot;,&quot;y&quot;]]
@@ -63,7 +63,9 @@ Union find.
 
 ```python
 class Solution:
-    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    def calcEquation(
+        self, equations: List[List[str]], values: List[float], queries: List[List[str]]
+    ) -> List[float]:
         def find(x):
             if p[x] != x:
                 origin = p[x]
@@ -82,7 +84,10 @@ class Solution:
                 continue
             p[pa] = pb
             w[pa] = w[b] * v / w[a]
-        return [-1 if c not in p or d not in p or find(c) != find(d) else w[c] / w[d] for c, d in queries]
+        return [
+            -1 if c not in p or d not in p or find(c) != find(d) else w[c] / w[d]
+            for c, d in queries
+        ]
 ```
 
 ### **Java**
@@ -92,7 +97,8 @@ class Solution {
     private Map<String, String> p;
     private Map<String, Double> w;
 
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+    public double[] calcEquation(
+        List<List<String>> equations, double[] values, List<List<String>> queries) {
         int n = equations.size();
         p = new HashMap<>();
         w = new HashMap<>();
@@ -116,7 +122,9 @@ class Solution {
         double[] ans = new double[m];
         for (int i = 0; i < m; ++i) {
             String c = queries.get(i).get(0), d = queries.get(i).get(1);
-            ans[i] = !p.containsKey(c) || !p.containsKey(d) || !Objects.equals(find(c), find(d)) ? - 1.0 : w.get(c) / w.get(d);
+            ans[i] = !p.containsKey(c) || !p.containsKey(d) || !Objects.equals(find(c), find(d))
+                ? -1.0
+                : w.get(c) / w.get(d);
         }
         return ans;
     }
@@ -142,15 +150,13 @@ public:
 
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         int n = equations.size();
-        for (auto e : equations)
-        {
+        for (auto e : equations) {
             p[e[0]] = e[0];
             p[e[1]] = e[1];
             w[e[0]] = 1.0;
             w[e[1]] = 1.0;
         }
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             vector<string> e = equations[i];
             string a = e[0], b = e[1];
             string pa = find(a), pb = find(b);
@@ -160,8 +166,7 @@ public:
         }
         int m = queries.size();
         vector<double> ans(m);
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             string c = queries[i][0], d = queries[i][1];
             ans[i] = p.find(c) == p.end() || p.find(d) == p.end() || find(c) != find(d) ? -1.0 : w[c] / w[d];
         }
@@ -169,8 +174,7 @@ public:
     }
 
     string find(string x) {
-        if (p[x] != x)
-        {
+        if (p[x] != x) {
             string origin = p[x];
             p[x] = find(p[x]);
             w[x] *= w[origin];

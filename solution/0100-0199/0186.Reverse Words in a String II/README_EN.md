@@ -11,10 +11,10 @@
 <p>Your code must solve the problem&nbsp;<strong>in-place,</strong> i.e. without allocating extra space.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = ["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]
 <strong>Output:</strong> ["b","l","u","e"," ","i","s"," ","s","k","y"," ","t","h","e"]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = ["a"]
 <strong>Output:</strong> ["a"]
 </pre>
@@ -41,6 +41,7 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
+
         def reverse(s, i, j):
             while i < j:
                 s[i], s[j] = s[j], s[i]

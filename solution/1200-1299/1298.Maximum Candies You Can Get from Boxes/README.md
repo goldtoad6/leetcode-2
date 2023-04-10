@@ -93,7 +93,14 @@
 
 ```python
 class Solution:
-    def maxCandies(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]], initialBoxes: List[int]) -> int:
+    def maxCandies(
+        self,
+        status: List[int],
+        candies: List[int],
+        keys: List[List[int]],
+        containedBoxes: List[List[int]],
+        initialBoxes: List[int],
+    ) -> int:
         q = deque([i for i in initialBoxes if status[i] == 1])
         ans = sum(candies[i] for i in initialBoxes if status[i] == 1)
         has = set(initialBoxes)
@@ -122,7 +129,8 @@ class Solution:
 
 ```java
 class Solution {
-    public int maxCandies(int[] status, int[] candies, int[][] keys, int[][] containedBoxes, int[] initialBoxes) {
+    public int maxCandies(
+        int[] status, int[] candies, int[][] keys, int[][] containedBoxes, int[] initialBoxes) {
         int ans = 0;
         int n = status.length;
         boolean[] has = new boolean[n];
@@ -171,35 +179,28 @@ public:
         vector<bool> has(n);
         vector<bool> took(n);
         queue<int> q;
-        for (int& i : initialBoxes)
-        {
+        for (int& i : initialBoxes) {
             has[i] = true;
-            if (status[i])
-            {
+            if (status[i]) {
                 ans += candies[i];
                 took[i] = true;
                 q.push(i);
             }
         }
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int i = q.front();
             q.pop();
-            for (int k : keys[i])
-            {
+            for (int k : keys[i]) {
                 status[k] = 1;
-                if (has[k] && !took[k])
-                {
+                if (has[k] && !took[k]) {
                     ans += candies[k];
                     took[k] = true;
                     q.push(k);
                 }
             }
-            for (int j : containedBoxes[i])
-            {
+            for (int j : containedBoxes[i]) {
                 has[j] = true;
-                if (status[j] && !took[j])
-                {
+                if (status[j] && !took[j]) {
                     ans += candies[j];
                     took[j] = true;
                     q.push(j);

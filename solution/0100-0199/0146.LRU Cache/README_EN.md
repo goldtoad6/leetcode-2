@@ -11,13 +11,13 @@
 <ul>
 	<li><code>LRUCache(int capacity)</code> Initialize the LRU cache with <strong>positive</strong> size <code>capacity</code>.</li>
 	<li><code>int get(int key)</code> Return the value of the <code>key</code> if the key exists, otherwise return <code>-1</code>.</li>
-	<li><code>void put(int key, int value)</code>&nbsp;Update the value of the <code>key</code> if the <code>key</code> exists. Otherwise, add the <code>key-value</code> pair to the cache. If the number of keys exceeds the <code>capacity</code> from this operation, <strong>evict</strong> the least recently used key.</li>
+	<li><code>void put(int key, int value)</code> Update the value of the <code>key</code> if the <code>key</code> exists. Otherwise, add the <code>key-value</code> pair to the cache. If the number of keys exceeds the <code>capacity</code> from this operation, <strong>evict</strong> the least recently used key.</li>
 </ul>
 
-<p>The functions&nbsp;<code data-stringify-type="code">get</code>&nbsp;and&nbsp;<code data-stringify-type="code">put</code>&nbsp;must each run in <code>O(1)</code> average time complexity.</p>
+<p>The functions <code>get</code> and <code>put</code> must each run in <code>O(1)</code> average time complexity.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -46,7 +46,7 @@ lRUCache.get(4);    // return 4
 	<li><code>1 &lt;= capacity &lt;= 3000</code></li>
 	<li><code>0 &lt;= key &lt;= 10<sup>4</sup></code></li>
 	<li><code>0 &lt;= value &lt;= 10<sup>5</sup></code></li>
-	<li>At most 2<code>&nbsp;* 10<sup>5</sup></code>&nbsp;calls will be made to <code>get</code> and <code>put</code>.</li>
+	<li>At most <code>2 * 10<sup>5</sup></code> calls will be made to <code>get</code> and <code>put</code>.</li>
 </ul>
 
 ## Solutions
@@ -65,7 +65,6 @@ class Node:
 
 
 class LRUCache:
-
     def __init__(self, capacity: int):
         self.cache = {}
         self.head = Node()
@@ -133,7 +132,6 @@ class Node {
     Node next;
 
     Node() {
-
     }
 
     Node(int key, int val) {
@@ -431,13 +429,23 @@ struct Node {
     Node* prev;
     Node* next;
 
-    Node(): k(0), v(0), prev(nullptr), next(nullptr) {}
-    Node(int key, int val): k(key), v(val), prev(nullptr), next(nullptr) {}
+    Node()
+        : k(0)
+        , v(0)
+        , prev(nullptr)
+        , next(nullptr) { }
+    Node(int key, int val)
+        : k(key)
+        , v(val)
+        , prev(nullptr)
+        , next(nullptr) { }
 };
 
 class LRUCache {
 public:
-    LRUCache(int capacity): cap(capacity), size(0) {
+    LRUCache(int capacity)
+        : cap(capacity)
+        , size(0) {
         head = new Node();
         tail = new Node();
         head->next = tail;
@@ -452,20 +460,16 @@ public:
     }
 
     void put(int key, int value) {
-        if (cache.count(key))
-        {
+        if (cache.count(key)) {
             Node* node = cache[key];
             node->v = value;
             moveToHead(node);
-        }
-        else
-        {
+        } else {
             Node* node = new Node(key, value);
             cache[key] = node;
             addToHead(node);
             ++size;
-            if (size > cap)
-            {
+            if (size > cap) {
                 node = removeTail();
                 cache.erase(node->k);
                 --size;

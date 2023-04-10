@@ -20,7 +20,7 @@
 <p>Return <em>the <b>number of valid ways</b> to select 3 buildings.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;001101&quot;
@@ -36,7 +36,7 @@ The following sets of indices selected are valid:
 No other selection is valid. Thus, there are 6 total ways.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;11100&quot;
@@ -117,15 +117,11 @@ public:
         int cnt1 = n - cnt0;
         int c0 = 0, c1 = 0;
         long long ans = 0;
-        for (char& c : s)
-        {
-            if (c == '0')
-            {
+        for (char& c : s) {
+            if (c == '0') {
                 ans += c1 * (cnt1 - c1);
                 ++c0;
-            }
-            else
-            {
+            } else {
                 ans += c0 * (cnt0 - c0);
                 ++c1;
             }

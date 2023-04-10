@@ -14,14 +14,14 @@
 <p>Return <em>the probability that the </em><code>n<sup>th</sup></code><em> person gets his own seat</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1
 <strong>Output:</strong> 1.00000
 <strong>Explanation: </strong>The first person can only get the first seat.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2
@@ -43,13 +43,41 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def nthPersonGetsNthSeat(self, n: int) -> float:
+        return 1 if n == 1 else 0.5
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public double nthPersonGetsNthSeat(int n) {
+        return n == 1 ? 1 : .5;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    double nthPersonGetsNthSeat(int n) {
+        return n == 1 ? 1 : .5;
+    }
+};
+```
+
+### **Go**
+
+```go
+func nthPersonGetsNthSeat(n int) float64 {
+	if n == 1 {
+		return 1
+	}
+	return .5
+}
 ```
 
 ### **...**

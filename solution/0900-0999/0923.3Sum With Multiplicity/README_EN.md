@@ -9,7 +9,7 @@
 <p>As the answer can be very large, return it <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,1,2,2,3,3,4,4,5,5], target = 8
@@ -22,7 +22,7 @@ Enumerating by the values (arr[i], arr[j], arr[k]):
 (2, 3, 3) occurs 2 times.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,1,2,2,2,2], target = 5
@@ -33,7 +33,7 @@ We choose one 1 from [1,1] in 2 ways,
 and two 2s from [2,2,2,2] in 6 ways.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [2,1,3], target = 6
@@ -57,13 +57,46 @@ and two 2s from [2,2,2,2] in 6 ways.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def threeSumMulti(self, arr: List[int], target: int) -> int:
+        cnt = Counter(arr)
+        ans = 0
+        mod = 10**9 + 7
+        for j, b in enumerate(arr):
+            cnt[b] -= 1
+            for i in range(j):
+                a = arr[i]
+                c = target - a - b
+                ans = (ans + cnt[c]) % mod
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    private static final int MOD = (int) 1e9 + 7;
 
+    public int threeSumMulti(int[] arr, int target) {
+        int[] cnt = new int[101];
+        for (int v : arr) {
+            ++cnt[v];
+        }
+        long ans = 0;
+        for (int j = 0; j < arr.length; ++j) {
+            int b = arr[j];
+            --cnt[b];
+            for (int i = 0; i < j; ++i) {
+                int a = arr[i];
+                int c = target - a - b;
+                if (c >= 0 && c <= 100) {
+                    ans = (ans + cnt[c]) % MOD;
+                }
+            }
+        }
+        return (int) ans;
+    }
+}
 ```
 
 ### **C++**
@@ -71,24 +104,60 @@ and two 2s from [2,2,2,2] in 6 ways.
 ```cpp
 class Solution {
 public:
+    const int mod = 1e9 + 7;
+
     int threeSumMulti(vector<int>& arr, int target) {
-        unordered_map<int, long> c;
-        for (int a : arr) c[a]++;
-        long res = 0;
-        for (auto it : c)
-            for (auto it2 : c) {
-                int i = it.first, j = it2.first, k = target - i - j;
-                if (!c.count(k)) continue;
-                if (i == j && j == k)
-                    res += c[i] * (c[i] - 1) * (c[i] - 2) / 6;
-                else if (i == j && j != k)
-                    res += c[i] * (c[i] - 1) / 2 * c[k];
-                else if (i < j && j < k)
-                    res += c[i] * c[j] * c[k];
+        int cnt[101] = {0};
+        for (int& v : arr) {
+            ++cnt[v];
+        }
+        long ans = 0;
+        for (int j = 0; j < arr.size(); ++j) {
+            int b = arr[j];
+            --cnt[b];
+            for (int i = 0; i < j; ++i) {
+                int a = arr[i];
+                int c = target - a - b;
+                if (c >= 0 && c <= 100) {
+                    ans += cnt[c];
+                    ans %= mod;
+                }
             }
-        return res % int(1e9 + 7);
+        }
+        return ans;
     }
 };
+```
+
+### **Go**
+
+```go
+func threeSumMulti(arr []int, target int) int {
+	const mod int = 1e9 + 7
+	cnt := [101]int{}
+	for _, v := range arr {
+		cnt[v]++
+	}
+	ans := 0
+	for j, b := range arr {
+		cnt[b]--
+		for i := 0; i < j; i++ {
+			a := arr[i]
+			c := target - a - b
+			if c >= 0 && c <= 100 {
+				ans += cnt[c]
+				ans %= mod
+			}
+		}
+	}
+	return ans
+}
+```
+
+### **...**
+
+```
+
 ```
 
 <!-- tabs:end -->

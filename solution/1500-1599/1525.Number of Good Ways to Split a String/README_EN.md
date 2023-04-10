@@ -11,7 +11,7 @@
 <p>Return <em>the number of <strong>good splits</strong> you can make in <code>s</code></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aacaba&quot;
@@ -24,7 +24,7 @@
 (&quot;aacab&quot;, &quot;a&quot;) Left string and right string contains 3 and 1 different letters respectively.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcd&quot;
@@ -47,13 +47,90 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def numSplits(self, s: str) -> int:
+        cnt = Counter(s)
+        vis = set()
+        ans = 0
+        for c in s:
+            vis.add(c)
+            cnt[c] -= 1
+            if cnt[c] == 0:
+                cnt.pop(c)
+            ans += len(vis) == len(cnt)
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int numSplits(String s) {
+        Map<Character, Integer> cnt = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            cnt.merge(c, 1, Integer::sum);
+        }
+        Set<Character> vis = new HashSet<>();
+        int ans = 0;
+        for (char c : s.toCharArray()) {
+            vis.add(c);
+            if (cnt.merge(c, -1, Integer::sum) == 0) {
+                cnt.remove(c);
+            }
+            if (vis.size() == cnt.size()) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int numSplits(string s) {
+        unordered_map<char, int> cnt;
+        for (char& c : s) {
+            ++cnt[c];
+        }
+        unordered_set<char> vis;
+        int ans = 0;
+        for (char& c : s) {
+            vis.insert(c);
+            if (--cnt[c] == 0) {
+                cnt.erase(c);
+            }
+            ans += vis.size() == cnt.size();
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func numSplits(s string) (ans int) {
+	cnt := map[rune]int{}
+	for _, c := range s {
+		cnt[c]++
+	}
+	vis := map[rune]bool{}
+	for _, c := range s {
+		vis[c] = true
+		cnt[c]--
+		if cnt[c] == 0 {
+			delete(cnt, c)
+		}
+		if len(vis) == len(cnt) {
+			ans++
+		}
+	}
+	return
+}
 ```
 
 ### **...**

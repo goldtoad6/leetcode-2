@@ -58,8 +58,10 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     res, t = True, None
+
     def isValidBST(self, root: TreeNode) -> bool:
         self.isValid(root)
         return self.res
@@ -171,10 +173,10 @@ func check(node *TreeNode, lower, upper int) bool {
  */
 class Solution {
 public:
-    bool isValidBST(TreeNode *root) {
-        TreeNode *pre = nullptr;
-        TreeNode *cur = root;
-        stack<TreeNode *> stk;
+    bool isValidBST(TreeNode* root) {
+        TreeNode* pre = nullptr;
+        TreeNode* cur = root;
+        stack<TreeNode*> stk;
         while (cur || !stk.empty()) {
             if (cur) {
                 stk.push(cur);

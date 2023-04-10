@@ -11,7 +11,7 @@
 <p>Return <em>the number of remaining intervals</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,4],[3,6],[2,8]]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> Interval [3,6] is covered by [2,8], therefore it is removed.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,4],[2,3]]
@@ -86,15 +86,12 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    int removeCoveredIntervals(vector<vector<int>> &intervals) {
-        sort(intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b)
-             { return a[0] == b[0] ? b[1] < a[1] : a[0] < b[0]; });
+    int removeCoveredIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b) { return a[0] == b[0] ? b[1] < a[1] : a[0] < b[0]; });
         int cnt = 1;
         vector<int> pre = intervals[0];
-        for (int i = 1; i < intervals.size(); ++i)
-        {
-            if (pre[1] < intervals[i][1])
-            {
+        for (int i = 1; i < intervals.size(); ++i) {
+            if (pre[1] < intervals[i][1]) {
                 ++cnt;
                 pre = intervals[i];
             }

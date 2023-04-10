@@ -10,7 +10,7 @@
 
 <p>Return <em>the <strong>maximum number of candies</strong> each child can get.</em></p>
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> candies = [5,8,6], k = 3
@@ -18,7 +18,7 @@
 <strong>Explanation:</strong> We can divide candies[1] into 2 piles of size 5 and 3, and candies[2] into 2 piles of size 5 and 1. We now have five piles of candies of sizes 5, 5, 3, 5, and 1. We can allocate the 3 piles of size 5 to 3 children. It can be proven that each child cannot receive more than 5 candies.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> candies = [2,5], k = 11
@@ -85,13 +85,14 @@ class Solution {
 public:
     int maximumCandies(vector<int>& candies, long long k) {
         int left = 0, right = 1e7;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right + 1) >> 1;
             long long cnt = 0;
             for (int& v : candies) cnt += v / mid;
-            if (cnt >= k) left = mid;
-            else right = mid - 1;
+            if (cnt >= k)
+                left = mid;
+            else
+                right = mid - 1;
         }
         return left;
     }

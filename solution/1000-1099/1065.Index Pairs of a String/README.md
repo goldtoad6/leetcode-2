@@ -45,7 +45,7 @@
 
 **方法二：前缀树**
 
-类似题目：[616. 给字符串添加加粗标签](/solution/0600-0699/0616.Add%20Bold%20Tag%20in%20String/README.md)、[758. 字符串中的加粗单词](/solution/0700-0799/0758.Bold%20Words%20in%20String/README.md)
+相似题目：[616. 给字符串添加加粗标签](/solution/0600-0699/0616.Add%20Bold%20Tag%20in%20String/README.md)、[758. 字符串中的加粗单词](/solution/0700-0799/0758.Bold%20Words%20in%20String/README.md)
 
 <!-- tabs:start -->
 
@@ -58,7 +58,9 @@ class Solution:
     def indexPairs(self, text: str, words: List[str]) -> List[List[int]]:
         words = set(words)
         n = len(text)
-        return [[i, j] for i in range(n) for j in range(i, n) if text[i: j + 1] in words]
+        return [
+            [i, j] for i in range(n) for j in range(i, n) if text[i : j + 1] in words
+        ]
 ```
 
 ```python
@@ -135,7 +137,7 @@ class Solution {
                 }
                 node = node.children[idx];
                 if (node.isEnd) {
-                    ans.add(new int[]{i, j});
+                    ans.add(new int[] {i, j});
                 }
             }
         }
@@ -158,8 +160,7 @@ public:
 
     void insert(string word) {
         Trie* node = this;
-        for (char c : word)
-        {
+        for (char c : word) {
             c -= 'a';
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
@@ -175,11 +176,9 @@ public:
         for (auto w : words) trie->insert(w);
         int n = text.size();
         vector<vector<int>> ans;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             Trie* node = trie;
-            for (int j = i; j < n; ++j)
-            {
+            for (int j = i; j < n; ++j) {
                 int idx = text[j] - 'a';
                 if (!node->children[idx]) break;
                 node = node->children[idx];

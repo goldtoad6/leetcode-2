@@ -34,13 +34,18 @@
 
 <strong>解释</strong>
 RandomizedCollection collection = new RandomizedCollection();// 初始化一个空的集合。
-collection.insert(1);// 向集合中插入 1 。返回 true 表示集合不包含 1 。
-collection.insert(1);// 向集合中插入另一个 1 。返回 false 表示集合包含 1 。集合现在包含 [1,1] 。
-collection.insert(2);// 向集合中插入 2 ，返回 true 。集合现在包含 [1,1,2] 。
-collection.getRandom();// getRandom 应当有 2/3 的概率返回 1 ，1/3 的概率返回 2 。
-collection.remove(1);// 从集合中删除 1 ，返回 true 。集合现在包含 [1,2] 。
-collection.getRandom();// getRandom 应有相同概率返回 1 和 2 。
-</pre>
+collection.insert(1);   // 返回 true，因为集合不包含 1。
+                        // 将 1 插入到集合中。
+collection.insert(1);   // 返回 false，因为集合包含 1。
+&nbsp;                       // 将另一个 1 插入到集合中。集合现在包含 [1,1]。
+collection.insert(2);   // 返回 true，因为集合不包含 2。
+&nbsp;                       // 将 2 插入到集合中。集合现在包含 [1,1,2]。
+collection.getRandom(); // getRandom 应当:
+&nbsp;                       // 有 2/3 的概率返回 1,
+&nbsp;                       // 1/3 的概率返回 2。
+collection.remove(1);   // 返回 true，因为集合包含 1。
+&nbsp;                       // 从集合中移除 1。集合现在包含 [1,2]。
+collection.getRandom(); // getRandom 应该返回 1 或 2，两者的可能性相同。</pre>
 
 <p>&nbsp;</p>
 
@@ -70,7 +75,6 @@ collection.getRandom();// getRandom 应有相同概率返回 1 和 2 。
 
 ```python
 class RandomizedCollection:
-
     def __init__(self):
         """
         Initialize your data structure here.
@@ -117,7 +121,6 @@ class RandomizedCollection:
         return -1 if len(self.l) == 0 else random.choice(self.l)
 
 
-
 # Your RandomizedCollection object will be instantiated and called as such:
 # obj = RandomizedCollection()
 # param_1 = obj.insert(val)
@@ -142,14 +145,20 @@ class RandomizedCollection {
         rnd = new Random();
     }
 
-    /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
+    /**
+     * Inserts a value to the collection. Returns true if the collection did not already contain
+     * the specified element.
+     */
     public boolean insert(int val) {
         m.computeIfAbsent(val, k -> new HashSet<>()).add(l.size());
         l.add(val);
         return m.get(val).size() == 1;
     }
 
-    /** Removes a value from the collection. Returns true if the collection contained the specified element. */
+    /**
+     * Removes a value from the collection. Returns true if the collection contained the specified
+     * element.
+     */
     public boolean remove(int val) {
         if (!m.containsKey(val)) {
             return false;

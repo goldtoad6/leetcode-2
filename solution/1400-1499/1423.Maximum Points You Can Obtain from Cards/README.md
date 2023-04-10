@@ -79,7 +79,7 @@ class Solution:
         s = [0] * (n + 1)
         for i in range(n):
             s[i + 1] = s[i] + cardPoints[i]
-        mi = float('inf')
+        mi = inf
         for i in range(n):
             j = i + (n - k) - 1
             if j < n:
@@ -110,7 +110,6 @@ class Solution {
         return s[n] - mi;
     }
 }
-
 ```
 
 ### **C++**
@@ -123,8 +122,7 @@ public:
         vector<int> s(n + 1);
         for (int i = 0; i < n; ++i) s[i + 1] = s[i] + cardPoints[i];
         int mi = INT_MAX;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int j = i + (n - k) - 1;
             if (j < n) mi = min(mi, s[j + 1] - s[i]);
         }

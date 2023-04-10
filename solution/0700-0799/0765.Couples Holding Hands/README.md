@@ -69,6 +69,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -122,23 +123,17 @@ d[find(a)] = distance
 ```python
 class Solution:
     def minSwapsCouples(self, row: List[int]) -> int:
-        n = len(row) >> 1
-        p = list(range(n))
-
         def find(x):
             if p[x] != x:
                 p[x] = find(p[x])
             return p[x]
 
+        n = len(row) >> 1
+        p = list(range(n))
         for i in range(0, len(row), 2):
             a, b = row[i] >> 1, row[i + 1] >> 1
             p[find(a)] = find(b)
-
-        cnt = 0
-        for i in range(n):
-            if i == find(i):
-                cnt += 1
-        return n - cnt
+        return n - sum(i == find(i) for i in range(n))
 ```
 
 ### **Java**
@@ -184,21 +179,18 @@ class Solution {
 public:
     vector<int> p;
 
-    int minSwapsCouples(vector<int> &row) {
+    int minSwapsCouples(vector<int>& row) {
         int n = row.size() >> 1;
         p.resize(n);
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             p[i] = i;
         }
-        for (int i = 0; i < row.size(); i += 2)
-        {
+        for (int i = 0; i < row.size(); i += 2) {
             int a = row[i] >> 1, b = row[i + 1] >> 1;
             p[find(a)] = find(b);
         }
         int cnt = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             if (i == find(i))
                 ++cnt;
         }
@@ -206,8 +198,7 @@ public:
     }
 
     int find(int x) {
-        if (p[x] != x)
-        {
+        if (p[x] != x) {
             p[x] = find(p[x]);
         }
         return p[x];

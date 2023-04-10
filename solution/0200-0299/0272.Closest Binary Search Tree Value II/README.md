@@ -51,7 +51,7 @@
 -   若当前节点 root 与目标值的差值的绝对值大于等于第一个节点与目标值差值的绝对值，移除第一个元素，然后添加当前节点 root.val。
 -   否则，无需再遍历后面的节点。
 
-时间复杂度 O(n)，空间复杂度 O(k)。
+时间复杂度 $O(n)$，空间复杂度 $O(k)$。
 
 <!-- tabs:start -->
 
@@ -137,7 +137,6 @@ class Solution {
         dfs(root.right);
     }
 }
-
 ```
 
 ### **C++**
@@ -165,8 +164,7 @@ public:
         this->k = k;
         dfs(root);
         vector<int> ans;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ans.push_back(q.front());
             q.pop();
         }
@@ -176,9 +174,9 @@ public:
     void dfs(TreeNode* root) {
         if (!root) return;
         dfs(root->left);
-        if (q.size() < k) q.push(root->val);
-        else
-        {
+        if (q.size() < k)
+            q.push(root->val);
+        else {
             if (abs(root->val - target) >= abs(q.front() - target)) return;
             q.pop();
             q.push(root->val);

@@ -11,7 +11,7 @@
 <p>Given <code>arr</code>, return <em>the removed value</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [5,7,11,13]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> The previous array was [5,7,<strong>9</strong>,11,13].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [15,13,12]
@@ -44,6 +44,12 @@
 ```python
 class Solution:
     def missingNumber(self, arr: List[int]) -> int:
+        return (arr[0] + arr[-1]) * (len(arr) + 1) // 2 - sum(arr)
+```
+
+```python
+class Solution:
+    def missingNumber(self, arr: List[int]) -> int:
         n = len(arr)
         d = (arr[-1] - arr[0]) // n
         for i in range(1, n):
@@ -53,6 +59,17 @@ class Solution:
 ```
 
 ### **Java**
+
+```java
+class Solution {
+    public int missingNumber(int[] arr) {
+        int n = arr.length;
+        int x = (arr[0] + arr[n - 1]) * (n + 1) / 2;
+        int y = Arrays.stream(arr).sum();
+        return x - y;
+    }
+}
+```
 
 ```java
 class Solution {
@@ -76,14 +93,39 @@ class Solution {
 public:
     int missingNumber(vector<int>& arr) {
         int n = arr.size();
+        int x = (arr[0] + arr[n - 1]) * (n + 1) / 2;
+        int y = accumulate(arr.begin(), arr.end(), 0);
+        return x - y;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int missingNumber(vector<int>& arr) {
+        int n = arr.size();
         int d = (arr[n - 1] - arr[0]) / n;
-        for (int i = 1; i < n; ++i) if (arr[i] != arr[i - 1] + d) return arr[i - 1] + d;
+        for (int i = 1; i < n; ++i)
+            if (arr[i] != arr[i - 1] + d) return arr[i - 1] + d;
         return arr[0];
     }
 };
 ```
 
 ### **Go**
+
+```go
+func missingNumber(arr []int) int {
+	n := len(arr)
+	x := (arr[0] + arr[n-1]) * (n + 1) / 2
+	y := 0
+	for _, v := range arr {
+		y += v
+	}
+	return x - y
+}
+```
 
 ```go
 func missingNumber(arr []int) int {

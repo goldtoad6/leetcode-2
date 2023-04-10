@@ -19,7 +19,7 @@
 <p>Return <code>nums</code><em> after the rearrangement.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [9,12,5,10,14,3,10], pivot = 10
@@ -30,7 +30,7 @@ The elements 12 and 14 are greater than the pivot so they are on the right side 
 The relative ordering of the elements less than and greater than pivot is also maintained. [9, 5, 3] and [12, 14] are the respective orderings.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-3,4,3,2], pivot = 2
@@ -105,9 +105,12 @@ class Solution {
 public:
     vector<int> pivotArray(vector<int>& nums, int pivot) {
         vector<int> ans;
-        for (int& x : nums) if (x < pivot) ans.push_back(x);
-        for (int& x : nums) if (x == pivot) ans.push_back(x);
-        for (int& x : nums) if (x > pivot) ans.push_back(x);
+        for (int& x : nums)
+            if (x < pivot) ans.push_back(x);
+        for (int& x : nums)
+            if (x == pivot) ans.push_back(x);
+        for (int& x : nums)
+            if (x > pivot) ans.push_back(x);
         return ans;
     }
 };

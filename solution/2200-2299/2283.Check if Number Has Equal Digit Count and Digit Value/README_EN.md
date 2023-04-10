@@ -9,7 +9,7 @@
 <p>Return <code>true</code> <em>if for <strong>every</strong> index </em><code>i</code><em> in the range </em><code>0 &lt;= i &lt; n</code><em>, the digit </em><code>i</code><em> occurs </em><code>num[i]</code><em> times in </em><code>num</code><em>, otherwise return </em><code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = &quot;1210&quot;
@@ -22,7 +22,7 @@ num[3] = &#39;0&#39;. The digit 3 occurs zero times in num.
 The condition holds true for every index in &quot;1210&quot;, so return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = &quot;030&quot;
@@ -53,7 +53,7 @@ The indices 0 and 1 both violate the condition, so return false.
 class Solution:
     def digitCount(self, num: str) -> bool:
         cnt = Counter(num)
-        return all(int(v) == cnt[str(i)] for i, v in enumerate(num))
+        return all(cnt[str(i)] == int(v) for i, v in enumerate(num))
 ```
 
 ### **Java**
@@ -62,12 +62,12 @@ class Solution:
 class Solution {
     public boolean digitCount(String num) {
         int[] cnt = new int[10];
-        for (char c : num.toCharArray()) {
-            ++cnt[c - '0'];
+        int n = num.length();
+        for (int i = 0; i < n; ++i) {
+            ++cnt[num.charAt(i) - '0'];
         }
-        for (int i = 0; i < num.length(); ++i) {
-            int v = num.charAt(i) - '0';
-            if (cnt[i] != v) {
+        for (int i = 0; i < n; ++i) {
+            if (cnt[i] != num.charAt(i) - '0') {
                 return false;
             }
         }
@@ -82,12 +82,14 @@ class Solution {
 class Solution {
 public:
     bool digitCount(string num) {
-        vector<int> cnt(10);
-        for (char& c : num) ++cnt[c - '0'];
-        for (int i = 0; i < num.size(); ++i)
-        {
-            int v = num[i] - '0';
-            if (cnt[i] != v) return false;
+        int cnt[10]{};
+        for (char& c : num) {
+            ++cnt[c - '0'];
+        }
+        for (int i = 0; i < num.size(); ++i) {
+            if (cnt[i] != num[i] - '0') {
+                return false;
+            }
         }
         return true;
     }
@@ -98,13 +100,12 @@ public:
 
 ```go
 func digitCount(num string) bool {
-	cnt := make([]int, 10)
+	cnt := [10]int{}
 	for _, c := range num {
 		cnt[c-'0']++
 	}
-	for i, c := range num {
-		v := int(c - '0')
-		if cnt[i] != v {
+	for i, v := range num {
+		if cnt[i] != int(v-'0') {
 			return false
 		}
 	}
@@ -115,7 +116,56 @@ func digitCount(num string) bool {
 ### **TypeScript**
 
 ```ts
+function digitCount(num: string): boolean {
+    const n = num.length;
+    const count = new Array(10).fill(0);
+    for (let i = 0; i < n; i++) {
+        count[i] = Number(num[i]);
+    }
+    for (const c of num) {
+        count[c]--;
+    }
+    return count.every(v => v === 0);
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn digit_count(num: String) -> bool {
+        let s = num.as_bytes();
+        let n = num.len();
+        let mut count = [0; 10];
+        for i in 0..n {
+            count[i] = s[i] - b'0';
+        }
+        for c in s {
+            count[(c - b'0') as usize] -= 1;
+        }
+        count.iter().all(|v| *v == 0)
+    }
+}
+```
+
+### **C**
+
+```c
+bool digitCount(char *num) {
+    int count[10] = {0};
+    for (int i = 0; num[i]; i++) {
+        count[i] = num[i] - '0';
+    }
+    for (int i = 0; num[i]; i++) {
+        count[num[i] - '0']--;
+    }
+    for (int i = 0; i < 10; i++) {
+        if (count[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
 ```
 
 ### **...**

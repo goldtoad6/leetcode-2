@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -30,7 +30,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -59,12 +59,12 @@
 ```python
 class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
-        counter = Counter({0: 1})
-        s = ans = 0
-        for num in nums:
-            s += num
-            ans += counter[s - goal]
-            counter[s] += 1
+        cnt = Counter({0: 1})
+        ans = s = 0
+        for v in nums:
+            s += v
+            ans += cnt[s - goal]
+            cnt[s] += 1
         return ans
 ```
 
@@ -92,15 +92,15 @@ class Solution:
 ```java
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
-        int[] counter = new int[nums.length + 1];
-        counter[0] = 1;
-        int s = 0, ans = 0;
-        for (int num : nums) {
-            s += num;
-            if (s >= goal) {
-                ans += counter[s - goal];
+        int[] cnt = new int[nums.length + 1];
+        cnt[0] = 1;
+        int ans = 0, s = 0;
+        for (int v : nums) {
+            s += v;
+            if (s - goal >= 0) {
+                ans += cnt[s - goal];
             }
-            ++counter[s];
+            ++cnt[s];
         }
         return ans;
     }
@@ -135,14 +135,16 @@ class Solution {
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        vector<int> counter(nums.size() + 1);
-        counter[0] = 1;
-        int s = 0, ans = 0;
-        for (int& num : nums)
-        {
-            s += num;
-            if (s >= goal) ans += counter[s - goal];
-            ++counter[s];
+        int cnt[nums.size() + 1];
+        memset(cnt, 0, sizeof cnt);
+        cnt[0] = 1;
+        int ans = 0, s = 0;
+        for (int& v : nums) {
+            s += v;
+            if (s - goal >= 0) {
+                ans += cnt[s - goal];
+            }
+            ++cnt[s];
         }
         return ans;
     }
@@ -172,18 +174,15 @@ public:
 ### **Go**
 
 ```go
-func numSubarraysWithSum(nums []int, goal int) int {
-	counter := make([]int, len(nums)+1)
-	counter[0] = 1
-	s, ans := 0, 0
-	for _, num := range nums {
-		s += num
-		if s >= goal {
-			ans += counter[s-goal]
-		}
-		counter[s]++
+func numSubarraysWithSum(nums []int, goal int) (ans int) {
+	cnt := map[int]int{0: 1}
+	s := 0
+	for _, v := range nums {
+		s += v
+		ans += cnt[s-goal]
+		cnt[s]++
 	}
-	return ans
+	return
 }
 ```
 
@@ -209,6 +208,28 @@ func numSubarraysWithSum(nums []int, goal int) int {
 ```
 
 ### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} goal
+ * @return {number}
+ */
+var numSubarraysWithSum = function (nums, goal) {
+    const cnt = new Array(nums.length + 1).fill(0);
+    cnt[0] = 1;
+    let ans = 0;
+    let s = 0;
+    for (const v of nums) {
+        s += v;
+        if (s >= goal) {
+            ans += cnt[s - goal];
+        }
+        ++cnt[s];
+    }
+    return ans;
+};
+```
 
 ```js
 /**

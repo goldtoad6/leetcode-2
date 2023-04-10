@@ -11,13 +11,13 @@
 <p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "egg", t = "add"
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "foo", t = "bar"
 <strong>Output:</strong> false
-</pre><p><strong>Example 3:</strong></p>
+</pre><p><strong class="example">Example 3:</strong></p>
 <pre><strong>Input:</strong> s = "paper", t = "title"
 <strong>Output:</strong> true
 </pre>
@@ -114,8 +114,7 @@ public:
         vector<int> d1(256);
         vector<int> d2(256);
         int n = s.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             char a = s[i], b = t[i];
             if (d1[a] != d2[b]) return false;
             d1[a] = d2[b] = i + 1;

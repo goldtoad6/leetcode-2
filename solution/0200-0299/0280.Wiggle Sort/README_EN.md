@@ -9,7 +9,7 @@
 <p>You may assume the input array always has a valid answer.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,5,2,1,6,4]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> [1,6,2,5,3,4] is also accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [6,6,5,6,3,8]
@@ -49,7 +49,9 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         for i in range(1, len(nums)):
-            if (i % 2 == 1 and nums[i] < nums[i - 1]) or (i % 2 == 0 and nums[i] > nums[i - 1]):
+            if (i % 2 == 1 and nums[i] < nums[i - 1]) or (
+                i % 2 == 0 and nums[i] > nums[i - 1]
+            ):
                 nums[i], nums[i - 1] = nums[i - 1], nums[i]
 ```
 

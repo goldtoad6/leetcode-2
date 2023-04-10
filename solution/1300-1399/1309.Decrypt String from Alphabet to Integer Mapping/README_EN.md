@@ -16,7 +16,7 @@
 <p>The test cases are generated so that a unique mapping will always exist.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;10#11#12&quot;
@@ -24,7 +24,7 @@
 <strong>Explanation:</strong> &quot;j&quot; -&gt; &quot;10#&quot; , &quot;k&quot; -&gt; &quot;11#&quot; , &quot;a&quot; -&gt; &quot;1&quot; , &quot;b&quot; -&gt; &quot;2&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;1326#&quot;
@@ -56,7 +56,7 @@ class Solution:
         res = []
         while i < n:
             if i + 2 < n and s[i + 2] == '#':
-                res.append(get(s[i: i + 2]))
+                res.append(get(s[i : i + 2]))
                 i += 3
             else:
                 res.append(get(s[i]))
@@ -94,20 +94,20 @@ class Solution {
 ```ts
 function freqAlphabets(s: string): string {
     const n = s.length;
-    const res = [];
+    const ans = [];
     let i = 0;
     while (i < n) {
-        let code: string;
-        if (s[i + 2] === '#') {
-            code = s.slice(i, i + 2);
+        if (s[i + 2] == '#') {
+            ans.push(s.slice(i, i + 2));
             i += 3;
         } else {
-            code = s[i];
+            ans.push(s[i]);
             i += 1;
         }
-        res.push(code);
     }
-    return res.map(v => String.fromCharCode(96 + Number(v))).join('');
+    return ans
+        .map(c => String.fromCharCode('a'.charCodeAt(0) + Number(c) - 1))
+        .join('');
 }
 ```
 
@@ -129,10 +129,34 @@ impl Solution {
                 code = s[i];
                 i += 1;
             }
-            res.push(char::from(97 + code - b'1'));
+            res.push(char::from('a' as u8 + code - b'1'));
         }
         res
     }
+}
+```
+
+### **C**
+
+```c
+char *freqAlphabets(char *s) {
+    int n = strlen(s);
+    int i = 0;
+    int j = 0;
+    char *ans = malloc(sizeof(s) * n);
+    while (i < n) {
+        int t;
+        if (i + 2 < n && s[i + 2] == '#') {
+            t = (s[i] - '0') * 10 + s[i + 1];
+            i += 3;
+        } else {
+            t = s[i];
+            i += 1;
+        }
+        ans[j++] = 'a' + t - '1';
+    }
+    ans[j] = '\0';
+    return ans;
 }
 ```
 

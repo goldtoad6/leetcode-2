@@ -76,12 +76,13 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-先将 `knowledge` 转为哈希字典。
+**方法一：哈希表 + 模拟**
 
-然后遍历字符串每个字符 `s[i]`：
+我们先用哈希表 $d$ 记录 `knowledge` 中的键值对。
 
--   若 `s[i] == '('`，说明遇到了左括号，因此要找到右括号 `)` 的位置，然后截取括号间的子串作为 `key`，在哈希字典中查找 `key` 对应的 `value`，有则追加 `value` 到结果中，没有则追加 `?`，然后指针跳到右括号位置的下一个位置；
--   若 `s[i]` 是其他字符，则正常追加即可。
+然后遍历字符串 $s$，如果当前字符是左括号 `'('`，则从当前位置开始向后遍历，直到遇到右括号 `')'`，此时括号内的字符串即为键，我们在哈希表 $d$ 中查找该键对应的值，如果找到了，则将该值替换到括号内，否则替换为 `'?'`。
+
+时间复杂度 $O(n + m)$，空间复杂度 $O(L)$。其中 $n$ 和 $m$ 分别为字符串 $s$ 和列表 `knowledge` 的长度，而 $L$ 为 `knowledge` 中所有字符串的长度之和。
 
 <!-- tabs:start -->
 
@@ -92,23 +93,18 @@
 ```python
 class Solution:
     def evaluate(self, s: str, knowledge: List[List[str]]) -> str:
-        def find_right_bracket(s, start, end):
-            for i in range(start, end):
-                if s[i] == ')':
-                    return i
-        knowledge_dict = {item[0]: item[1] for item in knowledge}
-        res, n = [], len(s)
-        i = 0
+        d = {a: b for a, b in knowledge}
+        i, n = 0, len(s)
+        ans = []
         while i < n:
             if s[i] == '(':
-                right_bracket_pos = find_right_bracket(s, i + 1, n)
-                key = s[i + 1: right_bracket_pos]
-                res.append(knowledge_dict.get(key, '?'))
-                i = right_bracket_pos + 1
+                j = s.find(')', i + 1)
+                ans.append(d.get(s[i + 1: j], '?'))
+                i = j
             else:
-                res.append(s[i])
-                i += 1
-        return ''.join(res)
+                ans.append(s[i])
+            i += 1
+        return ''.join(ans)
 ```
 
 ### **Java**
@@ -118,33 +114,136 @@ class Solution:
 ```java
 class Solution {
     public String evaluate(String s, List<List<String>> knowledge) {
-        Map<String, String> knowledgeDict = new HashMap<>();
-        for (List<String> item : knowledge) {
-            knowledgeDict.put(item.get(0), item.get(1));
+        Map<String, String> d = new HashMap<>(knowledge.size());
+        for (var e : knowledge) {
+            d.put(e.get(0), e.get(1));
         }
-        StringBuilder res = new StringBuilder();
-        int i = 0, n = s.length();
-        while (i < n) {
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == '(') {
-                int rightBracketPos = findRightBracket(s, i + 1, n);
-                String key = s.substring(i + 1, rightBracketPos);
-                res.append(knowledgeDict.getOrDefault(key, "?"));
-                i = rightBracketPos + 1;
+                int j = s.indexOf(')', i + 1);
+                ans.append(d.getOrDefault(s.substring(i + 1, j), "?"));
+                i = j;
             } else {
-                res.append(s.charAt(i));
-                i += 1;
+                ans.append(s.charAt(i));
             }
         }
-        return res.toString();
+        return ans.toString();
     }
+}
+```
 
-    private int findRightBracket(String s, int start, int end) {
-        for (int i =  start; i < end; ++i) {
-            if (s.charAt(i) == ')') {
-                return i;
+### **C++**
+
+```cpp
+class Solution {
+public:
+    string evaluate(string s, vector<vector<string>>& knowledge) {
+        unordered_map<string, string> d;
+        for (auto& e : knowledge) {
+            d[e[0]] = e[1];
+        }
+        string ans;
+        for (int i = 0; i < s.size(); ++i) {
+            if (s[i] == '(') {
+                int j = s.find(")", i + 1);
+                auto t = s.substr(i + 1, j - i - 1);
+                ans += d.count(t) ? d[t] : "?";
+                i = j;
+            } else {
+                ans += s[i];
             }
         }
-        return -1;
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func evaluate(s string, knowledge [][]string) string {
+	d := map[string]string{}
+	for _, v := range knowledge {
+		d[v[0]] = v[1]
+	}
+	var ans strings.Builder
+	for i := 0; i < len(s); i++ {
+		if s[i] == '(' {
+			j := i + 1
+			for s[j] != ')' {
+				j++
+			}
+			if v, ok := d[s[i+1:j]]; ok {
+				ans.WriteString(v)
+			} else {
+				ans.WriteByte('?')
+			}
+			i = j
+		} else {
+			ans.WriteByte(s[i])
+		}
+	}
+	return ans.String()
+}
+```
+
+### **TypeScript**
+
+```ts
+function evaluate(s: string, knowledge: string[][]): string {
+    const n = s.length;
+    const map = new Map();
+    for (const [k, v] of knowledge) {
+        map.set(k, v);
+    }
+    const ans = [];
+    let i = 0;
+    while (i < n) {
+        if (s[i] === '(') {
+            const j = s.indexOf(')', i + 1);
+            ans.push(map.get(s.slice(i + 1, j)) ?? '?');
+            i = j;
+        } else {
+            ans.push(s[i]);
+        }
+        i++;
+    }
+    return ans.join('');
+}
+```
+
+### **Rust**
+
+```rust
+use std::collections::HashMap;
+impl Solution {
+    pub fn evaluate(s: String, knowledge: Vec<Vec<String>>) -> String {
+        let s = s.as_bytes();
+        let n = s.len();
+        let mut map = HashMap::new();
+        for v in knowledge.iter() {
+            map.insert(&v[0], &v[1]);
+        }
+        let mut ans = String::new();
+        let mut i = 0;
+        while i < n {
+            if s[i] == b'(' {
+                i += 1;
+                let mut j = i;
+                let mut key = String::new();
+                while s[j] != b')' {
+                    key.push(s[j] as char);
+                    j += 1;
+                }
+                ans.push_str(map.get(&key).unwrap_or(&&'?'.to_string()));
+                i = j;
+            } else {
+                ans.push(s[i] as char);
+            }
+            i += 1;
+        }
+        ans
     }
 }
 ```

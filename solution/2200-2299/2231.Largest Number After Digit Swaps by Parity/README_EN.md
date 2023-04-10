@@ -9,7 +9,7 @@
 <p>Return<em> the <strong>largest</strong> possible value of </em><code>num</code><em> after <strong>any</strong> number of swaps.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 1234
@@ -20,7 +20,7 @@ Note that there may be other sequences of swaps but it can be shown that 3412 is
 Also note that we may not swap the digit 4 with the digit 1 since they are of different parities.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 65875
@@ -104,22 +104,18 @@ public:
     int largestInteger(int num) {
         vector<int> cnt(10);
         int x = num;
-        while (x)
-        {
+        while (x) {
             cnt[x % 10]++;
             x /= 10;
         }
         x = num;
         int ans = 0;
         long t = 1;
-        while (x)
-        {
+        while (x) {
             int v = x % 10;
             x /= 10;
-            for (int y = 0; y < 10; ++y)
-            {
-                if (((v ^ y) & 1) == 0 && cnt[y] > 0)
-                {
+            for (int y = 0; y < 10; ++y) {
+                if (((v ^ y) & 1) == 0 && cnt[y] > 0) {
                     cnt[y]--;
                     ans += y * t;
                     t *= 10;

@@ -51,7 +51,7 @@ sum(k + 1, n - 1) = sum(6, 6) = 1
 
 <!-- 这里可写通用的实现逻辑 -->
 
-前缀和 + 哈希表。
+**方法一：前缀和 + 哈希表**
 
 先求出前缀和数组 s。
 
@@ -61,7 +61,7 @@ sum(k + 1, n - 1) = sum(6, 6) = 1
 
 否则遍历结束返回 false。
 
-时间复杂度 O(n²)。
+时间复杂度 $O(n^2)$。
 
 <!-- tabs:start -->
 
@@ -126,8 +126,7 @@ public:
         int n = nums.size();
         vector<int> s(n + 1);
         for (int i = 0; i < n; ++i) s[i + 1] = s[i] + nums[i];
-        for (int j = 3; j < n - 3; ++j)
-        {
+        for (int j = 3; j < n - 3; ++j) {
             unordered_set<int> seen;
             for (int i = 1; i < j - 1; ++i)
                 if (s[i] == s[j] - s[i + 1])

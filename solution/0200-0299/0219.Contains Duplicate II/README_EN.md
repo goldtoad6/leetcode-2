@@ -4,24 +4,24 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <code>true</code> if there are two <strong>distinct indices</strong> <code>i</code> and <code>j</code> in the array such that <code>nums[i] == nums[j]</code> and <code>abs(i - j) &lt;= k</code>.</p>
+<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <code>true</code> <em>if there are two <strong>distinct indices</strong> </em><code>i</code><em> and </em><code>j</code><em> in the array such that </em><code>nums[i] == nums[j]</code><em> and </em><code>abs(i - j) &lt;= k</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,1], k = 3
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,0,1,1], k = 1
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,1,2,3], k = 2
@@ -78,8 +78,7 @@ class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
         unordered_map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i)
-        {
+        for (int i = 0; i < nums.size(); ++i) {
             if (mp.count(nums[i]) && i - mp[nums[i]] <= k) return true;
             mp[nums[i]] = i;
         }
@@ -121,6 +120,22 @@ public class Solution {
         }
         return false;
     }
+}
+```
+
+### **TypeScript**
+
+```ts
+function containsNearbyDuplicate(nums: number[], k: number): boolean {
+    const map = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        const t = nums[i];
+        if (map.has(t) && i - map.get(t) <= k) {
+            return true;
+        }
+        map.set(t, i);
+    }
+    return false;
 }
 ```
 

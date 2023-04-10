@@ -26,7 +26,7 @@
 <p>Return <em>the number of different <strong>transformations</strong> among all words we have</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;gin&quot;,&quot;zen&quot;,&quot;gig&quot;,&quot;msg&quot;]
@@ -39,7 +39,7 @@
 There are 2 different transformations: &quot;--...-.&quot; and &quot;--...--.&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;]
@@ -64,8 +64,34 @@ There are 2 different transformations: &quot;--...-.&quot; and &quot;--...--.&qu
 ```python
 class Solution:
     def uniqueMorseRepresentations(self, words: List[str]) -> int:
-        codes = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
-                 "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."]
+        codes = [
+            ".-",
+            "-...",
+            "-.-.",
+            "-..",
+            ".",
+            "..-.",
+            "--.",
+            "....",
+            "..",
+            ".---",
+            "-.-",
+            ".-..",
+            "--",
+            "-.",
+            "---",
+            ".--.",
+            "--.-",
+            ".-.",
+            "...",
+            "-",
+            "..-",
+            "...-",
+            ".--",
+            "-..-",
+            "-.--",
+            "--..",
+        ]
         s = {''.join([codes[ord(c) - ord('a')] for c in word]) for word in words}
         return len(s)
 ```
@@ -75,7 +101,9 @@ class Solution:
 ```java
 class Solution {
     public int uniqueMorseRepresentations(String[] words) {
-        String[] codes = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+        String[] codes = new String[] {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+            "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
+            "..-", "...-", ".--", "-..-", "-.--", "--.."};
         Set<String> s = new HashSet<>();
         for (String word : words) {
             StringBuilder t = new StringBuilder();
@@ -165,10 +193,9 @@ class Solution {
 public:
     int uniqueMorseRepresentations(vector<string>& words) {
         vector<string> codes = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
-                 "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+            "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
         unordered_set<string> s;
-        for (auto& word : words)
-        {
+        for (auto& word : words) {
             string t;
             for (char& c : word) t += codes[c - 'a'];
             s.insert(t);

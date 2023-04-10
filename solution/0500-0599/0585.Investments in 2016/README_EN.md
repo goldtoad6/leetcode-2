@@ -20,8 +20,8 @@ pid is the primary key column for this table.
 Each row of this table contains information about one policy where:
 pid is the policyholder&#39;s policy ID.
 tiv_2015 is the total investment value in 2015 and tiv_2016 is the total investment value in 2016.
-lat is the latitude of the policy holder&#39;s city.
-lon is the longitude of the policy holder&#39;s city.
+lat is the latitude of the policy holder&#39;s city. It&#39;s guaranteed that lat is not NULL.
+lon is the longitude of the policy holder&#39;s city. It&#39;s guaranteed that lon is not NULL.
 </pre>
 
 <p>&nbsp;</p>
@@ -38,7 +38,7 @@ lon is the longitude of the policy holder&#39;s city.
 <p>The query result format is in the following example.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> 

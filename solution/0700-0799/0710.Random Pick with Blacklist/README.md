@@ -66,7 +66,6 @@ solution.pick(); // 返回 4
 
 ```python
 class Solution:
-
     def __init__(self, n: int, blacklist: List[int]):
         self.k = n - len(blacklist)
         self.d = {}
@@ -141,10 +140,8 @@ public:
         k = n - blacklist.size();
         int i = k;
         unordered_set<int> black(blacklist.begin(), blacklist.end());
-        for (int& b : blacklist)
-        {
-            if (b < k)
-            {
+        for (int& b : blacklist) {
+            if (b < k) {
                 while (black.count(i)) ++i;
                 d[b] = i++;
             }

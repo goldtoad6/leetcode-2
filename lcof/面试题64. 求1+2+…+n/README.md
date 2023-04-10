@@ -56,12 +56,12 @@ class Solution {
 
 ```cpp
 class Solution {
-    public int sumNums(int n) {
-        int s = n;
-        boolean t = n > 0 && (s += sumNums(n - 1)) > 0;
-        return s;
+public:
+    int sumNums(int n) {
+        n && (n += sumNums(n - 1));
+        return n;
     }
-}
+};
 ```
 
 ### **JavaScript**
@@ -108,6 +108,24 @@ impl Solution {
         n
     }
 }
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public int result;
+    public int SumNums(int n) {
+        helper(n);
+        return result;
+    }
+
+    public bool helper(int n) {
+        result += n;
+        return n == 0 || helper(n - 1);
+    }
+}
+
 ```
 
 ### **...**

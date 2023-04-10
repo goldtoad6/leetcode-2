@@ -1,37 +1,22 @@
 class Solution {
     public int longestMountain(int[] arr) {
-        int left = 0, right = 0;
+        int n = arr.length;
         int ans = 0;
-        int status = -1;
-        while (++right < arr.length) {
-            if (status == -1 || status == 1) {
-                if (arr[right] == arr[right - 1]) {
-                    status = -1;
+        for (int l = 0, r = 0; l + 2 < n; l = r) {
+            r = l + 1;
+            if (arr[l] < arr[r]) {
+                while (r + 1 < n && arr[r] < arr[r + 1]) {
+                    ++r;
                 }
-                if (status == -1) {
-                    if (arr[right] > arr[right - 1]) {
-                        status = 1;
-                    } else {
-                        left = right;
+                if (r + 1 < n && arr[r] > arr[r + 1]) {
+                    while (r + 1 < n && arr[r] > arr[r + 1]) {
+                        ++r;
                     }
-                }
-                if (status == 1 && arr[right] < arr[right - 1]) {
-                    status = 2;
-                }
-            } else {
-                if (arr[right] > arr[right - 1]) {
-                    status = 1;
-                    ans = Math.max(right - left, ans);
-                    left = right - 1;
-                } else if (arr[right] == arr[right - 1]) {
-                    status = -1;
-                    ans = Math.max(right - left, ans);
-                    left = right;
+                    ans = Math.max(ans, r - l + 1);
+                } else {
+                    ++r;
                 }
             }
-        }
-        if (status == 2) {
-            ans = Math.max(ans, right - left);
         }
         return ans;
     }

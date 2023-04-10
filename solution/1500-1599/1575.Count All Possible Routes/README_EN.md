@@ -13,7 +13,7 @@
 <p>Return <em>the count of all possible routes from </em><code>start</code> <em>to</em> <code>finish</code>. Since the answer may be too large, return it modulo <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> locations = [2,3,6,8,4], start = 1, finish = 3, fuel = 5
@@ -25,7 +25,7 @@
 1 -&gt; 4 -&gt; 2 -&gt; 3
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> locations = [4,3,1], start = 1, finish = 0, fuel = 6
@@ -38,7 +38,7 @@
 1 -&gt; 0 -&gt; 1 -&gt; 0 -&gt; 1 -&gt; 0, used fuel = 5
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> locations = [5,2,1], start = 0, finish = 2, fuel = 3
@@ -65,17 +65,20 @@
 
 ```python
 class Solution:
-    def countRoutes(self, locations: List[int], start: int, finish: int, fuel: int) -> int:
+    def countRoutes(
+        self, locations: List[int], start: int, finish: int, fuel: int
+    ) -> int:
         @cache
-        def dfs(i, t):
-            if abs(locations[i] - locations[finish]) > t:
+        def dfs(i: int, k: int) -> int:
+            if k < 0 or abs(locations[i] - locations[finish] > k):
                 return 0
-            res = int(i == finish)
-            for j, v in enumerate(locations):
-                if j != i:
-                    if (cost := abs(locations[i] - v)) <= t:
-                        res += dfs(j, t - cost)
-            return res % mod
+            ans = int(i == finish)
+            ans += sum(
+                dfs(j, k - abs(locations[i] - x))
+                for j, x in enumerate(locations)
+                if j != i
+            )
+            return ans % mod
 
         mod = 10**9 + 7
         return dfs(start, fuel)
@@ -85,41 +88,34 @@ class Solution:
 
 ```java
 class Solution {
-    private int[][] f;
     private int[] locations;
-    private int target;
-    private static final int MOD = (int) 1e9 + 7;
+    private int finish;
+    private int n;
+    private Integer[][] f;
+    private final int mod = (int) 1e9 + 7;
 
     public int countRoutes(int[] locations, int start, int finish, int fuel) {
-        int n = locations.length;
-        f = new int[n + 1][fuel + 1];
+        n = locations.length;
         this.locations = locations;
-        target = finish;
-        for (int i = 0; i < f.length; ++i) {
-            Arrays.fill(f[i], -1);
-        }
+        this.finish = finish;
+        f = new Integer[n][fuel + 1];
         return dfs(start, fuel);
     }
 
-    private int dfs(int i, int t) {
-        if (f[i][t] != -1) {
-            return f[i][t];
-        }
-        if (Math.abs(locations[i] - locations[target]) > t) {
+    private int dfs(int i, int k) {
+        if (k < 0 || Math.abs(locations[i] - locations[finish]) > k) {
             return 0;
         }
-        int res = i == target ? 1 : 0;
-        for (int j = 0; j < locations.length; ++j) {
+        if (f[i][k] != null) {
+            return f[i][k];
+        }
+        int ans = i == finish ? 1 : 0;
+        for (int j = 0; j < n; ++j) {
             if (j != i) {
-                int cost = Math.abs(locations[i] - locations[j]);
-                if (cost <= t) {
-                    res += dfs(j, t - cost);
-                    res %= MOD;
-                }
+                ans = (ans + dfs(j, k - Math.abs(locations[i] - locations[j]))) % mod;
             }
         }
-        f[i][t] = res;
-        return res;
+        return f[i][k] = ans;
     }
 }
 ```
@@ -129,26 +125,27 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    const int mod = 1e9 + 7;
-
     int countRoutes(vector<int>& locations, int start, int finish, int fuel) {
         int n = locations.size();
-        vector<vector<int>> f(n + 1, vector<int>(fuel + 1, -1));
-        return dfs(start, fuel, locations, finish, f);
-    }
-
-    int dfs(int i, int t, vector<int>& locations, int target, vector<vector<int>>& f) {
-        if (f[i][t] != -1) return f[i][t];
-        if (abs(locations[i] - locations[target]) > t) return 0;
-        int res = i == target;
-        for (int j = 0; j < locations.size(); ++j)
-        {
-            if (j == i) continue;
-            int cost = abs(locations[i] - locations[j]);
-            if (cost <= t) res = (res + dfs(j, t - cost, locations, target, f)) % mod;
-        }
-        f[i][t] = res;
-        return res;
+        int f[n][fuel + 1];
+        memset(f, -1, sizeof(f));
+        const int mod = 1e9 + 7;
+        function<int(int, int)> dfs = [&](int i, int k) -> int {
+            if (k < 0 || abs(locations[i] - locations[finish]) > k) {
+                return 0;
+            }
+            if (f[i][k] != -1) {
+                return f[i][k];
+            }
+            int ans = i == finish;
+            for (int j = 0; j < n; ++j) {
+                if (j != i) {
+                    ans = (ans + dfs(j, k - abs(locations[i] - locations[j]))) % mod;
+                }
+            }
+            return f[i][k] = ans;
+        };
+        return dfs(start, fuel);
     }
 };
 ```
@@ -158,36 +155,32 @@ public:
 ```go
 func countRoutes(locations []int, start int, finish int, fuel int) int {
 	n := len(locations)
-	f := make([][]int, n+1)
+	f := make([][]int, n)
 	for i := range f {
 		f[i] = make([]int, fuel+1)
 		for j := range f[i] {
 			f[i][j] = -1
 		}
 	}
-	mod := int(1e9) + 7
+	const mod = 1e9 + 7
 	var dfs func(int, int) int
-	dfs = func(i, t int) int {
-		if f[i][t] != -1 {
-			return f[i][t]
-		}
-		if abs(locations[i]-locations[finish]) > t {
+	dfs = func(i, k int) (ans int) {
+		if k < 0 || abs(locations[i]-locations[finish]) > k {
 			return 0
 		}
-		res := 0
-		if i == finish {
-			res++
+		if f[i][k] != -1 {
+			return f[i][k]
 		}
-		for j, v := range locations {
+		if i == finish {
+			ans = 1
+		}
+		for j, x := range locations {
 			if j != i {
-				cost := abs(locations[i] - v)
-				if cost <= t {
-					res = (res + dfs(j, t-cost)) % mod
-				}
+				ans = (ans + dfs(j, k-abs(locations[i]-x))) % mod
 			}
 		}
-		f[i][t] = res
-		return res
+		f[i][k] = ans
+		return
 	}
 	return dfs(start, fuel)
 }
@@ -197,6 +190,38 @@ func abs(x int) int {
 		return -x
 	}
 	return x
+}
+```
+
+### **TypeScript**
+
+```ts
+function countRoutes(
+    locations: number[],
+    start: number,
+    finish: number,
+    fuel: number,
+): number {
+    const n = locations.length;
+    const f = Array.from({ length: n }, () => Array(fuel + 1).fill(-1));
+    const mod = 1e9 + 7;
+    const dfs = (i: number, k: number): number => {
+        if (k < 0 || Math.abs(locations[i] - locations[finish]) > k) {
+            return 0;
+        }
+        if (f[i][k] !== -1) {
+            return f[i][k];
+        }
+        let ans = i === finish ? 1 : 0;
+        for (let j = 0; j < n; ++j) {
+            if (j != i) {
+                const x = Math.abs(locations[i] - locations[j]);
+                ans = (ans + dfs(j, k - x)) % mod;
+            }
+        }
+        return (f[i][k] = ans);
+    };
+    return dfs(start, fuel);
 }
 ```
 

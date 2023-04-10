@@ -15,7 +15,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
@@ -26,7 +26,7 @@ rorse -&gt; rose (remove &#39;r&#39;)
 rose -&gt; ros (remove &#39;e&#39;)
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
@@ -71,8 +71,7 @@ class Solution:
                 if word1[i - 1] == word2[j - 1]:
                     dp[i][j] = dp[i - 1][j - 1]
                 else:
-                    dp[i][j] = min(dp[i][j - 1], dp[i - 1]
-                                   [j], dp[i - 1][j - 1]) + 1
+                    dp[i][j] = min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1
         return dp[-1][-1]
 ```
 

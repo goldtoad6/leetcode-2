@@ -51,6 +51,8 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：BFS(A\* 算法)**
+
 因为每条边权值一样，所以用 BFS 就能得出最短路径，过程中可以用**状态压缩**记录节点的访问情况。另外，同一个节点 u 以及对应的节点访问情况需要保证只被搜索过一次，因此可以用 `vis(u, state)` 表示是否已经被搜索过，防止无效的重复搜索。
 
 本题也属于 BFS 最小步数模型，可以使用 A\* 算法优化搜索。
@@ -104,7 +106,7 @@ class Solution:
             return sum(((state >> i) & 1) == 0 for i in range(n))
 
         q = []
-        dist = [[float('inf')] * (1 << n) for _ in range(n)]
+        dist = [[inf] * (1 << n) for _ in range(n)]
         for i in range(n):
             heappush(q, (f(1 << i), i, 1 << i))
             dist[i][1 << i] = 0
@@ -182,7 +184,7 @@ class Solution {
         }
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
         for (int i = 0; i < n; ++i) {
-            q.offer(new int[]{f(1 << i), i, 1 << i});
+            q.offer(new int[] {f(1 << i), i, 1 << i});
             dist[i][1 << i] = 0;
         }
         while (!q.isEmpty()) {
@@ -195,7 +197,7 @@ class Solution {
                 int nxt = state | (1 << v);
                 if (dist[v][nxt] > dist[u][state] + 1) {
                     dist[v][nxt] = dist[u][state] + 1;
-                    q.offer(new int[]{dist[v][nxt] + f(nxt), v, nxt});
+                    q.offer(new int[] {dist[v][nxt] + f(nxt), v, nxt});
                 }
             }
         }
@@ -263,21 +265,17 @@ public:
         int n = graph.size();
         queue<tuple<int, int, int>> q;
         vector<vector<bool>> vis(n, vector<bool>(1 << n));
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             q.emplace(i, 1 << i, 0);
             vis[i][1 << i] = true;
         }
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto [u, state, dist] = q.front();
             q.pop();
             if (state == (1 << n) - 1) return dist;
-            for (int& v : graph[u])
-            {
+            for (int& v : graph[u]) {
                 int nxt = state | (1 << v);
-                if (!vis[v][nxt])
-                {
+                if (!vis[v][nxt]) {
                     q.emplace(v, nxt, dist + 1);
                     vis[v][nxt] = true;
                 }

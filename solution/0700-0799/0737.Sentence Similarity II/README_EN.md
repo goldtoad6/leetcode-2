@@ -20,7 +20,7 @@
 <p>Notice that a word is always similar to itself, also notice that the similarity relation is transitive. For example, if the words <code>a</code> and <code>b</code> are similar, and the words <code>b</code> and <code>c</code> are similar, then&nbsp;<code>a</code> and <code>c</code> are <strong>similar</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> sentence1 = [&quot;great&quot;,&quot;acting&quot;,&quot;skills&quot;], sentence2 = [&quot;fine&quot;,&quot;drama&quot;,&quot;talent&quot;], similarPairs = [[&quot;great&quot;,&quot;good&quot;],[&quot;fine&quot;,&quot;good&quot;],[&quot;drama&quot;,&quot;acting&quot;],[&quot;skills&quot;,&quot;talent&quot;]]
@@ -28,7 +28,7 @@
 <strong>Explanation:</strong> The two sentences have the same length and each word i of sentence1 is also similar to the corresponding word in sentence2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> sentence1 = [&quot;I&quot;,&quot;love&quot;,&quot;leetcode&quot;], sentence2 = [&quot;I&quot;,&quot;love&quot;,&quot;onepiece&quot;], similarPairs = [[&quot;manga&quot;,&quot;onepiece&quot;],[&quot;platform&quot;,&quot;anime&quot;],[&quot;leetcode&quot;,&quot;platform&quot;],[&quot;anime&quot;,&quot;manga&quot;]]
@@ -36,7 +36,7 @@
 <strong>Explanation:</strong> &quot;leetcode&quot; --&gt; &quot;platform&quot; --&gt; &quot;anime&quot; --&gt; &quot;manga&quot; --&gt; &quot;onepiece&quot;.
 Since &quot;leetcode is similar to &quot;onepiece&quot; and the first two words are the same, the two sentences are similar.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> sentence1 = [&quot;I&quot;,&quot;love&quot;,&quot;leetcode&quot;], sentence2 = [&quot;I&quot;,&quot;love&quot;,&quot;onepiece&quot;], similarPairs = [[&quot;manga&quot;,&quot;hunterXhunter&quot;],[&quot;platform&quot;,&quot;anime&quot;],[&quot;leetcode&quot;,&quot;platform&quot;],[&quot;anime&quot;,&quot;manga&quot;]]
@@ -65,7 +65,9 @@ Since &quot;leetcode is similar to &quot;onepiece&quot; and the first two words 
 
 ```python
 class Solution:
-    def areSentencesSimilarTwo(self, sentence1: List[str], sentence2: List[str], similarPairs: List[List[str]]) -> bool:
+    def areSentencesSimilarTwo(
+        self, sentence1: List[str], sentence2: List[str], similarPairs: List[List[str]]
+    ) -> bool:
         if len(sentence1) != len(sentence2):
             return False
         n = len(similarPairs)
@@ -90,7 +92,11 @@ class Solution:
         for i in range(len(sentence1)):
             if sentence1[i] == sentence2[i]:
                 continue
-            if sentence1[i] not in words or sentence2[i] not in words or find(words[sentence1[i]]) != find(words[sentence2[i]]):
+            if (
+                sentence1[i] not in words
+                or sentence2[i] not in words
+                or find(words[sentence1[i]]) != find(words[sentence2[i]])
+            ):
                 return False
         return True
 ```
@@ -101,7 +107,8 @@ class Solution:
 class Solution {
     private int[] p;
 
-    public boolean areSentencesSimilarTwo(String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
+    public boolean areSentencesSimilarTwo(
+        String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
         if (sentence1.length != sentence2.length) {
             return false;
         }
@@ -126,7 +133,8 @@ class Solution {
             if (Objects.equals(sentence1[i], sentence2[i])) {
                 continue;
             }
-            if (!words.containsKey(sentence1[i]) || !words.containsKey(sentence2[i]) || find(words.get(sentence1[i])) != find(words.get(sentence2[i]))) {
+            if (!words.containsKey(sentence1[i]) || !words.containsKey(sentence2[i])
+                || find(words.get(sentence1[i])) != find(words.get(sentence2[i]))) {
                 return false;
             }
         }

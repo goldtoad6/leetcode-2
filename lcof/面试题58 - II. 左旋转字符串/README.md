@@ -28,6 +28,12 @@
 
 ## 解法
 
+**方法一：模拟**
+
+我们可以将字符串分为两部分，分别对两部分进行翻转，然后再对整个字符串进行翻转，即可得到结果。或者直接截取两个子串，然后拼接起来。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -99,6 +105,16 @@ impl Solution {
     pub fn reverse_left_words(s: String, n: i32) -> String {
         let n = n as usize;
         String::from(&s[n..]) + &s[..n]
+    }
+}
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public string ReverseLeftWords(string s, int n) {
+        return s.Substring(n) + s.Substring(0, n);
     }
 }
 ```

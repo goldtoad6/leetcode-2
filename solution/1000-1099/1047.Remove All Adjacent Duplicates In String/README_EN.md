@@ -11,7 +11,7 @@
 <p>Return <em>the final string after all such duplicate removals have been made</em>. It can be proven that the answer is <strong>unique</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abbaca&quot;
@@ -20,7 +20,7 @@
 For example, in &quot;abbaca&quot; we could remove &quot;bb&quot; since the letters are adjacent and equal, and this is the only possible move.  The result of this move is that the string is &quot;aaca&quot;, of which only &quot;aa&quot; is possible, so the final string is &quot;ca&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;azxxzy&quot;
@@ -43,35 +43,124 @@ For example, in &quot;abbaca&quot; we could remove &quot;bb&quot; since the lett
 
 ```python
 class Solution:
-    def removeDuplicates(self, S: str) -> str:
-        res = []
-        for s in S:
-            if not res or res[-1] != s:
-                res.append(s)
+    def removeDuplicates(self, s: str) -> str:
+        stk = []
+        for c in s:
+            if stk and stk[-1] == c:
+                stk.pop()
             else:
-                res.pop()
-        return ''.join(res)
+                stk.append(c)
+        return ''.join(stk)
 ```
 
 ### **Java**
 
 ```java
 class Solution {
-    public String removeDuplicates(String S) {
+    public String removeDuplicates(String s) {
         StringBuilder sb = new StringBuilder();
-        int top = -1;
-        for (int i = 0, n = S.length(); i < n; ++i) {
-            char s = S.charAt(i);
-            if (top == -1 || sb.charAt(top) != s) {
-                sb.append(s);
-                ++top;
+        for (char c : s.toCharArray()) {
+            if (sb.length() > 0 && sb.charAt(sb.length() - 1) == c) {
+                sb.deleteCharAt(sb.length() - 1);
             } else {
-                sb.deleteCharAt(top);
-                --top;
+                sb.append(c);
             }
         }
         return sb.toString();
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        string stk;
+        for (char c : s) {
+            if (!stk.empty() && stk[stk.size() - 1] == c) {
+                stk.pop_back();
+            } else {
+                stk += c;
+            }
+        }
+        return stk;
+    }
+};
+```
+
+### **Go**
+
+```go
+func removeDuplicates(s string) string {
+	stk := []rune{}
+	for _, c := range s {
+		if len(stk) > 0 && stk[len(stk)-1] == c {
+			stk = stk[:len(stk)-1]
+		} else {
+			stk = append(stk, c)
+		}
+	}
+	return string(stk)
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var removeDuplicates = function (s) {
+    const stk = [];
+    for (const c of s) {
+        if (stk.length && stk[stk.length - 1] == c) {
+            stk.pop();
+        } else {
+            stk.push(c);
+        }
+    }
+    return stk.join('');
+};
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn remove_duplicates(s: String) -> String {
+        let mut stack = Vec::new();
+        for c in s.chars() {
+            if !stack.is_empty() && *stack.last().unwrap() == c {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        stack.into_iter().collect()
+    }
+}
+```
+
+### **C**
+
+```c
+char *removeDuplicates(char *s) {
+    int n = strlen(s);
+    char *stack = malloc(sizeof(char) * (n + 1));
+    int i = 0;
+    for (int j = 0; j < n; j++) {
+        char c = s[j];
+        if (i && stack[i - 1] == c) {
+            i--;
+        } else {
+            stack[i++] = c;
+        }
+    }
+    stack[i] = '\0';
+    return stack;
 }
 ```
 

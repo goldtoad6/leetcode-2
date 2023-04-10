@@ -14,7 +14,7 @@
 <p>Return <code>[total_jumbo, total_small]</code> so that the number of remaining <code>tomatoSlices</code> equal to <code>0</code> and the number of remaining <code>cheeseSlices</code> equal to <code>0</code>. If it is not possible to make the remaining <code>tomatoSlices</code> and <code>cheeseSlices</code> equal to <code>0</code> return <code>[]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> tomatoSlices = 16, cheeseSlices = 7
@@ -23,7 +23,7 @@
 There will be no remaining ingredients.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> tomatoSlices = 17, cheeseSlices = 4
@@ -31,7 +31,7 @@ There will be no remaining ingredients.
 <strong>Explantion:</strong> There will be no way to use all ingredients to make small and jumbo burgers.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> tomatoSlices = 4, cheeseSlices = 17
@@ -53,13 +53,53 @@ There will be no remaining ingredients.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def numOfBurgers(self, tomatoSlices: int, cheeseSlices: int) -> List[int]:
+        k = 4 * cheeseSlices - tomatoSlices
+        y = k // 2
+        x = cheeseSlices - y
+        return [] if k % 2 or y < 0 or x < 0 else [x, y]
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public List<Integer> numOfBurgers(int tomatoSlices, int cheeseSlices) {
+        int k = 4 * cheeseSlices - tomatoSlices;
+        int y = k / 2;
+        int x = cheeseSlices - y;
+        return k % 2 != 0 || y < 0 || x < 0 ? Collections.emptyList() : Arrays.asList(x, y);
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<int> numOfBurgers(int tomatoSlices, int cheeseSlices) {
+        int k = 4 * cheeseSlices - tomatoSlices;
+        int y = k / 2;
+        int x = cheeseSlices - y;
+        return k % 2 || x < 0 || y < 0 ? vector<int>{} : vector<int>{x, y};
+    }
+};
+```
+
+### **Go**
+
+```go
+func numOfBurgers(tomatoSlices int, cheeseSlices int) []int {
+	k := 4*cheeseSlices - tomatoSlices
+	y := k / 2
+	x := cheeseSlices - y
+	if k%2 != 0 || x < 0 || y < 0 {
+		return []int{}
+	}
+	return []int{x, y}
+}
 ```
 
 ### **...**

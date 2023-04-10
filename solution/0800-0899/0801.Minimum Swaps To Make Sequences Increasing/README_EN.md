@@ -15,7 +15,7 @@
 <p>An array <code>arr</code> is <strong>strictly increasing</strong> if and only if <code>arr[0] &lt; arr[1] &lt; arr[2] &lt; ... &lt; arr[arr.length - 1]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,3,5,4], nums2 = [1,2,3,7]
@@ -26,7 +26,7 @@ nums1 = [1, 3, 5, 7] and nums2 = [1, 2, 3, 4]
 which are both strictly increasing.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [0,3,5,8,9], nums2 = [2,1,4,6,9]
@@ -49,13 +49,94 @@ which are both strictly increasing.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
+        a, b = 0, 1
+        for i in range(1, len(nums1)):
+            x, y = a, b
+            if nums1[i - 1] >= nums1[i] or nums2[i - 1] >= nums2[i]:
+                a, b = y, x + 1
+            else:
+                b = y + 1
+                if nums1[i - 1] < nums2[i] and nums2[i - 1] < nums1[i]:
+                    a, b = min(a, y), min(b, x + 1)
+        return min(a, b)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int minSwap(int[] nums1, int[] nums2) {
+        int a = 0, b = 1;
+        for (int i = 1; i < nums1.length; ++i) {
+            int x = a, y = b;
+            if (nums1[i - 1] >= nums1[i] || nums2[i - 1] >= nums2[i]) {
+                a = y;
+                b = x + 1;
+            } else {
+                b = y + 1;
+                if (nums1[i - 1] < nums2[i] && nums2[i - 1] < nums1[i]) {
+                    a = Math.min(a, y);
+                    b = Math.min(b, x + 1);
+                }
+            }
+        }
+        return Math.min(a, b);
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minSwap(vector<int>& nums1, vector<int>& nums2) {
+        int a = 0, b = 1, n = nums1.size();
+        for (int i = 1; i < n; ++i) {
+            int x = a, y = b;
+            if (nums1[i - 1] >= nums1[i] || nums2[i - 1] >= nums2[i]) {
+                a = y, b = x + 1;
+            } else {
+                b = y + 1;
+                if (nums1[i - 1] < nums2[i] && nums2[i - 1] < nums1[i]) {
+                    a = min(a, y);
+                    b = min(b, x + 1);
+                }
+            }
+        }
+        return min(a, b);
+    }
+};
+```
+
+### **Go**
+
+```go
+func minSwap(nums1 []int, nums2 []int) int {
+	a, b, n := 0, 1, len(nums1)
+	for i := 1; i < n; i++ {
+		x, y := a, b
+		if nums1[i-1] >= nums1[i] || nums2[i-1] >= nums2[i] {
+			a, b = y, x+1
+		} else {
+			b = y + 1
+			if nums1[i-1] < nums2[i] && nums2[i-1] < nums1[i] {
+				a = min(a, y)
+				b = min(b, x+1)
+			}
+		}
+	}
+	return min(a, b)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

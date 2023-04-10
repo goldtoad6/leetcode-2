@@ -11,7 +11,7 @@
 <p>Given the puzzle board <code>board</code>, return <em>the least number of moves required so that the state of the board is solved</em>. If it is impossible for the state of the board to be solved, return <code>-1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0700-0799/0773.Sliding%20Puzzle/images/slide1-grid.jpg" style="width: 244px; height: 165px;" />
 <pre>
 <strong>Input:</strong> board = [[1,2,3],[4,0,5]]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> Swap the 0 and the 5 in one move.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0700-0799/0773.Sliding%20Puzzle/images/slide2-grid.jpg" style="width: 244px; height: 165px;" />
 <pre>
 <strong>Input:</strong> board = [[1,2,3],[5,4,0]]
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> No number of moves will make the board solved.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0700-0799/0773.Sliding%20Puzzle/images/slide3-grid.jpg" style="width: 244px; height: 165px;" />
 <pre>
 <strong>Input:</strong> board = [[4,1,2],[5,0,3]]
@@ -76,16 +76,9 @@ class Solution:
                 for j in range(3):
                     board[i][j] = int(s[i * 3 + j])
 
-        def next():
-            def find0():
-                for i in range(2):
-                    for j in range(3):
-                        if board[i][j] == 0:
-                            return (i, j)
-                return (0, 0)
-
+        def f():
             res = []
-            i, j = find0()
+            i, j = next((i, j) for i in range(2) for j in range(3) if board[i][j] == 0)
             for a, b in [[0, -1], [0, 1], [1, 0], [-1, 0]]:
                 x, y = i + a, j + b
                 if 0 <= x < 2 and 0 <= y < 3:
@@ -106,7 +99,7 @@ class Solution:
             for _ in range(len(q)):
                 x = q.popleft()
                 setb(x)
-                for y in next():
+                for y in f():
                     if y == end:
                         return ans
                     if y not in vis:
@@ -280,7 +273,8 @@ class Solution {
         if (!check(seq)) {
             return -1;
         }
-        PriorityQueue<Pair<Integer, String>> q = new PriorityQueue<>(Comparator.comparingInt(Pair::getKey));
+        PriorityQueue<Pair<Integer, String>> q
+            = new PriorityQueue<>(Comparator.comparingInt(Pair::getKey));
         Map<String, Integer> dist = new HashMap<>();
         dist.put(start, 0);
         q.offer(new Pair<>(f(start), start));
@@ -354,21 +348,17 @@ public:
         if (start == end) return 0;
         unordered_set<string> vis;
         vis.insert(start);
-        queue<string> q{{start}};
+        queue<string> q {{start}};
         int ans = 0;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int n = q.size(); n > 0; --n)
-            {
+            for (int n = q.size(); n > 0; --n) {
                 string x = q.front();
                 q.pop();
                 setb(x, board);
-                for (string y : next(board))
-                {
+                for (string y : next(board)) {
                     if (y == end) return ans;
-                    if (!vis.count(y))
-                    {
+                    if (!vis.count(y)) {
                         vis.insert(y);
                         q.push(y);
                     }
@@ -397,11 +387,9 @@ public:
         auto p = find0(board);
         int i = p.first, j = p.second;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i + dirs[k], y = j + dirs[k + 1];
-            if (x >= 0 && x < 2 && y >= 0 && y < 3)
-            {
+            if (x >= 0 && x < 2 && y >= 0 && y < 3) {
                 swap(i, j, x, y, board);
                 res.push_back(gets(board));
                 swap(i, j, x, y, board);

@@ -11,7 +11,7 @@
 <p>Return <em>the</em> <code>k<sup>th</sup></code> <em>smallest fraction considered</em>. Return your answer as an array of integers of size <code>2</code>, where <code>answer[0] == arr[i]</code> and <code>answer[1] == arr[j]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,3,5], k = 3
@@ -21,7 +21,7 @@
 The third fraction is 2/5.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,7], k = 1
@@ -78,7 +78,7 @@ class Solution {
             }
         }
         Frac f = pq.peek();
-        return new int[] { f.x, f.y };
+        return new int[] {f.x, f.y};
     }
 
     static class Frac implements Comparable {
@@ -136,7 +136,7 @@ public:
     vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
         using pii = pair<int, int>;
         int n = arr.size();
-        auto cmp = [&](const pii &a, const pii &b) {
+        auto cmp = [&](const pii& a, const pii& b) {
             return arr[a.first] * arr[b.second] > arr[b.first] * arr[a.second];
         };
         priority_queue<pii, vector<pii>, decltype(cmp)> pq(cmp);

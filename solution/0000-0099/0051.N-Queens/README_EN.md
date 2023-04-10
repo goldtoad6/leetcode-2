@@ -11,7 +11,7 @@
 <p>Each solution contains a distinct board configuration of the n-queens&#39; placement, where <code>&#39;Q&#39;</code> and <code>&#39;.&#39;</code> both indicate a queen and an empty space, respectively.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0051.N-Queens/images/queens.jpg" style="width: 600px; height: 268px;" />
 <pre>
 <strong>Input:</strong> n = 4
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> There exist two distinct solutions to the 4-queens puzzle as shown above
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1
@@ -85,7 +85,8 @@ class Solution {
         return res;
     }
 
-    private void dfs(int u, int n, boolean[] col, boolean[] dg, boolean[] udg, String[][] g, List<List<String>> res) {
+    private void dfs(int u, int n, boolean[] col, boolean[] dg, boolean[] udg, String[][] g,
+        List<List<String>> res) {
         if (u == n) {
             List<String> t = new ArrayList<>();
             for (String[] e : g) {
@@ -123,15 +124,12 @@ public:
     }
 
     void dfs(int u, int n, vector<bool>& col, vector<bool>& dg, vector<bool>& udg, vector<string>& g, vector<vector<string>>& res) {
-        if (u == n)
-        {
+        if (u == n) {
             res.push_back(g);
             return;
         }
-        for (int i = 0; i < n; ++i)
-        {
-            if (!col[i] && !dg[u + i] && !udg[n - u + i])
-            {
+        for (int i = 0; i < n; ++i) {
+            if (!col[i] && !dg[u + i] && !udg[n - u + i]) {
                 g[u][i] = 'Q';
                 col[i] = dg[u + i] = udg[n - u + i] = true;
                 dfs(u + 1, n, col, dg, udg, g, res);

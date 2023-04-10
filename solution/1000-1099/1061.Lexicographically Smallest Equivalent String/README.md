@@ -81,6 +81,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -208,8 +209,7 @@ public:
         p.resize(26);
         for (int i = 0; i < 26; ++i)
             p[i] = i;
-        for (int i = 0; i < s1.size(); ++i)
-        {
+        for (int i = 0; i < s1.size(); ++i) {
             int a = s1[i] - 'a', b = s2[i] - 'a';
             int pa = find(a), pb = find(b);
             if (pa < pb)
@@ -218,8 +218,7 @@ public:
                 p[pa] = pb;
         }
         string res = "";
-        for (char a : baseStr)
-        {
+        for (char a : baseStr) {
             char b = (char)(find(a - 'a') + 'a');
             res += b;
         }

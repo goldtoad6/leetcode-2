@@ -7,7 +7,7 @@
 <p>Given two integers <code>n</code> and <code>k</code>, return <em>the</em> <code>k<sup>th</sup></code> <em>lexicographically smallest integer in the range</em> <code>[1, n]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 13, k = 2
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> The lexicographical order is [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9], so the second smallest number is 10.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1, k = 1
@@ -81,7 +81,6 @@ class Solution {
         return (int) curr;
     }
 
-
     public int count(long curr) {
         long next = curr + 1;
         long cnt = 0;
@@ -106,28 +105,23 @@ public:
         this->n = n;
         --k;
         long long curr = 1;
-        while (k)
-        {
+        while (k) {
             int cnt = count(curr);
-            if (k >= cnt)
-            {
+            if (k >= cnt) {
                 k -= cnt;
                 ++curr;
-            }
-            else
-            {
+            } else {
                 --k;
                 curr *= 10;
             }
         }
-        return (int) curr;
+        return (int)curr;
     }
 
     int count(long long curr) {
         long long next = curr + 1;
         int cnt = 0;
-        while (curr <= n)
-        {
+        while (curr <= n) {
             cnt += min(n - curr + 1, next - curr);
             next *= 10;
             curr *= 10;

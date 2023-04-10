@@ -15,7 +15,7 @@
 <p>Return <em>an array of booleans </em><code>answer</code><em> where </em><code>answer[i]</code><em> is </em><code>true</code><em> if </em><code>x<sub>i</sub></code><em> is divisible by </em><code>5</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,1,1]
@@ -24,7 +24,7 @@
 Only the first number is divisible by 5, so answer[0] is true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1]
@@ -46,13 +46,60 @@ Only the first number is divisible by 5, so answer[0] is true.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def prefixesDivBy5(self, nums: List[int]) -> List[bool]:
+        ans = []
+        x = 0
+        for v in nums:
+            x = (x << 1 | v) % 5
+            ans.append(x == 0)
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public List<Boolean> prefixesDivBy5(int[] nums) {
+        List<Boolean> ans = new ArrayList<>();
+        int x = 0;
+        for (int v : nums) {
+            x = (x << 1 | v) % 5;
+            ans.add(x == 0);
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<bool> prefixesDivBy5(vector<int>& nums) {
+        vector<bool> ans;
+        int x = 0;
+        for (int v : nums) {
+            x = (x << 1 | v) % 5;
+            ans.push_back(x == 0);
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func prefixesDivBy5(nums []int) (ans []bool) {
+	x := 0
+	for _, v := range nums {
+		x = (x<<1 | v) % 5
+		ans = append(ans, x == 0)
+	}
+	return
+}
 ```
 
 ### **...**

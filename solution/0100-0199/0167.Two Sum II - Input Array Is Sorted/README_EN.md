@@ -13,7 +13,7 @@
 <p>Your solution must use only constant extra space.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> numbers = [<u>2</u>,<u>7</u>,11,15], target = 9
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> The sum of 2 and 7 is 9. Therefore, index<sub>1</sub> = 1, index<sub>2</sub> = 2. We return [1, 2].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> numbers = [<u>2</u>,3,<u>4</u>], target = 6
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> The sum of 2 and 4 is 6. Therefore index<sub>1</sub> = 1, index<sub>2</sub> = 3. We return [1, 3].
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> numbers = [<u>-1</u>,<u>0</u>], target = -1
@@ -121,7 +121,7 @@ class Solution {
         while (i < j) {
             int x = numbers[i - 1] + numbers[j - 1];
             if (x == target) {
-                return new int[]{i, j};
+                return new int[] {i, j};
             }
             if (x < target) {
                 ++i;
@@ -129,7 +129,7 @@ class Solution {
                 --j;
             }
         }
-        return new int[]{-1, -1};
+        return new int[] {-1, -1};
     }
 }
 ```
@@ -189,8 +189,7 @@ Binary search:
 class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
-        for (int i = 0, n = numbers.size(); i < n - 1; ++i)
-        {
+        for (int i = 0, n = numbers.size(); i < n - 1; ++i) {
             int x = target - numbers[i];
             int j = lower_bound(numbers.begin() + i + 1, numbers.end(), x) - numbers.begin();
             if (j != n && numbers[j] == x) return {i + 1, j + 1};

@@ -13,7 +13,7 @@
 <p>Return <em>the <strong>minimum number of operations</strong> needed to convert </em><code>current</code><em> to </em><code>correct</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> current = &quot;02:30&quot;, correct = &quot;04:35&quot;
@@ -25,7 +25,7 @@
 - Add 5 minutes to current. current becomes &quot;04:35&quot;.
 It can be proven that it is not possible to convert current to correct in fewer than 3 operations.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> current = &quot;11:00&quot;, correct = &quot;11:01&quot;
@@ -64,8 +64,10 @@ class Solution:
 ```java
 class Solution {
     public int convertTime(String current, String correct) {
-        int a = Integer.parseInt(current.substring(0, 2)) * 60 + Integer.parseInt(current.substring(3));
-        int b = Integer.parseInt(correct.substring(0, 2)) * 60 + Integer.parseInt(correct.substring(3));
+        int a = Integer.parseInt(current.substring(0, 2)) * 60
+            + Integer.parseInt(current.substring(3));
+        int b = Integer.parseInt(correct.substring(0, 2)) * 60
+            + Integer.parseInt(correct.substring(3));
         int ans = 0, d = b - a;
         for (int i : Arrays.asList(60, 15, 5, 1)) {
             ans += d / i;
@@ -86,8 +88,7 @@ public:
         int b = stoi(correct.substr(0, 2)) * 60 + stoi(correct.substr(3, 2));
         int ans = 0, d = b - a;
         vector<int> inc = {60, 15, 5, 1};
-        for (int i : inc)
-        {
+        for (int i : inc) {
             ans += d / i;
             d %= i;
         }

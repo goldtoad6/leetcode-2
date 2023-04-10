@@ -9,7 +9,7 @@
 <p>Each time you can either climb <code>1</code> or <code>2</code> steps. In how many distinct ways can you climb to the top?</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2
@@ -19,7 +19,7 @@
 2. 2 steps
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 3
@@ -141,6 +141,27 @@ impl Solution {
             q = t;
         }
         q
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer $n
+     * @return Integer
+     */
+    function climbStairs($n) {
+        if ($n <= 2) {
+            return $n;
+        }
+        $dp = [0, 1, 2];
+        for ($i = 3; $i <= $n; $i++) {
+            $dp[$i] = $dp[$i - 2] + $dp[$i - 1];
+        }
+        return $dp[$n];
     }
 }
 ```

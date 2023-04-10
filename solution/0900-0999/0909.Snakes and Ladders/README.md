@@ -20,7 +20,6 @@
     </li>
     <li>传送玩家：如果目标方格 <code>next</code> 处存在蛇或梯子，那么玩家会传送到蛇或梯子的目的地。否则，玩家传送到目标方格 <code>next</code> 。&nbsp;</li>
     <li>当玩家到达编号 <code>n<sup>2</sup></code> 的方格时，游戏结束。</li>
-
 </ul>
 
 <p><code>r</code> 行 <code>c</code> 列的棋盘，按前述方法编号，棋盘格中可能存在 “蛇” 或 “梯子”；如果 <code>board[r][c] != -1</code>，那个蛇或梯子的目的地将会是 <code>board[r][c]</code>。编号为 <code>1</code> 和 <code>n<sup>2</sup></code> 的方格上没有蛇或梯子。</p>
@@ -152,7 +151,7 @@ class Solution {
         if (i % 2 == 1) {
             j = n - 1 - j;
         }
-        return new int[]{n - 1 - i, j};
+        return new int[] {n - 1 - i, j};
     }
 }
 ```
@@ -166,25 +165,21 @@ public:
 
     int snakesAndLadders(vector<vector<int>>& board) {
         n = board.size();
-        queue<int> q{{1}};
+        queue<int> q {{1}};
         vector<bool> vis(n * n + 1);
         vis[1] = true;
         int ans = 0;
-        while (!q.empty())
-        {
-            for (int t = q.size(); t; --t)
-            {
+        while (!q.empty()) {
+            for (int t = q.size(); t; --t) {
                 int curr = q.front();
                 if (curr == n * n) return ans;
                 q.pop();
-                for (int k = curr + 1; k <= min(curr + 6, n * n); ++k)
-                {
+                for (int k = curr + 1; k <= min(curr + 6, n * n); ++k) {
                     auto p = get(k);
                     int next = k;
                     int i = p[0], j = p[1];
                     if (board[i][j] != -1) next = board[i][j];
-                    if (!vis[next])
-                    {
+                    if (!vis[next]) {
                         vis[next] = true;
                         q.push(next);
                     }

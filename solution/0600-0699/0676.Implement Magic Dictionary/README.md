@@ -83,7 +83,6 @@ magicDictionary.search("leetcoded"); // 返回 False
 
 ```python
 class MagicDictionary:
-
     def __init__(self):
         self.d = None
 
@@ -145,11 +144,11 @@ class MagicDictionary {
     public MagicDictionary() {
 
     }
-    
+
     public void buildDict(String[] dictionary) {
         d = dictionary;
     }
-    
+
     public boolean search(String searchWord) {
         for (String w : d) {
             if (w.length() != searchWord.length()) {
@@ -184,7 +183,6 @@ class MagicDictionary {
 
     /** Initialize your data structure here. */
     public MagicDictionary() {
-
     }
 
     public void buildDict(String[] dictionary) {
@@ -235,16 +233,14 @@ public:
     vector<string> d;
 
     MagicDictionary() {
-
     }
-    
+
     void buildDict(vector<string> dictionary) {
         d = move(dictionary);
     }
-    
+
     bool search(string searchWord) {
-        for (auto&& w : d)
-        {
+        for (auto&& w : d) {
             if (w.size() != searchWord.size()) continue;
             int diff = 0;
             for (int i = 0; i < w.size(); ++i) diff += w[i] != searchWord[i];
@@ -269,7 +265,7 @@ public:
     MagicDictionary() {
 
     }
-    
+
     void buildDict(vector<string> dictionary) {
         for (string word : dictionary)
         {
@@ -277,7 +273,7 @@ public:
             for (string p : gen(word)) ++cnt[p];
         }
     }
-    
+
     bool search(string searchWord) {
         for (string p : gen(searchWord))
         {

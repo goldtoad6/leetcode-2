@@ -11,21 +11,21 @@
 <p>The <strong>Manhattan distance</strong> between two points <code>(x<sub>1</sub>, y<sub>1</sub>)</code> and <code>(x<sub>2</sub>, y<sub>2</sub>)</code> is <code>abs(x<sub>1</sub> - x<sub>2</sub>) + abs(y<sub>1</sub> - y<sub>2</sub>)</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> x = 3, y = 4, points = [[1,2],[3,1],[2,4],[2,3],[4,4]]
 <strong>Output:</strong> 2
 <strong>Explanation:</strong> Of all the points, only [3,1], [2,4] and [4,4] are valid. Of the valid points, [2,4] and [4,4] have the smallest Manhattan distance from your current location, with a distance of 1. [2,4] has the smallest index, so return 2.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> x = 3, y = 4, points = [[3,4]]
 <strong>Output:</strong> 0
 <strong>Explanation:</strong> The answer is allowed to be on the same location as your current location.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> x = 3, y = 4, points = [[2,3]]
@@ -48,13 +48,83 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def nearestValidPoint(self, x: int, y: int, points: List[List[int]]) -> int:
+        ans, mi = -1, inf
+        for i, (a, b) in enumerate(points):
+            if a == x or b == y:
+                d = abs(a - x) + abs(b - y)
+                if mi > d:
+                    ans, mi = i, d
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int nearestValidPoint(int x, int y, int[][] points) {
+        int ans = -1, mi = 1000000;
+        for (int i = 0; i < points.length; ++i) {
+            int a = points[i][0], b = points[i][1];
+            if (a == x || b == y) {
+                int d = Math.abs(a - x) + Math.abs(b - y);
+                if (d < mi) {
+                    mi = d;
+                    ans = i;
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int nearestValidPoint(int x, int y, vector<vector<int>>& points) {
+        int ans = -1, mi = 1e6;
+        for (int i = 0; i < points.size(); ++i) {
+            int a = points[i][0], b = points[i][1];
+            if (a == x || b == y) {
+                int d = abs(a - x) + abs(b - y);
+                if (d < mi) {
+                    mi = d;
+                    ans = i;
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func nearestValidPoint(x int, y int, points [][]int) int {
+	ans, mi := -1, 1000000
+	for i, p := range points {
+		a, b := p[0], p[1]
+		if a == x || b == y {
+			d := abs(a-x) + abs(b-y)
+			if d < mi {
+				ans, mi = i, d
+			}
+		}
+	}
+	return ans
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
 ```
 
 ### **TypeScript**
@@ -98,6 +168,27 @@ impl Solution {
         }
         res
     }
+}
+```
+
+### **C**
+
+```c
+int nearestValidPoint(int x, int y, int **points, int pointsSize, int *pointsColSize) {
+    int ans = -1;
+    int min = INT_MAX;
+    for (int i = 0; i < pointsSize; i++) {
+        int *point = points[i];
+        if (point[0] != x && point[1] != y) {
+            continue;
+        }
+        int d = abs(x - point[0]) + abs(y - point[1]);
+        if (d < min) {
+            min = d;
+            ans = i;
+        }
+    }
+    return ans;
 }
 ```
 

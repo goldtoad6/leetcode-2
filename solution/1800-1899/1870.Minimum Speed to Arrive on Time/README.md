@@ -70,6 +70,8 @@
 
 二分枚举速度值，找到满足条件的最小速度。
 
+时间复杂度 $O(n\times \log m)$，其中 $n$ 和 $m$ 分别为数组 `dist` 和最大速度值。
+
 以下是二分查找的两个通用模板：
 
 模板 1：
@@ -134,14 +136,9 @@ class Solution:
                 res += (d / speed) if i == len(dist) - 1 else math.ceil(d / speed)
             return res <= hour
 
-        left, right = 1, 10 ** 7
-        while left < right:
-            mid = (left + right) >> 1
-            if check(mid):
-                right = mid
-            else:
-                left = mid + 1
-        return left if check(left) else -1
+        r = 10**7 + 1
+        ans = bisect_left(range(1, r), True, key=check) + 1
+        return -1 if ans == r else ans
 ```
 
 ### **Java**
@@ -203,6 +200,28 @@ public:
 };
 ```
 
+### **Go**
+
+```go
+func minSpeedOnTime(dist []int, hour float64) int {
+	n := len(dist)
+	const mx int = 1e7
+	x := sort.Search(mx, func(s int) bool {
+		s++
+		var cost float64
+		for _, v := range dist[:n-1] {
+			cost += math.Ceil(float64(v) / float64(s))
+		}
+		cost += float64(dist[n-1]) / float64(s)
+		return cost <= hour
+	})
+	if x == mx {
+		return -1
+	}
+	return x + 1
+}
+```
+
 ### **JavaScript**
 
 ```js
@@ -237,36 +256,6 @@ function arriveOnTime(dist, speed, hour) {
         res += cost;
     }
     return res <= hour;
-}
-```
-
-### **Go**
-
-```go
-func minSpeedOnTime(dist []int, hour float64) int {
-	n := len(dist)
-	left, right := 1, int(1e7)
-	check := func(speed float64) bool {
-		var cost float64
-		for _, v := range dist[:n-1] {
-			cost += math.Ceil(float64(v) / speed)
-		}
-		cost += float64(dist[n-1]) / speed
-		return cost <= hour
-
-	}
-	for left < right {
-		mid := (left + right) >> 1
-		if check(float64(mid)) {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	if check(float64(left)) {
-		return left
-	}
-	return -1
 }
 ```
 

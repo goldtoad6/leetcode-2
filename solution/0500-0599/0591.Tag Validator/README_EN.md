@@ -20,7 +20,7 @@
 </ol>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> code = &quot;&lt;DIV&gt;This is the first line &lt;![CDATA[&lt;div&gt;]]&gt;&lt;/DIV&gt;&quot;
@@ -32,7 +32,7 @@ Although CDATA_CONTENT has an unmatched start tag with invalid TAG_NAME, it shou
 So TAG_CONTENT is valid, and then the code is valid. Thus return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> code = &quot;&lt;DIV&gt;&gt;&gt;  ![cdata[]] &lt;![CDATA[&lt;div&gt;]&gt;]]&gt;]]&gt;&gt;]&lt;/DIV&gt;&quot;
@@ -49,7 +49,7 @@ The reason why start_tag is NOT <b>&quot;&lt;DIV&gt;&gt;&gt;&quot;</b> is becaus
 The reason why cdata is NOT <b>&quot;&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;]]&gt;&quot;</b> is because of the rule 7.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> code = &quot;&lt;A&gt;  &lt;B&gt; &lt;/A&gt;   &lt;/B&gt;&quot;
@@ -172,26 +172,20 @@ class Solution {
 public:
     bool isValid(string code) {
         stack<string> stk;
-        for (int i = 0; i < code.size(); ++i)
-        {
+        for (int i = 0; i < code.size(); ++i) {
             if (i && stk.empty()) return false;
-            if (code.substr(i, 9) == "<![CDATA[")
-            {
+            if (code.substr(i, 9) == "<![CDATA[") {
                 i = code.find("]]>", i + 9);
                 if (i < 0) return false;
                 i += 2;
-            }
-            else if (code.substr(i, 2) == "</")
-            {
+            } else if (code.substr(i, 2) == "</") {
                 int j = i + 2;
                 i = code.find('>', j);
                 if (i < 0) return false;
                 string t = code.substr(j, i - j);
                 if (!check(t) || stk.empty() || stk.top() != t) return false;
                 stk.pop();
-            }
-            else if (code.substr(i, 1) == "<")
-            {
+            } else if (code.substr(i, 1) == "<") {
                 int j = i + 1;
                 i = code.find('>', j);
                 if (i < 0) return false;

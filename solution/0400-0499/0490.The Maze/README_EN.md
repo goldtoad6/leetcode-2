@@ -11,7 +11,7 @@
 <p>You may assume that <strong>the borders of the maze are all walls</strong> (see examples).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0490.The%20Maze/images/maze1-1-grid.jpg" style="width: 573px; height: 573px;" />
 <pre>
 <strong>Input:</strong> maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> One possible way is : left -&gt; down -&gt; left -&gt; down -&gt; right -&gt; down -&gt; right.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0490.The%20Maze/images/maze1-2-grid.jpg" style="width: 573px; height: 573px;" />
 <pre>
 <strong>Input:</strong> maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> There is no way for the ball to stop at the destination. Notice that you can pass through the destination but you cannot stop there.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], start = [4,3], destination = [0,1]
@@ -60,7 +60,9 @@ DFS.
 
 ```python
 class Solution:
-    def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:
+    def hasPath(
+        self, maze: List[List[int]], start: List[int], destination: List[int]
+    ) -> bool:
         def dfs(i, j):
             if vis[i][j]:
                 return
@@ -164,7 +166,8 @@ class Solution {
             for (int k = 0; k < 4; ++k) {
                 int x = i, y = j;
                 int a = dirs[k], b = dirs[k + 1];
-                while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
+                while (
+                    x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
                     x += a;
                     y += b;
                 }
@@ -173,7 +176,7 @@ class Solution {
                 }
                 if (!vis[x][y]) {
                     vis[x][y] = true;
-                    q.offer(new int[]{x, y});
+                    q.offer(new int[] {x, y});
                 }
             }
         }
@@ -208,12 +211,10 @@ public:
         vis[i][j] = true;
         if (i == d[0] && j == d[1]) return;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i, y = j;
             int a = dirs[k], b = dirs[k + 1];
-            while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0)
-            {
+            while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0) {
                 x += a;
                 y += b;
             }

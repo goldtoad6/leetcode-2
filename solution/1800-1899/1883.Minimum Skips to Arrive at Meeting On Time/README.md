@@ -90,13 +90,16 @@
 class Solution:
     def minSkips(self, dist: List[int], speed: int, hoursBefore: int) -> int:
         n = len(dist)
-        dp = [[float('inf')] * (n + 1) for _ in range(n + 1)]
+        dp = [[inf] * (n + 1) for _ in range(n + 1)]
         dp[0][0] = 0
         for i in range(1, n + 1):
             for j in range(i + 1):
                 if i != j:
                     # 没有跳过
-                    dp[i][j] = min(dp[i][j], ((dp[i - 1][j] + dist[i - 1] - 1) // speed + 1) * speed)
+                    dp[i][j] = min(
+                        dp[i][j],
+                        ((dp[i - 1][j] + dist[i - 1] - 1) // speed + 1) * speed,
+                    )
                 if j > 0:
                     # 跳过
                     dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + dist[i - 1])
@@ -125,7 +128,8 @@ class Solution {
             for (int j = 0; j <= i; ++j) {
                 if (i != j) {
                     // 没有跳过
-                    dp[i][j] = Math.min(dp[i][j], ((dp[i - 1][j] + dist[i - 1] - 1) / speed + 1) * speed);
+                    dp[i][j] = Math.min(
+                        dp[i][j], ((dp[i - 1][j] + dist[i - 1] - 1) / speed + 1) * speed);
                 }
                 if (j > 0) {
                     // 跳过

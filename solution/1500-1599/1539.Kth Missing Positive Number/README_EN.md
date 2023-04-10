@@ -9,7 +9,7 @@
 <p>Return <em>the</em> <code>k<sup>th</sup></code> <em><strong>positive</strong> integer that is <strong>missing</strong> from this array.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [2,3,4,7,11], k = 5
@@ -17,7 +17,7 @@
 <strong>Explanation: </strong>The missing positive integers are [1,5,6,8,9,10,12,13,...]. The 5<sup>th</sup>&nbsp;missing positive integer is 9.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,3,4], k = 2
@@ -93,11 +93,12 @@ public:
     int findKthPositive(vector<int>& arr, int k) {
         if (arr[0] > k) return k;
         int left = 0, right = arr.size();
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
-            if (arr[mid] - mid - 1 >= k) right = mid;
-            else left = mid + 1;
+            if (arr[mid] - mid - 1 >= k)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return arr[left - 1] + k - (arr[left - 1] - (left - 1) - 1);
     }

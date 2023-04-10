@@ -54,7 +54,7 @@ class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
         flowerbed = [0] + flowerbed + [0]
         for i in range(1, len(flowerbed) - 1):
-            if sum(flowerbed[i - 1: i + 2]) == 0:
+            if sum(flowerbed[i - 1 : i + 2]) == 0:
                 flowerbed[i] = 1
                 n -= 1
         return n <= 0
@@ -88,12 +88,10 @@ class Solution {
 public:
     bool canPlaceFlowers(vector<int>& flowerbed, int n) {
         int m = flowerbed.size();
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             int l = i == 0 ? 0 : flowerbed[i - 1];
             int r = i == m - 1 ? 0 : flowerbed[i + 1];
-            if (l + flowerbed[i] + r == 0)
-            {
+            if (l + flowerbed[i] + r == 0) {
                 flowerbed[i] = 1;
                 --n;
             }

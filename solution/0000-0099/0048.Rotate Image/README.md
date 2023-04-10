@@ -97,19 +97,19 @@ public:
     void rotate(vector<vector<int>>& matrix) {
 
         int n = matrix.size();
-        if(n <= 1)return ;
+        if (n <= 1) return;
 
-        //先做转置
-        for(int i = 0 ; i < n ; i++){
-            for(int j = i;j < n ;j++){
-                swap(matrix[i][j],matrix[j][i]);
+        // 先做转置
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                swap(matrix[i][j], matrix[j][i]);
             }
         }
 
-        //再做水平互换
-        for(int i = 0 ; i < n ; i++){
-            for(int j = 0;j < n/2;j++){
-                swap(matrix[i][j],matrix[i][n-1-j]);
+        // 再做水平互换
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                swap(matrix[i][j], matrix[i][n - 1 - j]);
             }
         }
     }
@@ -189,6 +189,25 @@ impl Solution {
             }
         }
     }
+}
+```
+
+### **Go**
+
+```go
+func rotate(matrix [][]int) {
+	n := len(matrix)
+	for i := 0; i < n; i++ {
+		for j := i; j < n; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+
+	for i := 0; i < n; i++ {
+		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
+			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
+		}
+	}
 }
 ```
 

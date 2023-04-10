@@ -17,7 +17,7 @@
 <p>The test cases are generated so that the answer fits in a <strong>32-bit</strong> integer.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [4,3,2,6]
@@ -30,7 +30,7 @@ F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
 So the maximum value of F(0), F(1), F(2), F(3) is F(3) = 26.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [100]
@@ -93,14 +93,12 @@ class Solution {
 public:
     int maxRotateFunction(vector<int>& nums) {
         int f = 0, s = 0, n = nums.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             f += i * nums[i];
             s += nums[i];
         }
         int ans = f;
-        for (int i = 1; i < n; ++i)
-        {
+        for (int i = 1; i < n; ++i) {
             f = f + s - n * nums[n - i];
             ans = max(ans, f);
         }

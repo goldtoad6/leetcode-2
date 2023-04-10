@@ -13,7 +13,7 @@
 | customer_id | int     |
 | product_key | int     |
 +-------------+---------+
-There is no primary key for this table. It may contain duplicates.
+There is no primary key for this table. It may contain duplicates. <code>customer_id</code> is not NULL<code>.</code>
 product_key is a foreign key to <code>Product</code> table.
 </pre>
 
@@ -39,7 +39,7 @@ product_key is the primary key column for this table.
 <p>The query result format is in the following example.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> 

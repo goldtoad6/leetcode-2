@@ -78,6 +78,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -180,7 +181,8 @@ class Solution {
     private int[] p;
     private double[] w;
 
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+    public double[] calcEquation(
+        List<List<String>> equations, double[] values, List<List<String>> queries) {
         int n = equations.size();
         p = new int[n << 1];
         w = new double[n << 1];
@@ -242,15 +244,13 @@ public:
 
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         int n = equations.size();
-        for (int i = 0; i < (n << 1); ++i)
-        {
+        for (int i = 0; i < (n << 1); ++i) {
             p.push_back(i);
             w.push_back(1.0);
         }
         unordered_map<string, int> mp;
         int idx = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             auto e = equations[i];
             string a = e[0], b = e[1];
             if (mp.find(a) == mp.end()) mp[a] = idx++;
@@ -262,12 +262,11 @@ public:
         }
         int m = queries.size();
         vector<double> res;
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             string c = queries[i][0], d = queries[i][1];
-            if (mp.find(c) == mp.end() || mp.find(d) == mp.end()) res.push_back(-1.0);
-            else
-            {
+            if (mp.find(c) == mp.end() || mp.find(d) == mp.end())
+                res.push_back(-1.0);
+            else {
                 int pa = find(mp[c]), pb = find(mp[d]);
                 res.push_back(pa == pb ? w[mp[c]] / w[mp[d]] : -1.0);
             }
@@ -276,8 +275,7 @@ public:
     }
 
     int find(int x) {
-        if (p[x] != x)
-        {
+        if (p[x] != x) {
             int origin = p[x];
             p[x] = find(p[x]);
             w[x] *= w[origin];

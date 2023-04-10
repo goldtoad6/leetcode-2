@@ -13,10 +13,10 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "abcde", goal = "cdeab"
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "abcde", goal = "abced"
 <strong>Output:</strong> false
 </pre>
@@ -83,6 +83,21 @@ function rotateString(s: string, goal: string): boolean {
 impl Solution {
     pub fn rotate_string(s: String, goal: String) -> bool {
         s.len() == goal.len() && (s.clone() + &s).contains(&goal)
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @param String $goal
+     * @return Boolean
+     */
+    function rotateString($s, $goal) {
+        return strlen($goal) === strlen($s) && strpos(($s.$s), $goal) !== false;
     }
 }
 ```

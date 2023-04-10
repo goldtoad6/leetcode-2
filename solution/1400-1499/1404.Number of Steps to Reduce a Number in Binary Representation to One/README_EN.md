@@ -18,7 +18,7 @@
 <p>It is guaranteed that you can always reach one for all test cases.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;1101&quot;
@@ -32,7 +32,7 @@ Step 5) 4 is even, divide by 2 and obtain 2.&nbsp;
 Step 6) 2 is even, divide by 2 and obtain 1.&nbsp; 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;10&quot;
@@ -41,7 +41,7 @@ Step 6) 2 is even, divide by 2 and obtain 1.&nbsp;
 Step 1) 2 is even, divide by 2 and obtain 1.&nbsp; 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;1&quot;
@@ -123,20 +123,16 @@ public:
     int numSteps(string s) {
         int ans = 0;
         bool carry = false;
-        for (int i = s.size() - 1; i; --i)
-        {
+        for (int i = s.size() - 1; i; --i) {
             char c = s[i];
-            if (carry)
-            {
-                if (c == '0')
-                {
+            if (carry) {
+                if (c == '0') {
                     c = '1';
                     carry = false;
-                }
-                else c = '0';
+                } else
+                    c = '0';
             }
-            if (c == '1')
-            {
+            if (c == '1') {
                 ++ans;
                 carry = true;
             }

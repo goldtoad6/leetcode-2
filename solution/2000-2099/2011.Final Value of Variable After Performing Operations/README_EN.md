@@ -16,7 +16,7 @@
 <p>Given an array of strings <code>operations</code> containing a list of operations, return <em>the <strong>final </strong>value of </em><code>X</code> <em>after performing all the operations</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> operations = [&quot;--X&quot;,&quot;X++&quot;,&quot;X++&quot;]
@@ -28,7 +28,7 @@ X++: X is incremented by 1, X = -1 + 1 =  0.
 X++: X is incremented by 1, X =  0 + 1 =  1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> operations = [&quot;++X&quot;,&quot;++X&quot;,&quot;X++&quot;]
@@ -40,7 +40,7 @@ Initially, X = 0.
 X++: X is incremented by 1, X = 2 + 1 = 3.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> operations = [&quot;X++&quot;,&quot;++X&quot;,&quot;--X&quot;,&quot;X--&quot;]
@@ -79,12 +79,56 @@ class Solution:
 class Solution {
     public int finalValueAfterOperations(String[] operations) {
         int ans = 0;
-        for (String s : operations) {
+        for (var s : operations) {
             ans += (s.charAt(1) == '+' ? 1 : -1);
         }
         return ans;
     }
 }
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int finalValueAfterOperations(vector<string>& operations) {
+        int ans = 0;
+        for (auto& s : operations) ans += (s[1] == '+' ? 1 : -1);
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func finalValueAfterOperations(operations []string) (ans int) {
+	for _, s := range operations {
+		if s[1] == '+' {
+			ans += 1
+		} else {
+			ans -= 1
+		}
+	}
+	return
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {string[]} operations
+ * @return {number}
+ */
+var finalValueAfterOperations = function (operations) {
+    let ans = 0;
+    for (const s of operations) {
+        ans += s[1] === '+' ? 1 : -1;
+    }
+    return ans;
+};
 ```
 
 ### **TypeScript**
@@ -99,32 +143,35 @@ function finalValueAfterOperations(operations: string[]): number {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int finalValueAfterOperations(vector<string>& operations) {
-        int ans = 0;
-        for (auto s : operations) ans += (s[1] == '+' ? 1 : -1);
-        return ans;
-    }
-};
+```ts
+function finalValueAfterOperations(operations: string[]): number {
+    return operations.reduce((r, v) => r + (v[1] === '+' ? 1 : -1), 0);
+}
 ```
 
-### **Go**
+### **Rust**
 
-```go
-func finalValueAfterOperations(operations []string) int {
-    ans := 0
-    for _, s := range operations {
-        if s[1] == '+' {
-            ans += 1
-        } else {
-            ans -= 1
+```rust
+impl Solution {
+    pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
+        let mut ans = 0;
+        for s in operations.iter() {
+            ans += if s.as_bytes()[1] == b'+' { 1 } else { -1 };
         }
+        ans
     }
-    return ans
+}
+```
+
+### **C**
+
+```c
+int finalValueAfterOperations(char **operations, int operationsSize) {
+    int ans = 0;
+    for (int i = 0; i < operationsSize; i++) {
+        ans += operations[i][1] == '+' ? 1 : -1;
+    }
+    return ans;
 }
 ```
 

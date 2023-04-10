@@ -4,11 +4,11 @@
 
 ## Description
 
-<p>Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle and the last position is connected back to the first position to make a circle. It is also called &quot;Ring Buffer&quot;.</p>
+<p>Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle. It is also called &quot;Ring Buffer&quot;.</p>
 
 <p>One of the benefits of the circular queue is that we can make use of the spaces in front of the queue. In a normal queue, once the queue becomes full, we cannot insert the next element even if there is a space in front of the queue. But using the circular queue, we can use the space to store new values.</p>
 
-<p>Implementation the <code>MyCircularQueue</code> class:</p>
+<p>Implement the <code>MyCircularQueue</code> class:</p>
 
 <ul>
 	<li><code>MyCircularQueue(k)</code> Initializes the object with the size of the queue to be <code>k</code>.</li>
@@ -23,7 +23,7 @@
 <p>You must solve the problem without using the built-in queue data structure in your programming language.&nbsp;</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -62,7 +62,6 @@ myCircularQueue.Rear();     // return 4
 
 ```python
 class MyCircularQueue:
-
     def __init__(self, k: int):
         self.q = [0] * k
         self.front = 0
@@ -85,9 +84,7 @@ class MyCircularQueue:
         return True
 
     def Front(self) -> int:
-        if self.isEmpty():
-            return -1
-        return self.q[self.front]
+        return -1 if self.isEmpty() else self.q[self.front]
 
     def Rear(self) -> int:
         if self.isEmpty():
@@ -178,6 +175,139 @@ class MyCircularQueue {
  * int param_4 = obj.Rear();
  * boolean param_5 = obj.isEmpty();
  * boolean param_6 = obj.isFull();
+ */
+```
+
+### **C++**
+
+```cpp
+class MyCircularQueue {
+private:
+    int front;
+    int size;
+    int capacity;
+    vector<int> q;
+
+public:
+    MyCircularQueue(int k) {
+        capacity = k;
+        q = vector<int>(k);
+        front = size = 0;
+    }
+
+    bool enQueue(int value) {
+        if (isFull()) return false;
+        int idx = (front + size) % capacity;
+        q[idx] = value;
+        ++size;
+        return true;
+    }
+
+    bool deQueue() {
+        if (isEmpty()) return false;
+        front = (front + 1) % capacity;
+        --size;
+        return true;
+    }
+
+    int Front() {
+        if (isEmpty()) return -1;
+        return q[front];
+    }
+
+    int Rear() {
+        if (isEmpty()) return -1;
+        int idx = (front + size - 1) % capacity;
+        return q[idx];
+    }
+
+    bool isEmpty() {
+        return size == 0;
+    }
+
+    bool isFull() {
+        return size == capacity;
+    }
+};
+
+/**
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * MyCircularQueue* obj = new MyCircularQueue(k);
+ * bool param_1 = obj->enQueue(value);
+ * bool param_2 = obj->deQueue();
+ * int param_3 = obj->Front();
+ * int param_4 = obj->Rear();
+ * bool param_5 = obj->isEmpty();
+ * bool param_6 = obj->isFull();
+ */
+```
+
+### **Go**
+
+```go
+type MyCircularQueue struct {
+	front    int
+	size     int
+	capacity int
+	q        []int
+}
+
+func Constructor(k int) MyCircularQueue {
+	q := make([]int, k)
+	return MyCircularQueue{0, 0, k, q}
+}
+
+func (this *MyCircularQueue) EnQueue(value int) bool {
+	if this.IsFull() {
+		return false
+	}
+	idx := (this.front + this.size) % this.capacity
+	this.q[idx] = value
+	this.size++
+	return true
+}
+
+func (this *MyCircularQueue) DeQueue() bool {
+	if this.IsEmpty() {
+		return false
+	}
+	this.front = (this.front + 1) % this.capacity
+	this.size--
+	return true
+}
+
+func (this *MyCircularQueue) Front() int {
+	if this.IsEmpty() {
+		return -1
+	}
+	return this.q[this.front]
+}
+
+func (this *MyCircularQueue) Rear() int {
+	if this.IsEmpty() {
+		return -1
+	}
+	idx := (this.front + this.size - 1) % this.capacity
+	return this.q[idx]
+}
+
+func (this *MyCircularQueue) IsEmpty() bool {
+	return this.size == 0
+}
+
+func (this *MyCircularQueue) IsFull() bool {
+	return this.size == this.capacity
+}
+
+/**
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * obj := Constructor(k);
+ * param_1 := obj.EnQueue(value);
+ * param_2 := obj.DeQueue();
+ * param_3 := obj.Front();
+ * param_4 := obj.Rear();
+ * param_5 := obj.IsEmpty();
+ * param_6 := obj.IsFull();
  */
 ```
 

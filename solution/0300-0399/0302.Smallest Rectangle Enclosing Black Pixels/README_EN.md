@@ -13,14 +13,14 @@
 <p>You must write an algorithm with less than <code>O(mn)</code> runtime complexity</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0302.Smallest%20Rectangle%20Enclosing%20Black%20Pixels/images/pixel-grid.jpg" style="width: 333px; height: 253px;" />
 <pre>
 <strong>Input:</strong> image = [[&quot;0&quot;,&quot;0&quot;,&quot;1&quot;,&quot;0&quot;],[&quot;0&quot;,&quot;1&quot;,&quot;1&quot;,&quot;0&quot;],[&quot;0&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;]], x = 0, y = 2
 <strong>Output:</strong> 6
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> image = [[&quot;1&quot;]], x = 0, y = 0
@@ -169,7 +169,6 @@ class Solution {
         return (d - u + 1) * (r - l + 1);
     }
 }
-
 ```
 
 ### **C++**
@@ -180,46 +179,50 @@ public:
     int minArea(vector<vector<char>>& image, int x, int y) {
         int m = image.size(), n = image[0].size();
         int left = 0, right = x;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             int c = 0;
             while (c < n && image[mid][c] == '0') ++c;
-            if (c < n) right = mid;
-            else left = mid + 1;
+            if (c < n)
+                right = mid;
+            else
+                left = mid + 1;
         }
         int u = left;
         left = x;
         right = m - 1;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right + 1) >> 1;
             int c = 0;
             while (c < n && image[mid][c] == '0') ++c;
-            if (c < n) left = mid;
-            else right = mid - 1;
+            if (c < n)
+                left = mid;
+            else
+                right = mid - 1;
         }
         int d = left;
         left = 0;
         right = y;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             int r = 0;
             while (r < m && image[r][mid] == '0') ++r;
-            if (r < m) right = mid;
-            else left = mid + 1;
+            if (r < m)
+                right = mid;
+            else
+                left = mid + 1;
         }
         int l = left;
         left = y;
         right = n - 1;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right + 1) >> 1;
             int r = 0;
             while (r < m && image[r][mid] == '0') ++r;
-            if (r < m) left = mid;
-            else right = mid - 1;
+            if (r < m)
+                left = mid;
+            else
+                right = mid - 1;
         }
         int r = left;
         return (d - u + 1) * (r - l + 1);

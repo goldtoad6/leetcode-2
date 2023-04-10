@@ -13,7 +13,7 @@
 <p><strong>Notice</strong> that you may not slant the container.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0011.Container%20With%20Most%20Water/images/question_11.jpg" style="width: 600px; height: 287px;" />
 <pre>
 <strong>Input:</strong> height = [1,8,6,2,5,4,8,3,7]
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> height = [1,1]
@@ -68,8 +68,10 @@ class Solution {
         while (i < j) {
             int t = (j - i) * Math.min(height[i], height[j]);
             res = Math.max(res, t);
-            if (height[i] < height[j]) ++i;
-            else --j;
+            if (height[i] < height[j])
+                ++i;
+            else
+                --j;
         }
         return res;
     }
@@ -87,8 +89,10 @@ public:
         while (i < j) {
             int t = (j - i) * min(height[i], height[j]);
             res = max(res, t);
-            if (height[i] < height[j]) ++i;
-            else --j;
+            if (height[i] < height[j])
+                ++i;
+            else
+                --j;
         }
         return res;
     }

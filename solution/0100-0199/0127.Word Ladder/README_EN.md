@@ -15,7 +15,7 @@
 <p>Given two words, <code>beginWord</code> and <code>endWord</code>, and a dictionary <code>wordList</code>, return <em>the <strong>number of words</strong> in the <strong>shortest transformation sequence</strong> from</em> <code>beginWord</code> <em>to</em> <code>endWord</code><em>, or </em><code>0</code><em> if no such sequence exists.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> beginWord = &quot;hit&quot;, endWord = &quot;cog&quot;, wordList = [&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> One shortest transformation sequence is &quot;hit&quot; -&gt; &quot;hot&quot; -&gt; &quot;dot&quot; -&gt; &quot;dog&quot; -&gt; cog&quot;, which is 5 words long.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> beginWord = &quot;hit&quot;, endWord = &quot;cog&quot;, wordList = [&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;]
@@ -210,20 +210,16 @@ class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> words(wordList.begin(), wordList.end());
-        queue<string> q{{beginWord}};
+        queue<string> q {{beginWord}};
         int ans = 1;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int i = q.size(); i > 0; --i)
-            {
+            for (int i = q.size(); i > 0; --i) {
                 string s = q.front();
                 q.pop();
-                for (int j = 0; j < s.size(); ++j)
-                {
+                for (int j = 0; j < s.size(); ++j) {
                     char ch = s[j];
-                    for (char k = 'a'; k <= 'z'; ++k)
-                    {
+                    for (char k = 'a'; k <= 'z'; ++k) {
                         s[j] = k;
                         if (!words.count(s)) continue;
                         if (s == endWord) return ans;
@@ -245,14 +241,13 @@ public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> words(wordList.begin(), wordList.end());
         if (!words.count(endWord)) return 0;
-        queue<string> q1{{beginWord}};
-        queue<string> q2{{endWord}};
+        queue<string> q1 {{beginWord}};
+        queue<string> q2 {{endWord}};
         unordered_map<string, int> m1;
         unordered_map<string, int> m2;
         m1[beginWord] = 0;
         m2[endWord] = 0;
-        while (!q1.empty() && !q2.empty())
-        {
+        while (!q1.empty() && !q2.empty()) {
             int t = q1.size() <= q2.size() ? extend(m1, m2, q1, words) : extend(m2, m1, q2, words);
             if (t != -1) return t + 1;
         }
@@ -260,16 +255,13 @@ public:
     }
 
     int extend(unordered_map<string, int>& m1, unordered_map<string, int>& m2, queue<string>& q, unordered_set<string>& words) {
-        for (int i = q.size(); i > 0; --i)
-        {
+        for (int i = q.size(); i > 0; --i) {
             string s = q.front();
             int step = m1[s];
             q.pop();
-            for (int j = 0; j < s.size(); ++j)
-            {
+            for (int j = 0; j < s.size(); ++j) {
                 char ch = s[j];
-                for (char k = 'a'; k <= 'z'; ++k)
-                {
+                for (char k = 'a'; k <= 'z'; ++k) {
                     s[j] = k;
                     if (!words.count(s) || m1.count(s)) continue;
                     if (m2.count(s)) return step + 1 + m2[s];

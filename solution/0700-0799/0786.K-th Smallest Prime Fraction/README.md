@@ -43,6 +43,10 @@
 	<li><code>1 &lt;= k &lt;= arr.length * (arr.length - 1) / 2</code></li>
 </ul>
 
+<p>&nbsp;</p>
+
+<p><strong>进阶：</strong>你可以设计并实现时间复杂度小于 <code>O(n<sup>2</sup>)</code> 的算法解决此问题吗？</p>
+
 ## 解法
 
 <!-- 这里可写通用的实现逻辑 -->
@@ -84,7 +88,7 @@ class Solution {
             }
         }
         Frac f = pq.peek();
-        return new int[] { f.x, f.y };
+        return new int[] {f.x, f.y};
     }
 
     static class Frac implements Comparable {
@@ -142,7 +146,7 @@ public:
     vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
         using pii = pair<int, int>;
         int n = arr.size();
-        auto cmp = [&](const pii &a, const pii &b) {
+        auto cmp = [&](const pii& a, const pii& b) {
             return arr[a.first] * arr[b.second] > arr[b.first] * arr[a.second];
         };
         priority_queue<pii, vector<pii>, decltype(cmp)> pq(cmp);

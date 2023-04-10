@@ -60,6 +60,14 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：遍历**
+
+遍历两个数组，找到第一个不相等的位置 $i$。如果 $i \lt n - 1$，循环比较 $sensor1[i + 1]$ 和 $sensor2[i]$，如果不相等，说明传感器 $1$ 有缺陷，返回 $1$；否则比较 $sensor1[i]$ 和 $sensor2[i + 1]$，如果不相等，说明传感器 $2$ 有缺陷，返回 $2$。
+
+遍历结束，说明无法确定有缺陷的传感器，返回 $-1$。
+
+时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -92,7 +100,8 @@ class Solution {
     public int badSensor(int[] sensor1, int[] sensor2) {
         int i = 0;
         int n = sensor1.length;
-        for (; i < n - 1 && sensor1[i] == sensor2[i]; ++i) {}
+        for (; i < n - 1 && sensor1[i] == sensor2[i]; ++i) {
+        }
         for (; i < n - 1; ++i) {
             if (sensor1[i + 1] != sensor2[i]) {
                 return 1;
@@ -114,9 +123,8 @@ public:
     int badSensor(vector<int>& sensor1, vector<int>& sensor2) {
         int i = 0;
         int n = sensor1.size();
-        for (; i < n - 1 && sensor1[i] == sensor2[i]; ++i) {}
-        for (; i < n - 1; ++i)
-        {
+        for (; i < n - 1 && sensor1[i] == sensor2[i]; ++i) { }
+        for (; i < n - 1; ++i) {
             if (sensor1[i + 1] != sensor2[i]) return 1;
             if (sensor1[i] != sensor2[i + 1]) return 2;
         }

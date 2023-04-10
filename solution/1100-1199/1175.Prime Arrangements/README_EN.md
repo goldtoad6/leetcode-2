@@ -11,7 +11,7 @@
 <p>Since the answer may be large, return the answer <strong>modulo <code>10^9 + 7</code></strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> For example [1,2,5,4,3] is a valid permutation, but [5,2,3,4,1] is not because the prime number 5 is at index 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 100
@@ -105,7 +105,7 @@ public:
     int numPrimeArrangements(int n) {
         int cnt = count(n);
         ll ans = f(cnt) * f(n - cnt);
-        return (int) (ans % MOD);
+        return (int)(ans % MOD);
     }
 
     ll f(int n) {
@@ -117,10 +117,8 @@ public:
     int count(int n) {
         vector<bool> primes(n + 1, true);
         int cnt = 0;
-        for (int i = 2; i <= n; ++i)
-        {
-            if (primes[i])
-            {
+        for (int i = 2; i <= n; ++i) {
+            if (primes[i]) {
                 ++cnt;
                 for (int j = i + i; j <= n; j += i) primes[j] = false;
             }

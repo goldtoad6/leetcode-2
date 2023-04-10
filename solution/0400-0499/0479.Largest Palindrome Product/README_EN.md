@@ -7,7 +7,7 @@
 <p>Given an integer n, return <em>the <strong>largest palindromic integer</strong> that can be represented as the product of two <code>n</code>-digits integers</em>. Since the answer can be very large, return it <strong>modulo</strong> <code>1337</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2
@@ -15,7 +15,7 @@
 Explanation: 99 x 91 = 9009, 9009 % 1337 = 987
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1
@@ -83,12 +83,10 @@ class Solution {
 public:
     int largestPalindrome(int n) {
         int mx = pow(10, n) - 1;
-        for (int a = mx; a > mx / 10; --a)
-        {
+        for (int a = mx; a > mx / 10; --a) {
             int b = a;
             long x = a;
-            while (b)
-            {
+            while (b) {
                 x = x * 10 + b % 10;
                 b /= 10;
             }

@@ -14,7 +14,7 @@
 <p>Return <em>the minimum number of operations to transform </em><code>n</code><em> into </em><code>0</code><em>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 3
@@ -24,7 +24,7 @@
 &quot;0<u>1</u>&quot; -&gt; &quot;0<u>0</u>&quot; with the 1<sup>st</sup> operation.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 6
@@ -50,13 +50,33 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minimumOneBitOperations(self, n: int) -> int:
+        if n <= 1:
+            return n
+        for i in range(64):
+            if (n >> i) == 1:
+                base = 1 << i
+                break
+        return 2*base-1 - self.minimumOneBitOperations(n-base)
 ```
 
-### **Java**
+### **Go**
 
-```java
-
+```go
+func minimumOneBitOperations(n int) int {
+	if n <= 1 {
+		return n
+	}
+	base := 0
+	for i := 0; i < 64; i++ {
+		if (n >> i) == 1 {
+			base = 1 << i
+			break
+		}
+	}
+	return (base << 1) - 1 - minimumOneBitOperations(n-base)
+}
 ```
 
 ### **...**

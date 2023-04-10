@@ -7,14 +7,14 @@
 <p>Given a string <code>s</code> and a string array <code>dictionary</code>, return <em>the longest string in the dictionary that can be formed by deleting some of the given string characters</em>. If there is more than one possible result, return the longest word with the smallest lexicographical order. If there is no possible result, return the empty string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abpcplea&quot;, dictionary = [&quot;ale&quot;,&quot;apple&quot;,&quot;monkey&quot;,&quot;plea&quot;]
 <strong>Output:</strong> &quot;apple&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abpcplea&quot;, dictionary = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
@@ -63,7 +63,9 @@ class Solution {
     public String findLongestWord(String s, List<String> dictionary) {
         String ans = "";
         for (String a : dictionary) {
-            if (check(s, a) && (ans.length() < a.length() || (ans.length() == a.length() && a.compareTo(ans) < 0))) {
+            if (check(s, a)
+                && (ans.length() < a.length()
+                    || (ans.length() == a.length() && a.compareTo(ans) < 0))) {
                 ans = a;
             }
         }
@@ -159,8 +161,7 @@ public:
     bool check(string& a, string& b) {
         int m = a.size(), n = b.size();
         int i = 0, j = 0;
-        while (i < m && j < n)
-        {
+        while (i < m && j < n) {
             if (a[i] == b[j]) ++j;
             ++i;
         }

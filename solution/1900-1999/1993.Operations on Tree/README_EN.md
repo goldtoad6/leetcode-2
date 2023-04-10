@@ -30,7 +30,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1993.Operations%20on%20Tree/images/untitled.png" style="width: 375px; height: 246px;" />
 <pre>
 <strong>Input</strong>
@@ -78,7 +78,6 @@ DFS.
 
 ```python
 class LockingTree:
-
     def __init__(self, parent: List[int]):
         self.nums = {}
         self.parent = parent
@@ -140,9 +139,7 @@ class LockingTree {
         this.parent = parent;
         int n = parent.length;
         children = new List[n];
-        for (int i = 0; i < n; ++i) {
-            children[i] = new ArrayList<>();
-        }
+        Arrays.setAll(children, k -> new ArrayList<>());
         for (int i = 0; i < n; ++i) {
             if (parent[i] != -1) {
                 children[parent[i]].add(i);
@@ -245,10 +242,8 @@ public:
     }
 
     void dfs(int num, bool& find) {
-        for (int child : children[num])
-        {
-            if (nums.count(child))
-            {
+        for (int child : children[num]) {
+            if (nums.count(child)) {
                 nums.erase(child);
                 find = true;
             }

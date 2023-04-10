@@ -13,7 +13,7 @@
 <p>Return <em>the rotation index </em><code>k</code><em> that corresponds to the highest score we can achieve if we rotated </em><code>nums</code><em> by it</em>. If there are multiple answers, return the smallest such index <code>k</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,3,1,4,0]
@@ -27,7 +27,7 @@ k = 4,  nums = [0,2,3,1,4],    score 3
 So we should choose k = 3, which has the highest score.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,3,0,2,4]
@@ -106,19 +106,16 @@ public:
         int n = nums.size();
         int mx = -1, ans = n;
         vector<int> d(n);
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int l = (i + 1) % n;
             int r = (n + i + 1 - nums[i]) % n;
             ++d[l];
             --d[r];
         }
         int s = 0;
-        for (int k = 0; k < n; ++k)
-        {
+        for (int k = 0; k < n; ++k) {
             s += d[k];
-            if (s > mx)
-            {
+            if (s > mx) {
                 mx = s;
                 ans = k;
             }

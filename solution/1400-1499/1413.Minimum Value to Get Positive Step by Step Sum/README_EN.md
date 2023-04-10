@@ -11,7 +11,7 @@
 <p>Return the minimum <strong>positive</strong> value of&nbsp;<em>startValue</em> such that the step by step sum is never less than 1.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-3,2,-3,4,2]
@@ -26,7 +26,7 @@
   (4 <strong>+2</strong> ) = 6  | (5 <strong>+2</strong> ) = 7    |   2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2]
@@ -34,7 +34,7 @@
 <strong>Explanation:</strong> Minimum start value should be positive. 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,-2,-3]
@@ -58,11 +58,18 @@
 ```python
 class Solution:
     def minStartValue(self, nums: List[int]) -> int:
-        s, t = 0, float('inf')
+        s, t = 0, inf
         for num in nums:
             s += num
             t = min(t, s)
         return max(1, 1 - t)
+```
+
+```python
+class Solution:
+    def minStartValue(self, nums: List[int]) -> int:
+        s = list(accumulate(nums))
+        return 1 if min(s) >= 0 else abs(min(s)) + 1
 ```
 
 ### **Java**
@@ -88,8 +95,7 @@ class Solution {
 public:
     int minStartValue(vector<int>& nums) {
         int s = 0, t = INT_MAX;
-        for (int num : nums)
-        {
+        for (int num : nums) {
             s += num;
             t = min(t, s);
         }
@@ -113,6 +119,36 @@ func minStartValue(nums []int) int {
 		return 1 - t
 	}
 	return 1
+}
+```
+
+### **TypeScript**
+
+```ts
+function minStartValue(nums: number[]): number {
+    let sum = 0;
+    let min = Infinity;
+    for (const num of nums) {
+        sum += num;
+        min = Math.min(min, sum);
+    }
+    return Math.max(1, 1 - min);
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn min_start_value(nums: Vec<i32>) -> i32 {
+        let mut sum = 0;
+        let mut min = i32::MAX;
+        for num in nums.iter() {
+            sum += num;
+            min = min.min(sum);
+        }
+        1.max(1 - min)
+    }
 }
 ```
 

@@ -27,7 +27,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-递归遍历左右子树，求左右子树的最大深度 +1 即可。
+**方法一：递归**
+
+递归遍历左右子树，求左右子树的最大深度，然后取最大值加 $1$ 即可。
+
+时间复杂度 $O(n)$，其中 $n$ 是二叉树的节点数。每个节点在递归中只被遍历一次。
 
 <!-- tabs:start -->
 
@@ -216,6 +220,30 @@ impl Solution {
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         Self::dfs(&root)
     }
+}
+```
+
+### **C**
+
+```c
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+
+int maxDepth(struct TreeNode *root) {
+    if (!root) {
+        return 0;
+    }
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+    return 1 + max(left, right);
 }
 ```
 

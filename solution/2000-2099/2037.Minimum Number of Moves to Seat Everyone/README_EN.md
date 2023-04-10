@@ -17,7 +17,7 @@
 <p>Note that there may be <strong>multiple</strong> seats or students in the <strong>same </strong>position at the beginning.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> seats = [3,1,5], students = [2,7,4]
@@ -29,7 +29,7 @@
 In total, 1 + 2 + 1 = 4 moves were used.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> seats = [4,1,5,9], students = [1,3,2,6]
@@ -42,7 +42,7 @@ In total, 1 + 2 + 1 = 4 moves were used.
 In total, 0 + 1 + 3 + 3 = 7 moves were used.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> seats = [2,2,6,6], students = [1,3,2,6]
@@ -76,7 +76,7 @@ class Solution:
     def minMovesToSeat(self, seats: List[int], students: List[int]) -> int:
         seats.sort()
         students.sort()
-        return sum(abs(seats[i] - students[i]) for i in range(len(seats)))
+        return sum(abs(a - b) for a, b in zip(seats, students))
 ```
 
 ### **Java**
@@ -104,8 +104,9 @@ public:
         sort(seats.begin(), seats.end());
         sort(students.begin(), students.end());
         int ans = 0;
-        for (int i = 0; i < seats.size(); ++i)
+        for (int i = 0; i < seats.size(); ++i) {
             ans += abs(seats[i] - students[i]);
+        }
         return ans;
     }
 };
@@ -114,21 +115,71 @@ public:
 ### **Go**
 
 ```go
-func minMovesToSeat(seats []int, students []int) int {
+func minMovesToSeat(seats []int, students []int) (ans int) {
 	sort.Ints(seats)
 	sort.Ints(students)
-	ans := 0
-	for i := range students {
-		ans += abs(seats[i] - students[i])
+	for i, a := range seats {
+		b := students[i]
+		ans += abs(a - b)
 	}
-	return ans
+	return
 }
 
 func abs(x int) int {
-	if x >= 0 {
-		return x
+	if x < 0 {
+		return -x
 	}
-	return -x
+	return x
+}
+```
+
+### **TypeScript**
+
+```ts
+function minMovesToSeat(seats: number[], students: number[]): number {
+    seats.sort((a, b) => a - b);
+    students.sort((a, b) => a - b);
+    const n = seats.length;
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+        ans += Math.abs(seats[i] - students[i]);
+    }
+    return ans;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
+        seats.sort();
+        students.sort();
+        let n = seats.len();
+        let mut ans = 0;
+        for i in 0..n {
+            ans += (seats[i] - students[i]).abs();
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+int cmp(const void *a, const void *b) {
+    return *(int *) a - *(int *) b;
+}
+
+int minMovesToSeat(int *seats, int seatsSize, int *students, int studentsSize) {
+    qsort(seats, seatsSize, sizeof(int), cmp);
+    qsort(students, studentsSize, sizeof(int), cmp);
+    int ans = 0;
+    for (int i = 0; i < seatsSize; i++) {
+        ans += abs(seats[i] - students[i]);
+    }
+    return ans;
 }
 ```
 

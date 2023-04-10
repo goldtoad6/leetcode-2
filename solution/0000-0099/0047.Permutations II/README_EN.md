@@ -7,7 +7,7 @@
 <p>Given a collection of numbers, <code>nums</code>,&nbsp;that might contain duplicates, return <em>all possible unique permutations <strong>in any order</strong>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,2]
@@ -17,7 +17,7 @@
  [2,1,1]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3]
@@ -79,7 +79,8 @@ class Solution {
         return res;
     }
 
-    private void dfs(int u, int n, int[] nums, boolean[] used, List<Integer> path, List<List<Integer>> res) {
+    private void dfs(
+        int u, int n, int[] nums, boolean[] used, List<Integer> path, List<List<Integer>> res) {
         if (u == n) {
             res.add(new ArrayList<>(path));
             return;
@@ -114,13 +115,11 @@ public:
     }
 
     void dfs(int u, int n, vector<int>& nums, vector<bool>& used, vector<int>& path, vector<vector<int>>& res) {
-        if (u == n)
-        {
+        if (u == n) {
             res.emplace_back(path);
             return;
         }
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) continue;
             path[u] = nums[i];
             used[i] = true;

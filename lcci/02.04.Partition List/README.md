@@ -42,11 +42,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-**方法 1：**
+**方法一：拼接链表**
 
 创建两个链表，一个存放小于 `x` 的节点，另一个存放大于等于 `x` 的节点，之后进行拼接即可。
 
-**方法 2：**
+**方法二：头插法**
 
 题中指出，**不需要保留节点的相对位置**。
 
@@ -66,6 +66,7 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
 
 class Solution:
     def partition(self, head: ListNode, x: int) -> ListNode:

@@ -65,6 +65,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -175,8 +176,7 @@ public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         p.resize(1010);
         for (int i = 0; i < p.size(); ++i) p[i] = i;
-        for (auto& e : edges)
-        {
+        for (auto& e : edges) {
             int a = e[0], b = e[1];
             if (find(a) == find(b)) return e;
             p[find(a)] = find(b);

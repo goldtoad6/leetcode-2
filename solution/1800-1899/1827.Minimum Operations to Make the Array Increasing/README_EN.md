@@ -7,7 +7,9 @@
 <p>You are given an integer array <code>nums</code> (<strong>0-indexed</strong>). In one operation, you can choose an element of the array and increment it by <code>1</code>.</p>
 
 <ul>
+
     <li>For example, if <code>nums = [1,2,3]</code>, you can choose to increment <code>nums[1]</code> to make <code>nums = [1,<u><b>3</b></u>,3]</code>.</li>
+
 </ul>
 
 <p>Return <em>the <strong>minimum</strong> number of operations needed to make</em> <code>nums</code> <em><strong>strictly</strong> <strong>increasing</strong>.</em></p>
@@ -16,7 +18,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -34,7 +36,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -44,7 +46,7 @@
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -72,7 +74,7 @@
 ```python
 class Solution:
     def minOperations(self, nums: List[int]) -> int:
-        mx = ans = 0
+        ans = mx = 0
         for v in nums:
             ans += max(0, mx + 1 - v)
             mx = max(mx + 1, v)
@@ -84,8 +86,7 @@ class Solution:
 ```java
 class Solution {
     public int minOperations(int[] nums) {
-        int ans = 0;
-        int mx = 0;
+        int ans = 0, mx = 0;
         for (int v : nums) {
             ans += Math.max(0, mx + 1 - v);
             mx = Math.max(mx + 1, v);
@@ -101,10 +102,8 @@ class Solution {
 class Solution {
 public:
     int minOperations(vector<int>& nums) {
-        int ans = 0;
-        int mx = 0;
-        for (int& v : nums)
-        {
+        int ans = 0, mx = 0;
+        for (int& v : nums) {
             ans += max(0, mx + 1 - v);
             mx = max(mx + 1, v);
         }
@@ -116,13 +115,13 @@ public:
 ### **Go**
 
 ```go
-func minOperations(nums []int) int {
-	ans, mx := 0, 0
+func minOperations(nums []int) (ans int) {
+	mx := 0
 	for _, v := range nums {
 		ans += max(0, mx+1-v)
 		mx = max(mx+1, v)
 	}
-	return ans
+	return
 }
 
 func max(a, b int) int {
@@ -130,6 +129,67 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public int MinOperations(int[] nums) {
+        int ans = 0, mx = 0;
+        foreach (int v in nums) {
+            ans += Math.Max(0, mx + 1 - v);
+            mx = Math.Max(mx + 1, v);
+        }
+        return ans;
+    }
+}
+```
+
+### **TypeScript**
+
+```ts
+function minOperations(nums: number[]): number {
+    let ans = 0;
+    let max = 0;
+    for (const v of nums) {
+        ans += Math.max(0, max + 1 - v);
+        max = Math.max(max + 1, v);
+    }
+    return ans;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn min_operations(nums: Vec<i32>) -> i32 {
+        let mut ans = 0;
+        let mut max = 0;
+        for &v in nums.iter() {
+            ans += 0.max(max + 1 - v);
+            max = v.max(max + 1);
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+
+int minOperations(int *nums, int numsSize) {
+    int ans = 0;
+    int mx = 0;
+    for (int i = 0; i < numsSize; i++) {
+        ans += max(0, mx + 1 - nums[i]);
+        mx = max(mx + 1, nums[i]);
+    }
+    return ans;
 }
 ```
 

@@ -121,16 +121,16 @@ public:
  */
 var isUgly = function (n) {
     if (n < 1) return false;
-    while (n % 2 == 0) {
+    while (n % 2 === 0) {
         n /= 2;
     }
-    while (n % 3 == 0) {
+    while (n % 3 === 0) {
         n /= 3;
     }
-    while (n % 5 == 0) {
+    while (n % 5 === 0) {
         n /= 5;
     }
-    return n == 1;
+    return n === 1;
 };
 ```
 
@@ -147,6 +147,26 @@ func isUgly(n int) bool {
 		}
 	}
 	return n == 1
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer $n
+     * @return Boolean
+     */
+    function isUgly($n) {
+        while ($n) {
+            if ($n % 2 == 0) $n = $n / 2;
+            else if ($n % 3 == 0) $n = $n / 3;
+            else if ($n % 5 == 0) $n = $n / 5;
+            else break;
+        }
+        return $n == 1;
+    }
 }
 ```
 

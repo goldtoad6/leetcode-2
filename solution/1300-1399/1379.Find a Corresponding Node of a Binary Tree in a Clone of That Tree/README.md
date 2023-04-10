@@ -83,8 +83,11 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+    def getTargetCopy(
+        self, original: TreeNode, cloned: TreeNode, target: TreeNode
+    ) -> TreeNode:
         res = None
 
         def dfs(original, cloned):
@@ -119,7 +122,8 @@ class Solution:
 class Solution {
     private TreeNode res;
 
-    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+    public final TreeNode getTargetCopy(
+        final TreeNode original, final TreeNode cloned, final TreeNode target) {
         dfs(original, cloned, target);
         return res;
     }
@@ -162,8 +166,7 @@ public:
 
     void dfs(TreeNode* original, TreeNode* cloned, TreeNode* target) {
         if (!cloned) return;
-        if (original == target)
-        {
+        if (original == target) {
             res = cloned;
             return;
         }
@@ -171,6 +174,41 @@ public:
         dfs(original->right, cloned->right, target);
     }
 };
+```
+
+### **TypeScript**
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function getTargetCopy(
+    original: TreeNode | null,
+    cloned: TreeNode | null,
+    target: TreeNode | null,
+): TreeNode | null {
+    if (cloned === null) {
+        return null;
+    }
+    if (cloned.val === target.val) {
+        return cloned;
+    }
+    return (
+        getTargetCopy(original, cloned.left, target) ||
+        getTargetCopy(original, cloned.right, target)
+    );
+}
 ```
 
 ### **...**

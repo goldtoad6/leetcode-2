@@ -11,7 +11,7 @@
 <p>You can return the answer in any order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,7,11,15], target = 9
@@ -19,14 +19,14 @@
 <strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,2,4], target = 6
 <strong>Output:</strong> [1,2]
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,3], target = 6
@@ -55,12 +55,12 @@
 ```python
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        helper = {}
-        for i, v in enumerate(nums):
-            num = target - v
-            if num in helper:
-                return [helper[num], i]
-            helper[v] = i
+        m = {}
+        for i, x in enumerate(nums):
+            y = target - x
+            if y in m:
+                return [m[y], i]
+            m[x] = i
 ```
 
 ### **Java**
@@ -68,15 +68,15 @@ class Solution:
 ```java
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; ++i) {
-            int num = target - nums[i];
-            if (map.containsKey(num)) {
-                return new int[]{map.get(num), i};
+        Map<Integer, Integer> m = new HashMap<>();
+        for (int i = 0;; ++i) {
+            int x = nums[i];
+            int y = target - x;
+            if (m.containsKey(y)) {
+                return new int[] {m.get(y), i};
             }
-            map.put(nums[i], i);
+            m.put(x, i);
         }
-        return null;
     }
 }
 ```
@@ -87,15 +87,15 @@ class Solution {
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> map;
-        for (int i = 0; i < nums.size(); ++i) {
-            int num = target - nums[i];
-            if (map.find(num) != map.end()) {
-                return {map[num], i};
+        unordered_map<int, int> m;
+        for (int i = 0; ; ++i) {
+            int x = nums[i];
+            int y = target - x;
+            if (m.count(y)) {
+                return {m[y], i};
             }
-            map[nums[i]] = i;
+            m[x] = i;
         }
-        return {};
     }
 };
 ```
@@ -104,30 +104,56 @@ public:
 
 ```go
 func twoSum(nums []int, target int) []int {
-	numMap := make(map[int]int)
-	for i, num := range nums {
-		other := target - num
-		if _, ok := numMap[other]; ok {
-			return []int{numMap[other], i}
+	m := map[int]int{}
+	for i := 0; ; i++ {
+		x := nums[i]
+		y := target - x
+		if j, ok := m[y]; ok {
+			return []int{j, i}
 		}
-		numMap[num] = i
+		m[x] = i
 	}
-	return nil
+}
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        var m = new Dictionary<int, int>();
+        for (int i = 0, j; ; ++i) {
+            int x = nums[i];
+            int y = target - x;
+            if (m.TryGetValue(y, out j)) {
+                return new [] {j, i};
+            }
+            if (!m.ContainsKey(x)) {
+                m.Add(x, i);
+            }
+        }
+    }
 }
 ```
 
 ### **JavaScript**
 
 ```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
 var twoSum = function (nums, target) {
-    const map = new Map();
-    for (let i = 0; i < nums.length; i++) {
-        if (map.has(target - nums[i])) {
-            return [map.get(target - nums[i]), i];
+    const m = new Map();
+    for (let i = 0; ; ++i) {
+        const x = nums[i];
+        const y = target - x;
+        if (m.has(y)) {
+            return [m.get(y), i];
         }
-        map.set(nums[i], i);
+        m.set(x, i);
     }
-    return [];
 };
 ```
 
@@ -136,40 +162,19 @@ var twoSum = function (nums, target) {
 ```swift
 class Solution {
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-        var map = [Int: Int]()
+        var m = [Int: Int]()
         var i = 0
-        for num in nums {
-            map[num] = i
-            i = i + 1
-        }
-        i = 0
-        for num in nums {
-            if let otherIndex = map[target - num], otherIndex != i {
-                return [i, otherIndex]
+        while true {
+            let x = nums[i]
+            let y = target - nums[i]
+            if let j = m[target - nums[i]] {
+                return [j, i]
             }
-            i = i + 1
+            m[nums[i]] = i
+            i += 1
         }
-        return []
     }
 }
-```
-
-### **Nim**
-
-```nim
-import std/enumerate
-
-proc twoSum(nums: seq[int], target: int): seq[int] =
-    var
-        bal: int
-        tdx: int
-    for idx, val in enumerate(nums):
-        bal = target - val
-        if bal in nums:
-            tdx = nums.find(bal)
-            if idx != tdx:
-                return @[idx, tdx]
-
 ```
 
 ### **Rust**
@@ -188,6 +193,46 @@ pub fn soluation(nums: Vec<i32>, target: i32) -> Vec<i32> {
         }
     }
     unreachable!()
+}
+```
+
+### **Nim**
+
+```nim
+import std/enumerate
+
+proc twoSum(nums: seq[int], target: int): seq[int] =
+    var
+        bal: int
+        tdx: int
+    for idx, val in enumerate(nums):
+        bal = target - val
+        if bal in nums:
+            tdx = nums.find(bal)
+            if idx != tdx:
+                return @[idx, tdx]
+```
+
+### **PHP**
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $target
+     * @return Integer[]
+     */
+    function twoSum($nums, $target) {
+        $len = count($nums);
+        for ($i = 0; $i < $len; $i++) {
+            for ($j = 1 + $i; $j < $len; $j++) {
+                if ($nums[$i] + $nums[$j] == $target) {
+                    return [$i, $j];
+                }
+            }
+        }
+    }
 }
 ```
 

@@ -21,7 +21,7 @@
 <p>A <strong>subarray</strong> is a contiguous sequence of elements within an array. <code>arr[left...right]</code> denotes the subarray that contains the elements of <code>nums</code> between indices <code>left</code> and <code>right</code> (<strong>inclusive</strong>).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [60,60,60], nums2 = [10,90,10]
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> Choosing left = 1 and right = 1, we have nums1 = [60,<u><strong>90</strong></u>,60] and nums2 = [10,<u><strong>60</strong></u>,10].
 The score is max(sum(nums1), sum(nums2)) = max(210, 80) = 210.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [20,40,20,70,30], nums2 = [50,20,50,40,20]
@@ -38,7 +38,7 @@ The score is max(sum(nums1), sum(nums2)) = max(210, 80) = 210.</pre>
 The score is max(sum(nums1), sum(nums2)) = max(140, 220) = 220.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [7,11,13], nums2 = [1,1,1]
@@ -117,8 +117,7 @@ class Solution {
 public:
     int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
         int s1 = 0, s2 = 0, n = nums1.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             s1 += nums1[i];
             s2 += nums2[i];
         }
@@ -128,11 +127,12 @@ public:
     int f(vector<int>& nums1, vector<int>& nums2) {
         int t = nums1[0] - nums2[0];
         int mx = t;
-        for (int i = 1; i < nums1.size(); ++i)
-        {
+        for (int i = 1; i < nums1.size(); ++i) {
             int v = nums1[i] - nums2[i];
-            if (t > 0) t += v;
-            else t = v;
+            if (t > 0)
+                t += v;
+            else
+                t = v;
             mx = max(mx, t);
         }
         return mx;

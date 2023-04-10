@@ -11,7 +11,7 @@
 <p>Return <em>a list of the target indices of</em> <code>nums</code> after<em> sorting </em><code>nums</code><em> in <strong>non-decreasing</strong> order</em>. If there are no target indices, return <em>an <strong>empty</strong> list</em>. The returned list must be sorted in <strong>increasing</strong> order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,5,2,3], target = 2
@@ -20,7 +20,7 @@
 The indices where nums[i] == 2 are 1 and 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,5,2,3], target = 3
@@ -29,7 +29,7 @@ The indices where nums[i] == 2 are 1 and 2.
 The index where nums[i] == 3 is 3.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,5,2,3], target = 5
@@ -56,7 +56,7 @@ The index where nums[i] == 5 is 4.
 class Solution:
     def targetIndices(self, nums: List[int], target: int) -> List[int]:
         nums.sort()
-        return [i for i, num in enumerate(nums) if num == target]
+        return [i for i, v in enumerate(nums) if v == target]
 ```
 
 ### **Java**
@@ -76,22 +76,6 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function targetIndices(nums: number[], target: number): number[] {
-    nums.sort((a, b) => a - b);
-    let ans = [];
-    for (let i = 0; i < nums.length && nums[i] <= target; i++) {
-        let cur = nums[i];
-        if (cur == target) {
-            ans.push(i);
-        }
-    }
-    return ans;
-}
-```
-
 ### **C++**
 
 ```cpp
@@ -100,9 +84,11 @@ public:
     vector<int> targetIndices(vector<int>& nums, int target) {
         sort(nums.begin(), nums.end());
         vector<int> ans;
-        for (int i = 0; i < nums.size(); ++i)
-            if (nums[i] == target)
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] == target) {
                 ans.push_back(i);
+            }
+        }
         return ans;
     }
 };
@@ -111,15 +97,29 @@ public:
 ### **Go**
 
 ```go
-func targetIndices(nums []int, target int) []int {
+func targetIndices(nums []int, target int) (ans []int) {
 	sort.Ints(nums)
-	var ans []int
-	for i, num := range nums {
-		if num == target {
+	for i, v := range nums {
+		if v == target {
 			ans = append(ans, i)
 		}
 	}
-	return ans
+	return
+}
+```
+
+### **TypeScript**
+
+```ts
+function targetIndices(nums: number[], target: number): number[] {
+    nums.sort((a, b) => a - b);
+    let ans: number[] = [];
+    for (let i = 0; i < nums.length; ++i) {
+        if (nums[i] == target) {
+            ans.push(i);
+        }
+    }
+    return ans;
 }
 ```
 

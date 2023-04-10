@@ -11,7 +11,7 @@
 <p>Return <em>the minimum total cost to supply water to all houses</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1168.Optimize%20Water%20Distribution%20in%20a%20Village/images/1359_ex1.png" style="width: 189px; height: 196px;" />
 <pre>
 <strong>Input:</strong> n = 3, wells = [1,2,2], pipes = [[1,2,1],[2,3,1]]
@@ -20,7 +20,7 @@
 The best strategy is to build a well in the first house with cost 1 and connect the other houses to it with cost 2 so the total cost is 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, wells = [1,1], pipes = [[1,2,1],[1,2,2]]
@@ -65,7 +65,9 @@ Union find.
 
 ```python
 class Solution:
-    def minCostToSupplyWater(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
+    def minCostToSupplyWater(
+        self, n: int, wells: List[int], pipes: List[List[int]]
+    ) -> int:
         for i, w in enumerate(wells):
             pipes.append([0, i + 1, w])
         pipes.sort(key=lambda x: x[2])
@@ -102,7 +104,7 @@ class Solution {
             all[idx++] = pipe;
         }
         for (int j = 0; j < n; ++j) {
-            all[idx++] = new int[]{0, j + 1, wells[j]};
+            all[idx++] = new int[] {0, j + 1, wells[j]};
         }
         p = new int[n + 1];
         for (int i = 0; i < p.length; ++i) {
@@ -148,8 +150,7 @@ public:
             return a[2] < b[2];
         });
         int res = 0;
-        for (auto e : pipes)
-        {
+        for (auto e : pipes) {
             if (find(e[0]) == find(e[1])) continue;
             p[find(e[0])] = find(e[1]);
             res += e[2];

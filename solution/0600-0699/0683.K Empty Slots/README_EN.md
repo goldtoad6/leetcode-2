@@ -11,7 +11,7 @@
 <p>Given an integer <code>k</code>, return&nbsp;<em>the <strong>minimum day number</strong> such that there exists two <strong>turned on</strong> bulbs that have <strong>exactly</strong>&nbsp;<code>k</code> bulbs between them that are <strong>all turned off</strong>. If there isn&#39;t such day, return <code>-1</code>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> bulbs = [1,3,2], k = 1
@@ -22,7 +22,7 @@ On the second day: bulbs[1] = 3, third bulb is turned on: [1,0,1]
 On the third day: bulbs[2] = 2, second bulb is turned on: [1,1,1]
 We return 2 because on the second day, there were two on bulbs with one off bulb between them.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> bulbs = [1,2,3], k = 1
@@ -70,14 +70,23 @@ class BinaryIndexedTree:
             x -= BinaryIndexedTree.lowbit(x)
         return s
 
+
 class Solution:
     def kEmptySlots(self, bulbs: List[int], k: int) -> int:
         n = len(bulbs)
         tree = BinaryIndexedTree(n)
         for i, x in enumerate(bulbs, 1):
             tree.update(x, 1)
-            case1 = x - k - 1 > 0 and tree.query(x - k - 1) - tree.query(x - k - 2) == 1 and tree.query(x - 1) - tree.query(x - k - 1) == 0
-            case2 = x + k + 1 <= n and tree.query(x + k + 1) - tree.query(x + k) == 1 and tree.query(x + k) - tree.query(x) == 0
+            case1 = (
+                x - k - 1 > 0
+                and tree.query(x - k - 1) - tree.query(x - k - 2) == 1
+                and tree.query(x - 1) - tree.query(x - k - 1) == 0
+            )
+            case2 = (
+                x + k + 1 <= n
+                and tree.query(x + k + 1) - tree.query(x + k) == 1
+                and tree.query(x + k) - tree.query(x) == 0
+            )
             if case1 or case2:
                 return i
         return -1
@@ -93,8 +102,10 @@ class Solution {
         for (int i = 0; i < n; ++i) {
             int x = bulbs[i];
             tree.update(x, 1);
-            boolean case1 = x - k - 1 > 0 && tree.query(x - k - 1) - tree.query(x - k - 2) == 1 && tree.query(x - 1) - tree.query(x - k - 1) == 0;
-            boolean case2 = x + k + 1 <= n && tree.query(x + k + 1) - tree.query(x + k) == 1 && tree.query(x + k) - tree.query(x) == 0;
+            boolean case1 = x - k - 1 > 0 && tree.query(x - k - 1) - tree.query(x - k - 2) == 1
+                && tree.query(x - 1) - tree.query(x - k - 1) == 0;
+            boolean case2 = x + k + 1 <= n && tree.query(x + k + 1) - tree.query(x + k) == 1
+                && tree.query(x + k) - tree.query(x) == 0;
             if (case1 || case2) {
                 return i + 1;
             }
@@ -142,11 +153,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -154,8 +166,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -172,8 +183,7 @@ public:
     int kEmptySlots(vector<int>& bulbs, int k) {
         int n = bulbs.size();
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int x = bulbs[i];
             tree->update(x, 1);
             bool case1 = x - k - 1 > 0 && tree->query(x - k - 1) - tree->query(x - k - 2) == 1 && tree->query(x - 1) - tree->query(x - k - 1) == 0;

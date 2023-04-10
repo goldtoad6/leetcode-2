@@ -11,14 +11,14 @@
 <p>You must solve the problem <strong>without</strong> modifying the array <code>nums</code>&nbsp;and uses only constant extra space.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,3,4,2,2]
 <strong>Output:</strong> 2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,1,3,4,2]
@@ -95,15 +95,16 @@ class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
         int left = 1, right = nums.size() - 1;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             int cnt = 0;
             for (int& v : nums)
                 if (v <= mid)
                     ++cnt;
-            if (cnt > mid) right = mid;
-            else left = mid + 1;
+            if (cnt > mid)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }

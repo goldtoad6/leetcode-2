@@ -13,7 +13,7 @@
 <p>Given two integer <code>n</code> and <code>k</code>, return the <code>k<sup>th</sup></code> (<strong>1-indexed</strong>) symbol in the <code>n<sup>th</sup></code> row of a table of <code>n</code> rows.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1, k = 1
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> row 1: <u>0</u>
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, k = 1
@@ -31,7 +31,7 @@ row 1: 0
 row 2: <u>0</u>1
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, k = 2
@@ -65,6 +65,12 @@ class Solution:
         return self.kthGrammar(n - 1, k - (1 << (n - 2))) ^ 1
 ```
 
+```python
+class Solution:
+    def kthGrammar(self, n: int, k: int) -> int:
+        return (k - 1).bit_count() & 1
+```
+
 ### **Java**
 
 ```java
@@ -77,6 +83,14 @@ class Solution {
             return kthGrammar(n - 1, k);
         }
         return kthGrammar(n - 1, k - (1 << (n - 2))) ^ 1;
+    }
+}
+```
+
+```java
+class Solution {
+    public int kthGrammar(int n, int k) {
+        return Integer.bitCount(k - 1) & 1;
     }
 }
 ```
@@ -94,6 +108,15 @@ public:
 };
 ```
 
+```cpp
+class Solution {
+public:
+    int kthGrammar(int n, int k) {
+        return __builtin_popcount(k - 1) & 1;
+    }
+};
+```
+
 ### **Go**
 
 ```go
@@ -105,6 +128,12 @@ func kthGrammar(n int, k int) int {
 		return kthGrammar(n-1, k)
 	}
 	return kthGrammar(n-1, k-(1<<(n-2))) ^ 1
+}
+```
+
+```go
+func kthGrammar(n int, k int) int {
+	return bits.OnesCount(uint(k-1)) & 1
 }
 ```
 

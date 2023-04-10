@@ -7,10 +7,10 @@
 <p>Given two binary strings <code>a</code> and <code>b</code>, return <em>their sum as a binary string</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> a = "11", b = "1"
 <strong>Output:</strong> "100"
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> a = "1010", b = "1011"
 <strong>Output:</strong> "10101"
 </pre>
@@ -54,7 +54,8 @@ class Solution:
 class Solution {
     public String addBinary(String a, String b) {
         StringBuilder sb = new StringBuilder();
-        for (int i = a.length() - 1, j = b.length() - 1, carry = 0; i >= 0 || j >= 0 || carry > 0; --i, --j) {
+        for (int i = a.length() - 1, j = b.length() - 1, carry = 0; i >= 0 || j >= 0 || carry > 0;
+             --i, --j) {
             carry += (i >= 0 ? a.charAt(i) - '0' : 0) + (j >= 0 ? b.charAt(j) - '0' : 0);
             sb.append(carry % 2);
             carry /= 2;

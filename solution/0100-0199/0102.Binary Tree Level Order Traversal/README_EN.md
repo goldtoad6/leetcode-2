@@ -7,21 +7,21 @@
 <p>Given the <code>root</code> of a binary tree, return <em>the level order traversal of its nodes&#39; values</em>. (i.e., from left to right, level by level).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0102.Binary%20Tree%20Level%20Order%20Traversal/images/tree1.jpg" style="width: 277px; height: 302px;" />
 <pre>
 <strong>Input:</strong> root = [3,9,20,null,null,15,7]
 <strong>Output:</strong> [[3],[9,20],[15,7]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = [1]
 <strong>Output:</strong> [[1]]
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = []
@@ -52,10 +52,10 @@ BFS.
 #         self.left = left
 #         self.right = right
 class Solution:
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        if root is None:
-            return []
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         ans = []
+        if root is None:
+            return ans
         q = deque([root])
         while q:
             t = []
@@ -134,12 +134,10 @@ public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> ans;
         if (!root) return ans;
-        queue<TreeNode*> q{{root}};
-        while (!q.empty())
-        {
+        queue<TreeNode*> q {{root}};
+        while (!q.empty()) {
             vector<int> t;
-            for (int n = q.size(); n; --n)
-            {
+            for (int n = q.size(); n; --n) {
                 auto node = q.front();
                 q.pop();
                 t.push_back(node->val);
@@ -164,14 +162,13 @@ public:
  *     Right *TreeNode
  * }
  */
-func levelOrder(root *TreeNode) [][]int {
-	var ans [][]int
+func levelOrder(root *TreeNode) (ans [][]int) {
 	if root == nil {
-		return ans
+		return
 	}
-	var q = []*TreeNode{root}
+	q := []*TreeNode{root}
 	for len(q) > 0 {
-		var t []int
+		t := []int{}
 		for n := len(q); n > 0; n-- {
 			node := q[0]
 			q = q[1:]
@@ -185,7 +182,7 @@ func levelOrder(root *TreeNode) [][]int {
 		}
 		ans = append(ans, t)
 	}
-	return ans
+	return
 }
 ```
 
@@ -213,14 +210,10 @@ var levelOrder = function (root) {
     while (q.length) {
         let t = [];
         for (let n = q.length; n; --n) {
-            const node = q.shift();
-            t.push(node.val);
-            if (node.left) {
-                q.push(node.left);
-            }
-            if (node.right) {
-                q.push(node.right);
-            }
+            const { val, left, right } = q.shift();
+            t.push(val);
+            left && q.push(left);
+            right && q.push(right);
         }
         ans.push(t);
     }

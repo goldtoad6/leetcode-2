@@ -16,7 +16,7 @@
 <p>Return <em>the indices of the </em><code>k</code><em> <strong>weakest</strong> rows in the matrix ordered from weakest to strongest</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> mat = 
@@ -37,7 +37,7 @@ The number of soldiers in each row is:
 The rows ordered from weakest to strongest are [2,0,3,1,4].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> mat = 
@@ -145,12 +145,10 @@ function kWeakestRows(mat: number[][], k: number): number[] {
 ```cpp
 class Solution {
 public:
-    int search(vector<int>& m)
-    {
+    int search(vector<int>& m) {
         int l = 0;
         int h = m.size() - 1;
-        while (l <= h)
-        {
+        while (l <= h) {
             int mid = l + (h - l) / 2;
             if (m[mid] == 0)
                 h = mid - 1;
@@ -163,14 +161,12 @@ public:
     vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
         vector<pair<int, int>> p;
         vector<int> res;
-        for (int i = 0; i < mat.size(); i++)
-        {
+        for (int i = 0; i < mat.size(); i++) {
             int count = search(mat[i]);
             p.push_back({count, i});
         }
         sort(p.begin(), p.end());
-        for (int i = 0; i < k; i++)
-        {
+        for (int i = 0; i < k; i++) {
             res.push_back(p[i].second);
         }
         return res;

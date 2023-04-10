@@ -24,7 +24,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2201.Count%20Artifacts%20That%20Can%20Be%20Extracted/images/untitled-diagram.jpg" style="width: 216px; height: 216px;" />
 <pre>
 <strong>Input:</strong> n = 2, artifacts = [[0,0,0,0],[0,1,1,1]], dig = [[0,0],[0,1]]
@@ -36,7 +36,7 @@ The blue artifact has one part in cell (1,1) which remains uncovered, so we cann
 Thus, we return 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2201.Count%20Artifacts%20That%20Can%20Be%20Extracted/images/untitled-diagram-1.jpg" style="width: 216px; height: 216px;" />
 <pre>
 <strong>Input:</strong> n = 2, artifacts = [[0,0,0,0],[0,1,1,1]], dig = [[0,0],[0,1],[1,1]]
@@ -68,7 +68,9 @@ Thus, we return 1.
 
 ```python
 class Solution:
-    def digArtifacts(self, n: int, artifacts: List[List[int]], dig: List[List[int]]) -> int:
+    def digArtifacts(
+        self, n: int, artifacts: List[List[int]], dig: List[List[int]]
+    ) -> int:
         def check(artifact):
             r1, c1, r2, c2 = artifact
             for x in range(r1, r2 + 1):
@@ -156,12 +158,9 @@ public:
 
     bool check(vector<int>& a, unordered_set<int>& s, int n) {
         int r1 = a[0], c1 = a[1], r2 = a[2], c2 = a[3];
-        for (int i = r1; i <= r2; ++i)
-        {
-            for (int j = c1; j <= c2; ++j)
-            {
-                if (!s.count(i * n + j))
-                {
+        for (int i = r1; i <= r2; ++i) {
+            for (int j = c1; j <= c2; ++j) {
+                if (!s.count(i * n + j)) {
                     return false;
                 }
             }

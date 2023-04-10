@@ -24,7 +24,7 @@
 <p>Since the answer may be very large, return it <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> pressedKeys = &quot;22233&quot;
@@ -35,7 +35,7 @@ The possible text messages Alice could have sent are:
 Since there are 8 possible messages, we return 8.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> pressedKeys = &quot;222222222222222222222222222222222222&quot;
@@ -105,7 +105,8 @@ class Solution {
         for (int i = 0, n = pressedKeys.length(); i < n; ++i) {
             int j = i;
             char c = pressedKeys.charAt(i);
-            for (; j + 1 < n && pressedKeys.charAt(j + 1) == c; ++j);
+            for (; j + 1 < n && pressedKeys.charAt(j + 1) == c; ++j)
+                ;
             int cnt = j - i + 1;
             ans = c == '7' || c == '9' ? ans * g[cnt] : ans * f[cnt];
             ans %= MOD;

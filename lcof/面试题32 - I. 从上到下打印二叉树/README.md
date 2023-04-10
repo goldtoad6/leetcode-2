@@ -31,6 +31,12 @@
 
 ## 解法
 
+**方法一：BFS**
+
+我们可以通过 BFS 遍历二叉树，将每一层的节点值存入数组中，最后返回数组即可。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉树的节点数。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -43,23 +49,22 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[int]:
+        ans = []
         if root is None:
-            return []
-        q = deque()
-        q.append(root)
-        res = []
+            return ans
+        q = deque([root])
         while q:
-            size = len(q)
-            for _ in range(size):
+            for _ in range(len(q)):
                 node = q.popleft()
-                res.append(node.val)
+                ans.append(node.val)
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-        return res
+        return ans
 ```
 
 ### **Java**
@@ -76,26 +81,101 @@ class Solution:
  */
 class Solution {
     public int[] levelOrder(TreeNode root) {
-        if (root == null) return new int[]{};
+        if (root == null) {
+            return new int[] {};
+        }
         Deque<TreeNode> q = new ArrayDeque<>();
-        List<Integer> t = new ArrayList<>();
         q.offer(root);
+        List<Integer> res = new ArrayList<>();
         while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
+            for (int n = q.size(); n > 0; --n) {
                 TreeNode node = q.poll();
-                t.add(node.val);
-                if (node.left != null) q.offer(node.left);
-                if (node.right != null) q.offer(node.right);
+                res.add(node.val);
+                if (node.left != null) {
+                    q.offer(node.left);
+                }
+                if (node.right != null) {
+                    q.offer(node.right);
+                }
             }
         }
-        int i = 0, n = t.size();
-        int[] res = new int[n];
-        for (Integer e : t) {
-            res[i++] = e;
+        int[] ans = new int[res.size()];
+        for (int i = 0; i < ans.length; ++i) {
+            ans[i] = res.get(i);
         }
-        return res;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> levelOrder(TreeNode* root) {
+        if (!root) {
+            return {};
+        }
+        vector<int> ans;
+        queue<TreeNode*> q{{root}};
+        while (!q.empty()) {
+            for (int n = q.size(); n; --n) {
+                auto node = q.front();
+                q.pop();
+                ans.push_back(node->val);
+                if (node->left) {
+                    q.push(node->left);
+                }
+                if (node->right) {
+                    q.push(node->right);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func levelOrder(root *TreeNode) (ans []int) {
+	if root == nil {
+		return
+	}
+	q := []*TreeNode{root}
+	for len(q) > 0 {
+		for n := len(q); n > 0; n-- {
+			node := q[0]
+			q = q[1:]
+			ans = append(ans, node.Val)
+			if node.Left != nil {
+				q = append(q, node.Left)
+			}
+			if node.Right != nil {
+				q = append(q, node.Right)
+			}
+		}
+	}
+	return
 }
 ```
 
@@ -114,78 +194,20 @@ class Solution {
  * @return {number[]}
  */
 var levelOrder = function (root) {
-    if (!root) return [];
-    let queue = [root];
-    let res = [];
-    while (queue.length) {
-        let node = queue.shift();
-        if (!node) continue;
-        res.push(node.val);
-        queue.push(node.left, node.right);
+    if (!root) {
+        return [];
     }
-    return res;
-};
-```
-
-### **Go**
-
-```go
-func levelOrder(root *TreeNode) []int {
-	if root == nil {
-		return []int{}
-	}
-	q := []*TreeNode{}
-	q = append(q, root)
-	// 层序遍历,用队列,遍历到谁,就把谁的左右结点加入队列
-	res := []int{}
-	for len(q) != 0 {
-		tmp := q[0]
-		q = q[1:]
-		res = append(res, tmp.Val)
-		if tmp.Left != nil {
-			q = append(q, tmp.Left)
-		}
-		if tmp.Right != nil {
-			q = append(q, tmp.Right)
-		}
-	}
-	return res
-}
-```
-
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    vector<int> levelOrder(TreeNode *root) {
-        vector<int> res;
-        queue<TreeNode *> q;
-        if (root != nullptr) {
-            q.push(root);
+    const q = [root];
+    const ans = [];
+    while (q.length) {
+        for (let n = q.length; n; --n) {
+            const { val, left, right } = q.shift();
+            ans.push(val);
+            left && q.push(left);
+            right && q.push(right);
         }
-        while (!q.empty()) {
-            TreeNode *node = q.front();
-            q.pop();
-            if (node->left != nullptr) {
-                q.push(node->left);
-            }
-            if (node->right != nullptr) {
-                q.push(node->right);
-            }
-            res.push_back(node->val);
-        }
-        return res;
     }
+    return ans;
 };
 ```
 
@@ -264,6 +286,44 @@ impl Solution {
             }
         }
         res
+    }
+}
+```
+
+### **C#**
+
+```cs
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int[] LevelOrder(TreeNode root) {
+        if (root == null) {
+            return new int[]{};
+        }
+        Queue<TreeNode> q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        List<int> ans = new List<int>();
+        while (q.Count != 0) {
+            int x = q.Count;
+            for (int i = 0; i < x; i++) {
+                TreeNode node = q.Dequeue();
+                ans.Add(node.val);
+                if (node.left != null) {
+                    q.Enqueue(node.left);
+                }
+                if (node.right != null) {
+                    q.Enqueue(node.right);
+                }
+            }
+        }
+        return ans.ToArray();
     }
 }
 ```

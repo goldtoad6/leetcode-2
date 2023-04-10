@@ -15,7 +15,7 @@
 <p>Return <em>the probability that the knight remains on the board after it has stopped moving</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 3, k = 2, row = 0, column = 0
@@ -25,7 +25,7 @@ From each of those positions, there are also two moves that will keep the knight
 The total probability the knight stays on the board is 0.0625.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1, k = 0, row = 0, column = 0
@@ -38,7 +38,7 @@ The total probability the knight stays on the board is 0.0625.
 <ul>
 	<li><code>1 &lt;= n &lt;= 25</code></li>
 	<li><code>0 &lt;= k &lt;= 100</code></li>
-	<li><code>0 &lt;= row, column &lt;= n</code></li>
+	<li><code>0 &lt;= row, column &lt;= n - 1</code></li>
 </ul>
 
 ## Solutions
@@ -57,7 +57,16 @@ class Solution:
                     if l == 0:
                         dp[l][i][j] = 1
                     else:
-                        for a, b in ((-2, -1), (-2, 1), (2, -1), (2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2)):
+                        for a, b in (
+                            (-2, -1),
+                            (-2, 1),
+                            (2, -1),
+                            (2, 1),
+                            (-1, -2),
+                            (-1, 2),
+                            (1, -2),
+                            (1, 2),
+                        ):
                             x, y = i + a, j + b
                             if 0 <= x < n and 0 <= y < n:
                                 dp[l][i][j] += dp[l - 1][x][y] / 8
@@ -142,17 +151,13 @@ public:
     double knightProbability(int n, int k, int row, int column) {
         vector<vector<vector<double>>> dp(k + 1, vector<vector<double>>(n, vector<double>(n)));
         vector<int> dirs = {-2, -1, 2, 1, -2, 1, 2, -1, -2};
-        for (int l = 0; l <= k; ++l)
-        {
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    if (l == 0) dp[l][i][j] = 1;
-                    else
-                    {
-                        for (int d = 0; d < 8; ++d)
-                        {
+        for (int l = 0; l <= k; ++l) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    if (l == 0)
+                        dp[l][i][j] = 1;
+                    else {
+                        for (int d = 0; d < 8; ++d) {
                             int x = i + dirs[d], y = j + dirs[d + 1];
                             if (x >= 0 && x < n && y >= 0 && y < n)
                                 dp[l][i][j] += dp[l - 1][x][y] / 8;

@@ -7,21 +7,21 @@
 <p>Your task is to calculate <code>a<sup>b</sup></code> mod <code>1337</code> where <code>a</code> is a positive integer and <code>b</code> is an extremely large positive integer given in the form of an array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> a = 2, b = [3]
 <strong>Output:</strong> 8
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> a = 2, b = [1,0]
 <strong>Output:</strong> 1024
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> a = 1, b = [4,3,3,8,5,2]
@@ -89,12 +89,12 @@ class Solution {
 ```cpp
 class Solution {
     const int MOD = 1337;
+
 public:
     int superPow(int a, vector<int>& b) {
         int ans = 1;
-        for (int i = b.size() - 1; i >= 0; --i)
-        {
-            ans = (long) ans * quickPowAndMod(a, b[i]) % MOD;
+        for (int i = b.size() - 1; i >= 0; --i) {
+            ans = (long)ans * quickPowAndMod(a, b[i]) % MOD;
             a = quickPowAndMod(a, 10);
         }
         return ans;
@@ -102,10 +102,8 @@ public:
 
     int quickPowAndMod(int a, int b) {
         int ans = 1;
-        while (b)
-        {
-            if (b & 1)
-            {
+        while (b) {
+            if (b & 1) {
                 ans = (ans * (a % MOD)) % MOD;
             }
             b >>= 1;

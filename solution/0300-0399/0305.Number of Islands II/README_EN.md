@@ -13,7 +13,7 @@
 <p>An <strong>island</strong> is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0305.Number%20of%20Islands%20II/images/tmp-grid.jpg" style="width: 500px; height: 294px;" />
 <pre>
 <strong>Input:</strong> m = 3, n = 3, positions = [[0,0],[0,1],[1,2],[2,1]]
@@ -26,7 +26,7 @@ Initially, the 2d grid is filled with water.
 - Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land. We have 3 islands.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> m = 1, n = 1, positions = [[0,0]]
@@ -75,7 +75,12 @@ class Solution:
             cnt += 1
             for a, b in [[0, -1], [0, 1], [1, 0], [-1, 0]]:
                 x, y = i + a, j + b
-                if 0 <= x < m and 0 <= y < n and grid[x][y] == 1 and find(i * n + j) != find(x * n + y):
+                if (
+                    0 <= x < m
+                    and 0 <= y < n
+                    and grid[x][y] == 1
+                    and find(i * n + j) != find(x * n + y)
+                ):
                     p[find(i * n + j)] = find(x * n + y)
                     cnt -= 1
             ans.append(cnt)
@@ -109,7 +114,8 @@ class Solution {
             for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k];
                 int y = j + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j)) {
+                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1
+                    && find(x * n + y) != find(i * n + j)) {
                     p[find(x * n + y)] = find(i * n + j);
                     --cnt;
                 }
@@ -142,21 +148,17 @@ public:
         vector<int> ans;
         int cnt = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (auto& pos : positions)
-        {
+        for (auto& pos : positions) {
             int i = pos[0], j = pos[1];
-            if (grid[i][j] == 1)
-            {
+            if (grid[i][j] == 1) {
                 ans.push_back(cnt);
                 continue;
             }
             grid[i][j] = 1;
             ++cnt;
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j))
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && find(x * n + y) != find(i * n + j)) {
                     p[find(x * n + y)] = find(i * n + j);
                     --cnt;
                 }

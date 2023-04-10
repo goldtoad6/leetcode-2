@@ -62,7 +62,7 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-“优先队列”实现。
+**方法一：优先队列（小根堆）**
 
 定义两个优先级队列，分别表示空闲服务器、使用中的服务器。其中：空闲服务器 `idle` 依据**权重、下标**排序；而使用中的服务器 `busy` 依据**结束时间、权重、下标**排序。
 
@@ -71,6 +71,8 @@
 -   若有使用中的服务器小于任务开始时间，将其加入到空闲服务器队列 `idle` 中；
 -   若当前有空闲服务器，那么在空闲队列 `idle` 中取出权重最小的服务器，将其加入使用中的队列 `busy` 中；
 -   若当前没有空闲服务器，那么在使用队列 `busy` 中找出最早结束时间且权重最小的服务器，重新加入使用中的队列 `busy` 中。
+
+相似题目：[2402. 会议室 III](/solution/2400-2499/2402.Meeting%20Rooms%20III/README.md)
 
 <!-- tabs:start -->
 
@@ -107,7 +109,8 @@ class Solution:
 class Solution {
     public int[] assignTasks(int[] servers, int[] tasks) {
         int m = tasks.length, n = servers.length;
-        PriorityQueue<int[]> idle = new PriorityQueue<>((a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
+        PriorityQueue<int[]> idle
+            = new PriorityQueue<>((a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
         PriorityQueue<int[]> busy = new PriorityQueue<>((a, b) -> {
             if (a[0] == b[0]) {
                 return a[1] == b[1] ? a[2] - b[2] : a[1] - b[1];
@@ -115,7 +118,7 @@ class Solution {
             return a[0] - b[0];
         });
         for (int i = 0; i < n; ++i) {
-            idle.offer(new int[]{servers[i], i});
+            idle.offer(new int[] {servers[i], i});
         }
         int[] res = new int[m];
         int j = 0;
@@ -123,16 +126,16 @@ class Solution {
             int cost = tasks[start];
             while (!busy.isEmpty() && busy.peek()[0] <= start) {
                 int[] item = busy.poll();
-                idle.offer(new int[]{item[1], item[2]});
+                idle.offer(new int[] {item[1], item[2]});
             }
             if (!idle.isEmpty()) {
                 int[] item = idle.poll();
                 res[j++] = item[1];
-                busy.offer(new int[]{start + cost, item[0], item[1]});
+                busy.offer(new int[] {start + cost, item[0], item[1]});
             } else {
                 int[] item = busy.poll();
                 res[j++] = item[2];
-                busy.offer(new int[]{item[0] + cost, item[1], item[2]});
+                busy.offer(new int[] {item[0] + cost, item[1], item[2]});
             }
         }
         return res;

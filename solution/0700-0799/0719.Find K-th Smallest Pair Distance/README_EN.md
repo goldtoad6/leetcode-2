@@ -9,7 +9,7 @@
 <p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <em>the</em> <code>k<sup>th</sup></code> <em>smallest <strong>distance among all the pairs</strong></em> <code>nums[i]</code> <em>and</em> <code>nums[j]</code> <em>where</em> <code>0 &lt;= i &lt; j &lt; nums.length</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,3,1], k = 1
@@ -21,14 +21,14 @@
 Then the 1<sup>st</sup> smallest distance pair is (1,1), and its distance is 0.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1], k = 2
 <strong>Output:</strong> 0
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,6,1], k = 3
@@ -140,19 +140,19 @@ public:
     int smallestDistancePair(vector<int>& nums, int k) {
         sort(nums.begin(), nums.end());
         int left = 0, right = nums.back() - nums.front();
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
-            if (count(mid, k, nums) >= k) right = mid;
-            else left = mid + 1;
+            if (count(mid, k, nums) >= k)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }
 
     int count(int dist, int k, vector<int>& nums) {
         int cnt = 0;
-        for (int i = 0; i < nums.size(); ++i)
-        {
+        for (int i = 0; i < nums.size(); ++i) {
             int target = nums[i] - dist;
             int j = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
             cnt += i - j;

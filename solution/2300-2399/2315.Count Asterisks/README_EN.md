@@ -11,7 +11,7 @@
 <p><strong>Note</strong> that each <code>&#39;|&#39;</code> will belong to <strong>exactly</strong> one pair.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;l|*e*et|c**o|*de|&quot;
@@ -21,7 +21,7 @@ The characters between the first and second &#39;|&#39; are excluded from the an
 Also, the characters between the third and fourth &#39;|&#39; are excluded from the answer.
 There are 2 asterisks considered. Therefore, we return 2.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;iamprogrammer&quot;
@@ -29,7 +29,7 @@ There are 2 asterisks considered. Therefore, we return 2.</pre>
 <strong>Explanation:</strong> In this example, there are no asterisks in s. Therefore, we return 0.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;yo|uar|e**|b|e***au|tifu|l&quot;
@@ -54,13 +54,12 @@ There are 2 asterisks considered. Therefore, we return 2.</pre>
 ```python
 class Solution:
     def countAsterisks(self, s: str) -> int:
-        ans = t = 0
+        ans, ok = 0, 1
         for c in s:
-            if c == '|':
-                t ^= 1
-            elif c == '*':
-                if t == 0:
-                    ans += 1
+            if c == "*":
+                ans += ok
+            elif c == "|":
+                ok ^= 1
         return ans
 ```
 
@@ -69,14 +68,13 @@ class Solution:
 ```java
 class Solution {
     public int countAsterisks(String s) {
-        int ans = 0, t = 0;
-        for (char c : s.toCharArray()) {
-            if (c == '|') {
-                t ^= 1;
-            } else if (c == '*') {
-                if (t == 0) {
-                    ++ans;
-                }
+        int ans = 0;
+        for (int i = 0, ok = 1; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (c == '*') {
+                ans += ok;
+            } else if (c == '|') {
+                ok ^= 1;
             }
         }
         return ans;
@@ -90,11 +88,13 @@ class Solution {
 class Solution {
 public:
     int countAsterisks(string s) {
-        int ans = 0, t = 0;
-        for (char& c : s)
-        {
-            if (c == '|') t ^= 1;
-            else if (c == '*') ans += t == 0;
+        int ans = 0, ok = 1;
+        for (char& c : s) {
+            if (c == '*') {
+                ans += ok;
+            } else if (c == '|') {
+                ok ^= 1;
+            }
         }
         return ans;
     }
@@ -104,25 +104,88 @@ public:
 ### **Go**
 
 ```go
-func countAsterisks(s string) int {
-	ans, t := 0, 0
+func countAsterisks(s string) (ans int) {
+	ok := 1
 	for _, c := range s {
-		if c == '|' {
-			t ^= 1
-		} else if c == '*' {
-			if t == 0 {
-				ans++
-			}
+		if c == '*' {
+			ans += ok
+		} else if c == '|' {
+			ok ^= 1
 		}
 	}
-	return ans
+	return
 }
 ```
 
 ### **TypeScript**
 
 ```ts
+function countAsterisks(s: string): number {
+    let ans = 0;
+    let ok = 1;
+    for (const c of s) {
+        if (c === '*') {
+            ans += ok;
+        } else if (c === '|') {
+            ok ^= 1;
+        }
+    }
+    return ans;
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn count_asterisks(s: String) -> i32 {
+        let mut ans = 0;
+        let mut ok = 1;
+        for &c in s.as_bytes() {
+            if c == b'*' {
+                ans += ok
+            } else if c == b'|' {
+                ok ^= 1
+            }
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+int countAsterisks(char * s){
+    int ans = 0;
+    int ok = 1;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] == '*') {
+            ans += ok;
+        } else if (s[i] == '|') {
+            ok ^= 1;
+        }
+    }
+    return ans;
+}
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public int CountAsterisks(string s) {
+        int ans = 0, ok = 1;
+        foreach (char c in s) {
+            if (c == '*') {
+                ans += ok;
+            } else if (c == '|') {
+                ok ^= 1;
+            }
+        }
+        return ans;
+    }
+}
 ```
 
 ### **...**

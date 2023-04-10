@@ -11,7 +11,7 @@
 <p>Return the <em><strong>number</strong> of islands in </em><code>grid2</code> <em>that are considered <strong>sub-islands</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1905.Count%20Sub%20Islands/images/test1.png" style="width: 493px; height: 205px;" />
 <pre>
 <strong>Input:</strong> grid1 = [[1,1,1,0,0],[0,1,1,1,1],[0,0,0,0,0],[1,0,0,0,0],[1,1,0,1,1]], grid2 = [[1,1,1,0,0],[0,0,1,1,1],[0,1,0,0,0],[1,0,1,1,0],[0,1,0,1,0]]
@@ -20,7 +20,7 @@
 The 1s colored red in grid2 are those considered to be part of a sub-island. There are three sub-islands.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1905.Count%20Sub%20Islands/images/testcasex2.png" style="width: 491px; height: 201px;" />
 <pre>
 <strong>Input:</strong> grid1 = [[1,0,1,0,1],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[1,0,1,0,1]], grid2 = [[0,0,0,0,0],[1,1,1,1,1],[0,1,0,1,0],[0,1,0,1,0],[1,0,0,0,1]]
@@ -288,18 +288,15 @@ public:
         grid2[i][j] = 0;
         bool ans = true;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
             i = p.first;
             j = p.second;
             if (grid1[i][j] == 0) ans = false;
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = i + dirs[k], y = j + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid2[x][y])
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && grid2[x][y]) {
                     q.push({x, y});
                     grid2[x][y] = 0;
                 }

@@ -77,10 +77,10 @@ class Solution {
 class Solution {
 public:
     string reverseWords(string s) {
-        for (int i = 0, n = s.size(); i < n; ++i)
-        {
+        for (int i = 0, n = s.size(); i < n; ++i) {
             int j = i;
-            while (++j < n && s[j] != ' ');
+            while (++j < n && s[j] != ' ')
+                ;
             reverse(s.begin() + i, s.begin() + j);
             i = j;
         }
@@ -134,6 +134,24 @@ impl Solution {
             .map(|s| s.chars().rev().collect::<String>())
             .collect::<Vec<_>>()
             .join(" ")
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function reverseWords($s) {
+        $sArr = explode(' ', $s);
+        for ($i = 0; $i < count($sArr); $i++) {
+            $sArr[$i] = strrev($sArr[$i]);
+        }
+        return implode(" ", $sArr);
     }
 }
 ```

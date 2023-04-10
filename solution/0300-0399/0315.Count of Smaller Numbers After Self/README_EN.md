@@ -4,10 +4,10 @@
 
 ## Description
 
-<p>You are given an integer array <code>nums</code> and you have to return a new <code>counts</code> array. The <code>counts</code> array has the property where <code>counts[i]</code> is the number of smaller elements to the right of <code>nums[i]</code>.</p>
+<p>Given an integer array <code>nums</code>, return<em> an integer array </em><code>counts</code><em> where </em><code>counts[i]</code><em> is the number of smaller elements to the right of </em><code>nums[i]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [5,2,6,1]
@@ -19,14 +19,14 @@ To the right of 6 there is <b>1</b> smaller element (1).
 To the right of 1 there is <b>0</b> smaller element.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-1]
 <strong>Output:</strong> [0]
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-1,-1]
@@ -306,11 +306,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -318,8 +319,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -342,8 +342,7 @@ public:
         for (int i = 0; i < n; ++i) m[alls[i]] = i + 1;
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         vector<int> ans(nums.size());
-        for (int i = nums.size() - 1; i >= 0; --i)
-        {
+        for (int i = nums.size() - 1; i >= 0; --i) {
             int x = m[nums[i]];
             tree->update(x, 1);
             ans[i] = tree->query(x - 1);

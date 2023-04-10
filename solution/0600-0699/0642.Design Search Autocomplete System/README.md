@@ -107,7 +107,6 @@ class Trie:
 
 
 class AutocompleteSystem:
-
     def __init__(self, sentences: List[str], times: List[int]):
         self.trie = Trie()
         for a, b in zip(sentences, times):
@@ -190,7 +189,7 @@ class AutocompleteSystem {
             trie.insert(s, times[i++]);
         }
     }
-    
+
     public List<String> input(char c) {
         List<String> res = new ArrayList<>();
         if (c == '#') {
@@ -203,7 +202,8 @@ class AutocompleteSystem {
         if (node == null) {
             return res;
         }
-        PriorityQueue<Trie> q = new PriorityQueue<>((a, b) -> a.v == b.v ? b.w.compareTo(a.w) : a.v - b.v);
+        PriorityQueue<Trie> q
+            = new PriorityQueue<>((a, b) -> a.v == b.v ? b.w.compareTo(a.w) : a.v - b.v);
         dfs(node, q);
         while (!q.isEmpty()) {
             res.add(0, q.poll().w);

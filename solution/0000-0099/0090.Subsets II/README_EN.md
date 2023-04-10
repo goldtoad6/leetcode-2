@@ -4,15 +4,15 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code> that may contain duplicates, return <em>all possible subsets (the power set)</em>.</p>
+<p>Given an integer array <code>nums</code> that may contain duplicates, return <em>all possible</em> <span data-keyword="subset"><em>subsets</em></span><em> (the power set)</em>.</p>
 
 <p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> nums = [1,2,2]
 <strong>Output:</strong> [[],[1],[1,2],[1,2,2],[2],[2,2]]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> nums = [0]
 <strong>Output:</strong> [[],[0]]
 </pre>
@@ -92,8 +92,7 @@ public:
 
     void dfs(int u, vector<int>& t, vector<int>& nums, vector<vector<int>>& ans) {
         ans.push_back(t);
-        for (int i = u; i < nums.size(); ++i)
-        {
+        for (int i = u; i < nums.size(); ++i) {
             if (i != u && nums[i] == nums[i - 1]) continue;
             t.push_back(nums[i]);
             dfs(i + 1, t, nums, ans);

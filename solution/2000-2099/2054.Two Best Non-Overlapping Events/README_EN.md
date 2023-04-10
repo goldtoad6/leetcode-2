@@ -11,7 +11,7 @@
 <p>Note that the start time and end time is <strong>inclusive</strong>: that is, you cannot attend two events where one of them starts and the other ends at the same time. More specifically, if you attend an event with end time <code>t</code>, the next event must start at or after <code>t + 1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2054.Two%20Best%20Non-Overlapping%20Events/images/picture5.png" style="width: 400px; height: 75px;" />
 <pre>
 <strong>Input:</strong> events = [[1,3,2],[4,5,2],[2,4,3]]
@@ -19,7 +19,7 @@
 <strong>Explanation: </strong>Choose the green events, 0 and 1 for a sum of 2 + 2 = 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="Example 1 Diagram" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2054.Two%20Best%20Non-Overlapping%20Events/images/picture1.png" style="width: 400px; height: 77px;" />
 <pre>
 <strong>Input:</strong> events = [[1,3,2],[4,5,2],[1,5,5]]
@@ -27,7 +27,7 @@
 <strong>Explanation: </strong>Choose event 2 for a sum of 5.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2054.Two%20Best%20Non-Overlapping%20Events/images/picture3.png" style="width: 400px; height: 66px;" />
 <pre>
 <strong>Input:</strong> events = [[1,5,3],[1,5,1],[6,6,5]]
@@ -74,7 +74,7 @@ class Solution {
     public int maxTwoEvents(int[][] events) {
         Arrays.sort(events, (a, b) -> a[0] - b[0]);
         int n = events.length;
-        int[] f = new int [n + 1];
+        int[] f = new int[n + 1];
         for (int i = n - 1; i >= 0; --i) {
             f[i] = Math.max(f[i + 1], events[i][2]);
         }
@@ -111,15 +111,15 @@ public:
         vector<int> f(n + 1);
         for (int i = n - 1; ~i; --i) f[i] = max(f[i + 1], events[i][2]);
         int ans = 0;
-        for (auto& e : events)
-        {
+        for (auto& e : events) {
             int v = e[2];
             int left = 0, right = n;
-            while (left < right)
-            {
+            while (left < right) {
                 int mid = (left + right) >> 1;
-                if (events[mid][0] > e[1]) right = mid;
-                else left = mid + 1;
+                if (events[mid][0] > e[1])
+                    right = mid;
+                else
+                    left = mid + 1;
             }
             if (left < n) v += f[left];
             ans = max(ans, v);

@@ -9,7 +9,7 @@
 <p>You may assume the given input string is always valid. For example, <code>&quot;01:34&quot;</code>, <code>&quot;12:09&quot;</code> are all valid. <code>&quot;1:34&quot;</code>, <code>&quot;12:9&quot;</code> are all invalid.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> time = &quot;19:34&quot;
@@ -18,7 +18,7 @@
 It is not <strong>19:33</strong>, because this occurs 23 hours and 59 minutes later.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> time = &quot;23:59&quot;
@@ -65,7 +65,7 @@ class Solution:
 
         s = {c for c in time if c != ':'}
         t = int(time[:2]) * 60 + int(time[3:])
-        d = float('inf')
+        d = inf
         ans = None
         dfs('')
         if ans is None:
@@ -109,7 +109,8 @@ class Solution {
             if (!check(curr)) {
                 return;
             }
-            int p = Integer.parseInt(curr.substring(0, 2)) * 60 + Integer.parseInt(curr.substring(2));
+            int p
+                = Integer.parseInt(curr.substring(0, 2)) * 60 + Integer.parseInt(curr.substring(2));
             if (p > t && p - t < d) {
                 d = p - t;
                 ans = curr.substring(0, 2) + ":" + curr.substring(2);

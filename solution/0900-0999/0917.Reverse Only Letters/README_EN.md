@@ -14,13 +14,13 @@
 <p>Return <code>s</code><em> after reversing it</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "ab-cd"
 <strong>Output:</strong> "dc-ba"
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "a-bC-dEf-ghIj"
 <strong>Output:</strong> "j-Ih-gfE-dCba"
-</pre><p><strong>Example 3:</strong></p>
+</pre><p><strong class="example">Example 3:</strong></p>
 <pre><strong>Input:</strong> s = "Test1ng-Leet=code-Q!"
 <strong>Output:</strong> "Qedo1ct-eeLg=ntse-T!"
 </pre>
@@ -108,12 +108,10 @@ class Solution {
 public:
     string reverseOnlyLetters(string s) {
         int i = 0, j = s.size() - 1;
-        while (i < j)
-        {
+        while (i < j) {
             while (i < j && !isalpha(s[i])) ++i;
             while (i < j && !isalpha(s[j])) --j;
-            if (i < j)
-            {
+            if (i < j) {
                 swap(s[i], s[j]);
                 ++i;
                 --j;

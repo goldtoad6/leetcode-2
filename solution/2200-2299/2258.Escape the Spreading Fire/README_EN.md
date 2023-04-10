@@ -21,7 +21,7 @@
 <p>A cell is <strong>adjacent</strong> to another cell if the former is directly north, east, south, or west of the latter (i.e., their sides are touching).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2258.Escape%20the%20Spreading%20Fire/images/ex1new.jpg" style="width: 650px; height: 404px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,2,0,0,0,0,0],[0,0,0,2,2,1,0],[0,2,0,0,1,2,0],[0,0,2,2,2,0,2],[0,0,0,0,0,0,0]]
@@ -30,7 +30,7 @@
 You will still be able to safely reach the safehouse.
 Staying for more than 3 minutes will not allow you to safely reach the safehouse.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2258.Escape%20the%20Spreading%20Fire/images/ex2new2.jpg" style="width: 515px; height: 150px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,0,0,0],[0,1,2,0],[0,2,0,0]]
@@ -40,7 +40,7 @@ Fire will spread to any cell you move towards and it is impossible to safely rea
 Thus, -1 is returned.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2258.Escape%20the%20Spreading%20Fire/images/ex3new.jpg" style="width: 174px; height: 150px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,0,0],[2,2,0],[1,2,0]]
@@ -105,7 +105,13 @@ class Solution:
                         continue
                     for a, b in [[0, -1], [0, 1], [-1, 0], [1, 0]]:
                         x, y = i + a, j + b
-                        if 0 <= x < m and 0 <= y < n and not fire[x][y] and not vis[x][y] and grid[x][y] == 0:
+                        if (
+                            0 <= x < m
+                            and 0 <= y < n
+                            and not fire[x][y]
+                            and not vis[x][y]
+                            and grid[x][y] == 0
+                        ):
                             if x == m - 1 and y == n - 1:
                                 return True
                             vis[x][y] = True
@@ -156,7 +162,7 @@ class Solution {
             for (int j = 0; j < n; ++j) {
                 if (grid[i][j] == 1) {
                     fire[i][j] = true;
-                    f.offer(new int[]{i, j});
+                    f.offer(new int[] {i, j});
                 }
             }
         }
@@ -168,7 +174,7 @@ class Solution {
         }
         Deque<int[]> q = new ArrayDeque<>();
         boolean[][] vis = new boolean[m][n];
-        q.offer(new int[]{0, 0});
+        q.offer(new int[] {0, 0});
         vis[0][0] = true;
         while (!q.isEmpty()) {
             for (int i = q.size(); i > 0; --i) {
@@ -178,12 +184,13 @@ class Solution {
                 }
                 for (int k = 0; k < 4; ++k) {
                     int x = p[0] + dirs[k], y = p[1] + dirs[k + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && !vis[x][y] && grid[x][y] == 0) {
+                    if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && !vis[x][y]
+                        && grid[x][y] == 0) {
                         if (x == m - 1 && y == n - 1) {
                             return true;
                         }
                         vis[x][y] = true;
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                     }
                 }
             }
@@ -200,7 +207,7 @@ class Solution {
                 int x = p[0] + dirs[k], y = p[1] + dirs[k + 1];
                 if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && grid[x][y] == 0) {
                     fire[x][y] = true;
-                    nf.offer(new int[]{x, y});
+                    nf.offer(new int[] {x, y});
                 }
             }
         }
@@ -219,11 +226,12 @@ public:
     int maximumMinutes(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
         int left = -1, right = m * n;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right + 1) >> 1;
-            if (check(mid, grid)) left = mid;
-            else right = mid - 1;
+            if (check(mid, grid))
+                left = mid;
+            else
+                right = mid - 1;
         }
         return left == m * n ? 1e9 : left;
     }
@@ -232,12 +240,9 @@ public:
         int m = grid.size(), n = grid[0].size();
         vector<vector<bool>> fire(m, vector<bool>(n));
         queue<vector<int>> f;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (grid[i][j] == 1)
-                {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] == 1) {
                     fire[i][j] = true;
                     f.push({i, j});
                 }
@@ -248,18 +253,14 @@ public:
         vector<vector<bool>> vis(m, vector<bool>(n));
         q.push({0, 0});
         vis[0][0] = true;
-        while (!q.empty())
-        {
-            for (int i = q.size(); i > 0; --i)
-            {
+        while (!q.empty()) {
+            for (int i = q.size(); i > 0; --i) {
                 auto p = q.front();
                 q.pop();
                 if (fire[p[0]][p[1]]) continue;
-                for (int k = 0; k < 4; ++k)
-                {
+                for (int k = 0; k < 4; ++k) {
                     int x = p[0] + dirs[k], y = p[1] + dirs[k + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] &&!vis[x][y] && grid[x][y] == 0)
-                    {
+                    if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && !vis[x][y] && grid[x][y] == 0) {
                         if (x == m - 1 && y == n - 1) return true;
                         vis[x][y] = true;
                         q.push({x, y});
@@ -274,15 +275,12 @@ public:
     queue<vector<int>> spread(vector<vector<bool>>& fire, queue<vector<int>>& f, vector<vector<int>>& grid) {
         queue<vector<int>> nf;
         int m = grid.size(), n = grid[0].size();
-        while (!f.empty())
-        {
+        while (!f.empty()) {
             auto p = f.front();
             f.pop();
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = p[0] + dirs[k], y = p[1] + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && grid[x][y] == 0)
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && !fire[x][y] && grid[x][y] == 0) {
                     fire[x][y] = true;
                     nf.push({x, y});
                 }

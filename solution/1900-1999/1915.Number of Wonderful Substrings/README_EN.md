@@ -7,6 +7,7 @@
 <p>A <strong>wonderful</strong> string is a string where <strong>at most one</strong> letter appears an <strong>odd</strong> number of times.</p>
 
 <ul>
+
     <li>For example, <code>&quot;ccjjc&quot;</code> and <code>&quot;abab&quot;</code> are wonderful, but <code>&quot;ab&quot;</code> is not.</li>
 
 </ul>
@@ -17,7 +18,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -37,7 +38,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -67,7 +68,7 @@
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -88,7 +89,9 @@
 <p><strong>Constraints:</strong></p>
 
 <ul>
+
     <li><code>1 &lt;= word.length &lt;= 10<sup>5</sup></code></li>
+
     <li><code>word</code> consists of lowercase English letters from <code>&#39;a&#39;</code>&nbsp;to <code>&#39;j&#39;</code>.</li>
 
 </ul>
@@ -106,7 +109,7 @@ class Solution:
         state = 0
         ans = 0
         for c in word:
-            state ^= (1 << (ord(c) - ord('a')))
+            state ^= 1 << (ord(c) - ord('a'))
             ans += counter[state]
             for i in range(10):
                 ans += counter[state ^ (1 << i)]
@@ -170,8 +173,7 @@ public:
         counter[0] = 1;
         long long ans = 0;
         int state = 0;
-        for (char c : word)
-        {
+        for (char c : word) {
             state ^= (1 << (c - 'a'));
             ans += counter[state];
             for (int i = 0; i < 10; ++i) ans += counter[state ^ (1 << i)];

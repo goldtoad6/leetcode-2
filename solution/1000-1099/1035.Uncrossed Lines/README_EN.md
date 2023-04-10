@@ -18,7 +18,7 @@
 <p>Return <em>the maximum number of connecting lines we can draw in this way</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1000-1099/1035.Uncrossed%20Lines/images/142.png" style="width: 400px; height: 286px;" />
 <pre>
 <strong>Input:</strong> nums1 = [1,4,2], nums2 = [1,2,4]
@@ -27,14 +27,14 @@
 We cannot draw 3 uncrossed lines, because the line from nums1[1] = 4 to nums2[2] = 4 will intersect the line from nums1[2]=2 to nums2[1]=2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [2,5,1,2,5], nums2 = [10,5,2,1,5,2]
 <strong>Output:</strong> 3
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,3,7,1,7,5], nums2 = [1,9,2,5,1]
@@ -52,6 +52,14 @@ We cannot draw 3 uncrossed lines, because the line from nums1[1] = 4 to nums2[2]
 ## Solutions
 
 Longest common sub-sequences
+
+$$
+dp[i][j]=
+\begin{cases}
+dp[i-1][j-1]+1, & nums1[i-1]=nums2[j-1] \\
+\max(dp[i-1][j], dp[i][j-1]), & nums1[i-1]\neq nums2[j-1]
+\end{cases}
+$$
 
 <!-- tabs:start -->
 
@@ -113,6 +121,54 @@ public:
         return dp[m][n];
     }
 };
+```
+
+### **Go**
+
+```go
+func maxUncrossedLines(nums1 []int, nums2 []int) int {
+	m, n := len(nums1), len(nums2)
+	dp := make([][]int, m+1)
+	for i := range dp {
+		dp[i] = make([]int, n+1)
+	}
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if nums1[i-1] == nums2[j-1] {
+				dp[i][j] = dp[i-1][j-1] + 1
+			} else {
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+			}
+		}
+	}
+	return dp[m][n]
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+```
+
+### **TypeScript**
+
+```ts
+function maxUncrossedLines(nums1: number[], nums2: number[]): number {
+    const m = nums1.length;
+    const n = nums2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; ++i) {
+        for (let j = 1; j <= n; ++j) {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            if (nums1[i - 1] == nums2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            }
+        }
+    }
+    return dp[m][n];
+}
 ```
 
 ### **...**

@@ -73,23 +73,23 @@ magicDictionary.search(&quot;leetcoded&quot;); // 返回 False
 
 ```python
 class MagicDictionary:
-
     def __init__(self):
         """
         Initialize your data structure here.
         """
 
     def _patterns(self, word):
-        return [word[:i] + '*' + word[i + 1:] for i in range(len(word))]
+        return [word[:i] + '*' + word[i + 1 :] for i in range(len(word))]
 
     def buildDict(self, dictionary: List[str]) -> None:
         self.words = set(dictionary)
-        self.counter = Counter(
-            p for word in dictionary for p in self._patterns(word))
+        self.counter = Counter(p for word in dictionary for p in self._patterns(word))
 
     def search(self, searchWord: str) -> bool:
         for p in self._patterns(searchWord):
-            if self.counter[p] > 1 or (self.counter[p] == 1 and searchWord not in self.words):
+            if self.counter[p] > 1 or (
+                self.counter[p] == 1 and searchWord not in self.words
+            ):
                 return True
         return False
 
@@ -162,20 +162,17 @@ class MagicDictionary {
 public:
     /** Initialize your data structure here. */
     MagicDictionary() {
-
     }
 
     void buildDict(vector<string> dictionary) {
-        for (string word : dictionary)
-        {
+        for (string word : dictionary) {
             words.insert(word);
             for (string p : patterns(word)) ++counter[p];
         }
     }
 
     bool search(string searchWord) {
-        for (string p : patterns(searchWord))
-        {
+        for (string p : patterns(searchWord)) {
             if (counter[p] > 1 || (counter[p] == 1 && !words.count(searchWord))) return true;
         }
         return false;
@@ -187,8 +184,7 @@ private:
 
     vector<string> patterns(string word) {
         vector<string> res;
-        for (int i = 0; i < word.size(); ++i)
-        {
+        for (int i = 0; i < word.size(); ++i) {
             char c = word[i];
             word[i] = '*';
             res.push_back(word);

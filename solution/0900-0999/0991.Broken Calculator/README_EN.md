@@ -14,7 +14,7 @@
 <p>Given two integers <code>startValue</code> and <code>target</code>, return <em>the minimum number of operations needed to display </em><code>target</code><em> on the calculator</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> startValue = 2, target = 3
@@ -22,7 +22,7 @@
 <strong>Explanation:</strong> Use double operation and then decrement operation {2 -&gt; 4 -&gt; 3}.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> startValue = 5, target = 8
@@ -30,7 +30,7 @@
 <strong>Explanation:</strong> Use decrement and then double {5 -&gt; 4 -&gt; 8}.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> startValue = 3, target = 10
@@ -52,13 +52,75 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def brokenCalc(self, startValue: int, target: int) -> int:
+        ans = 0
+        while startValue < target:
+            if target & 1:
+                target += 1
+            else:
+                target >>= 1
+            ans += 1
+        ans += startValue - target
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int brokenCalc(int startValue, int target) {
+        int ans = 0;
+        while (startValue < target) {
+            if ((target & 1) == 1) {
+                target++;
+            } else {
+                target >>= 1;
+            }
+            ans += 1;
+        }
+        ans += startValue - target;
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int brokenCalc(int startValue, int target) {
+        int ans = 0;
+        while (startValue < target) {
+            if (target & 1) {
+                target++;
+            } else {
+                target >>= 1;
+            }
+            ++ans;
+        }
+        ans += startValue - target;
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func brokenCalc(startValue int, target int) (ans int) {
+	for startValue < target {
+		if target&1 == 1 {
+			target++
+		} else {
+			target >>= 1
+		}
+		ans++
+	}
+	ans += startValue - target
+	return
+}
 ```
 
 ### **...**

@@ -49,11 +49,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-方法一：模拟旋转
+**方法一：模拟旋转**
 
 旋转矩阵，判断矩阵是否一致，旋转方式同 [48. 旋转图像](https://leetcode.cn/problems/rotate-image/)。
 
-方法二：原地比较
+**方法二：原地比较**
 
 此题不同于 [48. 旋转图像](https://leetcode.cn/problems/rotate-image/)，并不要求改动原数组，因此，只要比较对应的位置即可。
 
@@ -84,10 +84,21 @@ class Solution:
                     matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1]
                     matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1]
                     matrix[j][n - i - 1] = t
+
         for _ in range(4):
             if mat == target:
                 return True
             rotate(mat)
+        return False
+```
+
+```python
+class Solution:
+    def findRotation(self, mat: List[List[int]], target: List[List[int]]) -> bool:
+        for _ in range(4):
+            mat = [list(col) for col in zip(*mat[::-1])]
+            if mat == target:
+                return True
         return False
 ```
 
@@ -132,6 +143,94 @@ class Solution {
         }
         return true;
     }
+}
+```
+
+```java
+class Solution {
+    public boolean findRotation(int[][] mat, int[][] target) {
+        int n = mat.length;
+        for (int k = 0; k < 4; ++k) {
+            int[][] g = new int[n][n];
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    g[i][j] = mat[j][n - i - 1];
+                }
+            }
+            if (equals(g, target)) {
+                return true;
+            }
+            mat = g;
+        }
+        return false;
+    }
+
+    private boolean equals(int[][] a, int[][] b) {
+        int n = a.length;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (a[i][j] != b[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool findRotation(vector<vector<int>>& mat, vector<vector<int>>& target) {
+        int n = mat.size();
+        for (int k = 0; k < 4; ++k) {
+            vector<vector<int>> g(n, vector<int>(n));
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < n; ++j)
+                    g[i][j] = mat[j][n - i - 1];
+            if (g == target) return true;
+            mat = g;
+        }
+        return false;
+    }
+};
+```
+
+### **Go**
+
+```go
+func findRotation(mat [][]int, target [][]int) bool {
+	n := len(mat)
+	for k := 0; k < 4; k++ {
+		g := make([][]int, n)
+		for i := range g {
+			g[i] = make([]int, n)
+		}
+		for i := 0; i < n; i++ {
+			for j := 0; j < n; j++ {
+				g[i][j] = mat[j][n-i-1]
+			}
+		}
+		if equals(g, target) {
+			return true
+		}
+		mat = g
+	}
+	return false
+}
+
+func equals(a, b [][]int) bool {
+	for i, row := range a {
+		for j, v := range row {
+			if v != b[i][j] {
+				return false
+			}
+		}
+	}
+	return true
 }
 ```
 

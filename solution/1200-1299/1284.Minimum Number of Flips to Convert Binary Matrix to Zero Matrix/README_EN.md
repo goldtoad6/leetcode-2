@@ -13,7 +13,7 @@
 <p>A <strong>zero matrix</strong> is a matrix with all cells equal to <code>0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1284.Minimum%20Number%20of%20Flips%20to%20Convert%20Binary%20Matrix%20to%20Zero%20Matrix/images/matrix.png" style="width: 409px; height: 86px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0],[0,1]]
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> One possible solution is to flip (1, 0) then (0, 1) and finally (1, 1) as shown.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> mat = [[0]]
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> Given matrix is a zero matrix. We do not need to change it.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> mat = [[1,0,0],[1,0,0]]
@@ -57,8 +57,7 @@
 class Solution:
     def minFlips(self, mat: List[List[int]]) -> int:
         m, n = len(mat), len(mat[0])
-        state = sum(1 << (i * n + j) for i in range(m)
-                    for j in range(n) if mat[i][j])
+        state = sum(1 << (i * n + j) for i in range(m) for j in range(n) if mat[i][j])
         q = deque([state])
         vis = {state}
         ans = 0
@@ -152,31 +151,27 @@ public:
             for (int j = 0; j < n; ++j)
                 if (mat[i][j])
                     state |= (1 << (i * n + j));
-        queue<int> q{{state}};
-        unordered_set<int> vis{{state}};
+        queue<int> q {{state}};
+        unordered_set<int> vis {{state}};
         int ans = 0;
         vector<int> dirs = {0, -1, 0, 1, 0, 0};
-        while (!q.empty())
-        {
-            for (int t = q.size(); t; --t)
-            {
+        while (!q.empty()) {
+            for (int t = q.size(); t; --t) {
                 state = q.front();
                 if (state == 0) return ans;
                 q.pop();
-                for (int i = 0; i < m; ++i)
-                {
-                    for (int j = 0; j < n; ++j)
-                    {
+                for (int i = 0; i < m; ++i) {
+                    for (int j = 0; j < n; ++j) {
                         int nxt = state;
-                        for (int k = 0; k < 5; ++k)
-                        {
+                        for (int k = 0; k < 5; ++k) {
                             int x = i + dirs[k], y = j + dirs[k + 1];
                             if (x < 0 || x >= m || y < 0 || y >= n) continue;
-                            if ((nxt & (1 << (x * n + y))) != 0) nxt -= 1 << (x * n + y);
-                            else nxt |= 1 << (x * n + y);
+                            if ((nxt & (1 << (x * n + y))) != 0)
+                                nxt -= 1 << (x * n + y);
+                            else
+                                nxt |= 1 << (x * n + y);
                         }
-                        if (!vis.count(nxt))
-                        {
+                        if (!vis.count(nxt)) {
                             vis.insert(nxt);
                             q.push(nxt);
                         }

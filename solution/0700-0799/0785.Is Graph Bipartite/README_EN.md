@@ -18,14 +18,14 @@
 <p>Return <code>true</code><em> if and only if it is <strong>bipartite</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0700-0799/0785.Is%20Graph%20Bipartite/images/bi2.jpg" style="width: 222px; height: 222px;" />
 <pre>
 <strong>Input:</strong> graph = [[1,2,3],[0,2],[0,1,3],[0,2]]
 <strong>Output:</strong> false
 <strong>Explanation:</strong> There is no way to partition the nodes into two independent sets such that every edge connects a node in one and a node in the other.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0700-0799/0785.Is%20Graph%20Bipartite/images/bi1.jpg" style="width: 222px; height: 222px;" />
 <pre>
 <strong>Input:</strong> graph = [[1,3],[0,2],[1,3],[0,2]]
@@ -181,13 +181,11 @@ public:
 
     bool dfs(int u, int c, vector<int>& color, vector<vector<int>>& g) {
         color[u] = c;
-        for (int& v : g[u])
-        {
-            if (!color[v])
-            {
+        for (int& v : g[u]) {
+            if (!color[v]) {
                 if (!dfs(v, 3 - c, color, g)) return false;
-            }
-            else if (color[v] == c) return false;
+            } else if (color[v] == c)
+                return false;
         }
         return true;
     }

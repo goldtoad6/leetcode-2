@@ -55,9 +55,9 @@ Alice 先开始，只能拿前 5 颗或后 5 颗石子 。
 
 设 $dp[i][j]$ 表示在石子堆 $[i,j]$ 中，当前玩家与另一个玩家的石子数量的最大差值。
 
-若 $dp[0][n-1]>0$，说明当前玩家能赢得比赛。
+若 $dp[0][n-1] \gt 0$，说明当前玩家能赢得比赛。
 
-时间复杂度 $O(n^2)$。
+时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。其中 $n$ 是石子堆的数量。
 
 <!-- tabs:start -->
 
@@ -74,8 +74,7 @@ class Solution:
             dp[i][i] = v
         for i in range(n - 2, -1, -1):
             for j in range(i + 1, n):
-                dp[i][j] = max(piles[i] - dp[i + 1][j],
-                               piles[j] - dp[i][j - 1])
+                dp[i][j] = max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1])
         return dp[0][-1] > 0
 ```
 

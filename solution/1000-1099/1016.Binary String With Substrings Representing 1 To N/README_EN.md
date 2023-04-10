@@ -9,10 +9,10 @@
 <p>A <strong>substring</strong> is a contiguous sequence of characters within a string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "0110", n = 3
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "0110", n = 4
 <strong>Output:</strong> false
 </pre>
@@ -34,10 +34,9 @@
 ```python
 class Solution:
     def queryString(self, s: str, n: int) -> bool:
-        for i in range(n, n // 2, -1):
-            if bin(i)[2:] not in s:
-                return False
-        return True
+        if n > 1023:
+            return False
+        return all(bin(i)[2:] in s for i in range(n, n // 2, -1))
 ```
 
 ### **Java**
@@ -55,6 +54,24 @@ class Solution {
 }
 ```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool queryString(string s, int n) {
+        for (int i = n; i > n / 2; --i) {
+            string b = bitset<32>(i).to_string();
+            b = b.substr(b.find_first_not_of('0'));
+            if (s.find(b) == string::npos) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
+
 ### **Go**
 
 ```go
@@ -68,20 +85,17 @@ func queryString(s string, n int) bool {
 }
 ```
 
-### **C++**
+### **TypeScript**
 
-```cpp
-class Solution {
-public:
-    bool queryString(string s, int n) {
-        for (int i = n; i > n / 2; --i) {
-            string b = bitset<32>(i).to_string();
-            b = b.substr(b.find_first_not_of('0'));
-            if (s.find(b) == string::npos) return false;
+```ts
+function queryString(s: string, n: number): boolean {
+    for (let i = n; i > n / 2; --i) {
+        if (s.indexOf(i.toString(2)) === -1) {
+            return false;
         }
-        return true;
     }
-};
+    return true;
+}
 ```
 
 ### **...**

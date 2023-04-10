@@ -59,19 +59,19 @@
 
 **方法一：朴素 Dijkstra 算法**
 
-时间复杂度 O(n²+m)。
+时间复杂度 $O(n^2+m)$。
 
 **方法二：堆优化 Dijkstra 算法**
 
-时间复杂度 O(mlogn)。
+时间复杂度 $O(m\log n)$。
 
 **方法三：Bellman Ford 算法**
 
-时间复杂度 O(nm)。
+时间复杂度 $O(nm)$。
 
 **方法四：SPFA 算法**
 
-时间复杂度，平均情况下 O(m)，最坏情况下 O(nm)。
+时间复杂度，平均情况下 $O(m)$，最坏情况下 $O(nm)$。
 
 <!-- tabs:start -->
 
@@ -84,7 +84,7 @@
 ```python
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
-        INF = 0x3f3f
+        INF = 0x3F3F
         dist = [INF] * n
         vis = [False] * n
         g = [[INF] * n for _ in range(n)]
@@ -294,7 +294,7 @@ class Solution {
         }
         for (int[] t : times) {
             int u = t[0] - 1, v = t[1] - 1, w = t[2];
-            g[u].add(new int[]{v, w});
+            g[u].add(new int[] {v, w});
         }
         --k;
         dist[k] = 0;
@@ -563,19 +563,15 @@ public:
         vector<bool> vis(n);
         vector<int> dist(n, inf);
         dist[k - 1] = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int t = -1;
-            for (int j = 0; j < n; ++j)
-            {
-                if (!vis[j] && (t == -1 || dist[t] > dist[j]))
-                {
+            for (int j = 0; j < n; ++j) {
+                if (!vis[j] && (t == -1 || dist[t] > dist[j])) {
                     t = j;
                 }
             }
             vis[t] = true;
-            for (int j = 0; j < n; ++j)
-            {
+            for (int j = 0; j < n; ++j) {
                 dist[j] = min(dist[j], dist[t] + g[t][j]);
             }
         }

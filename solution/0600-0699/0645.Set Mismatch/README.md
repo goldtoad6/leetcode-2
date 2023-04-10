@@ -60,7 +60,7 @@ class Solution:
     def findErrorNums(self, nums: List[int]) -> List[int]:
         eor, n = 0, len(nums)
         for i in range(1, n + 1):
-            eor ^= (i ^ nums[i - 1])
+            eor ^= i ^ nums[i - 1]
         diff = eor & (~eor + 1)
         a = 0
         for i in range(1, n + 1):
@@ -99,10 +99,10 @@ class Solution {
         int b = eor ^ a;
         for (int num : nums) {
             if (a == num) {
-                return new int[]{a, b};
+                return new int[] {a, b};
             }
         }
-        return new int[]{b, a};
+        return new int[] {b, a};
     }
 }
 ```

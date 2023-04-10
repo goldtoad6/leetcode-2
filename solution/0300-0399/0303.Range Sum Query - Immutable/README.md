@@ -56,6 +56,8 @@ numArray.sumRange(0, 5); // return -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))
 
 前缀和计算公式：`s[i + 1] = s[i] + nums[i]`。
 
+初始化的时间复杂度是 $O(n)$，每次查询的时间复杂度是 $O(1)$。其中 $n$ 是数组的长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -64,9 +66,8 @@ numArray.sumRange(0, 5); // return -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))
 
 ```python
 class NumArray:
-
     def __init__(self, nums: List[int]):
-        self.s = [0] + list(accumulate(nums))
+        self.s = list(accumulate(nums, initial=0))
 
     def sumRange(self, left: int, right: int) -> int:
         return self.s[right + 1] - self.s[left]
@@ -157,6 +158,62 @@ func (this *NumArray) SumRange(left int, right int) int {
  */
 ```
 
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ */
+var NumArray = function (nums) {
+    const n = nums.length;
+    this.s = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; ++i) {
+        this.s[i + 1] = this.s[i] + nums[i];
+    }
+};
+
+/**
+ * @param {number} left
+ * @param {number} right
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function (left, right) {
+    return this.s[right + 1] - this.s[left];
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * var obj = new NumArray(nums)
+ * var param_1 = obj.sumRange(left,right)
+ */
+```
+
+### **TypeScript**
+
+```ts
+class NumArray {
+    private s: number[];
+
+    constructor(nums: number[]) {
+        const n = nums.length;
+        this.s = new Array(n + 1).fill(0);
+        for (let i = 0; i < n; ++i) {
+            this.s[i + 1] = this.s[i] + nums[i];
+        }
+    }
+
+    sumRange(left: number, right: number): number {
+        return this.s[right + 1] - this.s[left];
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * var obj = new NumArray(nums)
+ * var param_1 = obj.sumRange(left,right)
+ */
+```
+
 ### **Rust**
 
 ```rust
@@ -192,7 +249,7 @@ impl NumArray {
 
 ```rust
 struct NumArray {
-    nums: Vec<i32>
+    sums: Vec<i32>,
 }
 
 
@@ -204,17 +261,15 @@ impl NumArray {
 
     fn new(mut nums: Vec<i32>) -> Self {
         let n = nums.len();
-        for i in 1..n {
-            nums[i] += nums[i - 1];
+        let mut sums = vec![0; n + 1];
+        for i in 0..n {
+            sums[i + 1] = sums[i] + nums[i];
         }
-        Self {
-            nums
-        }
+        Self { sums }
     }
 
     fn sum_range(&self, left: i32, right: i32) -> i32 {
-        let (left, right) = (left as usize, right as usize);
-        self.nums[right] - if left == 0 { 0 } else { self.nums[left - 1] }
+        self.sums[(right + 1) as usize] - self.sums[left as usize]
     }
 }
 
@@ -225,34 +280,64 @@ impl NumArray {
  */
 ```
 
-### **JavaScript**
+### **C**
 
-```js
-/**
- * @param {number[]} nums
- */
-var NumArray = function (nums) {
-    const n = nums.length;
-    this.s = new Array(n + 1).fill(0);
-    for (let i = 0; i < n; ++i) {
-        this.s[i + 1] = this.s[i] + nums[i];
+```c
+typedef struct {
+    int *sums;
+} NumArray;
+
+
+NumArray *numArrayCreate(int *nums, int numsSize) {
+    int *sums = malloc(sizeof(int) * (numsSize + 1));
+    memset(sums, 0, numsSize + 1);
+    for (int i = 0; i < numsSize; i++) {
+        sums[i + 1] = sums[i] + nums[i];
     }
-};
+    NumArray *res = malloc(sizeof(NumArray));
+    res->sums = sums;
+    return res;
+}
+
+int numArraySumRange(NumArray *obj, int left, int right) {
+    return obj->sums[right + 1] - obj->sums[left];
+}
+
+void numArrayFree(NumArray *obj) {
+    free(obj);
+}
 
 /**
- * @param {number} left
- * @param {number} right
- * @return {number}
- */
-NumArray.prototype.sumRange = function (left, right) {
-    return this.s[right + 1] - this.s[left];
-};
+ * Your NumArray struct will be instantiated and called as such:
+ * NumArray* obj = numArrayCreate(nums, numsSize);
+ * int param_1 = numArraySumRange(obj, left, right);
 
-/**
- * Your NumArray object will be instantiated and called as such:
- * var obj = new NumArray(nums)
- * var param_1 = obj.sumRange(left,right)
- */
+ * numArrayFree(obj);
+*/
+```
+
+### **PHP**
+
+```php
+class NumArray {
+    /**
+     * @param Integer[] $nums
+     */
+    function __construct($nums) {
+        $this->sum = [0];
+        for ($i = 0; $i < count($nums); $i++) {
+            array_push($this->sum, $this->sum[$i] + $nums[$i]);
+        }
+    }
+    /**
+     * @param Integer $left
+     * @param Integer $right
+     * @return Integer
+     */
+    function sumRange($left, $right) {
+        return $this->sum[$right + 1] - $this->sum[$left];
+    }
+}
 ```
 
 ### **...**

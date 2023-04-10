@@ -56,6 +56,8 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：头插法**
+
 先默认第一个点已经排序完毕。然后从第二个点开始，遇到值为负数的节点，采用头插法；非负数，则继续往下遍历即可。
 
 <!-- tabs:start -->
@@ -138,18 +140,14 @@ public:
     ListNode* sortLinkedList(ListNode* head) {
         ListNode* prev = head;
         ListNode* curr = head->next;
-        while (curr)
-        {
-            if (curr->val < 0)
-            {
+        while (curr) {
+            if (curr->val < 0) {
                 auto t = curr->next;
                 prev->next = t;
                 curr->next = head;
                 head = curr;
                 curr = t;
-            }
-            else
-            {
+            } else {
                 prev = curr;
                 curr = curr->next;
             }

@@ -16,7 +16,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -53,7 +53,6 @@ logger.shouldPrintMessage(11, &quot;foo&quot;); // 11 &gt;= 11, return true, nex
 
 ```python
 class Logger:
-
     def __init__(self):
         """
         Initialize your data structure here.
@@ -90,9 +89,11 @@ class Logger {
         limiter = new HashMap<>();
     }
 
-    /** Returns true if the message should be printed in the given timestamp, otherwise returns false.
-        If this method returns false, the message will not be printed.
-        The timestamp is in seconds granularity. */
+    /**
+       Returns true if the message should be printed in the given timestamp, otherwise returns
+       false. If this method returns false, the message will not be printed. The timestamp is in
+       seconds granularity.
+     */
     public boolean shouldPrintMessage(int timestamp, String message) {
         int t = limiter.getOrDefault(message, 0);
         if (t > timestamp) {

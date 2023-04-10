@@ -19,7 +19,7 @@
 <p>A sequence <code>a</code> is lexicographically larger than a sequence <code>b</code> (of the same length) if in the first position where <code>a</code> and <code>b</code> differ, sequence <code>a</code> has a number greater than the corresponding number in <code>b</code>. For example, <code>[0,1,9,0]</code> is lexicographically larger than <code>[0,1,5,6]</code> because the first position they differ is at the third number, and <code>9</code> is greater than <code>5</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 3
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> [2,3,2,1,3] is also a valid sequence, but [3,1,2,3,2] is the lexicographically largest valid sequence.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5
@@ -109,7 +109,7 @@ class Solution {
             return dfs(u + 1);
         }
         for (int i = n; i > 1; --i) {
-            if (cnt[i] > 0 && u + i < n * 2 &&  path[u + i] == 0) {
+            if (cnt[i] > 0 && u + i < n * 2 && path[u + i] == 0) {
                 cnt[i] = 0;
                 path[u] = i;
                 path[u + i] = i;
@@ -157,10 +157,8 @@ public:
     bool dfs(int u) {
         if (u == n * 2) return 1;
         if (path[u]) return dfs(u + 1);
-        for (int i = n; i > 1; --i)
-        {
-            if (cnt[i] && u + i < n * 2 && !path[u + i])
-            {
+        for (int i = n; i > 1; --i) {
+            if (cnt[i] && u + i < n * 2 && !path[u + i]) {
                 path[u] = path[u + i] = i;
                 cnt[i] = 0;
                 if (dfs(u + 1)) return 1;
@@ -168,8 +166,7 @@ public:
                 path[u] = path[u + i] = 0;
             }
         }
-        if (cnt[1])
-        {
+        if (cnt[1]) {
             path[u] = 1;
             cnt[1] = 0;
             if (dfs(u + 1)) return 1;

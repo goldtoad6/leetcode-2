@@ -59,7 +59,7 @@ class Solution:
         for i, w in enumerate(words):
             t += len(w)
             if len(s) == t:
-                return ''.join(words[:i + 1]) == s
+                return ''.join(words[: i + 1]) == s
         return False
 ```
 
@@ -89,8 +89,7 @@ class Solution {
 public:
     bool isPrefixString(string s, vector<string>& words) {
         string t = "";
-        for (string& w : words)
-        {
+        for (string& w : words) {
             t += w;
             if (t.size() == s.size()) return t == s;
         }

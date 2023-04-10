@@ -9,10 +9,10 @@
 <p>The majority element is the element that appears more than <code>&lfloor;n / 2&rfloor;</code> times. You may assume that the majority element always exists in the array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> nums = [3,2,3]
 <strong>Output:</strong> 3
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> nums = [2,2,1,1,1,2,2]
 <strong>Output:</strong> 2
 </pre>
@@ -42,7 +42,7 @@ class Solution:
             if cnt == 0:
                 m, cnt = v, 1
             else:
-                cnt += (1 if m == v else -1)
+                cnt += 1 if m == v else -1
         return m
 ```
 
@@ -94,14 +94,12 @@ class Solution {
 public:
     int majorityElement(vector<int>& nums) {
         int cnt = 0, m = 0;
-        for (int& v : nums)
-        {
-            if (cnt == 0)
-            {
+        for (int& v : nums) {
+            if (cnt == 0) {
                 m = v;
                 cnt = 1;
-            }
-            else cnt += (m == v ? 1 : -1);
+            } else
+                cnt += (m == v ? 1 : -1);
         }
         return m;
     }
@@ -167,6 +165,27 @@ impl Solution {
             }
         }
         m
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function majorityElement($nums) {
+        $major = 0;
+        $count = 0;
+        for ($i = 0; $i < count($nums); $i++) {
+            if ($count == 0) $major = $nums[$i];
+            if ($major == $nums[$i]) $count++;
+            else $count--;
+        }
+        return $major;
     }
 }
 ```

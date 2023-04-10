@@ -7,21 +7,21 @@
 <p>Convert a non-negative integer <code>num</code> to its English words representation.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 123
 <strong>Output:</strong> &quot;One Hundred Twenty Three&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 12345
 <strong>Output:</strong> &quot;Twelve Thousand Three Hundred Forty Five&quot;
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 1234567
@@ -47,8 +47,40 @@ class Solution:
         if num == 0:
             return 'Zero'
 
-        lt20 = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
-        tens = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+        lt20 = [
+            '',
+            'One',
+            'Two',
+            'Three',
+            'Four',
+            'Five',
+            'Six',
+            'Seven',
+            'Eight',
+            'Nine',
+            'Ten',
+            'Eleven',
+            'Twelve',
+            'Thirteen',
+            'Fourteen',
+            'Fifteen',
+            'Sixteen',
+            'Seventeen',
+            'Eighteen',
+            'Nineteen',
+        ]
+        tens = [
+            '',
+            'Ten',
+            'Twenty',
+            'Thirty',
+            'Forty',
+            'Fifty',
+            'Sixty',
+            'Seventy',
+            'Eighty',
+            'Ninety',
+        ]
         thousands = ['Billion', 'Million', 'Thousand', '']
 
         def transfer(num):
@@ -151,8 +183,11 @@ class Solution {
 
 ```java
 class Solution {
-    private String[] lt20 = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-    private String[] tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+    private String[] lt20 = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+        "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+        "Seventeen", "Eighteen", "Nineteen"};
+    private String[] tens
+        = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
     private String[] thousands = {"Billion", "Million", "Thousand", ""};
 
     public String numberToWords(int num) {

@@ -9,13 +9,13 @@
 <p>A <strong>subarray</strong> is a <strong>contiguous</strong> part of an array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> nums = [1], k = 1
 <strong>Output:</strong> 1
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> nums = [1,2], k = 4
 <strong>Output:</strong> -1
-</pre><p><strong>Example 3:</strong></p>
+</pre><p><strong class="example">Example 3:</strong></p>
 <pre><strong>Input:</strong> nums = [2,-1,2], k = 3
 <strong>Output:</strong> 3
 </pre>
@@ -37,16 +37,16 @@
 ```python
 class Solution:
     def shortestSubarray(self, nums: List[int], k: int) -> int:
-        s = [0] + list(accumulate(nums))
-        ans = float('inf')
-        q = deque([0])
-        for i in range(1, len(s)):
-            while q and s[i] - s[q[0]] >= k:
+        s = list(accumulate(nums, initial=0))
+        q = deque()
+        ans = inf
+        for i, v in enumerate(s):
+            while q and v - s[q[0]] >= k:
                 ans = min(ans, i - q.popleft())
-            while q and s[i] <= s[q[-1]]:
+            while q and s[q[-1]] >= v:
                 q.pop()
             q.append(i)
-        return -1 if ans == float('inf') else ans
+        return -1 if ans == inf else ans
 ```
 
 ### **Java**
@@ -60,18 +60,17 @@ class Solution {
             s[i + 1] = s[i] + nums[i];
         }
         Deque<Integer> q = new ArrayDeque<>();
-        q.offer(0);
-        int ans = Integer.MAX_VALUE;
-        for (int i = 1; i <= n; ++i) {
+        int ans = n + 1;
+        for (int i = 0; i <= n; ++i) {
             while (!q.isEmpty() && s[i] - s[q.peek()] >= k) {
                 ans = Math.min(ans, i - q.poll());
             }
-            while (!q.isEmpty() && s[i] <= s[q.peekLast()]) {
+            while (!q.isEmpty() && s[q.peekLast()] >= s[i]) {
                 q.pollLast();
             }
             q.offer(i);
         }
-        return ans == Integer.MAX_VALUE ? -1 : ans;
+        return ans > n ? -1 : ans;
     }
 }
 ```
@@ -83,21 +82,19 @@ class Solution {
 public:
     int shortestSubarray(vector<int>& nums, int k) {
         int n = nums.size();
-        vector<long long> s(n + 1);
+        vector<long> s(n + 1);
         for (int i = 0; i < n; ++i) s[i + 1] = s[i] + nums[i];
-        deque<int> q{{0}};
-        int ans = INT_MAX;
-        for (int i = 1; i <= n; ++i)
-        {
-            while (!q.empty() && s[i] - s[q.front()] >= k)
-            {
+        deque<int> q;
+        int ans = n + 1;
+        for (int i = 0; i <= n; ++i) {
+            while (!q.empty() && s[i] - s[q.front()] >= k) {
                 ans = min(ans, i - q.front());
                 q.pop_front();
             }
-            while (!q.empty() && s[i] <= s[q.back()]) q.pop_back();
+            while (!q.empty() && s[q.back()] >= s[i]) q.pop_back();
             q.push_back(i);
         }
-        return ans == INT_MAX ? -1 : ans;
+        return ans > n ? -1 : ans;
     }
 };
 ```
@@ -108,22 +105,22 @@ public:
 func shortestSubarray(nums []int, k int) int {
 	n := len(nums)
 	s := make([]int, n+1)
-	for i, v := range nums {
-		s[i+1] = s[i] + v
+	for i, x := range nums {
+		s[i+1] = s[i] + x
 	}
-	q := []int{0}
-	ans := math.MaxInt32
-	for i := 1; i <= n; i++ {
-		for len(q) > 0 && s[i]-s[q[0]] >= k {
+	q := []int{}
+	ans := n + 1
+	for i, v := range s {
+		for len(q) > 0 && v-s[q[0]] >= k {
 			ans = min(ans, i-q[0])
 			q = q[1:]
 		}
-		for len(q) > 0 && s[i] <= s[q[len(q)-1]] {
+		for len(q) > 0 && s[q[len(q)-1]] >= v {
 			q = q[:len(q)-1]
 		}
 		q = append(q, i)
 	}
-	if ans == math.MaxInt32 {
+	if ans > n {
 		return -1
 	}
 	return ans

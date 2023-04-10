@@ -9,7 +9,7 @@
 <p>The test cases are generated such that the output values fit in a 32-bit integer and the number of different results does not exceed <code>10<sup>4</sup></code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> expression = &quot;2-1-1&quot;
@@ -19,7 +19,7 @@
 (2-(1-1)) = 2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> expression = &quot;2*3-4*5&quot;
@@ -57,7 +57,7 @@ class Solution:
             ans = []
             for i, c in enumerate(exp):
                 if c in '-+*':
-                    left, right = dfs(exp[:i]), dfs(exp[i + 1:])
+                    left, right = dfs(exp[:i]), dfs(exp[i + 1 :])
                     for a in left:
                         for b in right:
                             if c == '-':
@@ -128,20 +128,19 @@ public:
         if (exp.size() < 3) return {stoi(exp)};
         vector<int> ans;
         int n = exp.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             char c = exp[i];
-            if (c == '-' || c == '+' || c == '*')
-            {
+            if (c == '-' || c == '+' || c == '*') {
                 vector<int> left = dfs(exp.substr(0, i));
                 vector<int> right = dfs(exp.substr(i + 1, n - i - 1));
-                for (int& a : left)
-                {
-                    for (int& b : right)
-                    {
-                        if (c == '-') ans.push_back(a - b);
-                        else if (c == '+') ans.push_back(a + b);
-                        else ans.push_back(a * b);
+                for (int& a : left) {
+                    for (int& b : right) {
+                        if (c == '-')
+                            ans.push_back(a - b);
+                        else if (c == '+')
+                            ans.push_back(a + b);
+                        else
+                            ans.push_back(a * b);
                     }
                 }
             }

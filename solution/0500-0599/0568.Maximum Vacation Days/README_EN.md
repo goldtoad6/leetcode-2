@@ -21,7 +21,7 @@
 <p>Given the two matrices <code>flights</code> and <code>days</code>, return <em>the maximum vacation days you could take during </em><code>k</code><em> weeks</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> flights = [[0,1,1],[1,0,1],[1,1,0]], days = [[1,3,1],[6,0,3],[3,3,3]]
@@ -35,7 +35,7 @@ One of the best strategies is:
 Ans = 6 + 3 + 3 = 12.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> flights = [[0,0,0],[0,0,0],[0,0,0]], days = [[1,1,1],[7,7,7],[7,7,7]]
@@ -47,7 +47,7 @@ So the maximum number of vacation days is 3.
 Ans = 1 + 1 + 1 = 3.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> flights = [[0,1,1],[1,0,1],[1,1,0]], days = [[7,0,0],[0,7,0],[0,0,7]]
@@ -80,13 +80,122 @@ Ans = 7 + 7 + 7 = 21
 ### **Python3**
 
 ```python
-
+class Solution:
+    def maxVacationDays(self, flights: List[List[int]], days: List[List[int]]) -> int:
+        n = len(flights)
+        K = len(days[0])
+        f = [[-inf] * n for _ in range(K + 1)]
+        f[0][0] = 0
+        for k in range(1, K + 1):
+            for j in range(n):
+                f[k][j] = f[k - 1][j]
+                for i in range(n):
+                    if flights[i][j]:
+                        f[k][j] = max(f[k][j], f[k - 1][i])
+                f[k][j] += days[j][k - 1]
+        return max(f[-1][j] for j in range(n))
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int maxVacationDays(int[][] flights, int[][] days) {
+        int n = flights.length;
+        int K = days[0].length;
+        final int inf = 1 << 30;
+        int[][] f = new int[K + 1][n];
+        for (var g : f) {
+            Arrays.fill(g, -inf);
+        }
+        f[0][0] = 0;
+        for (int k = 1; k <= K; ++k) {
+            for (int j = 0; j < n; ++j) {
+                f[k][j] = f[k - 1][j];
+                for (int i = 0; i < n; ++i) {
+                    if (flights[i][j] == 1) {
+                        f[k][j] = Math.max(f[k][j], f[k - 1][i]);
+                    }
+                }
+                f[k][j] += days[j][k - 1];
+            }
+        }
+        int ans = 0;
+        for (int j = 0; j < n; ++j) {
+            ans = Math.max(ans, f[K][j]);
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int maxVacationDays(vector<vector<int>>& flights, vector<vector<int>>& days) {
+        int n = flights.size();
+        int K = days[0].size();
+        int f[K + 1][n];
+        memset(f, -0x3f, sizeof(f));
+        f[0][0] = 0;
+        for (int k = 1; k <= K; ++k) {
+            for (int j = 0; j < n; ++j) {
+                f[k][j] = f[k - 1][j];
+                for (int i = 0; i < n; ++i) {
+                    if (flights[i][j] == 1) {
+                        f[k][j] = max(f[k][j], f[k - 1][i]);
+                    }
+                }
+                f[k][j] += days[j][k - 1];
+            }
+        }
+        int ans = 0;
+        for (int j = 0; j < n; ++j) {
+            ans = max(ans, f[K][j]);
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func maxVacationDays(flights [][]int, days [][]int) (ans int) {
+	n, K := len(flights), len(days[0])
+	f := make([][]int, K+1)
+	for i := range f {
+		f[i] = make([]int, n)
+		for j := range f[i] {
+			f[i][j] = -(1 << 30)
+		}
+	}
+	f[0][0] = 0
+	for k := 1; k <= K; k++ {
+		for j := 0; j < n; j++ {
+			f[k][j] = f[k-1][j]
+			for i := 0; i < n; i++ {
+				if flights[i][j] == 1 {
+					f[k][j] = max(f[k][j], f[k-1][i])
+				}
+			}
+			f[k][j] += days[j][k-1]
+		}
+	}
+	for j := 0; j < n; j++ {
+		ans = max(ans, f[K][j])
+	}
+	return
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

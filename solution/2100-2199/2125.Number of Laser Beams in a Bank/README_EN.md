@@ -18,7 +18,7 @@
 <p>Return <em>the total number of laser beams in the bank</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2125.Number%20of%20Laser%20Beams%20in%20a%20Bank/images/laser1.jpg" style="width: 400px; height: 368px;" />
 <pre>
 <strong>Input:</strong> bank = [&quot;011001&quot;,&quot;000000&quot;,&quot;010100&quot;,&quot;001000&quot;]
@@ -36,7 +36,7 @@ Note that there is no beam between any device on the 0<sup>th</sup> row with any
 This is because the 2<sup>nd</sup> row contains security devices, which breaks the second condition.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2125.Number%20of%20Laser%20Beams%20in%20a%20Bank/images/laser2.jpg" style="width: 244px; height: 325px;" />
 <pre>
 <strong>Input:</strong> bank = [&quot;000&quot;,&quot;111&quot;,&quot;000&quot;]
@@ -103,14 +103,12 @@ public:
     int numberOfBeams(vector<string>& bank) {
         int ans = 0;
         int last = 0;
-        for (auto& b : bank)
-        {
+        for (auto& b : bank) {
             int t = 0;
             for (char& c : b)
                 if (c == '1')
                     ++t;
-            if (t)
-            {
+            if (t) {
                 ans += last * t;
                 last = t;
             }
@@ -139,7 +137,69 @@ func numberOfBeams(bank []string) int {
 ### **TypeScript**
 
 ```ts
+function numberOfBeams(bank: string[]): number {
+    let last = 0;
+    let ans = 0;
+    for (const r of bank) {
+        let t = 0;
+        for (const v of r) {
+            if (v === '1') {
+                t++;
+            }
+        }
+        if (t !== 0) {
+            ans += last * t;
+            last = t;
+        }
+    }
+    return ans;
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn number_of_beams(bank: Vec<String>) -> i32 {
+        let mut last = 0;
+        let mut ans = 0;
+        for r in bank.iter() {
+            let mut t = 0;
+            for &v in r.as_bytes() {
+                if v == b'1' {
+                    t += 1;
+                }
+            }
+            if t != 0 {
+                ans += last * t;
+                last = t;
+            }
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+int numberOfBeams(char **bank, int bankSize) {
+    int last = 0;
+    int ans = 0;
+    for (int i = 0; i < bankSize; i++) {
+        int t = 0;
+        for (int j = 0; bank[i][j]; j++) {
+            if (bank[i][j] == '1') {
+                t++;
+            }
+        }
+        if (t != 0) {
+            ans += last * t;
+            last = t;
+        }
+    }
+    return ans;
+}
 ```
 
 ### **...**

@@ -13,7 +13,7 @@
 <p><strong>Note:</strong> You cannot rotate an envelope.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> envelopes = [[5,4],[6,4],[6,7],[2,3]]
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> The maximum number of envelopes you can Russian doll is <code>3</code> ([2,3] =&gt; [5,4] =&gt; [6,7]).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> envelopes = [[1,1],[1,1],[1,1]]
@@ -64,9 +64,7 @@ class Solution:
 ```java
 class Solution {
     public int maxEnvelopes(int[][] envelopes) {
-        Arrays.sort(envelopes, (a, b) -> {
-            return a[0] == b[0] ? b[1] - a[1] : a[0] - b[0];
-        });
+        Arrays.sort(envelopes, (a, b) -> { return a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]; });
         int n = envelopes.length;
         int[] d = new int[n + 1];
         d[1] = envelopes[0][1];
@@ -104,13 +102,12 @@ public:
             return e1[0] < e2[0] || (e1[0] == e2[0] && e1[1] > e2[1]);
         });
         int n = envelopes.size();
-        vector<int> d{envelopes[0][1]};
-        for (int i = 1; i < n; ++i)
-        {
+        vector<int> d {envelopes[0][1]};
+        for (int i = 1; i < n; ++i) {
             int x = envelopes[i][1];
-            if (x > d[d.size() - 1]) d.push_back(x);
-            else
-            {
+            if (x > d[d.size() - 1])
+                d.push_back(x);
+            else {
                 int idx = lower_bound(d.begin(), d.end(), x) - d.begin();
                 if (idx == d.size()) idx = 0;
                 d[idx] = x;

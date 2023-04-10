@@ -9,7 +9,7 @@
 <p>Each element is either an integer or a list whose elements may also be integers or other lists.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;324&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> You should return a NestedInteger object which contains a single integer 324.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;[123,[456,[789]]]&quot;
@@ -209,15 +209,14 @@ public:
         if (s.size() <= 2) return NestedInteger();
         NestedInteger ans;
         int depth = 0;
-        for (int i = 1, j = 1; i < s.size(); ++i)
-        {
-            if (depth == 0 && (s[i] == ',' || i == s.size() - 1))
-            {
+        for (int i = 1, j = 1; i < s.size(); ++i) {
+            if (depth == 0 && (s[i] == ',' || i == s.size() - 1)) {
                 ans.add(deserialize(s.substr(j, i - j)));
                 j = i + 1;
-            }
-            else if (s[i] == '[') ++depth;
-            else if (s[i] == ']') --depth;
+            } else if (s[i] == '[')
+                ++depth;
+            else if (s[i] == ']')
+                --depth;
         }
         return ans;
     }

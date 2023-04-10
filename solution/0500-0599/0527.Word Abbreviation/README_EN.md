@@ -24,10 +24,10 @@
 </ol>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> words = ["like","god","internal","me","internet","interval","intension","face","intrusion"]
 <strong>Output:</strong> ["l2e","god","internal","me","i6t","interval","inte4n","f2e","intr4n"]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> words = ["aa","aaa"]
 <strong>Output:</strong> ["aa","aaa"]
 </pre>
@@ -92,7 +92,7 @@ class Trie:
     def __init__(self):
         self.children = [None] * 26
         self.v = Counter()
-    
+
     def insert(self, w):
         node = self
         for c in w:
@@ -101,7 +101,7 @@ class Trie:
                 node.children[idx] = Trie()
             node = node.children[idx]
             node.v[w[-1]] += 1
-    
+
     def search(self, w):
         node = self
         res = []

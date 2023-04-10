@@ -13,7 +13,7 @@
 <p><strong>Note:</strong> Numbers in the additive sequence <strong>cannot</strong> have leading zeros, so sequence <code>1, 2, 03</code> or <code>1, 02, 3</code> is invalid.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> &quot;112358&quot;
@@ -23,7 +23,7 @@ The digits can form an additive sequence: 1, 1, 2, 3, 5, 8.
 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> &quot;199100199&quot;
@@ -71,7 +71,7 @@ class Solution:
                     break
                 if j - i > 1 and num[i] == '0':
                     continue
-                if dfs(int(num[:i]), int(num[i: j]), num[j:]):
+                if dfs(int(num[:i]), int(num[i:j]), num[j:]):
                     return True
         return False
 ```
@@ -126,10 +126,8 @@ class Solution {
 public:
     bool isAdditiveNumber(string num) {
         int n = num.size();
-        for (int i = 1; i < min(n - 1, 19); ++i)
-        {
-            for (int j = i + 1; j < min(n, i + 19); ++j)
-            {
+        for (int i = 1; i < min(n - 1, 19); ++i) {
+            for (int j = i + 1; j < min(n, i + 19); ++j) {
                 if (i > 1 && num[0] == '0') break;
                 if (j - i > 1 && num[i] == '0') continue;
                 auto a = stoll(num.substr(0, i));
@@ -143,7 +141,7 @@ public:
     bool dfs(long long a, long long b, string num) {
         if (num == "") return true;
         if (a + b > 0 && num[0] == '0') return false;
-        for (int i = 1; i < min((int) num.size() + 1, 19); ++i)
+        for (int i = 1; i < min((int)num.size() + 1, 19); ++i)
             if (a + b == stoll(num.substr(0, i)))
                 if (dfs(b, a + b, num.substr(i, num.size() - i)))
                     return true;

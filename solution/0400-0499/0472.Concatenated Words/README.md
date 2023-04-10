@@ -8,7 +8,7 @@
 
 <p>给你一个 <strong>不含重复 </strong>单词的字符串数组 <code>words</code> ，请你找出并返回 <code>words</code> 中的所有 <strong>连接词</strong> 。</p>
 
-<p><strong>连接词</strong> 定义为：一个完全由给定数组中的至少两个较短单词组成的字符串。</p>
+<p><strong>连接词</strong> 定义为：一个完全由给定数组中的至少两个较短单词（不一定是不同的两个单词）组成的字符串。</p>
 
 <p>&nbsp;</p>
 
@@ -34,9 +34,10 @@
 
 <ul>
 	<li><code>1 &lt;= words.length &lt;= 10<sup>4</sup></code></li>
-	<li><code>0 &lt;= words[i].length &lt;= 30</code></li>
-	<li><code>words[i]</code> 仅由小写字母组成</li>
-	<li><code>0 &lt;= sum(words[i].length) &lt;= 10<sup>5</sup></code></li>
+	<li><code>1 &lt;= words[i].length &lt;= 30</code></li>
+	<li><code>words[i]</code>&nbsp;仅由小写英文字母组成。</li>
+	<li>&nbsp;<code>words</code>&nbsp;中的所有字符串都是 <strong>唯一</strong> 的。</li>
+	<li><code>1 &lt;= sum(words[i].length) &lt;= 10<sup>5</sup></code></li>
 </ul>
 
 ## 解法
@@ -93,7 +94,7 @@ class Solution:
                 if node.children[idx] is None:
                     return False
                 node = node.children[idx]
-                if node.is_end and dfs(w[i + 1:]):
+                if node.is_end and dfs(w[i + 1 :]):
                     return True
             return False
 
@@ -173,12 +174,13 @@ class Trie {
 public:
     vector<Trie*> children;
     bool isEnd;
-    Trie(): children(26), isEnd(false) {}
+    Trie()
+        : children(26)
+        , isEnd(false) { }
 
     void insert(string w) {
         Trie* node = this;
-        for (char c : w)
-        {
+        for (char c : w) {
             c -= 'a';
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
@@ -192,14 +194,15 @@ public:
     Trie* trie = new Trie();
 
     vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
-        sort(words.begin(), words.end(), [&](const string & a, const string & b){
-            return a.size() < b.size(); 
+        sort(words.begin(), words.end(), [&](const string& a, const string& b) {
+            return a.size() < b.size();
         });
         vector<string> ans;
-        for (auto& w : words)
-        {
-            if (dfs(w)) ans.push_back(w);
-            else trie->insert(w);
+        for (auto& w : words) {
+            if (dfs(w))
+                ans.push_back(w);
+            else
+                trie->insert(w);
         }
         return ans;
     }
@@ -207,8 +210,7 @@ public:
     bool dfs(string w) {
         if (w == "") return true;
         Trie* node = trie;
-        for (int i = 0; i < w.size(); ++i)
-        {
+        for (int i = 0; i < w.size(); ++i) {
             int idx = w[i] - 'a';
             if (!node->children[idx]) return false;
             node = node->children[idx];

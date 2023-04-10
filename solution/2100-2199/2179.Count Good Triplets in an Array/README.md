@@ -45,6 +45,8 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：树状数组或线段树**
+
 对于本题，我们先用 pos 记录每个数在 nums2 中的位置，然后依次对 nums1 中的每个元素进行处理。
 
 考虑**以当前数字作为三元组中间数字**的好三元组的数目。第一个数字需要是之前已经遍历过的，并且在 nums2 中的位置比当前数字更靠前的；第三个数字需要是当前还没有遍历过的，并且在 nums2 中的位置比当前数字更靠后的。
@@ -66,7 +68,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 **数据结构 2：线段树**
 
@@ -342,11 +344,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -354,8 +357,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -375,8 +377,7 @@ public:
         for (int i = 0; i < n; ++i) pos[nums2[i]] = i + 1;
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         long long ans = 0;
-        for (int& num : nums1)
-        {
+        for (int& num : nums1) {
             int p = pos[num];
             int left = tree->query(p);
             int right = n - p - (tree->query(n) - tree->query(p));

@@ -13,7 +13,7 @@
 <p><strong>Note</strong> that the input will be generated such that <code>s</code> can always be converted to a palindrome.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aabb&quot;
@@ -25,7 +25,7 @@ We can obtain two palindromes from s, &quot;abba&quot; and &quot;baab&quot;.
 Thus, the minimum number of moves needed to make s a palindrome is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;letelt&quot;
@@ -115,16 +115,12 @@ public:
     int minMovesToMakePalindrome(string s) {
         int n = s.size();
         int ans = 0;
-        for (int i = 0, j = n - 1; i < j; ++i)
-        {
+        for (int i = 0, j = n - 1; i < j; ++i) {
             bool even = false;
-            for (int k = j; k != i; --k)
-            {
-                if (s[i] == s[k])
-                {
+            for (int k = j; k != i; --k) {
+                if (s[i] == s[k]) {
                     even = true;
-                    for (; k < j; ++k)
-                    {
+                    for (; k < j; ++k) {
                         swap(s[k], s[k + 1]);
                         ++ans;
                     }

@@ -21,7 +21,7 @@
 <p><strong>Note:</strong> The input is generated such that no two trees have the same height, and there is at least one tree needs to be cut off.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0675.Cut%20Off%20Trees%20for%20Golf%20Event/images/trees1.jpg" style="width: 242px; height: 242px;" />
 <pre>
 <strong>Input:</strong> forest = [[1,2,3],[0,0,4],[7,6,5]]
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> Following the path above allows you to cut off the trees from shortest to tallest in 6 steps.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0675.Cut%20Off%20Trees%20for%20Golf%20Event/images/trees2.jpg" style="width: 242px; height: 242px;" />
 <pre>
 <strong>Input:</strong> forest = [[1,2,3],[0,0,0],[7,6,5]]
@@ -37,7 +37,7 @@
 <strong>Explanation:</strong> The trees in the bottom row cannot be accessed as the middle row is blocked.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> forest = [[2,3,4],[0,0,5],[8,7,6]]
@@ -86,7 +86,9 @@ class Solution:
             return -1
 
         m, n = len(forest), len(forest[0])
-        trees = [(forest[i][j], i, j) for i in range(m) for j in range(n) if forest[i][j] > 1]
+        trees = [
+            (forest[i][j], i, j) for i in range(m) for j in range(n) if forest[i][j] > 1
+        ]
         trees.sort()
         i = j = 0
         ans = 0
@@ -116,7 +118,7 @@ class Solution {
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (forest.get(i).get(j) > 1) {
-                    trees.add(new int[]{forest.get(i).get(j), i * n + j});
+                    trees.add(new int[] {forest.get(i).get(j), i * n + j});
                 }
             }
         }
@@ -137,7 +139,7 @@ class Solution {
 
     private int bfs(int start, int end) {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        q.offer(new int[]{f(start, end), start});
+        q.offer(new int[] {f(start, end), start});
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
         int[] dirs = {-1, 0, 1, 0, -1};
@@ -152,7 +154,7 @@ class Solution {
                 if (x >= 0 && x < m && y >= 0 && y < n && forest.get(x).get(y) > 0) {
                     if (dist[x * n + y] > dist[state] + 1) {
                         dist[x * n + y] = dist[state] + 1;
-                        q.offer(new int[]{dist[x * n + y] + f(x * n + y, end), x * n + y});
+                        q.offer(new int[] {dist[x * n + y] + f(x * n + y, end), x * n + y});
                     }
                 }
             }
@@ -191,8 +193,7 @@ public:
         sort(trees.begin(), trees.end());
         int ans = 0;
         int start = 0;
-        for (auto& tree : trees)
-        {
+        for (auto& tree : trees) {
             int end = tree.second;
             int t = bfs(start, end, forest);
             if (t == -1) return -1;
@@ -208,16 +209,13 @@ public:
         fill(dist.begin(), dist.end(), INT_MAX);
         dist[start] = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int state = q.top().second;
             q.pop();
             if (state == end) return dist[state];
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = state / n + dirs[k], y = state % n + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && forest[x][y] && dist[x * n + y] > dist[state] + 1)
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && forest[x][y] && dist[x * n + y] > dist[state] + 1) {
                     dist[x * n + y] = dist[state] + 1;
                     q.push({dist[x * n + y] + f(x * n + y, end), x * n + y});
                 }

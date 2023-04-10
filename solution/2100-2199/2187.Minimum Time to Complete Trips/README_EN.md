@@ -11,7 +11,7 @@
 <p>You are also given an integer <code>totalTrips</code>, which denotes the number of trips all buses should make <strong>in total</strong>. Return <em>the <strong>minimum time</strong> required for all buses to complete <strong>at least</strong> </em><code>totalTrips</code><em> trips</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> time = [1,2,3], totalTrips = 5
@@ -26,7 +26,7 @@
 So the minimum time needed for all buses to complete at least 5 trips is 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> time = [2], totalTrips = 1
@@ -54,7 +54,9 @@ So the minimum time needed to complete 1 trip is 2.
 class Solution:
     def minimumTime(self, time: List[int], totalTrips: int) -> int:
         mx = min(time) * totalTrips
-        return bisect_left(range(mx), totalTrips, key=lambda x: sum(x // v for v in time))
+        return bisect_left(
+            range(mx), totalTrips, key=lambda x: sum(x // v for v in time)
+        )
 ```
 
 ### **Java**
@@ -91,14 +93,15 @@ class Solution {
 public:
     long long minimumTime(vector<int>& time, int totalTrips) {
         int mi = *min_element(time.begin(), time.end());
-        long long left = 1, right = (long long) mi * totalTrips;
-        while (left < right)
-        {
+        long long left = 1, right = (long long)mi * totalTrips;
+        while (left < right) {
             long long cnt = 0;
             long long mid = (left + right) >> 1;
             for (int v : time) cnt += mid / v;
-            if (cnt >= totalTrips) right = mid;
-            else left = mid + 1;
+            if (cnt >= totalTrips)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }

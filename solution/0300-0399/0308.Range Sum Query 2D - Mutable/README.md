@@ -6,18 +6,18 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给你一个二维矩阵 <code>matrix</code> ，你需要处理下面两种类型的若干次查询：</p>
+<p>给你一个二维矩阵 <code>matrix</code> ，处理以下类型的多个查询:</p>
 
 <ol>
-	<li><strong>更新：</strong>更新 <code>matrix</code> 中某个单元的值。</li>
-	<li><strong>求和：</strong>计算矩阵&nbsp;<code>matrix</code> 中某一矩形区域元素的 <strong>和</strong> ，该区域由 <strong>左上角</strong> <code>(row1, col1)</code> 和 <strong>右下角</strong> <code>(row2, col2)</code> 界定。</li>
+	<li><strong>更新</strong> <code>matrix</code> 中单元格的值。</li>
+	<li>计算由&nbsp;<strong>左上角</strong> <code>(row1, col1)</code> 和&nbsp;<strong>右下角</strong> <code>(row2, col2)</code> 定义的 <code>matrix</code>&nbsp;内矩阵元素的&nbsp;<strong>和</strong>。</li>
 </ol>
 
 <p>实现 <code>NumMatrix</code> 类：</p>
 
 <ul>
 	<li><code>NumMatrix(int[][] matrix)</code> 用整数矩阵&nbsp;<code>matrix</code> 初始化对象。</li>
-	<li><code>void update(int row, int col, int val)</code> 更新 <code>matrix[row][col]</code> 的值到 <code>val</code> 。</li>
+	<li><code>void update(int row, int col, int val)</code> <strong>更新</strong> <code>matrix[row][col]</code> 的值到 <code>val</code> 。</li>
 	<li><code>int sumRegion(int row1, int col1, int row2, int col2)</code> 返回矩阵&nbsp;<code>matrix</code> 中指定矩形区域元素的 <strong>和</strong> ，该区域由 <strong>左上角</strong> <code>(row1, col1)</code> 和 <strong>右下角</strong> <code>(row2, col2)</code> 界定。</li>
 </ul>
 
@@ -68,7 +68,7 @@ numMatrix.sumRegion(2, 1, 4, 3); // 返回 10 (即，右侧红色矩形的和)
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 对于本题，可以构建二维树状数组。
 
@@ -113,7 +113,6 @@ class BinaryIndexedTree:
 
 
 class NumMatrix:
-
     def __init__(self, matrix: List[List[int]]):
         self.trees = []
         n = len(matrix[0])
@@ -129,7 +128,10 @@ class NumMatrix:
         tree.update(col + 1, val - prev)
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        return sum(tree.query(col2 + 1) - tree.query(col1) for tree in self.trees[row1: row2 + 1])
+        return sum(
+            tree.query(col2 + 1) - tree.query(col1)
+            for tree in self.trees[row1 : row2 + 1]
+        )
 
 
 # Your NumMatrix object will be instantiated and called as such:
@@ -400,11 +402,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -412,8 +415,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -448,8 +450,7 @@ public:
 
     int sumRegion(int row1, int col1, int row2, int col2) {
         int s = 0;
-        for (int i = row1; i <= row2; ++i)
-        {
+        for (int i = row1; i <= row2; ++i) {
             BinaryIndexedTree* tree = trees[i];
             s += tree->query(col2 + 1) - tree->query(col1);
         }

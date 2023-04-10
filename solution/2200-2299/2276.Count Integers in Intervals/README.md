@@ -101,7 +101,6 @@ class Node:
 
 
 class CountIntervals:
-
     def __init__(self):
         self.tree = Node()
 
@@ -110,6 +109,7 @@ class CountIntervals:
 
     def count(self) -> int:
         return self.tree.tot
+
 
 # Your CountIntervals object will be instantiated and called as such:
 # obj = CountIntervals()
@@ -142,7 +142,6 @@ class SegmentTree {
     private Node root = new Node(1, (int) 1e9 + 1);
 
     public SegmentTree() {
-
     }
 
     public void modify(int l, int r, int v) {
@@ -216,7 +215,6 @@ class CountIntervals {
     private SegmentTree tree = new SegmentTree();
 
     public CountIntervals() {
-
     }
 
     public void add(int left, int right) {
@@ -234,7 +232,6 @@ class CountIntervals {
  * obj.add(left,right);
  * int param_2 = obj.count();
  */
-
 ```
 
 ### **TypeScript**

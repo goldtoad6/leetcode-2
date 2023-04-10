@@ -60,7 +60,18 @@
 
 **方法一：贪心 + 排序**
 
-每次贪心地选择其中较大的两个数进行减一操作（最多减为 0），直至所有数变为 0。
+我们可以每次贪心地选择其中较大的两个数进行减一操作（最多减为 $0$），直至所有数变为 $0$。
+
+时间复杂度 $O(S)$，空间复杂度 $O(1)$。其中 $S$ 为数组 `amount` 中所有数的和，本题中 $S \leq 300$。
+
+**方法二：贪心 + 分类讨论**
+
+我们可以将数组 `amount` 排序，设 $a$, $b$, $c$ 分别为数组 `amount` 中的三个数，有以下两种情况：
+
+-   如果 $a + b \leq c$，此时我们只需要 $c$ 次操作即可将所有数变为 $0$，因此答案为 $c$。
+-   如果 $a + b > c$，每一次操作我们都可以将其中两个数减一，最终匹配完，或者剩下最后一个数（取决于总和是偶数还是奇数），因此答案为 $\left \lfloor \frac{a + b + c + 1}{2}  \right \rfloor$。
+
+时间复杂度 $O(1)$，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
 
@@ -78,6 +89,15 @@ class Solution:
             amount[2] -= 1
             amount[1] = max(0, amount[1] - 1)
         return ans
+```
+
+```python
+class Solution:
+    def fillCups(self, amount: List[int]) -> int:
+        amount.sort()
+        if amount[0] + amount[1] <= amount[2]:
+            return amount[2]
+        return (sum(amount) + 1) // 2
 ```
 
 ### **Java**
@@ -99,6 +119,18 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public int fillCups(int[] amount) {
+        Arrays.sort(amount);
+        if (amount[0] + amount[1] <= amount[2]) {
+            return amount[2];
+        }
+        return (amount[0] + amount[1] + amount[2] + 1) / 2;
+    }
+}
+```
+
 ### **C++**
 
 ```cpp
@@ -106,14 +138,26 @@ class Solution {
 public:
     int fillCups(vector<int>& amount) {
         int ans = 0;
-        while (amount[0] + amount[1] + amount[2])
-        {
+        while (amount[0] + amount[1] + amount[2]) {
             sort(amount.begin(), amount.end());
             ++ans;
             amount[2]--;
             amount[1] = max(0, amount[1] - 1);
         }
         return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int fillCups(vector<int>& amount) {
+        sort(amount.begin(), amount.end());
+        if (amount[0] + amount[1] <= amount[2]) {
+            return amount[2];
+        }
+        return (amount[0] + amount[1] + amount[2] + 1) / 2;
     }
 };
 ```
@@ -135,16 +179,42 @@ func fillCups(amount []int) int {
 }
 ```
 
+```go
+func fillCups(amount []int) int {
+	sort.Ints(amount)
+	if amount[0]+amount[1] <= amount[2] {
+		return amount[2]
+	}
+	return (amount[0] + amount[1] + amount[2] + 1) / 2
+}
+```
+
 ### **TypeScript**
 
 ```ts
 function fillCups(amount: number[]): number {
     amount.sort((a, b) => a - b);
     let [a, b, c] = amount;
-    let diff =  (a + b) - c;
+    let diff = a + b - c;
     if (diff <= 0) return c;
-    else return Math.floor((diff + 1) / 2)  + c;
-};
+    else return Math.floor((diff + 1) / 2) + c;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn fill_cups(mut amount: Vec<i32>) -> i32 {
+        amount.sort();
+        let dif = amount[0] + amount[1] - amount[2];
+        if dif <= 0 {
+            return amount[2];
+        }
+        (dif + 1) / 2 + amount[2]
+    }
+}
+
 ```
 
 ### **...**

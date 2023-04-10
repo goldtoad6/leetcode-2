@@ -50,7 +50,7 @@
 
 **方法一：转换为最长上升子序列问题**
 
-最长上升子序列问题，动态规划的做法，时间复杂度是 O(n²)，这里可以采用贪心优化，将复杂度降至 O(nlogn)。
+最长上升子序列问题，动态规划的做法，时间复杂度是 $O(n^2)$，这里可以采用贪心优化，将复杂度降至 $O(n\log n)$。
 
 **方法二：排序 + 贪心**
 
@@ -61,7 +61,7 @@
 
 最后返回 ans 即可。
 
-时间复杂度 O(nlogn)。
+时间复杂度 $O(n\log n)$。
 
 <!-- tabs:start -->
 
@@ -177,12 +177,13 @@ function eraseOverlapIntervals(intervals: number[][]): number {
 class Solution {
 public:
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(), [](const auto &a, const auto &b) { return a[1] < b[1]; });
+        sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b) { return a[1] < b[1]; });
         int ans = 0, t = intervals[0][1];
-        for (int i = 1; i < intervals.size(); ++i)
-        {
-            if (t <= intervals[i][0]) t = intervals[i][1];
-            else ++ans;
+        for (int i = 1; i < intervals.size(); ++i) {
+            if (t <= intervals[i][0])
+                t = intervals[i][1];
+            else
+                ++ans;
         }
         return ans;
     }

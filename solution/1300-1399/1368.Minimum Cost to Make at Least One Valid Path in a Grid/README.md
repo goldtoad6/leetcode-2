@@ -127,7 +127,7 @@ class Solution {
         int m = grid.length, n = grid[0].length;
         boolean[][] vis = new boolean[m][n];
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0, 0});
+        q.offer(new int[] {0, 0, 0});
         int[][] dirs = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         while (!q.isEmpty()) {
             int[] p = q.poll();
@@ -143,9 +143,9 @@ class Solution {
                 int x = i + dirs[k][0], y = j + dirs[k][1];
                 if (x >= 0 && x < m && y >= 0 && y < n) {
                     if (grid[i][j] == k) {
-                        q.offerFirst(new int[]{x, y, d});
+                        q.offerFirst(new int[] {x, y, d});
                     } else {
-                        q.offer(new int[]{x, y, d + 1});
+                        q.offer(new int[] {x, y, d + 1});
                     }
                 }
             }
@@ -201,21 +201,20 @@ public:
         vector<vector<int>> dirs = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         deque<pair<int, int>> q;
         q.push_back({0, 0});
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop_front();
             int i = p.first / n, j = p.first % n, d = p.second;
             if (i == m - 1 && j == n - 1) return d;
             if (vis[i][j]) continue;
             vis[i][j] = true;
-            for (int k = 1; k <= 4; ++k)
-            {
+            for (int k = 1; k <= 4; ++k) {
                 int x = i + dirs[k][0], y = j + dirs[k][1];
-                if (x >= 0 && x < m && y >= 0 && y < n)
-                {
-                    if (grid[i][j] == k) q.push_front({x * n + y, d});
-                    else q.push_back({x * n + y, d + 1});
+                if (x >= 0 && x < m && y >= 0 && y < n) {
+                    if (grid[i][j] == k)
+                        q.push_front({x * n + y, d});
+                    else
+                        q.push_back({x * n + y, d + 1});
                 }
             }
         }

@@ -11,7 +11,7 @@
 <p>Return <em>the number of times the binary string is <strong>prefix-aligned</strong> during the flipping process</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> flips = [3,2,4,1,5]
@@ -25,7 +25,7 @@ After applying step 5: The string becomes &quot;11111&quot;, which is prefix-ali
 We can see that the string was prefix-aligned 2 times, so we return 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> flips = [4,1,2,3]
@@ -54,13 +54,256 @@ We can see that the string was prefix-aligned 1 time, so we return 1.
 ### **Python3**
 
 ```python
+class Solution:
+    def numTimesAllBlue(self, flips: List[int]) -> int:
+        ans = mx = 0
+        for i, v in enumerate(flips, 1):
+            mx = max(mx, v)
+            if mx == i:
+                ans += 1
+        return ans
+```
 
+```python
+class BinaryIndexedTree:
+    def __init__(self, n):
+        self.n = n
+        self.c = [0] * (n + 1)
+
+    @staticmethod
+    def lowbit(x):
+        return x & -x
+
+    def update(self, x, delta):
+        while x <= self.n:
+            self.c[x] += delta
+            x += BinaryIndexedTree.lowbit(x)
+
+    def query(self, x):
+        s = 0
+        while x > 0:
+            s += self.c[x]
+            x -= BinaryIndexedTree.lowbit(x)
+        return s
+
+
+class Solution:
+    def numTimesAllBlue(self, flips: List[int]) -> int:
+        n = len(flips)
+        tree = BinaryIndexedTree(n)
+        ans = mx = 0
+        for v in flips:
+            mx = max(mx, v)
+            tree.update(v, 1)
+            if tree.query(mx) == mx:
+                ans += 1
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int numTimesAllBlue(int[] flips) {
+        int ans = 0;
+        int mx = 0;
+        for (int i = 1; i <= flips.length; ++i) {
+            mx = Math.max(mx, flips[i - 1]);
+            if (mx == i) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+}
+```
 
+```java
+class BinaryIndexedTree {
+    private int n;
+    private int[] c;
+
+    public BinaryIndexedTree(int n) {
+        this.n = n;
+        this.c = new int[n + 1];
+    }
+
+    public static int lowbit(int x) {
+        return x & -x;
+    }
+
+    public void update(int x, int delta) {
+        while (x <= n) {
+            c[x] += delta;
+            x += lowbit(x);
+        }
+    }
+
+    public int query(int x) {
+        int s = 0;
+        while (x > 0) {
+            s += c[x];
+            x -= lowbit(x);
+        }
+        return s;
+    }
+}
+
+class Solution {
+    public int numTimesAllBlue(int[] flips) {
+        int n = flips.length;
+        BinaryIndexedTree tree = new BinaryIndexedTree(n);
+        int ans = 0;
+        int mx = 0;
+        for (int v : flips) {
+            mx = Math.max(mx, v);
+            tree.update(v, 1);
+            if (tree.query(mx) == mx) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int numTimesAllBlue(vector<int>& flips) {
+        int ans = 0, mx = 0;
+        for (int i = 1; i <= flips.size(); ++i) {
+            mx = max(mx, flips[i - 1]);
+            ans += mx == i;
+        }
+        return ans;
+    }
+};
+```
+
+```cpp
+class BinaryIndexedTree {
+public:
+    int n;
+    vector<int> c;
+
+    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+
+    void update(int x, int delta) {
+        while (x <= n)
+        {
+            c[x] += delta;
+            x += lowbit(x);
+        }
+    }
+
+    int query(int x) {
+        int s = 0;
+        while (x > 0)
+        {
+            s += c[x];
+            x -= lowbit(x);
+        }
+        return s;
+    }
+
+    int lowbit(int x) {
+        return x & -x;
+    }
+};
+
+class Solution {
+public:
+    int numTimesAllBlue(vector<int>& flips) {
+        int n = flips.size();
+        BinaryIndexedTree* tree = new BinaryIndexedTree(n);
+        int ans = 0, mx = 0;
+        for (int v : flips)
+        {
+            mx = max(mx, v);
+            tree->update(v, 1);
+            ans += tree->query(mx) == mx;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func numTimesAllBlue(flips []int) int {
+	ans, mx := 0, 0
+	for i := 1; i <= len(flips); i++ {
+		mx = max(mx, flips[i-1])
+		if mx == i {
+			ans++
+		}
+	}
+	return ans
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+```
+
+```go
+type BinaryIndexedTree struct {
+	n int
+	c []int
+}
+
+func newBinaryIndexedTree(n int) *BinaryIndexedTree {
+	c := make([]int, n+1)
+	return &BinaryIndexedTree{n, c}
+}
+
+func (this *BinaryIndexedTree) lowbit(x int) int {
+	return x & -x
+}
+
+func (this *BinaryIndexedTree) update(x, delta int) {
+	for x <= this.n {
+		this.c[x] += delta
+		x += this.lowbit(x)
+	}
+}
+
+func (this *BinaryIndexedTree) query(x int) int {
+	s := 0
+	for x > 0 {
+		s += this.c[x]
+		x -= this.lowbit(x)
+	}
+	return s
+}
+
+func numTimesAllBlue(flips []int) int {
+	n := len(flips)
+	tree := newBinaryIndexedTree(n)
+	ans, mx := 0, 0
+	for _, v := range flips {
+		mx = max(mx, v)
+		tree.update(v, 1)
+		if tree.query(mx) == mx {
+			ans++
+		}
+	}
+	return ans
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **TypeScript**

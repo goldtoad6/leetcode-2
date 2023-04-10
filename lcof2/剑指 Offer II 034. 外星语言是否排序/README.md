@@ -68,7 +68,10 @@ class Solution:
             l1, l2 = len(w1), len(w2)
             flag = False
             for j in range(max(l1, l2)):
-                i1, i2 = -1 if j >= l1 else index[w1[j]], -1 if j >= l2 else index[w2[j]]
+                i1, i2 = (
+                    -1 if j >= l1 else index[w1[j]],
+                    -1 if j >= l2 else index[w2[j]],
+                )
                 if i1 > i2:
                     # 说明不是按字典序排序，直接返回False
                     return False
@@ -140,17 +143,15 @@ function isAlienSorted(words: string[], order: string): boolean {
 ```cpp
 class Solution {
 public:
-    bool isAlienSorted(vector<string> &words, string order) {
+    bool isAlienSorted(vector<string>& words, string order) {
         vector<int> index(26);
         for (int i = 0; i < index.size(); ++i)
             index[order[i] - 'a'] = i;
-        for (int i = 0; i < words.size() - 1; ++i)
-        {
+        for (int i = 0; i < words.size() - 1; ++i) {
             string w1 = words[i];
             string w2 = words[i + 1];
             int l1 = w1.size(), l2 = w2.size();
-            for (int j = 0; j < max(l1, l2); ++j)
-            {
+            for (int j = 0; j < max(l1, l2); ++j) {
                 int i1 = j >= l1 ? -1 : index[w1[j] - 'a'];
                 int i2 = j >= l2 ? -1 : index[w2[j] - 'a'];
                 if (i1 > i2)

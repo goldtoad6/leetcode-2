@@ -82,8 +82,8 @@ class Node:
         self.prev = None
         self.next = None
 
-class LRUCache:
 
+class LRUCache:
     def __init__(self, capacity: int):
         self.cache = {}
         self.head = Node()
@@ -153,7 +153,6 @@ class LRUCache {
         Node prev;
         Node next;
         Node() {
-
         }
         Node(int key, int value) {
             this.key = key;

@@ -7,7 +7,7 @@
 <p>Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5
@@ -15,14 +15,14 @@
 <strong>Explanation:</strong> The binary representation of 5 is: 101
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 7
 <strong>Output:</strong> false
 <strong>Explanation:</strong> The binary representation of 7 is: 111.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 11
@@ -97,8 +97,7 @@ class Solution {
 public:
     bool hasAlternatingBits(int n) {
         int prev = -1;
-        while (n)
-        {
+        while (n) {
             int curr = n & 1;
             if (prev == curr) return false;
             prev = curr;

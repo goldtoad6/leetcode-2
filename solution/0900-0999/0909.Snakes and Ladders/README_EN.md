@@ -16,7 +16,6 @@
     </li>
     <li>If <code>next</code> has a snake or ladder, you <strong>must</strong> move to the destination of that snake or ladder. Otherwise, you move to <code>next</code>.</li>
     <li>The game ends when you reach the square <code>n<sup>2</sup></code>.</li>
-
 </ul>
 
 <p>A board square on row <code>r</code> and column <code>c</code> has a snake or ladder if <code>board[r][c] != -1</code>. The destination of that snake or ladder is <code>board[r][c]</code>. Squares <code>1</code> and <code>n<sup>2</sup></code> do not have a snake or ladder.</p>
@@ -30,7 +29,7 @@
 <p>Return <em>the least number of moves required to reach the square </em><code>n<sup>2</sup></code><em>. If it is not possible to reach the square, return </em><code>-1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0900-0999/0909.Snakes%20and%20Ladders/images/snakes.png" style="width: 500px; height: 394px;" />
 <pre>
 <strong>Input:</strong> board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]
@@ -44,7 +43,7 @@ You then decide to move to square 36, ending the game.
 This is the lowest possible number of moves to reach the last square, so return 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> board = [[-1,-1],[-1,3]]
@@ -57,7 +56,7 @@ This is the lowest possible number of moves to reach the last square, so return 
 <ul>
 	<li><code>n == board.length == board[i].length</code></li>
 	<li><code>2 &lt;= n &lt;= 20</code></li>
-	<li><code>grid[i][j]</code> is either <code>-1</code> or in the range <code>[1, n<sup>2</sup>]</code>.</li>
+	<li><code>board[i][j]</code> is either <code>-1</code> or in the range <code>[1, n<sup>2</sup>]</code>.</li>
 	<li>The squares labeled <code>1</code> and <code>n<sup>2</sup></code> do not have any ladders or snakes.</li>
 </ul>
 
@@ -140,7 +139,7 @@ class Solution {
         if (i % 2 == 1) {
             j = n - 1 - j;
         }
-        return new int[]{n - 1 - i, j};
+        return new int[] {n - 1 - i, j};
     }
 }
 ```
@@ -154,25 +153,21 @@ public:
 
     int snakesAndLadders(vector<vector<int>>& board) {
         n = board.size();
-        queue<int> q{{1}};
+        queue<int> q {{1}};
         vector<bool> vis(n * n + 1);
         vis[1] = true;
         int ans = 0;
-        while (!q.empty())
-        {
-            for (int t = q.size(); t; --t)
-            {
+        while (!q.empty()) {
+            for (int t = q.size(); t; --t) {
                 int curr = q.front();
                 if (curr == n * n) return ans;
                 q.pop();
-                for (int k = curr + 1; k <= min(curr + 6, n * n); ++k)
-                {
+                for (int k = curr + 1; k <= min(curr + 6, n * n); ++k) {
                     auto p = get(k);
                     int next = k;
                     int i = p[0], j = p[1];
                     if (board[i][j] != -1) next = board[i][j];
-                    if (!vis[next])
-                    {
+                    if (!vis[next]) {
                         vis[next] = true;
                         q.push(next);
                     }

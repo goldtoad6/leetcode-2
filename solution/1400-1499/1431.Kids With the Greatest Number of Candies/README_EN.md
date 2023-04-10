@@ -11,7 +11,7 @@
 <p>Note that <strong>multiple</strong> kids can have the <strong>greatest</strong> number of candies.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> candies = [2,3,5,1,3], extraCandies = 3
@@ -24,7 +24,7 @@
 - Kid 5, they will have 3 + 3 = 6 candies, which is the greatest among the kids.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> candies = [4,2,1,1,2], extraCandies = 1
@@ -33,7 +33,7 @@
 Kid 1 will always have the greatest number of candies, even if a different kid is given the extra candy.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> candies = [12,1,12], extraCandies = 10
@@ -117,6 +117,47 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### **TypeScript**
+
+```ts
+function kidsWithCandies(candies: number[], extraCandies: number): boolean[] {
+    const max = candies.reduce((r, v) => Math.max(r, v));
+    return candies.map(v => v + extraCandies >= max);
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+        let max = *candies.iter().max().unwrap();
+        candies.iter().map(|v| v + extra_candies >= max).collect()
+    }
+}
+```
+
+### **C**
+
+```c
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+bool *kidsWithCandies(int *candies, int candiesSize, int extraCandies, int *returnSize) {
+    int mx = 0;
+    for (int i = 0; i < candiesSize; i++) {
+        mx = max(mx, candies[i]);
+    }
+    bool *ans = malloc(candiesSize * sizeof(bool));
+    for (int i = 0; i < candiesSize; i++) {
+        ans[i] = candies[i] + extraCandies >= mx;
+    }
+    *returnSize = candiesSize;
+    return ans;
 }
 ```
 

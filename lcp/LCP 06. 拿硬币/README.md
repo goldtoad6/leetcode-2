@@ -93,7 +93,7 @@ func minCount(coins []int) int {
 ```c
 int minCount(int* coins, int coinsSize) {
     int res = 0;
-    for (int i = 0 ; i < coinsSize; i++) {
+    for (int i = 0; i < coinsSize; i++) {
         int coin = coins[i];
         if (coin % 2 == 1) {
             res++;
@@ -101,6 +101,18 @@ int minCount(int* coins, int coinsSize) {
         res += coin / 2;
     }
     return res;
+}
+```
+
+### **TypeScript**
+
+```ts
+function minCount(coins: number[]): number {
+    let ans = 0;
+    for (const coin of coins) {
+        ans += Math.floor((coin + 1) / 2);
+    }
+    return ans;
 }
 ```
 

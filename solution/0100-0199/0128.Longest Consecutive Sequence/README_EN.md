@@ -9,7 +9,7 @@
 <p>You must write an algorithm that runs in&nbsp;<code>O(n)</code>&nbsp;time.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [100,4,200,1,3,2]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> The longest consecutive elements sequence is <code>[1, 2, 3, 4]</code>. Therefore its length is 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,3,7,2,5,8,4,6,0,1]
@@ -36,11 +36,11 @@
 
 **1. Sort**
 
-Sort the array then compare each value. `O(nlogn)`, `O(1)`.
+Sort the array then compare each value. $O(n\log n)$, $O(1)$.
 
 **2. HashSet**
 
-Making use of hash set. `O(n)`, `O(n)`.
+Making use of hash set. $O(n)$, $O(n)$.
 
 <!-- tabs:start -->
 
@@ -132,23 +132,19 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    int longestConsecutive(vector<int> &nums) {
+    int longestConsecutive(vector<int>& nums) {
         int n = nums.size();
         if (n < 2)
             return n;
         sort(nums.begin(), nums.end());
         int res = 1, t = 1;
-        for (int i = 1; i < n; ++i)
-        {
+        for (int i = 1; i < n; ++i) {
             if (nums[i] == nums[i - 1])
                 continue;
-            if (nums[i] - nums[i - 1] == 1)
-            {
+            if (nums[i] - nums[i - 1] == 1) {
                 ++t;
                 res = max(res, t);
-            }
-            else
-            {
+            } else {
                 t = 1;
             }
         }
@@ -160,18 +156,15 @@ public:
 ```cpp
 class Solution {
 public:
-    int longestConsecutive(vector<int> &nums) {
-        unordered_set<int> s;
-        for (int num : nums)
-            s.insert(num);
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s(nums.begin(), nums.end());
         int res = 0;
-        for (int num : nums)
-        {
-            if (!s.count(num - 1))
-            {
+        for (int& num : nums) {
+            if (!s.count(num - 1)) {
                 int t = 1, next = num + 1;
-                while (s.count(next++))
+                while (s.count(next++)) {
                     ++t;
+                }
                 res = max(res, t);
             }
         }
@@ -236,6 +229,30 @@ func max(a, b int) int {
 	}
 	return b
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestConsecutive = function (nums) {
+    const s = new Set(nums);
+    let res = 0;
+    for (const num of nums) {
+        if (!s.has(num - 1)) {
+            let t = 1;
+            let next = num + 1;
+            while (s.has(next++)) {
+                t++;
+            }
+            res = Math.max(res, t);
+        }
+    }
+    return res;
+};
 ```
 
 ### **...**

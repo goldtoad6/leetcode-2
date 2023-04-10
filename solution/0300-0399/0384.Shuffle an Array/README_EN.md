@@ -15,7 +15,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -52,7 +52,6 @@ solution.shuffle();    // Returns the random shuffling of array [1,2,3]. Example
 
 ```python
 class Solution:
-
     def __init__(self, nums: List[int]):
         self.nums = nums
         self.original = nums.copy()
@@ -135,8 +134,7 @@ public:
     }
 
     vector<int> shuffle() {
-        for (int i = 0; i < nums.size(); ++i)
-        {
+        for (int i = 0; i < nums.size(); ++i) {
             int j = i + rand() % (nums.size() - i);
             swap(nums[i], nums[j]);
         }

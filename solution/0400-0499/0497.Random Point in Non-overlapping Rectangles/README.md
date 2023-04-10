@@ -74,7 +74,6 @@ solution.pick(); // 返回 [0, 0]</pre>
 
 ```python
 class Solution:
-
     def __init__(self, rects: List[List[int]]):
         self.rects = rects
         self.s = [0] * len(rects)
@@ -125,7 +124,8 @@ class Solution {
             }
         }
         int[] rect = rects[left - 1];
-        return new int[]{rect[0] + random.nextInt(rect[2] - rect[0] + 1), rect[1] + random.nextInt(rect[3] - rect[1] + 1)};
+        return new int[] {rect[0] + random.nextInt(rect[2] - rect[0] + 1),
+            rect[1] + random.nextInt(rect[3] - rect[1] + 1)};
     }
 }
 

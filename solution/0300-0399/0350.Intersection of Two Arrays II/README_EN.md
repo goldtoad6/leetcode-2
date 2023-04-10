@@ -7,14 +7,14 @@
 <p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their intersection</em>. Each element in the result must appear as many times as it shows in both arrays and you may return the result in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,2,2,1], nums2 = [2,2]
 <strong>Output:</strong> [2,2]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [4,9,5], nums2 = [9,4,9,8,4]
@@ -115,10 +115,8 @@ public:
         unordered_map<int, int> counter;
         for (int num : nums1) ++counter[num];
         vector<int> res;
-        for (int num : nums2)
-        {
-            if (counter[num] > 0)
-            {
+        for (int num : nums2) {
+            if (counter[num] > 0) {
                 --counter[num];
                 res.push_back(num);
             }
@@ -186,6 +184,31 @@ impl Solution {
             }
         }
         res
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums1
+     * @param Integer[] $nums2
+     * @return Integer[]
+     */
+    function intersect($nums1, $nums2) {
+        $rs = [];
+        for ($i = 0; $i < count($nums1); $i++) {
+            $hashtable[$nums1[$i]] += 1;
+        }
+        for ($j = 0; $j < count($nums2); $j++) {
+            if (isset($hashtable[$nums2[$j]]) && $hashtable[$nums2[$j]] > 0) {
+                array_push($rs, $nums2[$j]);
+                $hashtable[$nums2[$j]] -= 1;
+            }
+        }
+        return $rs;
     }
 }
 ```

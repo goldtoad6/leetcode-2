@@ -9,7 +9,7 @@
 <p>The array <code>nums</code> is <strong>strictly increasing</strong> if <code>nums[i - 1] &lt; nums[i]</code> for each index <code>(1 &lt;= i &lt; nums.length).</code></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,<u>10</u>,5,7]
@@ -18,7 +18,7 @@
 [1,2,5,7] is strictly increasing, so return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,3,1,2]
@@ -30,7 +30,7 @@
 [2,3,1] is the result of removing the element at index 3.
 No resulting array is strictly increasing, so return false.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1]
@@ -57,7 +57,7 @@ No resulting array is strictly increasing, so return false.</pre>
 class Solution:
     def canBeIncreasing(self, nums: List[int]) -> bool:
         def check(nums, i):
-            prev = float('-inf')
+            prev = -inf
             for j, num in enumerate(nums):
                 if i == j:
                     continue
@@ -78,7 +78,8 @@ class Solution:
 class Solution {
     public boolean canBeIncreasing(int[] nums) {
         int i = 1, n = nums.length;
-        for (; i < n && nums[i - 1] < nums[i]; ++i);
+        for (; i < n && nums[i - 1] < nums[i]; ++i)
+            ;
         return check(nums, i - 1) || check(nums, i);
     }
 
@@ -105,7 +106,8 @@ class Solution {
 public:
     bool canBeIncreasing(vector<int>& nums) {
         int i = 1, n = nums.size();
-        for (; i < n && nums[i - 1] < nums[i]; ++i);
+        for (; i < n && nums[i - 1] < nums[i]; ++i)
+            ;
         return check(nums, i - 1) || check(nums, i);
     }
 

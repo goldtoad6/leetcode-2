@@ -18,14 +18,19 @@
 <pre>
 <strong>输入：</strong>nums = [2,1,2]
 <strong>输出：</strong>5
+<strong>解释：</strong>你可以用三个边长组成一个三角形:1 2 2。
 </pre>
 
 <p><strong>示例 2：</strong></p>
 
 <pre>
-<strong>输入：</strong>nums = [1,2,1]
+<strong>输入：</strong>nums = [1,2,1,10]
 <strong>输出：</strong>0
-</pre>
+<strong>解释：</strong>
+你不能用边长 1,1,2 来组成三角形。
+不能用边长 1,1,10 来构成三角形。
+不能用边长 1、2 和 10 来构成三角形。
+因为我们不能用任何三条边长来构成一个非零面积的三角形，所以我们返回 0。</pre>
 
 <p>&nbsp;</p>
 
@@ -39,6 +44,8 @@
 ## 解法
 
 <!-- 这里可写通用的实现逻辑 -->
+
+**方法一：排序 + 贪心**
 
 > 三角形由三条边组成，且满足 <var>C</var> >= <var>B</var> && <var>C</var> >= <var>A</var> && <var>C</var> < <var>A</var> + <var>B</var>
 
@@ -56,7 +63,13 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
-
+class Solution:
+    def largestPerimeter(self, nums: List[int]) -> int:
+        nums.sort()
+        for i in range(len(nums) - 1, 1, -1):
+            if (c := nums[i - 1] + nums[i - 2]) > nums[i]:
+                return c + nums[i]
+        return 0
 ```
 
 ### **Java**
@@ -64,7 +77,18 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
-
+class Solution {
+    public int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = nums.length - 1; i >= 2; --i) {
+            int c = nums[i - 1] + nums[i - 2];
+            if (c > nums[i]) {
+                return c + nums[i];
+            }
+        }
+        return 0;
+    }
+}
 ```
 
 ### **C++**
@@ -72,26 +96,30 @@
 ```cpp
 class Solution {
 public:
-    int largestPerimeter(vector<int>& A) {
-        priority_queue<int> q(A.begin(), A.end()) ; // 大顶堆
-
-        int a, b, c ;
-        b = q.top() ;
-        q.pop() ;
-        c = q.top() ;
-        q.pop() ;
-        while ( !q.empty() )
-        {
-            a = b ;
-            b = c ;
-            c = q.top() ;
-            q.pop() ;
-            if ( b + c > a )
-                return a + b + c ;
+    int largestPerimeter(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for (int i = nums.size() - 1; i >= 2; --i) {
+            int c = nums[i - 1] + nums[i - 2];
+            if (c > nums[i]) return c + nums[i];
         }
-        return 0 ;
+        return 0;
     }
 };
+```
+
+### **Go**
+
+```go
+func largestPerimeter(nums []int) int {
+	sort.Ints(nums)
+	for i := len(nums) - 1; i >= 2; i-- {
+		c := nums[i-1] + nums[i-2]
+		if c > nums[i] {
+			return c + nums[i]
+		}
+	}
+	return 0
+}
 ```
 
 ### **TypeScript**
@@ -125,6 +153,24 @@ impl Solution {
         }
         0
     }
+}
+```
+
+### **C**
+
+```c
+int cmp(const void *a, const void *b) {
+    return *(int *) b - *(int *) a;
+}
+
+int largestPerimeter(int *nums, int numsSize) {
+    qsort(nums, numsSize, sizeof(int), cmp);
+    for (int i = 2; i < numsSize; i++) {
+        if (nums[i - 2] < nums[i - 1] + nums[i]) {
+            return nums[i - 2] + nums[i - 1] + nums[i];
+        }
+    }
+    return 0;
 }
 ```
 

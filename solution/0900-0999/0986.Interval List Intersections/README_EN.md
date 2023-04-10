@@ -13,14 +13,14 @@
 <p>The <strong>intersection</strong> of two closed intervals is a set of real numbers that are either empty or represented as a closed interval. For example, the intersection of <code>[1, 3]</code> and <code>[2, 4]</code> is <code>[2, 3]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0900-0999/0986.Interval%20List%20Intersections/images/interval1.png" style="width: 700px; height: 194px;" />
 <pre>
 <strong>Input:</strong> firstList = [[0,2],[5,10],[13,23],[24,25]], secondList = [[1,5],[8,12],[15,24],[25,26]]
 <strong>Output:</strong> [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> firstList = [[1,3],[5,9]], secondList = []
@@ -47,8 +47,10 @@
 
 ```python
 class Solution:
-    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
-        i =  j = 0
+    def intervalIntersection(
+        self, firstList: List[List[int]], secondList: List[List[int]]
+    ) -> List[List[int]]:
+        i = j = 0
         ans = []
         while i < len(firstList) and j < len(secondList):
             s1, e1, s2, e2 = *firstList[i], *secondList[j]
@@ -73,7 +75,7 @@ class Solution {
             int l = Math.max(firstList[i][0], secondList[j][0]);
             int r = Math.min(firstList[i][1], secondList[j][1]);
             if (l <= r) {
-                ans.add(new int[]{l, r});
+                ans.add(new int[] {l, r});
             }
             if (firstList[i][1] < secondList[j][1]) {
                 ++i;
@@ -94,13 +96,14 @@ public:
     vector<vector<int>> intervalIntersection(vector<vector<int>>& firstList, vector<vector<int>>& secondList) {
         vector<vector<int>> ans;
         int m = firstList.size(), n = secondList.size();
-        for (int i = 0, j = 0; i < m && j < n;)
-        {
+        for (int i = 0, j = 0; i < m && j < n;) {
             int l = max(firstList[i][0], secondList[j][0]);
             int r = min(firstList[i][1], secondList[j][1]);
             if (l <= r) ans.push_back({l, r});
-            if (firstList[i][1] < secondList[j][1]) ++i;
-            else ++j;
+            if (firstList[i][1] < secondList[j][1])
+                ++i;
+            else
+                ++j;
         }
         return ans;
     }

@@ -16,7 +16,7 @@
 <p>Return <em>the <strong>minimum</strong> number of white tiles still visible.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2209.Minimum%20White%20Tiles%20After%20Covering%20With%20Carpets/images/ex1-1.png" style="width: 400px; height: 73px;" />
 <pre>
 <strong>Input:</strong> floor = &quot;10110101&quot;, numCarpets = 2, carpetLen = 2
@@ -26,7 +26,7 @@ The figure above shows one way of covering the tiles with the carpets such that 
 No other way of covering the tiles with the carpets can leave less than 2 white tiles visible.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2209.Minimum%20White%20Tiles%20After%20Covering%20With%20Carpets/images/ex2.png" style="width: 353px; height: 123px;" />
 <pre>
 <strong>Input:</strong> floor = &quot;11111&quot;, numCarpets = 2, carpetLen = 3
@@ -52,13 +52,140 @@ Note that the carpets are able to overlap one another.
 ### **Python3**
 
 ```python
+class Solution:
+    def minimumWhiteTiles(self, floor: str, numCarpets: int, carpetLen: int) -> int:
+        @cache
+        def dfs(i, j):
+            if i >= n:
+                return 0
+            if floor[i] == '0':
+                return dfs(i + 1, j)
+            if j == 0:
+                return s[-1] - s[i]
+            return min(1 + dfs(i + 1, j), dfs(i + carpetLen, j - 1))
 
+        n = len(floor)
+        s = [0] * (n + 1)
+        for i, c in enumerate(floor):
+            s[i + 1] = s[i] + int(c == '1')
+        ans = dfs(0, numCarpets)
+        dfs.cache_clear()
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    private int[][] f;
+    private int[] s;
+    private int n;
+    private int k;
 
+    public int minimumWhiteTiles(String floor, int numCarpets, int carpetLen) {
+        n = floor.length();
+        f = new int[n][numCarpets + 1];
+        for (var e : f) {
+            Arrays.fill(e, -1);
+        }
+        s = new int[n + 1];
+        for (int i = 0; i < n; ++i) {
+            s[i + 1] = s[i] + (floor.charAt(i) == '1' ? 1 : 0);
+        }
+        k = carpetLen;
+        return dfs(0, numCarpets);
+    }
+
+    private int dfs(int i, int j) {
+        if (i >= n) {
+            return 0;
+        }
+        if (j == 0) {
+            return s[n] - s[i];
+        }
+        if (f[i][j] != -1) {
+            return f[i][j];
+        }
+        if (s[i + 1] == s[i]) {
+            return dfs(i + 1, j);
+        }
+        int ans = Math.min(1 + dfs(i + 1, j), dfs(i + k, j - 1));
+        f[i][j] = ans;
+        return ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minimumWhiteTiles(string floor, int numCarpets, int carpetLen) {
+        int n = floor.size();
+        vector<vector<int>> f(n, vector<int>(numCarpets + 1, -1));
+        vector<int> s(n + 1);
+        for (int i = 0; i < n; ++i) {
+            s[i + 1] = s[i] + (floor[i] == '1');
+        }
+        function<int(int, int)> dfs;
+        dfs = [&](int i, int j) {
+            if (i >= n) return 0;
+            if (j == 0) return s[n] - s[i];
+            if (f[i][j] != -1) return f[i][j];
+            if (s[i + 1] == s[i]) return dfs(i + 1, j);
+            int ans = min(1 + dfs(i + 1, j), dfs(i + carpetLen, j - 1));
+            f[i][j] = ans;
+            return ans;
+        };
+        return dfs(0, numCarpets);
+    }
+};
+```
+
+### **Go**
+
+```go
+func minimumWhiteTiles(floor string, numCarpets int, carpetLen int) int {
+	n := len(floor)
+	f := make([][]int, n)
+	for i := range f {
+		f[i] = make([]int, numCarpets+1)
+		for j := range f[i] {
+			f[i][j] = -1
+		}
+	}
+	s := make([]int, n+1)
+	for i, c := range floor {
+		s[i+1] = s[i] + int(c-'0')
+	}
+	var dfs func(i, j int) int
+	dfs = func(i, j int) int {
+		if i >= n {
+			return 0
+		}
+		if j == 0 {
+			return s[n] - s[i]
+		}
+		if f[i][j] != -1 {
+			return f[i][j]
+		}
+		if s[i+1] == s[i] {
+			return dfs(i+1, j)
+		}
+		ans := min(1+dfs(i+1, j), dfs(i+carpetLen, j-1))
+		f[i][j] = ans
+		return ans
+	}
+	return dfs(0, numCarpets)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **TypeScript**

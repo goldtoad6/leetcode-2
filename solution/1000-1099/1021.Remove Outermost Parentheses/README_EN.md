@@ -17,7 +17,7 @@
 <p>Return <code>s</code> <em>after removing the outermost parentheses of every primitive string in the primitive decomposition of </em><code>s</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;(()())(())&quot;
@@ -27,7 +27,7 @@ The input string is &quot;(()())(())&quot;, with primitive decomposition &quot;(
 After removing outer parentheses of each part, this is &quot;()()&quot; + &quot;()&quot; = &quot;()()()&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;(()())(())(()(()))&quot;
@@ -37,7 +37,7 @@ The input string is &quot;(()())(())(()(()))&quot;, with primitive decomposition
 After removing outer parentheses of each part, this is &quot;()()&quot; + &quot;()&quot; + &quot;()(())&quot; = &quot;()()()()(())&quot;.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;()()&quot;
@@ -79,25 +79,63 @@ class Solution:
         return ''.join(ans)
 ```
 
+```python
+class Solution:
+    def removeOuterParentheses(self, s: str) -> str:
+        ans = []
+        cnt = 0
+        for c in s:
+            if c == '(':
+                cnt += 1
+            if cnt > 1:
+                ans.append(c)
+            if c == ')':
+                cnt -= 1
+        return ''.join(ans)
+```
+
 ### **Java**
 
 ```java
 class Solution {
-    public String removeOuterParentheses(String S) {
-        StringBuilder res = new StringBuilder();
+    public String removeOuterParentheses(String s) {
+        StringBuilder ans = new StringBuilder();
         int cnt = 0;
-        for (char c : S.toCharArray()) {
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
             if (c == '(') {
                 if (++cnt > 1) {
-                    res.append('(');
+                    ans.append(c);
                 }
             } else {
                 if (--cnt > 0) {
-                    res.append(')');
+                    ans.append(c);
                 }
             }
         }
-        return res.toString();
+        return ans.toString();
+    }
+}
+```
+
+```java
+class Solution {
+    public String removeOuterParentheses(String s) {
+        StringBuilder ans = new StringBuilder();
+        int cnt = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                ++cnt;
+            }
+            if (cnt > 1) {
+                ans.append(c);
+            }
+            if (c == ')') {
+                --cnt;
+            }
+        }
+        return ans.toString();
     }
 }
 ```
@@ -108,20 +146,42 @@ class Solution {
 class Solution {
 public:
     string removeOuterParentheses(string s) {
-        string res;
-        int depth = 0;
-        for (char c: s) {
+        string ans;
+        int cnt = 0;
+        for (char& c : s) {
             if (c == '(') {
-                depth++;
-            }
-            if (depth != 1) {
-                res.push_back(c);
-            }
-            if (c == ')') {
-                depth--;
+                if (++cnt > 1) {
+                    ans.push_back(c);
+                }
+            } else {
+                if (--cnt) {
+                    ans.push_back(c);
+                }
             }
         }
-        return res;
+        return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        string ans;
+        int cnt = 0;
+        for (char& c : s) {
+            if (c == '(') {
+                ++cnt;
+            }
+            if (cnt > 1) {
+                ans.push_back(c);
+            }
+            if (c == ')') {
+                --cnt;
+            }
+        }
+        return ans;
     }
 };
 ```
@@ -143,6 +203,25 @@ func removeOuterParentheses(s string) string {
 			if cnt > 0 {
 				ans = append(ans, c)
 			}
+		}
+	}
+	return string(ans)
+}
+```
+
+```go
+func removeOuterParentheses(s string) string {
+	ans := []rune{}
+	cnt := 0
+	for _, c := range s {
+		if c == '(' {
+			cnt++
+		}
+		if cnt > 1 {
+			ans = append(ans, c)
+		}
+		if c == ')' {
+			cnt--
 		}
 	}
 	return string(ans)

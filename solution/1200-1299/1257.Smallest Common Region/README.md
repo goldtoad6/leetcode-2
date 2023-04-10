@@ -56,7 +56,9 @@ region2 = &quot;New York&quot;
 
 ```python
 class Solution:
-    def findSmallestRegion(self, regions: List[List[str]], region1: str, region2: str) -> str:
+    def findSmallestRegion(
+        self, regions: List[List[str]], region1: str, region2: str
+    ) -> str:
         m = {}
         for region in regions:
             for r in region[1:]:
@@ -112,13 +114,11 @@ public:
             for (int i = 1; i < region.size(); ++i)
                 m[region[i]] = region[0];
         unordered_set<string> s;
-        while (m.count(region1))
-        {
+        while (m.count(region1)) {
             s.insert(region1);
             region1 = m[region1];
         }
-        while (m.count(region2))
-        {
+        while (m.count(region2)) {
             if (s.count(region2)) return region2;
             region2 = m[region2];
         }
@@ -127,30 +127,29 @@ public:
 };
 ```
 
-### **C++**
+### **Go**
 
-```cpp
-class Solution {
-public:
-    string findSmallestRegion(vector<vector<string>>& regions, string region1, string region2) {
-        unordered_map<string, string> m;
-        for (auto& region : regions)
-            for (int i = 1; i < region.size(); ++i)
-                m[region[i]] = region[0];
-        unordered_set<string> s;
-        while (m.count(region1))
-        {
-            s.insert(region1);
-            region1 = m[region1];
-        }
-        while (m.count(region2))
-        {
-            if (s.count(region2)) return region2;
-            region2 = m[region2];
-        }
-        return region1;
-    }
-};
+```go
+func findSmallestRegion(regions [][]string, region1 string, region2 string) string {
+	m := make(map[string]string)
+	for _, region := range regions {
+		for i := 1; i < len(region); i++ {
+			m[region[i]] = region[0]
+		}
+	}
+	s := make(map[string]bool)
+	for region1 != "" {
+		s[region1] = true
+		region1 = m[region1]
+	}
+	for region2 != "" {
+		if s[region2] {
+			return region2
+		}
+		region2 = m[region2]
+	}
+	return region1
+}
 ```
 
 ### **...**

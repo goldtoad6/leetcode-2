@@ -238,7 +238,6 @@ class SegmentTree {
     private Node root = new Node(1, (int) 1e9 + 1);
 
     public SegmentTree() {
-
     }
 
     public void modify(int l, int r, int v) {
@@ -312,9 +311,8 @@ class MyCalendarTwo {
     private SegmentTree tree = new SegmentTree();
 
     public MyCalendarTwo() {
-
     }
-    
+
     public boolean book(int start, int end) {
         if (tree.query(start + 1, end) >= 2) {
             return false;
@@ -339,18 +337,15 @@ public:
     map<int, int> m;
 
     MyCalendarTwo() {
-
     }
-    
+
     bool book(int start, int end) {
         ++m[start];
         --m[end];
         int s = 0;
-        for (auto& [_, v] : m)
-        {
+        for (auto& [_, v] : m) {
             s += v;
-            if (s > 2)
-            {
+            if (s > 2) {
                 --m[start];
                 ++m[end];
                 return false;
@@ -415,7 +410,7 @@ public:
     }
 
     int query(int l, int r) {
-        return query(l, r, root); 
+        return query(l, r, root);
     }
 
     int query(int l, int r, Node* node) {
@@ -425,7 +420,7 @@ public:
         int v = 0;
         if (l <= node->mid) v = max(v, query(l, r, node->left));
         if (r > node->mid) v = max(v, query(l, r, node->right));
-        return v; 
+        return v;
     }
 
     void pushup(Node* node) {
@@ -455,7 +450,7 @@ public:
     MyCalendarTwo() {
 
     }
-    
+
     bool book(int start, int end) {
         if (tree->query(start + 1, end) >= 2) return false;
         tree->modify(start + 1, end, 1);

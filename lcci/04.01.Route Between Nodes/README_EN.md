@@ -44,7 +44,9 @@ DFS or BFS.
 
 ```python
 class Solution:
-    def findWhetherExistsPath(self, n: int, graph: List[List[int]], start: int, target: int) -> bool:
+    def findWhetherExistsPath(
+        self, n: int, graph: List[List[int]], start: int, target: int
+    ) -> bool:
         def dfs(u):
             if u == target:
                 return True
@@ -148,16 +150,14 @@ public:
     bool findWhetherExistsPath(int n, vector<vector<int>>& graph, int start, int target) {
         unordered_map<int, vector<int>> g;
         for (auto& e : graph) g[e[0]].push_back(e[1]);
-        unordered_set<int> vis{{start}};
+        unordered_set<int> vis {{start}};
         return dfs(start, target, g, vis);
     }
 
     bool dfs(int u, int& target, unordered_map<int, vector<int>>& g, unordered_set<int>& vis) {
         if (u == target) return true;
-        for (int& v : g[u])
-        {
-            if (!vis.count(v))
-            {
+        for (int& v : g[u]) {
+            if (!vis.count(v)) {
                 vis.insert(v);
                 if (dfs(v, target, g, vis)) return true;
             }
@@ -173,17 +173,14 @@ public:
     bool findWhetherExistsPath(int n, vector<vector<int>>& graph, int start, int target) {
         unordered_map<int, vector<int>> g;
         for (auto& e : graph) g[e[0]].push_back(e[1]);
-        queue<int> q{{start}};
-        unordered_set<int> vis{{start}};
-        while (!q.empty())
-        {
+        queue<int> q {{start}};
+        unordered_set<int> vis {{start}};
+        while (!q.empty()) {
             int u = q.front();
             if (u == target) return true;
             q.pop();
-            for (int v : g[u])
-            {
-                if (!vis.count(v))
-                {
+            for (int v : g[u]) {
+                if (!vis.count(v)) {
                     vis.insert(v);
                     q.push(v);
                 }

@@ -20,7 +20,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -57,7 +57,6 @@ but the second term did not exist. Since the last term exhausted does not exist,
 
 ```python
 class RLEIterator:
-
     def __init__(self, encoding: List[int]):
         self.encoding = encoding
         self.i = 0
@@ -132,16 +131,12 @@ public:
     }
 
     int next(int n) {
-        while (i < encoding.size())
-        {
-            if (curr + n > encoding[i])
-            {
+        while (i < encoding.size()) {
+            if (curr + n > encoding[i]) {
                 n -= encoding[i] - curr;
                 curr = 0;
                 i += 2;
-            }
-            else
-            {
+            } else {
                 curr += n;
                 return encoding[i + 1];
             }

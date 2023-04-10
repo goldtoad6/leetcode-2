@@ -14,7 +14,7 @@
 <p>Return <em>a list of all possible valid combinations</em>. The list must not contain the same combination twice, and the combinations may be returned in any order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 3, n = 7
@@ -23,7 +23,7 @@
 1 + 2 + 4 = 7
 There are no other valid combinations.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 3, n = 9
@@ -35,7 +35,7 @@ There are no other valid combinations.</pre>
 There are no other valid combinations.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 4, n = 1
@@ -124,8 +124,7 @@ public:
 
     void dfs(int i, int n, int k, vector<int>& t) {
         if (i > 9 || n < 0 || t.size() > k) return;
-        if (n == 0 && t.size() == k)
-        {
+        if (n == 0 && t.size() == k) {
             ans.push_back(t);
             return;
         }

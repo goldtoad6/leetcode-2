@@ -11,7 +11,7 @@
 <p>Return <em>the <strong>total number</strong> of good triplets</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [2,0,1,3], nums2 = [0,1,2,3]
@@ -21,7 +21,7 @@ There are 4 triplets (x,y,z) such that pos1<sub>x</sub> &lt; pos1<sub>y</sub> &l
 Out of those triplets, only the triplet (0,1,3) satisfies pos2<sub>x</sub> &lt; pos2<sub>y</sub> &lt; pos2<sub>z</sub>. Hence, there is only 1 good triplet.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [4,0,1,3,2], nums2 = [4,1,0,2,3]
@@ -302,11 +302,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -314,8 +315,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -335,8 +335,7 @@ public:
         for (int i = 0; i < n; ++i) pos[nums2[i]] = i + 1;
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         long long ans = 0;
-        for (int& num : nums1)
-        {
+        for (int& num : nums1) {
             int p = pos[num];
             int left = tree->query(p);
             int right = n - p - (tree->query(n) - tree->query(p));

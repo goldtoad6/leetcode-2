@@ -15,7 +15,7 @@
 <p>Return <em>an integer array</em> <code>answer</code> <em>where</em> <code>answer[i]</code> <em>is the answer to the</em> <code>i<sup>th</sup></code> <em>query</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="ex-1" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2055.Plates%20Between%20Candles/images/ex-1.png" style="width: 400px; height: 134px;" />
 <pre>
 <strong>Input:</strong> s = &quot;**|**|***|&quot;, queries = [[2,5],[5,9]]
@@ -25,7 +25,7 @@
 - queries[1] has three plates between candles.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="ex-2" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2055.Plates%20Between%20Candles/images/ex-2.png" style="width: 600px; height: 193px;" />
 <pre>
 <strong>Input:</strong> s = &quot;***|**|*****|**||**|*&quot;, queries = [[1,17],[4,5],[14,17],[5,11],[15,16]]
@@ -127,19 +127,16 @@ public:
         for (int i = 0; i < n; ++i) presum[i + 1] = presum[i] + (s[i] == '*');
         vector<int> left(n);
         vector<int> right(n);
-        for (int i = 0, l = -1; i < n; ++i)
-        {
+        for (int i = 0, l = -1; i < n; ++i) {
             if (s[i] == '|') l = i;
             left[i] = l;
         }
-        for (int i = n - 1, r = -1; i >= 0; --i)
-        {
+        for (int i = n - 1, r = -1; i >= 0; --i) {
             if (s[i] == '|') r = i;
             right[i] = r;
         }
         vector<int> ans(queries.size());
-        for (int k = 0; k < queries.size(); ++k)
-        {
+        for (int k = 0; k < queries.size(); ++k) {
             int i = right[queries[k][0]];
             int j = left[queries[k][1]];
             if (i >= 0 && j >= 0 && i < j) ans[k] = presum[j] - presum[i + 1];

@@ -18,7 +18,7 @@
 <p>Return <em>the maximum <strong>score</strong> of a subset </em><code>s</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> values = [5,4,3,2,1], labels = [1,1,2,2,3], numWanted = 3, useLimit = 1
@@ -26,7 +26,7 @@
 <strong>Explanation:</strong> The subset chosen is the first, third, and fifth items.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> values = [5,4,3,2,1], labels = [1,3,3,3,2], numWanted = 3, useLimit = 2
@@ -34,7 +34,7 @@
 <strong>Explanation:</strong> The subset chosen is the first, second, and third items.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> values = [9,8,8,7,6], labels = [0,0,0,1,1], numWanted = 3, useLimit = 1
@@ -60,7 +60,9 @@
 
 ```python
 class Solution:
-    def largestValsFromLabels(self, values: List[int], labels: List[int], numWanted: int, useLimit: int) -> int:
+    def largestValsFromLabels(
+        self, values: List[int], labels: List[int], numWanted: int, useLimit: int
+    ) -> int:
         arr = list(zip(values, labels))
         arr.sort(reverse=True)
         cnt = Counter()
@@ -83,7 +85,7 @@ class Solution {
         int n = values.length;
         int[][] p = new int[n][2];
         for (int i = 0; i < n; ++i) {
-            p[i] = new int[]{values[i], labels[i]};
+            p[i] = new int[] {values[i], labels[i]};
         }
         Arrays.sort(p, (a, b) -> b[0] - a[0]);
         int ans = 0;
@@ -114,11 +116,9 @@ public:
         sort(p.begin(), p.end());
         unordered_map<int, int> counter;
         int ans = 0, num = 0;
-        for (int i = n - 1; i >= 0 && num < numWanted; --i)
-        {
+        for (int i = n - 1; i >= 0 && num < numWanted; --i) {
             int v = p[i].first, l = p[i].second;
-            if (counter[l] < useLimit)
-            {
+            if (counter[l] < useLimit) {
                 ++counter[l];
                 ++num;
                 ans += v;

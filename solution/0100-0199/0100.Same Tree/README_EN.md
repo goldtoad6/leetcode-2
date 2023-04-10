@@ -9,21 +9,21 @@
 <p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0100.Same%20Tree/images/ex1.jpg" style="width: 622px; height: 182px;" />
 <pre>
 <strong>Input:</strong> p = [1,2,3], q = [1,2,3]
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0100.Same%20Tree/images/ex2.jpg" style="width: 382px; height: 182px;" />
 <pre>
 <strong>Input:</strong> p = [1,2], q = [1,null,2]
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0100.Same%20Tree/images/ex3.jpg" style="width: 622px; height: 182px;" />
 <pre>
 <strong>Input:</strong> p = [1,2,1], q = [1,1,2]
@@ -54,7 +54,7 @@ DFS or BFS.
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         if p == q:
             return True
         if p is None or q is None or p.val != q.val:
@@ -534,6 +534,43 @@ impl Solution {
             }
         }
         true
+    }
+}
+```
+
+### **PHP**
+
+```php
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     public $val = null;
+ *     public $left = null;
+ *     public $right = null;
+ *     function __construct($val = 0, $left = null, $right = null) {
+ *         $this->val = $val;
+ *         $this->left = $left;
+ *         $this->right = $right;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * @param TreeNode $p
+     * @param TreeNode $q
+     * @return Boolean
+     */
+    function isSameTree($p, $q) {
+        if ($p == Null && $q == Null) {
+            return true;
+        }
+        if ($p == Null || $q == Null) {
+            return false;
+        }
+        if ($p->val != $q->val) {
+            return false;
+        }
+        return $this->isSameTree($p->left, $q->left) && $this->isSameTree($p->right, $q->right);
     }
 }
 ```

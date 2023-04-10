@@ -4,15 +4,13 @@
 
 ## Description
 
-<p>Given a string <code>s</code>, partition <code>s</code> such that every substring of the partition is a <strong>palindrome</strong>. Return all possible palindrome partitioning of <code>s</code>.</p>
-
-<p>A <strong>palindrome</strong> string is a string that reads the same backward as forward.</p>
+<p>Given a string <code>s</code>, partition <code>s</code> such that every <span data-keyword="substring-nonempty">substring</span> of the partition is a <span data-keyword="palindrome-string"><strong>palindrome</strong></span>. Return <em>all possible palindrome partitioning of </em><code>s</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "aab"
 <strong>Output:</strong> [["a","a","b"],["aa","b"]]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "a"
 <strong>Output:</strong> [["a"]]
 </pre>
@@ -47,7 +45,7 @@ class Solution:
                 return
             for j in range(i, n):
                 if dp[i][j]:
-                    t.append(s[i: j + 1])
+                    t.append(s[i : j + 1])
                     dfs(s, j + 1, t)
                     t.pop(-1)
 
@@ -107,10 +105,8 @@ public:
     vector<vector<string>> partition(string s) {
         n = s.size();
         dp.assign(n, vector<bool>(n, true));
-        for (int i = n - 1; i >= 0; --i)
-        {
-            for (int j = i + 1; j < n; ++j)
-            {
+        for (int i = n - 1; i >= 0; --i) {
+            for (int j = i + 1; j < n; ++j) {
                 dp[i][j] = s[i] == s[j] && dp[i + 1][j - 1];
             }
         }
@@ -120,15 +116,12 @@ public:
     }
 
     void dfs(string& s, int i, vector<string> t) {
-        if (i == n)
-        {
+        if (i == n) {
             ans.push_back(t);
             return;
         }
-        for (int j = i; j < n; ++j)
-        {
-            if (dp[i][j])
-            {
+        for (int j = i; j < n; ++j) {
+            if (dp[i][j]) {
                 t.push_back(s.substr(i, j - i + 1));
                 dfs(s, j + 1, t);
                 t.pop_back();

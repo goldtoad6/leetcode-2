@@ -13,7 +13,7 @@
 <p><strong>Note:</strong> In all test cases, all words were chosen randomly from the <code>1000</code> most common US English words, and <code>target</code> was chosen as a concatenation of two random words.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> stickers = [&quot;with&quot;,&quot;example&quot;,&quot;science&quot;], target = &quot;thehat&quot;
@@ -24,7 +24,7 @@ After cutting and rearrange the letters of those stickers, we can form the targe
 Also, this is the minimum number of stickers necessary to form the target string.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> stickers = [&quot;notice&quot;,&quot;possible&quot;], target = &quot;basicbasic&quot;
@@ -128,34 +128,28 @@ class Solution {
 class Solution {
 public:
     int minStickers(vector<string>& stickers, string target) {
-        queue<int> q{{0}};
+        queue<int> q {{0}};
         int ans = 0;
         int n = target.size();
         vector<bool> vis(1 << n);
         vis[0] = true;
-        while (!q.empty())
-        {
-            for (int t = q.size(); t; --t)
-            {
+        while (!q.empty()) {
+            for (int t = q.size(); t; --t) {
                 int state = q.front();
                 if (state == (1 << n) - 1) return ans;
                 q.pop();
-                for (auto& s : stickers)
-                {
+                for (auto& s : stickers) {
                     int nxt = state;
                     vector<int> cnt(26);
                     for (char& c : s) ++cnt[c - 'a'];
-                    for (int i = 0; i < n; ++i)
-                    {
+                    for (int i = 0; i < n; ++i) {
                         int idx = target[i] - 'a';
-                        if (!(nxt & (1 << i)) && cnt[idx])
-                        {
+                        if (!(nxt & (1 << i)) && cnt[idx]) {
                             nxt |= 1 << i;
                             --cnt[idx];
                         }
                     }
-                    if (!vis[nxt])
-                    {
+                    if (!vis[nxt]) {
                         vis[nxt] = true;
                         q.push(nxt);
                     }

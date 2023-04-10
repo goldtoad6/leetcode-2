@@ -11,7 +11,7 @@
 <p>Return <em>the <strong>number of ways</strong> you can arrive at your destination in the <strong>shortest amount of time</strong></em>. Since the answer may be large, return it <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1976.Number%20of%20Ways%20to%20Arrive%20at%20Destination/images/graph2.png" style="width: 235px; height: 381px;" />
 <pre>
 <strong>Input:</strong> n = 7, roads = [[0,6,7],[0,1,2],[1,2,3],[1,3,3],[6,3,3],[3,5,1],[6,5,1],[2,5,1],[0,4,5],[4,6,2]]
@@ -24,7 +24,7 @@ The four ways to get there in 7 minutes are:
 - 0 ➝ 1 ➝ 3 ➝ 5 ➝ 6
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, roads = [[1,0,10]]
@@ -55,7 +55,7 @@ The four ways to get there in 7 minutes are:
 ```python
 class Solution:
     def countPaths(self, n: int, roads: List[List[int]]) -> int:
-        INF = float('inf')
+        INF = inf
         MOD = 10**9 + 7
         g = [[INF] * n for _ in range(n)]
         for u, v, t in roads:
@@ -150,8 +150,7 @@ public:
         vector<ll> dist(n, INF);
         vector<ll> w(n);
         vector<bool> vis(n);
-        for (auto& r : roads)
-        {
+        for (auto& r : roads) {
             int u = r[0], v = r[1], t = r[2];
             g[u][v] = t;
             g[v][u] = t;
@@ -159,24 +158,20 @@ public:
         g[0][0] = 0;
         dist[0] = 0;
         w[0] = 1;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int t = -1;
-            for (int j = 0; j < n; ++j)
-            {
+            for (int j = 0; j < n; ++j) {
                 if (!vis[j] && (t == -1 || dist[t] > dist[j])) t = j;
             }
             vis[t] = true;
-            for (int j = 0; j < n; ++j)
-            {
+            for (int j = 0; j < n; ++j) {
                 if (t == j) continue;
                 ll ne = dist[t] + g[t][j];
-                if (dist[j] > ne)
-                {
+                if (dist[j] > ne) {
                     dist[j] = ne;
                     w[j] = w[t];
-                }
-                else if (dist[j] == ne) w[j] = (w[j] + w[t]) % MOD;
+                } else if (dist[j] == ne)
+                    w[j] = (w[j] + w[t]) % MOD;
             }
         }
         return w[n - 1];

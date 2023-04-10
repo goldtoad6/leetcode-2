@@ -15,7 +15,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example:</strong></p>
+<p><strong class="example">Example:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -42,7 +42,7 @@ wordDictionary.search(&quot;b..&quot;); // return True
 	<li><code>1 &lt;= word.length &lt;= 25</code></li>
 	<li><code>word</code> in <code>addWord</code> consists of lowercase English letters.</li>
 	<li><code>word</code> in <code>search</code> consist of <code>&#39;.&#39;</code> or lowercase English letters.</li>
-	<li>There will be at most <code>3</code> dots in <code>word</code> for <code>search</code> queries.</li>
+	<li>There will be at most <code>2</code> dots in <code>word</code> for <code>search</code> queries.</li>
 	<li>At most <code>10<sup>4</sup></code> calls will be made to <code>addWord</code> and <code>search</code>.</li>
 </ul>
 
@@ -54,14 +54,12 @@ wordDictionary.search(&quot;b..&quot;); // return True
 
 ```python
 class Trie:
-
     def __init__(self):
         self.children = [None] * 26
         self.is_end = False
 
 
 class WordDictionary:
-
     def __init__(self):
         self.trie = Trie()
 
@@ -83,13 +81,14 @@ class WordDictionary:
                     return False
                 if c == '.':
                     for child in node.children:
-                        if child is not None and search(word[i + 1:], child):
+                        if child is not None and search(word[i + 1 :], child):
                             return True
                     return False
                 node = node.children[idx]
             return node.is_end
 
         return search(word, self.trie)
+
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
@@ -256,7 +255,8 @@ private:
     trie* root;
 
 public:
-    WordDictionary() : root(new trie) {}
+    WordDictionary()
+        : root(new trie) { }
 
     void addWord(string word) {
         root->insert(word);

@@ -17,7 +17,7 @@
 <p>Test cases are generated such that partitioning exists.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [5,0,3,8,6]
@@ -25,7 +25,7 @@
 <strong>Explanation:</strong> left = [5,0,3], right = [8,6]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1,0,6,12]
@@ -49,13 +49,97 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def partitionDisjoint(self, nums: List[int]) -> int:
+        n = len(nums)
+        mi = [inf] * (n + 1)
+        for i in range(n - 1, -1, -1):
+            mi[i] = min(nums[i], mi[i + 1])
+        mx = 0
+        for i, v in enumerate(nums, 1):
+            mx = max(mx, v)
+            if mx <= mi[i]:
+                return i
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int partitionDisjoint(int[] nums) {
+        int n = nums.length;
+        int[] mi = new int[n + 1];
+        mi[n] = nums[n - 1];
+        for (int i = n - 1; i >= 0; --i) {
+            mi[i] = Math.min(nums[i], mi[i + 1]);
+        }
+        int mx = 0;
+        for (int i = 1; i <= n; ++i) {
+            int v = nums[i - 1];
+            mx = Math.max(mx, v);
+            if (mx <= mi[i]) {
+                return i;
+            }
+        }
+        return 0;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int partitionDisjoint(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> mi(n + 1, INT_MAX);
+        for (int i = n - 1; ~i; --i) mi[i] = min(nums[i], mi[i + 1]);
+        int mx = 0;
+        for (int i = 1; i <= n; ++i) {
+            int v = nums[i - 1];
+            mx = max(mx, v);
+            if (mx <= mi[i]) return i;
+        }
+        return 0;
+    }
+};
+```
+
+### **Go**
+
+```go
+func partitionDisjoint(nums []int) int {
+	n := len(nums)
+	mi := make([]int, n+1)
+	mi[n] = nums[n-1]
+	for i := n - 1; i >= 0; i-- {
+		mi[i] = min(nums[i], mi[i+1])
+	}
+	mx := 0
+	for i := 1; i <= n; i++ {
+		v := nums[i-1]
+		mx = max(mx, v)
+		if mx <= mi[i] {
+			return i
+		}
+	}
+	return 0
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

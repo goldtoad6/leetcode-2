@@ -11,7 +11,7 @@
 <p>A <strong>subsequence</strong> is an array that can be derived from another array by deleting some or no elements without changing the order of the remaining elements.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [&quot;un&quot;,&quot;iq&quot;,&quot;ue&quot;]
@@ -26,7 +26,7 @@
 Maximum length is 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [&quot;cha&quot;,&quot;r&quot;,&quot;act&quot;,&quot;ers&quot;]
@@ -34,7 +34,7 @@ Maximum length is 4.
 <strong>Explanation:</strong> Possible longest valid concatenations are &quot;chaers&quot; (&quot;cha&quot; + &quot;ers&quot;) and &quot;acters&quot; (&quot;act&quot; + &quot;ers&quot;).
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [&quot;abcdefghijklmnopqrstuvwxyz&quot;]
@@ -62,30 +62,22 @@ State compression uses a 32-bit number to record the appearance of letters, and 
 ```python
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
-        def ones_count(x):
-            c = 0
-            while x:
-                x &= x - 1
-                c += 1
-            return c
-
         ans = 0
         masks = [0]
         for s in arr:
             mask = 0
-            for ch in s:
-                ch = ord(ch) - ord('a')
-                if (mask >> ch) & 1 == 1:
+            for c in s:
+                i = ord(c) - ord('a')
+                if mask >> i & 1:
                     mask = 0
                     break
-                mask |= 1 << ch
+                mask |= 1 << i
             if mask == 0:
                 continue
             for m in masks:
                 if m & mask == 0:
                     masks.append(m | mask)
-                    ans = max(ans, ones_count(m | mask))
-
+                    ans = max(ans, (m | mask).bit_count())
         return ans
 ```
 
@@ -97,19 +89,21 @@ class Solution {
         int ans = 0;
         List<Integer> masks = new ArrayList<>();
         masks.add(0);
-
-    loop:
-        for (String s : arr) {
+        for (var s : arr) {
             int mask = 0;
-            for (char ch : s.toCharArray()) {
-                ch -= 'a';
-                if (((mask >> ch) & 1) == 1) {
-                    continue loop;
+            for (int i = 0; i < s.length(); ++i) {
+                int j = s.charAt(i) - 'a';
+                if (((mask >> j) & 1) == 1) {
+                    mask = 0;
+                    break;
                 }
-                mask |= 1 << ch;
+                mask |= 1 << j;
+            }
+            if (mask == 0) {
+                continue;
             }
             int n = masks.size();
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; ++i) {
                 int m = masks.get(i);
                 if ((m & mask) == 0) {
                     masks.add(m | mask);
@@ -117,46 +111,80 @@ class Solution {
                 }
             }
         }
-
         return ans;
     }
 }
 ```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int maxLength(vector<string>& arr) {
+        int ans = 0;
+        vector<int> masks = {0};
+        for (auto& s : arr) {
+            int mask = 0;
+            for (auto& c : s) {
+                int i = c - 'a';
+                if (mask >> i & 1) {
+                    mask = 0;
+                    break;
+                }
+                mask |= 1 << i;
+            }
+            if (mask == 0) {
+                continue;
+            }
+            int n = masks.size();
+            for (int i = 0; i < n; ++i) {
+                int m = masks[i];
+                if ((m & mask) == 0) {
+                    masks.push_back(m | mask);
+                    ans = max(ans, __builtin_popcount(m | mask));
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
 ### **Go**
 
 ```go
-func maxLength(arr []string) int {
-
-	max := func(x, y int) int {
-		if x > y {
-			return x
-		}
-		return y
-	}
-
-	ans := 0
+func maxLength(arr []string) (ans int) {
 	masks := []int{0}
-
-loop:
 	for _, s := range arr {
 		mask := 0
-		for _, ch := range s {
-			ch -= 'a'
-			if (mask>>ch)&1 == 1 {
-				continue loop
+		for _, c := range s {
+			i := int(c - 'a')
+			if mask>>i&1 == 1 {
+				mask = 0
+				break
 			}
-			mask |= 1 << ch
+			mask |= 1 << i
 		}
-		for _, m := range masks {
+		if mask == 0 {
+			continue
+		}
+		n := len(masks)
+		for _, m := range masks[:n] {
 			if m&mask == 0 {
 				masks = append(masks, m|mask)
 				ans = max(ans, bits.OnesCount(uint(m|mask)))
 			}
 		}
 	}
+	return
+}
 
-	return ans
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 ```
 

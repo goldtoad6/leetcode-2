@@ -9,7 +9,7 @@
 <p>Return <code>true</code><em> if you can make </em><code>s</code><em> a palindrome after performing <strong>exactly</strong> one or two operations, or return </em><code>false</code><em> otherwise.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcdba&quot;
@@ -19,7 +19,7 @@
 One operation could be performed to make s a palindrome so return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aa&quot;
@@ -30,7 +30,7 @@ One operation could be performed to make s a palindrome so return true.
 Two operations could be performed to make s a palindrome so return true.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcdef&quot;
@@ -53,19 +53,78 @@ Two operations could be performed to make s a palindrome so return true.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def makePalindrome(self, s: str) -> bool:
+        i, j = 0, len(s) - 1
+        cnt = 0
+        while i < j:
+            cnt += s[i] != s[j]
+            i, j = i + 1, j - 1
+        return cnt <= 2
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean makePalindrome(String s) {
+        int cnt = 0;
+        int i = 0, j = s.length() - 1;
+        for (; i < j; ++i, --j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                ++cnt;
+            }
+        }
+        return cnt <= 2;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool makePalindrome(string s) {
+        int cnt = 0;
+        int i = 0, j = s.size() - 1;
+        for (; i < j; ++i, --j) {
+            cnt += s[i] != s[j];
+        }
+        return cnt <= 2;
+    }
+};
+```
+
+### **Go**
+
+```go
+func makePalindrome(s string) bool {
+	cnt := 0
+	i, j := 0, len(s)-1
+	for ; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			cnt++
+		}
+	}
+	return cnt <= 2
+}
 ```
 
 ### **TypeScript**
 
 ```ts
-
+function makePalindrome(s: string): boolean {
+    let cnt = 0;
+    let i = 0;
+    let j = s.length - 1;
+    for (; i < j; ++i, --j) {
+        if (s[i] != s[j]) {
+            ++cnt;
+        }
+    }
+    return cnt <= 2;
+}
 ```
 
 ### **...**

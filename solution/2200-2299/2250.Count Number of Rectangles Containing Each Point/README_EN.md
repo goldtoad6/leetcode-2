@@ -13,7 +13,7 @@
 <p>The <code>i<sup>th</sup></code> rectangle <strong>contains</strong> the <code>j<sup>th</sup></code> point if <code>0 &lt;= x<sub>j</sub> &lt;= l<sub>i</sub></code> and <code>0 &lt;= y<sub>j</sub> &lt;= h<sub>i</sub></code>. Note that points that lie on the <strong>edges</strong> of a rectangle are also considered to be contained by that rectangle.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2250.Count%20Number%20of%20Rectangles%20Containing%20Each%20Point/images/example1.png" style="width: 300px; height: 509px;" />
 <pre>
 <strong>Input:</strong> rectangles = [[1,2],[2,3],[2,5]], points = [[2,1],[1,4]]
@@ -27,7 +27,7 @@ The number of rectangles that contain the point (1, 4) is 1.
 Therefore, we return [2, 1].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2250.Count%20Number%20of%20Rectangles%20Containing%20Each%20Point/images/example2.png" style="width: 300px; height: 312px;" />
 <pre>
 <strong>Input:</strong> rectangles = [[1,1],[2,2],[3,3]], points = [[1,3],[1,1]]
@@ -61,7 +61,9 @@ Therefore, we return [1, 3].
 
 ```python
 class Solution:
-    def countRectangles(self, rectangles: List[List[int]], points: List[List[int]]) -> List[int]:
+    def countRectangles(
+        self, rectangles: List[List[int]], points: List[List[int]]
+    ) -> List[int]:
         d = defaultdict(list)
         for x, y in rectangles:
             d[y].append(x)
@@ -84,9 +86,7 @@ class Solution {
     public int[] countRectangles(int[][] rectangles, int[][] points) {
         int n = 101;
         List<Integer>[] d = new List[n];
-        for (int i = 0; i < n; ++i) {
-            d[i] = new ArrayList<>();
-        }
+        Arrays.setAll(d, k -> new ArrayList<>());
         for (int[] r : rectangles) {
             d[r[1]].add(r[0]);
         }
@@ -164,12 +164,10 @@ public:
         for (auto& r : rectangles) d[r[1]].push_back(r[0]);
         for (auto& v : d) sort(v.begin(), v.end());
         vector<int> ans;
-        for (auto& p : points)
-        {
+        for (auto& p : points) {
             int x = p[0], y = p[1];
             int cnt = 0;
-            for (int h = y; h < n; ++h)
-            {
+            for (int h = y; h < n; ++h) {
                 auto& xs = d[h];
                 cnt += xs.size() - (lower_bound(xs.begin(), xs.end(), x) - xs.begin());
             }

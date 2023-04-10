@@ -12,7 +12,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,6]
@@ -20,7 +20,7 @@
 <strong>Explanation:</strong> The only quadruplet that satisfies the requirement is (0, 1, 2, 3) because 1 + 2 + 3 == 6.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,3,6,4,5]
@@ -28,7 +28,7 @@
 <strong>Explanation:</strong> There are no such quadruplets in [3,3,6,4,5].
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1,3,5]
@@ -141,7 +141,7 @@ class Solution {
         int[] counter = new int[310];
         for (int b = n - 3; b > 0; --b) {
             int c = b + 1;
-            for (int d =  c + 1; d < n; ++d) {
+            for (int d = c + 1; d < n; ++d) {
                 if (nums[d] - nums[c] >= 0) {
                     ++counter[nums[d] - nums[c]];
                 }

@@ -81,7 +81,9 @@
 
 ```python
 class Solution:
-    def findAllPeople(self, n: int, meetings: List[List[int]], firstPerson: int) -> List[int]:
+    def findAllPeople(
+        self, n: int, meetings: List[List[int]], firstPerson: int
+    ) -> List[int]:
         vis = [False] * n
         vis[0] = vis[firstPerson] = True
         meetings.sort(key=lambda x: x[2])
@@ -92,7 +94,7 @@ class Solution:
                 j += 1
             s = set()
             g = defaultdict(list)
-            for x, y, _ in meetings[i: j + 1]:
+            for x, y, _ in meetings[i : j + 1]:
                 g[x].append(y)
                 g[y].append(x)
                 s.update([x, y])
@@ -121,7 +123,8 @@ class Solution {
         Arrays.sort(meetings, Comparator.comparingInt(a -> a[2]));
         for (int i = 0; i < m;) {
             int j = i;
-            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j);
+            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j)
+                ;
             Map<Integer, List<Integer>> g = new HashMap<>();
             Set<Integer> s = new HashSet<>();
             for (int k = i; k <= j; ++k) {
@@ -170,14 +173,13 @@ public:
         sort(meetings.begin(), meetings.end(), [&](const auto& x, const auto& y) {
             return x[2] < y[2];
         });
-        for (int i = 0, m = meetings.size(); i < m;)
-        {
+        for (int i = 0, m = meetings.size(); i < m;) {
             int j = i;
-            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j);
+            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j)
+                ;
             unordered_map<int, vector<int>> g;
             unordered_set<int> s;
-            for (int k = i; k <= j; ++k)
-            {
+            for (int k = i; k <= j; ++k) {
                 int x = meetings[k][0], y = meetings[k][1];
                 g[x].push_back(y);
                 g[y].push_back(x);
@@ -188,14 +190,11 @@ public:
             for (int u : s)
                 if (vis[u])
                     q.push(u);
-            while (!q.empty())
-            {
+            while (!q.empty()) {
                 int u = q.front();
                 q.pop();
-                for (int v : g[u])
-                {
-                    if (!vis[v])
-                    {
+                for (int v : g[u]) {
+                    if (!vis[v]) {
                         vis[v] = true;
                         q.push(v);
                     }

@@ -75,14 +75,14 @@ class Solution:
     def largestBSTSubtree(self, root: Optional[TreeNode]) -> int:
         def dfs(root):
             if root is None:
-                return float('inf'), float('-inf'), 0
+                return inf, -inf, 0
             lmi, lmx, ln = dfs(root.left)
             rmi, rmx, rn = dfs(root.right)
             nonlocal ans
             if lmx < root.val < rmi:
                 ans = max(ans, ln + rn + 1)
                 return min(lmi, root.val), max(rmx, root.val), ln + rn + 1
-            return float('-inf'), float('inf'), 0
+            return -inf, inf, 0
 
         ans = 0
         dfs(root)
@@ -120,15 +120,16 @@ class Solution {
 
     private int[] dfs(TreeNode root) {
         if (root == null) {
-            return new int[]{Integer.MAX_VALUE, Integer.MIN_VALUE, 0};
+            return new int[] {Integer.MAX_VALUE, Integer.MIN_VALUE, 0};
         }
         int[] left = dfs(root.left);
         int[] right = dfs(root.right);
         if (left[1] < root.val && root.val < right[0]) {
             ans = Math.max(ans, left[2] + right[2] + 1);
-            return new int[]{Math.min(root.val, left[0]), Math.max(root.val, right[1]), left[2] + right[2] + 1};
+            return new int[] {
+                Math.min(root.val, left[0]), Math.max(root.val, right[1]), left[2] + right[2] + 1};
         }
-        return new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, 0};
+        return new int[] {Integer.MIN_VALUE, Integer.MAX_VALUE, 0};
     }
 }
 ```
@@ -161,8 +162,7 @@ public:
         if (!root) return {INT_MAX, INT_MIN, 0};
         auto left = dfs(root->left);
         auto right = dfs(root->right);
-        if (left[1] < root->val && root->val < right[0])
-        {
+        if (left[1] < root->val && root->val < right[0]) {
             ans = max(ans, left[2] + right[2] + 1);
             return {min(root->val, left[0]), max(root->val, right[1]), left[2] + right[2] + 1};
         }

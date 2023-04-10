@@ -6,10 +6,10 @@
 
 <p>Given an array of strings <code>words</code> (<strong>without duplicates</strong>), return <em>all the <strong>concatenated words</strong> in the given list of</em> <code>words</code>.</p>
 
-<p>A <strong>concatenated word</strong> is defined as a string that is comprised entirely of at least two shorter words in the given array.</p>
+<p>A <strong>concatenated word</strong> is defined as a string that is comprised entirely of at least two shorter words (not necesssarily distinct)&nbsp;in the given array.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;cat&quot;,&quot;cats&quot;,&quot;catsdogcats&quot;,&quot;dog&quot;,&quot;dogcatsdog&quot;,&quot;hippopotamuses&quot;,&quot;rat&quot;,&quot;ratcatdogcat&quot;]
@@ -18,7 +18,7 @@
 &quot;dogcatsdog&quot; can be concatenated by &quot;dog&quot;, &quot;cats&quot; and &quot;dog&quot;; 
 &quot;ratcatdogcat&quot; can be concatenated by &quot;rat&quot;, &quot;cat&quot;, &quot;dog&quot; and &quot;cat&quot;.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;cat&quot;,&quot;dog&quot;,&quot;catdog&quot;]
@@ -69,7 +69,7 @@ class Solution:
                 if node.children[idx] is None:
                     return False
                 node = node.children[idx]
-                if node.is_end and dfs(w[i + 1:]):
+                if node.is_end and dfs(w[i + 1 :]):
                     return True
             return False
 
@@ -147,12 +147,13 @@ class Trie {
 public:
     vector<Trie*> children;
     bool isEnd;
-    Trie(): children(26), isEnd(false) {}
+    Trie()
+        : children(26)
+        , isEnd(false) { }
 
     void insert(string w) {
         Trie* node = this;
-        for (char c : w)
-        {
+        for (char c : w) {
             c -= 'a';
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
@@ -166,14 +167,15 @@ public:
     Trie* trie = new Trie();
 
     vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
-        sort(words.begin(), words.end(), [&](const string & a, const string & b){
-            return a.size() < b.size(); 
+        sort(words.begin(), words.end(), [&](const string& a, const string& b) {
+            return a.size() < b.size();
         });
         vector<string> ans;
-        for (auto& w : words)
-        {
-            if (dfs(w)) ans.push_back(w);
-            else trie->insert(w);
+        for (auto& w : words) {
+            if (dfs(w))
+                ans.push_back(w);
+            else
+                trie->insert(w);
         }
         return ans;
     }
@@ -181,8 +183,7 @@ public:
     bool dfs(string w) {
         if (w == "") return true;
         Trie* node = trie;
-        for (int i = 0; i < w.size(); ++i)
-        {
+        for (int i = 0; i < w.size(); ++i) {
             int idx = w[i] - 'a';
             if (!node->children[idx]) return false;
             node = node->children[idx];

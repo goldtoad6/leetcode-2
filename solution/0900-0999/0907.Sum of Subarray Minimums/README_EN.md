@@ -7,7 +7,7 @@
 <p>Given an array of integers arr, find the sum of <code>min(b)</code>, where <code>b</code> ranges over every (contiguous) subarray of <code>arr</code>. Since the answer may be large, return the answer <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [3,1,2,4]
@@ -18,7 +18,7 @@ Minimums are 3, 1, 2, 4, 1, 1, 2, 1, 1, 1.
 Sum is 17.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [11,81,94,43,3]
@@ -52,6 +52,7 @@ class Solution:
             if stk:
                 left[i] = stk[-1]
             stk.append(i)
+
         stk = []
         for i in range(n - 1, -1, -1):
             while stk and arr[stk[-1]] > arr[i]:
@@ -59,7 +60,7 @@ class Solution:
             if stk:
                 right[i] = stk[-1]
             stk.append(i)
-        mod = int(1e9) + 7
+        mod = 10**9 + 7
         return sum((i - left[i]) * (right[i] - i) * v for i, v in enumerate(arr)) % mod
 ```
 
@@ -117,23 +118,20 @@ public:
         vector<int> left(n, -1);
         vector<int> right(n, n);
         stack<int> stk;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             while (!stk.empty() && arr[stk.top()] >= arr[i]) stk.pop();
             if (!stk.empty()) left[i] = stk.top();
             stk.push(i);
         }
         stk = stack<int>();
-        for (int i = n - 1; i >= 0; --i)
-        {
+        for (int i = n - 1; i >= 0; --i) {
             while (!stk.empty() && arr[stk.top()] > arr[i]) stk.pop();
             if (!stk.empty()) right[i] = stk.top();
             stk.push(i);
         }
         ll ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
-            ans += (ll) (i - left[i]) * (right[i] - i) * arr[i] % mod;
+        for (int i = 0; i < n; ++i) {
+            ans += (ll)(i - left[i]) * (right[i] - i) * arr[i] % mod;
             ans %= mod;
         }
         return ans;

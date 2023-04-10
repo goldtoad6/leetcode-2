@@ -13,7 +13,7 @@
 <p>Return <em>the generated matrix</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2300-2399/2326.Spiral%20Matrix%20IV/images/ex1new.jpg" style="width: 240px; height: 150px;" />
 <pre>
 <strong>Input:</strong> m = 3, n = 5, head = [3,0,2,6,8,1,7,9,4,2,5,5,0]
@@ -22,7 +22,7 @@
 Note that the remaining spaces in the matrix are filled with -1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2300-2399/2326.Spiral%20Matrix%20IV/images/ex2.jpg" style="width: 221px; height: 60px;" />
 <pre>
 <strong>Input:</strong> m = 1, n = 4, head = [0,1,2]
@@ -134,17 +134,15 @@ public:
         vector<vector<int>> ans(m, vector<int>(n, -1));
         int i = 0, j = 0, p = 0;
         vector<vector<int>> dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        while (1)
-        {
+        while (1) {
             ans[i][j] = head->val;
             head = head->next;
             if (!head) break;
-            while (1)
-            {
+            while (1) {
                 int x = i + dirs[p][0], y = j + dirs[p][1];
-                if (x < 0 || y < 0 || x >= m || y >= n || ans[x][y] >= 0) p = (p + 1) % 4;
-                else
-                {
+                if (x < 0 || y < 0 || x >= m || y >= n || ans[x][y] >= 0)
+                    p = (p + 1) % 4;
+                else {
                     i = x, j = y;
                     break;
                 }

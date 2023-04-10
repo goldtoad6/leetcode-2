@@ -67,10 +67,12 @@
 ```python
 import abc
 from abc import ABC, abstractmethod
+
 """
 This is the interface for the expression tree Node.
 You should not remove it, and you can define some classes to implement it.
 """
+
 
 class Node(ABC):
     @abstractmethod
@@ -78,8 +80,8 @@ class Node(ABC):
     def evaluate(self) -> int:
         pass
 
-class MyNode(Node):
 
+class MyNode(Node):
     def __init__(self, val):
         self.val = val
         self.left = None
@@ -107,6 +109,7 @@ You can treat it as the driver code that takes the postinfix input
 and returns the expression tree represnting it as a Node.
 """
 
+
 class TreeBuilder(object):
     def buildTree(self, postfix: List[str]) -> 'Node':
         stk = []
@@ -117,6 +120,7 @@ class TreeBuilder(object):
                 node.left = stk.pop()
             stk.append(node)
         return stk[-1]
+
 
 """
 Your TreeBuilder object will be instantiated and called as such:
@@ -180,7 +184,6 @@ class MyNode extends Node {
     }
 }
 
-
 /**
  * This is the TreeBuilder class.
  * You can treat it as the driver code that takes the postinfix input
@@ -202,7 +205,6 @@ class TreeBuilder {
     }
 };
 
-
 /**
  * Your TreeBuilder object will be instantiated and called as such:
  * TreeBuilder obj = new TreeBuilder();
@@ -221,8 +223,9 @@ class TreeBuilder {
 
 class Node {
 public:
-    virtual ~Node () {};
+    virtual ~Node() {};
     virtual int evaluate() const = 0;
+
 protected:
     // define your fields here
     string val;
@@ -253,7 +256,6 @@ public:
     }
 };
 
-
 /**
  * This is the TreeBuilder class.
  * You can treat it as the driver code that takes the postinfix input
@@ -264,19 +266,15 @@ class TreeBuilder {
 public:
     Node* buildTree(vector<string>& postfix) {
         stack<MyNode*> stk;
-        for (auto s : postfix)
-        {
+        for (auto s : postfix) {
             MyNode* node;
-            if (s == "+" || s == "-" || s == "*" || s == "/")
-            {
+            if (s == "+" || s == "-" || s == "*" || s == "/") {
                 auto right = stk.top();
                 stk.pop();
                 auto left = stk.top();
                 stk.pop();
                 node = new MyNode(s, left, right);
-            }
-            else
-            {
+            } else {
                 node = new MyNode(s);
             }
             stk.push(node);
@@ -284,7 +282,6 @@ public:
         return stk.top();
     }
 };
-
 
 /**
  * Your TreeBuilder object will be instantiated and called as such:

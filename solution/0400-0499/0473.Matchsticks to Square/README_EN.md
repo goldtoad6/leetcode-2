@@ -9,7 +9,7 @@
 <p>Return <code>true</code> if you can make this square and <code>false</code> otherwise.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0473.Matchsticks%20to%20Square/images/matchsticks1-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> matchsticks = [1,1,2,2,2]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> You can form a square with length 2, one side of the square came two sticks with length 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> matchsticks = [3,3,3,3,4]
@@ -130,8 +130,7 @@ class Solution {
 public:
     bool makesquare(vector<int>& matchsticks) {
         int s = 0, mx = 0;
-        for (int& v : matchsticks)
-        {
+        for (int& v : matchsticks) {
             s += v;
             mx = max(mx, v);
         }
@@ -144,8 +143,7 @@ public:
 
     bool dfs(int u, int x, vector<int>& matchsticks, vector<int>& edges) {
         if (u == matchsticks.size()) return true;
-        for (int i = 0; i < 4; ++i)
-        {
+        for (int i = 0; i < 4; ++i) {
             if (i > 0 && edges[i - 1] == edges[i]) continue;
             edges[i] += matchsticks[u];
             if (edges[i] <= x && dfs(u + 1, x, matchsticks, edges)) return true;

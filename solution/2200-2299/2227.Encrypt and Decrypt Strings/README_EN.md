@@ -31,7 +31,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -75,7 +75,6 @@ encrypter.decrypt(&quot;eizfeiam&quot;); // return 2.
 
 ```python
 class Encrypter:
-
     def __init__(self, keys: List[str], values: List[str], dictionary: List[str]):
         self.mp = dict(zip(keys, values))
         self.cnt = Counter(self.encrypt(v) for v in dictionary)
@@ -114,7 +113,7 @@ class Encrypter {
             cnt.put(w, cnt.getOrDefault(w, 0) + 1);
         }
     }
-    
+
     public String encrypt(String word1) {
         StringBuilder sb = new StringBuilder();
         for (char c : word1.toCharArray()) {
@@ -125,7 +124,7 @@ class Encrypter {
         }
         return sb.toString();
     }
-    
+
     public int decrypt(String word2) {
         return cnt.getOrDefault(word2, 0);
     }
@@ -151,17 +150,16 @@ public:
         for (int i = 0; i < keys.size(); ++i) mp[keys[i]] = values[i];
         for (auto v : dictionary) cnt[encrypt(v)]++;
     }
-    
+
     string encrypt(string word1) {
         string res = "";
-        for (char c : word1)
-        {
+        for (char c : word1) {
             if (!mp.count(c)) return "";
             res += mp[c];
         }
         return res;
     }
-    
+
     int decrypt(string word2) {
         return cnt[word2];
     }

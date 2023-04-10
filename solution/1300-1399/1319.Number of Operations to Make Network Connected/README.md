@@ -75,6 +75,8 @@ def find(x):
         # 路径压缩
         p[x] = find(p[x])
     return p[x]
+
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -198,12 +200,11 @@ public:
         p.resize(n);
         for (int i = 0; i < n; ++i) p[i] = i;
         int cnt = 0;
-        for (auto& e : connections)
-        {
+        for (auto& e : connections) {
             int a = e[0], b = e[1];
-            if (find(a) == find(b)) ++cnt;
-            else
-            {
+            if (find(a) == find(b))
+                ++cnt;
+            else {
                 p[find(a)] = find(b);
                 --n;
             }

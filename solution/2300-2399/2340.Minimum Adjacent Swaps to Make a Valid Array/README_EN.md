@@ -18,7 +18,7 @@
 <p>Return <em>the <strong>minimum</strong> swaps required to make </em><code>nums</code><em> a valid array</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,4,5,5,3,1]
@@ -33,7 +33,7 @@
 It can be shown that 6 swaps is the minimum swaps required to make a valid array.
 </pre>
 
-<strong>Example 2:</strong>
+<strong class="example">Example 2:</strong>
 
 <pre>
 <strong>Input:</strong> nums = [9]
@@ -56,19 +56,104 @@ It can be shown that 6 swaps is the minimum swaps required to make a valid array
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minimumSwaps(self, nums: List[int]) -> int:
+        i = j = 0
+        for k, v in enumerate(nums):
+            if v < nums[i] or (v == nums[i] and k < i):
+                i = k
+            if v >= nums[j] or (v == nums[j] and k > j):
+                j = k
+        return 0 if i == j else i + len(nums) - 1 - j - (i > j)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int minimumSwaps(int[] nums) {
+        int n = nums.length;
+        int i = 0, j = 0;
+        for (int k = 0; k < n; ++k) {
+            if (nums[k] < nums[i] || (nums[k] == nums[i] && k < i)) {
+                i = k;
+            }
+            if (nums[k] > nums[j] || (nums[k] == nums[j] && k > j)) {
+                j = k;
+            }
+        }
+        if (i == j) {
+            return 0;
+        }
+        return i + n - 1 - j - (i > j ? 1 : 0);
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minimumSwaps(vector<int>& nums) {
+        int n = nums.size();
+        int i = 0, j = 0;
+        for (int k = 0; k < n; ++k) {
+            if (nums[k] < nums[i] || (nums[k] == nums[i] && k < i)) {
+                i = k;
+            }
+            if (nums[k] > nums[j] || (nums[k] == nums[j] && k > j)) {
+                j = k;
+            }
+        }
+        if (i == j) {
+            return 0;
+        }
+        return i + n - 1 - j - (i > j);
+    }
+};
+```
+
+### **Go**
+
+```go
+func minimumSwaps(nums []int) int {
+	var i, j int
+	for k, v := range nums {
+		if v < nums[i] || (v == nums[i] && k < i) {
+			i = k
+		}
+		if v > nums[j] || (v == nums[j] && k > j) {
+			j = k
+		}
+	}
+	if i == j {
+		return 0
+	}
+	if i < j {
+		return i + len(nums) - 1 - j
+	}
+	return i + len(nums) - 2 - j
+}
 ```
 
 ### **TypeScript**
 
 ```ts
-
+function minimumSwaps(nums: number[]): number {
+    let i = 0;
+    let j = 0;
+    const n = nums.length;
+    for (let k = 0; k < n; ++k) {
+        if (nums[k] < nums[i] || (nums[k] == nums[i] && k < i)) {
+            i = k;
+        }
+        if (nums[k] > nums[j] || (nums[k] == nums[j] && k > j)) {
+            j = k;
+        }
+    }
+    return i == j ? 0 : i + n - 1 - j - (i > j ? 1 : 0);
+}
 ```
 
 ### **...**

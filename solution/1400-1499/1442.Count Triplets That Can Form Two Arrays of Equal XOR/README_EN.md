@@ -20,7 +20,7 @@
 <p>Return <em>the number of triplets</em> (<code>i</code>, <code>j</code> and <code>k</code>) Where <code>a == b</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [2,3,1,6,7]
@@ -28,7 +28,7 @@
 <strong>Explanation:</strong> The triplets are (0,1,2), (0,2,2), (2,3,4) and (2,4,4)
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,1,1,1,1]
@@ -103,12 +103,9 @@ public:
         vector<int> pre(n + 1);
         for (int i = 0; i < n; ++i) pre[i + 1] = pre[i] ^ arr[i];
         int ans = 0;
-        for (int i = 0; i < n - 1; ++i)
-        {
-            for (int j = i + 1; j < n; ++j)
-            {
-                for (int k = j; k < n; ++k)
-                {
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                for (int k = j; k < n; ++k) {
                     int a = pre[j] ^ pre[i], b = pre[k + 1] ^ pre[j];
                     if (a == b) ++ans;
                 }

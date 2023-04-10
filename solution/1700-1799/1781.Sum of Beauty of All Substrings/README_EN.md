@@ -13,14 +13,14 @@
 <p>Given a string <code>s</code>, return <em>the sum of <strong>beauty</strong> of all of its substrings.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aabcb&quot;
 <strong>Output:</strong> 5
 <strong>Explanation: </strong>The substrings with non-zero beauty are [&quot;aab&quot;,&quot;aabc&quot;,&quot;aabcb&quot;,&quot;abcb&quot;,&quot;bcb&quot;], each with beauty equal to 1.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aabcbaa&quot;
@@ -46,11 +46,10 @@ class Solution:
     def beautySum(self, s: str) -> int:
         ans, n = 0, len(s)
         for i in range(n):
-            counter = Counter()
+            cnt = Counter()
             for j in range(i, n):
-                counter[s[j]] += 1
-                t = [v for v in counter.values() if v]
-                ans += max(t) - min(t)
+                cnt[s[j]] += 1
+                ans += max(cnt.values()) - min(cnt.values())
         return ans
 ```
 
@@ -62,12 +61,11 @@ class Solution {
         int ans = 0;
         int n = s.length();
         for (int i = 0; i < n; ++i) {
-            int[] counter = new int[26];
+            int[] cnt = new int[26];
             for (int j = i; j < n; ++j) {
-                ++counter[s.charAt(j) - 'a'];
-                int mi = 1000;
-                int mx = 0;
-                for (int v : counter) {
+                ++cnt[s.charAt(j) - 'a'];
+                int mi = 1000, mx = 0;
+                for (int v : cnt) {
                     if (v > 0) {
                         mi = Math.min(mi, v);
                         mx = Math.max(mx, v);
@@ -89,18 +87,14 @@ public:
     int beautySum(string s) {
         int ans = 0;
         int n = s.size();
-        for (int i = 0; i < n; ++i)
-        {
-            vector<int> counter(26);
-            for (int j = i; j < n; ++j)
-            {
-                ++counter[s[j] - 'a'];
-                int mi = 1000;
-                int mx = 0;
-                for (int v : counter)
-                {
-                    if (v)
-                    {
+        int cnt[26];
+        for (int i = 0; i < n; ++i) {
+            memset(cnt, 0, sizeof cnt);
+            for (int j = i; j < n; ++j) {
+                ++cnt[s[j] - 'a'];
+                int mi = 1000, mx = 0;
+                for (int& v : cnt) {
+                    if (v > 0) {
                         mi = min(mi, v);
                         mx = max(mx, v);
                     }
@@ -116,38 +110,48 @@ public:
 ### **Go**
 
 ```go
-func beautySum(s string) int {
-	ans, n := 0, len(s)
-	for i := 0; i < n; i++ {
-		counter := make([]int, 26)
-		for j := i; j < n; j++ {
-			counter[s[j]-'a']++
+func beautySum(s string) (ans int) {
+	for i := range s {
+		cnt := [26]int{}
+		for j := i; j < len(s); j++ {
+			cnt[s[j]-'a']++
 			mi, mx := 1000, 0
-			for _, v := range counter {
+			for _, v := range cnt {
 				if v > 0 {
-					mi = min(mi, v)
-					mx = max(mx, v)
+					if mi > v {
+						mi = v
+					}
+					if mx < v {
+						mx = v
+					}
 				}
 			}
 			ans += mx - mi
 		}
 	}
-	return ans
+	return
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
+### **JavaScript**
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var beautySum = function (s) {
+    let ans = 0;
+    for (let i = 0; i < s.length; ++i) {
+        const cnt = new Map();
+        for (let j = i; j < s.length; ++j) {
+            cnt.set(s[j], (cnt.get(s[j]) || 0) + 1);
+            const t = Array.from(cnt.values());
+            ans += Math.max(...t) - Math.min(...t);
+        }
+    }
+    return ans;
+};
 ```
 
 ### **...**

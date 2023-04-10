@@ -19,7 +19,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,5,3,9,5,3]
@@ -34,7 +34,7 @@
 The average difference of index 3 is the minimum average difference so return 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0]
@@ -63,7 +63,7 @@ class Solution:
     def minimumAverageDifference(self, nums: List[int]) -> int:
         s = list(accumulate(nums))
         ans, n = 0, len(nums)
-        mi = float('inf')
+        mi = inf
         for i in range(n):
             a = s[i] // (i + 1)
             b = 0 if i == n - 1 else (s[-1] - s[i]) // (n - i - 1)
@@ -115,13 +115,11 @@ public:
         for (int i = 1; i < n; ++i) s[i] = s[i - 1] + nums[i];
         int ans = 0;
         ll mi = LONG_MAX;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             ll a = s[i] / (i + 1);
             ll b = i == n - 1 ? 0 : (s[n - 1] - s[i]) / (n - i - 1);
             ll t = abs(a - b);
-            if (mi > t)
-            {
+            if (mi > t) {
                 ans = i;
                 mi = t;
             }

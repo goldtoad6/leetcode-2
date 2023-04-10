@@ -31,7 +31,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;b&quot;,&quot;ab&quot;,&quot;cde&quot;]
@@ -44,7 +44,7 @@
 Thus, words can be divided into 2 groups [&quot;a&quot;,&quot;b&quot;,&quot;ab&quot;] and [&quot;cde&quot;]. The size of the largest group is 3.  
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;ab&quot;,&quot;abc&quot;]
@@ -154,7 +154,7 @@ class Solution {
                 }
             }
         }
-        return new int[]{n, mx};
+        return new int[] {n, mx};
     }
 
     private int find(int x) {
@@ -192,8 +192,7 @@ public:
         unordered_map<int, int> size;
         mx = 0;
         n = words.size();
-        for (auto& word : words)
-        {
+        for (auto& word : words) {
             int x = 0;
             for (auto& c : word) x |= 1 << (c - 'a');
             p[x] = x;
@@ -201,15 +200,11 @@ public:
             mx = max(mx, size[x]);
             if (size[x] > 1) --n;
         }
-        for (auto& [x, _] : p)
-        {
-            for (int i = 0; i < 26; ++i)
-            {
+        for (auto& [x, _] : p) {
+            for (int i = 0; i < 26; ++i) {
                 unite(x, x ^ (1 << i), p, size);
-                if ((x >> i) & 1)
-                {
-                    for (int j = 0; j < 26; ++j)
-                    {
+                if ((x >> i) & 1) {
+                    for (int j = 0; j < 26; ++j) {
                         if (((x >> j) & 1) == 0) unite(x, x ^ (1 << i) | (1 << j), p, size);
                     }
                 }

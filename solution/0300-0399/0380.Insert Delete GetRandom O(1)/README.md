@@ -85,7 +85,6 @@ randomizedSet.getRandom(); // 由于 2 是集合中唯一的数字，getRandom �
 
 ```python
 class RandomizedSet:
-
     def __init__(self):
         self.m = {}
         self.l = []
@@ -116,7 +115,6 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
-
 ```
 
 ### **Java**
@@ -130,7 +128,6 @@ class RandomizedSet {
     private Random rnd = new Random();
 
     public RandomizedSet() {
-
     }
 
     public boolean insert(int val) {
@@ -176,9 +173,9 @@ class RandomizedSet {
 private:
     unordered_map<int, int> mp;
     vector<int> nums;
+
 public:
     RandomizedSet() {
-
     }
 
     bool insert(int val) {

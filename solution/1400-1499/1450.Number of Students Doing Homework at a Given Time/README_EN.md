@@ -11,7 +11,7 @@
 <p>Return <em>the number of students</em> doing their homework at time <code>queryTime</code>. More formally, return the number of students where <code>queryTime</code> lays in the interval <code>[startTime[i], endTime[i]]</code> inclusive.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> startTime = [1,2,3], endTime = [3,2,7], queryTime = 4
@@ -22,7 +22,7 @@ The second student started doing homework at time 2 and finished at time 2 and a
 The third student started doing homework at time 3 and finished at time 7 and was the only student doing homework at time 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> startTime = [4], endTime = [4], queryTime = 4
@@ -48,11 +48,20 @@ The third student started doing homework at time 3 and finished at time 7 and wa
 
 ```python
 class Solution:
+    def busyStudent(
+        self, startTime: List[int], endTime: List[int], queryTime: int
+    ) -> int:
+        return sum(a <= queryTime <= b for a, b in zip(startTime, endTime))
+```
+
+```python
+class Solution:
     def busyStudent(self, startTime: List[int], endTime: List[int], queryTime: int) -> int:
-        count, n = 0, len(startTime)
-        for i in range(n):
-            count += startTime[i] <= queryTime <= endTime[i]
-        return count
+        c = [0] * 1010
+        for a, b in zip(startTime, endTime):
+            c[a] += 1
+            c[b + 1] -= 1
+        return sum(c[: queryTime + 1])
 ```
 
 ### **Java**
@@ -60,13 +69,30 @@ class Solution:
 ```java
 class Solution {
     public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
-        int count = 0, n = startTime.length;
-        for (int i = 0; i < n; ++i) {
+        int ans = 0;
+        for (int i = 0; i < startTime.length; ++i) {
             if (startTime[i] <= queryTime && queryTime <= endTime[i]) {
-                ++count;
+                ++ans;
             }
         }
-        return count;
+        return ans;
+    }
+}
+```
+
+```java
+class Solution {
+    public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
+        int[] c = new int[1010];
+        for (int i = 0; i < startTime.length; ++i) {
+            c[startTime[i]]++;
+            c[endTime[i] + 1]--;
+        }
+        int ans = 0;
+        for (int i = 0; i <= queryTime; ++i) {
+            ans += c[i];
+        }
+        return ans;
     }
 }
 ```
@@ -77,13 +103,29 @@ class Solution {
 class Solution {
 public:
     int busyStudent(vector<int>& startTime, vector<int>& endTime, int queryTime) {
-        int count = 0, n = startTime.size();
-        for (int i = 0; i < n; ++i) {
-            if (startTime[i] <= queryTime && queryTime <= endTime[i]) {
-                ++count;
-            }
+        int ans = 0;
+        for (int i = 0; i < startTime.size(); ++i) {
+            ans += startTime[i] <= queryTime && queryTime <= endTime[i];
         }
-        return count;
+        return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int busyStudent(vector<int>& startTime, vector<int>& endTime, int queryTime) {
+        vector<int> c(1010);
+        for (int i = 0; i < startTime.size(); ++i) {
+            c[startTime[i]]++;
+            c[endTime[i] + 1]--;
+        }
+        int ans = 0;
+        for (int i = 0; i <= queryTime; ++i) {
+            ans += c[i];
+        }
+        return ans;
     }
 };
 ```
@@ -92,13 +134,79 @@ public:
 
 ```go
 func busyStudent(startTime []int, endTime []int, queryTime int) int {
-	count, n := 0, len(startTime)
-	for i := 0; i < n; i++ {
-		if startTime[i] <= queryTime && queryTime <= endTime[i] {
-			count++
+	ans := 0
+	for i, a := range startTime {
+		b := endTime[i]
+		if a <= queryTime && queryTime <= b {
+			ans++
 		}
 	}
-	return count
+	return ans
+}
+```
+
+```go
+func busyStudent(startTime []int, endTime []int, queryTime int) int {
+	c := make([]int, 1010)
+	for i, a := range startTime {
+		b := endTime[i]
+		c[a]++
+		c[b+1]--
+	}
+	ans := 0
+	for i := 0; i <= queryTime; i++ {
+		ans += c[i]
+	}
+	return ans
+}
+```
+
+### **C**
+
+```c
+int busyStudent(int* startTime, int startTimeSize, int* endTime, int endTimeSize, int queryTime) {
+    int res = 0;
+    for (int i = 0; i < startTimeSize; i++) {
+        if (startTime[i] <= queryTime && endTime[i] >= queryTime) {
+            res++;
+        }
+    }
+    return res;
+}
+```
+
+### **TypeScript**
+
+```ts
+function busyStudent(
+    startTime: number[],
+    endTime: number[],
+    queryTime: number,
+): number {
+    const n = startTime.length;
+    let res = 0;
+    for (let i = 0; i < n; i++) {
+        if (startTime[i] <= queryTime && endTime[i] >= queryTime) {
+            res++;
+        }
+    }
+    return res;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
+        let mut res = 0;
+        for i in 0..start_time.len() {
+            if start_time[i] <= query_time && end_time[i] >= query_time {
+                res += 1;
+            }
+        }
+        res
+    }
 }
 ```
 

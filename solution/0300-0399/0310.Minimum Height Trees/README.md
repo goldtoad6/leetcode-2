@@ -73,15 +73,11 @@ class Solution:
             g[b].append(a)
             degree[a] += 1
             degree[b] += 1
-        q = deque()
-        for i in range(n):
-            if degree[i] == 1:
-                q.append(i)
+        q = deque(i for i in range(n) if degree[i] == 1)
         ans = []
         while q:
-            n = len(q)
             ans.clear()
-            for _ in range(n):
+            for _ in range(len(q)):
                 a = q.popleft()
                 ans.append(a)
                 for b in g[a]:
@@ -102,10 +98,8 @@ class Solution {
             return Collections.singletonList(0);
         }
         List<Integer>[] g = new List[n];
+        Arrays.setAll(g, k -> new ArrayList<>());
         int[] degree = new int[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
         for (int[] e : edges) {
             int a = e[0], b = e[1];
             g[a].add(b);
@@ -146,8 +140,7 @@ public:
         if (n == 1) return {0};
         vector<vector<int>> g(n);
         vector<int> degree(n);
-        for (auto& e : edges)
-        {
+        for (auto& e : edges) {
             int a = e[0], b = e[1];
             g[a].push_back(b);
             g[b].push_back(a);
@@ -159,11 +152,9 @@ public:
             if (degree[i] == 1)
                 q.push(i);
         vector<int> ans;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ans.clear();
-            for (int i = q.size(); i > 0; --i)
-            {
+            for (int i = q.size(); i > 0; --i) {
                 int a = q.front();
                 q.pop();
                 ans.push_back(a);

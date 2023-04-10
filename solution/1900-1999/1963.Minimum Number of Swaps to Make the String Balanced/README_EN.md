@@ -19,7 +19,7 @@
 <p>Return <em>the <strong>minimum</strong> number of swaps to make </em><code>s</code> <em><strong>balanced</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;][][&quot;
@@ -28,7 +28,7 @@
 The resulting string is &quot;[[]]&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;]]][[[&quot;
@@ -39,7 +39,7 @@ The resulting string is &quot;[[]]&quot;.
 The resulting string is &quot;[[][]]&quot;.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;[]&quot;
@@ -101,10 +101,11 @@ class Solution {
 public:
     int minSwaps(string s) {
         int ans = 0;
-        for (char& c : s)
-        {
-            if (c == '[') ++ans;
-            else if (ans) --ans;
+        for (char& c : s) {
+            if (c == '[')
+                ++ans;
+            else if (ans)
+                --ans;
         }
         return (ans + 1) >> 1;
     }

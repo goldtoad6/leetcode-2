@@ -71,7 +71,9 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
+    def getDirections(
+        self, root: Optional[TreeNode], startValue: int, destValue: int
+    ) -> str:
         edges = defaultdict(list)
         ans = None
         visited = set()
@@ -146,12 +148,16 @@ class Solution {
             return;
         }
         if (root.left != null) {
-            edges.computeIfAbsent(root.val, k -> new ArrayList<>()).add(Arrays.asList(String.valueOf(root.left.val), "L"));
-            edges.computeIfAbsent(root.left.val, k -> new ArrayList<>()).add(Arrays.asList(String.valueOf(root.val), "U"));
+            edges.computeIfAbsent(root.val, k -> new ArrayList<>())
+                .add(Arrays.asList(String.valueOf(root.left.val), "L"));
+            edges.computeIfAbsent(root.left.val, k -> new ArrayList<>())
+                .add(Arrays.asList(String.valueOf(root.val), "U"));
         }
         if (root.right != null) {
-            edges.computeIfAbsent(root.val, k -> new ArrayList<>()).add(Arrays.asList(String.valueOf(root.right.val), "R"));
-            edges.computeIfAbsent(root.right.val, k -> new ArrayList<>()).add(Arrays.asList(String.valueOf(root.val), "U"));
+            edges.computeIfAbsent(root.val, k -> new ArrayList<>())
+                .add(Arrays.asList(String.valueOf(root.right.val), "R"));
+            edges.computeIfAbsent(root.right.val, k -> new ArrayList<>())
+                .add(Arrays.asList(String.valueOf(root.val), "U"));
         }
         traverse(root.left);
         traverse(root.right);
@@ -209,13 +215,11 @@ public:
 
     void traverse(TreeNode* root) {
         if (!root) return;
-        if (root->left)
-        {
+        if (root->left) {
             edges[root->val].push_back({root->left->val, 'L'});
             edges[root->left->val].push_back({root->val, 'U'});
         }
-        if (root->right)
-        {
+        if (root->right) {
             edges[root->val].push_back({root->right->val, 'R'});
             edges[root->right->val].push_back({root->val, 'U'});
         }
@@ -225,16 +229,13 @@ public:
 
     void dfs(int start, int dest, string& t) {
         if (visited.count(start)) return;
-        if (start == dest)
-        {
+        if (start == dest) {
             if (ans == "" || ans.size() > t.size()) ans = t;
             return;
         }
         visited.insert(start);
-        if (edges.count(start))
-        {
-            for (auto& item : edges[start])
-            {
+        if (edges.count(start)) {
+            for (auto& item : edges[start]) {
                 t += item.second;
                 dfs(item.first, dest, t);
                 t.pop_back();

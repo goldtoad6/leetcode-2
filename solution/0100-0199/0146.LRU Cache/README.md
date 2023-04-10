@@ -66,7 +66,7 @@ lRUCache.get(4);    // 返回 4
 “哈希表 + 双向链表”实现。其中：
 
 -   双向链表按照被使用的顺序存储 kv 键值对，靠近头部的 kv 键值对是最近使用的，而靠近尾部的键值对是最久未使用的。
--   哈希表通过缓存的 key 映射到双向链表中的位置。我们可以在 `O(1)` 时间内定位到缓存的 key 所对应的 value 在链表中的位置。
+-   哈希表通过缓存的 key 映射到双向链表中的位置。我们可以在 $O(1)$ 时间内定位到缓存的 key 所对应的 value 在链表中的位置。
 
 对于 `get` 操作，判断 key 是否存在哈希表中：
 
@@ -116,7 +116,6 @@ class Node:
 
 
 class LRUCache:
-
     def __init__(self, capacity: int):
         self.cache = {}
         self.head = Node()
@@ -186,7 +185,6 @@ class Node {
     Node next;
 
     Node() {
-
     }
 
     Node(int key, int val) {
@@ -484,13 +482,23 @@ struct Node {
     Node* prev;
     Node* next;
 
-    Node(): k(0), v(0), prev(nullptr), next(nullptr) {}
-    Node(int key, int val): k(key), v(val), prev(nullptr), next(nullptr) {}
+    Node()
+        : k(0)
+        , v(0)
+        , prev(nullptr)
+        , next(nullptr) { }
+    Node(int key, int val)
+        : k(key)
+        , v(val)
+        , prev(nullptr)
+        , next(nullptr) { }
 };
 
 class LRUCache {
 public:
-    LRUCache(int capacity): cap(capacity), size(0) {
+    LRUCache(int capacity)
+        : cap(capacity)
+        , size(0) {
         head = new Node();
         tail = new Node();
         head->next = tail;
@@ -505,20 +513,16 @@ public:
     }
 
     void put(int key, int value) {
-        if (cache.count(key))
-        {
+        if (cache.count(key)) {
             Node* node = cache[key];
             node->v = value;
             moveToHead(node);
-        }
-        else
-        {
+        } else {
             Node* node = new Node(key, value);
             cache[key] = node;
             addToHead(node);
             ++size;
-            if (size > cap)
-            {
+            if (size > cap) {
                 node = removeTail();
                 cache.erase(node->k);
                 --size;

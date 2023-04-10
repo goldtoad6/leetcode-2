@@ -96,7 +96,7 @@ class Solution:
         q = deque([root])
         ans = []
         while q:
-            t = float('-inf')
+            t = -inf
             for _ in range(len(q)):
                 node = q.popleft()
                 t = max(t, node.val)
@@ -173,13 +173,11 @@ class Solution {
 public:
     vector<int> largestValues(TreeNode* root) {
         if (!root) return {};
-        queue<TreeNode*> q{{root}};
+        queue<TreeNode*> q {{root}};
         vector<int> ans;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int t = INT_MIN;
-            for (int i = q.size(); i > 0; --i)
-            {
+            for (int i = q.size(); i > 0; --i) {
                 auto node = q.front();
                 q.pop();
                 t = max(t, node->val);

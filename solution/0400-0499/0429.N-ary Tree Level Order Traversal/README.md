@@ -47,7 +47,7 @@
 
 借助队列，逐层遍历。
 
-时间复杂度 O(n)。
+时间复杂度 $O(n)$。
 
 **方法二：DFS**
 
@@ -55,7 +55,7 @@
 
 假设当前深度为 i，遍历到的节点为 root。若结果列表 `ans[i]` 不存在，则创建一个空列表放入 ans 中，然后将 `root.val` 放入 `ans[i]`。接着往下一层遍历（root 的子节点）。
 
-时间复杂度 O(n)。
+时间复杂度 $O(n)$。
 
 <!-- tabs:start -->
 
@@ -240,12 +240,10 @@ public:
     vector<vector<int>> levelOrder(Node* root) {
         vector<vector<int>> ans;
         if (!root) return ans;
-        queue<Node*> q{{root}};
-        while (!q.empty())
-        {
+        queue<Node*> q {{root}};
+        while (!q.empty()) {
             vector<int> t;
-            for (int n = q.size(); n > 0; --n)
-            {
+            for (int n = q.size(); n > 0; --n) {
                 root = q.front();
                 q.pop();
                 t.push_back(root->val);

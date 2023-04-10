@@ -13,7 +13,7 @@
 <p>Return <code>true</code><em> if it is possible to escape regardless of how the ghosts move, otherwise return </em><code>false</code><em>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> ghosts = [[1,0],[0,3]], target = [0,1]
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> You can reach the destination (0, 1) after 1 turn, while the ghosts located at (1, 0) and (0, 3) cannot catch up with you.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> ghosts = [[1,0]], target = [2,0]
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> You need to reach the destination (2, 0), but the ghost at (1, 0) lies between you and the destination.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> ghosts = [[2,0]], target = [1,0]
@@ -56,13 +56,84 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def escapeGhosts(self, ghosts: List[List[int]], target: List[int]) -> bool:
+        tx, ty = target
+        return all(abs(tx - x) + abs(ty - y) > abs(tx) + abs(ty) for x, y in ghosts)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean escapeGhosts(int[][] ghosts, int[] target) {
+        int tx = target[0], ty = target[1];
+        for (var g : ghosts) {
+            int x = g[0], y = g[1];
+            if (Math.abs(tx - x) + Math.abs(ty - y) <= Math.abs(tx) + Math.abs(ty)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target) {
+        int tx = target[0], ty = target[1];
+        for (auto& g : ghosts) {
+            int x = g[0], y = g[1];
+            if (abs(tx - x) + abs(ty - y) <= abs(tx) + abs(ty)) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
+
+### **Go**
+
+```go
+func escapeGhosts(ghosts [][]int, target []int) bool {
+	tx, ty := target[0], target[1]
+	for _, g := range ghosts {
+		x, y := g[0], g[1]
+		if abs(tx-x)+abs(ty-y) <= abs(tx)+abs(ty) {
+			return false
+		}
+	}
+	return true
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+```
+
+### **TypeScript**
+
+```ts
+function escapeGhosts(ghosts: number[][], target: number[]): boolean {
+    const [tx, ty] = target;
+    for (const [x, y] of ghosts) {
+        if (
+            Math.abs(tx - x) + Math.abs(ty - y) <=
+            Math.abs(tx) + Math.abs(ty)
+        ) {
+            return false;
+        }
+    }
+    return true;
+}
 ```
 
 ### **...**

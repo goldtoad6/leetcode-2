@@ -18,10 +18,10 @@
 
 <p>Your penalty is the <strong>maximum</strong> number of balls in a bag. You want to <strong>minimize</strong> your penalty after the operations.</p>
 
-<p>Return <em>the minimum possible penalty&nbsp;after performing the operations</em>.</p>
+<p>Return <em>the minimum possible penalty after performing the operations</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [9], maxOperations = 2
@@ -32,7 +32,7 @@
 The bag with the most number of balls has 3 balls, so your penalty is 3 and you should return 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,4,8,2], maxOperations = 4
@@ -42,14 +42,7 @@ The bag with the most number of balls has 3 balls, so your penalty is 3 and you 
 - Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,<strong><u>4</u></strong>,4,4,2] -&gt; [2,2,2,4,4,2].
 - Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,2,2,<strong><u>4</u></strong>,4,2] -&gt; [2,2,2,2,2,4,2].
 - Divide the bag with 4 balls into two bags of sizes 2 and 2. [2,2,2,2,2,<strong><u>4</u></strong>,2] -&gt; [2,2,2,2,2,2,2,2].
-The bag with the most number of balls has 2 balls, so your penalty is 2 an you should return 2.
-</pre>
-
-<p><strong>Example 3:</strong></p>
-
-<pre>
-<strong>Input:</strong> nums = [7,17], maxOperations = 2
-<strong>Output:</strong> 7
+The bag with the most number of balls has 2 balls, so your penalty is 2, and you should return 2.
 </pre>
 
 <p>&nbsp;</p>
@@ -71,15 +64,10 @@ Binary search.
 ```python
 class Solution:
     def minimumSize(self, nums: List[int], maxOperations: int) -> int:
-        left, right = 1, max(nums)
-        while left < right:
-            mid = (left + right) >> 1
-            ops = sum((num - 1) // mid for num in nums)
-            if ops <= maxOperations:
-                right = mid
-            else:
-                left = mid + 1
-        return left
+        def f(x):
+            return sum((v - 1) // x for v in nums) <= maxOperations
+
+        return bisect_left(range(1, max(nums) + 1), True, key=f) + 1
 ```
 
 ### **Java**
@@ -90,11 +78,11 @@ class Solution {
         int left = 1, right = (int) 1e9;
         while (left < right) {
             int mid = (left + right) >>> 1;
-            long ops = 0;
-            for (int num : nums) {
-                ops += (num - 1) / mid;
+            long s = 0;
+            for (int v : nums) {
+                s += (v - 1) / mid;
             }
-            if (ops <= maxOperations) {
+            if (s <= maxOperations) {
                 right = mid;
             } else {
                 left = mid + 1;
@@ -111,13 +99,12 @@ class Solution {
 class Solution {
 public:
     int minimumSize(vector<int>& nums, int maxOperations) {
-        int left = 1, right = 1e9;
-        while (left < right)
-        {
-            int mid = left + ((right - left) >> 1);
-            long long ops = 0;
-            for (int num : nums) ops += (num - 1) / mid;
-            if (ops <= maxOperations) right = mid;
+        int left = 1, right = *max_element(nums.begin(), nums.end());
+        while (left < right) {
+            int mid = left + right >> 1;
+            long s = 0;
+            for (int v : nums) s += (v - 1) / mid;
+            if (s <= maxOperations) right = mid;
             else left = mid + 1;
         }
         return left;
@@ -129,21 +116,42 @@ public:
 
 ```go
 func minimumSize(nums []int, maxOperations int) int {
-	left, right := 1, int(1e9)
-	for left < right {
-		mid := (left + right) >> 1
-		var ops int
-		for _, num := range nums {
-			ops += (num - 1) / mid
+	return 1 + sort.Search(1e9, func(x int) bool {
+		x++
+		s := 0
+		for _, v := range nums {
+			s += (v - 1) / x
 		}
-		if ops <= maxOperations {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	return left
+		return s <= maxOperations
+	})
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} maxOperations
+ * @return {number}
+ */
+var minimumSize = function (nums, maxOperations) {
+    let left = 1;
+    let right = 1e9;
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        let s = 0;
+        for (const v of nums) {
+            s += Math.floor((v - 1) / mid);
+        }
+        if (s <= maxOperations) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+};
 ```
 
 ### **...**

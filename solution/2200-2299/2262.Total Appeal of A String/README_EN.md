@@ -15,7 +15,7 @@
 <p>A <strong>substring</strong> is a contiguous sequence of characters within a string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abbca&quot;
@@ -29,7 +29,7 @@
 The total sum is 5 + 7 + 7 + 6 + 3 = 28.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;code&quot;
@@ -97,8 +97,7 @@ public:
     long long appealSum(string s) {
         long long ans = 0, t = 0;
         vector<int> pos(26, -1);
-        for (int i = 0; i < s.size(); ++i)
-        {
+        for (int i = 0; i < s.size(); ++i) {
             int c = s[i] - 'a';
             t += i - pos[c];
             ans += t;

@@ -80,8 +80,14 @@ class Solution:
             if i == m and j == n:
                 return True
 
-            return i < m and s1[i] == s3[i + j] and dfs(i + 1, j) or \
-                j < n and s2[j] == s3[i + j] and dfs(i, j + 1)
+            return (
+                i < m
+                and s1[i] == s3[i + j]
+                and dfs(i + 1, j)
+                or j < n
+                and s2[j] == s3[i + j]
+                and dfs(i, j + 1)
+            )
 
         return dfs(0, 0)
 ```
@@ -120,8 +126,8 @@ class Solution {
             return memo.get(i * 100 + j);
         }
 
-        boolean ret = (i < m && s1.charAt(i) == s3.charAt(i + j) && dfs(i + 1, j)) ||
-                (j < n && s2.charAt(j) == s3.charAt(i + j) && dfs(i, j + 1));
+        boolean ret = (i < m && s1.charAt(i) == s3.charAt(i + j) && dfs(i + 1, j))
+            || (j < n && s2.charAt(j) == s3.charAt(i + j) && dfs(i, j + 1));
 
         memo.put(i * 100 + j, ret);
         return ret;
@@ -146,8 +152,7 @@ public:
             auto it = memo.find(i * 100 + j);
             if (it != memo.end()) return it->second;
 
-            bool ret = (i < m && s1[i] == s3[i + j] && dfs(i + 1, j)) ||
-                       (j < n && s2[j] == s3[i + j] && dfs(i, j + 1));
+            bool ret = (i < m && s1[i] == s3[i + j] && dfs(i + 1, j)) || (j < n && s2[j] == s3[i + j] && dfs(i, j + 1));
 
             memo[i * 100 + j] = ret;
             return ret;

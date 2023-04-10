@@ -7,14 +7,14 @@
 <p>Given two binary search trees <code>root1</code> and <code>root2</code>, return <em>a list containing all the integers from both trees sorted in <strong>ascending</strong> order</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1305.All%20Elements%20in%20Two%20Binary%20Search%20Trees/images/q2-e1.png" style="width: 457px; height: 207px;" />
 <pre>
 <strong>Input:</strong> root1 = [2,1,4], root2 = [1,0,3]
 <strong>Output:</strong> [0,1,1,2,3,4]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1305.All%20Elements%20in%20Two%20Binary%20Search%20Trees/images/q2-e5-.png" style="width: 352px; height: 197px;" />
 <pre>
 <strong>Input:</strong> root1 = [1,null,8], root2 = [8,1]
@@ -166,10 +166,11 @@ public:
     vector<int> merge(vector<int>& t1, vector<int>& t2) {
         vector<int> ans;
         int i = 0, j = 0;
-        while (i < t1.size() && j < t2.size())
-        {
-            if (t1[i] <= t2[j]) ans.push_back(t1[i++]);
-            else ans.push_back(t2[j++]);
+        while (i < t1.size() && j < t2.size()) {
+            if (t1[i] <= t2[j])
+                ans.push_back(t1[i++]);
+            else
+                ans.push_back(t2[j++]);
         }
         while (i < t1.size()) ans.push_back(t1[i++]);
         while (j < t2.size()) ans.push_back(t2[j++]);

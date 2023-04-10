@@ -20,7 +20,7 @@
 <p>Given two strings <code>s1</code> and <code>s2</code> of <strong>the same length</strong>, return <code>true</code> if <code>s2</code> is a scrambled string of <code>s1</code>, otherwise, return <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s1 = &quot;great&quot;, s2 = &quot;rgeat&quot;
@@ -36,14 +36,14 @@ The algorithm stops now, and the result string is &quot;rgeat&quot; which is s2.
 As one possible scenario led s1 to be scrambled to s2, we return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s1 = &quot;abcde&quot;, s2 = &quot;caebd&quot;
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s1 = &quot;a&quot;, s2 = &quot;a&quot;
@@ -116,6 +116,43 @@ class Solution {
         }
         return dp[0][0][n];
     }
+}
+```
+
+### **Go**
+
+```go
+func isScramble(s1 string, s2 string) bool {
+	n := len(s1)
+	dp := make([][][]bool, n+1)
+	for i := range dp {
+		dp[i] = make([][]bool, n)
+		for j := range dp[i] {
+			dp[i][j] = make([]bool, n+1)
+		}
+	}
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			dp[i][j][1] = s1[i] == s2[j]
+		}
+	}
+	for l := 2; l < n+1; l++ {
+		for i1 := 0; i1 < n-l+1; i1++ {
+			for i2 := 0; i2 < n-l+1; i2++ {
+				for i := 1; i < l; i++ {
+					if dp[i1][i2][i] && dp[i1+i][i2+i][l-i] {
+						dp[i1][i2][l] = true
+						break
+					}
+					if dp[i1][i2+l-i][i] && dp[i1+i][i2][l-i] {
+						dp[i1][i2][l] = true
+						break
+					}
+				}
+			}
+		}
+	}
+	return dp[0][0][n]
 }
 ```
 

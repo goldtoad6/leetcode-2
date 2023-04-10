@@ -11,7 +11,7 @@
 <p>Two paths are considered different if they do not have exactly the same sequence of visited cells.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2300-2399/2328.Number%20of%20Increasing%20Paths%20in%20a%20Grid/images/griddrawio-4.png" style="width: 181px; height: 121px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1],[3,4]]
@@ -23,7 +23,7 @@
 The total number of paths is 4 + 3 + 1 = 8.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[1],[2]]
@@ -129,8 +129,7 @@ public:
         if (f[i][j]) return f[i][j];
         int res = 1;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i + dirs[k], y = j + dirs[k + 1];
             if (x >= 0 && x < g.size() && y >= 0 && y < g[0].size() && g[x][y] > g[i][j])
                 res = (res + dfs(x, y, f, g)) % mod;

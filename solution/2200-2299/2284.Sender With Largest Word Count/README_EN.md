@@ -18,7 +18,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> messages = [&quot;Hello userTwooo&quot;,&quot;Hi userThree&quot;,&quot;Wonderful day Alice&quot;,&quot;Nice day userThree&quot;], senders = [&quot;Alice&quot;,&quot;userTwo&quot;,&quot;userThree&quot;,&quot;Alice&quot;]
@@ -29,7 +29,7 @@ userThree sends a total of 3 words.
 Since Alice has the largest word count, we return &quot;Alice&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> messages = [&quot;How is leetcode for everyone&quot;,&quot;Leetcode is useful for practice&quot;], senders = [&quot;Bob&quot;,&quot;Charlie&quot;]
@@ -62,9 +62,13 @@ Since there is a tie for the largest word count, we return the sender with the l
 class Solution:
     def largestWordCount(self, messages: List[str], senders: List[str]) -> str:
         cnt = Counter()
-        for m, s in zip(messages, senders):
-            cnt[s] += m.count(' ') + 1
-        return sorted(cnt.items(), key=lambda x: (x[1], x[0]))[-1][0]
+        for msg, sender in zip(messages, senders):
+            cnt[sender] += msg.count(' ') + 1
+        ans = ''
+        for sender, v in cnt.items():
+            if cnt[ans] < v or (cnt[ans] == v and ans < sender):
+                ans = sender
+        return ans
 ```
 
 ### **Java**
@@ -75,14 +79,20 @@ class Solution {
         Map<String, Integer> cnt = new HashMap<>();
         int n = senders.length;
         for (int i = 0; i < n; ++i) {
-            cnt.put(senders[i], cnt.getOrDefault(senders[i], 0) + messages[i].split(" ").length);
+            int v = 1;
+            for (int j = 0; j < messages[i].length(); ++j) {
+                if (messages[i].charAt(j) == ' ') {
+                    ++v;
+                }
+            }
+            cnt.merge(senders[i], v, Integer::sum);
         }
         String ans = senders[0];
-        for (Map.Entry<String, Integer> e : cnt.entrySet()) {
-            String u = e.getKey();
-            int v = e.getValue();
-            if (v > cnt.get(ans) || (v == cnt.get(ans) && ans.compareTo(u) < 0)) {
-                ans = u;
+        for (var e : cnt.entrySet()) {
+            String sender = e.getKey();
+            if (cnt.get(ans) < cnt.get(sender)
+                || (cnt.get(ans) == cnt.get(sender) && ans.compareTo(sender) < 0)) {
+                ans = sender;
             }
         }
         return ans;
@@ -98,19 +108,15 @@ public:
     string largestWordCount(vector<string>& messages, vector<string>& senders) {
         unordered_map<string, int> cnt;
         int n = senders.size();
-        for (int i = 0; i < n; ++i)
-        {
-            int v = 0;
-            for (char& c : messages[i])
-            {
-                if (c == ' ') ++v;
-            }
-            cnt[senders[i]] += v + 1;
+        for (int i = 0; i < n; ++i) {
+            int v = count(messages[i].begin(), messages[i].end(), ' ') + 1;
+            cnt[senders[i]] += v;
         }
         string ans = senders[0];
-        for (auto& [u, v] : cnt)
-        {
-            if (v > cnt[ans] || (v == cnt[ans] && u > ans)) ans = u;
+        for (auto& [sender, v] : cnt) {
+            if (cnt[ans] < v || (cnt[ans] == v && ans < sender)) {
+                ans = sender;
+            }
         }
         return ans;
     }
@@ -120,19 +126,18 @@ public:
 ### **Go**
 
 ```go
-func largestWordCount(messages []string, senders []string) string {
+func largestWordCount(messages []string, senders []string) (ans string) {
 	cnt := map[string]int{}
 	for i, msg := range messages {
 		v := strings.Count(msg, " ") + 1
 		cnt[senders[i]] += v
 	}
-	ans := ""
-	for u, v := range cnt {
-		if v > cnt[ans] || (v == cnt[ans] && u > ans) {
-			ans = u
+	for sender, v := range cnt {
+		if cnt[ans] < v || (cnt[ans] == v && ans < sender) {
+			ans = sender
 		}
 	}
-	return ans
+	return
 }
 ```
 

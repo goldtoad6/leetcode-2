@@ -9,7 +9,7 @@
 <p>Note that operands in the returned expressions <strong>should not</strong> contain leading zeros.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = &quot;123&quot;, target = 6
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> Both &quot;1*2*3&quot; and &quot;1+2+3&quot; evaluate to 6.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = &quot;232&quot;, target = 8
@@ -25,7 +25,7 @@
 <strong>Explanation:</strong> Both &quot;2*3+2&quot; and &quot;2+3*2&quot; evaluate to 8.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = &quot;3456237490&quot;, target = 9191
@@ -61,14 +61,18 @@ class Solution:
             for i in range(u, len(num)):
                 if i != u and num[u] == '0':
                     break
-                next = int(num[u: i+1])
+                next = int(num[u : i + 1])
                 if u == 0:
                     dfs(i + 1, next, next, path + str(next))
                 else:
-                    dfs(i + 1,  next, curr + next, path + "+" + str(next))
+                    dfs(i + 1, next, curr + next, path + "+" + str(next))
                     dfs(i + 1, -next, curr - next, path + "-" + str(next))
-                    dfs(i + 1, prev * next, curr - prev +
-                        prev * next, path + "*" + str(next))
+                    dfs(
+                        i + 1,
+                        prev * next,
+                        curr - prev + prev * next,
+                        path + "*" + str(next),
+                    )
 
         dfs(0, 0, 0, "")
         return ans
@@ -94,7 +98,7 @@ class Solution {
     private void dfs(int u, long prev, long curr, String path) {
         if (u == num.length()) {
             if (curr == target) ans.add(path);
-            return ;
+            return;
         }
         for (int i = u; i < num.length(); i++) {
             if (i != u && num.charAt(u) == '0') {
@@ -104,7 +108,7 @@ class Solution {
             if (u == 0) {
                 dfs(i + 1, next, next, path + next);
             } else {
-                dfs(i + 1,  next, curr + next, path + "+" + next);
+                dfs(i + 1, next, curr + next, path + "+" + next);
                 dfs(i + 1, -next, curr - next, path + "-" + next);
                 dfs(i + 1, prev * next, curr - prev + prev * next, path + "*" + next);
             }

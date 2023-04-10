@@ -84,8 +84,7 @@ class Solution:
         s = [[0] * (n + 1) for _ in range(m + 1)]
         for i, row in enumerate(pizza):
             for j, v in enumerate(row):
-                s[i + 1][j + 1] = s[i + 1][j] + \
-                    s[i][j + 1] - s[i][j] + int(v == 'A')
+                s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + int(v == 'A')
         return dfs(0, 0, k - 1)
 ```
 
@@ -108,7 +107,8 @@ class Solution {
         f = new int[m][n][k];
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
-                s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + (pizza[i].charAt(j) == 'A' ? 1 : 0);
+                s[i + 1][j + 1]
+                    = s[i + 1][j] + s[i][j + 1] - s[i][j] + (pizza[i].charAt(j) == 'A' ? 1 : 0);
                 Arrays.fill(f[i][j], -1);
             }
         }

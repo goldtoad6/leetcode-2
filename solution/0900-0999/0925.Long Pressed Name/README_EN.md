@@ -9,7 +9,7 @@
 <p>You examine the <code>typed</code> characters of the keyboard. Return <code>True</code> if it is possible that it was your friends name, with some characters (possibly none) being long pressed.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> name = &quot;alex&quot;, typed = &quot;aaleex&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation: </strong>&#39;a&#39; and &#39;e&#39; in &#39;alex&#39; were long pressed.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> name = &quot;saeed&quot;, typed = &quot;ssaaedd&quot;
@@ -99,18 +99,15 @@ public:
     bool isLongPressedName(string name, string typed) {
         int m = name.size(), n = typed.size();
         int i = 0, j = 0;
-        for (; i < m && j < n; ++i, ++j)
-        {
+        for (; i < m && j < n; ++i, ++j) {
             if (name[i] != typed[j]) return false;
             int cnt1 = 0, cnt2 = 0;
             char c = name[i];
-            while (i + 1 < m && name[i + 1] == c)
-            {
+            while (i + 1 < m && name[i + 1] == c) {
                 ++i;
                 ++cnt1;
             }
-            while (j + 1 < n && typed[j + 1] == c)
-            {
+            while (j + 1 < n && typed[j + 1] == c) {
                 ++j;
                 ++cnt2;
             }

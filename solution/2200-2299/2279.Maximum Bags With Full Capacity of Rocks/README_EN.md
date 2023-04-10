@@ -9,7 +9,7 @@
 <p>Return<em> the <strong>maximum</strong> number of bags that could have full capacity after placing the additional rocks in some bags.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> capacity = [2,3,4,5], rocks = [1,2,4,4], additionalRocks = 2
@@ -23,7 +23,7 @@ It can be shown that it is not possible to have more than 3 bags at full capacit
 Note that there may be other ways of placing the rocks that result in an answer of 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> capacity = [10,2,2], rocks = [2,2,0], additionalRocks = 100
@@ -56,7 +56,9 @@ Note that we did not use all of the additional rocks.
 
 ```python
 class Solution:
-    def maximumBags(self, capacity: List[int], rocks: List[int], additionalRocks: int) -> int:
+    def maximumBags(
+        self, capacity: List[int], rocks: List[int], additionalRocks: int
+    ) -> int:
         d = [a - b for a, b in zip(capacity, rocks)]
         d.sort()
         ans = 0
@@ -103,8 +105,7 @@ public:
         for (int i = 0; i < n; ++i) d[i] = capacity[i] - rocks[i];
         sort(d.begin(), d.end());
         int ans = 0;
-        for (int& v : d)
-        {
+        for (int& v : d) {
             if (v > additionalRocks) break;
             ++ans;
             additionalRocks -= v;

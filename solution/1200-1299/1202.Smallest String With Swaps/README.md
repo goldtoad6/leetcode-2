@@ -76,6 +76,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -197,8 +198,7 @@ public:
         for (int i = 0; i < n; ++i) mp[find(i)].push_back(s[i]);
         for (auto& [k, v] : mp) sort(v.rbegin(), v.rend());
         string ans;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             ans.push_back(mp[find(i)].back());
             mp[find(i)].pop_back();
         }

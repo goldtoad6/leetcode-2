@@ -120,8 +120,7 @@ class Solution {
         int carry = 0;
         ListNode dummy = new ListNode();
         while (!s1.isEmpty() || !s2.isEmpty() || carry != 0) {
-            carry +=
-                (s1.isEmpty() ? 0 : s1.pop()) + (s2.isEmpty() ? 0 : s2.pop());
+            carry += (s1.isEmpty() ? 0 : s1.pop()) + (s2.isEmpty() ? 0 : s2.pop());
             ListNode node = new ListNode(carry % 10, dummy.next);
             dummy.next = node;
             carry /= 10;
@@ -129,7 +128,6 @@ class Solution {
         return dummy.next;
     }
 }
-
 ```
 
 ### **C++**
@@ -154,15 +152,12 @@ public:
         for (; l2; l2 = l2->next) s2.push(l2->val);
         int carry = 0;
         ListNode* dummy = new ListNode();
-        while (!s1.empty() || !s2.empty() || carry)
-        {
-            if (!s1.empty())
-            {
+        while (!s1.empty() || !s2.empty() || carry) {
+            if (!s1.empty()) {
                 carry += s1.top();
                 s1.pop();
             }
-            if (!s2.empty())
-            {
+            if (!s2.empty()) {
                 carry += s2.top();
                 s2.pop();
             }

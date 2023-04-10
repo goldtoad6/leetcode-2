@@ -9,7 +9,7 @@
 <p>Return <em>the <strong>sum</strong> of all the unique elements of </em><code>nums</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,2]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> The unique elements are [1,3], and the sum is 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1,1,1]
@@ -25,7 +25,7 @@
 <strong>Explanation:</strong> There are no unique elements, and the sum is 0.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4,5]
@@ -50,8 +50,8 @@
 ```python
 class Solution:
     def sumOfUnique(self, nums: List[int]) -> int:
-        counter = Counter(nums)
-        return sum(num for num, cnt in counter.items() if cnt == 1)
+        cnt = Counter(nums)
+        return sum(x for x, v in cnt.items() if v == 1)
 ```
 
 ### **Java**
@@ -59,14 +59,14 @@ class Solution:
 ```java
 class Solution {
     public int sumOfUnique(int[] nums) {
-        int[] counter = new int[101];
-        for (int num : nums) {
-            ++counter[num];
+        int[] cnt = new int[101];
+        for (int x : nums) {
+            ++cnt[x];
         }
         int ans = 0;
-        for (int i = 0; i < 101; ++i) {
-            if (counter[i] == 1) {
-                ans += i;
+        for (int x = 0; x < 101; ++x) {
+            if (cnt[x] == 1) {
+                ans += x;
             }
         }
         return ans;
@@ -80,12 +80,16 @@ class Solution {
 class Solution {
 public:
     int sumOfUnique(vector<int>& nums) {
-        vector<int> counter(101);
-        for (int num : nums) ++ counter[num];
+        int cnt[101]{};
+        for (int& x : nums) {
+            ++cnt[x];
+        }
         int ans = 0;
-        for (int i = 0; i < 101; ++i)
-            if (counter[i] == 1)
-                ans += i;
+        for (int x = 0; x < 101; ++x) {
+            if (cnt[x] == 1) {
+                ans += x;
+            }
+        }
         return ans;
     }
 };
@@ -94,18 +98,17 @@ public:
 ### **Go**
 
 ```go
-func sumOfUnique(nums []int) int {
-	counter := make([]int, 101)
-	for _, num := range nums {
-		counter[num]++
+func sumOfUnique(nums []int) (ans int) {
+	cnt := [101]int{}
+	for _, x := range nums {
+		cnt[x]++
 	}
-	ans := 0
-	for i := 0; i < 101; i++ {
-		if counter[i] == 1 {
-			ans += i
+	for x := 0; x < 101; x++ {
+		if cnt[x] == 1 {
+			ans += x
 		}
 	}
-	return ans
+	return
 }
 ```
 
@@ -113,46 +116,39 @@ func sumOfUnique(nums []int) int {
 
 ```ts
 function sumOfUnique(nums: number[]): number {
-    let res = 0;
-    const map = new Map();
-    for (const num of nums) {
-        if (map.has(num)) {
-            if (map.get(num)) {
-                map.set(num, false);
-                res -= num;
-            }
-        } else {
-            map.set(num, true);
-            res += num;
+    const cnt = new Array(101).fill(0);
+    for (const x of nums) {
+        ++cnt[x];
+    }
+    let ans = 0;
+    for (let x = 0; x < 101; ++x) {
+        if (cnt[x] == 1) {
+            ans += x;
         }
     }
-    return res;
+    return ans;
 }
 ```
 
 ### **Rust**
 
--   Count
-
 ```rust
 impl Solution {
     pub fn sum_of_unique(nums: Vec<i32>) -> i32 {
-        let mut arr = [0; 101];
-        for num in nums {
-            arr[num as usize] += 1;
+        let mut cnt = [0; 101];
+        for x in nums {
+            cnt[x as usize] += 1;
         }
-        let mut res = 0;
-        for i in 1..101 {
-            if arr[i] == 1 {
-                res += i;
+        let mut ans = 0;
+        for x in 1..101 {
+            if cnt[x] == 1 {
+                ans += x;
             }
         }
-        res as i32
+        ans as i32
     }
 }
 ```
-
--   HashMap
 
 ```rust
 use std::collections::HashMap;

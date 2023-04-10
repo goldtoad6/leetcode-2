@@ -9,14 +9,14 @@
 <p>The bomb kills all the enemies in the same row and column from the planted point until it hits the wall since it is too strong to be destroyed.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0361.Bomb%20Enemy/images/bomb1-grid.jpg" style="width: 600px; height: 187px;" />
 <pre>
 <strong>Input:</strong> grid = [[&quot;0&quot;,&quot;E&quot;,&quot;0&quot;,&quot;0&quot;],[&quot;E&quot;,&quot;0&quot;,&quot;W&quot;,&quot;E&quot;],[&quot;0&quot;,&quot;E&quot;,&quot;0&quot;,&quot;0&quot;]]
 <strong>Output:</strong> 3
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0361.Bomb%20Enemy/images/bomb2-grid.jpg" style="width: 500px; height: 194px;" />
 <pre>
 <strong>Input:</strong> grid = [[&quot;W&quot;,&quot;W&quot;,&quot;W&quot;],[&quot;0&quot;,&quot;0&quot;,&quot;0&quot;],[&quot;E&quot;,&quot;E&quot;,&quot;E&quot;]]
@@ -74,7 +74,10 @@ class Solution:
                 elif grid[i][j] == 'E':
                     t += 1
                 g[i][j] += t
-        return max([g[i][j] for i in range(m) for j in range(n) if grid[i][j] == '0'], default=0)
+        return max(
+            [g[i][j] for i in range(m) for j in range(n) if grid[i][j] == '0'],
+            default=0,
+        )
 ```
 
 ### **Java**
@@ -146,45 +149,45 @@ public:
     int maxKilledEnemies(vector<vector<char>>& grid) {
         int m = grid.size(), n = grid[0].size();
         vector<vector<int>> g(m, vector<int>(n));
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             int t = 0;
-            for (int j = 0; j < n; ++j)
-            {
-                if (grid[i][j] == 'W') t = 0;
-                else if (grid[i][j] == 'E') ++t;
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] == 'W')
+                    t = 0;
+                else if (grid[i][j] == 'E')
+                    ++t;
                 g[i][j] += t;
             }
             t = 0;
-            for (int j = n - 1; j >= 0; --j)
-            {
-                if (grid[i][j] == 'W') t = 0;
-                else if (grid[i][j] == 'E') ++t;
+            for (int j = n - 1; j >= 0; --j) {
+                if (grid[i][j] == 'W')
+                    t = 0;
+                else if (grid[i][j] == 'E')
+                    ++t;
                 g[i][j] += t;
             }
         }
-        for (int j = 0; j < n; ++j)
-        {
+        for (int j = 0; j < n; ++j) {
             int t = 0;
-            for (int i = 0; i < m; ++i)
-            {
-                if (grid[i][j] == 'W') t = 0;
-                else if (grid[i][j] == 'E') ++t;
+            for (int i = 0; i < m; ++i) {
+                if (grid[i][j] == 'W')
+                    t = 0;
+                else if (grid[i][j] == 'E')
+                    ++t;
                 g[i][j] += t;
             }
             t = 0;
-            for (int i = m - 1; i >= 0; --i)
-            {
-                if (grid[i][j] == 'W') t = 0;
-                else if (grid[i][j] == 'E') ++t;
+            for (int i = m - 1; i >= 0; --i) {
+                if (grid[i][j] == 'W')
+                    t = 0;
+                else if (grid[i][j] == 'E')
+                    ++t;
                 g[i][j] += t;
             }
         }
         int ans = 0;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 if (grid[i][j] == '0') ans = max(ans, g[i][j]);
             }
         }

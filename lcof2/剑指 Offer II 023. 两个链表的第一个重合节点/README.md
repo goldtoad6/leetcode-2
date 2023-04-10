@@ -98,6 +98,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         cur1, cur2 = headA, headB
@@ -148,7 +149,7 @@ public class Solution {
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
         ListNode* cur1 = headA;
         ListNode* cur2 = headB;
         while (cur1 != cur2) {

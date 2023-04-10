@@ -11,14 +11,14 @@
 <p>Return <em>an array of coordinates representing the positions of the grid in the order you visited them</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0885.Spiral%20Matrix%20III/images/example_1.png" style="width: 174px; height: 99px;" />
 <pre>
 <strong>Input:</strong> rows = 1, cols = 4, rStart = 0, cStart = 0
 <strong>Output:</strong> [[0,0],[0,1],[0,2],[0,3]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0885.Spiral%20Matrix%20III/images/example_2.png" style="width: 202px; height: 142px;" />
 <pre>
 <strong>Input:</strong> rows = 5, cols = 6, rStart = 1, cStart = 4
@@ -42,7 +42,9 @@
 
 ```python
 class Solution:
-    def spiralMatrixIII(self, rows: int, cols: int, rStart: int, cStart: int) -> List[List[int]]:
+    def spiralMatrixIII(
+        self, rows: int, cols: int, rStart: int, cStart: int
+    ) -> List[List[int]]:
         ans = [[rStart, cStart]]
         if rows * cols == 1:
             return ans
@@ -66,19 +68,19 @@ class Solution {
     public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
         int cnt = rows * cols;
         int[][] ans = new int[cnt][2];
-        ans[0] = new int[]{rStart, cStart};
+        ans[0] = new int[] {rStart, cStart};
         if (cnt == 1) {
             return ans;
         }
         for (int k = 1, idx = 1;; k += 2) {
-            int[][] dirs = new int[][]{{0, 1, k}, {1, 0, k}, {0, -1, k + 1}, {-1, 0, k + 1}};
+            int[][] dirs = new int[][] {{0, 1, k}, {1, 0, k}, {0, -1, k + 1}, {-1, 0, k + 1}};
             for (int[] dir : dirs) {
                 int r = dir[0], c = dir[1], dk = dir[2];
                 while (dk-- > 0) {
                     rStart += r;
                     cStart += c;
                     if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols) {
-                        ans[idx++] = new int[]{rStart, cStart};
+                        ans[idx++] = new int[] {rStart, cStart};
                         if (idx == cnt) {
                             return ans;
                         }
@@ -100,18 +102,14 @@ public:
         vector<vector<int>> ans;
         ans.push_back({rStart, cStart});
         if (cnt == 1) return ans;
-        for (int k = 1;; k += 2)
-        {
+        for (int k = 1;; k += 2) {
             vector<vector<int>> dirs = {{0, 1, k}, {1, 0, k}, {0, -1, k + 1}, {-1, 0, k + 1}};
-            for (auto& dir : dirs)
-            {
+            for (auto& dir : dirs) {
                 int r = dir[0], c = dir[1], dk = dir[2];
-                while (dk-- > 0)
-                {
+                while (dk-- > 0) {
                     rStart += r;
                     cStart += c;
-                    if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols)
-                    {
+                    if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols) {
                         ans.push_back({rStart, cStart});
                         if (ans.size() == cnt) return ans;
                     }

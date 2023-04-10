@@ -19,7 +19,7 @@
 <p>Return <em>the <strong>minimum</strong> number of operations needed to remove all </em><code>1</code><em>&#39;s from </em><code>grid</code><em>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2174.Remove%20All%20Ones%20With%20Row%20and%20Column%20Flips%20II/images/image-20220213162716-1.png" style="width: 709px; height: 200px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1,1],[1,1,1],[0,1,0]]
@@ -29,7 +29,7 @@ In the first operation, change all cell values of row 1 and column 1 to zero.
 In the second operation, change all cell values of row 0 and column 0 to zero.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2174.Remove%20All%20Ones%20With%20Row%20and%20Column%20Flips%20II/images/image-20220213162737-2.png" style="width: 734px; height: 200px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,1,0],[1,0,1],[0,1,0]]
@@ -40,7 +40,7 @@ In the second operation, change all cell values of row 2 and column 1 to zero.
 Note that we cannot perform an operation using row 1 and column 1 because grid[1][1] != 1.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2174.Remove%20All%20Ones%20With%20Row%20and%20Column%20Flips%20II/images/image-20220213162752-3.png" style="width: 156px; height: 150px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,0],[0,0]]
@@ -70,8 +70,7 @@ There are no 1&#39;s to remove so return 0.
 class Solution:
     def removeOnes(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
-        state = sum(1 << (i * n + j) for i in range(m)
-                    for j in range(n) if grid[i][j])
+        state = sum(1 << (i * n + j) for i in range(m) for j in range(n) if grid[i][j])
         q = deque([state])
         vis = {state}
         ans = 0
@@ -159,26 +158,21 @@ public:
             for (int j = 0; j < n; ++j)
                 if (grid[i][j])
                     state |= (1 << (i * n + j));
-        queue<int> q{{state}};
-        unordered_set<int> vis{{state}};
+        queue<int> q {{state}};
+        unordered_set<int> vis {{state}};
         int ans = 0;
-        while (!q.empty())
-        {
-            for (int k = q.size(); k > 0; --k)
-            {
+        while (!q.empty()) {
+            for (int k = q.size(); k > 0; --k) {
                 state = q.front();
                 q.pop();
                 if (state == 0) return ans;
-                for (int i = 0; i < m; ++i)
-                {
-                    for (int j = 0; j < n; ++j)
-                    {
+                for (int i = 0; i < m; ++i) {
+                    for (int j = 0; j < n; ++j) {
                         if (grid[i][j] == 0) continue;
                         int nxt = state;
                         for (int r = 0; r < m; ++r) nxt &= ~(1 << (r * n + j));
                         for (int c = 0; c < n; ++c) nxt &= ~(1 << (i * n + c));
-                        if (!vis.count(nxt))
-                        {
+                        if (!vis.count(nxt)) {
                             vis.insert(nxt);
                             q.push(nxt);
                         }

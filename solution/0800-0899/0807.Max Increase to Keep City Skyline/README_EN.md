@@ -6,14 +6,14 @@
 
 <p>There is a city composed of <code>n x n</code> blocks, where each block contains a single building shaped like a vertical square prism. You are given a <strong>0-indexed</strong> <code>n x n</code> integer matrix <code>grid</code> where <code>grid[r][c]</code> represents the <strong>height</strong> of the building located in the block at row <code>r</code> and column <code>c</code>.</p>
 
-<p>A city&#39;s <strong>skyline</strong> is the the outer contour formed by all the building when viewing the side of the city from a distance. The <strong>skyline</strong> from each cardinal direction north, east, south, and west may be different.</p>
+<p>A city&#39;s <strong>skyline</strong> is the&nbsp;outer contour formed by all the building when viewing the side of the city from a distance. The <strong>skyline</strong> from each cardinal direction north, east, south, and west may be different.</p>
 
 <p>We are allowed to increase the height of <strong>any number of buildings by any amount</strong> (the amount can be different per building). The height of a <code>0</code>-height building can also be increased. However, increasing the height of a building should <strong>not</strong> affect the city&#39;s <strong>skyline</strong> from any cardinal direction.</p>
 
 <p>Return <em>the <strong>maximum total sum</strong> that the height of the buildings can be increased by <strong>without</strong> changing the city&#39;s <strong>skyline</strong> from any cardinal direction</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0807.Max%20Increase%20to%20Keep%20City%20Skyline/images/807-ex1.png" style="width: 700px; height: 603px;" />
 <pre>
 <strong>Input:</strong> grid = [[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]
@@ -27,7 +27,7 @@ gridNew = [ [8, 4, 8, 7],
             [3, 3, 3, 3] ]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[0,0,0],[0,0,0],[0,0,0]]
@@ -56,7 +56,11 @@ class Solution:
     def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:
         rmx = [max(row) for row in grid]
         cmx = [max(col) for col in zip(*grid)]
-        return sum((min(rmx[i], cmx[j]) - grid[i][j]) for i in range(len(grid)) for j in range(len(grid[0])))
+        return sum(
+            (min(rmx[i], cmx[j]) - grid[i][j])
+            for i in range(len(grid))
+            for j in range(len(grid[0]))
+        )
 ```
 
 ### **Java**
@@ -118,10 +122,8 @@ public:
         int m = grid.size(), n = grid[0].size();
         vector<int> rmx(m, 0);
         vector<int> cmx(n, 0);
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 rmx[i] = max(rmx[i], grid[i][j]);
                 cmx[j] = max(cmx[j], grid[i][j]);
             }

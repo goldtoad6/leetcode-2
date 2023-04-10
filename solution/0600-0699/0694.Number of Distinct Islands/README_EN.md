@@ -11,14 +11,14 @@
 <p>Return <em>the number of <b>distinct</b> islands</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0694.Number%20of%20Distinct%20Islands/images/distinctisland1-1-grid.jpg" style="width: 413px; height: 334px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]
 <strong>Output:</strong> 1
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0694.Number%20of%20Distinct%20Islands/images/distinctisland1-2-grid.jpg" style="width: 413px; height: 334px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]
@@ -116,12 +116,9 @@ public:
     int numDistinctIslands(vector<vector<int>>& grid) {
         unordered_set<string> paths;
         string path;
-        for (int i = 0; i < grid.size(); ++i)
-        {
-            for (int j = 0; j < grid[0].size(); ++j)
-            {
-                if (grid[i][j] == 1)
-                {
+        for (int i = 0; i < grid.size(); ++i) {
+            for (int j = 0; j < grid[0].size(); ++j) {
+                if (grid[i][j] == 1) {
                     path = "";
                     dfs(i, j, 0, grid, path);
                     paths.insert(path);
@@ -135,8 +132,7 @@ public:
         grid[i][j] = 0;
         path += to_string(direction);
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 1; k < 5; ++k)
-        {
+        for (int k = 1; k < 5; ++k) {
             int x = i + dirs[k - 1], y = j + dirs[k];
             if (x >= 0 && x < grid.size() && y >= 0 && y < grid[0].size() && grid[x][y] == 1)
                 dfs(x, y, k, grid, path);

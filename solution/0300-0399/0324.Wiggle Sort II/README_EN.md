@@ -9,7 +9,7 @@
 <p>You may assume the input array always has a valid answer.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,5,1,1,6,4]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> [1,4,1,5,1,6] is also accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,3,2,2,3,1]
@@ -140,10 +140,11 @@ public:
         sort(arr.begin(), arr.end());
         int n = nums.size();
         int i = (n - 1) >> 1, j = n - 1;
-        for (int k = 0; k < n; ++k)
-        {
-            if (k % 2 == 0) nums[k] = arr[i--];
-            else nums[k] = arr[j--];
+        for (int k = 0; k < n; ++k) {
+            if (k % 2 == 0)
+                nums[k] = arr[i--];
+            else
+                nums[k] = arr[j--];
         }
     }
 };
@@ -216,6 +217,37 @@ func wiggleSort(nums []int) {
 		bucket[j]--
 	}
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var wiggleSort = function (nums) {
+    let bucket = new Array(5001).fill(0);
+    for (const v of nums) {
+        bucket[v]++;
+    }
+    const n = nums.length;
+    let j = 5000;
+    for (let i = 1; i < n; i += 2) {
+        while (bucket[j] == 0) {
+            --j;
+        }
+        nums[i] = j;
+        --bucket[j];
+    }
+    for (let i = 0; i < n; i += 2) {
+        while (bucket[j] == 0) {
+            --j;
+        }
+        nums[i] = j;
+        --bucket[j];
+    }
+};
 ```
 
 ### **...**

@@ -22,7 +22,7 @@
 <p>Return <em>the <strong>earliest second</strong> starting from which the network becomes <strong>idle</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="example 1" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2039.The%20Time%20When%20the%20Network%20Becomes%20Idle/images/quiet-place-example1.png" style="width: 750px; height: 384px;" />
 <pre>
 <strong>Input:</strong> edges = [[0,1],[1,2]], patience = [0,2,1]
@@ -54,7 +54,7 @@ This is the time when the network becomes idle.
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="example 2" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2039.The%20Time%20When%20the%20Network%20Becomes%20Idle/images/network_a_quiet_place_2.png" style="width: 100px; height: 85px;" />
 <pre>
 <strong>Input:</strong> edges = [[0,1],[0,2],[1,2]], patience = [0,10,10]
@@ -119,9 +119,7 @@ class Solution {
         int n = patience.length;
         List<Integer>[] g = new List[n];
         boolean[] vis = new boolean[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int[] e : edges) {
             int u = e[0], v = e[1];
             g[u].add(v);
@@ -162,24 +160,20 @@ public:
         int n = patience.size();
         vector<vector<int>> g(n);
         vector<bool> vis(n);
-        for (auto& e : edges)
-        {
+        for (auto& e : edges) {
             int u = e[0], v = e[1];
             g[u].push_back(v);
             g[v].push_back(u);
         }
-        queue<int> q{{0}};
+        queue<int> q {{0}};
         vis[0] = true;
         int ans = 0, step = 0;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++step;
-            for (int i = q.size(); i > 0; --i)
-            {
+            for (int i = q.size(); i > 0; --i) {
                 int u = q.front();
                 q.pop();
-                for (int v : g[u])
-                {
+                for (int v : g[u]) {
                     if (vis[v]) continue;
                     vis[v] = true;
                     q.push(v);

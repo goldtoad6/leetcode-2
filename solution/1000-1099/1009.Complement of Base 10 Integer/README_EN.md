@@ -13,7 +13,7 @@
 <p>Given an integer <code>n</code>, return <em>its complement</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> 5 is &quot;101&quot; in binary, with complement &quot;010&quot; in binary, which is 2 in base-10.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 7
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> 7 is &quot;111&quot; in binary, with complement &quot;000&quot; in binary, which is 0 in base-10.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 10
@@ -66,7 +66,7 @@ class Solution:
                 continue
             find = True
             if b == 0:
-                ans |= (1 << i)
+                ans |= 1 << i
         return ans
 ```
 
@@ -104,8 +104,7 @@ public:
         if (n == 0) return 1;
         int ans = 0;
         bool find = false;
-        for (int i = 30; i >= 0; --i)
-        {
+        for (int i = 30; i >= 0; --i) {
             int b = n & (1 << i);
             if (!find && b == 0) continue;
             find = true;

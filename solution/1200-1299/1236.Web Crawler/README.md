@@ -108,6 +108,7 @@ DFS。
 #        :rtype List[str]
 #        """
 
+
 class Solution:
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
         def host(url):
@@ -202,8 +203,7 @@ public:
     string host(string url) {
         int i = 7;
         string res;
-        for (; i < url.size(); ++i)
-        {
+        for (; i < url.size(); ++i) {
             if (url[i] == '/') break;
             res += url[i];
         }

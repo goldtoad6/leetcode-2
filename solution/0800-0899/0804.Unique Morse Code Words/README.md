@@ -69,7 +69,7 @@
 
 将 words 所有单词翻译成对应的摩尔斯密码，加入到哈希表中，最后返回哈希表的 size。
 
-时间复杂度 O(n)。
+时间复杂度 $O(n)$。
 
 <!-- tabs:start -->
 
@@ -80,8 +80,34 @@
 ```python
 class Solution:
     def uniqueMorseRepresentations(self, words: List[str]) -> int:
-        codes = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
-                 "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."]
+        codes = [
+            ".-",
+            "-...",
+            "-.-.",
+            "-..",
+            ".",
+            "..-.",
+            "--.",
+            "....",
+            "..",
+            ".---",
+            "-.-",
+            ".-..",
+            "--",
+            "-.",
+            "---",
+            ".--.",
+            "--.-",
+            ".-.",
+            "...",
+            "-",
+            "..-",
+            "...-",
+            ".--",
+            "-..-",
+            "-.--",
+            "--..",
+        ]
         s = {''.join([codes[ord(c) - ord('a')] for c in word]) for word in words}
         return len(s)
 ```
@@ -93,7 +119,9 @@ class Solution:
 ```java
 class Solution {
     public int uniqueMorseRepresentations(String[] words) {
-        String[] codes = new String[]{".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+        String[] codes = new String[] {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+            "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
+            "..-", "...-", ".--", "-..-", "-.--", "--.."};
         Set<String> s = new HashSet<>();
         for (String word : words) {
             StringBuilder t = new StringBuilder();
@@ -183,10 +211,9 @@ class Solution {
 public:
     int uniqueMorseRepresentations(vector<string>& words) {
         vector<string> codes = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
-                 "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+            "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
         unordered_set<string> s;
-        for (auto& word : words)
-        {
+        for (auto& word : words) {
             string t;
             for (char& c : word) t += codes[c - 'a'];
             s.insert(t);

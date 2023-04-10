@@ -9,7 +9,7 @@
 <p>Return the result as a list of indices representing the starting position of each interval (<strong>0-indexed</strong>). If there are multiple answers, return the lexicographically smallest one.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,1,2,6,7,5,1], k = 2
@@ -18,7 +18,7 @@
 We could have also taken [2, 1], but an answer of [1, 3, 5] would be lexicographically larger.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,1,2,1,2,1,2,1], k = 2
@@ -92,7 +92,7 @@ class Solution {
                 }
                 if (mx12 + s3 > s) {
                     s = mx12 + s3;
-                    ans = new int[]{idx121, idx122, i - k + 1};
+                    ans = new int[] {idx121, idx122, i - k + 1};
                 }
                 s1 -= nums[i - k * 3 + 1];
                 s2 -= nums[i - k * 2 + 1];
@@ -114,26 +114,21 @@ public:
         int s = 0, s1 = 0, s2 = 0, s3 = 0;
         int mx1 = 0, mx12 = 0;
         int idx1 = 0, idx121 = 0, idx122 = 0;
-        for (int i = k * 2; i < nums.size(); ++i)
-        {
+        for (int i = k * 2; i < nums.size(); ++i) {
             s1 += nums[i - k * 2];
             s2 += nums[i - k];
             s3 += nums[i];
-            if (i >= k * 3 - 1)
-            {
-                if (s1 > mx1)
-                {
+            if (i >= k * 3 - 1) {
+                if (s1 > mx1) {
                     mx1 = s1;
                     idx1 = i - k * 3 + 1;
                 }
-                if (mx1 + s2 > mx12)
-                {
+                if (mx1 + s2 > mx12) {
                     mx12 = mx1 + s2;
                     idx121 = idx1;
                     idx122 = i - k * 2 + 1;
                 }
-                if (mx12 + s3 > s)
-                {
+                if (mx12 + s3 > s) {
                     s = mx12 + s3;
                     ans = {idx121, idx122, i - k + 1};
                 }

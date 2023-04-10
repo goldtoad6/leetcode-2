@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -28,7 +28,7 @@ merged: a p b q c r
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -46,7 +46,7 @@ merged: a p b q   r   s
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -82,15 +82,7 @@ merged: a p b q c   d
 ```python
 class Solution:
     def mergeAlternately(self, word1: str, word2: str) -> str:
-        i, m, n = 0, len(word1), len(word2)
-        res = []
-        while i < m or i < n:
-            if i < m:
-                res.append(word1[i])
-            if i < n:
-                res.append(word2[i])
-            i += 1
-        return ''.join(res)
+        return ''.join(a + b for a, b in zip_longest(word1, word2, fillvalue=''))
 ```
 
 ### **Java**
@@ -99,16 +91,16 @@ class Solution:
 class Solution {
     public String mergeAlternately(String word1, String word2) {
         int m = word1.length(), n = word2.length();
-        StringBuilder res = new StringBuilder();
+        StringBuilder ans = new StringBuilder();
         for (int i = 0; i < m || i < n; ++i) {
             if (i < m) {
-                res.append(word1.charAt(i));
+                ans.append(word1.charAt(i));
             }
             if (i < n) {
-                res.append(word2.charAt(i));
+                ans.append(word2.charAt(i));
             }
         }
-        return res.toString();
+        return ans.toString();
     }
 }
 ```
@@ -120,18 +112,46 @@ class Solution {
 public:
     string mergeAlternately(string word1, string word2) {
         int m = word1.size(), n = word2.size();
-        string res;
+        string ans;
         for (int i = 0; i < m || i < n; ++i) {
-            if (i < m) {
-                res.push_back(word1[i]);
-            }
-            if (i < n) {
-                res.push_back(word2[i]);
-            }
+            if (i < m) ans += word1[i];
+            if (i < n) ans += word2[i];
         }
-        return res;
+        return ans;
     }
 };
+```
+
+### **Go**
+
+```go
+func mergeAlternately(word1 string, word2 string) string {
+	m, n := len(word1), len(word2)
+	ans := make([]byte, 0, m+n)
+	for i := 0; i < m || i < n; i++ {
+		if i < m {
+			ans = append(ans, word1[i])
+		}
+		if i < n {
+			ans = append(ans, word2[i])
+		}
+	}
+	return string(ans)
+}
+```
+
+### **TypeScript**
+
+```ts
+function mergeAlternately(word1: string, word2: string): string {
+    const res = [];
+    const n = Math.max(word1.length, word2.length);
+    for (let i = 0; i < n; i++) {
+        word1[i] && res.push(word1[i]);
+        word2[i] && res.push(word2[i]);
+    }
+    return res.join('');
+}
 ```
 
 ### **Rust**
@@ -153,6 +173,30 @@ impl Solution {
         }
         String::from_utf8(res).unwrap()
     }
+}
+```
+
+### **C**
+
+```c
+char *mergeAlternately(char *word1, char *word2) {
+    int m = strlen(word1);
+    int n = strlen(word2);
+    char *ans = malloc(sizeof(char) * (n + m + 1));
+    int i = 0;
+    int j = 0;
+    while (i + j != m + n) {
+        if (i < m) {
+            ans[i + j] = word1[i];
+            i++;
+        }
+        if (j < n) {
+            ans[i + j] = word2[j];
+            j++;
+        }
+    }
+    ans[n + m] = '\0';
+    return ans;
 }
 ```
 

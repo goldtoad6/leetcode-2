@@ -11,7 +11,7 @@
 <p>Return <code>true</code><em> if </em><code>s</code><em> is a <strong>prefix string</strong> of </em><code>words</code><em>, or </em><code>false</code><em> otherwise</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;iloveleetcode&quot;, words = [&quot;i&quot;,&quot;love&quot;,&quot;leetcode&quot;,&quot;apples&quot;]
@@ -20,7 +20,7 @@
 s can be made by concatenating &quot;i&quot;, &quot;love&quot;, and &quot;leetcode&quot; together.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;iloveleetcode&quot;, words = [&quot;apples&quot;,&quot;i&quot;,&quot;love&quot;,&quot;leetcode&quot;]
@@ -51,7 +51,7 @@ class Solution:
         for i, w in enumerate(words):
             t += len(w)
             if len(s) == t:
-                return ''.join(words[:i + 1]) == s
+                return ''.join(words[: i + 1]) == s
         return False
 ```
 
@@ -79,8 +79,7 @@ class Solution {
 public:
     bool isPrefixString(string s, vector<string>& words) {
         string t = "";
-        for (string& w : words)
-        {
+        for (string& w : words) {
             t += w;
             if (t.size() == s.size()) return t == s;
         }

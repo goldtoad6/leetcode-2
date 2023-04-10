@@ -72,7 +72,7 @@
 class Solution:
     def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
         m, n = len(grid), len(grid[0])
-        k %= (m * n)
+        k %= m * n
         t = [grid[i][j] for i in range(m) for j in range(n)]
         t = t[-k:] + t[:-k]
         for i in range(m):
@@ -137,10 +137,8 @@ public:
     vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
         int m = grid.size(), n = grid[0].size();
         vector<vector<int>> ans(m, vector<int>(n));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 int t = (i * n + j + k) % (m * n);
                 ans[t / n][t % n] = grid[i][j];
             }

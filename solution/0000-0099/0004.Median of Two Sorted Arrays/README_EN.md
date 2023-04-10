@@ -9,7 +9,7 @@
 <p>The overall run time complexity should be <code>O(log (m+n))</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,3], nums2 = [2]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> merged array = [1,2,3] and median is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,2], nums2 = [3,4]
@@ -55,8 +55,8 @@ class Solution:
                 return nums1[i + k - 1]
             if k == 1:
                 return min(nums1[i], nums2[j])
-            midVal1 = nums1[i + k // 2 - 1] if i + k // 2 - 1 < m else float('inf')
-            midVal2 = nums2[j + k // 2 - 1] if j + k // 2 - 1 < n else float('inf')
+            midVal1 = nums1[i + k // 2 - 1] if i + k // 2 - 1 < m else inf
+            midVal2 = nums2[j + k // 2 - 1] if j + k // 2 - 1 < n else inf
             if midVal1 < midVal2:
                 return findKth(i + k // 2, j, k - k // 2)
             return findKth(i, j + k // 2, k - k // 2)

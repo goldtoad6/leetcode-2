@@ -51,6 +51,12 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：贪心**
+
+我们将数组转换为字符串，然后从左到右遍历字符串，找到第一个出现的 $6$，将其替换为 $9$，然后返回转换后的字符串对应的整数即可。
+
+时间复杂度 $O(\log num)$，空间复杂度 $O(\log num)$。其中 $num$ 为给定的整数。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -82,10 +88,8 @@ class Solution {
 public:
     int maximum69Number(int num) {
         string s = to_string(num);
-        for (char& ch: s)
-        {
-            if (ch == '6')
-            {
+        for (char& ch : s) {
+            if (ch == '6') {
                 ch = '9';
                 break;
             }
@@ -109,6 +113,42 @@ func maximum69Number(num int) int {
 	}
 	ans, _ := strconv.Atoi(string(nums))
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function maximum69Number(num: number): number {
+    return Number((num + '').replace('6', '9'));
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn maximum69_number(num: i32) -> i32 {
+        num.to_string().replacen('6', "9", 1).parse().unwrap()
+    }
+}
+```
+
+### **C**
+
+```c
+int maximum69Number(int num) {
+    int n = 0;
+    int i = 0;
+    int t = num;
+    while (t) {
+        n++;
+        if (t % 10 == 6) {
+            i = n;
+        }
+        t /= 10;
+    }
+    return num + 3 * pow(10, i - 1);
 }
 ```
 

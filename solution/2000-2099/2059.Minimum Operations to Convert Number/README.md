@@ -87,6 +87,8 @@ while q1 and q2:
         extend(m1, m2, q1)
     else:
         extend(m2, m1, q2)
+
+
 def extend(m1, m2, q):
     # 新一轮扩展
     for _ in range(len(q)):
@@ -330,7 +332,7 @@ class Solution {
 public:
     int minimumOperations(vector<int>& nums, int start, int goal) {
         using pii = pair<int, int>;
-        vector<function<int(int, int)>> ops{
+        vector<function<int(int, int)>> ops {
             [](int x, int y) { return x + y; },
             [](int x, int y) { return x - y; },
             [](int x, int y) { return x ^ y; },

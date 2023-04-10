@@ -18,7 +18,7 @@
 <p>Return <em>the smallest possible weight of the left stone</em>. If there are no stones left, return <code>0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [2,7,4,1,8,1]
@@ -30,7 +30,7 @@ we can combine 2 and 1 to get 1, so the array converts to [1,1,1] then,
 we can combine 1 and 1 to get 0, so the array converts to [1], then that&#39;s the optimal value.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [31,26,33,21,40]
@@ -65,8 +65,9 @@ class Solution:
             for j in range(n + 1):
                 dp[i][j] = dp[i - 1][j]
                 if stones[i - 1] <= j:
-                    dp[i][j] = max(dp[i][j], dp[i - 1]
-                                   [j - stones[i - 1]] + stones[i - 1])
+                    dp[i][j] = max(
+                        dp[i][j], dp[i - 1][j - stones[i - 1]] + stones[i - 1]
+                    )
         return s - 2 * dp[-1][-1]
 ```
 
@@ -136,10 +137,8 @@ public:
         int s = accumulate(stones.begin(), stones.end(), 0);
         int m = stones.size(), n = s >> 1;
         vector<vector<int>> dp(m + 1, vector<int>(n + 1));
-        for (int i = 1; i <= m; ++i)
-        {
-            for (int j = 0; j <= n; ++j)
-            {
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 0; j <= n; ++j) {
                 dp[i][j] = dp[i - 1][j];
                 if (stones[i - 1] <= j) dp[i][j] = max(dp[i][j], dp[i - 1][j - stones[i - 1]] + stones[i - 1]);
             }

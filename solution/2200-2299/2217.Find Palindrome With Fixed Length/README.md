@@ -57,7 +57,7 @@
 class Solution:
     def kthPalindrome(self, queries: List[int], intLength: int) -> List[int]:
         l = (intLength + 1) >> 1
-        start, end = 10**(l - 1), 10**l - 1
+        start, end = 10 ** (l - 1), 10**l - 1
         ans = []
         for q in queries:
             v = start + q - 1
@@ -65,7 +65,7 @@ class Solution:
                 ans.append(-1)
                 continue
             s = str(v)
-            s += s[::-1][intLength % 2:]
+            s += s[::-1][intLength % 2 :]
             ans.append(int(s))
         return ans
 ```
@@ -106,11 +106,9 @@ public:
         int l = (intLength + 1) >> 1;
         long long start = pow(10, l - 1), end = pow(10, l) - 1;
         vector<long long> ans;
-        for (int& q : queries)
-        {
+        for (int& q : queries) {
             long long v = start + q - 1;
-            if (v > end)
-            {
+            if (v > end) {
                 ans.push_back(-1);
                 continue;
             }

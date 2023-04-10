@@ -92,8 +92,10 @@ class Solution {
     public int removeElement(int[] nums, int val) {
         int cnt = 0, n = nums.length;
         for (int i = 0; i < n; ++i) {
-            if (nums[i] == val) ++cnt;
-            else nums[i - cnt] = nums[i];
+            if (nums[i] == val)
+                ++cnt;
+            else
+                nums[i - cnt] = nums[i];
         }
         return n - cnt;
     }
@@ -108,8 +110,10 @@ public:
     int removeElement(vector<int>& nums, int val) {
         int cnt = 0, n = nums.size();
         for (int i = 0; i < n; ++i) {
-            if (nums[i] == val) ++cnt;
-            else nums[i - cnt] = nums[i];
+            if (nums[i] == val)
+                ++cnt;
+            else
+                nums[i - cnt] = nums[i];
         }
         return n - cnt;
     }
@@ -164,6 +168,26 @@ impl Solution {
             }
         }
         len as i32
+    }
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $val
+     * @return Integer
+     */
+    function removeElement(&$nums, $val) {
+        for ($i = count($nums) - 1; $i >= 0; $i--) {
+            if ($nums[$i] == $val) {
+                array_splice($nums, $i, 1);
+            }
+        }
     }
 }
 ```

@@ -21,21 +21,21 @@
 <p>Return <em>the number that I picked</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 10, pick = 6
 <strong>Output:</strong> 6
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1, pick = 1
 <strong>Output:</strong> 1
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, pick = 1
@@ -62,6 +62,7 @@
 # @return -1 if my number is lower, 1 if my number is higher, otherwise return 0
 # def guess(num: int) -> int:
 
+
 class Solution:
     def guessNumber(self, n: int) -> int:
         left, right = 1, n
@@ -72,6 +73,19 @@ class Solution:
             else:
                 left = mid + 1
         return left
+```
+
+```python
+# The guess API is already defined for you.
+# @param num, your guess
+# @return -1 if num is higher than the picked number
+#          1 if num is lower than the picked number
+#          otherwise return 0
+# def guess(num: int) -> int:
+
+class Solution:
+    def guessNumber(self, n: int) -> int:
+        return bisect.bisect(range(1, n + 1), 0, key=lambda x: -guess(x))
 ```
 
 ### **Java**
@@ -157,14 +171,32 @@ func guessNumber(n int) int {
 }
 ```
 
+```go
+/**
+ * Forward declaration of guess API.
+ * @param  num   your guess
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
+ *               otherwise return 0
+ * func guess(num int) int;
+ */
+
+func guessNumber(n int) int {
+	return sort.Search(n, func(i int) bool {
+		i++
+		return guess(i) <= 0
+	}) + 1
+}
+```
+
 ### **C#**
 
 ```cs
 /**
  * Forward declaration of guess API.
  * @param  num   your guess
- * @return 	     -1 if num is lower than the guess number
- *			      1 if num is higher than the guess number
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
  *               otherwise return 0
  * int guess(int num);
  */
@@ -172,15 +204,11 @@ func guessNumber(n int) int {
 public class Solution : GuessGame {
     public int GuessNumber(int n) {
         int left = 1, right = n;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = left + ((right - left) >> 1);
-            if (guess(mid) <= 0)
-            {
+            if (guess(mid) <= 0) {
                 right = mid;
-            }
-            else
-            {
+            } else {
                 left = mid + 1;
             }
         }

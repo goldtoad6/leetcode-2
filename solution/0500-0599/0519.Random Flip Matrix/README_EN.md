@@ -17,7 +17,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -52,7 +52,6 @@ solution.flip();  // return [2, 0], [0,0], [1,0], and [2,0] should be equally li
 
 ```python
 class Solution:
-
     def __init__(self, m: int, n: int):
         self.m = m
         self.n = n
@@ -69,6 +68,7 @@ class Solution:
     def reset(self) -> None:
         self.total = self.m * self.n
         self.mp.clear()
+
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(m, n)
@@ -96,7 +96,7 @@ class Solution {
         int x = rand.nextInt(total--);
         int idx = mp.getOrDefault(x, x);
         mp.put(x, mp.getOrDefault(total, total));
-        return new int[]{idx / n, idx % n};
+        return new int[] {idx / n, idx % n};
     }
 
     public void reset() {

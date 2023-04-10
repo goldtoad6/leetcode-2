@@ -9,7 +9,7 @@
 <p>Given a string <code>n</code> that represents a positive decimal integer, return <em>the <strong>minimum</strong> number of positive <strong>deci-binary</strong> numbers needed so that they sum up to </em><code>n</code><em>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = &quot;32&quot;
@@ -17,14 +17,14 @@
 <strong>Explanation:</strong> 10 + 11 + 11 = 32
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = &quot;82734&quot;
 <strong>Output:</strong> 8
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = &quot;27346209830709182346&quot;
@@ -57,12 +57,38 @@ class Solution:
 ```java
 class Solution {
     public int minPartitions(String n) {
-        int res = 0;
-        for (char c : n.toCharArray()) {
-            res = Math.max(res, c - '0');
+        int ans = 0;
+        for (int i = 0; i < n.length(); ++i) {
+            ans = Math.max(ans, n.charAt(i) - '0');
         }
-        return res;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minPartitions(string n) {
+        int ans = 0;
+        for (char& c : n) ans = max(ans, c - '0');
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minPartitions(n string) (ans int) {
+	for _, c := range n {
+		if t := int(c - '0'); ans < t {
+			ans = t
+		}
+	}
+	return
 }
 ```
 
@@ -76,33 +102,32 @@ function minPartitions(n: string): number {
 }
 ```
 
-### **C++**
+### **Rust**
 
-```cpp
-class Solution {
-public:
-    int minPartitions(string n) {
-        int res = 0;
-        for (auto& c : n) {
-            res = max(res, c - '0');
+```rust
+impl Solution {
+    pub fn min_partitions(n: String) -> i32 {
+        let mut ans = 0;
+        for c in n.as_bytes() {
+            ans = ans.max((c - b'0') as i32);
         }
-        return res;
+        ans
     }
-};
+}
 ```
 
-### **Go**
+### **C**
 
-```go
-func minPartitions(n string) int {
-	res := 0
-	for _, c := range n {
-		t := int(c - '0')
-		if t > res {
-			res = t
-		}
-	}
-	return res
+```c
+int minPartitions(char *n) {
+    int ans = 0;
+    for (int i = 0; n[i]; i++) {
+        int v = n[i] - '0';
+        if (v > ans) {
+            ans = v;
+        }
+    }
+    return ans;
 }
 ```
 

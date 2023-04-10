@@ -6,13 +6,13 @@
 
 <p>You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in <strong>adjacent</strong> plots.</p>
 
-<p>Given an integer array <code>flowerbed</code> containing <code>0</code>&#39;s and <code>1</code>&#39;s, where <code>0</code> means empty and <code>1</code> means not empty, and an integer <code>n</code>, return <em>if</em> <code>n</code> new flowers can be planted in the <code>flowerbed</code> without violating the no-adjacent-flowers rule.</p>
+<p>Given an integer array <code>flowerbed</code> containing <code>0</code>&#39;s and <code>1</code>&#39;s, where <code>0</code> means empty and <code>1</code> means not empty, and an integer <code>n</code>, return <code>true</code>&nbsp;<em>if</em> <code>n</code> <em>new flowers can be planted in the</em> <code>flowerbed</code> <em>without violating the no-adjacent-flowers rule and</em> <code>false</code> <em>otherwise</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> flowerbed = [1,0,0,0,1], n = 1
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> flowerbed = [1,0,0,0,1], n = 2
 <strong>Output:</strong> false
 </pre>
@@ -37,7 +37,7 @@ class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
         flowerbed = [0] + flowerbed + [0]
         for i in range(1, len(flowerbed) - 1):
-            if sum(flowerbed[i - 1: i + 2]) == 0:
+            if sum(flowerbed[i - 1 : i + 2]) == 0:
                 flowerbed[i] = 1
                 n -= 1
         return n <= 0
@@ -69,12 +69,10 @@ class Solution {
 public:
     bool canPlaceFlowers(vector<int>& flowerbed, int n) {
         int m = flowerbed.size();
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             int l = i == 0 ? 0 : flowerbed[i - 1];
             int r = i == m - 1 ? 0 : flowerbed[i + 1];
-            if (l + flowerbed[i] + r == 0)
-            {
+            if (l + flowerbed[i] + r == 0) {
                 flowerbed[i] = 1;
                 --n;
             }

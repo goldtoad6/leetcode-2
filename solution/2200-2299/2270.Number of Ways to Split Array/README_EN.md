@@ -16,7 +16,7 @@
 <p>Return <em>the number of <strong>valid splits</strong> in</em> <code>nums</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,4,-8,7]
@@ -29,7 +29,7 @@ There are three ways of splitting nums into two non-empty parts:
 Thus, the number of valid splits in nums is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,3,1,0]
@@ -57,14 +57,13 @@ There are two valid splits in nums:
 ```python
 class Solution:
     def waysToSplitArray(self, nums: List[int]) -> int:
-        left, right = 0, sum(nums)
-        cnt = 0
+        s = sum(nums)
+        ans = t = 0
         for v in nums[:-1]:
-            left += v
-            right -= v
-            if left >= right:
-                cnt += 1
-        return cnt
+            t += v
+            if t >= s - t:
+                ans += 1
+        return ans
 ```
 
 ### **Java**
@@ -72,18 +71,57 @@ class Solution:
 ```java
 class Solution {
     public int waysToSplitArray(int[] nums) {
-        long[] pre = new long[nums.length + 1];
-        for (int i = 0; i < nums.length; i++) {
-            pre[i + 1] = pre[i] + nums[i];
+        long s = 0;
+        for (int v : nums) {
+            s += v;
         }
-        int cnt = 0;
-        for (int i = 1; i < nums.length; i++) {
-            if (pre[i] >= pre[nums.length] - pre[i]) {
-                cnt++;
+        int ans = 0;
+        long t = 0;
+        for (int i = 0; i < nums.length - 1; ++i) {
+            t += nums[i];
+            if (t >= s - t) {
+                ++ans;
             }
         }
-        return cnt;
+        return ans;
     }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int waysToSplitArray(vector<int>& nums) {
+        long long s = accumulate(nums.begin(), nums.end(), 0ll);
+        long long t = 0;
+        int ans = 0;
+        for (int i = 0; i < nums.size() - 1; ++i) {
+            t += nums[i];
+            ans += t >= s - t;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func waysToSplitArray(nums []int) int {
+	s := 0
+	for _, v := range nums {
+		s += v
+	}
+	ans, t := 0, 0
+	for _, v := range nums[:len(nums)-1] {
+		t += v
+		if t >= s-t {
+			ans++
+		}
+	}
+	return ans
 }
 ```
 

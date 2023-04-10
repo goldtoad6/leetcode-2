@@ -11,7 +11,7 @@
 <p>Return <em>the <strong>minimum</strong> number of semesters needed to take all courses</em>. If there is no way to take all the courses, return <code>-1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1136.Parallel%20Courses/images/course1graph.jpg" style="width: 222px; height: 222px;" />
 <pre>
 <strong>Input:</strong> n = 3, relations = [[1,3],[2,3]]
@@ -21,7 +21,7 @@ In the first semester, you can take courses 1 and 2.
 In the second semester, you can take course 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1136.Parallel%20Courses/images/course2graph.jpg" style="width: 222px; height: 222px;" />
 <pre>
 <strong>Input:</strong> n = 3, relations = [[1,2],[2,3],[3,1]]
@@ -48,13 +48,172 @@ In the second semester, you can take course 3.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minimumSemesters(self, n: int, relations: List[List[int]]) -> int:
+        g = defaultdict(list)
+        indeg = [0] * n
+        for prev, nxt in relations:
+            prev, nxt = prev - 1, nxt - 1
+            g[prev].append(nxt)
+            indeg[nxt] += 1
+        q = deque(i for i, v in enumerate(indeg) if v == 0)
+        ans = 0
+        while q:
+            ans += 1
+            for _ in range(len(q)):
+                i = q.popleft()
+                n -= 1
+                for j in g[i]:
+                    indeg[j] -= 1
+                    if indeg[j] == 0:
+                        q.append(j)
+        return -1 if n else ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+        List<Integer>[] g = new List[n];
+        Arrays.setAll(g, k -> new ArrayList<>());
+        int[] indeg = new int[n];
+        for (var r : relations) {
+            int prev = r[0] - 1, nxt = r[1] - 1;
+            g[prev].add(nxt);
+            ++indeg[nxt];
+        }
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; ++i) {
+            if (indeg[i] == 0) {
+                q.offer(i);
+            }
+        }
+        int ans = 0;
+        while (!q.isEmpty()) {
+            ++ans;
+            for (int k = q.size(); k > 0; --k) {
+                int i = q.poll();
+                --n;
+                for (int j : g[i]) {
+                    if (--indeg[j] == 0) {
+                        q.offer(j);
+                    }
+                }
+            }
+        }
+        return n == 0 ? ans : -1;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minimumSemesters(int n, vector<vector<int>>& relations) {
+        vector<vector<int>> g(n);
+        vector<int> indeg(n);
+        for (auto& r : relations) {
+            int prev = r[0] - 1, nxt = r[1] - 1;
+            g[prev].push_back(nxt);
+            ++indeg[nxt];
+        }
+        queue<int> q;
+        for (int i = 0; i < n; ++i) {
+            if (indeg[i] == 0) {
+                q.push(i);
+            }
+        }
+        int ans = 0;
+        while (!q.empty()) {
+            ++ans;
+            for (int k = q.size(); k; --k) {
+                int i = q.front();
+                q.pop();
+                --n;
+                for (int& j : g[i]) {
+                    if (--indeg[j] == 0) {
+                        q.push(j);
+                    }
+                }
+            }
+        }
+        return n == 0 ? ans : -1;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minimumSemesters(n int, relations [][]int) (ans int) {
+	g := make([][]int, n)
+	indeg := make([]int, n)
+	for _, r := range relations {
+		prev, nxt := r[0]-1, r[1]-1
+		g[prev] = append(g[prev], nxt)
+		indeg[nxt]++
+	}
+	q := []int{}
+	for i, v := range indeg {
+		if v == 0 {
+			q = append(q, i)
+		}
+	}
+	for len(q) > 0 {
+		ans++
+		for k := len(q); k > 0; k-- {
+			i := q[0]
+			q = q[1:]
+			n--
+			for _, j := range g[i] {
+				indeg[j]--
+				if indeg[j] == 0 {
+					q = append(q, j)
+				}
+			}
+		}
+	}
+	if n == 0 {
+		return
+	}
+	return -1
+}
+```
+
+### **TypeScript**
+
+```ts
+function minimumSemesters(n: number, relations: number[][]): number {
+    const g = Array.from({ length: n }, () => []);
+    const indeg = new Array(n).fill(0);
+    for (const [prev, nxt] of relations) {
+        g[prev - 1].push(nxt - 1);
+        indeg[nxt - 1]++;
+    }
+    const q: number[] = [];
+    for (let i = 0; i < n; ++i) {
+        if (indeg[i] === 0) {
+            q.push(i);
+        }
+    }
+    let ans = 0;
+    while (q.length) {
+        ++ans;
+        for (let k = q.length; k; --k) {
+            const i = q.shift()!;
+            --n;
+            for (const j of g[i]) {
+                if (--indeg[j] === 0) {
+                    q.push(j);
+                }
+            }
+        }
+    }
+    return n === 0 ? ans : -1;
+}
 ```
 
 ### **...**

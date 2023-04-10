@@ -12,7 +12,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -28,7 +28,7 @@ T_4 = 1 + 1 + 2 = 4
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -92,7 +92,7 @@ public:
             b = c;
             c = d;
         }
-        return (int) a;
+        return (int)a;
     }
 };
 ```
@@ -128,6 +128,29 @@ var tribonacci = function (n) {
     }
     return a;
 };
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer $n
+     * @return Integer
+     */
+    function tribonacci($n) {
+        if ($n == 0) {
+            return 0;
+        } else if ($n == 1 || $n == 2) {
+            return 1;
+        }
+        $dp = [0, 1, 1];
+        for ($i = 3; $i <= $n; $i++) {
+            $dp[$i] = $dp[$i - 1] + $dp[$i - 2] + $dp[$i - 3];
+        }
+        return $dp[$n];
+    }
+}
 ```
 
 ### **...**

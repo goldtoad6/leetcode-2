@@ -60,6 +60,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
+
         def dfs(i, j):
             board[i][j] = '.'
             for a, b in [[0, -1], [0, 1], [1, 0], [-1, 0]]:
@@ -70,7 +71,9 @@ class Solution:
         m, n = len(board), len(board[0])
         for i in range(m):
             for j in range(n):
-                if board[i][j] == 'O' and (i == 0 or i == m - 1 or j == 0 or j == n - 1):
+                if board[i][j] == 'O' and (
+                    i == 0 or i == m - 1 or j == 0 or j == n - 1
+                ):
                     dfs(i, j)
         for i in range(m):
             for j in range(n):
@@ -312,12 +315,12 @@ public:
             for (int j = 0; j < n; ++j)
                 if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O')
                     dfs(board, i, j);
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (board[i][j] == '.') board[i][j] = 'O';
-                else if (board[i][j] == 'O') board[i][j] = 'X';
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == '.')
+                    board[i][j] = 'O';
+                else if (board[i][j] == 'O')
+                    board[i][j] = 'X';
             }
         }
     }
@@ -325,8 +328,7 @@ public:
     void dfs(vector<vector<char>>& board, int i, int j) {
         board[i][j] = '.';
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i + dirs[k], y = j + dirs[k + 1];
             if (x >= 0 && x < board.size() && y >= 0 && y < board[0].size() && board[x][y] == 'O')
                 dfs(board, x, y);

@@ -20,7 +20,7 @@
 <p>Return <code>true</code> <em>if it is possible to fit the stamps while following the given restrictions and requirements. Otherwise, return</em> <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2132.Stamping%20the%20Grid/images/ex1.png" style="width: 180px; height: 237px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]], stampHeight = 4, stampWidth = 3
@@ -28,7 +28,7 @@
 <strong>Explanation:</strong> We have two overlapping stamps (labeled 1 and 2 in the image) that are able to cover all the empty cells.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2132.Stamping%20the%20Grid/images/ex2.png" style="width: 170px; height: 179px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]], stampHeight = 2, stampWidth = 2 
@@ -56,7 +56,9 @@
 
 ```python
 class Solution:
-    def possibleToStamp(self, grid: List[List[int]], stampHeight: int, stampWidth: int) -> bool:
+    def possibleToStamp(
+        self, grid: List[List[int]], stampHeight: int, stampWidth: int
+    ) -> bool:
         m, n = len(grid), len(grid[0])
         s = [[0] * (n + 1) for _ in range(m + 1)]
         for i, row in enumerate(grid):
@@ -131,22 +133,17 @@ public:
     bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth) {
         int m = grid.size(), n = grid[0].size();
         vector<vector<int>> s(m + 1, vector<int>(n + 1));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + grid[i][j];
             }
         }
         vector<vector<int>> d(m + 1, vector<int>(n + 1));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 if (grid[i][j]) continue;
                 int x = i + stampHeight, y = j + stampWidth;
-                if (x <= m && y <= n && s[x][y] - s[i][y] - s[x][j] + s[i][j] == 0)
-                {
+                if (x <= m && y <= n && s[x][y] - s[i][y] - s[x][j] + s[i][j] == 0) {
                     d[i][j]++;
                     d[x][j]--;
                     d[i][y]--;
@@ -155,10 +152,8 @@ public:
             }
         }
         vector<vector<int>> cnt(m + 1, vector<int>(n + 1));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 cnt[i + 1][j + 1] = cnt[i + 1][j] + cnt[i][j + 1] - cnt[i][j] + d[i][j];
                 if (grid[i][j] == 0 && cnt[i + 1][j + 1] == 0) return false;
             }

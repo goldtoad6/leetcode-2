@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -22,7 +22,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -34,7 +34,7 @@
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -61,13 +61,97 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+        cnt = Counter({0: 1})
+        ans = t = 0
+        for v in nums:
+            t += v & 1
+            ans += cnt[t - k]
+            cnt[t] += 1
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        int[] cnt = new int[n + 1];
+        cnt[0] = 1;
+        int ans = 0, t = 0;
+        for (int v : nums) {
+            t += v & 1;
+            if (t - k >= 0) {
+                ans += cnt[t - k];
+            }
+            cnt[t]++;
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> cnt(n + 1);
+        cnt[0] = 1;
+        int ans = 0, t = 0;
+        for (int& v : nums) {
+            t += v & 1;
+            if (t - k >= 0) {
+                ans += cnt[t - k];
+            }
+            cnt[t]++;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func numberOfSubarrays(nums []int, k int) (ans int) {
+	n := len(nums)
+	cnt := make([]int, n+1)
+	cnt[0] = 1
+	t := 0
+	for _, v := range nums {
+		t += v & 1
+		if t >= k {
+			ans += cnt[t-k]
+		}
+		cnt[t]++
+	}
+	return
+}
+```
+
+### **TypeScript**
+
+```ts
+function numberOfSubarrays(nums: number[], k: number): number {
+    const n = nums.length;
+    const cnt = new Array(n + 1).fill(0);
+    cnt[0] = 1;
+    let ans = 0;
+    let t = 0;
+    for (const v of nums) {
+        t += v & 1;
+        if (t - k >= 0) {
+            ans += cnt[t - k];
+        }
+        cnt[t] += 1;
+    }
+    return ans;
+}
 ```
 
 ### **...**

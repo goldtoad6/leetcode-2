@@ -15,7 +15,7 @@
 <p>Return <em>an integer array </em><code>ans</code><em> where </em><code>ans[i]</code><em> represents the height described above after dropping the </em><code>i<sup>th</sup></code><em> square</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0699.Falling%20Squares/images/fallingsq1-plane.jpg" style="width: 500px; height: 505px;" />
 <pre>
 <strong>Input:</strong> positions = [[1,2],[2,3],[6,1]]
@@ -27,7 +27,7 @@ After the third drop, the tallest stack is still squares 1 and 2 with a height o
 Thus, we return an answer of [2, 5, 5].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> positions = [[100,100],[200,100]]
@@ -155,7 +155,6 @@ class SegmentTree {
     private Node root = new Node(1, (int) 1e9);
 
     public SegmentTree() {
-
     }
 
     public void modify(int l, int r, int v) {
@@ -277,10 +276,9 @@ public:
         modify(l, r, v, root);
     }
 
-    void modify(int l, int r,int v, Node* node) {
+    void modify(int l, int r, int v, Node* node) {
         if (l > r) return;
-        if (node->l >= l && node->r <= r)
-        {
+        if (node->l >= l && node->r <= r) {
             node->v = v;
             node->add = v;
             return;
@@ -297,7 +295,7 @@ public:
 
     int query(int l, int r, Node* node) {
         if (l > r) return 0;
-        if (node->l >= l && node-> r <= r) return node->v;
+        if (node->l >= l && node->r <= r) return node->v;
         pushdown(node);
         int v = 0;
         if (l <= node->mid) v = max(v, query(l, r, node->left));
@@ -312,8 +310,7 @@ public:
     void pushdown(Node* node) {
         if (!node->left) node->left = new Node(node->l, node->mid);
         if (!node->right) node->right = new Node(node->mid + 1, node->r);
-        if (node->add)
-        {
+        if (node->add) {
             Node* left = node->left;
             Node* right = node->right;
             left->v = node->add;
@@ -331,8 +328,7 @@ public:
         vector<int> ans;
         SegmentTree* tree = new SegmentTree();
         int mx = 0;
-        for (auto& p : positions)
-        {
+        for (auto& p : positions) {
             int l = p[0], w = p[1], r = l + w - 1;
             int h = tree->query(l, r) + w;
             mx = max(mx, h);

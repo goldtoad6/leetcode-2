@@ -17,7 +17,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -33,7 +33,7 @@ There is not other value of n that has at most 5 prime factors and more nice div
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -58,13 +58,111 @@ There is not other value of n that has at most 5 prime factors and more nice div
 ### **Python3**
 
 ```python
-
+class Solution:
+    def maxNiceDivisors(self, primeFactors: int) -> int:
+        mod = 10**9 + 7
+        if primeFactors < 4:
+            return primeFactors
+        if primeFactors % 3 == 0:
+            return pow(3, primeFactors // 3, mod) % mod
+        if primeFactors % 3 == 1:
+            return 4 * pow(3, primeFactors // 3 - 1, mod) % mod
+        return 2 * pow(3, primeFactors // 3, mod) % mod
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int maxNiceDivisors(int primeFactors) {
+        if (primeFactors < 4) {
+            return primeFactors;
+        }
+        final int mod = (int) 1e9 + 7;
+        if (primeFactors % 3 == 0) {
+            return (int) qmi(3, primeFactors / 3, mod);
+        }
+        if (primeFactors % 3 == 1) {
+            return (int) (4 * qmi(3, primeFactors / 3 - 1, mod) % mod);
+        }
+        return (int) (2 * qmi(3, primeFactors / 3, mod) % mod);
+    }
 
+    private long qmi(long a, long k, long p) {
+        long res = 1;
+        while (k != 0) {
+            if ((k & 1) == 1) {
+                res = res * a % p;
+            }
+            k >>= 1;
+            a = a * a % p;
+        }
+        return res;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int maxNiceDivisors(int primeFactors) {
+        if (primeFactors < 4) {
+            return primeFactors;
+        }
+        const int mod = 1e9 + 7;
+        if (primeFactors % 3 == 0) {
+            return qmi(3, primeFactors / 3, mod);
+        }
+        if (primeFactors % 3 == 1) {
+            return 4 * qmi(3, primeFactors / 3 - 1, mod) % mod;
+        }
+        return 2 * qmi(3, primeFactors / 3, mod) % mod;
+    }
+
+    long qmi(long a, long k, long p) {
+        long res = 1;
+        while (k != 0) {
+            if ((k & 1) == 1) {
+                res = res * a % p;
+            }
+            k >>= 1;
+            a = a * a % p;
+        }
+        return res;
+    }
+};
+```
+
+### **Go**
+
+```go
+func maxNiceDivisors(primeFactors int) int {
+	if primeFactors < 4 {
+		return primeFactors
+	}
+	const mod int = 1e9 + 7
+	if primeFactors%3 == 0 {
+		return qmi(3, primeFactors/3, mod)
+	}
+	if primeFactors%3 == 1 {
+		return 4 * qmi(3, primeFactors/3-1, mod) % mod
+	}
+	return 2 * qmi(3, primeFactors/3, mod) % mod
+}
+
+func qmi(a, k, p int) int {
+	res := 1
+	for k != 0 {
+		if k&1 == 1 {
+			res = res * a % p
+		}
+		k >>= 1
+		a = a * a % p
+	}
+	return res
+}
 ```
 
 ### **...**

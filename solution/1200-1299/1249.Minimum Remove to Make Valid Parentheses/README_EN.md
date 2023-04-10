@@ -17,7 +17,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;lee(t(c)o)de)&quot;
@@ -25,14 +25,14 @@
 <strong>Explanation:</strong> &quot;lee(t(co)de)&quot; , &quot;lee(t(c)ode)&quot; would also be accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;a)b(c)d&quot;
 <strong>Output:</strong> &quot;ab(c)d&quot;
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;))((&quot;
@@ -55,13 +55,136 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        stk = []
+        x = 0
+        for c in s:
+            if c == ')' and x == 0:
+                continue
+            if c == '(':
+                x += 1
+            elif c == ')':
+                x -= 1
+            stk.append(c)
+        x = 0
+        ans = []
+        for c in stk[::-1]:
+            if c == '(' and x == 0:
+                continue
+            if c == ')':
+                x += 1
+            elif c == '(':
+                x -= 1
+            ans.append(c)
+        return ''.join(ans[::-1])
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        Deque<Character> stk = new ArrayDeque<>();
+        int x = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (c == ')' && x == 0) {
+                continue;
+            }
+            if (c == '(') {
+                ++x;
+            } else if (c == ')') {
+                --x;
+            }
+            stk.push(c);
+        }
+        StringBuilder ans = new StringBuilder();
+        x = 0;
+        while (!stk.isEmpty()) {
+            char c = stk.pop();
+            if (c == '(' && x == 0) {
+                continue;
+            }
+            if (c == ')') {
+                ++x;
+            } else if (c == '(') {
+                --x;
+            }
+            ans.append(c);
+        }
+        return ans.reverse().toString();
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string stk;
+        int x = 0;
+        for (char& c : s) {
+            if (c == ')' && x == 0) continue;
+            if (c == '(') ++x;
+            else if (c == ')') --x;
+            stk.push_back(c);
+        }
+        string ans;
+        x = 0;
+        while (stk.size()) {
+            char c = stk.back();
+            stk.pop_back();
+            if (c == '(' && x == 0) continue;
+            if (c == ')') ++x;
+            else if (c == '(') --x;
+            ans.push_back(c);
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minRemoveToMakeValid(s string) string {
+	stk := []byte{}
+	x := 0
+	for i := range s {
+		c := s[i]
+		if c == ')' && x == 0 {
+			continue
+		}
+		if c == '(' {
+			x++
+		} else if c == ')' {
+			x--
+		}
+		stk = append(stk, c)
+	}
+	ans := []byte{}
+	x = 0
+	for i := len(stk) - 1; i >= 0; i-- {
+		c := stk[i]
+		if c == '(' && x == 0 {
+			continue
+		}
+		if c == ')' {
+			x++
+		} else if c == '(' {
+			x--
+		}
+		ans = append(ans, c)
+	}
+	for i, j := 0, len(ans)-1; i < j; i, j = i+1, j-1 {
+		ans[i], ans[j] = ans[j], ans[i]
+	}
+	return string(ans)
+}
 ```
 
 ### **TypeScript**

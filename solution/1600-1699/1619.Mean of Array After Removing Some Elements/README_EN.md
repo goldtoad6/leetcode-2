@@ -9,7 +9,7 @@
 <p>Answers within <code>10<sup>-5</sup></code> of the <strong>actual answer</strong> will be considered accepted.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3]
@@ -17,14 +17,14 @@
 <strong>Explanation:</strong> After erasing the minimum and the maximum values of this array, all elements are equal to 2, so the mean is 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [6,2,7,5,1,2,0,3,10,2,5,0,5,5,0,8,7,6,8,0]
 <strong>Output:</strong> 4.00000
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [6,0,7,0,7,5,7,8,3,4,0,7,8,1,6,8,1,1,2,4,8,1,9,5,4,3,8,5,10,8,6,6,1,0,6,10,8,2,3,4]
@@ -52,7 +52,7 @@ class Solution:
         n = len(arr)
         start, end = int(n * 0.05), int(n * 0.95)
         arr.sort()
-        t = arr[start: end]
+        t = arr[start:end]
         return round(sum(t) / len(t), 5)
 ```
 
@@ -96,7 +96,7 @@ public:
         sort(arr.begin(), arr.end());
         int n = arr.size();
         double s = 0;
-        for (int start = (int) (n * 0.05), i = start; i < n - start; ++i)
+        for (int start = (int)(n * 0.05), i = start; i < n - start; ++i)
             s += arr[i];
         return s / (n * 0.9);
     }
@@ -114,6 +114,23 @@ func trimMean(arr []int) float64 {
 		sum += float64(arr[i])
 	}
 	return sum / (float64(n) * 0.9)
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
+        arr.sort();
+        let n = arr.len();
+        let count = (n as f64 * 0.05).floor() as usize;
+        let mut sum = 0;
+        for i in count..n - count {
+            sum += arr[i];
+        }
+        sum as f64 / (n as f64 * 0.9)
+    }
 }
 ```
 

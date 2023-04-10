@@ -8,7 +8,7 @@
 
 <p>给你一个字符串 <code>s</code> ，仅反转字符串中的所有元音字母，并返回结果字符串。</p>
 
-<p>元音字母包括 <code>'a'</code>、<code>'e'</code>、<code>'i'</code>、<code>'o'</code>、<code>'u'</code>，且可能以大小写两种形式出现。</p>
+<p>元音字母包括 <code>'a'</code>、<code>'e'</code>、<code>'i'</code>、<code>'o'</code>、<code>'u'</code>，且可能以大小写两种形式出现不止一次。</p>
 
 <p>&nbsp;</p>
 
@@ -74,7 +74,8 @@ class Solution:
 ```java
 class Solution {
     public String reverseVowels(String s) {
-        Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+        Set<Character> vowels
+            = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
         int i = 0, j = s.length() - 1;
         char[] chars = s.toCharArray();
         while (i < j) {

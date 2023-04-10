@@ -7,7 +7,7 @@
 <p>Given an integer <code>num</code>, return <em>three consecutive integers (as a sorted array)</em><em> that <strong>sum</strong> to </em><code>num</code>. If <code>num</code> cannot be expressed as the sum of three consecutive integers, return<em> an <strong>empty</strong> array.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 33
@@ -16,7 +16,7 @@
 10, 11, 12 are 3 consecutive integers, so we return [10, 11, 12].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 4
@@ -50,10 +50,10 @@ class Solution:
 class Solution {
     public long[] sumOfThree(long num) {
         if (num % 3 != 0) {
-            return new long[]{};
+            return new long[] {};
         }
         long x = num / 3;
-        return new long[]{x - 1, x, x + 1};
+        return new long[] {x - 1, x, x + 1};
     }
 }
 ```

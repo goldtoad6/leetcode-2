@@ -9,21 +9,21 @@
 <p>Here <b>follow</b> means a full match, such that there is a bijection between a letter in <code>pattern</code> and a <b>non-empty</b> word in <code>s</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;abba&quot;, s = &quot;dog cat cat dog&quot;
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;abba&quot;, s = &quot;dog cat cat fish&quot;
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;aaaa&quot;, s = &quot;dog cat cat dog&quot;
@@ -157,8 +157,7 @@ public:
 
         unordered_map<char, string> c2str;
         unordered_map<string, char> str2c;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             char k = pattern[i];
             string v = ss[i];
             if (c2str.count(k) && c2str[k] != v) return false;

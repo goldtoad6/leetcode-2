@@ -6,10 +6,11 @@
 
 <p>Design an algorithm that collects daily price quotes for some stock and returns <strong>the span</strong> of that stock&#39;s price for the current day.</p>
 
-<p>The <strong>span</strong> of the stock&#39;s price today is defined as the maximum number of consecutive days (starting from today and going backward) for which the stock price was less than or equal to today&#39;s price.</p>
+<p>The <strong>span</strong> of the stock&#39;s price in one day is the maximum number of consecutive days (starting from that day and going backward) for which the stock price was less than or equal to the price of that day.</p>
 
 <ul>
-	<li>For example, if the price of a stock over the next <code>7</code> days were <code>[100,80,60,70,60,75,85]</code>, then the stock spans would be <code>[1,1,1,2,1,4,6]</code>.</li>
+	<li>For example, if the prices of the stock in the last four days is <code>[7,2,1,2]</code> and the price of the stock today is <code>2</code>, then the span of today is <code>4</code> because starting from today, the price of the stock was less than or equal <code>2</code> for <code>4</code> consecutive days.</li>
+	<li>Also, if the prices of the stock in the last four days is <code>[7,34,1,2]</code> and the price of the stock today is <code>8</code>, then the span of today is <code>3</code> because starting from today, the price of the stock was less than or equal <code>8</code> for <code>3</code> consecutive days.</li>
 </ul>
 
 <p>Implement the <code>StockSpanner</code> class:</p>
@@ -20,7 +21,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -56,17 +57,16 @@ stockSpanner.next(85);  // return 6
 
 ```python
 class StockSpanner:
-
     def __init__(self):
         self.stk = []
 
     def next(self, price: int) -> int:
-        res = 1
+        cnt = 1
         while self.stk and self.stk[-1][0] <= price:
-            _, t = self.stk.pop()
-            res += t
-        self.stk.append([price, res])
-        return res
+            cnt += self.stk.pop()[1]
+        self.stk.append((price, cnt))
+        return cnt
+
 
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
@@ -77,20 +77,18 @@ class StockSpanner:
 
 ```java
 class StockSpanner {
-    private Deque<int[]> stk;
+    private Deque<int[]> stk = new ArrayDeque<>();
 
     public StockSpanner() {
-        stk = new ArrayDeque<>();
     }
 
     public int next(int price) {
-        int res = 1;
+        int cnt = 1;
         while (!stk.isEmpty() && stk.peek()[0] <= price) {
-            int[] t = stk.pop();
-            res += t[1];
+            cnt += stk.pop()[1];
         }
-        stk.push(new int[]{price, res});
-        return res;
+        stk.push(new int[] {price, cnt});
+        return cnt;
     }
 }
 
@@ -101,54 +99,27 @@ class StockSpanner {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class StockSpanner {
-    stack: number[][];
-    constructor() {
-        this.stack = [];
-    }
-
-    next(price: number): number {
-        let ans = 1;
-        while (this.stack.length > 0 && this.stack[0][0] <= price) {
-            let [p, c] = this.stack.shift();
-            ans += c;
-        }
-        this.stack.unshift([price, ans]);
-        return ans;
-    }
-}
-
-/**
- * Your StockSpanner object will be instantiated and called as such:
- * var obj = new StockSpanner()
- * var param_1 = obj.next(price)
- */
-```
-
 ### **C++**
 
 ```cpp
 class StockSpanner {
 public:
-    stack<pair<int, int>> stk;
-
     StockSpanner() {
+
     }
 
     int next(int price) {
-        int res = 1;
-        while (!stk.empty() && stk.top().first <= price)
-        {
-            pair<int, int> t = stk.top();
+        int cnt = 1;
+        while (!stk.empty() && stk.top().first <= price) {
+            cnt += stk.top().second;
             stk.pop();
-            res += t.second;
         }
-        stk.push({price, res});
-        return res;
+        stk.push({price, cnt});
+        return cnt;
     }
+
+private:
+    stack<pair<int, int>> stk;
 };
 
 /**
@@ -162,30 +133,93 @@ public:
 
 ```go
 type StockSpanner struct {
-	stk [][]int
+	stk []pair
 }
 
 func Constructor() StockSpanner {
-	return StockSpanner{
-		stk: make([][]int, 0),
-	}
+	return StockSpanner{[]pair{}}
 }
 
 func (this *StockSpanner) Next(price int) int {
-	res := 1
-	for len(this.stk) > 0 && this.stk[len(this.stk)-1][0] <= price {
-		t := this.stk[len(this.stk)-1]
-		res += t[1]
+	cnt := 1
+	for len(this.stk) > 0 && this.stk[len(this.stk)-1].price <= price {
+		cnt += this.stk[len(this.stk)-1].cnt
 		this.stk = this.stk[:len(this.stk)-1]
 	}
-	this.stk = append(this.stk, []int{price, res})
-	return res
+	this.stk = append(this.stk, pair{price, cnt})
+	return cnt
 }
+
+type pair struct{ price, cnt int }
 
 /**
  * Your StockSpanner object will be instantiated and called as such:
  * obj := Constructor();
  * param_1 := obj.Next(price);
+ */
+```
+
+### **TypeScript**
+
+```ts
+class StockSpanner {
+    private stack: [number, number][];
+
+    constructor() {
+        this.stack = [[Infinity, -1]];
+    }
+
+    next(price: number): number {
+        let res = 1;
+        while (this.stack[this.stack.length - 1][0] <= price) {
+            res += this.stack.pop()[1];
+        }
+        this.stack.push([price, res]);
+        return res;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * var obj = new StockSpanner()
+ * var param_1 = obj.next(price)
+ */
+```
+
+### **Rust**
+
+```rust
+use std::collections::VecDeque;
+struct StockSpanner {
+    stack: VecDeque<(i32, i32)>,
+}
+
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl StockSpanner {
+    fn new() -> Self {
+        Self {
+            stack: vec![(i32::MAX, -1)].into_iter().collect()
+        }
+    }
+
+    fn next(&mut self, price: i32) -> i32 {
+        let mut res = 1;
+        while self.stack.back().unwrap().0 <= price {
+            res += self.stack.pop_back().unwrap().1;
+        }
+        self.stack.push_back((price, res));
+        res
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * let obj = StockSpanner::new();
+ * let ret_1: i32 = obj.next(price);
  */
 ```
 

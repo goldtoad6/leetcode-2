@@ -8,6 +8,7 @@
 
 <ul>
 	<li><code>int compareSub(int l, int r, int x, int y)</code>: where <code>0 &lt;= l, r, x, y &lt; ArrayReader.length()</code>, <code>l &lt;= r and</code> <code>x &lt;= y</code>. The function compares the sum of sub-array <code>arr[l..r]</code> with the sum of the sub-array <code>arr[x..y]</code> and returns:
+
     <ul>
     	<li><strong>1</strong> if <code>arr[l]+arr[l+1]+...+arr[r] &gt; arr[x]+arr[x+1]+...+arr[y]</code>.</li>
     	<li><strong>0</strong> if <code>arr[l]+arr[l+1]+...+arr[r] == arr[x]+arr[x+1]+...+arr[y]</code>.</li>
@@ -23,7 +24,7 @@
 <p>Return <em>the index of the array <code>arr</code> which has the largest integer</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [7,7,7,7,10,7,7,7]
@@ -36,7 +37,7 @@ reader.compareSub(4, 4, 5, 5) // returns 1, thus for sure arr[4] is the largest 
 Notice that we made only 3 calls, so the answer is valid.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [6,6,12]
@@ -71,14 +72,14 @@ Notice that we made only 3 calls, so the answer is valid.
 # This is ArrayReader's API interface.
 # You should not implement it, or speculate about its implementation
 # """
-#class ArrayReader(object):
-#	 # Compares the sum of arr[l..r] with the sum of arr[x..y]
-#	 # return 1 if sum(arr[l..r]) > sum(arr[x..y])
-#	 # return 0 if sum(arr[l..r]) == sum(arr[x..y])
-#	 # return -1 if sum(arr[l..r]) < sum(arr[x..y])
+# class ArrayReader(object):
+# 	 # Compares the sum of arr[l..r] with the sum of arr[x..y]
+# 	 # return 1 if sum(arr[l..r]) > sum(arr[x..y])
+# 	 # return 0 if sum(arr[l..r]) == sum(arr[x..y])
+# 	 # return -1 if sum(arr[l..r]) < sum(arr[x..y])
 #    def compareSub(self, l: int, r: int, x: int, y: int) -> int:
 #
-#	 # Returns the length of the array
+# 	 # Returns the length of the array
 #    def length(self) -> int:
 #
 
@@ -87,7 +88,11 @@ class Solution:
     def getIndex(self, reader: 'ArrayReader') -> int:
         left, right = 0, reader.length() - 1
         while left < right:
-            t1, t2, t3 = left, left + (right - left) // 3, left + ((right - left) // 3) * 2 + 1
+            t1, t2, t3 = (
+                left,
+                left + (right - left) // 3,
+                left + ((right - left) // 3) * 2 + 1,
+            )
             cmp = reader.compareSub(t1, t2, t2 + 1, t3)
             if cmp == 0:
                 left = t3 + 1
@@ -157,7 +162,7 @@ class Solution {
 
 class Solution {
 public:
-    int getIndex(ArrayReader &reader) {
+    int getIndex(ArrayReader& reader) {
         int left = 0, right = reader.length() - 1;
         while (left < right) {
             int t1 = left, t2 = left + (right - left) / 3, t3 = left + (right - left) / 3 * 2 + 1;

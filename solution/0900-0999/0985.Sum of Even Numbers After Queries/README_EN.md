@@ -11,7 +11,7 @@
 <p>Return <em>an integer array </em><code>answer</code><em> where </em><code>answer[i]</code><em> is the answer to the </em><code>i<sup>th</sup></code><em> query</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4], queries = [[1,0],[-3,1],[-4,0],[2,3]]
@@ -23,7 +23,7 @@ After adding -4 to nums[0], the array is [-2,-1,3,4], and the sum of even values
 After adding 2 to nums[3], the array is [-2,-1,3,6], and the sum of even values is -2 + 6 = 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1], queries = [[4,0]]
@@ -49,7 +49,9 @@ After adding 2 to nums[3], the array is [-2,-1,3,6], and the sum of even values 
 
 ```python
 class Solution:
-    def sumEvenAfterQueries(self, nums: List[int], queries: List[List[int]]) -> List[int]:
+    def sumEvenAfterQueries(
+        self, nums: List[int], queries: List[List[int]]
+    ) -> List[int]:
         ans = []
         s = sum(num for num in nums if num % 2 == 0)
         for v, i in queries:
@@ -107,14 +109,16 @@ public:
             if (num % 2 == 0)
                 s += num;
         vector<int> ans;
-        for (auto& q : queries)
-        {
+        for (auto& q : queries) {
             int v = q[0], i = q[1];
             int old = nums[i];
             nums[i] += v;
-            if (nums[i] % 2 == 0 && old % 2 == 0) s += v;
-            else if (nums[i] % 2 == 0 && old % 2 != 0) s += nums[i];
-            else if (old % 2 == 0) s -= old;
+            if (nums[i] % 2 == 0 && old % 2 == 0)
+                s += v;
+            else if (nums[i] % 2 == 0 && old % 2 != 0)
+                s += nums[i];
+            else if (old % 2 == 0)
+                s -= old;
             ans.push_back(s);
         }
         return ans;

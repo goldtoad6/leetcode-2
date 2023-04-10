@@ -29,7 +29,7 @@
 <p>Remember that one minute consists of <code>60</code> seconds.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2162.Minimum%20Cost%20to%20Set%20Cooking%20Time/images/1.png" style="width: 506px; height: 210px;" />
 <pre>
 <strong>Input:</strong> startAt = 1, moveCost = 2, pushCost = 1, targetSeconds = 600
@@ -46,7 +46,7 @@
 &nbsp; The cost is: 2 + 1 + 2 + 1 + 2 + 1 = 9.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2162.Minimum%20Cost%20to%20Set%20Cooking%20Time/images/2.png" style="width: 505px; height: 73px;" />
 <pre>
 <strong>Input:</strong> startAt = 0, moveCost = 1, pushCost = 2, targetSeconds = 76
@@ -73,7 +73,9 @@ Note other possible ways are 0076, 076, 0116, and 116, but none of them produces
 
 ```python
 class Solution:
-    def minCostSetTime(self, startAt: int, moveCost: int, pushCost: int, targetSeconds: int) -> int:
+    def minCostSetTime(
+        self, startAt: int, moveCost: int, pushCost: int, targetSeconds: int
+    ) -> int:
         def f(m, s):
             if not 0 <= m < 100 or not 0 <= s < 100:
                 return inf
@@ -102,16 +104,18 @@ class Solution {
     public int minCostSetTime(int startAt, int moveCost, int pushCost, int targetSeconds) {
         int m = targetSeconds / 60;
         int s = targetSeconds % 60;
-        return Math.min(f(m, s, startAt, moveCost, pushCost), f(m - 1, s + 60, startAt, moveCost, pushCost));
+        return Math.min(
+            f(m, s, startAt, moveCost, pushCost), f(m - 1, s + 60, startAt, moveCost, pushCost));
     }
 
     private int f(int m, int s, int prev, int moveCost, int pushCost) {
         if (m < 0 || m > 99 || s < 0 || s > 99) {
             return Integer.MAX_VALUE;
         }
-        int[] arr = new int[]{m / 10, m % 10, s / 10, s % 10};
+        int[] arr = new int[] {m / 10, m % 10, s / 10, s % 10};
         int i = 0;
-        for (; i < 4 && arr[i] == 0; ++i);
+        for (; i < 4 && arr[i] == 0; ++i)
+            ;
         int t = 0;
         for (; i < 4; ++i) {
             if (arr[i] != prev) {
@@ -139,10 +143,10 @@ public:
         if (m < 0 || m > 99 || s < 0 || s > 99) return INT_MAX;
         vector<int> arr = {m / 10, m % 10, s / 10, s % 10};
         int i = 0;
-        for (; i < 4 && arr[i] == 0; ++i);
+        for (; i < 4 && arr[i] == 0; ++i)
+            ;
         int t = 0;
-        for (; i < 4; ++i)
-        {
+        for (; i < 4; ++i) {
             if (arr[i] != prev) t += moveCost;
             t += pushCost;
             prev = arr[i];

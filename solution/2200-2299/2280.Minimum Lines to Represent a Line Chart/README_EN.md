@@ -9,7 +9,7 @@
 <p>Return <em>the <strong>minimum number of lines</strong> needed to represent the line chart</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2280.Minimum%20Lines%20to%20Represent%20a%20Line%20Chart/images/ex0.png" style="width: 400px; height: 400px;" />
 <pre>
 <strong>Input:</strong> stockPrices = [[1,7],[2,6],[3,5],[4,4],[5,4],[6,3],[7,2],[8,1]]
@@ -23,7 +23,7 @@ The following 3 lines can be drawn to represent the line chart:
 It can be shown that it is not possible to represent the line chart using less than 3 lines.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2200-2299/2280.Minimum%20Lines%20to%20Represent%20a%20Line%20Chart/images/ex1.png" style="width: 325px; height: 325px;" />
 <pre>
 <strong>Input:</strong> stockPrices = [[3,4],[1,2],[7,8],[2,3]]
@@ -94,12 +94,11 @@ public:
         sort(stockPrices.begin(), stockPrices.end());
         int dx = 0, dy = 1;
         int ans = 0;
-        for (int i = 1; i < stockPrices.size(); ++i)
-        {
+        for (int i = 1; i < stockPrices.size(); ++i) {
             int x = stockPrices[i - 1][0], y = stockPrices[i - 1][1];
             int x1 = stockPrices[i][0], y1 = stockPrices[i][1];
             int dx1 = x1 - x, dy1 = y1 - y;
-            if ((long long) dy * dx1 != (long long) dx * dy1) ++ans;
+            if ((long long)dy * dx1 != (long long)dx * dy1) ++ans;
             dx = dx1;
             dy = dy1;
         }

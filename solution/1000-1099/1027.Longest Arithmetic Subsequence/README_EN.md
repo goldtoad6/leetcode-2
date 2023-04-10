@@ -4,36 +4,38 @@
 
 ## Description
 
-<p>Given an array <code>nums</code> of integers, return the <strong>length</strong> of the longest arithmetic subsequence in <code>nums</code>.</p>
+<p>Given an array <code>nums</code> of integers, return <em>the length of the longest arithmetic subsequence in</em> <code>nums</code>.</p>
 
-<p>Recall that a <em>subsequence</em> of an array <code>nums</code> is a list <code>nums[i<sub>1</sub>], nums[i<sub>2</sub>], ..., nums[i<sub>k</sub>]</code> with <code>0 &lt;= i<sub>1</sub> &lt; i<sub>2</sub> &lt; ... &lt; i<sub>k</sub> &lt;= nums.length - 1</code>, and that a sequence <code>seq</code> is <em>arithmetic</em> if <code>seq[i+1] - seq[i]</code> are all the same value (for <code>0 &lt;= i &lt; seq.length - 1</code>).</p>
+<p><strong>Note</strong> that:</p>
+
+<ul>
+	<li>A <strong>subsequence</strong> is an array that can be derived from another array by deleting some or no elements without changing the order of the remaining elements.</li>
+	<li>A sequence <code>seq</code> is arithmetic if <code>seq[i + 1] - seq[i]</code> are all the same value (for <code>0 &lt;= i &lt; seq.length - 1</code>).</li>
+</ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,6,9,12]
 <strong>Output:</strong> 4
-<strong>Explanation: </strong>
-The whole array is an arithmetic sequence with steps of length = 3.
+<strong>Explanation: </strong> The whole array is an arithmetic sequence with steps of length = 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [9,4,7,2,10]
 <strong>Output:</strong> 3
-<strong>Explanation: </strong>
-The longest arithmetic subsequence is [4,7,10].
+<strong>Explanation: </strong> The longest arithmetic subsequence is [4,7,10].
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [20,1,15,3,10,5,8]
 <strong>Output:</strong> 4
-<strong>Explanation: </strong>
-The longest arithmetic subsequence is [20,15,10,5].
+<strong>Explanation: </strong> The longest arithmetic subsequence is [20,15,10,5].
 </pre>
 
 <p>&nbsp;</p>
@@ -54,13 +56,13 @@ The longest arithmetic subsequence is [20,15,10,5].
 class Solution:
     def longestArithSeqLength(self, nums: List[int]) -> int:
         n = len(nums)
-        dp = [[1] * 1001 for _ in range(n)]
+        f = [[1] * 1001 for _ in range(n)]
         ans = 0
         for i in range(1, n):
-            for j in range(i):
-                d = nums[i] - nums[j] + 500
-                dp[i][d] = max(dp[i][d], dp[j][d] + 1)
-                ans = max(ans, dp[i][d])
+            for k in range(i):
+                j = nums[i] - nums[k] + 500
+                f[i][j] = max(f[i][j], f[k][j] + 1)
+                ans = max(ans, f[i][j])
         return ans
 ```
 
@@ -71,12 +73,12 @@ class Solution {
     public int longestArithSeqLength(int[] nums) {
         int n = nums.length;
         int ans = 0;
-        int[][] dp = new int[n][1001];
+        int[][] f = new int[n][1001];
         for (int i = 1; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                int d = nums[i] - nums[j] + 500;
-                dp[i][d] = Math.max(dp[i][d], dp[j][d] + 1);
-                ans = Math.max(ans, dp[i][d]);
+            for (int k = 0; k < i; ++k) {
+                int j = nums[i] - nums[k] + 500;
+                f[i][j] = Math.max(f[i][j], f[k][j] + 1);
+                ans = Math.max(ans, f[i][j]);
             }
         }
         return ans + 1;
@@ -91,18 +93,17 @@ class Solution {
 public:
     int longestArithSeqLength(vector<int>& nums) {
         int n = nums.size();
+        int f[n][1001];
+        memset(f, 0, sizeof(f));
         int ans = 0;
-        vector<vector<int>> dp(n, vector<int>(1001, 1));
-        for (int i = 1; i < n; ++i)
-        {
-            for (int j = 0; j < i; ++j)
-            {
-                int d = nums[i] - nums[j] + 500;
-                dp[i][d] = max(dp[i][d], dp[j][d] + 1);
-                ans = max(ans, dp[i][d]);
+        for (int i = 1; i < n; ++i) {
+            for (int k = 0; k < i; ++k) {
+                int j = nums[i] - nums[k] + 500;
+                f[i][j] = max(f[i][j], f[k][j] + 1);
+                ans = max(ans, f[i][j]);
             }
         }
-        return ans;
+        return ans + 1;
     }
 };
 ```
@@ -112,16 +113,16 @@ public:
 ```go
 func longestArithSeqLength(nums []int) int {
 	n := len(nums)
-	dp := make([][]int, n)
-	for i := range dp {
-		dp[i] = make([]int, 1001)
+	f := make([][]int, n)
+	for i := range f {
+		f[i] = make([]int, 1001)
 	}
 	ans := 0
 	for i := 1; i < n; i++ {
-		for j := 0; j < i; j++ {
-			d := nums[i] - nums[j] + 500
-			dp[i][d] = max(dp[i][d], dp[j][d]+1)
-			ans = max(ans, dp[i][d])
+		for k := 0; k < i; k++ {
+			j := nums[i] - nums[k] + 500
+			f[i][j] = max(f[i][j], f[k][j]+1)
+			ans = max(ans, f[i][j])
 		}
 	}
 	return ans + 1

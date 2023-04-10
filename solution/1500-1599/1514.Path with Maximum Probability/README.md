@@ -75,7 +75,14 @@
 
 ```python
 class Solution:
-    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
+    def maxProbability(
+        self,
+        n: int,
+        edges: List[List[int]],
+        succProb: List[float],
+        start: int,
+        end: int,
+    ) -> float:
         g = defaultdict(list)
         for (a, b), s in zip(edges, succProb):
             g[a].append((b, s))
@@ -127,16 +134,15 @@ class Solution:
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
         List<Pair<Integer, Double>>[] g = new List[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int i = 0; i < edges.length; ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
             g[a].add(new Pair<>(b, s));
             g[b].add(new Pair<>(a, s));
         }
-        PriorityQueue<Pair<Double, Integer>> q = new PriorityQueue<>(Comparator.comparingDouble(Pair::getKey));
+        PriorityQueue<Pair<Double, Integer>> q
+            = new PriorityQueue<>(Comparator.comparingDouble(Pair::getKey));
         double[] d = new double[n];
         d[start] = 1.0;
         q.offer(new Pair<>(-1.0, start));
@@ -163,9 +169,7 @@ class Solution {
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
         List<Pair<Integer, Double>>[] g = new List[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int i = 0; i < edges.length; ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
@@ -205,8 +209,7 @@ class Solution {
 public:
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start, int end) {
         vector<vector<pair<int, double>>> g(n);
-        for (int i = 0; i < edges.size(); ++i)
-        {
+        for (int i = 0; i < edges.size(); ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
             g[a].push_back({b, s});
@@ -216,19 +219,16 @@ public:
         d[start] = 1.0;
         queue<pair<double, int>> q;
         q.push({1.0, start});
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
             double w = p.first;
             int u = p.second;
             if (d[u] > w) continue;
-            for (auto& e : g[u])
-            {
+            for (auto& e : g[u]) {
                 int v = e.first;
                 double t = e.second;
-                if (d[v] < d[u] * t)
-                {
+                if (d[v] < d[u] * t) {
                     d[v] = d[u] * t;
                     q.push({d[v], v});
                 }

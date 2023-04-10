@@ -29,10 +29,10 @@
 <p>Return<em> the final sentence representing the conversion from sentence to Goat Latin</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> sentence = "I speak Goat Latin"
 <strong>Output:</strong> "Imaa peaksmaaa oatGmaaaa atinLmaaaaa"
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> sentence = "The quick brown fox jumped over the lazy dog"
 <strong>Output:</strong> "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"
 </pre>
@@ -71,7 +71,8 @@ class Solution:
 class Solution {
     public String toGoatLatin(String sentence) {
         List<String> ans = new ArrayList<>();
-        Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+        Set<Character> vowels
+            = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
         int i = 1;
         for (String word : sentence.split(" ")) {
             StringBuilder t = new StringBuilder();

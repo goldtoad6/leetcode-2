@@ -9,13 +9,16 @@
 <p>Implement the <code>DistanceLimitedPathsExist</code> class:</p>
 
 <ul>
+
     <li><code>DistanceLimitedPathsExist(int n, int[][] edgeList)</code> Initializes the class with an undirected graph.</li>
+
     <li><code>boolean query(int p, int q, int limit)</code> Returns <code>true</code> if there exists a path from <code>p</code> to <code>q</code> such that each edge on the path has a distance <strong>strictly less than</strong> <code>limit</code>, and otherwise <code>false</code>.</li>
+
 </ul>
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1700-1799/1724.Checking%20Existence%20of%20Edge%20Length%20Limited%20Paths%20II/images/messed.png" style="width: 300px; height: 298px;" /></strong></p>
 

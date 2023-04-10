@@ -11,7 +11,7 @@
 <p>Return <em>an array of strings of length </em><code>n</code> where <code>ans[i]</code> is the actual name the system will assign to the <code>i<sup>th</sup></code> folder when you create it.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> names = [&quot;pes&quot;,&quot;fifa&quot;,&quot;gta&quot;,&quot;pes(2019)&quot;]
@@ -23,7 +23,7 @@
 &quot;pes(2019)&quot; --&gt; not assigned before, remains &quot;pes(2019)&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> names = [&quot;gta&quot;,&quot;gta(1)&quot;,&quot;gta&quot;,&quot;avalon&quot;]
@@ -35,7 +35,7 @@
 &quot;avalon&quot; --&gt; not assigned before, remains &quot;avalon&quot;
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> names = [&quot;onepiece&quot;,&quot;onepiece(1)&quot;,&quot;onepiece(2)&quot;,&quot;onepiece(3)&quot;,&quot;onepiece&quot;]
@@ -59,13 +59,106 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def getFolderNames(self, names: List[str]) -> List[str]:
+        d = defaultdict(int)
+        for i, name in enumerate(names):
+            if name in d:
+                k = d[name]
+                while f'{name}({k})' in d:
+                    k += 1
+                d[name] = k + 1
+                names[i] = f'{name}({k})'
+            d[names[i]] = 1
+        return names
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public String[] getFolderNames(String[] names) {
+        Map<String, Integer> d = new HashMap<>();
+        for (int i = 0; i < names.length; ++i) {
+            if (d.containsKey(names[i])) {
+                int k = d.get(names[i]);
+                while (d.containsKey(names[i] + "(" + k + ")")) {
+                    ++k;
+                }
+                d.put(names[i], k);
+                names[i] += "(" + k + ")";
+            }
+            d.put(names[i], 1);
+        }
+        return names;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<string> getFolderNames(vector<string>& names) {
+        unordered_map<string, int> d;
+        for (auto& name : names) {
+            int k = d[name];
+            if (k) {
+                while (d[name + "(" + to_string(k) + ")"]) {
+                    k++;
+                }
+                d[name] = k;
+                name += "(" + to_string(k) + ")";
+            }
+            d[name] = 1;
+        }
+        return names;
+    }
+};
+```
+
+### **Go**
+
+```go
+func getFolderNames(names []string) []string {
+	d := map[string]int{}
+	for i, name := range names {
+		if k, ok := d[name]; ok {
+			for {
+				newName := fmt.Sprintf("%s(%d)", name, k)
+				if d[newName] == 0 {
+					d[name] = k + 1
+					names[i] = newName
+					break
+				}
+				k++
+			}
+		}
+		d[names[i]] = 1
+	}
+	return names
+}
+```
+
+### **TypeScript**
+
+```ts
+function getFolderNames(names: string[]): string[] {
+    let d: Map<string, number> = new Map();
+    for (let i = 0; i < names.length; ++i) {
+        if (d.has(names[i])) {
+            let k: number = d.get(names[i]) || 0;
+            while (d.has(names[i] + '(' + k + ')')) {
+                ++k;
+            }
+            d.set(names[i], k);
+            names[i] += '(' + k + ')';
+        }
+        d.set(names[i], 1);
+    }
+    return names;
+}
 ```
 
 ### **...**

@@ -11,7 +11,7 @@
 <p>Return <em>an </em><code>m x n</code><em> 2D array constructed according to the above procedure, or an empty 2D array if it is impossible</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2000-2099/2022.Convert%201D%20Array%20Into%202D%20Array/images/image-20210826114243-1.png" style="width: 500px; height: 174px;" />
 <pre>
 <strong>Input:</strong> original = [1,2,3,4], m = 2, n = 2
@@ -21,7 +21,7 @@ The first group of n=2 elements in original, [1,2], becomes the first row in the
 The second group of n=2 elements in original, [3,4], becomes the second row in the constructed 2D array.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> original = [1,2,3], m = 1, n = 3
@@ -30,7 +30,7 @@ The second group of n=2 elements in original, [3,4], becomes the second row in t
 Put all three elements in original into the first row of the constructed 2D array.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> original = [1,2], m = 1, n = 1
@@ -59,7 +59,7 @@ class Solution:
     def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
         if m * n != len(original):
             return []
-        return [original[i: i + n] for i in range(0, m * n, n)]
+        return [original[i : i + n] for i in range(0, m * n, n)]
 ```
 
 ### **Java**
@@ -87,12 +87,12 @@ class Solution {
 class Solution {
 public:
     vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
-        if (m * n != original.size()) return {};
-        vector<vector<int>> ans(m, vector<int>(n, 0));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        if (m * n != original.size()) {
+            return {};
+        }
+        vector<vector<int>> ans(m, vector<int>(n));
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 ans[i][j] = original[i * n + j];
             }
         }
@@ -104,15 +104,14 @@ public:
 ### **Go**
 
 ```go
-func construct2DArray(original []int, m int, n int) [][]int {
+func construct2DArray(original []int, m int, n int) (ans [][]int) {
 	if m*n != len(original) {
 		return [][]int{}
 	}
-	var ans [][]int
 	for i := 0; i < m*n; i += n {
 		ans = append(ans, original[i:i+n])
 	}
-	return ans
+	return
 }
 ```
 
@@ -126,17 +125,14 @@ func construct2DArray(original []int, m int, n int) [][]int {
  * @return {number[][]}
  */
 var construct2DArray = function (original, m, n) {
-    const result = [];
-
-    if (original.length != m * n) {
-        return result;
+    if (m * n != original.length) {
+        return [];
     }
-
-    for (let i = 0; i < m; i++) {
-        result.push(original.slice(i * n, i * n + n));
+    const ans = [];
+    for (let i = 0; i < m * n; i += n) {
+        ans.push(original.slice(i, i + n));
     }
-
-    return result;
+    return ans;
 };
 ```
 
@@ -148,17 +144,14 @@ function construct2DArray(
     m: number,
     n: number,
 ): number[][] {
-    const result = [];
-
-    if (original.length != m * n) {
-        return result;
+    if (m * n != original.length) {
+        return [];
     }
-
-    for (let i = 0; i < m; i++) {
-        result.push(original.slice(i * n, i * n + n));
+    const ans: number[][] = [];
+    for (let i = 0; i < m * n; i += n) {
+        ans.push(original.slice(i, i + n));
     }
-
-    return result;
+    return ans;
 }
 ```
 

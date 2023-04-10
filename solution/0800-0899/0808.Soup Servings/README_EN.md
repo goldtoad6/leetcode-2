@@ -20,7 +20,7 @@
 <p>Return <em>the probability that <strong>soup A</strong> will be empty first, plus half the probability that <strong>A</strong> and <strong>B</strong> become empty at the same time</em>. Answers within <code>10<sup>-5</sup></code> of the actual answer will be accepted.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 50
@@ -31,7 +31,7 @@ For the fourth operation, B will become empty first.
 So the total probability of A becoming empty first plus half the probability that A and B become empty at the same time, is 0.25 * (1 + 1 + 0.5 + 0) = 0.625.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 100
@@ -52,13 +52,106 @@ So the total probability of A becoming empty first plus half the probability tha
 ### **Python3**
 
 ```python
+class Solution:
+    def soupServings(self, n: int) -> float:
+        @cache
+        def dfs(i, j):
+            if i <= 0 and j <= 0:
+                return 0.5
+            if i <= 0:
+                return 1
+            if j <= 0:
+                return 0
+            return 0.25 * (
+                dfs(i - 4, j)
+                + dfs(i - 3, j - 1)
+                + dfs(i - 2, j - 2)
+                + dfs(i - 1, j - 3)
+            )
 
+        return 1 if n > 4800 else dfs((n + 24) // 25, (n + 24) // 25)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    private double[][] f = new double[200][200];
 
+    public double soupServings(int n) {
+        return n > 4800 ? 1 : dfs((n + 24) / 25, (n + 24) / 25);
+    }
+
+    private double dfs(int i, int j) {
+        if (i <= 0 && j <= 0) {
+            return 0.5;
+        }
+        if (i <= 0) {
+            return 1.0;
+        }
+        if (j <= 0) {
+            return 0;
+        }
+        if (f[i][j] > 0) {
+            return f[i][j];
+        }
+        double ans
+            = 0.25 * (dfs(i - 4, j) + dfs(i - 3, j - 1) + dfs(i - 2, j - 2) + dfs(i - 1, j - 3));
+        f[i][j] = ans;
+        return ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    double soupServings(int n) {
+        double f[200][200] = {0.0};
+        function<double(int, int)> dfs = [&](int i, int j) -> double {
+            if (i <= 0 && j <= 0) return 0.5;
+            if (i <= 0) return 1;
+            if (j <= 0) return 0;
+            if (f[i][j] > 0) return f[i][j];
+            double ans = 0.25 * (dfs(i - 4, j) + dfs(i - 3, j - 1) + dfs(i - 2, j - 2) + dfs(i - 1, j - 3));
+            f[i][j] = ans;
+            return ans;
+        };
+        return n > 4800 ? 1 : dfs((n + 24) / 25, (n + 24) / 25);
+    }
+};
+```
+
+### **Go**
+
+```go
+func soupServings(n int) float64 {
+	if n > 4800 {
+		return 1
+	}
+	f := [200][200]float64{}
+	var dfs func(i, j int) float64
+	dfs = func(i, j int) float64 {
+		if i <= 0 && j <= 0 {
+			return 0.5
+		}
+		if i <= 0 {
+			return 1.0
+		}
+		if j <= 0 {
+			return 0
+		}
+		if f[i][j] > 0 {
+			return f[i][j]
+		}
+		ans := 0.25 * (dfs(i-4, j) + dfs(i-3, j-1) + dfs(i-2, j-2) + dfs(i-1, j-3))
+		f[i][j] = ans
+		return ans
+	}
+	return dfs((n+24)/25, (n+24)/25)
+}
 ```
 
 ### **...**

@@ -23,7 +23,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> matches = [[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]]
@@ -35,7 +35,7 @@ Players 3, 6, and 9 each have lost two matches.
 Thus, answer[0] = [1,2,10] and answer[1] = [4,5,7,8].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> matches = [[2,3],[1,3],[5,4],[6,4]]
@@ -115,15 +115,13 @@ class Solution {
 public:
     vector<vector<int>> findWinners(vector<vector<int>>& matches) {
         unordered_map<int, int> cnt;
-        for (auto& m : matches)
-        {
+        for (auto& m : matches) {
             int a = m[0], b = m[1];
             if (!cnt.count(a)) cnt[a] = 0;
             ++cnt[b];
         }
         vector<vector<int>> ans(2);
-        for (auto& [u, v] : cnt)
-        {
+        for (auto& [u, v] : cnt) {
             if (v < 2) ans[v].push_back(u);
         }
         sort(ans[0].begin(), ans[0].end());

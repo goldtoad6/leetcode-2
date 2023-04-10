@@ -20,7 +20,7 @@
 <p>Return <em>the <strong>total number of collisions</strong> that will happen on the road</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> directions = &quot;RLRSLL&quot;
@@ -34,7 +34,7 @@ The collisions that will happen on the road are:
 Thus, the total number of collisions that will happen on the road is 5. 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> directions = &quot;LLRR&quot;
@@ -118,18 +118,17 @@ function countCollisions(directions: string): number {
 class Solution {
 public:
     int countCollisions(string directions) {
-        int l = 0, r = directions.size() -1, count = 0;
+        int l = 0, r = directions.size() - 1, count = 0;
         while (l <= r && directions[l] == 'L') {
             l++;
         }
         while (l <= r && directions[r] == 'R') {
             r--;
         }
-        for (int i = l; i <=r; i++) {
+        for (int i = l; i <= r; i++) {
             count += directions[i] != 'S';
         }
         return count;
-
     }
 };
 ```

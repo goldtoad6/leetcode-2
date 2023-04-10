@@ -54,7 +54,11 @@
 class Solution:
     def countPairs(self, nums: List[int], k: int) -> int:
         n = len(nums)
-        return sum(nums[i] == nums[j] and (i * j) % k == 0 for i in range(n) for j in range(i + 1, n))
+        return sum(
+            nums[i] == nums[j] and (i * j) % k == 0
+            for i in range(n)
+            for j in range(i + 1, n)
+        )
 ```
 
 ### **Java**
@@ -86,10 +90,8 @@ public:
     int countPairs(vector<int>& nums, int k) {
         int n = nums.size();
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = i + 1; j < n; ++j)
-            {
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
                 if (nums[i] == nums[j] && (i * j) % k == 0) ++ans;
             }
         }
@@ -118,7 +120,54 @@ func countPairs(nums []int, k int) int {
 ### **TypeScript**
 
 ```ts
+function countPairs(nums: number[], k: number): number {
+    const n = nums.length;
+    let ans = 0;
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = i + 1; j < n; j++) {
+            if (nums[i] === nums[j] && (i * j) % k === 0) {
+                ans++;
+            }
+        }
+    }
+    return ans;
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn count_pairs(nums: Vec<i32>, k: i32) -> i32 {
+        let k = k as usize;
+        let n = nums.len();
+        let mut ans = 0;
+        for i in 0..n - 1 {
+            for j in i + 1..n {
+                if nums[i] == nums[j] && i * j % k == 0 {
+                    ans += 1;
+                }
+            }
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+int countPairs(int *nums, int numsSize, int k) {
+    int ans = 0;
+    for (int i = 0; i < numsSize - 1; i++) {
+        for (int j = i + 1; j < numsSize; j++) {
+            if (nums[i] == nums[j] && i * j % k == 0) {
+                ans++;
+            }
+        }
+    }
+    return ans;
+}
 ```
 
 ### **...**

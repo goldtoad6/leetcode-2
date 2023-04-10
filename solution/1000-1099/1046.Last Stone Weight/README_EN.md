@@ -18,7 +18,7 @@
 <p>Return <em>the weight of the last remaining stone</em>. If there are no stones left, return <code>0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [2,7,4,1,8,1]
@@ -30,7 +30,7 @@ we combine 2 and 1 to get 1 so the array converts to [1,1,1] then,
 we combine 1 and 1 to get 0 so the array converts to [1] then that&#39;s the value of the last stone.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> stones = [1]
@@ -54,7 +54,7 @@ we combine 1 and 1 to get 0 so the array converts to [1] then that&#39;s the val
 ```python
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
-        h = [-s for s in stones]
+        h = [-x for x in stones]
         heapify(h)
         while len(h) > 1:
             y, x = -heappop(h), -heappop(h)
@@ -68,18 +68,18 @@ class Solution:
 ```java
 class Solution {
     public int lastStoneWeight(int[] stones) {
-        Queue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
-        for (int stone : stones) {
-            queue.offer(stone);
+        PriorityQueue<Integer> q = new PriorityQueue<>((a, b) -> b - a);
+        for (int x : stones) {
+            q.offer(x);
         }
-        while (queue.size() > 1) {
-            int x = queue.poll();
-            int y = queue.poll();
+        while (q.size() > 1) {
+            int y = q.poll();
+            int x = q.poll();
             if (x != y) {
-                queue.offer(x - y);
+                q.offer(y - x);
             }
         }
-        return queue.isEmpty() ? 0 : queue.poll();
+        return q.isEmpty() ? 0 : q.poll();
     }
 }
 ```
@@ -90,14 +90,18 @@ class Solution {
 class Solution {
 public:
     int lastStoneWeight(vector<int>& stones) {
-        priority_queue<int> pq(stones.begin(), stones.end());
+        priority_queue<int> pq;
+        for (int x : stones) {
+            pq.push(x);
+        }
         while (pq.size() > 1) {
-            int x = pq.top();
-            pq.pop();
             int y = pq.top();
             pq.pop();
-            if (x != y)
-                pq.push(x-y);
+            int x = pq.top();
+            pq.pop();
+            if (x != y) {
+                pq.push(y - x);
+            }
         }
         return pq.empty() ? 0 : pq.top();
     }
@@ -111,9 +115,9 @@ func lastStoneWeight(stones []int) int {
 	q := &hp{stones}
 	heap.Init(q)
 	for q.Len() > 1 {
-		x, y := q.pop(), q.pop()
+		y, x := q.pop(), q.pop()
 		if x != y {
-			q.push(x - y)
+			q.push(y - x)
 		}
 	}
 	if q.Len() > 0 {
@@ -134,6 +138,48 @@ func (h *hp) Pop() interface{} {
 }
 func (h *hp) push(v int) { heap.Push(h, v) }
 func (h *hp) pop() int   { return heap.Pop(h).(int) }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} stones
+ * @return {number}
+ */
+var lastStoneWeight = function (stones) {
+    const pq = new MaxPriorityQueue();
+    for (const x of stones) {
+        pq.enqueue(x);
+    }
+    while (pq.size() > 1) {
+        const y = pq.dequeue()['priority'];
+        const x = pq.dequeue()['priority'];
+        if (x != y) {
+            pq.enqueue(y - x);
+        }
+    }
+    return pq.isEmpty() ? 0 : pq.dequeue()['priority'];
+};
+```
+
+### **TypeScript**
+
+```ts
+function lastStoneWeight(stones: number[]): number {
+    const pq = new MaxPriorityQueue();
+    for (const x of stones) {
+        pq.enqueue(x);
+    }
+    while (pq.size() > 1) {
+        const y = pq.dequeue().element;
+        const x = pq.dequeue().element;
+        if (x !== y) {
+            pq.enqueue(y - x);
+        }
+    }
+    return pq.isEmpty() ? 0 : pq.dequeue().element;
+}
 ```
 
 ### **...**

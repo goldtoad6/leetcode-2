@@ -7,7 +7,7 @@
 <p>Given an array <code>nums</code> and an integer <code>target</code>, return <em>the maximum number of <strong>non-empty</strong> <strong>non-overlapping</strong> subarrays such that the sum of values in each subarray is equal to</em> <code>target</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1,1,1], target = 2
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> There are 2 non-overlapping subarrays [<strong>1,1</strong>,1,<strong>1,1</strong>] with sum equals to target(2).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [-1,3,5,1,4,2,-9], target = 6
@@ -93,16 +93,13 @@ public:
     int maxNonOverlapping(vector<int>& nums, int target) {
         int i = 0, n = nums.size();
         int ans = 0;
-        while (i < n)
-        {
+        while (i < n) {
             int s = 0;
             unordered_set<int> seen;
             seen.insert(0);
-            while (i < n)
-            {
+            while (i < n) {
                 s += nums[i];
-                if (seen.count(s - target))
-                {
+                if (seen.count(s - target)) {
                     ++ans;
                     break;
                 }

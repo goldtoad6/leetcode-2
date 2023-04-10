@@ -15,7 +15,7 @@
 <p><strong>Note</strong>: You are allowed to modify the array elements to become <strong>negative</strong> integers.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,2,3,4], nums2 = [2,10,20,19], k1 = 0, k2 = 0
@@ -24,7 +24,7 @@
 The sum of square difference will be: (1 - 2)<sup>2 </sup>+ (2 - 10)<sup>2 </sup>+ (3 - 20)<sup>2 </sup>+ (4 - 19)<sup>2</sup>&nbsp;= 579.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,4,10,12], nums2 = [5,8,6,9], k1 = 1, k2 = 1
@@ -54,7 +54,9 @@ Note that, there are other ways to obtain the minimum of the sum of square diffe
 
 ```python
 class Solution:
-    def minSumSquareDiff(self, nums1: List[int], nums2: List[int], k1: int, k2: int) -> int:
+    def minSumSquareDiff(
+        self, nums1: List[int], nums2: List[int], k1: int, k2: int
+    ) -> int:
         d = [abs(a - b) for a, b in zip(nums1, nums2)]
         k = k1 + k2
         if sum(d) <= k:
@@ -91,7 +93,7 @@ class Solution {
         for (int i = 0; i < n; ++i) {
             d[i] = Math.abs(nums1[i] - nums2[i]);
             s += d[i];
-            mx = Math.max(mx ,d[i]);
+            mx = Math.max(mx, d[i]);
         }
         if (s <= k) {
             return 0;
@@ -141,31 +143,28 @@ public:
         ll s = 0;
         int mx = 0;
         int k = k1 + k2;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             d[i] = abs(nums1[i] - nums2[i]);
             s += d[i];
             mx = max(mx, d[i]);
         }
         if (s <= k) return 0;
         int left = 0, right = mx;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             ll t = 0;
             for (int v : d) t += max(v - mid, 0);
-            if (t <= k) right = mid;
-            else left = mid + 1;
+            if (t <= k)
+                right = mid;
+            else
+                left = mid + 1;
         }
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             k -= max(0, d[i] - left);
             d[i] = min(d[i], left);
         }
-        for (int i = 0; i < n && k; ++i)
-        {
-            if (d[i] == left)
-            {
+        for (int i = 0; i < n && k; ++i) {
+            if (d[i] == left) {
                 --k;
                 --d[i];
             }

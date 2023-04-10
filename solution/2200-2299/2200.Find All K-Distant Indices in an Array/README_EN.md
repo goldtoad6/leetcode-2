@@ -9,7 +9,7 @@
 <p>Return <em>a list of all k-distant indices sorted in <strong>increasing order</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,4,9,1,3,9,5], key = 9, k = 1
@@ -25,7 +25,7 @@
 </code>Thus, we return [1,2,3,4,5,6] which is sorted in increasing order. 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,2,2,2,2], key = 2, k = 2
@@ -110,12 +110,9 @@ public:
     vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {
         int n = nums.size();
         vector<int> ans;
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (abs(i - j) <= k && nums[j] == key)
-                {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (abs(i - j) <= k && nums[j] == key) {
                     ans.push_back(i);
                     break;
                 }

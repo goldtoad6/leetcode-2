@@ -4,19 +4,19 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code> of <strong>unique</strong> elements, return <em>all possible subsets (the power set)</em>.</p>
+<p>Given an integer array <code>nums</code> of <strong>unique</strong> elements, return <em>all possible</em> <span data-keyword="subset"><em>subsets</em></span> <em>(the power set)</em>.</p>
 
 <p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3]
 <strong>Output:</strong> [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0]
@@ -74,11 +74,10 @@ class Solution:
 
 ```java
 class Solution {
-    private List<List<Integer>> ans;
+    private List<List<Integer>> ans = new ArrayList<>();
     private int[] nums;
 
     public List<List<Integer>> subsets(int[] nums) {
-        ans = new ArrayList<>();
         this.nums = nums;
         dfs(0, new ArrayList<>());
         return ans;
@@ -129,8 +128,7 @@ public:
     }
 
     void dfs(int u, vector<int>& nums, vector<int>& t, vector<vector<int>>& ans) {
-        if (u == nums.size())
-        {
+        if (u == nums.size()) {
             ans.push_back(t);
             return;
         }

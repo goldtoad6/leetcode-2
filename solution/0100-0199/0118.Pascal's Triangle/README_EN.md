@@ -9,10 +9,10 @@
 <p>In <strong>Pascal&#39;s triangle</strong>, each number is the sum of the two numbers directly above it as shown:</p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0118.Pascal%27s%20Triangle/images/PascalTriangleAnimated2.gif" style="height:240px; width:260px" />
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> numRows = 5
 <strong>Output:</strong> [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> numRows = 1
 <strong>Output:</strong> [[1]]
 </pre>
@@ -34,8 +34,10 @@ class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         ans = []
         for i in range(numRows):
-            t = [1 if j == 0 or j == i else ans[-1][j] + ans[-1][j - 1]
-                 for j in range(i + 1)]
+            t = [
+                1 if j == 0 or j == i else ans[-1][j] + ans[-1][j - 1]
+                for j in range(i + 1)
+            ]
             ans.append(t)
         return ans
 ```
@@ -85,8 +87,7 @@ class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>> ans;
-        for (int i = 0; i < numRows; ++i)
-        {
+        for (int i = 0; i < numRows; ++i) {
             vector<int> t(i + 1, 1);
             for (int j = 1; j < i; ++j) t[j] = ans[i - 1][j] + ans[i - 1][j - 1];
             ans.push_back(t);

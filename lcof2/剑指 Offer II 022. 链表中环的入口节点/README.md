@@ -94,6 +94,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
         slow = fast = head
@@ -160,7 +161,7 @@ public class Solution {
  */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
+    ListNode* detectCycle(ListNode* head) {
         ListNode* slow = head;
         ListNode* fast = head;
         bool hasCycle = false;

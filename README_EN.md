@@ -14,7 +14,9 @@
 
 ## Introduction
 
-Complete solutions to [LeetCode](https://leetcode.com/problemset/all/), [LCOF](https://leetcode.cn/problemset/lcof/) and [LCCI](https://leetcode.cn/problemset/lcci/) problems, updated daily. Please give me a [star](https://github.com/doocs/leetcode) 🌟 if you like it.
+The Doocs LeetCode repository is a comprehensive collection of solutions to LeetCode questions in multiple programming languages. The repository contains solutions to LeetCode, LCOF, LCCI questions, and more in multiple programming languages.
+
+The repository is maintained by the Doocs community, and please give us a [star](https://github.com/doocs/leetcode) 🌟 if you like it.
 
 [中文文档](/README.md)
 
@@ -122,6 +124,12 @@ Complete solutions to [LeetCode](https://leetcode.com/problemset/all/), [LCOF](h
 -   [Coin Change](/solution/0300-0399/0322.Coin%20Change/README_EN.md) - `Unbounded Knapsack problem`
 -   [Combination Sum IV](/solution/0300-0399/0377.Combination%20Sum%20IV/README_EN.md) - `Unbounded Knapsack problem`
 -   [Maximum Value of K Coins From Piles](/solution/2200-2299/2218.Maximum%20Value%20of%20K%20Coins%20From%20Piles/README_EN.md) - `Group Knapsack problem`
+-   [Number of Digit One](/solution/0200-0299/0233.Number%20of%20Digit%20One/README_EN.md) - `Digit DP problem`, `Memoization`
+-   [Count Numbers with Unique Digits](/solution/0300-0399/0357.Count%20Numbers%20with%20Unique%20Digits/README_EN.md) - `Digit DP problem`, `Memoization`
+-   [Non-negative Integers without Consecutive Ones](/solution/0600-0699/0600.Non-negative%20Integers%20without%20Consecutive%20Ones/README_EN.md) - `Digit DP problem`, `Memoization`
+-   [Rotated Digits](/solution/0700-0799/0788.Rotated%20Digits/README_EN.md) - `Digit DP problem`, `Memoization`
+-   [Numbers At Most N Given Digit Set](/solution/0900-0999/0902.Numbers%20At%20Most%20N%20Given%20Digit%20Set/README_EN.md) - `Digit DP problem`, `Memoization`
+-   [Count Special Integers](/solution/2300-2399/2376.Count%20Special%20Integers/README_EN.md) - `Digit DP problem`, `Memoization`
 
 ### 5. Advanced Data Structures
 
@@ -190,7 +198,7 @@ You can also contribute to [doocs/leetcode](https://github.com/doocs/leetcode) u
 
 <a href="https://github.com/doocs/leetcode/stargazers" target="_blank"><img src="./images/starcharts.svg" alt="Stargazers over time" /></a>
 
-## Contributors
+## Our Top Contributors
 
 This project exists thanks to all the people who contribute.
 

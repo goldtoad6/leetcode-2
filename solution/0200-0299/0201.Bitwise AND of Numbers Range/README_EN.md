@@ -7,21 +7,21 @@
 <p>Given two integers <code>left</code> and <code>right</code> that represent the range <code>[left, right]</code>, return <em>the bitwise AND of all numbers in this range, inclusive</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> left = 5, right = 7
 <strong>Output:</strong> 4
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> left = 0, right = 0
 <strong>Output:</strong> 0
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> left = 1, right = 2147483647
@@ -45,7 +45,7 @@
 class Solution:
     def rangeBitwiseAnd(self, left: int, right: int) -> int:
         while left < right:
-            right &= (right - 1)
+            right &= right - 1
         return right
 ```
 
@@ -68,7 +68,9 @@ class Solution {
 class Solution {
 public:
     int rangeBitwiseAnd(int left, int right) {
-        while (left < right) right &= (right - 1);
+        while (left < right) {
+            right &= (right - 1);
+        }
         return right;
     }
 };
@@ -90,13 +92,28 @@ func rangeBitwiseAnd(left int, right int) int {
 ```cs
 public class Solution {
     public int RangeBitwiseAnd(int left, int right) {
-        while (left < right)
-        {
+        while (left < right) {
             right &= (right - 1);
         }
         return right;
     }
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number} left
+ * @param {number} right
+ * @return {number}
+ */
+var rangeBitwiseAnd = function (left, right) {
+    while (left < right) {
+        right &= right - 1;
+    }
+    return right;
+};
 ```
 
 ### **...**

@@ -16,7 +16,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -56,7 +56,6 @@ solution.pick(); // return 4
 
 ```python
 class Solution:
-
     def __init__(self, n: int, blacklist: List[int]):
         self.k = n - len(blacklist)
         self.d = {}
@@ -129,10 +128,8 @@ public:
         k = n - blacklist.size();
         int i = k;
         unordered_set<int> black(blacklist.begin(), blacklist.end());
-        for (int& b : blacklist)
-        {
-            if (b < k)
-            {
+        for (int& b : blacklist) {
+            if (b < k) {
                 while (black.count(i)) ++i;
                 d[b] = i++;
             }

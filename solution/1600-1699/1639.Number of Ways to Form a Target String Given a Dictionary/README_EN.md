@@ -20,7 +20,7 @@
 <p>Return <em>the number of ways to form <code>target</code> from <code>words</code></em>. Since the answer may be too large, return it <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;acca&quot;,&quot;bbbb&quot;,&quot;caca&quot;], target = &quot;aba&quot;
@@ -34,7 +34,7 @@
 &quot;aba&quot; -&gt; index 1 (&quot;c<u>a</u>ca&quot;), index 2 (&quot;bb<u>b</u>b&quot;), index 3 (&quot;cac<u>a</u>&quot;)
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;abba&quot;,&quot;baab&quot;], target = &quot;bab&quot;
@@ -64,13 +64,143 @@
 ### **Python3**
 
 ```python
+class Solution:
+    def numWays(self, words: List[str], target: str) -> int:
+        @cache
+        def dfs(i, j):
+            if i >= m:
+                return 1
+            if j >= n:
+                return 0
+            ans = dfs(i, j + 1) + dfs(i + 1, j + 1) * cnt[j][ord(target[i]) - ord("a")]
+            ans %= mod
+            return ans
 
+        m = len(target)
+        n = len(words[0])
+        cnt = [[0] * 26 for _ in range(n)]
+        for w in words:
+            for j, c in enumerate(w):
+                cnt[j][ord(c) - ord("a")] += 1
+        mod = 10**9 + 7
+        return dfs(0, 0)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    private int m;
+    private int n;
+    private String target;
+    private Integer[][] f;
+    private int[][] cnt;
+    private final int mod = (int) 1e9 + 7;
 
+    public int numWays(String[] words, String target) {
+        m = target.length();
+        n = words[0].length();
+        f = new Integer[m][n];
+        this.target = target;
+        cnt = new int[n][26];
+        for (var w : words) {
+            for (int j = 0; j < n; ++j) {
+                cnt[j][w.charAt(j) - 'a']++;
+            }
+        }
+        return dfs(0, 0);
+    }
+
+    private int dfs(int i, int j) {
+        if (i >= m) {
+            return 1;
+        }
+        if (j >= n) {
+            return 0;
+        }
+        if (f[i][j] != null) {
+            return f[i][j];
+        }
+        long ans = dfs(i, j + 1);
+        ans += 1L * dfs(i + 1, j + 1) * cnt[j][target.charAt(i) - 'a'];
+        ans %= mod;
+        return f[i][j] = (int) ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int numWays(vector<string>& words, string target) {
+        const int mod = 1e9 + 7;
+        int m = target.size(), n = words[0].size();
+        vector<vector<int>> cnt(n, vector<int>(26));
+        for (auto& w : words) {
+            for (int j = 0; j < n; ++j) {
+                ++cnt[j][w[j] - 'a'];
+            }
+        }
+        int f[m][n];
+        memset(f, -1, sizeof(f));
+        function<int(int, int)> dfs = [&](int i, int j) -> int {
+            if (i >= m) {
+                return 1;
+            }
+            if (j >= n) {
+                return 0;
+            }
+            if (f[i][j] != -1) {
+                return f[i][j];
+            }
+            int ans = dfs(i, j + 1);
+            ans = (ans + 1LL * dfs(i + 1, j + 1) * cnt[j][target[i] - 'a']) % mod;
+            return f[i][j] = ans;
+        };
+        return dfs(0, 0);
+    }
+};
+```
+
+### **Go**
+
+```go
+func numWays(words []string, target string) int {
+	m, n := len(target), len(words[0])
+	f := make([][]int, m)
+	cnt := make([][26]int, n)
+	for _, w := range words {
+		for j, c := range w {
+			cnt[j][c-'a']++
+		}
+	}
+	for i := range f {
+		f[i] = make([]int, n)
+		for j := range f[i] {
+			f[i][j] = -1
+		}
+	}
+	const mod = 1e9 + 7
+	var dfs func(i, j int) int
+	dfs = func(i, j int) int {
+		if i >= m {
+			return 1
+		}
+		if j >= n {
+			return 0
+		}
+		if f[i][j] != -1 {
+			return f[i][j]
+		}
+		ans := dfs(i, j+1)
+		ans = (ans + dfs(i+1, j+1)*cnt[j][target[i]-'a']) % mod
+		f[i][j] = ans
+		return ans
+	}
+	return dfs(0, 0)
+}
 ```
 
 ### **...**

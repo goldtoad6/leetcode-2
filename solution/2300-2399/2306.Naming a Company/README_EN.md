@@ -16,7 +16,7 @@
 <p>Return <em>the number of <strong>distinct</strong> valid names for the company</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> ideas = [&quot;coffee&quot;,&quot;donuts&quot;,&quot;time&quot;,&quot;toffee&quot;]
@@ -36,7 +36,7 @@ The following are some examples of invalid selections:
 - (&quot;coffee&quot;, &quot;toffee&quot;): Both names formed after swapping already exist in the original array.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> ideas = [&quot;lack&quot;,&quot;back&quot;]
@@ -127,27 +127,21 @@ public:
     long long distinctNames(vector<string>& ideas) {
         unordered_set<string> s(ideas.begin(), ideas.end());
         vector<vector<int>> f(26, vector<int>(26));
-        for (auto v : ideas)
-        {
+        for (auto v : ideas) {
             int i = v[0] - 'a';
-            for (int j = 0; j < 26; ++j)
-            {
+            for (int j = 0; j < 26; ++j) {
                 v[0] = j + 'a';
-                if (!s.count(v))
-                {
+                if (!s.count(v)) {
                     ++f[i][j];
                 }
             }
         }
         long long ans = 0;
-        for (auto v : ideas)
-        {
+        for (auto v : ideas) {
             int i = v[0] - 'a';
-            for (int j = 0; j < 26; ++j)
-            {
+            for (int j = 0; j < 26; ++j) {
                 v[0] = j + 'a';
-                if (!s.count(v))
-                {
+                if (!s.count(v)) {
                     ans += f[j][i];
                 }
             }

@@ -89,9 +89,10 @@
 # This is BinaryMatrix's API interface.
 # You should not implement it, or speculate about its implementation
 # """
-#class BinaryMatrix(object):
+# class BinaryMatrix(object):
 #    def get(self, row: int, col: int) -> int:
 #    def dimensions(self) -> list[]:
+
 
 class Solution:
     def leftMostColumnWithOne(self, binaryMatrix: 'BinaryMatrix') -> int:
@@ -170,7 +171,7 @@ class Solution {
 
 class Solution {
 public:
-    int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
+    int leftMostColumnWithOne(BinaryMatrix& binaryMatrix) {
         vector<int> scale = binaryMatrix.dimensions();
         int rows = scale[0], cols = scale[1];
         int res = -1;

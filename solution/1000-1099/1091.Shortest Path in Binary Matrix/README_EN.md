@@ -16,21 +16,21 @@
 <p>The <strong>length of a clear path</strong> is the number of visited cells of this path.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1000-1099/1091.Shortest%20Path%20in%20Binary%20Matrix/images/example1_1.png" style="width: 500px; height: 234px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,1],[1,0]]
 <strong>Output:</strong> 2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1000-1099/1091.Shortest%20Path%20in%20Binary%20Matrix/images/example2_1.png" style="height: 216px; width: 500px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,0,0],[1,1,0],[1,1,0]]
 <strong>Output:</strong> 4
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[1,0,0],[1,1,0],[1,1,0]]
@@ -88,7 +88,7 @@ class Solution {
         }
         int n = grid.length;
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0});
+        q.offer(new int[] {0, 0});
         grid[0][0] = 1;
         int ans = 0;
         while (!q.isEmpty()) {
@@ -102,7 +102,7 @@ class Solution {
                 for (int x = i - 1; x <= i + 1; ++x) {
                     for (int y = j - 1; y <= j + 1; ++y) {
                         if (x >= 0 && x < n && y >= 0 && y < n && grid[x][y] == 0) {
-                            q.offer(new int[]{x, y});
+                            q.offer(new int[] {x, y});
                             grid[x][y] = 1;
                         }
                     }
@@ -126,21 +126,16 @@ public:
         q.push({0, 0});
         grid[0][0] = 1;
         int ans = 0;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int m = q.size(); m > 0; --m)
-            {
+            for (int m = q.size(); m > 0; --m) {
                 auto p = q.front();
                 q.pop();
                 int i = p.first, j = p.second;
                 if (i == n - 1 && j == n - 1) return ans;
-                for (int x = i - 1; x <= i + 1; ++x)
-                {
-                    for (int y = j - 1; y <= j + 1; ++y)
-                    {
-                        if (x >= 0 && x < n && y >= 0 && y < n && grid[x][y] == 0)
-                        {
+                for (int x = i - 1; x <= i + 1; ++x) {
+                    for (int y = j - 1; y <= j + 1; ++y) {
+                        if (x >= 0 && x < n && y >= 0 && y < n && grid[x][y] == 0) {
                             q.push({x, y});
                             grid[x][y] = 1;
                         }

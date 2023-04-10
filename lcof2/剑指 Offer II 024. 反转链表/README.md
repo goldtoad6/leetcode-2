@@ -69,6 +69,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         pre, p = None, head
@@ -197,8 +198,7 @@ public:
     ListNode* reverseList(ListNode* head) {
         ListNode* pre = nullptr;
         ListNode* p = head;
-        while (p)
-        {
+        while (p) {
             ListNode* q = p->next;
             p->next = pre;
             pre = p;

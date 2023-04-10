@@ -6,7 +6,7 @@
 
 <p>Given strings <code>s1</code>, <code>s2</code>, and <code>s3</code>, find whether <code>s3</code> is formed by an <strong>interleaving</strong> of <code>s1</code> and <code>s2</code>.</p>
 
-<p>An <strong>interleaving</strong> of two strings <code>s</code> and <code>t</code> is a configuration where they are divided into <strong>non-empty</strong> substrings such that:</p>
+<p>An <strong>interleaving</strong> of two strings <code>s</code> and <code>t</code> is a configuration where <code>s</code> and <code>t</code> are divided into <code>n</code> and <code>m</code> <span data-keyword="substring-nonempty">substrings</span> respectively, such that:</p>
 
 <ul>
 	<li><code>s = s<sub>1</sub> + s<sub>2</sub> + ... + s<sub>n</sub></code></li>
@@ -18,21 +18,26 @@
 <p><strong>Note:</strong> <code>a + b</code> is the concatenation of strings <code>a</code> and <code>b</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0097.Interleaving%20String/images/interleave.jpg" style="width: 561px; height: 203px;" />
 <pre>
 <strong>Input:</strong> s1 = &quot;aabcc&quot;, s2 = &quot;dbbca&quot;, s3 = &quot;aadbbcbcac&quot;
 <strong>Output:</strong> true
+<strong>Explanation:</strong> One way to obtain s3 is:
+Split s1 into s1 = &quot;aa&quot; + &quot;bc&quot; + &quot;c&quot;, and s2 into s2 = &quot;dbbc&quot; + &quot;a&quot;.
+Interleaving the two splits, we get &quot;aa&quot; + &quot;dbbc&quot; + &quot;bc&quot; + &quot;a&quot; + &quot;c&quot; = &quot;aadbbcbcac&quot;.
+Since s3 can be obtained by interleaving s1 and s2, we return true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s1 = &quot;aabcc&quot;, s2 = &quot;dbbca&quot;, s3 = &quot;aadbbbaccc&quot;
 <strong>Output:</strong> false
+<strong>Explanation:</strong> Notice how it is impossible to interleave s2 with any other string to obtain s3.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s1 = &quot;&quot;, s2 = &quot;&quot;, s3 = &quot;&quot;
@@ -69,8 +74,14 @@ class Solution:
             if i == m and j == n:
                 return True
 
-            return i < m and s1[i] == s3[i + j] and dfs(i + 1, j) or \
-                j < n and s2[j] == s3[i + j] and dfs(i, j + 1)
+            return (
+                i < m
+                and s1[i] == s3[i + j]
+                and dfs(i + 1, j)
+                or j < n
+                and s2[j] == s3[i + j]
+                and dfs(i, j + 1)
+            )
 
         return dfs(0, 0)
 ```
@@ -194,8 +205,7 @@ public:
             auto it = memo.find(i * 100 + j);
             if (it != memo.end()) return it->second;
 
-            bool ret = (i < m && s1[i] == s3[i + j] && dfs(i + 1, j)) ||
-                       (j < n && s2[j] == s3[i + j] && dfs(i, j + 1));
+            bool ret = (i < m && s1[i] == s3[i + j] && dfs(i + 1, j)) || (j < n && s2[j] == s3[i + j] && dfs(i, j + 1));
 
             memo[i * 100 + j] = ret;
             return ret;

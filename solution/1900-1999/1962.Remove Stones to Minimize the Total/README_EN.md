@@ -17,7 +17,7 @@
 <p><code>floor(x)</code> is the <b>greatest</b> integer that is <strong>smaller</strong> than or <strong>equal</strong> to <code>x</code> (i.e., rounds <code>x</code> down).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> piles = [5,4,9], k = 2
@@ -28,7 +28,7 @@
 The total number of stones in [3,4,5] is 12.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> piles = [4,3,6,7], k = 3
@@ -97,15 +97,13 @@ public:
     int minStoneSum(vector<int>& piles, int k) {
         priority_queue<int> q;
         for (int& p : piles) q.push(p);
-        while (k--)
-        {
+        while (k--) {
             int p = q.top();
             q.pop();
             q.push((p + 1) >> 1);
         }
         int ans = 0;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ans += q.top();
             q.pop();
         }

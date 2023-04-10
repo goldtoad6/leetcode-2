@@ -13,7 +13,7 @@
 <p>Given two integers <code>maxChoosableInteger</code> and <code>desiredTotal</code>, return <code>true</code> if the first player to move can force a win, otherwise, return <code>false</code>. Assume both players play <strong>optimally</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> maxChoosableInteger = 10, desiredTotal = 11
@@ -26,14 +26,14 @@ The second player will win by choosing 10 and get a total = 11, which is &gt;= d
 Same with other integers chosen by the first player, the second player will always win.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> maxChoosableInteger = 10, desiredTotal = 0
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> maxChoosableInteger = 10, desiredTotal = 1
@@ -93,7 +93,8 @@ class Solution {
         boolean res = false;
         for (int i = 1; i <= maxChoosableInteger; ++i) {
             if (((state >> i) & 1) == 0) {
-                if (t + i >= desiredTotal || !dfs(state | 1 << i, t + i, maxChoosableInteger, desiredTotal)) {
+                if (t + i >= desiredTotal
+                    || !dfs(state | 1 << i, t + i, maxChoosableInteger, desiredTotal)) {
                     res = true;
                     break;
                 }
@@ -120,11 +121,9 @@ public:
     bool dfs(int state, int t, int maxChoosableInteger, int desiredTotal, unordered_map<int, bool>& memo) {
         if (memo.count(state)) return memo[state];
         bool res = false;
-        for (int i = 1; i <= maxChoosableInteger; ++i)
-        {
+        for (int i = 1; i <= maxChoosableInteger; ++i) {
             if ((state >> i) & 1) continue;
-            if (t + i >= desiredTotal || !dfs(state | 1 << i, t + i, maxChoosableInteger, desiredTotal, memo))
-            {
+            if (t + i >= desiredTotal || !dfs(state | 1 << i, t + i, maxChoosableInteger, desiredTotal, memo)) {
                 res = true;
                 break;
             }

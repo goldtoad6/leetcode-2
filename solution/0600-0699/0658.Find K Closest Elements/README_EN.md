@@ -14,10 +14,10 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> arr = [1,2,3,4,5], k = 4, x = 3
 <strong>Output:</strong> [1,2,3,4]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> arr = [1,2,3,4,5], k = 4, x = -1
 <strong>Output:</strong> [1,2,3,4]
 </pre>
@@ -44,8 +44,20 @@
 ```python
 class Solution:
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
-        arr.sort(key=lambda v: (abs(v - x), x))
+        arr.sort(key=lambda v: abs(v - x))
         return sorted(arr[:k])
+```
+
+```python
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        l, r = 0, len(arr)
+        while r - l > k:
+            if x - arr[l] <= arr[r - 1] - x:
+                r -= 1
+            else:
+                l += 1
+        return arr[l: r]
 ```
 
 ```python
@@ -80,6 +92,26 @@ class Solution {
 ```java
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int l = 0, r = arr.length;
+        while (r - l > k) {
+            if (x - arr[l] <= arr[r - 1] - x) {
+                --r;
+            } else {
+                ++l;
+            }
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (int i = l; i < r; ++i) {
+            ans.add(arr[i]);
+        }
+        return ans;
+    }
+}
+```
+
+```java
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
         int left = 0;
         int right = arr.length - k;
         while (left < right) {
@@ -106,7 +138,7 @@ int target;
 
 class Solution {
 public:
-    static bool cmp(int& a ,int& b) {
+    static bool cmp(int& a, int& b) {
         int v = abs(a - target) - abs(b - target);
         return v == 0 ? a < b : v < 0;
     }
@@ -125,9 +157,25 @@ public:
 class Solution {
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int l = 0, r = arr.size();
+        while (r - l > k) {
+            if (x - arr[l] <= arr[r - 1] - x) {
+                --r;
+            } else {
+                ++l;
+            }
+        }
+        return vector<int>(arr.begin() + l, arr.begin() + r);
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
         int left = 0, right = arr.size() - k;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             if (x - arr[mid] <= arr[mid + k] - x) right = mid;
             else left = mid + 1;
@@ -163,6 +211,20 @@ func abs(x int) int {
 
 ```go
 func findClosestElements(arr []int, k int, x int) []int {
+	l, r := 0, len(arr)
+	for r-l > k {
+		if x-arr[l] <= arr[r-1]-x {
+			r--
+		} else {
+			l++
+		}
+	}
+	return arr[l:r]
+}
+```
+
+```go
+func findClosestElements(arr []int, k int, x int) []int {
 	left, right := 0, len(arr)-k
 	for left < right {
 		mid := (left + right) >> 1
@@ -185,7 +247,7 @@ impl Solution {
         let mut l = 0;
         let mut r = n;
         while r - l != k as usize {
-            if (arr[l] - x).abs() <= (arr[r - 1] - x).abs() {
+            if x - arr[l] <= arr[r - 1] - x {
                 r -= 1;
             } else {
                 l += 1;
@@ -213,6 +275,39 @@ impl Solution {
         }
         arr[left..left + k].to_vec()
     }
+}
+```
+
+### **TypeScript**
+
+```ts
+function findClosestElements(arr: number[], k: number, x: number): number[] {
+    let l = 0;
+    let r = arr.length;
+    while (r - l > k) {
+        if (x - arr[l] <= arr[r - 1] - x) {
+            --r;
+        } else {
+            ++l;
+        }
+    }
+    return arr.slice(l, r);
+}
+```
+
+```ts
+function findClosestElements(arr: number[], k: number, x: number): number[] {
+    let left = 0;
+    let right = arr.length - k;
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        if (x - arr[mid] <= arr[mid + k] - x) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return arr.slice(left, left + k);
 }
 ```
 

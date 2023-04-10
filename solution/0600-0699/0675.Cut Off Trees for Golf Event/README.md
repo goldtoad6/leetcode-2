@@ -63,7 +63,9 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-题目的一个关键信息是“所有树的高度都不同”，要按照从小到大的顺序依次砍树，因此，先遍历树林，找出所有树及对应的坐标点。然后将树按照高度升序排列。
+**方法一：BFS + 优先队列（A\* 算法）**
+
+题目的一个关键信息是“所有树的高度都不同”，要按照从小到大的顺序依次砍树，因此，我们先遍历树林，找出所有树及对应的坐标点。然后将树按照高度升序排列。
 
 接下来就是找相邻两个点之间的最短距离。可以用 BFS，A\* 算法优化搜索。
 
@@ -104,7 +106,9 @@ class Solution:
             return -1
 
         m, n = len(forest), len(forest[0])
-        trees = [(forest[i][j], i, j) for i in range(m) for j in range(n) if forest[i][j] > 1]
+        trees = [
+            (forest[i][j], i, j) for i in range(m) for j in range(n) if forest[i][j] > 1
+        ]
         trees.sort()
         i = j = 0
         ans = 0
@@ -136,7 +140,7 @@ class Solution {
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (forest.get(i).get(j) > 1) {
-                    trees.add(new int[]{forest.get(i).get(j), i * n + j});
+                    trees.add(new int[] {forest.get(i).get(j), i * n + j});
                 }
             }
         }
@@ -157,7 +161,7 @@ class Solution {
 
     private int bfs(int start, int end) {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        q.offer(new int[]{f(start, end), start});
+        q.offer(new int[] {f(start, end), start});
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
         int[] dirs = {-1, 0, 1, 0, -1};
@@ -172,7 +176,7 @@ class Solution {
                 if (x >= 0 && x < m && y >= 0 && y < n && forest.get(x).get(y) > 0) {
                     if (dist[x * n + y] > dist[state] + 1) {
                         dist[x * n + y] = dist[state] + 1;
-                        q.offer(new int[]{dist[x * n + y] + f(x * n + y, end), x * n + y});
+                        q.offer(new int[] {dist[x * n + y] + f(x * n + y, end), x * n + y});
                     }
                 }
             }
@@ -211,8 +215,7 @@ public:
         sort(trees.begin(), trees.end());
         int ans = 0;
         int start = 0;
-        for (auto& tree : trees)
-        {
+        for (auto& tree : trees) {
             int end = tree.second;
             int t = bfs(start, end, forest);
             if (t == -1) return -1;
@@ -228,16 +231,13 @@ public:
         fill(dist.begin(), dist.end(), INT_MAX);
         dist[start] = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int state = q.top().second;
             q.pop();
             if (state == end) return dist[state];
-            for (int k = 0; k < 4; ++k)
-            {
+            for (int k = 0; k < 4; ++k) {
                 int x = state / n + dirs[k], y = state % n + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && forest[x][y] && dist[x * n + y] > dist[state] + 1)
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && forest[x][y] && dist[x * n + y] > dist[state] + 1) {
                     dist[x * n + y] = dist[state] + 1;
                     q.push({dist[x * n + y] + f(x * n + y, end), x * n + y});
                 }

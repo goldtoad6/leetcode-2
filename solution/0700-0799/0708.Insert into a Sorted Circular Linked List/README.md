@@ -12,7 +12,7 @@
 
 <p>如果有多个满足条件的插入位置，你可以选择任意一个位置插入新的值，插入后整个列表仍然保持有序。</p>
 
-<p>如果列表为空（给定的节点是 <code>null</code>），你需要创建一个循环有序列表并返回这个节点。否则。请返回原先给定的节点。</p>
+<p>如果列表为空（给定的节点是 <code>null</code>），你需要创建一个循环有序列表并返回这个节点。否则，请返回原先给定的节点。</p>
 
 <p>&nbsp;</p>
 
@@ -79,7 +79,9 @@ class Solution:
             return node
         prev, curr = head, head.next
         while curr != head:
-            if prev.val <= insertVal <= curr.val or (prev.val > curr.val and (insertVal >= prev.val or insertVal <= curr.val)):
+            if prev.val <= insertVal <= curr.val or (
+                prev.val > curr.val and (insertVal >= prev.val or insertVal <= curr.val)
+            ):
                 break
             prev, curr = curr, curr.next
         prev.next = node
@@ -120,7 +122,8 @@ class Solution {
         }
         Node prev = head, curr = head.next;
         while (curr != head) {
-            if ((prev.val <= insertVal && insertVal <= curr.val) || (prev.val > curr.val && (insertVal >= prev.val || insertVal <= curr.val))) {
+            if ((prev.val <= insertVal && insertVal <= curr.val)
+                || (prev.val > curr.val && (insertVal >= prev.val || insertVal <= curr.val))) {
                 break;
             }
             prev = curr;
@@ -161,14 +164,12 @@ class Solution {
 public:
     Node* insert(Node* head, int insertVal) {
         Node* node = new Node(insertVal);
-        if (!head)
-        {
+        if (!head) {
             node->next = node;
             return node;
         }
         Node *prev = head, *curr = head->next;
-        while (curr != head)
-        {
+        while (curr != head) {
             if ((prev->val <= insertVal && insertVal <= curr->val) || (prev->val > curr->val && (insertVal >= prev->val || insertVal <= curr->val))) break;
             prev = curr;
             curr = curr->next;

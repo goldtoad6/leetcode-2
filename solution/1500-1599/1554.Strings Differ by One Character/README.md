@@ -69,7 +69,7 @@ class Solution:
         s = set()
         for word in dict:
             for i in range(len(word)):
-                t = word[:i] + "*" + word[i + 1:]
+                t = word[:i] + "*" + word[i + 1 :]
                 if t in s:
                     return True
                 s.add(t)
@@ -105,10 +105,8 @@ class Solution {
 public:
     bool differByOne(vector<string>& dict) {
         unordered_set<string> s;
-        for (auto word : dict)
-        {
-            for (int i = 0; i < word.size(); ++i)
-            {
+        for (auto word : dict) {
+            for (int i = 0; i < word.size(); ++i) {
                 auto t = word;
                 t[i] = '*';
                 if (s.count(t)) return true;

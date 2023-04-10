@@ -14,7 +14,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -52,7 +52,6 @@ kthLargest.add(4);   // return 8
 
 ```python
 class KthLargest:
-
     def __init__(self, k: int, nums: List[int]):
         self.q = []
         self.size = k

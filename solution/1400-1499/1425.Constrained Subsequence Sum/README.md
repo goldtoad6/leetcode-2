@@ -59,7 +59,7 @@ class Solution:
     def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
         n = len(nums)
         dp = [0] * n
-        ans = float('-inf')
+        ans = -inf
         q = deque()
         for i, v in enumerate(nums):
             if q and i - q[0] > k:
@@ -109,8 +109,7 @@ public:
         vector<int> dp(n);
         int ans = INT_MIN;
         deque<int> q;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             if (!q.empty() && i - q.front() > k) q.pop_front();
             dp[i] = max(0, q.empty() ? 0 : dp[q.front()]) + nums[i];
             ans = max(ans, dp[i]);

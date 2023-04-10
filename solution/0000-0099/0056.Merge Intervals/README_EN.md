@@ -7,7 +7,7 @@
 <p>Given an array&nbsp;of <code>intervals</code>&nbsp;where <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,3],[2,6],[8,10],[15,18]]
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,4],[4,5]]
@@ -65,14 +65,14 @@ class Solution {
         for (int i = 1; i < intervals.length; ++i) {
             int s = intervals[i][0], e = intervals[i][1];
             if (ed < s) {
-                ans.add(new int[]{st, ed});
+                ans.add(new int[] {st, ed});
                 st = s;
                 ed = e;
             } else {
                 ed = Math.max(ed, e);
             }
         }
-        ans.add(new int[]{st, ed});
+        ans.add(new int[] {st, ed});
         return ans.toArray(new int[ans.size()][]);
     }
 }
@@ -87,15 +87,13 @@ public:
         sort(intervals.begin(), intervals.end());
         int st = intervals[0][0], ed = intervals[0][1];
         vector<vector<int>> ans;
-        for (int i = 1; i < intervals.size(); ++i)
-        {
+        for (int i = 1; i < intervals.size(); ++i) {
             int s = intervals[i][0], e = intervals[i][1];
-            if (ed < s)
-            {
+            if (ed < s) {
                 ans.push_back({st, ed});
                 st = s, ed = e;
-            }
-            else ed = max(ed, e);
+            } else
+                ed = max(ed, e);
         }
         ans.push_back({st, ed});
         return ans;

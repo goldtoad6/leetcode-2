@@ -21,14 +21,14 @@ string convert(string s, int numRows);
 </pre>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;PAYPALISHIRING&quot;, numRows = 3
 <strong>Output:</strong> &quot;PAHNAPLSIIGYIR&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;PAYPALISHIRING&quot;, numRows = 4
@@ -40,7 +40,7 @@ Y A   H R
 P     I
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;A&quot;, numRows = 1
@@ -121,12 +121,10 @@ public:
         if (numRows == 1) return s;
         string ans;
         int group = 2 * numRows - 2;
-        for (int i = 1; i <= numRows; ++i)
-        {
+        for (int i = 1; i <= numRows; ++i) {
             int interval = i == numRows ? group : 2 * numRows - 2 * i;
             int idx = i - 1;
-            while (idx < s.length())
-            {
+            while (idx < s.length()) {
                 ans.push_back(s[idx]);
                 idx += interval;
                 interval = group - interval;
@@ -207,7 +205,7 @@ func convert(s string, numRows int) string {
  */
 var convert = function (s, numRows) {
     if (numRows == 1) return s;
-    let arr = new Array(numRows);
+    const arr = new Array(numRows);
     for (let i = 0; i < numRows; i++) arr[i] = [];
     let mi = 0,
         isDown = true;
@@ -221,7 +219,7 @@ var convert = function (s, numRows) {
         else mi--;
     }
     let ans = [];
-    for (let item of arr) {
+    for (const item of arr) {
         ans = ans.concat(item);
     }
     return ans.join('');

@@ -15,10 +15,10 @@
 <p>Given two integers <code>left</code> and <code>right</code>, return <em>a list of all the <strong>self-dividing numbers</strong> in the range</em> <code>[left, right]</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> left = 1, right = 22
 <strong>Output:</strong> [1,2,3,4,5,6,7,8,9,11,12,15,22]
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> left = 47, right = 85
 <strong>Output:</strong> [48,55,66,77]
 </pre>
@@ -38,7 +38,11 @@
 ```python
 class Solution:
     def selfDividingNumbers(self, left: int, right: int) -> List[int]:
-        return [num for num in range(left, right + 1) if all(i != '0' and num % int(i) == 0 for i in str(num))]
+        return [
+            num
+            for num in range(left, right + 1)
+            if all(i != '0' and num % int(i) == 0 for i in str(num))
+        ]
 ```
 
 ### **Java**
@@ -107,8 +111,7 @@ public:
     }
 
     bool check(int num) {
-        for (int t = num; t; t /= 10)
-        {
+        for (int t = num; t; t /= 10) {
             int x = t % 10;
             if (x == 0 || num % x) return false;
         }

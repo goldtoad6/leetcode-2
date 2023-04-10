@@ -16,7 +16,7 @@
 <p>Given the integer <code>target</code>, return <em>the <strong>minimum</strong> number of moves required (i.e., the minimum </em><code>numMoves</code><em>) to reach the destination</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> target = 2
@@ -27,7 +27,7 @@ On the 2<sup>nd</sup> move, we step from 1 to -1 (2 steps).
 On the 3<sup>rd</sup> move, we step from -1 to 2 (3 steps).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> target = 3
@@ -52,13 +52,88 @@ On the 2<sup>nd</sup> move, we step from 1 to 3 (2 steps).
 ### **Python3**
 
 ```python
-
+class Solution:
+    def reachNumber(self, target: int) -> int:
+        target = abs(target)
+        s = k = 0
+        while 1:
+            if s >= target and (s - target) % 2 == 0:
+                return k
+            k += 1
+            s += k
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int reachNumber(int target) {
+        target = Math.abs(target);
+        int s = 0, k = 0;
+        while (true) {
+            if (s >= target && (s - target) % 2 == 0) {
+                return k;
+            }
+            ++k;
+            s += k;
+        }
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int reachNumber(int target) {
+        target = abs(target);
+        int s = 0, k = 0;
+        while (1) {
+            if (s >= target && (s - target) % 2 == 0) return k;
+            ++k;
+            s += k;
+        }
+    }
+};
+```
+
+### **Go**
+
+```go
+func reachNumber(target int) int {
+	if target < 0 {
+		target = -target
+	}
+	var s, k int
+	for {
+		if s >= target && (s-target)%2 == 0 {
+			return k
+		}
+		k++
+		s += k
+	}
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number} target
+ * @return {number}
+ */
+var reachNumber = function (target) {
+    target = Math.abs(target);
+    let [s, k] = [0, 0];
+    while (1) {
+        if (s >= target && (s - target) % 2 == 0) {
+            return k;
+        }
+        ++k;
+        s += k;
+    }
+};
 ```
 
 ### **...**

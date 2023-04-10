@@ -7,10 +7,10 @@
 <p>Given an integer <code>num</code>, return <em>a string of its <strong>base 7</strong> representation</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> num = 100
 <strong>Output:</strong> "202"
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> num = -7
 <strong>Output:</strong> "-10"
 </pre>
@@ -60,7 +60,6 @@ class Solution {
         return sb.reverse().toString();
     }
 }
-
 ```
 
 ### **TypeScript**
@@ -118,8 +117,7 @@ public:
         if (num == 0) return "0";
         if (num < 0) return "-" + convertToBase7(-num);
         string ans = "";
-        while (num)
-        {
+        while (num) {
             ans = to_string(num % 7) + ans;
             num /= 7;
         }

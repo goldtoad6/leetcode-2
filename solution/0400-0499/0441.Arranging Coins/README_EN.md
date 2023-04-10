@@ -9,7 +9,7 @@
 <p>Given the integer <code>n</code>, return <em>the number of <strong>complete rows</strong> of the staircase you will build</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0441.Arranging%20Coins/images/arrangecoins1-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> n = 5
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> Because the 3<sup>rd</sup> row is incomplete, we return 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0441.Arranging%20Coins/images/arrangecoins2-grid.jpg" style="width: 333px; height: 333px;" />
 <pre>
 <strong>Input:</strong> n = 8
@@ -93,11 +93,13 @@ class Solution {
 public:
     int arrangeCoins(int n) {
         LL left = 1, right = n;
-        while (left < right)
-        {
+        while (left < right) {
             LL mid = left + right + 1 >> 1;
-            if ((1 + mid) * mid / 2 <= n) left = mid;
-            else right = mid - 1;
+            LL s = (1 + mid) * mid >> 1;
+            if (n < s)
+                right = mid - 1;
+            else
+                left = mid;
         }
         return left;
     }

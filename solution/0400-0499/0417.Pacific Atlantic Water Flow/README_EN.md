@@ -13,18 +13,35 @@
 <p>Return <em>a <strong>2D list</strong> of grid coordinates </em><code>result</code><em> where </em><code>result[i] = [r<sub>i</sub>, c<sub>i</sub>]</code><em> denotes that rain water can flow from cell </em><code>(r<sub>i</sub>, c<sub>i</sub>)</code><em> to <strong>both</strong> the Pacific and Atlantic oceans</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
-<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0417.Pacific%20Atlantic%20Water%20Flow/images/waterflow-grid.jpg" style="width: 573px; height: 573px;" />
+<p><strong class="example">Example 1:</strong></p>
+<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0417.Pacific%20Atlantic%20Water%20Flow/images/waterflow-grid.jpg" style="width: 400px; height: 400px;" />
 <pre>
 <strong>Input:</strong> heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
 <strong>Output:</strong> [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
+<strong>Explanation:</strong> The following cells can flow to the Pacific and Atlantic oceans, as shown below:
+[0,4]: [0,4] -&gt; Pacific Ocean 
+&nbsp;      [0,4] -&gt; Atlantic Ocean
+[1,3]: [1,3] -&gt; [0,3] -&gt; Pacific Ocean 
+&nbsp;      [1,3] -&gt; [1,4] -&gt; Atlantic Ocean
+[1,4]: [1,4] -&gt; [1,3] -&gt; [0,3] -&gt; Pacific Ocean 
+&nbsp;      [1,4] -&gt; Atlantic Ocean
+[2,2]: [2,2] -&gt; [1,2] -&gt; [0,2] -&gt; Pacific Ocean 
+&nbsp;      [2,2] -&gt; [2,3] -&gt; [2,4] -&gt; Atlantic Ocean
+[3,0]: [3,0] -&gt; Pacific Ocean 
+&nbsp;      [3,0] -&gt; [4,0] -&gt; Atlantic Ocean
+[3,1]: [3,1] -&gt; [3,0] -&gt; Pacific Ocean 
+&nbsp;      [3,1] -&gt; [4,1] -&gt; Atlantic Ocean
+[4,0]: [4,0] -&gt; Pacific Ocean 
+       [4,0] -&gt; Atlantic Ocean
+Note that there are other possible paths for these cells to flow to the Pacific and Atlantic oceans.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
-<strong>Input:</strong> heights = [[2,1],[1,2]]
-<strong>Output:</strong> [[0,0],[0,1],[1,0],[1,1]]
+<strong>Input:</strong> heights = [[1]]
+<strong>Output:</strong> [[0,0]]
+<strong>Explanation:</strong> The water can flow from the only cell to the Pacific and Atlantic oceans.
 </pre>
 
 <p>&nbsp;</p>
@@ -52,7 +69,12 @@ class Solution:
                     i, j = q.popleft()
                     for a, b in [[0, -1], [0, 1], [1, 0], [-1, 0]]:
                         x, y = i + a, j + b
-                        if 0 <= x < m and 0 <= y < n and (x, y) not in vis and heights[x][y] >= heights[i][j]:
+                        if (
+                            0 <= x < m
+                            and 0 <= y < n
+                            and (x, y) not in vis
+                            and heights[x][y] >= heights[i][j]
+                        ):
                             vis.add((x, y))
                             q.append((x, y))
 
@@ -70,7 +92,12 @@ class Solution:
                     q2.append((i, j))
         bfs(q1, vis1)
         bfs(q2, vis2)
-        return [(i, j) for i in range(m) for j in range(n) if (i, j) in vis1 and (i, j) in vis2]
+        return [
+            (i, j)
+            for i in range(m)
+            for j in range(n)
+            if (i, j) in vis1 and (i, j) in vis2
+        ]
 ```
 
 ### **Java**
@@ -93,11 +120,11 @@ class Solution {
             for (int j = 0; j < n; ++j) {
                 if (i == 0 || j == 0) {
                     vis1.add(i * n + j);
-                    q1.offer(new int[]{i, j});
+                    q1.offer(new int[] {i, j});
                 }
                 if (i == m - 1 || j == n - 1) {
                     vis2.add(i * n + j);
-                    q2.offer(new int[]{i, j});
+                    q2.offer(new int[] {i, j});
                 }
             }
         }
@@ -123,9 +150,10 @@ class Solution {
                 for (int i = 0; i < 4; ++i) {
                     int x = p[0] + dirs[i];
                     int y = p[1] + dirs[i + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && !vis.contains(x * n + y) && heights[x][y] >= heights[p[0]][p[1]]) {
+                    if (x >= 0 && x < m && y >= 0 && y < n && !vis.contains(x * n + y)
+                        && heights[x][y] >= heights[p[0]][p[1]]) {
                         vis.add(x * n + y);
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                     }
                 }
             }
@@ -153,17 +181,13 @@ public:
         queue<pii> q2;
         unordered_set<int> vis1;
         unordered_set<int> vis2;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (i == 0 || j == 0)
-                {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i == 0 || j == 0) {
                     vis1.insert(i * n + j);
                     q1.emplace(i, j);
                 }
-                if (i == m - 1 || j == n - 1)
-                {
+                if (i == m - 1 || j == n - 1) {
                     vis2.insert(i * n + j);
                     q2.emplace(i, j);
                 }
@@ -172,13 +196,10 @@ public:
         bfs(q1, vis1);
         bfs(q2, vis2);
         vector<vector<int>> ans;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 int x = i * n + j;
-                if (vis1.count(x) && vis2.count(x))
-                {
+                if (vis1.count(x) && vis2.count(x)) {
                     ans.push_back({i, j});
                 }
             }
@@ -188,18 +209,14 @@ public:
 
     void bfs(queue<pii>& q, unordered_set<int>& vis) {
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
-            for (int k = q.size(); k > 0; --k)
-            {
+        while (!q.empty()) {
+            for (int k = q.size(); k > 0; --k) {
                 auto p = q.front();
                 q.pop();
-                for (int i = 0; i < 4; ++i)
-                {
+                for (int i = 0; i < 4; ++i) {
                     int x = p.first + dirs[i];
                     int y = p.second + dirs[i + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && !vis.count(x * n + y) && heights[x][y] >= heights[p.first][p.second])
-                    {
+                    if (x >= 0 && x < m && y >= 0 && y < n && !vis.count(x * n + y) && heights[x][y] >= heights[p.first][p.second]) {
                         vis.insert(x * n + y);
                         q.emplace(x, y);
                     }

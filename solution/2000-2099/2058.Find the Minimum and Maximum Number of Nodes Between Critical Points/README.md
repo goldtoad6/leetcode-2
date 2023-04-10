@@ -100,9 +100,11 @@ class Solution:
         prev, curr = head, head.next
         first = last = None
         i = 1
-        ans = [float('inf'), float('-inf')]
+        ans = [inf, -inf]
         while curr.next:
-            if curr.val < min(prev.val, curr.next.val) or curr.val > max(prev.val, curr.next.val):
+            if curr.val < min(prev.val, curr.next.val) or curr.val > max(
+                prev.val, curr.next.val
+            ):
                 if last is None:
                     first = last = i
                 else:
@@ -136,12 +138,10 @@ class Solution {
         ListNode curr = head.next;
         int first = 0, last = 0;
         int i = 1;
-        int[] ans = new int[] { Integer.MAX_VALUE, Integer.MIN_VALUE };
+        int[] ans = new int[] {Integer.MAX_VALUE, Integer.MIN_VALUE};
         while (curr.next != null) {
-            if (
-                curr.val < Math.min(prev.val, curr.next.val) ||
-                curr.val > Math.max(prev.val, curr.next.val)
-            ) {
+            if (curr.val < Math.min(prev.val, curr.next.val)
+                || curr.val > Math.max(prev.val, curr.next.val)) {
                 if (last == 0) {
                     first = i;
                     last = i;
@@ -155,10 +155,9 @@ class Solution {
             prev = curr;
             curr = curr.next;
         }
-        return first == last ? new int[] { -1, -1 } : ans;
+        return first == last ? new int[] {-1, -1} : ans;
     }
 }
-
 ```
 
 ### **TypeScript**
@@ -225,13 +224,11 @@ public:
         int first = 0, last = 0;
         int i = 1;
         vector<int> ans(2, INT_MAX);
-        while (curr->next)
-        {
-            if (curr->val < min(prev->val, curr->next->val) || curr->val > max(prev->val, curr->next->val))
-            {
-                if (last == 0) first = i;
-                else
-                {
+        while (curr->next) {
+            if (curr->val < min(prev->val, curr->next->val) || curr->val > max(prev->val, curr->next->val)) {
+                if (last == 0)
+                    first = i;
+                else {
                     ans[0] = min(ans[0], i - last);
                     ans[1] = i - first;
                 }

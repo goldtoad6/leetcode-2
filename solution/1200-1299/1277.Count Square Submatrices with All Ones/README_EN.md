@@ -7,7 +7,7 @@
 <p>Given a <code>m * n</code> matrix of ones and zeros, return how many <strong>square</strong> submatrices have all ones.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> matrix =
@@ -24,7 +24,7 @@ There is  <strong>1</strong> square of side 3.
 Total number of squares = 10 + 4 + 1 = <strong>15</strong>.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> matrix = 
@@ -68,8 +68,7 @@ class Solution:
                 if i == 0 or j == 0:
                     f[i][j] = 1
                 else:
-                    f[i][j] = min(f[i - 1][j - 1], f[i - 1]
-                                  [j], f[i][j - 1]) + 1
+                    f[i][j] = min(f[i - 1][j - 1], f[i - 1][j], f[i][j - 1]) + 1
                 ans += f[i][j]
         return ans
 ```
@@ -110,13 +109,13 @@ public:
         int m = matrix.size(), n = matrix[0].size();
         int ans = 0;
         vector<vector<int>> f(m, vector<int>(n));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 if (matrix[i][j] == 0) continue;
-                if (i == 0 || j == 0) f[i][j] = 1;
-                else f[i][j] = min(f[i - 1][j - 1], min(f[i - 1][j], f[i][j - 1])) + 1;
+                if (i == 0 || j == 0)
+                    f[i][j] = 1;
+                else
+                    f[i][j] = min(f[i - 1][j - 1], min(f[i - 1][j], f[i][j - 1])) + 1;
                 ans += f[i][j];
             }
         }

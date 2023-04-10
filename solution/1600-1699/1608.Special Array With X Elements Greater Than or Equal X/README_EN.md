@@ -11,7 +11,7 @@
 <p>Return <code>x</code> <em>if the array is <strong>special</strong>, otherwise, return </em><code>-1</code>. It can be proven that if <code>nums</code> is special, the value for <code>x</code> is <strong>unique</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,5]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> There are 2 values (3 and 5) that are greater than or equal to 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,0]
@@ -31,7 +31,7 @@ If x = 2, there should be 2 numbers &gt;= x, but there are 0.
 x cannot be greater since there are only 2 numbers in nums.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,4,3,0,4]
@@ -56,11 +56,20 @@ x cannot be greater since there are only 2 numbers in nums.
 ```python
 class Solution:
     def specialArray(self, nums: List[int]) -> int:
-        n = len(nums)
+        for x in range(1, len(nums) + 1):
+            cnt = sum(v >= x for v in nums)
+            if cnt == x:
+                return x
+        return -1
+```
+
+```python
+class Solution:
+    def specialArray(self, nums: List[int]) -> int:
         nums.sort()
-        for x in range(n + 1):
-            idx = bisect_left(nums, x)
-            cnt = n - 1 - idx + 1
+        n = len(nums)
+        for x in range(1, n + 1):
+            cnt = n - bisect_left(nums, x)
             if cnt == x:
                 return x
         return -1
@@ -71,9 +80,28 @@ class Solution:
 ```java
 class Solution {
     public int specialArray(int[] nums) {
+        for (int x = 1; x <= nums.length; ++x) {
+            int cnt = 0;
+            for (int v : nums) {
+                if (v >= x) {
+                    ++cnt;
+                }
+            }
+            if (cnt == x) {
+                return x;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+```java
+class Solution {
+    public int specialArray(int[] nums) {
         Arrays.sort(nums);
         int n = nums.length;
-        for (int x = 0; x <= n; ++x) {
+        for (int x = 1; x <= n; ++x) {
             int left = 0, right = n;
             while (left < right) {
                 int mid = (left + right) >> 1;
@@ -83,7 +111,7 @@ class Solution {
                     left = mid + 1;
                 }
             }
-            int cnt = n - 1 - left + 1;
+            int cnt = n - left;
             if (cnt == x) {
                 return x;
             }
@@ -99,12 +127,24 @@ class Solution {
 class Solution {
 public:
     int specialArray(vector<int>& nums) {
+        for (int x = 1; x <= nums.size(); ++x) {
+            int cnt = 0;
+            for (int v : nums) cnt += v >= x;
+            if (cnt == x) return x;
+        }
+        return -1;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int specialArray(vector<int>& nums) {
         int n = nums.size();
         sort(nums.begin(), nums.end());
-        for (int x = 0; x <= n; ++x)
-        {
-            int idx = lower_bound(nums.begin(), nums.end(), x) - nums.begin();
-            int cnt = n - 1 - idx + 1;
+        for (int x = 1; x <= n; ++x) {
+            int cnt = n - (lower_bound(nums.begin(), nums.end(), x) - nums.begin());
             if (cnt == x) return x;
         }
         return -1;
@@ -116,9 +156,26 @@ public:
 
 ```go
 func specialArray(nums []int) int {
-	n := len(nums)
+	for x := 1; x <= len(nums); x++ {
+		cnt := 0
+		for _, v := range nums {
+			if v >= x {
+				cnt++
+			}
+		}
+		if cnt == x {
+			return x
+		}
+	}
+	return -1
+}
+```
+
+```go
+func specialArray(nums []int) int {
 	sort.Ints(nums)
-	for x := 0; x <= n; x++ {
+	n := len(nums)
+	for x := 1; x <= n; x++ {
 		left, right := 0, n
 		for left < right {
 			mid := (left + right) >> 1
@@ -128,12 +185,103 @@ func specialArray(nums []int) int {
 				left = mid + 1
 			}
 		}
-		cnt := n - 1 - left + 1
+		cnt := n - left
 		if cnt == x {
 			return x
 		}
 	}
 	return -1
+}
+```
+
+### **TypeScript**
+
+```ts
+function specialArray(nums: number[]): number {
+    const n = nums.length;
+    for (let i = 0; i <= n; i++) {
+        if (i === nums.reduce((r, v) => r + (v >= i ? 1 : 0), 0)) {
+            return i;
+        }
+    }
+    return -1;
+}
+```
+
+```ts
+function specialArray(nums: number[]): number {
+    const n = nums.length;
+    let left = 0;
+    let right = n + 1;
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        const count = nums.reduce((r, v) => r + (v >= mid ? 1 : 0), 0);
+
+        if (count === mid) {
+            return mid;
+        }
+
+        if (count > mid) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return -1;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn special_array(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        for i in 0..=n {
+            let mut count = 0;
+            for &num in nums.iter() {
+                if num >= i {
+                    count += 1;
+                }
+            }
+            if count == i {
+                return i;
+            }
+        }
+        -1
+    }
+}
+```
+
+```rust
+use std::cmp::Ordering;
+impl Solution {
+    pub fn special_array(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut left = 0;
+        let mut right = n + 1;
+        while left < right {
+            let mid = left + (right - left) / 2;
+            let mut count = 0;
+            for &num in nums.iter() {
+                if num >= mid {
+                    count += 1;
+                }
+            }
+            match count.cmp(&mid) {
+                Ordering::Equal => {
+                    return mid;
+                }
+                Ordering::Less => {
+                    right = mid;
+                }
+                Ordering::Greater => {
+                    left = mid + 1;
+                }
+            }
+        }
+        -1
+    }
 }
 ```
 

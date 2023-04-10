@@ -11,7 +11,7 @@
 <p>After merging the accounts, return the accounts in the following format: the first element of each account is the name, and the rest of the elements are emails <strong>in sorted order</strong>. The accounts themselves can be returned in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> accounts = [[&quot;John&quot;,&quot;johnsmith@mail.com&quot;,&quot;john_newyork@mail.com&quot;],[&quot;John&quot;,&quot;johnsmith@mail.com&quot;,&quot;john00@mail.com&quot;],[&quot;Mary&quot;,&quot;mary@mail.com&quot;],[&quot;John&quot;,&quot;johnnybravo@mail.com&quot;]]
@@ -23,7 +23,7 @@ We could return these lists in any order, for example the answer [[&#39;Mary&#39
 [&#39;John&#39;, &#39;john00@mail.com&#39;, &#39;john_newyork@mail.com&#39;, &#39;johnsmith@mail.com&#39;]] would still be accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> accounts = [[&quot;Gabe&quot;,&quot;Gabe0@m.co&quot;,&quot;Gabe3@m.co&quot;,&quot;Gabe1@m.co&quot;],[&quot;Kevin&quot;,&quot;Kevin3@m.co&quot;,&quot;Kevin5@m.co&quot;,&quot;Kevin0@m.co&quot;],[&quot;Ethan&quot;,&quot;Ethan5@m.co&quot;,&quot;Ethan4@m.co&quot;,&quot;Ethan0@m.co&quot;],[&quot;Hanzo&quot;,&quot;Hanzo3@m.co&quot;,&quot;Hanzo1@m.co&quot;,&quot;Hanzo0@m.co&quot;],[&quot;Fern&quot;,&quot;Fern5@m.co&quot;,&quot;Fern1@m.co&quot;,&quot;Fern0@m.co&quot;]]
@@ -143,30 +143,27 @@ public:
         p.resize(n);
         for (int i = 0; i < n; ++i) p[i] = i;
         unordered_map<string, int> emailId;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             auto account = accounts[i];
             auto name = account[0];
-            for (int j = 1; j < account.size(); ++j)
-            {
+            for (int j = 1; j < account.size(); ++j) {
                 string email = account[j];
-                if (emailId.count(email)) p[find(i)] = find(emailId[email]);
-                else emailId[email] = i;
+                if (emailId.count(email))
+                    p[find(i)] = find(emailId[email]);
+                else
+                    emailId[email] = i;
             }
         }
         unordered_map<int, unordered_set<string>> mp;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             auto account = accounts[i];
-            for (int j = 1; j < account.size(); ++j)
-            {
+            for (int j = 1; j < account.size(); ++j) {
                 string email = account[j];
                 mp[find(i)].insert(email);
             }
         }
         vector<vector<string>> ans;
-        for (auto& [i, emails] : mp)
-        {
+        for (auto& [i, emails] : mp) {
             vector<string> t;
             t.push_back(accounts[i][0]);
             for (string email : emails) t.push_back(email);

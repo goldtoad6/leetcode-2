@@ -9,21 +9,21 @@
 <p>The final result should be an <a href="https://en.wikipedia.org/wiki/Irreducible_fraction" target="_blank">irreducible fraction</a>. If your final result is an integer, change it to the format of a fraction that has a denominator <code>1</code>. So in this case, <code>2</code> should be converted to <code>2/1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> expression = &quot;-1/2+1/2&quot;
 <strong>Output:</strong> &quot;0/1&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> expression = &quot;-1/2+1/2+1/3&quot;
 <strong>Output:</strong> &quot;1/3&quot;
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> expression = &quot;1/3-1/2&quot;
@@ -48,13 +48,108 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def fractionAddition(self, expression: str) -> str:
+        x, y = 0, 6 * 7 * 8 * 9 * 10
+        if expression[0].isdigit():
+            expression = '+' + expression
+        i, n = 0, len(expression)
+        while i < n:
+            sign = -1 if expression[i] == '-' else 1
+            i += 1
+            j = i
+            while j < n and expression[j] not in '+-':
+                j += 1
+            s = expression[i:j]
+            a, b = s.split('/')
+            x += sign * int(a) * y // int(b)
+            i = j
+        z = gcd(x, y)
+        x //= z
+        y //= z
+        return f'{x}/{y}'
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public String fractionAddition(String expression) {
+        int x = 0, y = 6 * 7 * 8 * 9 * 10;
+        if (Character.isDigit(expression.charAt(0))) {
+            expression = "+" + expression;
+        }
+        int i = 0, n = expression.length();
+        while (i < n) {
+            int sign = expression.charAt(i) == '-' ? -1 : 1;
+            ++i;
+            int j = i;
+            while (j < n && expression.charAt(j) != '+' && expression.charAt(j) != '-') {
+                ++j;
+            }
+            String s = expression.substring(i, j);
+            String[] t = s.split("/");
+            int a = Integer.parseInt(t[0]), b = Integer.parseInt(t[1]);
+            x += sign * a * y / b;
+            i = j;
+        }
+        int z = gcd(Math.abs(x), y);
+        x /= z;
+        y /= z;
+        return x + "/" + y;
+    }
 
+    private int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
+}
+```
+
+### **Go**
+
+```go
+func fractionAddition(expression string) string {
+	x, y := 0, 6*7*8*9*10
+	if unicode.IsDigit(rune(expression[0])) {
+		expression = "+" + expression
+	}
+	i, n := 0, len(expression)
+	for i < n {
+		sign := 1
+		if expression[i] == '-' {
+			sign = -1
+		}
+		i++
+		j := i
+		for j < n && expression[j] != '+' && expression[j] != '-' {
+			j++
+		}
+		s := expression[i:j]
+		t := strings.Split(s, "/")
+		a, _ := strconv.Atoi(t[0])
+		b, _ := strconv.Atoi(t[1])
+		x += sign * a * y / b
+		i = j
+	}
+	z := gcd(abs(x), y)
+	x /= z
+	y /= z
+	return fmt.Sprintf("%d/%d", x, y)
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func gcd(a, b int) int {
+	if b == 0 {
+		return a
+	}
+	return gcd(b, a%b)
+}
 ```
 
 ### **...**

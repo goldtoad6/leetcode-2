@@ -13,7 +13,7 @@
 <p><strong>Note: </strong>Assume we are dealing with an environment that could only store integers within the <strong>32-bit</strong> signed integer range: <code>[&minus;2<sup>31</sup>, 2<sup>31</sup> &minus; 1]</code>. For this problem, if the quotient is <strong>strictly greater than</strong> <code>2<sup>31</sup> - 1</code>, then return <code>2<sup>31</sup> - 1</code>, and if the quotient is <strong>strictly less than</strong> <code>-2<sup>31</sup></code>, then return <code>-2<sup>31</sup></code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> dividend = 10, divisor = 3
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> 10/3 = 3.33333.. which is truncated to 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> dividend = 7, divisor = -3
@@ -38,6 +38,10 @@
 </ul>
 
 ## Solutions
+
+**Approach 1: Quick Power**
+
+Time complexity $O(\log a \times \log b)$, Space complexity $O(1)$.
 
 <!-- tabs:start -->
 
@@ -94,36 +98,34 @@ class Solution {
 
 ```go
 func divide(a int, b int) int {
-	sign := 1
-	if a*b < 0 {
-		sign = -1
+	sign, ans, INT32_MAX, INT32_MIN, LIMIT := false, 0, 1<<31-1, -1<<31, -1<<31/2
+	if (a > 0 && b < 0) || (a < 0 && b > 0) {
+		sign = true
 	}
-
-	a = abs(a)
-	b = abs(b)
-
-	tot := 0
-	for a >= b {
+	a, b = convert(a), convert(b)
+	for a <= b {
 		cnt := 0
-		for a >= (b << (cnt + 1)) {
+		// (b<<cnt) >= LIMIT 是为了避免 b<<(cnt+1) 发生溢出
+		for (b<<cnt) >= LIMIT && a <= (b<<(cnt+1)) {
 			cnt++
 		}
-		tot += 1 << cnt
-		a -= b << cnt
+		ans = ans + -1<<cnt
+		a = a - b<<cnt
 	}
-
-	ans := sign * tot
-	if ans >= math.MinInt32 && ans <= math.MaxInt32 {
+	if sign {
 		return ans
 	}
-	return math.MaxInt32
+	if ans == INT32_MIN {
+		return INT32_MAX
+	}
+	return -ans
 }
 
-func abs(a int) int {
-	if a < 0 {
-		return -a
+func convert(v int) int {
+	if v > 0 {
+		return -v
 	}
-	return a
+	return v
 }
 ```
 

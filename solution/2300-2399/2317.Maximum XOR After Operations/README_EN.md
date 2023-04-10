@@ -11,7 +11,7 @@
 <p>Return <em>the <strong>maximum</strong> possible bitwise XOR of all elements of </em><code>nums</code><em> after applying the operation <strong>any number</strong> of times</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,2,4,6]
@@ -21,7 +21,7 @@ Now, nums = [3, 2, 4, 2] and the bitwise XOR of all the elements = 3 XOR 2 XOR 4
 It can be shown that 7 is the maximum possible bitwise XOR.
 Note that other operations may be used to achieve a bitwise XOR of 7.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,9,2]
@@ -47,10 +47,7 @@ It can be shown that 11 is the maximum possible bitwise XOR.</pre>
 ```python
 class Solution:
     def maximumXOR(self, nums: List[int]) -> int:
-        ans = 0
-        for v in nums:
-            ans |= v
-        return ans
+        return reduce(or_, nums)
 ```
 
 ### **Java**
@@ -59,8 +56,8 @@ class Solution:
 class Solution {
     public int maximumXOR(int[] nums) {
         int ans = 0;
-        for (int v : nums) {
-            ans |= v;
+        for (int x : nums) {
+            ans |= x;
         }
         return ans;
     }
@@ -74,7 +71,9 @@ class Solution {
 public:
     int maximumXOR(vector<int>& nums) {
         int ans = 0;
-        for (int& v : nums) ans |= v;
+        for (int& x : nums) {
+            ans |= x;
+        }
         return ans;
     }
 };
@@ -83,19 +82,24 @@ public:
 ### **Go**
 
 ```go
-func maximumXOR(nums []int) int {
-	ans := 0
-	for _, v := range nums {
-		ans |= v
+func maximumXOR(nums []int) (ans int) {
+	for _, x := range nums {
+		ans |= x
 	}
-	return ans
+	return
 }
 ```
 
 ### **TypeScript**
 
 ```ts
-
+function maximumXOR(nums: number[]): number {
+    let ans = 0;
+    for (const x of nums) {
+        ans |= x;
+    }
+    return ans;
+}
 ```
 
 ### **...**

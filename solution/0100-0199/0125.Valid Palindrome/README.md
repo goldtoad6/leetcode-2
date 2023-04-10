@@ -6,35 +6,46 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
+<p>如果在将所有大写字符转换为小写字符、并移除所有非字母数字字符之后，短语正着读和反着读都一样。则可以认为该短语是一个 <strong>回文串</strong> 。</p>
 
-<p><strong>说明：</strong>本题中，我们将空字符串定义为有效的回文串。</p>
+<p>字母和数字都属于字母数字字符。</p>
 
-<p> </p>
+<p>给你一个字符串 <code>s</code>，如果它是 <strong>回文串</strong> ，返回 <code>true</code><em> </em>；否则，返回<em> </em><code>false</code><em> </em>。</p>
 
-<p><strong>示例 1:</strong></p>
+<p>&nbsp;</p>
 
-<pre>
-<strong>输入:</strong> "A man, a plan, a canal: Panama"
-<strong>输出:</strong> true
-<strong>解释：</strong>"amanaplanacanalpanama" 是回文串
-</pre>
-
-<p><strong>示例 2:</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
-<strong>输入:</strong> "race a car"
-<strong>输出:</strong> false
-<strong>解释：</strong>"raceacar" 不是回文串
+<strong>输入:</strong> s = "A man, a plan, a canal: Panama"
+<strong>输出：</strong>true
+<strong>解释：</strong>"amanaplanacanalpanama" 是回文串。
 </pre>
 
-<p> </p>
+<p><strong>示例 2：</strong></p>
+
+<pre>
+<strong>输入：</strong>s = "race a car"
+<strong>输出：</strong>false
+<strong>解释：</strong>"raceacar" 不是回文串。
+</pre>
+
+<p><strong>示例 3：</strong></p>
+
+<pre>
+<strong>输入：</strong>s = " "
+<strong>输出：</strong>true
+<strong>解释：</strong>在移除非字母数字字符之后，s 是一个空字符串 "" 。
+由于空字符串正着反着读都一样，所以是回文串。
+</pre>
+
+<p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
 <ul>
-	<li><code>1 <= s.length <= 2 * 10<sup>5</sup></code></li>
-	<li>字符串 <code>s</code> 由 ASCII 字符组成</li>
+	<li><code>1 &lt;= s.length &lt;= 2 * 10<sup>5</sup></code></li>
+	<li><code>s</code> 仅由可打印的 ASCII 字符组成</li>
 </ul>
 
 ## 解法
@@ -97,9 +108,12 @@ public:
     bool isPalindrome(string s) {
         int i = 0, j = s.size() - 1;
         while (i < j) {
-            if (!isAlphaNum(s[i])) ++i;
-            else if (!isAlphaNum(s[j])) --j;
-            else if ((s[i] + 32 - 'a') % 32 != (s[j] + 32 - 'a') % 32) return false;
+            if (!isAlphaNum(s[i]))
+                ++i;
+            else if (!isAlphaNum(s[j]))
+                --j;
+            else if ((s[i] + 32 - 'a') % 32 != (s[j] + 32 - 'a') % 32)
+                return false;
             else {
                 ++i;
                 --j;
@@ -109,7 +123,7 @@ public:
     }
 
 private:
-    bool isAlphaNum(char &ch) {
+    bool isAlphaNum(char& ch) {
         if (ch >= 'a' && ch <= 'z') return true;
         if (ch >= 'A' && ch <= 'Z') return true;
         if (ch >= '0' && ch <= '9') return true;
@@ -261,6 +275,59 @@ impl Solution {
             }
         }
         true
+    }
+}
+```
+
+### **Go**
+
+```go
+func isPalindrome(s string) bool {
+	s = strings.ToLower(s)
+	left, right := 0, len(s) - 1
+	for left < right {
+		for left < right && !verify(s[left]) {
+			left++
+		}
+		for left < right && !verify(s[right]) {
+			right--
+		}
+		if left < right {
+			if s[left] != s[right] {
+				return false
+			}
+			left++
+			right--
+		}
+	}
+	return true
+}
+
+func verify(ch byte) bool {
+	return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Boolean
+     */
+    function isPalindrome($s) {
+        $regex = "/[a-z0-9]/";
+        $s = strtolower($s);
+        preg_match_all($regex, $s, $matches);
+        if ($matches[0] == Null) return true;
+        $len = floor(count($matches[0]) / 2);
+        for ($i = 0; $i < $len; $i++) {
+            if ($matches[0][$i] != $matches[0][count($matches[0]) - 1 - $i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 ```

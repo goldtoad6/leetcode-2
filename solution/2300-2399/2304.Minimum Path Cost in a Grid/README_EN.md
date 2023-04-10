@@ -11,7 +11,7 @@
 <p>The cost of a path in <code>grid</code> is the <strong>sum</strong> of all values of cells visited plus the <strong>sum</strong> of costs of all the moves made. Return <em>the <strong>minimum</strong> cost of a path that starts from any cell in the <strong>first</strong> row and ends at any cell in the <strong>last</strong> row.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2300-2399/2304.Minimum%20Path%20Cost%20in%20a%20Grid/images/griddrawio-2.png" style="width: 301px; height: 281px;" />
 <pre>
 <strong>Input:</strong> grid = [[5,3],[4,0],[2,1]], moveCost = [[9,8],[1,5],[10,12],[18,6],[2,4],[14,3]]
@@ -23,7 +23,7 @@
 So the total cost of the path is 6 + 3 + 8 = 17.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> grid = [[5,1,2],[4,0,3]], moveCost = [[12,10,15],[20,23,8],[21,7,1],[8,1,13],[9,10,25],[5,3,2]]
@@ -56,18 +56,13 @@ So the total cost of this path is 5 + 1 = 6.
 ```python
 class Solution:
     def minPathCost(self, grid: List[List[int]], moveCost: List[List[int]]) -> int:
-        n = len(grid[0])
-        f = [0] * n
-        for i, row in enumerate(grid):
-            g = [0] * n
-            for j, v in enumerate(row):
-                g[j] = v
-                t = inf
-                if i:
-                    for k, x in enumerate(grid[i - 1]):
-                        t = min(t, f[k] + moveCost[x][j])
-                if t != inf:
-                    g[j] += t
+        m, n = len(grid), len(grid[0])
+        f = grid[0]
+        for i in range(1, m):
+            g = [inf] * n
+            for j in range(n):
+                for k in range(n):
+                    g[j] = min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j])
             f = g
         return min(f)
 ```
@@ -78,24 +73,20 @@ class Solution:
 class Solution {
     public int minPathCost(int[][] grid, int[][] moveCost) {
         int m = grid.length, n = grid[0].length;
-        int inf = Integer.MAX_VALUE;
-        int[] f = new int[n];
-        for (int i = 0; i < m; ++i) {
+        int[] f = grid[0];
+        final int inf = 1 << 30;
+        for (int i = 1; i < m; ++i) {
             int[] g = new int[n];
+            Arrays.fill(g, inf);
             for (int j = 0; j < n; ++j) {
-                g[j] = grid[i][j];
-                int t = inf;
-                if (i > 0) {
-                    for (int k = 0; k < n; ++k) {
-                        t = Math.min(t, f[k] + moveCost[grid[i - 1][k]][j]);
-                    }
-                }
-                if (t != inf) {
-                    g[j] += t;
+                for (int k = 0; k < n; ++k) {
+                    g[j] = Math.min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j]);
                 }
             }
             f = g;
         }
+
+        // return Arrays.stream(f).min().getAsInt();
         int ans = inf;
         for (int v : f) {
             ans = Math.min(ans, v);
@@ -112,25 +103,16 @@ class Solution {
 public:
     int minPathCost(vector<vector<int>>& grid, vector<vector<int>>& moveCost) {
         int m = grid.size(), n = grid[0].size();
-        int inf = INT_MAX;
-        vector<int> f(n);
-        for (int i = 0; i < m; ++i)
-        {
-            vector<int> g(n);
-            for (int j = 0; j < n; ++j)
-            {
-                g[j] = grid[i][j];
-                int t = inf;
-                if (i)
-                {
-                    for (int k = 0; k < n; ++k)
-                    {
-                        t = min(t, f[k] + moveCost[grid[i - 1][k]][j]);
-                    }
+        const int inf = 1 << 30;
+        vector<int> f = grid[0];
+        for (int i = 1; i < m; ++i) {
+            vector<int> g(n, inf);
+            for (int j = 0; j < n; ++j) {
+                for (int k = 0; k < n; ++k) {
+                    g[j] = min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j]);
                 }
-                if (t != inf) g[j] += t;
             }
-            f = g;
+            f = move(g);
         }
         return *min_element(f.begin(), f.end());
     }
@@ -141,21 +123,15 @@ public:
 
 ```go
 func minPathCost(grid [][]int, moveCost [][]int) int {
-	n := len(grid[0])
-	inf := 0x3f3f3f3f
-	f := make([]int, n)
-	for i, row := range grid {
+	m, n := len(grid), len(grid[0])
+	const inf = 1 << 30
+	f := grid[0]
+	for i := 1; i < m; i++ {
 		g := make([]int, n)
-		for j, v := range row {
-			g[j] = v
-			t := inf
-			if i > 0 {
-				for k := 0; k < n; k++ {
-					t = min(t, f[k]+moveCost[grid[i-1][k]][j])
-				}
-			}
-			if t != inf {
-				g[j] += t
+		for j := 0; j < n; j++ {
+			g[j] = inf
+			for k := 0; k < n; k++ {
+				g[j] = min(g[j], f[k]+moveCost[grid[i-1][k]][j]+grid[i][j])
 			}
 		}
 		f = g

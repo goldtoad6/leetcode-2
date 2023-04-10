@@ -13,7 +13,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;ab&quot;, goal = &quot;ba&quot;
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> You can swap s[0] = &#39;a&#39; and s[1] = &#39;b&#39; to get &quot;ba&quot;, which is equal to goal.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;ab&quot;, goal = &quot;ab&quot;
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> The only letters you can swap are s[0] = &#39;a&#39; and s[1] = &#39;b&#39;, which results in &quot;ba&quot; != goal.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;aa&quot;, goal = &quot;aa&quot;
@@ -109,15 +109,13 @@ public:
         int diff = 0;
         vector<int> cnt1(26);
         vector<int> cnt2(26);
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             ++cnt1[s[i] - 'a'];
             ++cnt2[goal[i] - 'a'];
             if (s[i] != goal[i]) ++diff;
         }
         bool f = false;
-        for (int i = 0; i < 26; ++i)
-        {
+        for (int i = 0; i < 26; ++i) {
             if (cnt1[i] != cnt2[i]) return false;
             if (cnt1[i] > 1) f = true;
         }
@@ -154,6 +152,34 @@ func buddyStrings(s string, goal string) bool {
 		}
 	}
 	return diff == 2 || (diff == 0 && f)
+}
+```
+
+### **TypeScript**
+
+```ts
+function buddyStrings(s: string, goal: string): boolean {
+    const m = s.length;
+    const n = goal.length;
+    if (m != n) {
+        return false;
+    }
+    const cnt1 = new Array(26).fill(0);
+    const cnt2 = new Array(26).fill(0);
+    let diff = 0;
+    for (let i = 0; i < n; ++i) {
+        cnt1[s.charCodeAt(i) - 'a'.charCodeAt(0)]++;
+        cnt2[goal.charCodeAt(i) - 'a'.charCodeAt(0)]++;
+        if (s[i] != goal[i]) {
+            ++diff;
+        }
+    }
+    for (let i = 0; i < 26; ++i) {
+        if (cnt1[i] != cnt2[i]) {
+            return false;
+        }
+    }
+    return diff == 2 || (diff == 0 && cnt1.some(v => v > 1));
 }
 ```
 

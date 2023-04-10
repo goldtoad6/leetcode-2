@@ -13,7 +13,7 @@
 <p>Return <em>a list of all the people that have the secret after all the meetings have taken place. </em>You may return the answer in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 6, meetings = [[1,2,5],[2,3,8],[1,5,10]], firstPerson = 1
@@ -26,7 +26,7 @@ At time 10, person 1 shares the secret with person 5.​​​​
 Thus, people 0, 1, 2, 3, and 5 know the secret after all the meetings.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 4, meetings = [[3,1,3],[1,2,2],[0,3,3]], firstPerson = 3
@@ -38,7 +38,7 @@ At time 3, person 3 shares the secret with person 0 and person 1.
 Thus, people 0, 1, and 3 know the secret after all the meetings.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 5, meetings = [[3,4,2],[1,2,1],[2,3,1]], firstPerson = 1
@@ -74,7 +74,9 @@ BFS.
 
 ```python
 class Solution:
-    def findAllPeople(self, n: int, meetings: List[List[int]], firstPerson: int) -> List[int]:
+    def findAllPeople(
+        self, n: int, meetings: List[List[int]], firstPerson: int
+    ) -> List[int]:
         vis = [False] * n
         vis[0] = vis[firstPerson] = True
         meetings.sort(key=lambda x: x[2])
@@ -85,7 +87,7 @@ class Solution:
                 j += 1
             s = set()
             g = defaultdict(list)
-            for x, y, _ in meetings[i: j + 1]:
+            for x, y, _ in meetings[i : j + 1]:
                 g[x].append(y)
                 g[y].append(x)
                 s.update([x, y])
@@ -112,7 +114,8 @@ class Solution {
         Arrays.sort(meetings, Comparator.comparingInt(a -> a[2]));
         for (int i = 0; i < m;) {
             int j = i;
-            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j);
+            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j)
+                ;
             Map<Integer, List<Integer>> g = new HashMap<>();
             Set<Integer> s = new HashSet<>();
             for (int k = i; k <= j; ++k) {
@@ -161,14 +164,13 @@ public:
         sort(meetings.begin(), meetings.end(), [&](const auto& x, const auto& y) {
             return x[2] < y[2];
         });
-        for (int i = 0, m = meetings.size(); i < m;)
-        {
+        for (int i = 0, m = meetings.size(); i < m;) {
             int j = i;
-            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j);
+            for (; j + 1 < m && meetings[j + 1][2] == meetings[i][2]; ++j)
+                ;
             unordered_map<int, vector<int>> g;
             unordered_set<int> s;
-            for (int k = i; k <= j; ++k)
-            {
+            for (int k = i; k <= j; ++k) {
                 int x = meetings[k][0], y = meetings[k][1];
                 g[x].push_back(y);
                 g[y].push_back(x);
@@ -179,14 +181,11 @@ public:
             for (int u : s)
                 if (vis[u])
                     q.push(u);
-            while (!q.empty())
-            {
+            while (!q.empty()) {
                 int u = q.front();
                 q.pop();
-                for (int v : g[u])
-                {
-                    if (!vis[v])
-                    {
+                for (int v : g[u]) {
+                    if (!vis[v]) {
                         vis[v] = true;
                         q.push(v);
                     }

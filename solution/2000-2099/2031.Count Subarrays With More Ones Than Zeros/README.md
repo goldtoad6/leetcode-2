@@ -55,14 +55,12 @@
 
 **方法一：树状数组**
 
-树状数组。
-
 树状数组，也称作“二叉索引树”（Binary Indexed Tree）或 Fenwick 树。 它可以高效地实现如下两个操作：
 
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 <!-- tabs:start -->
 
@@ -179,12 +177,13 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n + 1e5 + 1), c(_n + 1 + 1e5 + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n + 1e5 + 1)
+        , c(_n + 1 + 1e5 + 1) { }
 
     void update(int x, int delta) {
         x += 1e5 + 1;
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -193,8 +192,7 @@ public:
     int query(int x) {
         x += 1e5 + 1;
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -216,8 +214,7 @@ public:
         BinaryIndexedTree* tree = new BinaryIndexedTree(n + 1);
         int ans = 0;
         const int MOD = 1e9 + 7;
-        for (int v : s)
-        {
+        for (int v : s) {
             ans = (ans + tree->query(v - 1)) % MOD;
             tree->update(v, 1);
         }

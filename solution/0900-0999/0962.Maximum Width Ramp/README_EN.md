@@ -9,7 +9,7 @@
 <p>Given an integer array <code>nums</code>, return <em>the maximum width of a <strong>ramp</strong> in </em><code>nums</code>. If there is no <strong>ramp</strong> in <code>nums</code>, return <code>0</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [6,0,8,2,1,5]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> The maximum width ramp is achieved at (i, j) = (1, 5): nums[1] = 0 and nums[5] = 5.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [9,8,1,0,1,9,4,0,4,1]
@@ -89,15 +89,12 @@ public:
     int maxWidthRamp(vector<int>& nums) {
         int n = nums.size();
         stack<int> stk;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             if (stk.empty() || nums[stk.top()] > nums[i]) stk.push(i);
         }
         int ans = 0;
-        for (int i = n - 1; i; --i)
-        {
-            while (!stk.empty() && nums[stk.top()] <= nums[i])
-            {
+        for (int i = n - 1; i; --i) {
+            while (!stk.empty() && nums[stk.top()] <= nums[i]) {
                 ans = max(ans, i - stk.top());
                 stk.pop();
             }

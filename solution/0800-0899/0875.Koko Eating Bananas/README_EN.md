@@ -13,21 +13,21 @@
 <p>Return <em>the minimum integer</em> <code>k</code> <em>such that she can eat all the bananas within</em> <code>h</code> <em>hours</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> piles = [3,6,7,11], h = 8
 <strong>Output:</strong> 4
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> piles = [30,11,23,4,20], h = 5
 <strong>Output:</strong> 30
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> piles = [30,11,23,4,20], h = 6
@@ -95,13 +95,14 @@ class Solution {
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
         int left = 1, right = 1e9;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
             int s = 0;
-            for (int& x : piles)  s += (x + mid - 1) / mid;
-            if (s <= h) right = mid;
-            else left = mid + 1;
+            for (int& x : piles) s += (x + mid - 1) / mid;
+            if (s <= h)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }
@@ -112,20 +113,38 @@ public:
 
 ```go
 func minEatingSpeed(piles []int, h int) int {
-	left, right := 1, int(1e9)
-	for left < right {
-		mid := (left + right) >> 1
+	return sort.Search(1e9, func(i int) bool {
+		if i == 0 {
+			return false
+		}
 		s := 0
 		for _, x := range piles {
-			s += (x + mid - 1) / mid
+			s += (x + i - 1) / i
 		}
-		if s <= h {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	return left
+		return s <= h
+	})
+}
+```
+
+### **TypeScript**
+
+```ts
+function minEatingSpeed(piles: number[], h: number): number {
+    let left = 1;
+    let right = Math.max(...piles);
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        let s = 0;
+        for (const x of piles) {
+            s += Math.ceil(x / mid);
+        }
+        if (s <= h) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
 ```
 

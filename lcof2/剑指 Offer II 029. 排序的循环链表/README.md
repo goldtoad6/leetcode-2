@@ -80,6 +80,7 @@ class Node:
         self.next = next
 """
 
+
 class Solution:
     def insert(self, head: 'Node', insertVal: int) -> 'Node':
         node = Node(insertVal)
@@ -88,9 +89,13 @@ class Solution:
             return node
         p = head
         while True:
-            if p.val <= insertVal and insertVal <= p.next.val or \
-                p.val > p.next.val and (insertVal <= p.next.val or insertVal >= p.val) or \
-                p.next == head:
+            if (
+                p.val <= insertVal
+                and insertVal <= p.next.val
+                or p.val > p.next.val
+                and (insertVal <= p.next.val or insertVal >= p.val)
+                or p.next == head
+            ):
 
                 node.next = p.next
                 p.next = node
@@ -133,9 +138,9 @@ class Solution {
         }
         Node p = head;
         for (;;) {
-            if (p.val <= insertVal && insertVal <= p.next.val ||
-                    p.val > p.next.val && (insertVal <= p.next.val || insertVal >= p.val) ||
-                    p.next == head) {
+            if (p.val <= insertVal && insertVal <= p.next.val
+                || p.val > p.next.val && (insertVal <= p.next.val || insertVal >= p.val)
+                || p.next == head) {
                 node.next = p.next;
                 p.next = node;
                 break;
@@ -175,14 +180,12 @@ class Solution {
 public:
     Node* insert(Node* head, int insertVal) {
         Node* node = new Node(insertVal);
-        if (!head)
-        {
+        if (!head) {
             node->next = node;
             return node;
         }
         Node *prev = head, *curr = head->next;
-        while (curr != head)
-        {
+        while (curr != head) {
             if ((prev->val <= insertVal && insertVal <= curr->val) || (prev->val > curr->val && (insertVal >= prev->val || insertVal <= curr->val))) break;
             prev = curr;
             curr = curr->next;

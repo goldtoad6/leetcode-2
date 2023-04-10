@@ -9,7 +9,7 @@
 <p>The allowed operation on some point <code>(x, y)</code> is to convert it to either <code>(x, x + y)</code> or <code>(x + y, y)</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> sx = 1, sy = 1, tx = 3, ty = 5
@@ -21,14 +21,14 @@ One series of moves that transforms the starting point to the target is:
 (3, 2) -&gt; (3, 5)
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> sx = 1, sy = 1, tx = 2, ty = 2
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> sx = 1, sy = 1, tx = 1, ty = 1
@@ -97,10 +97,11 @@ class Solution {
 class Solution {
 public:
     bool reachingPoints(int sx, int sy, int tx, int ty) {
-        while (tx > sx && ty > sy && tx != ty)
-        {
-            if (tx > ty) tx %= ty;
-            else ty %= tx;
+        while (tx > sx && ty > sy && tx != ty) {
+            if (tx > ty)
+                tx %= ty;
+            else
+                ty %= tx;
         }
         if (tx == sx && ty == sy) return true;
         if (tx == sx) return ty > sy && (ty - sy) % tx == 0;

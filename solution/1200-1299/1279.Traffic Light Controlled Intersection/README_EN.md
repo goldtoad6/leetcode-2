@@ -34,7 +34,7 @@
 <p>Your answer is considered correct if it avoids cars deadlock in the intersection.&nbsp;Turning the light green on a road when it was already green is considered a&nbsp;wrong answer.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> cars = [1,3,5,2,4], directions = [2,1,2,4,3], arrivalTimes = [10,20,30,40,50]
@@ -48,7 +48,7 @@
 ]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> cars = [1,2,3,4,5], directions = [2,4,3,3,1], arrivalTimes = [10,20,30,40,40]
@@ -81,9 +81,63 @@
 
 <!-- tabs:start -->
 
-### **SQL**
+### **Python3**
 
-```sql
+```python
+from threading import Lock
+
+
+class TrafficLight:
+    def __init__(self):
+        self.lock = Lock()
+        self.road = 1
+
+    def carArrived(
+        self,
+        carId: int,                      # ID of the car
+        # ID of the road the car travels on. Can be 1 (road A) or 2 (road B)
+        roadId: int,
+        direction: int,                  # Direction of the car
+        # Use turnGreen() to turn light to green on current road
+        turnGreen: 'Callable[[], None]',
+        # Use crossCar() to make car cross the intersection
+        crossCar: 'Callable[[], None]'
+    ) -> None:
+        self.lock.acquire()
+        if self.road != roadId:
+            self.road = roadId
+            turnGreen()
+        crossCar()
+        self.lock.release()
+```
+
+### **Java**
+
+```java
+class TrafficLight {
+    private int road = 1;
+
+    public TrafficLight() {
+    }
+
+    public synchronized void carArrived(int carId, // ID of the car
+        int roadId, // ID of the road the car travels on. Can be 1 (road A) or 2 (road B)
+        int direction, // Direction of the car
+        Runnable turnGreen, // Use turnGreen.run() to turn light to green on current road
+        Runnable crossCar // Use crossCar.run() to make car cross the intersection
+    ) {
+        if (roadId != road) {
+            turnGreen.run();
+            road = roadId;
+        }
+        crossCar.run();
+    }
+}
+```
+
+### **...**
+
+```
 
 ```
 

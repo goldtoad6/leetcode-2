@@ -11,7 +11,7 @@
 <p>Return <em>the minimum cost to make all points connected.</em> All points are connected if there is <strong>exactly one</strong> simple path between any two points.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1584.Min%20Cost%20to%20Connect%20All%20Points/images/d.png" style="width: 214px; height: 268px;" />
 <pre>
 <strong>Input:</strong> points = [[0,0],[2,2],[3,10],[5,2],[7,0]]
@@ -22,7 +22,7 @@ We can connect the points as shown above to get the minimum cost of 20.
 Notice that there is a unique path between every pair of points.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> points = [[3,12],[-2,5],[-4,1]]
@@ -47,7 +47,7 @@ Notice that there is a unique path between every pair of points.
 ```python
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        INF = 0x3f3f3f3f
+        INF = 0x3F3F3F3F
         n = len(points)
         g = [[0] * n for _ in range(n)]
         for i in range(n):
@@ -153,7 +153,7 @@ class Solution {
             int x1 = points[i][0], y1 = points[i][1];
             for (int j = i + 1; j < n; ++j) {
                 int x2 = points[j][0], y2 = points[j][1];
-                g.add(new int[]{Math.abs(x1 - x2) + Math.abs(y1 - y2), i, j});
+                g.add(new int[] {Math.abs(x1 - x2) + Math.abs(y1 - y2), i, j});
             }
         }
         g.sort(Comparator.comparingInt(a -> a[0]));
@@ -197,12 +197,9 @@ public:
         vector<vector<int>> g(n, vector<int>(n));
         vector<int> dist(n, inf);
         vector<bool> vis(n);
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (i !=  j)
-                {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i != j) {
                     int x1 = points[i][0], y1 = points[i][1];
                     int x2 = points[j][0], y2 = points[j][1];
                     g[i][j] = abs(x1 - x2) + abs(y1 - y2);
@@ -210,13 +207,10 @@ public:
             }
         }
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int t = -1;
-            for (int j = 0; j < n; ++j)
-            {
-                if (!vis[j] && (t == -1 || dist[t] > dist[j]))
-                {
+            for (int j = 0; j < n; ++j) {
+                if (!vis[j] && (t == -1 || dist[t] > dist[j])) {
                     t = j;
                 }
             }

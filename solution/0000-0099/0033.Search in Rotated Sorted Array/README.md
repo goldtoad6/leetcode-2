@@ -19,14 +19,14 @@
 <p><strong>示例 1：</strong></p>
 
 <pre>
-<strong>输入：</strong>nums = [<code>4,5,6,7,0,1,2]</code>, target = 0
+<strong>输入：</strong>nums = [4,5,6,7,0,1,2], target = 0
 <strong>输出：</strong>4
 </pre>
 
 <p><strong>示例&nbsp;2：</strong></p>
 
 <pre>
-<strong>输入：</strong>nums = [<code>4,5,6,7,0,1,2]</code>, target = 3
+<strong>输入：</strong>nums = [4,5,6,7,0,1,2], target = 3
 <strong>输出：</strong>-1</pre>
 
 <p><strong>示例 3：</strong></p>
@@ -133,18 +133,18 @@ public:
     int search(vector<int>& nums, int target) {
         int n = nums.size();
         int left = 0, right = n - 1;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
-            if (nums[0] <= nums[mid])
-            {
-                if (nums[0] <= target && target <= nums[mid]) right = mid;
-                else left = mid + 1;
-            }
-            else
-            {
-                if (nums[mid] < target && target <= nums[n - 1]) left = mid + 1;
-                else right = mid;
+            if (nums[0] <= nums[mid]) {
+                if (nums[0] <= target && target <= nums[mid])
+                    right = mid;
+                else
+                    left = mid + 1;
+            } else {
+                if (nums[mid] < target && target <= nums[n - 1])
+                    left = mid + 1;
+                else
+                    right = mid;
             }
         }
         return nums[left] == target ? left : -1;

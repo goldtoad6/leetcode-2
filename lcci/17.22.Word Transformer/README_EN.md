@@ -58,7 +58,9 @@ DFS.
 
 ```python
 class Solution:
-    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[str]:
+    def findLadders(
+        self, beginWord: str, endWord: str, wordList: List[str]
+    ) -> List[str]:
         def check(a, b):
             return sum(a[i] != b[i] for i in range(len(a))) == 1
 
@@ -155,13 +157,11 @@ public:
 
     void dfs(string begin, string end, vector<string>& t) {
         if (!ans.empty()) return;
-        if (begin == end)
-        {
+        if (begin == end) {
             ans = t;
             return;
         }
-        for (auto word : words)
-        {
+        for (auto word : words) {
             if (visited.count(word) || !check(begin, word)) continue;
             visited.insert(word);
             t.push_back(word);

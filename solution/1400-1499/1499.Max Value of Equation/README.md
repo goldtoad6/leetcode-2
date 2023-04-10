@@ -48,7 +48,7 @@
 
 区间（窗口）最值问题，使用单调队列优化。q 按 `y - x` 单调递减。
 
-时间复杂度 O(n)。
+时间复杂度 $O(n)$。
 
 <!-- tabs:start -->
 
@@ -60,7 +60,7 @@
 class Solution:
     def findMaxValueOfEquation(self, points: List[List[int]], k: int) -> int:
         q = deque([points[0]])
-        ans = float('-inf')
+        ans = -inf
         for x, y in points[1:]:
             while q and x - q[0][0] > k:
                 q.popleft()
@@ -107,8 +107,7 @@ public:
     int findMaxValueOfEquation(vector<vector<int>>& points, int k) {
         deque<vector<int>> q;
         int ans = INT_MIN;
-        for (auto& p : points)
-        {
+        for (auto& p : points) {
             int x = p[0], y = p[1];
             while (!q.empty() && x - q.front()[0] > k) q.pop_front();
             if (!q.empty()) ans = max(ans, y + x + q.front()[1] - q.front()[0]);

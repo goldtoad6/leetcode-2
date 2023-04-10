@@ -79,7 +79,9 @@
 
 ```python
 class Solution:
-    def minCostToSupplyWater(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
+    def minCostToSupplyWater(
+        self, n: int, wells: List[int], pipes: List[List[int]]
+    ) -> int:
         for i, w in enumerate(wells):
             pipes.append([0, i + 1, w])
         pipes.sort(key=lambda x: x[2])
@@ -118,7 +120,7 @@ class Solution {
             all[idx++] = pipe;
         }
         for (int j = 0; j < n; ++j) {
-            all[idx++] = new int[]{0, j + 1, wells[j]};
+            all[idx++] = new int[] {0, j + 1, wells[j]};
         }
         p = new int[n + 1];
         for (int i = 0; i < p.length; ++i) {
@@ -164,8 +166,7 @@ public:
             return a[2] < b[2];
         });
         int res = 0;
-        for (auto e : pipes)
-        {
+        for (auto e : pipes) {
             if (find(e[0]) == find(e[1])) continue;
             p[find(e[0])] = find(e[1]);
             res += e[2];

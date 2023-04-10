@@ -186,13 +186,9 @@ class Node {
         this.bottomRight = null;
     }
 
-    public Node(boolean val, boolean isLeaf, Node topLeft, Node topRight, Node bottomLeft, Node bottomRight) {
-        this.val = val;
-        this.isLeaf = isLeaf;
-        this.topLeft = topLeft;
-        this.topRight = topRight;
-        this.bottomLeft = bottomLeft;
-        this.bottomRight = bottomRight;
+    public Node(boolean val, boolean isLeaf, Node topLeft, Node topRight, Node bottomLeft, Node
+bottomRight) { this.val = val; this.isLeaf = isLeaf; this.topLeft = topLeft; this.topRight =
+topRight; this.bottomLeft = bottomLeft; this.bottomRight = bottomRight;
     }
 };
 */
@@ -279,12 +275,12 @@ public:
 
     Node* dfs(int a, int b, int c, int d, vector<vector<int>>& grid) {
         int zero = 0, one = 0;
-        for (int i = a; i <= c; ++i)
-        {
-            for (int j = b; j <= d; ++j)
-            {
-                if (grid[i][j]) one = 1;
-                else zero = 1;
+        for (int i = a; i <= c; ++i) {
+            for (int j = b; j <= d; ++j) {
+                if (grid[i][j])
+                    one = 1;
+                else
+                    zero = 1;
             }
         }
         bool isLeaf = zero + one == 1;

@@ -173,14 +173,12 @@ var nextGreaterElements = function (nums) {
 ```cpp
 class Solution {
 public:
-    vector<int> nextGreaterElements(vector<int> &nums) {
+    vector<int> nextGreaterElements(vector<int>& nums) {
         int n = nums.size();
         vector<int> ans(n, -1);
         stack<int> stk;
-        for (int i = 0; i < (n << 1); ++i)
-        {
-            while (!stk.empty() && nums[stk.top()] < nums[i % n])
-            {
+        for (int i = 0; i < (n << 1); ++i) {
+            while (!stk.empty() && nums[stk.top()] < nums[i % n]) {
                 ans[stk.top()] = nums[i % n];
                 stk.pop();
             }
@@ -250,6 +248,25 @@ func nextGreaterElements(nums []int) []int {
 		stk = append(stk, nums[j])
 	}
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function nextGreaterElements(nums: number[]): number[] {
+    const stack: number[] = [],
+        len = nums.length;
+    const res: number[] = new Array(len).fill(-1);
+    for (let i = 0; i < 2 * len - 1; i++) {
+        const j = i % len;
+        while (stack.length !== 0 && nums[stack[stack.length - 1]] < nums[j]) {
+            res[stack[stack.length - 1]] = nums[j];
+            stack.pop();
+        }
+        stack.push(j);
+    }
+    return res;
 }
 ```
 

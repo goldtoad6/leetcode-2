@@ -18,7 +18,7 @@
 <p>Return <em>the maximum number of candies you can get following the rules above</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> status = [1,0,1,0], candies = [7,5,4,100], keys = [[],[],[1],[]], containedBoxes = [[1,2],[3],[],[]], initialBoxes = [0]
@@ -29,7 +29,7 @@ In box 1, you will find 5 candies and box 3 but you will not find a key to box 3
 Total number of candies collected = 7 + 4 + 5 = 16 candy.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> status = [1,0,0,0,0,0], candies = [1,1,1,1,1,1], keys = [[1,2,3,4,5],[],[],[],[],[]], containedBoxes = [[1,2,3,4,5],[],[],[],[],[]], initialBoxes = [0]
@@ -67,7 +67,14 @@ BFS.
 
 ```python
 class Solution:
-    def maxCandies(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]], initialBoxes: List[int]) -> int:
+    def maxCandies(
+        self,
+        status: List[int],
+        candies: List[int],
+        keys: List[List[int]],
+        containedBoxes: List[List[int]],
+        initialBoxes: List[int],
+    ) -> int:
         q = deque([i for i in initialBoxes if status[i] == 1])
         ans = sum(candies[i] for i in initialBoxes if status[i] == 1)
         has = set(initialBoxes)
@@ -94,7 +101,8 @@ class Solution:
 
 ```java
 class Solution {
-    public int maxCandies(int[] status, int[] candies, int[][] keys, int[][] containedBoxes, int[] initialBoxes) {
+    public int maxCandies(
+        int[] status, int[] candies, int[][] keys, int[][] containedBoxes, int[] initialBoxes) {
         int ans = 0;
         int n = status.length;
         boolean[] has = new boolean[n];
@@ -143,35 +151,28 @@ public:
         vector<bool> has(n);
         vector<bool> took(n);
         queue<int> q;
-        for (int& i : initialBoxes)
-        {
+        for (int& i : initialBoxes) {
             has[i] = true;
-            if (status[i])
-            {
+            if (status[i]) {
                 ans += candies[i];
                 took[i] = true;
                 q.push(i);
             }
         }
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             int i = q.front();
             q.pop();
-            for (int k : keys[i])
-            {
+            for (int k : keys[i]) {
                 status[k] = 1;
-                if (has[k] && !took[k])
-                {
+                if (has[k] && !took[k]) {
                     ans += candies[k];
                     took[k] = true;
                     q.push(k);
                 }
             }
-            for (int j : containedBoxes[i])
-            {
+            for (int j : containedBoxes[i]) {
                 has[j] = true;
-                if (status[j] && !took[j])
-                {
+                if (status[j] && !took[j]) {
                     ans += candies[j];
                     took[j] = true;
                     q.push(j);

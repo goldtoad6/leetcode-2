@@ -96,7 +96,7 @@ class Solution {
         for (int a : aliceSizes) {
             int target = a - diff;
             if (s.contains(target)) {
-                return new int[]{a, target};
+                return new int[] {a, target};
             }
         }
         return null;
@@ -134,7 +134,7 @@ public:
         for (int& a : aliceSizes) {
             int target = a - diff;
             if (s.count(target)) {
-                ans = vector<int>{a, target};
+                ans = vector<int> {a, target};
                 break;
             }
         }

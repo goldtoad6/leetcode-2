@@ -74,6 +74,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -256,13 +257,11 @@ public:
 
     bool dfs(int u, int c, vector<int>& color, vector<vector<int>>& g) {
         color[u] = c;
-        for (int& v : g[u])
-        {
-            if (!color[v])
-            {
+        for (int& v : g[u]) {
+            if (!color[v]) {
                 if (!dfs(v, 3 - c, color, g)) return false;
-            }
-            else if (color[v] == c) return false;
+            } else if (color[v] == c)
+                return false;
         }
         return true;
     }

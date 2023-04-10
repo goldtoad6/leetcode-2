@@ -20,7 +20,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0308.Range%20Sum%20Query%202D%20-%20Mutable/images/summut-grid.jpg" style="width: 500px; height: 222px;" />
 <pre>
 <strong>Input</strong>
@@ -44,13 +44,13 @@ numMatrix.sumRegion(2, 1, 4, 3); // return 10 (i.e. sum of the right red rectang
 	<li><code>m == matrix.length</code></li>
 	<li><code>n == matrix[i].length</code></li>
 	<li><code>1 &lt;= m, n &lt;= 200</code></li>
-	<li><code>-10<sup>5</sup> &lt;= matrix[i][j] &lt;= 10<sup>5</sup></code></li>
+	<li><code>-1000 &lt;= matrix[i][j] &lt;= 1000</code></li>
 	<li><code>0 &lt;= row &lt; m</code></li>
 	<li><code>0 &lt;= col &lt; n</code></li>
-	<li><code>-10<sup>5</sup> &lt;= val &lt;= 10<sup>5</sup></code></li>
+	<li><code>-1000 &lt;= val &lt;= 1000</code></li>
 	<li><code>0 &lt;= row1 &lt;= row2 &lt; m</code></li>
 	<li><code>0 &lt;= col1 &lt;= col2 &lt; n</code></li>
-	<li>At most <code>10<sup>4</sup></code> calls will be made to <code>sumRegion</code> and <code>update</code>.</li>
+	<li>At most <code>5000</code> calls will be made to <code>sumRegion</code> and <code>update</code>.</li>
 </ul>
 
 ## Solutions
@@ -87,7 +87,6 @@ class BinaryIndexedTree:
 
 
 class NumMatrix:
-
     def __init__(self, matrix: List[List[int]]):
         self.trees = []
         n = len(matrix[0])
@@ -103,7 +102,10 @@ class NumMatrix:
         tree.update(col + 1, val - prev)
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        return sum(tree.query(col2 + 1) - tree.query(col1) for tree in self.trees[row1: row2 + 1])
+        return sum(
+            tree.query(col2 + 1) - tree.query(col1)
+            for tree in self.trees[row1 : row2 + 1]
+        )
 
 
 # Your NumMatrix object will be instantiated and called as such:
@@ -368,11 +370,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -380,8 +383,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -416,8 +418,7 @@ public:
 
     int sumRegion(int row1, int col1, int row2, int col2) {
         int s = 0;
-        for (int i = row1; i <= row2; ++i)
-        {
+        for (int i = row1; i <= row2; ++i) {
             BinaryIndexedTree* tree = trees[i];
             s += tree->query(col2 + 1) - tree->query(col1);
         }

@@ -54,7 +54,7 @@ class Solution:
     def reverseStr(self, s: str, k: int) -> str:
         t = list(s)
         for i in range(0, len(t), k << 1):
-            t[i: i + k] = reversed(t[i: i + k])
+            t[i : i + k] = reversed(t[i : i + k])
         return ''.join(t)
 ```
 
@@ -84,8 +84,7 @@ class Solution {
 class Solution {
 public:
     string reverseStr(string s, int k) {
-        for (int i = 0, n = s.size(); i < n; i += (k << 1))
-        {
+        for (int i = 0, n = s.size(); i < n; i += (k << 1)) {
             reverse(s.begin() + i, s.begin() + min(i + k, n));
         }
         return s;

@@ -13,7 +13,7 @@
 <p><strong>Note:</strong> The array can have <strong>any size</strong> at the start and does<strong> not </strong>count towards the number of resizing operations.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,20], k = 0
@@ -23,7 +23,7 @@ We can set the initial size to be 20.
 The total wasted space is (20 - 10) + (20 - 20) = 10.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,20,30], k = 1
@@ -33,7 +33,7 @@ We can set the initial size to be 20 and resize to 30 at time 2.
 The total wasted space is (20 - 10) + (20 - 20) + (30 - 30) = 10.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,20,15,30,20], k = 2
@@ -122,11 +122,9 @@ public:
         ++k;
         int n = nums.size();
         vector<vector<int>> g(n, vector<int>(n));
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int s = 0, mx = 0;
-            for (int j = i; j < n; ++j)
-            {
+            for (int j = i; j < n; ++j) {
                 mx = max(mx, nums[j]);
                 s += nums[j];
                 g[i][j] = mx * (j - i + 1) - s;
@@ -135,12 +133,9 @@ public:
         int inf = 0x3f3f3f3f;
         vector<vector<int>> f(n + 1, vector<int>(k + 1, inf));
         f[0][0] = 0;
-        for (int i = 1; i <= n; ++i)
-        {
-            for (int j = 1; j <= k; ++j)
-            {
-                for (int h = 0; h < i; ++h)
-                {
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= k; ++j) {
+                for (int h = 0; h < i; ++h) {
                     f[i][j] = min(f[i][j], f[h][j - 1] + g[h][i - 1]);
                 }
             }

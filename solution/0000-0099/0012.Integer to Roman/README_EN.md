@@ -29,7 +29,7 @@ M             1000</pre>
 <p>Given an integer, convert it to a roman numeral.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 3
@@ -37,7 +37,7 @@ M             1000</pre>
 <strong>Explanation:</strong> 3 is represented as 3 ones.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 58
@@ -45,7 +45,7 @@ M             1000</pre>
 <strong>Explanation:</strong> L = 50, V = 5, III = 3.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 1994
@@ -62,6 +62,10 @@ M             1000</pre>
 
 ## Solutions
 
+**Approach 1: Simulation**
+
+Time complexity $O(1)$, Space complexity $O(1)$.
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -69,7 +73,21 @@ M             1000</pre>
 ```python
 class Solution:
     def intToRoman(self, num: int) -> str:
-        nums = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'), (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+        nums = [
+            (1000, 'M'),
+            (900, 'CM'),
+            (500, 'D'),
+            (400, 'CD'),
+            (100, 'C'),
+            (90, 'XC'),
+            (50, 'L'),
+            (40, 'XL'),
+            (10, 'X'),
+            (9, 'IX'),
+            (5, 'V'),
+            (4, 'IV'),
+            (1, 'I'),
+        ]
         res = []
         for k, v in nums:
             while num >= k:
@@ -83,8 +101,9 @@ class Solution:
 ```java
 class Solution {
     public String intToRoman(int num) {
-        int[] nums = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] romans = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] nums = new int[] {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romans
+            = new String[] {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < nums.length; ++i) {
             while (num >= nums[i]) {
@@ -103,8 +122,8 @@ class Solution {
 class Solution {
 public:
     string intToRoman(int num) {
-        vector<int> nums{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        vector<string> romans{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        vector<int> nums {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        vector<string> romans {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         string ans;
         for (int i = 0; i < nums.size(); ++i) {
             while (num >= nums[i]) {
@@ -115,6 +134,55 @@ public:
         return ans;
     }
 };
+```
+
+### **Go**
+
+```go
+func intToRoman(num int) string {
+	ans := ""
+	values := []int{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}
+	romans := []string{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
+	for i, value := range values {
+		for value <= num {
+			ans, num = ans+romans[i], num-value
+		}
+	}
+	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function intToRoman(num: number): string {
+    const nums: number[] = [
+        1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,
+    ];
+    const romans: string[] = [
+        'M',
+        'CM',
+        'D',
+        'CD',
+        'C',
+        'XC',
+        'L',
+        'XL',
+        'X',
+        'IX',
+        'V',
+        'IV',
+        'I',
+    ];
+    let ans: string = '';
+    for (let i = 0; i < nums.length; ++i) {
+        while (num >= nums[i]) {
+            num -= nums[i];
+            ans += romans[i];
+        }
+    }
+    return ans;
+}
 ```
 
 ### **...**

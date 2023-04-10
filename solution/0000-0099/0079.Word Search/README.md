@@ -67,7 +67,14 @@ class Solution:
         def dfs(i, j, cur):
             if cur == len(word):
                 return True
-            if i < 0 or i >= m or j < 0 or j >= n or board[i][j] == '0' or word[cur] != board[i][j]:
+            if (
+                i < 0
+                or i >= m
+                or j < 0
+                or j >= n
+                or board[i][j] == '0'
+                or word[cur] != board[i][j]
+            ):
                 return False
             t = board[i][j]
             board[i][j] = '0'
@@ -199,8 +206,7 @@ public:
         char t = board[i][j];
         board[i][j] = '0';
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int x = i + dirs[k], y = j + dirs[k + 1];
             if (dfs(x, y, cur + 1, m, n, board, word)) return true;
         }

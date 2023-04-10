@@ -9,10 +9,15 @@
 <p>A triplet <code>(arr[i], arr[j], arr[k])</code>&nbsp;is <strong>good</strong> if the following conditions are true:</p>
 
 <ul>
+
     <li><code>0 &lt;= i &lt; j &lt; k &lt;&nbsp;arr.length</code></li>
+
     <li><code>|arr[i] - arr[j]| &lt;= a</code></li>
+
     <li><code>|arr[j] - arr[k]| &lt;= b</code></li>
+
     <li><code>|arr[i] - arr[k]| &lt;= c</code></li>
+
 </ul>
 
 <p>Where <code>|x|</code> denotes the absolute value of <code>x</code>.</p>
@@ -21,7 +26,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -33,7 +38,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -64,13 +69,12 @@
 ```python
 class Solution:
     def countGoodTriplets(self, arr: List[int], a: int, b: int, c: int) -> int:
-        n = len(arr)
-        ans = 0
+        ans, n = 0, len(arr)
         for i in range(n):
             for j in range(i + 1, n):
                 for k in range(j + 1, n):
-                    if abs(arr[i] - arr[j]) <= a and abs(arr[j] - arr[k]) <= b and abs(arr[i] - arr[k]) <= c:
-                        ans += 1
+                    ans += abs(arr[i] - arr[j]) <= a \
+                        and abs(arr[j] - arr[k]) <= b and abs(arr[i] - arr[k]) <= c
         return ans
 ```
 
@@ -84,7 +88,8 @@ class Solution {
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 for (int k = j + 1; k < n; ++k) {
-                    if (Math.abs(arr[i] - arr[j]) <= a && Math.abs(arr[j] - arr[k]) <= b && Math.abs(arr[i] - arr[k]) <= c) {
+                    if (Math.abs(arr[i] - arr[j]) <= a && Math.abs(arr[j] - arr[k]) <= b
+                        && Math.abs(arr[i] - arr[k]) <= c) {
                         ++ans;
                     }
                 }
@@ -103,12 +108,9 @@ public:
     int countGoodTriplets(vector<int>& arr, int a, int b, int c) {
         int n = arr.size();
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = i + 1; j < n; ++j)
-            {
-                for (int k = j + 1; k < n; ++k)
-                {
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                for (int k = j + 1; k < n; ++k) {
                     ans += abs(arr[i] - arr[j]) <= a && abs(arr[j] - arr[k]) <= b && abs(arr[i] - arr[k]) <= c;
                 }
             }
@@ -121,8 +123,8 @@ public:
 ### **Go**
 
 ```go
-func countGoodTriplets(arr []int, a int, b int, c int) int {
-	n, ans := len(arr), 0
+func countGoodTriplets(arr []int, a int, b int, c int) (ans int) {
+	n := len(arr)
 	for i := 0; i < n; i++ {
 		for j := i + 1; j < n; j++ {
 			for k := j + 1; k < n; k++ {
@@ -132,7 +134,7 @@ func countGoodTriplets(arr []int, a int, b int, c int) int {
 			}
 		}
 	}
-	return ans
+	return
 }
 
 func abs(x int) int {

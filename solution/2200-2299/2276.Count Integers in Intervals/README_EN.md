@@ -22,7 +22,7 @@
 <p><strong>Note</strong> that an interval <code>[left, right]</code> denotes all the integers <code>x</code> where <code>left &lt;= x &lt;= right</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -90,7 +90,6 @@ class Node:
 
 
 class CountIntervals:
-
     def __init__(self):
         self.tree = Node()
 
@@ -99,6 +98,7 @@ class CountIntervals:
 
     def count(self) -> int:
         return self.tree.tot
+
 
 # Your CountIntervals object will be instantiated and called as such:
 # obj = CountIntervals()
@@ -129,7 +129,6 @@ class SegmentTree {
     private Node root = new Node(1, (int) 1e9 + 1);
 
     public SegmentTree() {
-
     }
 
     public void modify(int l, int r, int v) {
@@ -203,7 +202,6 @@ class CountIntervals {
     private SegmentTree tree = new SegmentTree();
 
     public CountIntervals() {
-
     }
 
     public void add(int left, int right) {
@@ -221,7 +219,6 @@ class CountIntervals {
  * obj.add(left,right);
  * int param_2 = obj.count();
  */
-
 ```
 
 ### **TypeScript**

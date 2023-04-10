@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -22,7 +22,7 @@
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -32,7 +32,7 @@
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -47,9 +47,13 @@
 <p><strong>Constraints:</strong></p>
 
 <ul>
+
     <li><code>1 &lt;= n &lt;= 500</code></li>
+
     <li><code>nums.length == 2n</code></li>
+
     <li><code>1 &lt;= nums[i] &lt;= 10^3</code></li>
+
 </ul>
 
 ## Solutions
@@ -66,6 +70,13 @@ class Solution:
             ans.append(nums[i])
             ans.append(nums[i + n])
         return ans
+```
+
+```python
+class Solution:
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
+        nums[::2], nums[1::2] = nums[:n], nums[n:]
+        return nums
 ```
 
 ### **Java**
@@ -121,6 +132,63 @@ func shuffle(nums []int, n int) []int {
 		ans = append(ans, nums[i+n])
 	}
 	return ans
+}
+```
+
+### **C**
+
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int *shuffle(int *nums, int numsSize, int n, int *returnSize) {
+    int *res = (int *) malloc(sizeof(int) * n * 2);
+    for (int i = 0; i < n; i++) {
+        res[2 * i] = nums[i];
+        res[2 * i + 1] = nums[i + n];
+    }
+    *returnSize = n * 2;
+    return res;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
+        let n = n as usize;
+        let mut res = Vec::new();
+        for i in 0..n {
+            res.push(nums[i]);
+            res.push(nums[n + i]);
+        }
+        res
+    }
+}
+```
+
+```rust
+impl Solution {
+    pub fn shuffle(mut nums: Vec<i32>, n: i32) -> Vec<i32> {
+        let n = n as usize;
+        for i in 0..n * 2 {
+            let mut j = i;
+            while nums[i] > 0 {
+                j = if j < n {
+                    2 * j
+                } else {
+                    2 * (j - n) + 1
+                };
+                nums.swap(i, j);
+                nums[j] *= -1;
+            }
+        }
+        for i in 0..n * 2 {
+            nums[i] *= -1;
+        }
+        nums
+    }
 }
 ```
 

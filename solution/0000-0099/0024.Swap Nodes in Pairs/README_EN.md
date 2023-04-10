@@ -7,21 +7,21 @@
 <p>Given a&nbsp;linked list, swap every two adjacent nodes and return its head. You must solve the problem without&nbsp;modifying the values in the list&#39;s nodes (i.e., only nodes themselves may be changed.)</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0024.Swap%20Nodes%20in%20Pairs/images/swap_ex1.jpg" style="width: 422px; height: 222px;" />
 <pre>
 <strong>Input:</strong> head = [1,2,3,4]
 <strong>Output:</strong> [2,1,4,3]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> head = []
 <strong>Output:</strong> []
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> head = [1]
@@ -37,6 +37,14 @@
 </ul>
 
 ## Solutions
+
+**Approach 1: Iteration**
+
+Time complexity $O(n)$, Space complexity $O(1)$.
+
+**Approach 2: Recursion**
+
+Time complexity $O(n)$, Space complexity $O(n)$.
 
 <!-- tabs:start -->
 
@@ -137,10 +145,10 @@ var swapPairs = function (head) {
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        ListNode *dummy = new ListNode(0, head);
+        ListNode* dummy = new ListNode(0, head);
         ListNode *pre = dummy, *cur = head;
         while (cur != nullptr && cur->next != nullptr) {
-            ListNode *t = cur->next;
+            ListNode* t = cur->next;
             cur->next = t->next;
             t->next = cur;
             pre->next = t;
@@ -153,6 +161,8 @@ public:
 ```
 
 ### **Go**
+
+Iteration:
 
 ```go
 /**
@@ -174,6 +184,27 @@ func swapPairs(head *ListNode) *ListNode {
         cur = cur.Next
     }
     return dummy.Next
+}
+```
+
+Recursion:
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func swapPairs(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	res := swapPairs(head.Next.Next)
+	p := head.Next
+	p.Next, head.Next = head, res
+	return p
 }
 ```
 

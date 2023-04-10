@@ -70,6 +70,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -250,10 +251,8 @@ public:
         vis.resize(n);
         this->isConnected = isConnected;
         int ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
-            if (!vis[i])
-            {
+        for (int i = 0; i < n; ++i) {
+            if (!vis[i]) {
                 dfs(i);
                 ++ans;
             }

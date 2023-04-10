@@ -11,7 +11,7 @@
 <p><strong>Do not modify</strong> the linked list.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0142.Linked%20List%20Cycle%20II/images/circularlinkedlist.png" style="height: 145px; width: 450px;" />
 <pre>
 <strong>Input:</strong> head = [3,2,0,-4], pos = 1
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the second node.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0142.Linked%20List%20Cycle%20II/images/circularlinkedlist_test2.png" style="height: 105px; width: 201px;" />
 <pre>
 <strong>Input:</strong> head = [1,2], pos = 0
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the first node.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0142.Linked%20List%20Cycle%20II/images/circularlinkedlist_test3.png" style="height: 65px; width: 65px;" />
 <pre>
 <strong>Input:</strong> head = [1], pos = -1
@@ -59,6 +59,7 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
 
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
@@ -160,7 +161,7 @@ function detectCycle(head: ListNode | null): ListNode | null {
  */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
+    ListNode* detectCycle(ListNode* head) {
         ListNode* slow = head;
         ListNode* fast = head;
         bool hasCycle = false;

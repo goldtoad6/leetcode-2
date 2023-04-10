@@ -16,7 +16,7 @@
 <p>Given <code>m</code>, <code>n</code>, and <code>indices</code>, return <em>the <strong>number of odd-valued cells</strong> in the matrix after applying the increment to all locations in </em><code>indices</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1252.Cells%20with%20Odd%20Values%20in%20a%20Matrix/images/e1.png" style="width: 600px; height: 118px;" />
 <pre>
 <strong>Input:</strong> m = 2, n = 3, indices = [[0,1],[1,1]]
@@ -26,7 +26,7 @@ After applying first increment it becomes [[1,2,1],[0,1,0]].
 The final matrix is [[1,3,1],[1,3,1]], which contains 6 odd numbers.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1252.Cells%20with%20Odd%20Values%20in%20a%20Matrix/images/e2.png" style="width: 600px; height: 150px;" />
 <pre>
 <strong>Input:</strong> m = 2, n = 2, indices = [[1,1],[0,0]]
@@ -165,14 +165,14 @@ class Solution {
 public:
     int oddCells(int m, int n, vector<vector<int>>& indices) {
         vector<vector<int>> g(m, vector<int>(n));
-        for (auto& e : indices)
-        {
+        for (auto& e : indices) {
             int r = e[0], c = e[1];
             for (int i = 0; i < m; ++i) ++g[i][c];
             for (int j = 0; j < n; ++j) ++g[r][j];
         }
         int ans = 0;
-        for (auto& row : g) for (int v : row) ans += v % 2;
+        for (auto& row : g)
+            for (int v : row) ans += v % 2;
         return ans;
     }
 };

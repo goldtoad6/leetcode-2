@@ -22,7 +22,7 @@
 <p>Return <em>the minimum cost to make the grid have at least one valid path</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/images/grid1.png" style="width: 400px; height: 390px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1,1,1],[2,2,2,2],[1,1,1,1],[2,2,2,2]]
@@ -32,7 +32,7 @@ The path to (3, 3) is as follows. (0, 0) --&gt; (0, 1) --&gt; (0, 2) --&gt; (0, 
 The total cost = 3.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/images/grid2.png" style="width: 350px; height: 341px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,1,3],[3,2,2],[1,1,4]]
@@ -40,7 +40,7 @@ The total cost = 3.
 <strong>Explanation:</strong> You can follow the path from (0, 0) to (2, 2).
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/images/grid3.png" style="width: 200px; height: 192px;" />
 <pre>
 <strong>Input:</strong> grid = [[1,2],[4,3]]
@@ -97,7 +97,7 @@ class Solution {
         int m = grid.length, n = grid[0].length;
         boolean[][] vis = new boolean[m][n];
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0, 0});
+        q.offer(new int[] {0, 0, 0});
         int[][] dirs = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         while (!q.isEmpty()) {
             int[] p = q.poll();
@@ -113,9 +113,9 @@ class Solution {
                 int x = i + dirs[k][0], y = j + dirs[k][1];
                 if (x >= 0 && x < m && y >= 0 && y < n) {
                     if (grid[i][j] == k) {
-                        q.offerFirst(new int[]{x, y, d});
+                        q.offerFirst(new int[] {x, y, d});
                     } else {
-                        q.offer(new int[]{x, y, d + 1});
+                        q.offer(new int[] {x, y, d + 1});
                     }
                 }
             }
@@ -171,21 +171,20 @@ public:
         vector<vector<int>> dirs = {{0, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         deque<pair<int, int>> q;
         q.push_back({0, 0});
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop_front();
             int i = p.first / n, j = p.first % n, d = p.second;
             if (i == m - 1 && j == n - 1) return d;
             if (vis[i][j]) continue;
             vis[i][j] = true;
-            for (int k = 1; k <= 4; ++k)
-            {
+            for (int k = 1; k <= 4; ++k) {
                 int x = i + dirs[k][0], y = j + dirs[k][1];
-                if (x >= 0 && x < m && y >= 0 && y < n)
-                {
-                    if (grid[i][j] == k) q.push_front({x * n + y, d});
-                    else q.push_back({x * n + y, d + 1});
+                if (x >= 0 && x < m && y >= 0 && y < n) {
+                    if (grid[i][j] == k)
+                        q.push_front({x * n + y, d});
+                    else
+                        q.push_back({x * n + y, d + 1});
                 }
             }
         }

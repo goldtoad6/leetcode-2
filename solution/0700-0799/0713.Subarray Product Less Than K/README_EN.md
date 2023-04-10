@@ -7,7 +7,7 @@
 <p>Given an array of integers <code>nums</code> and an integer <code>k</code>, return <em>the number of contiguous subarrays where the product of all the elements in the subarray is strictly less than </em><code>k</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,5,2,6], k = 100
@@ -17,7 +17,7 @@
 Note that [10, 5, 2] is not included as the product of 100 is not strictly less than k.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3], k = 0
@@ -77,8 +77,7 @@ class Solution {
 public:
     int numSubarrayProductLessThanK(vector<int>& nums, int k) {
         int ans = 0;
-        for (int i = 0, j = 0, s = 1; i < nums.size(); ++i)
-        {
+        for (int i = 0, j = 0, s = 1; i < nums.size(); ++i) {
             s *= nums[i];
             while (j <= i && s >= k) s /= nums[j++];
             ans += i - j + 1;
@@ -143,6 +142,29 @@ impl Solution {
         res as i32
     }
 }
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var numSubarrayProductLessThanK = function (nums, k) {
+    const n = nums.length;
+    let ans = 0;
+    let s = 1;
+    for (let i = 0, j = 0; i < n; ++i) {
+        s *= nums[i];
+        while (j <= i && s >= k) {
+            s = Math.floor(s / nums[j++]);
+        }
+        ans += i - j + 1;
+    }
+    return ans;
+};
 ```
 
 ### **...**

@@ -9,10 +9,10 @@
 <p>A <strong>subsequence</strong> of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., <code>&quot;ace&quot;</code> is a subsequence of <code>&quot;<u>a</u>b<u>c</u>d<u>e</u>&quot;</code> while <code>&quot;aec&quot;</code> is not).</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "abc", t = "ahbgdc"
 <strong>Output:</strong> true
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "axc", t = "ahbgdc"
 <strong>Output:</strong> false
 </pre>
@@ -63,22 +63,6 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function isSubsequence(s: string, t: string): boolean {
-    let m = s.length,
-        n = t.length;
-    let i = 0;
-    for (let j = 0; j < n && i < m; ++j) {
-        if (s.charAt(i) == t.charAt(j)) {
-            ++i;
-        }
-    }
-    return i == m;
-}
-```
-
 ### **C++**
 
 ```cpp
@@ -87,8 +71,7 @@ public:
     bool isSubsequence(string s, string t) {
         int m = s.size(), n = t.size();
         int i = 0, j = 0;
-        while (i < m && j < n)
-        {
+        while (i < m && j < n) {
             if (s[i] == t[j]) ++i;
             ++j;
         }
@@ -109,6 +92,63 @@ func isSubsequence(s string, t string) bool {
 		j++
 	}
 	return i == m
+}
+```
+
+### **TypeScript**
+
+```ts
+function isSubsequence(s: string, t: string): boolean {
+    let m = s.length,
+        n = t.length;
+    let i = 0;
+    for (let j = 0; j < n && i < m; ++j) {
+        if (s.charAt(i) == t.charAt(j)) {
+            ++i;
+        }
+    }
+    return i == m;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn is_subsequence(s: String, t: String) -> bool {
+        let (s, t) = (s.as_bytes(), t.as_bytes());
+        let n = t.len();
+        let mut i = 0;
+        for &c in s.iter() {
+            while i < n && t[i] != c {
+                i += 1;
+            }
+            if i == n {
+                return false;
+            }
+            i += 1;
+        }
+        true
+    }
+}
+```
+
+### **C**
+
+```c
+bool isSubsequence(char *s, char *t) {
+    int n = strlen(s);
+    int i = 0;
+    for (int j = 0; j < n; j++) {
+        while (t[i] && t[i] != s[j]) {
+            i++;
+        }
+        if (!t[i]) {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
 }
 ```
 

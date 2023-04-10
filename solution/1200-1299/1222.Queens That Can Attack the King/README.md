@@ -77,11 +77,22 @@
 
 ```python
 class Solution:
-    def queensAttacktheKing(self, queens: List[List[int]], king: List[int]) -> List[List[int]]:
+    def queensAttacktheKing(
+        self, queens: List[List[int]], king: List[int]
+    ) -> List[List[int]]:
         n = 8
         s = {(i, j) for i, j in queens}
         ans = []
-        for a, b in [[-1, 0], [1, 0], [0, -1], [0, 1], [1, 1], [1, -1], [-1, 1], [-1, -1]]:
+        for a, b in [
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1],
+            [1, 1],
+            [1, -1],
+            [-1, 1],
+            [-1, -1],
+        ]:
             x, y = king
             while 0 <= x + a < n and 0 <= y + b < n:
                 x, y = x + a, y + b
@@ -98,7 +109,8 @@ class Solution:
 ```java
 class Solution {
     private static final int N = 8;
-    private int[][] dirs = new int[][]{{0, -1}, {0, 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    private int[][] dirs
+        = new int[][] {{0, -1}, {0, 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
 
     public List<List<Integer>> queensAttacktheKing(int[][] queens, int[] king) {
         Set<Integer> s = get(queens);
@@ -137,18 +149,15 @@ public:
         unordered_set<int> s;
         int n = 8;
         for (auto& queen : queens) s.insert(queen[0] * n + queen[1]);
-        vector<vector<int>> dirs = {{0, 1}, {0, - 1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        vector<vector<int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         vector<vector<int>> ans;
-        for (auto& dir : dirs)
-        {
+        for (auto& dir : dirs) {
             int x = king[0], y = king[1];
             int a = dir[0], b = dir[1];
-            while (x + a >= 0 && x + a < n && y + b >= 0 && y + b < n)
-            {
+            while (x + a >= 0 && x + a < n && y + b >= 0 && y + b < n) {
                 x += a;
                 y += b;
-                if (s.count(x * n + y))
-                {
+                if (s.count(x * n + y)) {
                     ans.push_back({x, y});
                     break;
                 }

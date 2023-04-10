@@ -4,30 +4,24 @@
 
 ## Description
 
-<p>Given a binary tree, determine if it is height-balanced.</p>
-
-<p>For this problem, a height-balanced binary tree is defined as:</p>
-
-<blockquote>
-<p>a binary tree in which the left and right subtrees of <em>every</em> node differ in height by no more than 1.</p>
-</blockquote>
+<p>Given a binary tree, determine if it is <span data-keyword="height-balanced"><strong>height-balanced</strong></span>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0110.Balanced%20Binary%20Tree/images/balance_1.jpg" style="width: 342px; height: 221px;" />
 <pre>
 <strong>Input:</strong> root = [3,9,20,null,null,15,7]
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0110.Balanced%20Binary%20Tree/images/balance_2.jpg" style="width: 452px; height: 301px;" />
 <pre>
 <strong>Input:</strong> root = [1,2,2,3,3,null,null,4,4]
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = []
@@ -56,7 +50,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isBalanced(self, root: TreeNode) -> bool:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
         def height(root):
             if root is None:
                 return 0
@@ -121,8 +115,8 @@ class Solution {
  * @return {boolean}
  */
 var isBalanced = function (root) {
-    let height = function (root) {
-        if (root == null) {
+    const height = root => {
+        if (!root) {
             return 0;
         }
         const l = height(root.left);
@@ -132,7 +126,6 @@ var isBalanced = function (root) {
         }
         return 1 + Math.max(l, r);
     };
-
     return height(root) >= 0;
 };
 ```
@@ -154,14 +147,18 @@ var isBalanced = function (root) {
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
+        function<int(TreeNode*)> height = [&](TreeNode* root) {
+            if (!root) {
+                return 0;
+            }
+            int l = height(root->left);
+            int r = height(root->right);
+            if (l == -1 || r == -1 || abs(l - r) > 1) {
+                return -1;
+            }
+            return 1 + max(l, r);
+        };
         return height(root) >= 0;
-    }
-
-    int height(TreeNode* root) {
-        if (!root) return 0;
-        int l = height(root->left), r = height(root->right);
-        if (l == -1 || r == -1 || abs(l - r) > 1) return -1;
-        return 1 + max(l, r);
     }
 };
 ```
@@ -178,32 +175,28 @@ public:
  * }
  */
 func isBalanced(root *TreeNode) bool {
+	var height func(*TreeNode) int
+	height = func(root *TreeNode) int {
+		if root == nil {
+			return 0
+		}
+		l, r := height(root.Left), height(root.Right)
+		if l == -1 || r == -1 || abs(l-r) > 1 {
+			return -1
+		}
+		if l > r {
+			return 1 + l
+		}
+		return 1 + r
+	}
 	return height(root) >= 0
 }
 
-func height(root *TreeNode) int {
-	if root == nil {
-		return 0
-	}
-	l, r := height(root.Left), height(root.Right)
-	if l == -1 || r == -1 || abs(l-r) > 1 {
-		return -1
-	}
-	return 1 + max(l, r)
-}
-
 func abs(x int) int {
-	if x >= 0 {
-		return x
+	if x < 0 {
+		return -x
 	}
-	return -x
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return x
 }
 ```
 

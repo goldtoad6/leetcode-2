@@ -91,7 +91,6 @@ class Solution {
         return ans;
     }
 }
-
 ```
 
 ### **C++**
@@ -102,7 +101,7 @@ public:
     int maxCoins(vector<int>& piles) {
         sort(piles.begin(), piles.end());
         int ans = 0;
-        for (int i = piles.size() - 2; i >= (int) piles.size() / 3; i -= 2) ans += piles[i];
+        for (int i = piles.size() - 2; i >= (int)piles.size() / 3; i -= 2) ans += piles[i];
         return ans;
     }
 };
@@ -118,6 +117,53 @@ func maxCoins(piles []int) int {
 		ans += piles[i]
 	}
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function maxCoins(piles: number[]): number {
+    piles.sort((a, b) => a - b);
+    const n = piles.length;
+    let ans = 0;
+    for (let i = 1; i <= Math.floor(n / 3); i++) {
+        ans += piles[n - 2 * i];
+    }
+    return ans;
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn max_coins(mut piles: Vec<i32>) -> i32 {
+        piles.sort();
+        let n = piles.len();
+        let mut ans = 0;
+        for i in 1..=n / 3 {
+            ans += piles[n - 2 * i];
+        }
+        ans
+    }
+}
+```
+
+### **C**
+
+```c
+int cmp(const void *a, const void *b) {
+    return *(int *) a - *(int *) b;
+}
+
+int maxCoins(int *piles, int pilesSize) {
+    qsort(piles, pilesSize, sizeof(int), cmp);
+    int ans = 0;
+    for (int i = 1; i <= pilesSize / 3; i++) {
+        ans += piles[pilesSize - 2 * i];
+    };
+    return ans;
 }
 ```
 

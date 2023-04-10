@@ -66,7 +66,9 @@
 
 ```python
 class Solution:
-    def maximumBags(self, capacity: List[int], rocks: List[int], additionalRocks: int) -> int:
+    def maximumBags(
+        self, capacity: List[int], rocks: List[int], additionalRocks: int
+    ) -> int:
         d = [a - b for a, b in zip(capacity, rocks)]
         d.sort()
         ans = 0
@@ -115,8 +117,7 @@ public:
         for (int i = 0; i < n; ++i) d[i] = capacity[i] - rocks[i];
         sort(d.begin(), d.end());
         int ans = 0;
-        for (int& v : d)
-        {
+        for (int& v : d) {
             if (v > additionalRocks) break;
             ++ans;
             additionalRocks -= v;

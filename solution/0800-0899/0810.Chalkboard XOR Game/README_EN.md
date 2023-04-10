@@ -13,7 +13,7 @@
 <p>Return <code>true</code> <em>if and only if Alice wins the game, assuming both players play optimally</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,2]
@@ -24,14 +24,14 @@ If she erases 1, the nums array becomes [1, 2]. The bitwise XOR of all the eleme
 If Alice erases 2 first, now nums become [1, 1]. The bitwise XOR of all the elements of the chalkboard is 1 XOR 1 = 0. Alice will lose.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,1]
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3]
@@ -53,13 +53,48 @@ If Alice erases 2 first, now nums become [1, 1]. The bitwise XOR of all the elem
 ### **Python3**
 
 ```python
-
+class Solution:
+    def xorGame(self, nums: List[int]) -> bool:
+        return len(nums) % 2 == 0 or reduce(xor, nums) == 0
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean xorGame(int[] nums) {
+        return nums.length % 2 == 0 || Arrays.stream(nums).reduce(0, (a, b) -> a ^ b) == 0;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool xorGame(vector<int>& nums) {
+        if (nums.size() % 2 == 0) return true;
+        int x = 0;
+        for (int& v : nums) x ^= v;
+        return x == 0;
+    }
+};
+```
+
+### **Go**
+
+```go
+func xorGame(nums []int) bool {
+	if len(nums)%2 == 0 {
+		return true
+	}
+	x := 0
+	for _, v := range nums {
+		x ^= v
+	}
+	return x == 0
+}
 ```
 
 ### **...**

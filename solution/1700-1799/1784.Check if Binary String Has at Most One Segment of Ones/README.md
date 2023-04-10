@@ -17,7 +17,7 @@
 <pre>
 <strong>输入：</strong>s = "1001"
 <strong>输出：</strong>false
-<strong>解释：</strong>字符串中的 1 没有形成一个连续字段。
+<strong>解释：</strong>由连续若干个&nbsp;<code>'1'</code> 组成的字段数量为 2，返回 false
 </pre>
 
 <p><strong>示例 2：</strong></p>
@@ -40,6 +40,18 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：0 后面不能有 1**
+
+注意到字符串 $s$ 不含前导零，说明 $s$ 以 '1' 开头。
+
+若字符串 $s$ 存在 "01" 串，那么 $s$ 就是形如 "1...01..." 的字符串，此时 $s$ 出现了至少两个连续的 '1' 片段，不满足题意，返回 `false`。
+
+若字符串 $s$ 不存在 "01" 串，那么 $s$ 只能是形如 "1..1000..." 的字符串，此时 $s$ 只有一个连续的 '1' 片段，满足题意，返回 `true`。
+
+因此，只需要判断字符串 $s$ 是否存在 "01" 串即可。
+
+时间复杂度 $O(n)$。其中 $n$ 为字符串 $s$ 的长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -47,7 +59,9 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
-
+class Solution:
+    def checkOnesSegment(self, s: str) -> bool:
+        return '01' not in s
 ```
 
 ### **Java**
@@ -55,7 +69,61 @@
 <!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        return !s.contains("01");
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool checkOnesSegment(string s) {
+        return s.find("01") == -1;
+    }
+};
+```
+
+### **Go**
+
+```go
+func checkOnesSegment(s string) bool {
+	return !strings.Contains(s, "01")
+}
+```
+
+### **TypeScript**
+
+```ts
+function checkOnesSegment(s: string): boolean {
+    let pre = s[0];
+    for (const c of s) {
+        if (pre !== c && c === '1') {
+            return false;
+        }
+        pre = c;
+    }
+    return true;
+}
+```
+
+```ts
+function checkOnesSegment(s: string): boolean {
+    return !s.includes('01');
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn check_ones_segment(s: String) -> bool {
+        !s.contains("01")
+    }
+}
 ```
 
 ### **...**

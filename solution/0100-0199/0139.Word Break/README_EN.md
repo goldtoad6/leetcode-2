@@ -9,7 +9,7 @@
 <p><strong>Note</strong> that the same word in the dictionary may be reused multiple times in the segmentation.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;leetcode&quot;, wordDict = [&quot;leet&quot;,&quot;code&quot;]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> Return true because &quot;leetcode&quot; can be segmented as &quot;leet code&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;applepenapple&quot;, wordDict = [&quot;apple&quot;,&quot;pen&quot;]
@@ -26,7 +26,7 @@
 Note that you are allowed to reuse a dictionary word.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;catsandog&quot;, wordDict = [&quot;cats&quot;,&quot;dog&quot;,&quot;sand&quot;,&quot;and&quot;,&quot;cat&quot;]
@@ -72,7 +72,7 @@ class Trie:
     def __init__(self):
         self.children = [None] * 26
         self.is_end = False
-    
+
     def insert(self, w):
         node = self
         for c in w:
@@ -81,7 +81,7 @@ class Trie:
                 node.children[idx] = Trie()
             node = node.children[idx]
         node.is_end = True
-    
+
     def search(self, w):
         node = self
         for c in w:
@@ -96,7 +96,7 @@ class Solution:
         @cache
         def dfs(s):
             return not s or any(trie.search(s[:i]) and dfs(s[i:]) for i in range(1, len(s) + 1))
-        
+
         trie = Trie()
         for w in wordDict:
             trie.insert(w)
@@ -195,12 +195,9 @@ public:
         int n = s.size();
         vector<bool> dp(n + 1);
         dp[0] = true;
-        for (int i = 1; i <= n; ++i)
-        {
-            for (int j = 0; j < i; ++j)
-            {
-                if (dp[j] && words.count(s.substr(j, i - j)))
-                {
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (dp[j] && words.count(s.substr(j, i - j))) {
                     dp[i] = true;
                     break;
                 }
@@ -249,7 +246,7 @@ public:
 
     bool wordBreak(string s, vector<string>& wordDict) {
         for (auto w : wordDict) trie->insert(w);
-        return dfs(s);    
+        return dfs(s);
     }
 
     bool dfs(string s) {

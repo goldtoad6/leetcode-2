@@ -11,7 +11,7 @@
 <p>Return all critical connections in the network in any order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1192.Critical%20Connections%20in%20a%20Network/images/1537_ex1_2.png" style="width: 198px; height: 248px;" />
 <pre>
 <strong>Input:</strong> n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> [[3,1]] is also accepted.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2, connections = [[0,1]]
@@ -51,6 +51,48 @@
 
 ```java
 
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int count = 0;
+    vector<int> dfn, low;
+    vector<vector<int>> graph;
+    vector<vector<int>> res;
+    void tarjan(int u, int fa) {
+        dfn[u] = low[u] = ++count;
+        for (auto& v : graph[u]) {
+            if (v == fa)
+                continue;
+            if (!dfn[v]) {
+                tarjan(v, u);
+                low[u] = min(low[u], low[v]);
+                if (dfn[u] < low[v])
+                    res.push_back({u, v});
+            } else {
+                low[u] = min(dfn[v], low[u]);
+            }
+        }
+    }
+
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        dfn.resize(n);
+        low.resize(n);
+        graph.resize(n);
+        for (auto& edge : connections) {
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+        for (int i = 0; i < n; i++) {
+            if (!dfn[i])
+                tarjan(i, -1);
+        }
+        return res;
+    }
+};
 ```
 
 ### **...**

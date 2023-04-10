@@ -84,10 +84,10 @@ class Solution:
                     cnt -= 1
                 if cnt == 0:
                     if start == p:
-                        root.left = dfs(s[start + 1: i])
+                        root.left = dfs(s[start + 1 : i])
                         start = i + 1
                     else:
-                        root.right = dfs(s[start + 1: i])
+                        root.right = dfs(s[start + 1 : i])
             return root
 
         return dfs(s)
@@ -176,18 +176,17 @@ public:
         TreeNode* root = new TreeNode(stoi(s.substr(0, p)));
         int start = p;
         int cnt = 0;
-        for (int i = p; i < s.size(); ++i)
-        {
-            if (s[i] == '(') ++cnt;
-            else if (s[i] == ')') --cnt;
-            if (cnt == 0)
-            {
-                if (start == p)
-                {
+        for (int i = p; i < s.size(); ++i) {
+            if (s[i] == '(')
+                ++cnt;
+            else if (s[i] == ')')
+                --cnt;
+            if (cnt == 0) {
+                if (start == p) {
                     root->left = dfs(s.substr(start + 1, i - start - 1));
                     start = i + 1;
-                }
-                else root->right = dfs(s.substr(start + 1, i - start - 1));
+                } else
+                    root->right = dfs(s.substr(start + 1, i - start - 1));
             }
         }
         return root;

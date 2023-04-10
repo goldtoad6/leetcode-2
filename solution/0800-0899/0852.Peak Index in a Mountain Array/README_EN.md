@@ -21,21 +21,21 @@
 <p>You must solve it in <code>O(log(arr.length))</code> time complexity.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [0,1,0]
 <strong>Output:</strong> 1
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [0,2,1,0]
 <strong>Output:</strong> 1
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [0,10,5,2]
@@ -98,11 +98,12 @@ class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
         int left = 1, right = arr.size() - 2;
-        while (left < right)
-        {
+        while (left < right) {
             int mid = (left + right) >> 1;
-            if (arr[mid] > arr[mid + 1]) right = mid;
-            else left = mid + 1;
+            if (arr[mid] > arr[mid + 1])
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left;
     }

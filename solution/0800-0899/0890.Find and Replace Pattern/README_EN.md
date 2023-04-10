@@ -11,7 +11,7 @@
 <p>Recall that a permutation of letters is a bijection from letters to letters: every letter maps to another letter, and no two letters map to the same letter.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;abc&quot;,&quot;deq&quot;,&quot;mee&quot;,&quot;aqq&quot;,&quot;dkd&quot;,&quot;ccc&quot;], pattern = &quot;abb&quot;
@@ -20,7 +20,7 @@
 &quot;ccc&quot; does not match the pattern because {a -&gt; c, b -&gt; c, ...} is not a permutation, since a and b map to the same letter.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;], pattern = &quot;a&quot;
@@ -95,22 +95,18 @@ class Solution {
 public:
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> ans;
-        for (auto& word : words)
-            if (match(word, pattern))
-                ans.push_back(word);
+        auto match = [](string& s, string& t) {
+            int m1[128] = {0};
+            int m2[128] = {0};
+            for (int i = 0; i < s.size(); ++i) {
+                if (m1[s[i]] != m2[t[i]]) return 0;
+                m1[s[i]] = i + 1;
+                m2[t[i]] = i + 1;
+            }
+            return 1;
+        };
+        for (auto& word : words) if (match(word, pattern)) ans.emplace_back(word);
         return ans;
-    }
-
-    bool match(string s, string t) {
-        vector<int> m1(128);
-        vector<int> m2(128);
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (m1[s[i]] != m2[t[i]]) return 0;
-            m1[s[i]] = i + 1;
-            m2[t[i]] = i + 1;
-        }
-        return 1;
     }
 };
 ```

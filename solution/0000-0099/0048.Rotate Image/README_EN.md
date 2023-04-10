@@ -9,14 +9,14 @@
 <p>You have to rotate the image <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank"><strong>in-place</strong></a>, which means you have to modify the input 2D matrix directly. <strong>DO NOT</strong> allocate another 2D matrix and do the rotation.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0048.Rotate%20Image/images/mat1.jpg" style="width: 500px; height: 188px;" />
 <pre>
 <strong>Input:</strong> matrix = [[1,2,3],[4,5,6],[7,8,9]]
 <strong>Output:</strong> [[7,4,1],[8,5,2],[9,6,3]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0048.Rotate%20Image/images/mat2.jpg" style="width: 500px; height: 201px;" />
 <pre>
 <strong>Input:</strong> matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
@@ -85,17 +85,17 @@ public:
     void rotate(vector<vector<int>>& matrix) {
 
         int n = matrix.size();
-        if(n <= 1)return ;
+        if (n <= 1) return;
 
-        for(int i = 0 ; i < n ; i++){
-            for(int j = i;j < n ;j++){
-                swap(matrix[i][j],matrix[j][i]);
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                swap(matrix[i][j], matrix[j][i]);
             }
         }
 
-        for(int i = 0 ; i < n ; i++){
-            for(int j = 0;j < n/2;j++){
-                swap(matrix[i][j],matrix[i][n-1-j]);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                swap(matrix[i][j], matrix[i][n - 1 - j]);
             }
         }
     }
@@ -175,6 +175,26 @@ impl Solution {
             }
         }
     }
+}
+```
+
+### **Go**
+
+```go
+func rotate(matrix [][]int) {
+	n := len(matrix)
+	// matrix transpose
+	for i := 0; i < n; i++ {
+		for j := i; j < n; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+	// reverse each matrix[i]
+	for i := 0; i < n; i++ {
+		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
+			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
+		}
+	}
 }
 ```
 

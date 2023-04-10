@@ -18,7 +18,7 @@
 <p>Return <em>the <strong>minimum number of operations</strong> required to make the array alternating</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,1,3,2,4,3]
@@ -29,7 +29,7 @@ The number of operations required in this case is 3.
 It can be proven that it is not possible to make the array alternating in less than 3 operations. 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,2,2,2]
@@ -112,7 +112,7 @@ class Solution {
                 n2 = v;
             }
         }
-        return new int[][]{{a, n1}, {b, n2}};
+        return new int[][] {{a, n1}, {b, n2}};
     }
 }
 ```
@@ -169,17 +169,13 @@ public:
         unordered_map<int, int> freq;
         for (; i < nums.size(); i += 2) ++freq[nums[i]];
         int a = 0, n1 = 0, b = 0, n2 = 0;
-        for (auto& [k, v] : freq)
-        {
-            if (v > n1)
-            {
+        for (auto& [k, v] : freq) {
+            if (v > n1) {
                 b = a;
                 n2 = n1;
                 a = k;
                 n1 = v;
-            }
-            else if (v > n2)
-            {
+            } else if (v > n2) {
                 b = k;
                 n2 = v;
             }

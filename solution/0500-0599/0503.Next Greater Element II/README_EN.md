@@ -9,7 +9,7 @@
 <p>The <strong>next greater number</strong> of a number <code>x</code> is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn&#39;t exist, return <code>-1</code> for this number.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,1]
@@ -19,7 +19,7 @@ The number 2 can&#39;t find next greater number.
 The second 1&#39;s next greater number needs to search circularly, which is also 2.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4,3]
@@ -161,14 +161,12 @@ var nextGreaterElements = function (nums) {
 ```cpp
 class Solution {
 public:
-    vector<int> nextGreaterElements(vector<int> &nums) {
+    vector<int> nextGreaterElements(vector<int>& nums) {
         int n = nums.size();
         vector<int> ans(n, -1);
         stack<int> stk;
-        for (int i = 0; i < (n << 1); ++i)
-        {
-            while (!stk.empty() && nums[stk.top()] < nums[i % n])
-            {
+        for (int i = 0; i < (n << 1); ++i) {
+            while (!stk.empty() && nums[stk.top()] < nums[i % n]) {
                 ans[stk.top()] = nums[i % n];
                 stk.pop();
             }
@@ -238,6 +236,25 @@ func nextGreaterElements(nums []int) []int {
 		stk = append(stk, nums[j])
 	}
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function nextGreaterElements(nums: number[]): number[] {
+    const stack: number[] = [],
+        len = nums.length;
+    const res: number[] = new Array(len).fill(-1);
+    for (let i = 0; i < 2 * len - 1; i++) {
+        const j = i % len;
+        while (stack.length !== 0 && nums[stack[stack.length - 1]] < nums[j]) {
+            res[stack[stack.length - 1]] = nums[j];
+            stack.pop();
+        }
+        stack.push(j);
+    }
+    return res;
 }
 ```
 

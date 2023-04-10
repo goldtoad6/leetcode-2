@@ -17,7 +17,7 @@
 <p>Given an integer <code>n</code>, return <em>any valid <strong>n-bit gray code sequence</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 2
@@ -35,7 +35,7 @@ The binary representation of [0,1,3,2] is [00,01,11,10].
 - 0<u>1</u> and 0<u>0</u> differ by one bit
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = 1
@@ -84,7 +84,9 @@ class Solution {
 public:
     vector<int> grayCode(int n) {
         vector<int> ans;
-        for (int i = 0; i < 1 << n; ++i) ans.push_back(i ^ (i >> 1));
+        for (int i = 0; i < 1 << n; ++i) {
+            ans.push_back(i ^ (i >> 1));
+        }
         return ans;
     }
 };
@@ -93,12 +95,11 @@ public:
 ### **Go**
 
 ```go
-func grayCode(n int) []int {
-	var ans []int
+func grayCode(n int) (ans []int) {
 	for i := 0; i < 1<<n; i++ {
 		ans = append(ans, i^(i>>1))
 	}
-	return ans
+	return
 }
 ```
 
@@ -110,7 +111,7 @@ func grayCode(n int) []int {
  * @return {number[]}
  */
 var grayCode = function (n) {
-    let ans = [];
+    const ans = [];
     for (let i = 0; i < 1 << n; ++i) {
         ans.push(i ^ (i >> 1));
     }

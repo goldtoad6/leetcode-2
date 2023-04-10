@@ -11,7 +11,7 @@
 <p>Return <code>true</code> <em>if there exists a pattern of length</em> <code>m</code> <em>that is repeated</em> <code>k</code> <em>or more times, otherwise return</em> <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,4,4,4,4], m = 1, k = 3
@@ -19,7 +19,7 @@
 <strong>Explanation: </strong>The pattern <strong>(4)</strong> of length 1 is repeated 4 consecutive times. Notice that pattern can be repeated k or more times but not less.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,1,2,1,1,1,3], m = 2, k = 2
@@ -27,7 +27,7 @@
 <strong>Explanation: </strong>The pattern <strong>(1,2)</strong> of length 2 is repeated 2 consecutive times. Another valid pattern <strong>(2,1) is</strong> also repeated 2 times.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> arr = [1,2,1,2,1,3], m = 2, k = 3
@@ -52,13 +52,103 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def containsPattern(self, arr: List[int], m: int, k: int) -> bool:
+        n = len(arr)
+        for i in range(n - m * k + 1):
+            j = 0
+            while j < m * k:
+                if arr[i + j] != arr[i + (j % m)]:
+                    break
+                j += 1
+            if j == m * k:
+                return True
+        return False
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean containsPattern(int[] arr, int m, int k) {
+        int n = arr.length;
+        for (int i = 0; i <= n - m * k; ++i) {
+            int j = 0;
+            for (; j < m * k; ++j) {
+                if (arr[i + j] != arr[i + (j % m)]) {
+                    break;
+                }
+            }
+            if (j == m * k) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool containsPattern(vector<int>& arr, int m, int k) {
+        int n = arr.size();
+        for (int i = 0; i <= n - m * k; ++i) {
+            int j = 0;
+            for (; j < m * k; ++j) {
+                if (arr[i + j] != arr[i + (j % m)]) {
+                    break;
+                }
+            }
+            if (j == m * k) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+
+### **Go**
+
+```go
+func containsPattern(arr []int, m int, k int) bool {
+	n := len(arr)
+	for i := 0; i <= n-m*k; i++ {
+		j := 0
+		for ; j < m*k; j++ {
+			if arr[i+j] != arr[i+(j%m)] {
+				break
+			}
+		}
+		if j == m*k {
+			return true
+		}
+	}
+	return false
+}
+```
+
+### **TypeScript**
+
+```ts
+function containsPattern(arr: number[], m: number, k: number): boolean {
+    const n = arr.length;
+    for (let i = 0; i <= n - m * k; ++i) {
+        let j = 0;
+        for (; j < m * k; ++j) {
+            if (arr[i + j] != arr[i + (j % m)]) {
+                break;
+            }
+        }
+        if (j == m * k) {
+            return true;
+        }
+    }
+    return false;
+}
 ```
 
 ### **...**

@@ -30,7 +30,7 @@ Each row of this table indicates that the employee with employee_id is working o
 | name             | varchar |
 | experience_years | int     |
 +------------------+---------+
-employee_id is the primary key of this table.
+employee_id is the primary key of this table. It&#39;s guaranteed that experience_years is not NULL.
 Each row of this table contains information about one employee.
 </pre>
 
@@ -43,7 +43,7 @@ Each row of this table contains information about one employee.
 <p>The query result format is in the following example.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> 

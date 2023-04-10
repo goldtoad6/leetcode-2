@@ -9,7 +9,7 @@
 <p>Return <em>the length of the shortest path that visits every node</em>. You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0847.Shortest%20Path%20Visiting%20All%20Nodes/images/shortest1-graph.jpg" style="width: 222px; height: 183px;" />
 <pre>
 <strong>Input:</strong> graph = [[1,2,3],[0],[0],[0]]
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> One possible path is [1,0,2,0,3]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0847.Shortest%20Path%20Visiting%20All%20Nodes/images/shortest2-graph.jpg" style="width: 382px; height: 222px;" />
 <pre>
 <strong>Input:</strong> graph = [[1],[0,2,4],[1,3,4],[2],[1,2]]
@@ -80,7 +80,7 @@ class Solution:
             return sum(((state >> i) & 1) == 0 for i in range(n))
 
         q = []
-        dist = [[float('inf')] * (1 << n) for _ in range(n)]
+        dist = [[inf] * (1 << n) for _ in range(n)]
         for i in range(n):
             heappush(q, (f(1 << i), i, 1 << i))
             dist[i][1 << i] = 0
@@ -156,7 +156,7 @@ class Solution {
         }
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
         for (int i = 0; i < n; ++i) {
-            q.offer(new int[]{f(1 << i), i, 1 << i});
+            q.offer(new int[] {f(1 << i), i, 1 << i});
             dist[i][1 << i] = 0;
         }
         while (!q.isEmpty()) {
@@ -169,7 +169,7 @@ class Solution {
                 int nxt = state | (1 << v);
                 if (dist[v][nxt] > dist[u][state] + 1) {
                     dist[v][nxt] = dist[u][state] + 1;
-                    q.offer(new int[]{dist[v][nxt] + f(nxt), v, nxt});
+                    q.offer(new int[] {dist[v][nxt] + f(nxt), v, nxt});
                 }
             }
         }
@@ -237,21 +237,17 @@ public:
         int n = graph.size();
         queue<tuple<int, int, int>> q;
         vector<vector<bool>> vis(n, vector<bool>(1 << n));
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             q.emplace(i, 1 << i, 0);
             vis[i][1 << i] = true;
         }
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto [u, state, dist] = q.front();
             q.pop();
             if (state == (1 << n) - 1) return dist;
-            for (int& v : graph[u])
-            {
+            for (int& v : graph[u]) {
                 int nxt = state | (1 << v);
-                if (!vis[v][nxt])
-                {
+                if (!vis[v][nxt]) {
                     q.emplace(v, nxt, dist + 1);
                     vis[v][nxt] = true;
                 }

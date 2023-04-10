@@ -70,7 +70,9 @@
 
 ```python
 class Solution:
-    def frogPosition(self, n: int, edges: List[List[int]], t: int, target: int) -> float:
+    def frogPosition(
+        self, n: int, edges: List[List[int]], t: int, target: int
+    ) -> float:
         g = defaultdict(list)
         for u, v in edges:
             g[u].append(v)
@@ -99,9 +101,7 @@ class Solution:
 class Solution {
     public double frogPosition(int n, int[][] edges, int t, int target) {
         List<Integer>[] g = new List[n + 1];
-        for (int i = 0; i <= n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int[] e : edges) {
             int u = e[0], v = e[1];
             g[u].add(v);
@@ -144,8 +144,7 @@ class Solution {
 public:
     double frogPosition(int n, vector<vector<int>>& edges, int t, int target) {
         vector<vector<int>> g(n + 1);
-        for (auto& e : edges)
-        {
+        for (auto& e : edges) {
             int u = e[0], v = e[1];
             g[u].push_back(v);
             g[v].push_back(u);
@@ -155,19 +154,15 @@ public:
         q.push({1, 1.0});
         vector<bool> vis(n + 1);
         vis[1] = true;
-        while (!q.empty() && t >= 0)
-        {
-            for (int k = q.size(); k; --k)
-            {
+        while (!q.empty() && t >= 0) {
+            for (int k = q.size(); k; --k) {
                 auto x = q.front();
                 q.pop();
                 int u = x.first;
                 double p = x.second;
                 vector<int> nxt;
-                for (int v : g[u])
-                {
-                    if (!vis[v])
-                    {
+                for (int v : g[u]) {
+                    if (!vis[v]) {
                         vis[v] = true;
                         nxt.push_back(v);
                     }

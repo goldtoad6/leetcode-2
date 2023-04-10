@@ -29,7 +29,7 @@
 <p>A <strong>substring</strong> is a contiguous <strong>non-empty</strong> sequence of characters within a string.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> word = &quot;internationalization&quot;, abbr = &quot;i12iz4n&quot;
@@ -37,7 +37,7 @@
 <strong>Explanation:</strong> The word &quot;internationalization&quot; can be abbreviated as &quot;i12iz4n&quot; (&quot;i <u>nternational</u> iz <u>atio</u> n&quot;).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> word = &quot;apple&quot;, abbr = &quot;a2e&quot;
@@ -63,13 +63,127 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def validWordAbbreviation(self, word: str, abbr: str) -> bool:
+        i = j = 0
+        m, n = len(word), len(abbr)
+        while i < m:
+            if j >= n:
+                return False
+            if word[i] == abbr[j]:
+                i, j = i + 1, j + 1
+                continue
+            k = j
+            while k < n and abbr[k].isdigit():
+                k += 1
+            t = abbr[j: k]
+            if not t.isdigit() or t[0] == '0' or int(t) == 0:
+                return False
+            i += int(t)
+            j = k
+        return i == m and j == n
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean validWordAbbreviation(String word, String abbr) {
+        int m = word.length(), n = abbr.length();
+        int i = 0, j = 0;
+        while (i < m) {
+            if (j >= n) {
+                return false;
+            }
+            if (word.charAt(i) == abbr.charAt(j)) {
+                ++i;
+                ++j;
+                continue;
+            }
+            int k = j;
+            while (k < n && Character.isDigit(abbr.charAt(k))) {
+                ++k;
+            }
+            String t = abbr.substring(j, k);
+            if (j == k || t.charAt(0) == '0' || Integer.parseInt(t) == 0) {
+                return false;
+            }
+            i += Integer.parseInt(t);
+            j = k;
+        }
+        return i == m && j == n;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool validWordAbbreviation(string word, string abbr) {
+        int i = 0, j = 0;
+        int m = word.size(), n = abbr.size();
+        while (i < m) {
+            if (j >= n) {
+                return false;
+            }
+            if (word[i] == abbr[j]) {
+                ++i;
+                ++j;
+                continue;
+            }
+            int k = j;
+            while (k < n && isdigit(abbr[k])) {
+                ++k;
+            }
+            string t = abbr.substr(j, k - j);
+            if (k == j || t[0] == '0') {
+                return false;
+            }
+            int x = stoi(t);
+            if (x == 0) {
+                return false;
+            }
+            i += x;
+            j = k;
+        }
+        return i == m && j == n;
+    }
+};
+```
+
+### **Go**
+
+```go
+func validWordAbbreviation(word string, abbr string) bool {
+	i, j := 0, 0
+	m, n := len(word), len(abbr)
+	for i < m {
+		if j >= n {
+			return false
+		}
+		if word[i] == abbr[j] {
+			i++
+			j++
+			continue
+		}
+		k := j
+		for k < n && abbr[k] >= '0' && abbr[k] <= '9' {
+			k++
+		}
+		if k == j || abbr[j] == '0' {
+			return false
+		}
+		x, _ := strconv.Atoi(abbr[j:k])
+		if x == 0 {
+			return false
+		}
+		i += x
+		j = k
+	}
+	return i == m && j == n
+}
 ```
 
 ### **...**

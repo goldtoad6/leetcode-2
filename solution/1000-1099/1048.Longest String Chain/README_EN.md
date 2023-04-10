@@ -17,7 +17,7 @@
 <p>Return <em>the <strong>length</strong> of the <strong>longest possible word chain</strong> with words chosen from the given list of </em><code>words</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;a&quot;,&quot;b&quot;,&quot;ba&quot;,&quot;bca&quot;,&quot;bda&quot;,&quot;bdca&quot;]
@@ -25,7 +25,7 @@
 <strong>Explanation</strong>: One of the longest word chains is [&quot;a&quot;,&quot;<u>b</u>a&quot;,&quot;b<u>d</u>a&quot;,&quot;bd<u>c</u>a&quot;].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;xbc&quot;,&quot;pcxbcf&quot;,&quot;xb&quot;,&quot;cxbc&quot;,&quot;pcxbc&quot;]
@@ -33,7 +33,7 @@
 <strong>Explanation:</strong> All the words can be put in a word chain [&quot;xb&quot;, &quot;xb<u>c</u>&quot;, &quot;<u>c</u>xbc&quot;, &quot;<u>p</u>cxbc&quot;, &quot;pcxbc<u>f</u>&quot;].
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;abcd&quot;,&quot;dbqca&quot;]
@@ -74,7 +74,7 @@ class Solution:
 
         n = len(words)
         dp = [1] * (n + 1)
-        words.sort(key= lambda x: len(x))
+        words.sort(key=lambda x: len(x))
         res = 1
         for i in range(1, n):
             for j in range(i):
@@ -147,16 +147,13 @@ function longestStrChain(words: string[]): number {
 ```cpp
 class Solution {
 public:
-    int longestStrChain(vector<string> &words) {
-        sort(words.begin(), words.end(), [&](string a, string b)
-             { return a.size() < b.size(); });
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(), words.end(), [&](string a, string b) { return a.size() < b.size(); });
         int res = 0;
         unordered_map<string, int> map;
-        for (auto word : words)
-        {
+        for (auto word : words) {
             int x = 1;
-            for (int i = 0; i < word.size(); ++i)
-            {
+            for (int i = 0; i < word.size(); ++i) {
                 string pre = word.substr(0, i) + word.substr(i + 1);
                 x = max(x, map[pre] + 1);
             }

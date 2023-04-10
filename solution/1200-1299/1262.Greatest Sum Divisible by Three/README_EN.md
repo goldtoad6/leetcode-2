@@ -4,20 +4,17 @@
 
 ## Description
 
-<p>Given an array&nbsp;<code>nums</code>&nbsp;of integers, we need to find the maximum possible sum of elements of the array such that it is divisible by three.</p>
-
-<ol>
-</ol>
+<p>Given an integer array <code>nums</code>, return <em>the <strong>maximum possible sum </strong>of elements of the array such that it is divisible by three</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,6,5,1,8]
 <strong>Output:</strong> 18
 <strong>Explanation:</strong> Pick numbers 3, 6, 1 and 8 their sum is 18 (maximum sum divisible by 3).</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [4]
@@ -25,7 +22,7 @@
 <strong>Explanation:</strong> Since 4 is not divisible by 3, do not pick any number.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4,4]
@@ -37,8 +34,8 @@
 <p><strong>Constraints:</strong></p>
 
 <ul>
-	<li><code>1 &lt;= nums.length &lt;= 4 * 10^4</code></li>
-	<li><code>1 &lt;= nums[i] &lt;= 10^4</code></li>
+	<li><code>1 &lt;= nums.length &lt;= 4 * 10<sup>4</sup></code></li>
+	<li><code>1 &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
 </ul>
 
 ## Solutions
@@ -48,13 +45,72 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def maxSumDivThree(self, nums: List[int]) -> int:
+        f = [0] * 3
+        for x in nums:
+            a, b, c = f[0] + x, f[1] + x, f[2] + x
+            f[a % 3] = max(f[a % 3], a)
+            f[b % 3] = max(f[b % 3], b)
+            f[c % 3] = max(f[c % 3], c)
+        return f[0]
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int maxSumDivThree(int[] nums) {
+        int[] f = new int[3];
+        for (int x : nums) {
+            int a = f[0] + x, b = f[1] + x, c = f[2] + x;
+            f[a % 3] = Math.max(f[a % 3], a);
+            f[b % 3] = Math.max(f[b % 3], b);
+            f[c % 3] = Math.max(f[c % 3], c);
+        }
+        return f[0];
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int maxSumDivThree(vector<int>& nums) {
+        int f[3]{};
+        for (int x : nums) {
+            int a = f[0] + x, b = f[1] + x, c = f[2] + x;
+            f[a % 3] = max(f[a % 3], a);
+            f[b % 3] = max(f[b % 3], b);
+            f[c % 3] = max(f[c % 3], c);
+        }
+        return f[0];
+    }
+};
+```
+
+### **Go**
+
+```go
+func maxSumDivThree(nums []int) int {
+	f := [3]int{}
+	for _, x := range nums {
+		a, b, c := f[0]+x, f[1]+x, f[2]+x
+		f[a%3] = max(f[a%3], a)
+		f[b%3] = max(f[b%3], b)
+		f[c%3] = max(f[c%3], c)
+	}
+	return f[0]
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

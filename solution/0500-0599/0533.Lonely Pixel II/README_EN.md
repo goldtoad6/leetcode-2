@@ -14,7 +14,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0533.Lonely%20Pixel%20II/images/pixel2-1-grid.jpg" style="width: 493px; height: 333px;" />
 <pre>
 <strong>Input:</strong> picture = [[&quot;W&quot;,&quot;B&quot;,&quot;W&quot;,&quot;B&quot;,&quot;B&quot;,&quot;W&quot;],[&quot;W&quot;,&quot;B&quot;,&quot;W&quot;,&quot;B&quot;,&quot;B&quot;,&quot;W&quot;],[&quot;W&quot;,&quot;B&quot;,&quot;W&quot;,&quot;B&quot;,&quot;B&quot;,&quot;W&quot;],[&quot;W&quot;,&quot;W&quot;,&quot;B&quot;,&quot;W&quot;,&quot;B&quot;,&quot;W&quot;]], target = 3
@@ -25,7 +25,7 @@ Take &#39;B&#39; at row r = 0 and column c = 1 as an example:
  - Rule 2, the rows have black pixel at column c = 1 are row 0, row 1 and row 2. They are exactly the same as row r = 0.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0533.Lonely%20Pixel%20II/images/pixel2-2-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> picture = [[&quot;W&quot;,&quot;W&quot;,&quot;B&quot;],[&quot;W&quot;,&quot;W&quot;,&quot;B&quot;],[&quot;W&quot;,&quot;W&quot;,&quot;B&quot;]], target = 1
@@ -141,35 +141,26 @@ public:
         int m = picture.size(), n = picture[0].size();
         vector<int> rows(m);
         unordered_map<int, vector<int>> cols;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (picture[i][j] == 'B')
-                {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (picture[i][j] == 'B') {
                     ++rows[i];
                     cols[j].push_back(i);
                 }
             }
         }
         vector<vector<bool>> t(m, vector<bool>(m, false));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int k = i; k < m; ++k)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int k = i; k < m; ++k) {
                 t[i][k] = i == k || all(picture[i], picture[k]);
                 t[k][i] = t[i][k];
             }
         }
         int res = 0;
-        for (int i = 0; i < m; ++i)
-        {
-            if (rows[i] == target)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    if (cols[j].size() == target)
-                    {
+        for (int i = 0; i < m; ++i) {
+            if (rows[i] == target) {
+                for (int j = 0; j < n; ++j) {
+                    if (cols[j].size() == target) {
                         bool check = true;
                         for (int k : cols[j]) check = check && t[i][k];
                         if (check) ++res;

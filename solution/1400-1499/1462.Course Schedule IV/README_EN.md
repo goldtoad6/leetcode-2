@@ -17,7 +17,7 @@
 <p>Return <i>a boolean array </i><code>answer</code><i>, where </i><code>answer[j]</code><i> is the answer to the </i><code>j<sup>th</sup></code><i> query.</i></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1462.Course%20Schedule%20IV/images/courses4-1-graph.jpg" style="width: 222px; height: 62px;" />
 <pre>
 <strong>Input:</strong> numCourses = 2, prerequisites = [[1,0]], queries = [[0,1],[1,0]]
@@ -26,7 +26,7 @@
 Course 0 is not a prerequisite of course 1, but the opposite is true.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> numCourses = 2, prerequisites = [], queries = [[1,0],[0,1]]
@@ -34,7 +34,7 @@ Course 0 is not a prerequisite of course 1, but the opposite is true.
 <strong>Explanation:</strong> There are no prerequisites, and each course is independent.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1462.Course%20Schedule%20IV/images/courses4-3-graph.jpg" style="width: 222px; height: 222px;" />
 <pre>
 <strong>Input:</strong> numCourses = 3, prerequisites = [[1,2],[1,0],[2,0]], queries = [[1,0],[1,2]]
@@ -67,7 +67,9 @@ DFS.
 
 ```python
 class Solution:
-    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
+    def checkIfPrerequisite(
+        self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]
+    ) -> List[bool]:
         @cache
         def dfs(a, b):
             if b in g[a] or a == b:
@@ -87,7 +89,8 @@ class Solution:
 
 ```java
 class Solution {
-    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+    public List<Boolean> checkIfPrerequisite(
+        int numCourses, int[][] prerequisites, int[][] queries) {
         int[][] g = new int[numCourses][numCourses];
         for (int i = 0; i < numCourses; ++i) {
             Arrays.fill(g[i], -1);
@@ -131,14 +134,12 @@ class Solution {
 public:
     vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
         vector<vector<int>> g(numCourses, vector<int>(numCourses, -1));
-        for (auto& e : prerequisites)
-        {
+        for (auto& e : prerequisites) {
             int a = e[0], b = e[1];
             g[a][b] = 1;
         }
         vector<bool> ans;
-        for (auto& e : queries)
-        {
+        for (auto& e : queries) {
             int a = e[0], b = e[1];
             ans.push_back(dfs(a, b, g));
         }
@@ -147,15 +148,12 @@ public:
 
     bool dfs(int a, int b, vector<vector<int>>& g) {
         if (g[a][b] != -1) return g[a][b] == 1;
-        if (a == b)
-        {
+        if (a == b) {
             g[a][b] = 1;
             return true;
         }
-        for (int i = 0; i < g[a].size(); ++i)
-        {
-            if (g[a][i] == 1 && dfs(i, b, g))
-            {
+        for (int i = 0; i < g[a].size(); ++i) {
+            if (g[a][i] == 1 && dfs(i, b, g)) {
                 g[a][b] = 1;
                 return true;
             }

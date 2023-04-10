@@ -9,7 +9,7 @@
 <p>Return <em>the <strong>number of pairs</strong> satisfying the condition.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [2,1,2,1], nums2 = [1,2,1,2]
@@ -17,7 +17,7 @@
 <strong>Explanation</strong>: The pairs satisfying the condition are:
 - (0, 2) where 2 + 2 &gt; 1 + 1.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums1 = [1,10,6,2], nums2 = [1,4,1,5]
@@ -94,8 +94,7 @@ public:
         for (int i = 0; i < n; ++i) d[i] = nums1[i] - nums2[i];
         sort(d.begin(), d.end());
         long long ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int j = upper_bound(d.begin() + i + 1, d.end(), -d[i]) - d.begin();
             ans += n - j;
         }

@@ -15,10 +15,10 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> strs = ["aba","cdc","eae"]
 <strong>Output:</strong> 3
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> strs = ["aaa","aaa","aa"]
 <strong>Output:</strong> -1
 </pre>
@@ -104,10 +104,8 @@ class Solution {
 public:
     int findLUSlength(vector<string>& strs) {
         int ans = -1;
-        for (int i = 0, j = 0, n = strs.size(); i < n; ++i)
-        {
-            for (j = 0; j < n; ++j)
-            {
+        for (int i = 0, j = 0, n = strs.size(); i < n; ++i) {
+            for (j = 0; j < n; ++j) {
                 if (i == j) continue;
                 if (check(strs[j], strs[i])) break;
             }

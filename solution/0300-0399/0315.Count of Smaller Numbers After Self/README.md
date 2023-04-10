@@ -56,7 +56,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 树状数组最基本的功能就是求比某点 x 小的点的个数（这里的比较是抽象的概念，可以是数的大小、坐标的大小、质量的大小等等）。
 
@@ -72,6 +72,8 @@
 -   线段树具有唯一的根节点，代表的区间是整个统计范围，如 `[1, N]`；
 -   线段树的每个叶子节点代表一个长度为 1 的元区间 `[x, x]`；
 -   对于每个内部节点 `[l, r]`，它的左儿子是 `[l, mid]`，右儿子是 `[mid + 1, r]`, 其中 `mid = ⌊(l + r) / 2⌋` (即向下取整)。
+
+**方法三：归并排序**
 
 <!-- tabs:start -->
 
@@ -340,11 +342,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -352,8 +355,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -376,8 +378,7 @@ public:
         for (int i = 0; i < n; ++i) m[alls[i]] = i + 1;
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         vector<int> ans(nums.size());
-        for (int i = nums.size() - 1; i >= 0; --i)
-        {
+        for (int i = nums.size() - 1; i >= 0; --i) {
             int x = m[nums[i]];
             tree->update(x, 1);
             ans[i] = tree->query(x - 1);
@@ -521,6 +522,67 @@ func countSmaller(nums []int) []int {
 		ans[i] = tree.query(x - 1)
 	}
 	return ans
+}
+```
+
+归并排序：
+
+```go
+type Pair struct {
+	val   int
+	index int
+}
+
+var (
+	tmp   []Pair
+	count []int
+)
+
+func countSmaller(nums []int) []int {
+	tmp, count = make([]Pair, len(nums)), make([]int, len(nums))
+	array := make([]Pair, len(nums))
+	for i, v := range nums {
+		array[i] = Pair{val: v, index: i}
+	}
+	sorted(array, 0, len(array)-1)
+	return count
+}
+
+func sorted(arr []Pair, low, high int) {
+	if low >= high {
+		return
+	}
+	mid := low + (high-low)/2
+	sorted(arr, low, mid)
+	sorted(arr, mid+1, high)
+	merge(arr, low, mid, high)
+}
+
+func merge(arr []Pair, low, mid, high int) {
+	left, right := low, mid+1
+	idx := low
+	for left <= mid && right <= high {
+		if arr[left].val <= arr[right].val {
+			count[arr[left].index] += right - mid - 1
+			tmp[idx], left = arr[left], left+1
+		} else {
+			tmp[idx], right = arr[right], right+1
+		}
+		idx++
+	}
+	for left <= mid {
+		count[arr[left].index] += right - mid - 1
+		tmp[idx] = arr[left]
+		idx, left = idx+1, left+1
+	}
+	for right <= high {
+		tmp[idx] = arr[right]
+		idx, right = idx+1, right+1
+	}
+	// 排序
+	for i := low; i <= high; i++ {
+		arr[i] = tmp[i]
+	}
 }
 ```
 

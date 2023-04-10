@@ -13,7 +13,7 @@
 <p>Return <em>the minimum <strong>score</strong> of </em><code>nums</code><em> after changing the values at each index</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1], k = 0
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> The score is max(nums) - min(nums) = 1 - 1 = 0.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,10], k = 2
@@ -29,7 +29,7 @@
 <strong>Explanation:</strong> Change nums to be [2, 8]. The score is max(nums) - min(nums) = 8 - 2 = 6.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,3,6], k = 3
@@ -53,13 +53,82 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def smallestRangeII(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        ans = nums[-1] - nums[0]
+        for i in range(1, len(nums)):
+            mi = min(nums[0] + k, nums[i] - k)
+            mx = max(nums[i - 1] + k, nums[-1] - k)
+            ans = min(ans, mx - mi)
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int smallestRangeII(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int ans = nums[n - 1] - nums[0];
+        for (int i = 1; i < n; ++i) {
+            int mi = Math.min(nums[0] + k, nums[i] - k);
+            int mx = Math.max(nums[i - 1] + k, nums[n - 1] - k);
+            ans = Math.min(ans, mx - mi);
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int smallestRangeII(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        int ans = nums[n - 1] - nums[0];
+        for (int i = 1; i < n; ++i) {
+            int mi = min(nums[0] + k, nums[i] - k);
+            int mx = max(nums[i - 1] + k, nums[n - 1] - k);
+            ans = min(ans, mx - mi);
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func smallestRangeII(nums []int, k int) int {
+	sort.Ints(nums)
+	n := len(nums)
+	ans := nums[n-1] - nums[0]
+	for i := 1; i < n; i++ {
+		mi := min(nums[0]+k, nums[i]-k)
+		mx := max(nums[i-1]+k, nums[n-1]-k)
+		ans = min(ans, mx-mi)
+	}
+	return ans
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

@@ -70,8 +70,10 @@ src = 0, dst = 2, k = 0
 
 ```python
 class Solution:
-    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        INF = 0x3f3f3f3f
+    def findCheapestPrice(
+        self, n: int, flights: List[List[int]], src: int, dst: int, k: int
+    ) -> int:
+        INF = 0x3F3F3F3F
         dist = [INF] * n
         dist[src] = 0
         for _ in range(k + 1):
@@ -89,9 +91,9 @@ class Solution:
             if u == dst:
                 return 0
             if k <= 0:
-                return float('inf')
+                return inf
             k -= 1
-            ans = float('inf')
+            ans = inf
             for v, p in g[u]:
                 ans = min(ans, dfs(v, k) + p)
             return ans
@@ -100,7 +102,7 @@ class Solution:
         for u, v, p in flights:
             g[u].append((v, p))
         ans = dfs(src, k + 1)
-        return -1 if ans >= float('inf') else ans
+        return -1 if ans >= inf else ans
 ```
 
 ### **Java**
@@ -182,11 +184,9 @@ public:
         vector<int> dist(n, inf);
         vector<int> backup;
         dist[src] = 0;
-        for (int i = 0; i < k + 1; ++i)
-        {
+        for (int i = 0; i < k + 1; ++i) {
             backup = dist;
-            for (auto& e : flights)
-            {
+            for (auto& e : flights) {
                 int f = e[0], t = e[1], p = e[2];
                 dist[t] = min(dist[t], backup[f] + p);
             }

@@ -11,7 +11,7 @@
 <p><strong>Note:</strong> <code>n</code> may not fit in a 64-bit signed integer.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 1
@@ -19,7 +19,7 @@
 <strong>Explanation:</strong> The smallest answer is n = 1, which has length 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 2
@@ -27,7 +27,7 @@
 <strong>Explanation:</strong> There is no such positive integer n divisible by 2.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> k = 3
@@ -49,13 +49,79 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def smallestRepunitDivByK(self, k: int) -> int:
+        n = 1 % k
+        for i in range(1, k + 1):
+            if n == 0:
+                return i
+            n = (n * 10 + 1) % k
+        return -1
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int smallestRepunitDivByK(int k) {
+        int n = 1 % k;
+        for (int i = 1; i <= k; ++i) {
+            if (n == 0) {
+                return i;
+            }
+            n = (n * 10 + 1) % k;
+        }
+        return -1;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int smallestRepunitDivByK(int k) {
+        int n = 1 % k;
+        for (int i = 1; i <= k; ++i) {
+            if (n == 0) {
+                return i;
+            }
+            n = (n * 10 + 1) % k;
+        }
+        return -1;
+    }
+};
+```
+
+### **Go**
+
+```go
+func smallestRepunitDivByK(k int) int {
+	n := 1 % k
+	for i := 1; i <= k; i++ {
+		if n == 0 {
+			return i
+		}
+		n = (n*10 + 1) % k
+	}
+	return -1
+}
+```
+
+### **TypeScript**
+
+```ts
+function smallestRepunitDivByK(k: number): number {
+    let n = 1 % k;
+    for (let i = 1; i <= k; ++i) {
+        if (n === 0) {
+            return i;
+        }
+        n = (n * 10 + 1) % k;
+    }
+    return -1;
+}
 ```
 
 ### **...**

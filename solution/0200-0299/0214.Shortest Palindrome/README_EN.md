@@ -4,15 +4,15 @@
 
 ## Description
 
-<p>You are given a string <code>s</code>. You can convert <code>s</code> to a palindrome by adding characters in front of it.</p>
+<p>You are given a string <code>s</code>. You can convert <code>s</code> to a <span data-keyword="palindrome-string">palindrome</span> by adding characters in front of it.</p>
 
 <p>Return <em>the shortest palindrome you can find by performing this transformation</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <pre><strong>Input:</strong> s = "aacecaaa"
 <strong>Output:</strong> "aaacecaaa"
-</pre><p><strong>Example 2:</strong></p>
+</pre><p><strong class="example">Example 2:</strong></p>
 <pre><strong>Input:</strong> s = "abcd"
 <strong>Output:</strong> "dcbabcd"
 </pre>
@@ -89,8 +89,7 @@ public:
         ull prefix = 0;
         ull suffix = 0;
         int idx = 0, n = s.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int t = s[i] - 'a' + 1;
             prefix = prefix * base + t;
             suffix = suffix + mul * t;

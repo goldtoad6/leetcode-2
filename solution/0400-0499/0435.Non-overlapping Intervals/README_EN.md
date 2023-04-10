@@ -7,7 +7,7 @@
 <p>Given an array of intervals <code>intervals</code> where <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code>, return <em>the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,2],[2,3],[3,4],[1,3]]
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> [1,3] can be removed and the rest of the intervals are non-overlapping.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,2],[1,2],[1,2]]
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> You need to remove two [1,2] to make the rest of the intervals non-overlapping.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> intervals = [[1,2],[2,3]]
@@ -154,12 +154,13 @@ function eraseOverlapIntervals(intervals: number[][]): number {
 class Solution {
 public:
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(), [](const auto &a, const auto &b) { return a[1] < b[1]; });
+        sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b) { return a[1] < b[1]; });
         int ans = 0, t = intervals[0][1];
-        for (int i = 1; i < intervals.size(); ++i)
-        {
-            if (t <= intervals[i][0]) t = intervals[i][1];
-            else ++ans;
+        for (int i = 1; i < intervals.size(); ++i) {
+            if (t <= intervals[i][0])
+                t = intervals[i][1];
+            else
+                ++ans;
         }
         return ans;
     }

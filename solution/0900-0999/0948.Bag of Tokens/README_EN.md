@@ -18,7 +18,7 @@
 <p>Return <em>the largest possible <strong>score</strong> you can achieve after playing any number of tokens</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> tokens = [100], power = 50
@@ -26,7 +26,7 @@
 <strong>Explanation</strong><strong>:</strong> Playing the only token in the bag is impossible because you either have too little power or too little score.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> tokens = [100,200], power = 150
@@ -35,7 +35,7 @@
 There is no need to play the 1<sup>st</sup> token since you cannot play it face up to add to your score.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> tokens = [100,200,300,400], power = 200
@@ -62,13 +62,102 @@ There is no need to play the 1<sup>st</sup> token since you cannot play it face 
 ### **Python3**
 
 ```python
-
+class Solution:
+    def bagOfTokensScore(self, tokens: List[int], power: int) -> int:
+        tokens.sort()
+        i, j = 0, len(tokens) - 1
+        ans = t = 0
+        while i <= j:
+            if power >= tokens[i]:
+                power -= tokens[i]
+                i, t = i + 1, t + 1
+                ans = max(ans, t)
+            elif t:
+                power += tokens[j]
+                j, t = j - 1, t - 1
+            else:
+                break
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int bagOfTokensScore(int[] tokens, int power) {
+        Arrays.sort(tokens);
+        int i = 0, j = tokens.length - 1;
+        int ans = 0, t = 0;
+        while (i <= j) {
+            if (power >= tokens[i]) {
+                power -= tokens[i++];
+                ++t;
+                ans = Math.max(ans, t);
+            } else if (t > 0) {
+                power += tokens[j--];
+                --t;
+            } else {
+                break;
+            }
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        sort(tokens.begin(), tokens.end());
+        int i = 0, j = tokens.size() - 1;
+        int ans = 0, t = 0;
+        while (i <= j) {
+            if (power >= tokens[i]) {
+                power -= tokens[i++];
+                ans = max(ans, ++t);
+            } else if (t) {
+                power += tokens[j--];
+                --t;
+            } else {
+                break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func bagOfTokensScore(tokens []int, power int) int {
+	sort.Ints(tokens)
+	i, j := 0, len(tokens)-1
+	ans, t := 0, 0
+	for i <= j {
+		if power >= tokens[i] {
+			power -= tokens[i]
+			i, t = i+1, t+1
+			ans = max(ans, t)
+		} else if t > 0 {
+			power += tokens[j]
+			j, t = j-1, t-1
+		} else {
+			break
+		}
+	}
+	return ans
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

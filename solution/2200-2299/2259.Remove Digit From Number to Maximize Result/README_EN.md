@@ -9,7 +9,7 @@
 <p>Return <em>the resulting string after removing <strong>exactly one occurrence</strong> of </em><code>digit</code><em> from </em><code>number</code><em> such that the value of the resulting string in <strong>decimal</strong> form is <strong>maximized</strong></em>. The test cases are generated such that <code>digit</code> occurs at least once in <code>number</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> number = &quot;123&quot;, digit = &quot;3&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> There is only one &#39;3&#39; in &quot;123&quot;. After removing &#39;3&#39;, the result is &quot;12&quot;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> number = &quot;1231&quot;, digit = &quot;1&quot;
@@ -26,7 +26,7 @@
 Since 231 &gt; 123, we return &quot;231&quot;.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> number = &quot;551&quot;, digit = &quot;5&quot;
@@ -54,7 +54,22 @@ Both result in the string &quot;51&quot;.
 ```python
 class Solution:
     def removeDigit(self, number: str, digit: str) -> str:
-        return max(number[:i] + number[i + 1:] for i, d in enumerate(number) if d == digit)
+        return max(
+            number[:i] + number[i + 1 :] for i, d in enumerate(number) if d == digit
+        )
+```
+
+```python
+class Solution:
+    def removeDigit(self, number: str, digit: str) -> str:
+        last = -1
+        n = len(number)
+        for i, d in enumerate(number):
+            if d == digit:
+                last = i
+                if i + 1 < n and d < number[i + 1]:
+                    break
+        return number[:last] + number[last + 1:]
 ```
 
 ### **Java**
@@ -77,6 +92,25 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public String removeDigit(String number, char digit) {
+        int last = -1;
+        int n = number.length();
+        for (int i = 0; i < n; ++i) {
+            char d = number.charAt(i);
+            if (d == digit) {
+                last = i;
+                if (i + 1 < n && d < number.charAt(i + 1)) {
+                    break;
+                }
+            }
+        }
+        return number.substring(0, last) + number.substring(last + 1);
+    }
+}
+```
+
 ### **C++**
 
 ```cpp
@@ -84,16 +118,36 @@ class Solution {
 public:
     string removeDigit(string number, char digit) {
         string ans = "0";
-        for (int i = 0, n = number.size(); i < n; ++i)
-        {
+        for (int i = 0, n = number.size(); i < n; ++i) {
             char d = number[i];
-            if (d == digit)
-            {
+            if (d == digit) {
                 string t = number.substr(0, i) + number.substr(i + 1, n - i);
-                if (ans < t) ans = t;
+                if (ans < t) {
+                    ans = t;
+                }
             }
         }
         return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    string removeDigit(string number, char digit) {
+        int n = number.size();
+        int last = -1;
+        for (int i = 0; i < n; ++i) {
+            char d = number[i];
+            if (d == digit) {
+                last = i;
+                if (i + 1 < n && number[i] < number[i + 1]) {
+                    break;
+                }
+            }
+        }
+        return number.substr(0, last) + number.substr(last + 1);
     }
 };
 ```
@@ -115,20 +169,37 @@ func removeDigit(number string, digit byte) string {
 }
 ```
 
+```go
+func removeDigit(number string, digit byte) string {
+	last := -1
+	n := len(number)
+	for i := range number {
+		if number[i] == digit {
+			last = i
+			if i+1 < n && number[i] < number[i+1] {
+				break
+			}
+		}
+	}
+	return number[:last] + number[last+1:]
+}
+```
+
 ### **TypeScript**
 
 ```ts
 function removeDigit(number: string, digit: string): string {
-    let nums = number.split('');
-    const n = nums.length;
-    let ans = 0;
-    for (let i = 0; i < n; i++) {
-        if (nums[i] != digit) continue;
-        ans = i;
-        if (i + 1 < n && nums[i + 1] > nums[i]) break;
+    const n = number.length;
+    let last = -1;
+    for (let i = 0; i < n; ++i) {
+        if (number[i] === digit) {
+            last = i;
+            if (i + 1 < n && number[i] < number[i + 1]) {
+                break;
+            }
+        }
     }
-    nums.splice(ans, 1);
-    return nums.join('');
+    return number.substring(0, last) + number.substring(last + 1);
 }
 ```
 

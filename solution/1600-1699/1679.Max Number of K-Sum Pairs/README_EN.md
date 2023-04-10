@@ -11,7 +11,7 @@
 <p>Return <em>the maximum number of operations you can perform on the array</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3,4], k = 5
@@ -21,7 +21,7 @@
 - Remove numbers 2 and 3, then nums = []
 There are no more pairs that sum up to 5, hence a total of 2 operations.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,1,3,4,3], k = 6
@@ -62,6 +62,20 @@ class Solution:
         return ans
 ```
 
+```python
+class Solution:
+    def maxOperations(self, nums: List[int], k: int) -> int:
+        cnt = Counter()
+        ans = 0
+        for x in nums:
+            if cnt[k - x]:
+                ans += 1
+                cnt[k - x] -= 1
+            else:
+                cnt[x] += 1
+        return ans
+```
+
 ### **Java**
 
 ```java
@@ -80,6 +94,26 @@ class Solution {
                 --r;
             } else {
                 ++l;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+```java
+class Solution {
+    public int maxOperations(int[] nums, int k) {
+        Map<Integer, Integer> cnt = new HashMap<>();
+        int ans = 0;
+        for (int x : nums) {
+            if (cnt.containsKey(k - x)) {
+                ++ans;
+                if (cnt.merge(k - x, -1, Integer::sum) == 0) {
+                    cnt.remove(k - x);
+                }
+            } else {
+                cnt.merge(x, 1, Integer::sum);
             }
         }
         return ans;
@@ -112,6 +146,25 @@ public:
 };
 ```
 
+```cpp
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        unordered_map<int, int> cnt;
+        int ans = 0;
+        for (int& x : nums) {
+            if (cnt[k - x]) {
+                --cnt[k - x];
+                ++ans;
+            } else {
+                ++cnt[x];
+            }
+        }
+        return ans;
+    }
+};
+```
+
 ### **Go**
 
 ```go
@@ -131,6 +184,39 @@ func maxOperations(nums []int, k int) int {
 		}
 	}
 	return ans
+}
+```
+
+```go
+func maxOperations(nums []int, k int) (ans int) {
+	cnt := map[int]int{}
+	for _, x := range nums {
+		if cnt[k-x] > 0 {
+			cnt[k-x]--
+			ans++
+		} else {
+			cnt[x]++
+		}
+	}
+	return
+}
+```
+
+### **TypeScript**
+
+```ts
+function maxOperations(nums: number[], k: number): number {
+    const cnt = new Map();
+    let ans = 0;
+    for (const x of nums) {
+        if (cnt.get(k - x)) {
+            cnt.set(k - x, cnt.get(k - x) - 1);
+            ++ans;
+        } else {
+            cnt.set(x, (cnt.get(x) | 0) + 1);
+        }
+    }
+    return ans;
 }
 ```
 

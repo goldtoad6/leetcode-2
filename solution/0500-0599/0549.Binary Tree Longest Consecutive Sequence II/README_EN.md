@@ -15,7 +15,7 @@
 <p>On the other hand, the path can be in the child-Parent-child order, where not necessarily be parent-child order.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0549.Binary%20Tree%20Longest%20Consecutive%20Sequence%20II/images/consec2-1-tree.jpg" style="width: 207px; height: 183px;" />
 <pre>
 <strong>Input:</strong> root = [1,2,3]
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> The longest consecutive path is [1, 2] or [2, 1].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0549.Binary%20Tree%20Longest%20Consecutive%20Sequence%20II/images/consec2-2-tree.jpg" style="width: 207px; height: 183px;" />
 <pre>
 <strong>Input:</strong> root = [2,1,3]
@@ -108,7 +108,7 @@ class Solution {
 
     private int[] dfs(TreeNode root) {
         if (root == null) {
-            return new int[]{0, 0};
+            return new int[] {0, 0};
         }
         int incr = 1, decr = 1;
         int[] left = dfs(root.left);
@@ -130,7 +130,7 @@ class Solution {
             }
         }
         ans = Math.max(ans, incr + decr - 1);
-        return new int[]{incr, decr};
+        return new int[] {incr, decr};
     }
 }
 ```
@@ -164,13 +164,11 @@ public:
         int incr = 1, decr = 1;
         auto left = dfs(root->left);
         auto right = dfs(root->right);
-        if (root->left)
-        {
+        if (root->left) {
             if (root->left->val + 1 == root->val) incr = left[0] + 1;
             if (root->left->val - 1 == root->val) decr = left[1] + 1;
         }
-        if (root->right)
-        {
+        if (root->right) {
             if (root->right->val + 1 == root->val) incr = max(incr, right[0] + 1);
             if (root->right->val - 1 == root->val) decr = max(decr, right[1] + 1);
         }

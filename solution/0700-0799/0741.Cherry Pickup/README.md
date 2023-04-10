@@ -68,14 +68,18 @@
 class Solution:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         n = len(grid)
-        dp = [[[float('-inf')] * n for _ in range(n)]
-              for _ in range((n << 1) - 1)]
+        dp = [[[-inf] * n for _ in range(n)] for _ in range((n << 1) - 1)]
         dp[0][0][0] = grid[0][0]
         for k in range(1, (n << 1) - 1):
             for i1 in range(n):
                 for i2 in range(n):
                     j1, j2 = k - i1, k - i2
-                    if not 0 <= j1 < n or not 0 <= j2 < n or grid[i1][j1] == -1 or grid[i2][j2] == -1:
+                    if (
+                        not 0 <= j1 < n
+                        or not 0 <= j2 < n
+                        or grid[i1][j1] == -1
+                        or grid[i2][j2] == -1
+                    ):
                         continue
                     t = grid[i1][j1]
                     if i1 != i2:
@@ -84,7 +88,8 @@ class Solution:
                         for x2 in range(i2 - 1, i2 + 1):
                             if x1 >= 0 and x2 >= 0:
                                 dp[k][i1][i2] = max(
-                                    dp[k][i1][i2], dp[k - 1][x1][x2] + t)
+                                    dp[k][i1][i2], dp[k - 1][x1][x2] + t
+                                )
         return max(0, dp[-1][-1][-1])
 ```
 
@@ -103,7 +108,8 @@ class Solution {
                 for (int i2 = 0; i2 < n; ++i2) {
                     int j1 = k - i1, j2 = k - i2;
                     dp[k][i1][i2] = Integer.MIN_VALUE;
-                    if (j1 < 0 || j1 >= n || j2 < 0 || j2 >= n || grid[i1][j1] == -1 || grid[i2][j2] == -1) {
+                    if (j1 < 0 || j1 >= n || j2 < 0 || j2 >= n || grid[i1][j1] == -1
+                        || grid[i2][j2] == -1) {
                         continue;
                     }
                     int t = grid[i1][j1];
@@ -134,12 +140,9 @@ public:
         int n = grid.size();
         vector<vector<vector<int>>> dp(n << 1, vector<vector<int>>(n, vector<int>(n, -1e9)));
         dp[0][0][0] = grid[0][0];
-        for (int k = 1; k < n * 2 - 1; ++k)
-        {
-            for (int i1 = 0; i1 < n; ++i1)
-            {
-                for (int i2 = 0; i2 < n; ++i2)
-                {
+        for (int k = 1; k < n * 2 - 1; ++k) {
+            for (int i1 = 0; i1 < n; ++i1) {
+                for (int i2 = 0; i2 < n; ++i2) {
                     int j1 = k - i1, j2 = k - i2;
                     if (j1 < 0 || j1 >= n || j2 < 0 || j2 >= n || grid[i1][j1] == -1 || grid[i2][j2] == -1) continue;
                     int t = grid[i1][j1];

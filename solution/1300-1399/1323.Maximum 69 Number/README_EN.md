@@ -9,7 +9,7 @@
 <p>Return <em>the maximum number you can get by changing <strong>at most</strong> one digit (</em><code>6</code><em> becomes </em><code>9</code><em>, and </em><code>9</code><em> becomes </em><code>6</code><em>)</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 9669
@@ -22,7 +22,7 @@ Changing the fourth digit results in 9666.
 The maximum number is 9969.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 9996
@@ -30,7 +30,7 @@ The maximum number is 9969.
 <strong>Explanation:</strong> Changing the last digit 6 to 9 results in the maximum number.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> num = 9999
@@ -75,10 +75,8 @@ class Solution {
 public:
     int maximum69Number(int num) {
         string s = to_string(num);
-        for (char& ch: s)
-        {
-            if (ch == '6')
-            {
+        for (char& ch : s) {
+            if (ch == '6') {
                 ch = '9';
                 break;
             }
@@ -102,6 +100,42 @@ func maximum69Number(num int) int {
 	}
 	ans, _ := strconv.Atoi(string(nums))
 	return ans
+}
+```
+
+### **TypeScript**
+
+```ts
+function maximum69Number(num: number): number {
+    return Number((num + '').replace('6', '9'));
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn maximum69_number(num: i32) -> i32 {
+        num.to_string().replacen('6', "9", 1).parse().unwrap()
+    }
+}
+```
+
+### **C**
+
+```c
+int maximum69Number(int num) {
+    int n = 0;
+    int i = 0;
+    int t = num;
+    while (t) {
+        n++;
+        if (t % 10 == 6) {
+            i = n;
+        }
+        t /= 10;
+    }
+    return num + 3 * pow(10, i - 1);
 }
 ```
 

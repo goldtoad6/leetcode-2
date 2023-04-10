@@ -4,12 +4,10 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code>, return the length of the longest strictly increasing subsequence.</p>
-
-<p>A <strong>subsequence</strong> is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, <code>[3,6,2,7]</code> is a subsequence of the array <code>[0,3,1,6,2,2,7]</code>.</p>
+<p>Given an integer array <code>nums</code>, return <em>the length of the longest <strong>strictly increasing </strong></em><span data-keyword="subsequence-array"><em><strong>subsequence</strong></em></span>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [10,9,2,5,3,7,101,18]
@@ -17,14 +15,14 @@
 <strong>Explanation:</strong> The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,1,0,3,2,3]
 <strong>Output:</strong> 4
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [7,7,7,7,7,7,7]
@@ -291,10 +289,8 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         vector<int> dp(n, 1);
-        for (int i = 1; i < n; ++i)
-        {
-            for (int j = 0; j < i; ++j)
-            {
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
                 if (nums[j] < nums[i]) dp[i] = max(dp[i], dp[j] + 1);
             }
         }
@@ -310,12 +306,11 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<int> d{nums[0]};
-        for (int i = 1; i < n; ++i)
-        {
-            if (nums[i] > d[d.size() - 1]) d.push_back(nums[i]);
-            else
-            {
+        vector<int> d {nums[0]};
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > d[d.size() - 1])
+                d.push_back(nums[i]);
+            else {
                 int idx = lower_bound(d.begin(), d.end(), nums[i]) - d.begin();
                 if (idx == d.size()) idx = 0;
                 d[idx] = nums[i];

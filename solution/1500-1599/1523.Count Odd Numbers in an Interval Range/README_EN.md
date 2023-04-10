@@ -8,7 +8,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -18,7 +18,7 @@
 
 <b>Explanation: </b>The odd numbers between 3 and 7 are [3,5,7].</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -60,16 +60,6 @@ class Solution {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn count_odds(low: i32, high: i32) -> i32 {
-        ((high + 1) >> 1) - (low >> 1)
-    }
-}
-```
-
 ### **C++**
 
 ```cpp
@@ -86,6 +76,47 @@ public:
 ```go
 func countOdds(low int, high int) int {
 	return ((high + 1) >> 1) - (low >> 1)
+}
+```
+
+### **TypeScript**
+
+```ts
+function countOdds(low: number, high: number): number {
+    return ((high + 1) >> 1) - (low >> 1);
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn count_odds(low: i32, high: i32) -> i32 {
+        ((high + 1) >> 1) - (low >> 1)
+    }
+}
+```
+
+### **C**
+
+```c
+int countOdds(int low, int high) {
+    return ((high + 1) >> 1) - (low >> 1);
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param Integer $low
+     * @param Integer $high
+     * @return Integer
+     */
+    function countOdds($low, $high) {
+        return (($high + 1) >> 1) - ($low >> 1);
+    }
 }
 ```
 

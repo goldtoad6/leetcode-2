@@ -64,11 +64,11 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
-**方法一：排序**
+**方法一：贪心 + 排序**
 
 考虑每个城市对所有道路的总重要性的贡献度，按贡献度从小到大排序，为城市依次分配 $[1, 2, ..., n]$。
 
-时间复杂度 $O(nlogn)$，其中 $n$ 表示城市数目。
+时间复杂度 $O(n \tiems \log n)$，其中 $n$ 表示城市数目。
 
 <!-- tabs:start -->
 
@@ -116,8 +116,7 @@ class Solution {
 public:
     long long maximumImportance(int n, vector<vector<int>>& roads) {
         vector<int> deg(n);
-        for (auto& r : roads)
-        {
+        for (auto& r : roads) {
             ++deg[r[0]];
             ++deg[r[1]];
         }

@@ -20,7 +20,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -80,8 +80,8 @@ class BinaryIndexedTree:
             x -= BinaryIndexedTree.lowbit(x)
         return s
 
-class NumArray:
 
+class NumArray:
     def __init__(self, nums: List[int]):
         self.tree = BinaryIndexedTree(len(nums))
         for i, v in enumerate(nums, 1):
@@ -338,11 +338,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -350,8 +351,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -362,7 +362,6 @@ public:
         return x & -x;
     }
 };
-
 
 class NumArray {
 public:

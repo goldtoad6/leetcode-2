@@ -17,7 +17,7 @@
 <p>Return<em> the <strong>chair number</strong> that the friend numbered </em><code>targetFriend</code><em> will sit on</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> times = [[1,4],[2,3],[4,6]], targetFriend = 1
@@ -31,7 +31,7 @@
 Since friend 1 sat on chair 1, we return 1.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> times = [[3,10],[1,5],[2,6]], targetFriend = 0
@@ -94,7 +94,7 @@ class Solution {
         PriorityQueue<Integer> q = new PriorityQueue<>();
         PriorityQueue<int[]> busy = new PriorityQueue<>((a, b) -> a[0] - b[0]);
         for (int i = 0; i < n; ++i) {
-            ts[i] = new int[]{times[i][0], times[i][1], i};
+            ts[i] = new int[] {times[i][0], times[i][1], i};
             q.offer(i);
         }
         Arrays.sort(ts, (a, b) -> a[0] - b[0]);
@@ -107,7 +107,7 @@ class Solution {
             if (i == targetFriend) {
                 return c;
             }
-            busy.offer(new int[]{b, c});
+            busy.offer(new int[] {b, c});
         }
         return -1;
     }
@@ -125,17 +125,14 @@ public:
         priority_queue<int, vector<int>, greater<int>> q;
         priority_queue<pii, vector<pii>, greater<pii>> busy;
         int n = times.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             times[i].push_back(i);
             q.push(i);
         }
         sort(times.begin(), times.end());
-        for (auto& t : times)
-        {
+        for (auto& t : times) {
             int a = t[0], b = t[1], i = t[2];
-            while (!busy.empty() && busy.top().first <= a)
-            {
+            while (!busy.empty() && busy.top().first <= a) {
                 q.push(busy.top().second);
                 busy.pop();
             }

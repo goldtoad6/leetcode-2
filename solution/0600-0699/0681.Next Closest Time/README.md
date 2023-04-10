@@ -75,7 +75,7 @@ class Solution:
 
         s = {c for c in time if c != ':'}
         t = int(time[:2]) * 60 + int(time[3:])
-        d = float('inf')
+        d = inf
         ans = None
         dfs('')
         if ans is None:
@@ -121,7 +121,8 @@ class Solution {
             if (!check(curr)) {
                 return;
             }
-            int p = Integer.parseInt(curr.substring(0, 2)) * 60 + Integer.parseInt(curr.substring(2));
+            int p
+                = Integer.parseInt(curr.substring(0, 2)) * 60 + Integer.parseInt(curr.substring(2));
             if (p > t && p - t < d) {
                 d = p - t;
                 ans = curr.substring(0, 2) + ":" + curr.substring(2);

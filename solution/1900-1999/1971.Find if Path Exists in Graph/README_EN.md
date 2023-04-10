@@ -11,7 +11,7 @@
 <p>Given <code>edges</code> and the integers <code>n</code>, <code>source</code>, and <code>destination</code>, return <code>true</code><em> if there is a <strong>valid path</strong> from </em><code>source</code><em> to </em><code>destination</code><em>, or </em><code>false</code><em> otherwise</em><em>.</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1971.Find%20if%20Path%20Exists%20in%20Graph/images/validpath-ex1.png" style="width: 141px; height: 121px;" />
 <pre>
 <strong>Input:</strong> n = 3, edges = [[0,1],[1,2],[2,0]], source = 0, destination = 2
@@ -21,7 +21,7 @@
 - 0 &rarr; 2
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1900-1999/1971.Find%20if%20Path%20Exists%20in%20Graph/images/validpath-ex2.png" style="width: 281px; height: 141px;" />
 <pre>
 <strong>Input:</strong> n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], source = 0, destination = 5
@@ -51,26 +51,22 @@
 
 ```python
 class Solution:
-    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
-        def dfs(u):
-            nonlocal ans
-            if ans or u in vis:
-                return
-            vis.add(u)
-            if u == end:
-                ans = True
-                return
-            for v in g[u]:
-                dfs(v)
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        def dfs(i):
+            if i == destination:
+                return True
+            vis.add(i)
+            for j in g[i]:
+                if j not in vis and dfs(j):
+                    return True
+            return False
 
         g = defaultdict(list)
+        for a, b in edges:
+            g[a].append(b)
+            g[b].append(a)
         vis = set()
-        ans = False
-        for u, v in edges:
-            g[u].append(v)
-            g[v].append(u)
-        dfs(start)
-        return ans
+        return dfs(source)
 ```
 
 ```python
@@ -88,6 +84,38 @@ class Solution:
 ```
 
 ### **Java**
+
+```java
+class Solution {
+    private boolean[] vis;
+    private List<Integer>[] g;
+
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        vis = new boolean[n];
+        g = new List[n];
+        Arrays.setAll(g, k -> new ArrayList<>());
+        for (var e : edges) {
+            int a = e[0], b = e[1];
+            g[a].add(b);
+            g[b].add(a);
+        }
+        return dfs(source, destination);
+    }
+
+    private boolean dfs(int source, int destination) {
+        if (source == destination) {
+            return true;
+        }
+        vis[source] = true;
+        for (int nxt : g[source]) {
+            if (!vis[nxt] && dfs(nxt, destination)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
 
 ```java
 class Solution {
@@ -118,23 +146,72 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    vector<int> p;
-
     bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
-        p.resize(n);
-        for (int i = 0; i < n; ++i) p[i] = i;
+        vector<bool> vis(n);
+        vector<vector<int>> g(n);
+        for (auto& e : edges) {
+            int a = e[0], b = e[1];
+            g[a].emplace_back(b);
+            g[b].emplace_back(a);
+        }
+        function<bool(int)> dfs = [&](int i) -> bool {
+            if (i == destination) return true;
+            vis[i] = true;
+            for (int& j : g[i]) {
+                if (!vis[j] && dfs(j)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        return dfs(source);
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        vector<int> p(n);
+        iota(p.begin(), p.end(), 0);
+        function<int(int)> find = [&](int x) -> int {
+            if (p[x] != x) p[x] = find(p[x]);
+            return p[x];
+        };
         for (auto& e : edges) p[find(e[0])] = find(e[1]);
         return find(source) == find(destination);
-    }
-
-    int find(int x) {
-        if (p[x] != x) p[x] = find(p[x]);
-        return p[x];
     }
 };
 ```
 
 ### **Go**
+
+```go
+func validPath(n int, edges [][]int, source int, destination int) bool {
+	vis := make([]bool, n)
+	g := make([][]int, n)
+	for _, e := range edges {
+		a, b := e[0], e[1]
+		g[a] = append(g[a], b)
+		g[b] = append(g[b], a)
+	}
+	var dfs func(int) bool
+	dfs = func(i int) bool {
+		if i == destination {
+			return true
+		}
+		vis[i] = true
+		for _, j := range g[i] {
+			if !vis[j] && dfs(j) {
+				return true
+			}
+		}
+		return false
+	}
+	return dfs(source)
+}
+```
 
 ```go
 func validPath(n int, edges [][]int, source int, destination int) bool {

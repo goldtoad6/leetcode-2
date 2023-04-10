@@ -17,7 +17,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
@@ -25,14 +25,14 @@
 <strong>Explanation:</strong> The famous <a href="https://www.youtube.com/watch?v=BVtQNK_ZUJg&amp;ab_channel=notnek01" target="_blank">Die Hard</a> example 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> jug1Capacity = 2, jug2Capacity = 6, targetCapacity = 5
 <strong>Output:</strong> false
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> jug1Capacity = 1, jug2Capacity = 2, targetCapacity = 3
@@ -54,7 +54,9 @@
 
 ```python
 class Solution:
-    def canMeasureWater(self, jug1Capacity: int, jug2Capacity: int, targetCapacity: int) -> bool:
+    def canMeasureWater(
+        self, jug1Capacity: int, jug2Capacity: int, targetCapacity: int
+    ) -> bool:
         stk, seen = [], set()
         stk.append([0, 0])
 
@@ -68,7 +70,11 @@ class Solution:
             seen.add(get_hash(stk[-1]))
             cur = stk.pop()
             cur1, cur2 = cur[0], cur[1]
-            if cur1 == targetCapacity or cur2 == targetCapacity or cur1 + cur2 == targetCapacity:
+            if (
+                cur1 == targetCapacity
+                or cur2 == targetCapacity
+                or cur1 + cur2 == targetCapacity
+            ):
                 return True
             stk.append([jug1Capacity, cur2])
             stk.append([0, cur2])

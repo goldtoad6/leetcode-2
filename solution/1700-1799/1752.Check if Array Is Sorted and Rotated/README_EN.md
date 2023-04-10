@@ -11,7 +11,7 @@
 <p><strong>Note:</strong> An array <code>A</code> rotated by <code>x</code> positions results in an array <code>B</code> of the same length such that <code>A[i] == B[(i+x) % A.length]</code>, where <code>%</code> is the modulo operation.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [3,4,5,1,2]
@@ -20,7 +20,7 @@
 You can rotate the array by x = 3 positions to begin on the the element of value 3: [3,4,5,1,2].
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,1,3,4]
@@ -28,7 +28,7 @@ You can rotate the array by x = 3 positions to begin on the the element of value
 <strong>Explanation:</strong> There is no sorted array once rotated that can make nums.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,3]
@@ -52,13 +52,96 @@ You can rotate the array by x = 0 positions (i.e. no rotation) to make nums.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        return sum(nums[i - 1] > v for i, v in enumerate(nums)) <= 1
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public boolean check(int[] nums) {
+        int cnt = 0;
+        for (int i = 0, n = nums.length; i < n; ++i) {
+            if (nums[i] > nums[(i + 1) % n]) {
+                ++cnt;
+            }
+        }
+        return cnt <= 1;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int cnt = 0;
+        for (int i = 0, n = nums.size(); i < n; ++i) {
+            cnt += nums[i] > (nums[(i + 1) % n]);
+        }
+        return cnt <= 1;
+    }
+};
+```
+
+### **Go**
+
+```go
+func check(nums []int) bool {
+	cnt := 0
+	for i, v := range nums {
+		if v > nums[(i+1)%len(nums)] {
+			cnt++
+		}
+	}
+	return cnt <= 1
+}
+```
+
+### **TypeScript**
+
+```ts
+function check(nums: number[]): boolean {
+    const n = nums.length;
+    return (
+        nums.reduce((r, v, i) => r + (v > nums[(i + 1) % n] ? 1 : 0), 0) <= 1
+    );
+}
+```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn check(nums: Vec<i32>) -> bool {
+        let n = nums.len();
+        let mut count = 0;
+        for i in 0..n {
+            if nums[i] > nums[(i + 1) % n] {
+                count += 1;
+            }
+        }
+        count <= 1
+    }
+}
+```
+
+### **C**
+
+```c
+bool check(int *nums, int numsSize) {
+    int count = 0;
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] > nums[(i + 1) % numsSize]) {
+            count++;
+        }
+    }
+    return count <= 1;
+}
 ```
 
 ### **...**

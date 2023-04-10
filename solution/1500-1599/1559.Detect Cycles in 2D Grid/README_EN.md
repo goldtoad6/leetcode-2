@@ -13,7 +13,7 @@
 <p>Return <code>true</code> if any cycle of the same value exists in <code>grid</code>, otherwise, return <code>false</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1559.Detect%20Cycles%20in%202D%20Grid/images/1.png" style="width: 231px; height: 152px;" /></strong></p>
 
@@ -24,7 +24,7 @@
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1559.Detect%20Cycles%20in%202D%20Grid/images/11.png" style="width: 225px; height: 163px;" />
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1559.Detect%20Cycles%20in%202D%20Grid/images/22.png" style="width: 236px; height: 154px;" /></strong></p>
 
@@ -35,7 +35,7 @@
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1559.Detect%20Cycles%20in%202D%20Grid/images/2.png" style="width: 229px; height: 157px;" />
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1559.Detect%20Cycles%20in%202D%20Grid/images/3.png" style="width: 183px; height: 120px;" /></strong></p>
 
@@ -135,15 +135,11 @@ public:
         p.resize(m * n);
         for (int i = 0; i < p.size(); ++i) p[i] = i;
         vector<int> dirs = {0, 1, 0};
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                for (int k = 0; k < 2; ++k)
-                {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                for (int k = 0; k < 2; ++k) {
                     int x = i + dirs[k], y = j + dirs[k + 1];
-                    if (x < m && y < n && grid[x][y] == grid[i][j])
-                    {
+                    if (x < m && y < n && grid[x][y] == grid[i][j]) {
                         if (find(x * n + y) == find(i * n + j)) return 1;
                         p[find(x * n + y)] = find(i * n + j);
                     }

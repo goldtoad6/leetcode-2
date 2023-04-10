@@ -15,7 +15,7 @@
 <p>Return&nbsp;<em>the intervals of every <strong>large</strong> group sorted in&nbsp;<strong>increasing order by start index</strong></em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abbxxxxzzy&quot;
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> <code>&quot;xxxx&quot; is the only </code>large group with start index 3 and end index 6.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abc&quot;
@@ -31,7 +31,7 @@
 <strong>Explanation:</strong> We have groups &quot;a&quot;, &quot;b&quot;, and &quot;c&quot;, none of which are large groups.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;abcdddeeeeaabbbcd&quot;
@@ -54,13 +54,85 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def largeGroupPositions(self, s: str) -> List[List[int]]:
+        i, n = 0, len(s)
+        ans = []
+        while i < n:
+            j = i
+            while j < n and s[j] == s[i]:
+                j += 1
+            if j - i >= 3:
+                ans.append([i, j - 1])
+            i = j
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public List<List<Integer>> largeGroupPositions(String s) {
+        int n = s.length();
+        int i = 0;
+        List<List<Integer>> ans = new ArrayList<>();
+        while (i < n) {
+            int j = i;
+            while (j < n && s.charAt(j) == s.charAt(i)) {
+                ++j;
+            }
+            if (j - i >= 3) {
+                ans.add(Arrays.asList(i, j - 1));
+            }
+            i = j;
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> largeGroupPositions(string s) {
+        int n = s.size();
+        int i = 0;
+        vector<vector<int>> ans;
+        while (i < n) {
+            int j = i;
+            while (j < n && s[j] == s[i]) {
+                ++j;
+            }
+            if (j - i >= 3) {
+                ans.push_back({i, j - 1});
+            }
+            i = j;
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func largeGroupPositions(s string) [][]int {
+	i, n := 0, len(s)
+	ans := [][]int{}
+	for i < n {
+		j := i
+		for j < n && s[j] == s[i] {
+			j++
+		}
+		if j-i >= 3 {
+			ans = append(ans, []int{i, j - 1})
+		}
+		i = j
+	}
+	return ans
+}
 ```
 
 ### **...**

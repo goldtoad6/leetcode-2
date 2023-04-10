@@ -74,8 +74,10 @@ class Solution:
 ```java
 class Solution {
     public int convertTime(String current, String correct) {
-        int a = Integer.parseInt(current.substring(0, 2)) * 60 + Integer.parseInt(current.substring(3));
-        int b = Integer.parseInt(correct.substring(0, 2)) * 60 + Integer.parseInt(correct.substring(3));
+        int a = Integer.parseInt(current.substring(0, 2)) * 60
+            + Integer.parseInt(current.substring(3));
+        int b = Integer.parseInt(correct.substring(0, 2)) * 60
+            + Integer.parseInt(correct.substring(3));
         int ans = 0, d = b - a;
         for (int i : Arrays.asList(60, 15, 5, 1)) {
             ans += d / i;
@@ -96,8 +98,7 @@ public:
         int b = stoi(correct.substr(0, 2)) * 60 + stoi(correct.substr(3, 2));
         int ans = 0, d = b - a;
         vector<int> inc = {60, 15, 5, 1};
-        for (int i : inc)
-        {
+        for (int i : inc) {
             ans += d / i;
             d %= i;
         }

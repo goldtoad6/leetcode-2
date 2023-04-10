@@ -58,7 +58,13 @@
 
 **方法一：双指针**
 
-时间复杂度 O(len(s) + len(t))，空间复杂度 O(1)。
+我们用双指针 $i$ 和 $j$ 分别指向字符串 $s$ 和 $t$ 的末尾。
+
+每次向前移动一个字符，如果当前字符是退格符，则跳过当前字符，同时退格符的数量加一，如果当前字符不是退格符，则判断退格符的数量，如果退格符的数量大于 $0$，则跳过当前字符，同时退格符的数量减一，如果退格符的数量等于 $0$，那么该字符需要进行比较。
+
+我们每次找到两个字符串中需要比较的字符，然后进行比较，如果两个字符不相等，则返回 $false$，如果遍历完两个字符串，都没有发现不相等的字符，则返回 $true$。
+
+时间复杂度 $O(m + n)$，空间复杂度 $O(1)$。其中 $m$ 和 $n$ 分别是字符串 $s$ 和 $t$ 的长度。
 
 <!-- tabs:start -->
 
@@ -151,41 +157,31 @@ public:
     bool backspaceCompare(string s, string t) {
         int i = s.size() - 1, j = t.size() - 1;
         int skip1 = 0, skip2 = 0;
-        for (; i >= 0 || j >= 0; --i, --j)
-        {
-            while (i >= 0)
-            {
-                if (s[i] == '#')
-                {
+        for (; i >= 0 || j >= 0; --i, --j) {
+            while (i >= 0) {
+                if (s[i] == '#') {
                     ++skip1;
                     --i;
-                }
-                else if (skip1)
-                {
+                } else if (skip1) {
                     --skip1;
                     --i;
-                }
-                else break;
+                } else
+                    break;
             }
-            while (j >= 0)
-            {
-                if (t[j] == '#')
-                {
+            while (j >= 0) {
+                if (t[j] == '#') {
                     ++skip2;
                     --j;
-                }
-                else if (skip2)
-                {
+                } else if (skip2) {
                     --skip2;
                     --j;
-                }
-                else break;
+                } else
+                    break;
             }
-            if (i >= 0 && j >= 0)
-            {
+            if (i >= 0 && j >= 0) {
                 if (s[i] != t[j]) return false;
-            }
-            else if (i >= 0 || j >= 0) return false;
+            } else if (i >= 0 || j >= 0)
+                return false;
         }
         return true;
     }

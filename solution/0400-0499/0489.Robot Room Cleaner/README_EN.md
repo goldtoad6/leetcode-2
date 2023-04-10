@@ -39,7 +39,7 @@ interface Robot {
 <p>The input is only given to initialize the room and the robot&#39;s position internally. You must solve this problem &quot;blindfolded&quot;. In other words, you must control the robot using only the four mentioned APIs without knowing the room layout and the initial robot&#39;s position.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0400-0499/0489.Robot%20Room%20Cleaner/images/lc-grid.jpg" style="width: 500px; height: 314px;" />
 <pre>
 <strong>Input:</strong> room = [[1,1,1,1,1,0,1,1],[1,1,1,1,1,0,1,1],[1,0,1,1,1,1,1,1],[0,0,0,1,0,0,0,0],[1,1,1,1,1,1,1,1]], row = 1, col = 3
@@ -50,7 +50,7 @@ The robot initially starts at the position of row=1, col=3.
 From the top left corner, its position is one row below and three columns right.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> room = [[1]], row = 0, col = 0
@@ -111,12 +111,14 @@ From the top left corner, its position is one row below and three columns right.
 #        :rtype void
 #        """
 
+
 class Solution:
     def cleanRoom(self, robot):
         """
         :type robot: Robot
         :rtype: None
         """
+
         def back():
             robot.turnRight()
             robot.turnRight()
@@ -229,13 +231,11 @@ public:
     void dfs(int i, int j, int d, unordered_set<string>& vis, Robot& robot) {
         vis.insert(to_string(i) + "," + to_string(j));
         robot.clean();
-        for (int k = 0; k < 4; ++k)
-        {
+        for (int k = 0; k < 4; ++k) {
             int nd = (d + k) % 4;
             int x = i + dirs[nd][0];
             int y = j + dirs[nd][1];
-            if (!vis.count(to_string(x) + "," + to_string(y)) && robot.move())
-            {
+            if (!vis.count(to_string(x) + "," + to_string(y)) && robot.move()) {
                 dfs(x, y, nd, vis, robot);
                 back(robot);
             }

@@ -77,6 +77,7 @@ BFS 最小步数模型。
 4. 只要其中一个队列为空，说明当前方向的搜索已经进行不下去了，说明起点到终点不连通，无需继续搜索。
 
     ```python
+
     while q1 and q2:
         if len(q1) <= len(q2):
             # 优先选择较少元素的队列进行扩展
@@ -397,7 +398,8 @@ class Solution {
         if (s.contains(start)) {
             return -1;
         }
-        PriorityQueue<Pair<Integer, String>> q = new PriorityQueue<>(Comparator.comparingInt(Pair::getKey));
+        PriorityQueue<Pair<Integer, String>> q
+            = new PriorityQueue<>(Comparator.comparingInt(Pair::getKey));
         q.offer(new Pair<>(f(start), start));
         Map<String, Integer> dist = new HashMap<>();
         dist.put(start, 0);
@@ -462,21 +464,17 @@ public:
         unordered_set<string> s(deadends.begin(), deadends.end());
         if (s.count("0000")) return -1;
         if (target == "0000") return 0;
-        queue<string> q{{"0000"}};
+        queue<string> q {{"0000"}};
         s.insert("0000");
         int ans = 0;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int n = q.size(); n > 0; --n)
-            {
+            for (int n = q.size(); n > 0; --n) {
                 string p = q.front();
                 q.pop();
-                for (string t : next(p))
-                {
+                for (string t : next(p)) {
                     if (target == t) return ans;
-                    if (!s.count(t))
-                    {
+                    if (!s.count(t)) {
                         q.push(t);
                         s.insert(t);
                     }
@@ -488,12 +486,11 @@ public:
 
     vector<string> next(string& t) {
         vector<string> res;
-        for (int i = 0; i < 4; ++i)
-        {
+        for (int i = 0; i < 4; ++i) {
             char c = t[i];
-            t[i] = c == '0' ? '9' : (char) (c - 1);
+            t[i] = c == '0' ? '9' : (char)(c - 1);
             res.push_back(t);
-            t[i] = c == '9' ? '0' : (char) (c + 1);
+            t[i] = c == '9' ? '0' : (char)(c + 1);
             res.push_back(t);
             t[i] = c;
         }

@@ -75,7 +75,7 @@
 设当前求出的最长上升子序列的长度为 size，初始 `size = 1`，从前往后遍历数组 nums，在遍历到 `nums[i]` 时：
 
 -   若 `nums[i] > d[size]`，则直接将 `nums[i]` 加入到数组 d 的末尾，并且更新 size 自增；
--   否则，在数组 d 中二分查找（前面证明 d 是一个单调递增数组），找到第一个大于等于 nums[i] 的位置 idx，更新 `d[idx] = nums[i]`。
+-   否则，在数组 d 中二分查找（前面证明 d 是一个单调递增数组），找到第一个大于等于 `nums[i]` 的位置 idx，更新 `d[idx] = nums[i]`。
 
 最终返回 size。
 
@@ -88,7 +88,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。当数的范围比较大时，需要进行离散化，即先进行去重并排序，然后对每个数字进行编号。
+这两个操作的时间复杂度均为 $O(\log n)$。当数的范围比较大时，需要进行离散化，即先进行去重并排序，然后对每个数字进行编号。
 
 本题我们使用树状数组 `tree[x]` 来维护以 x 结尾的最长上升子序列的长度。
 
@@ -358,10 +358,8 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         vector<int> dp(n, 1);
-        for (int i = 1; i < n; ++i)
-        {
-            for (int j = 0; j < i; ++j)
-            {
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
                 if (nums[j] < nums[i]) dp[i] = max(dp[i], dp[j] + 1);
             }
         }
@@ -377,12 +375,11 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<int> d{nums[0]};
-        for (int i = 1; i < n; ++i)
-        {
-            if (nums[i] > d[d.size() - 1]) d.push_back(nums[i]);
-            else
-            {
+        vector<int> d {nums[0]};
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > d[d.size() - 1])
+                d.push_back(nums[i]);
+            else {
                 int idx = lower_bound(d.begin(), d.end(), nums[i]) - d.begin();
                 if (idx == d.size()) idx = 0;
                 d[idx] = nums[i];

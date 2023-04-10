@@ -80,6 +80,7 @@ def find(x):
         p[x] = find(p[x])
     return p[x]
 
+
 # 合并a和b所在的两个集合
 p[find(a)] = find(b)
 ```
@@ -174,7 +175,8 @@ class Solution:
 class Solution {
     private int[] p;
 
-    public boolean areSentencesSimilarTwo(String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
+    public boolean areSentencesSimilarTwo(
+        String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
         if (sentence1.length != sentence2.length) {
             return false;
         }
@@ -199,7 +201,8 @@ class Solution {
             if (Objects.equals(sentence1[i], sentence2[i])) {
                 continue;
             }
-            if (!words.containsKey(sentence1[i]) || !words.containsKey(sentence2[i]) || find(words.get(sentence1[i])) != find(words.get(sentence2[i]))) {
+            if (!words.containsKey(sentence1[i]) || !words.containsKey(sentence2[i])
+                || find(words.get(sentence1[i])) != find(words.get(sentence2[i]))) {
                 return false;
             }
         }

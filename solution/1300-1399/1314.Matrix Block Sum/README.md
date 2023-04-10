@@ -60,7 +60,12 @@ class Solution:
         pre = [[0] * (n + 1) for _ in range(m + 1)]
         for i in range(1, m + 1):
             for j in range(1, n + 1):
-                pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + mat[i - 1][j - 1]
+                pre[i][j] = (
+                    pre[i - 1][j]
+                    + pre[i][j - 1]
+                    - pre[i - 1][j - 1]
+                    + mat[i - 1][j - 1]
+                )
 
         def get(i, j):
             i = max(min(m, i), 0)
@@ -70,7 +75,12 @@ class Solution:
         ans = [[0] * n for _ in range(m)]
         for i in range(m):
             for j in range(n):
-                ans[i][j] = get(i + k + 1, j + k + 1) - get(i + k + 1, j - k) - get(i - k, j + k + 1) + get(i - k, j - k)
+                ans[i][j] = (
+                    get(i + k + 1, j + k + 1)
+                    - get(i + k + 1, j - k)
+                    - get(i - k, j + k + 1)
+                    + get(i - k, j - k)
+                )
         return ans
 ```
 
@@ -88,7 +98,7 @@ class Solution {
         int[][] pre = new int[m + 1][n + 1];
         for (int i = 1; i < m + 1; ++i) {
             for (int j = 1; j < n + 1; ++j) {
-                pre[i][j] = pre[i - 1][j] + pre[i][j - 1] + - pre[i - 1][j - 1] + mat[i - 1][j - 1];
+                pre[i][j] = pre[i - 1][j] + pre[i][j - 1] + -pre[i - 1][j - 1] + mat[i - 1][j - 1];
             }
         }
         this.pre = pre;
@@ -97,7 +107,8 @@ class Solution {
         int[][] ans = new int[m][n];
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
-                ans[i][j] = get(i + k + 1, j + k + 1) - get(i + k + 1, j - k) - get(i - k, j + k + 1) + get(i - k, j - k);
+                ans[i][j] = get(i + k + 1, j + k + 1) - get(i + k + 1, j - k)
+                    - get(i - k, j + k + 1) + get(i - k, j - k);
             }
         }
         return ans;
@@ -121,7 +132,7 @@ public:
         vector<vector<int>> pre(m + 1, vector<int>(n + 1));
         for (int i = 1; i < m + 1; ++i) {
             for (int j = 1; j < n + 1; ++j) {
-                pre[i][j] = pre[i - 1][j] + pre[i][j - 1] + - pre[i - 1][j - 1] + mat[i - 1][j - 1];
+                pre[i][j] = pre[i - 1][j] + pre[i][j - 1] + -pre[i - 1][j - 1] + mat[i - 1][j - 1];
             }
         }
         vector<vector<int>> ans(m, vector<int>(n));

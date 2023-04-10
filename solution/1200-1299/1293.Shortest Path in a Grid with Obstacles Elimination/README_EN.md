@@ -9,7 +9,7 @@
 <p>Return <em>the minimum number of <strong>steps</strong> to walk from the upper left corner </em><code>(0, 0)</code><em> to the lower right corner </em><code>(m - 1, n - 1)</code><em> given that you can eliminate <strong>at most</strong> </em><code>k</code><em> obstacles</em>. If it is not possible to find such walk return <code>-1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1293.Shortest%20Path%20in%20a%20Grid%20with%20Obstacles%20Elimination/images/short1-grid.jpg" style="width: 244px; height: 405px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,0,0],[1,1,0],[0,0,0],[0,1,1],[0,0,0]], k = 1
@@ -19,7 +19,7 @@ The shortest path without eliminating any obstacle is 10.
 The shortest path with one obstacle elimination at position (3,2) is 6. Such path is (0,0) -&gt; (0,1) -&gt; (0,2) -&gt; (1,2) -&gt; (2,2) -&gt; <strong>(3,2)</strong> -&gt; (4,2).
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1293.Shortest%20Path%20in%20a%20Grid%20with%20Obstacles%20Elimination/images/short2-grid.jpg" style="width: 244px; height: 245px;" />
 <pre>
 <strong>Input:</strong> grid = [[0,1,1],[1,1,1],[1,0,0]], k = 1
@@ -83,7 +83,7 @@ class Solution {
             return m + n - 2;
         }
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0, k});
+        q.offer(new int[] {0, 0, k});
         boolean[][][] vis = new boolean[m][n][k + 1];
         vis[0][0][k] = true;
         int ans = 0;
@@ -101,10 +101,10 @@ class Solution {
                             return ans;
                         }
                         if (grid[x][y] == 0 && !vis[x][y][k]) {
-                            q.offer(new int[]{x, y, k});
+                            q.offer(new int[] {x, y, k});
                             vis[x][y][k] = true;
                         } else if (grid[x][y] == 1 && k > 0 && !vis[x][y][k - 1]) {
-                            q.offer(new int[]{x, y, k - 1});
+                            q.offer(new int[] {x, y, k - 1});
                             vis[x][y][k - 1] = true;
                         }
                     }
@@ -130,27 +130,20 @@ public:
         vis[0][0][k] = true;
         int ans = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             ++ans;
-            for (int i = q.size(); i > 0; --i)
-            {
+            for (int i = q.size(); i > 0; --i) {
                 auto p = q.front();
                 k = p[2];
                 q.pop();
-                for (int j = 0; j < 4; ++j)
-                {
+                for (int j = 0; j < 4; ++j) {
                     int x = p[0] + dirs[j], y = p[1] + dirs[j + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n)
-                    {
+                    if (x >= 0 && x < m && y >= 0 && y < n) {
                         if (x == m - 1 && y == n - 1) return ans;
-                        if (grid[x][y] == 0 && !vis[x][y][k])
-                        {
+                        if (grid[x][y] == 0 && !vis[x][y][k]) {
                             q.push({x, y, k});
                             vis[x][y][k] = true;
-                        }
-                        else if (grid[x][y] == 1 && k > 0 && !vis[x][y][k - 1])
-                        {
+                        } else if (grid[x][y] == 1 && k > 0 && !vis[x][y][k - 1]) {
                             q.push({x, y, k - 1});
                             vis[x][y][k - 1] = true;
                         }

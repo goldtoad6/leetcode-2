@@ -11,7 +11,7 @@
 <p>In this context downward path means a path that starts at some node and goes downwards.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1367.Linked%20List%20in%20Binary%20Tree/images/sample_1_1720.png" style="width: 220px; height: 280px;" /></strong></p>
 
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong> Nodes in blue form a subpath in the binary Tree.  
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1300-1399/1367.Linked%20List%20in%20Binary%20Tree/images/sample_2_1720.png" style="width: 220px; height: 280px;" /></strong></p>
 
@@ -30,7 +30,7 @@
 <strong>Output:</strong> true
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> head = [1,4,2,6,8], root = [1,4,4,null,2,2,null,1,null,6,8,null,null,null,null,1,3]
@@ -66,19 +66,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSubPath(self, head: ListNode, root: TreeNode) -> bool:
+    def isSubPath(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
         def dfs(head, root):
             if head is None:
                 return True
-            if root is None:
-                return False
-            if root.val != head.val:
+            if root is None or root.val != head.val:
                 return False
             return dfs(head.next, root.left) or dfs(head.next, root.right)
 
         if root is None:
             return False
-        return dfs(head, root) or self.isSubPath(head, root.left) or self.isSubPath(head, root.right)
+        return (
+            dfs(head, root)
+            or self.isSubPath(head, root.left)
+            or self.isSubPath(head, root.right)
+        )
 ```
 
 ### **Java**
@@ -121,14 +123,92 @@ class Solution {
         if (head == null) {
             return true;
         }
-        if (root == null) {
-            return false;
-        }
-        if (root.val != head.val) {
+        if (root == null || head.val != root.val) {
             return false;
         }
         return dfs(head.next, root.left) || dfs(head.next, root.right);
     }
+}
+```
+
+### **C++**
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSubPath(ListNode* head, TreeNode* root) {
+        if (!root) {
+            return false;
+        }
+        return dfs(head, root) || isSubPath(head, root->left) || isSubPath(head, root->right);
+    }
+
+    bool dfs(ListNode* head, TreeNode* root) {
+        if (!head) {
+            return true;
+        }
+        if (!root || head->val != root->val) {
+            return false;
+        }
+        return dfs(head->next, root->left) || dfs(head->next, root->right);
+    }
+};
+```
+
+### **Go**
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isSubPath(head *ListNode, root *TreeNode) bool {
+	if root == nil {
+		return false
+	}
+	return dfs(head, root) || isSubPath(head, root.Left) || isSubPath(head, root.Right)
+}
+
+func dfs(head *ListNode, root *TreeNode) bool {
+	if head == nil {
+		return true
+	}
+	if root == nil || head.Val != root.Val {
+		return false
+	}
+	return dfs(head.Next, root.Left) || dfs(head.Next, root.Right)
 }
 ```
 

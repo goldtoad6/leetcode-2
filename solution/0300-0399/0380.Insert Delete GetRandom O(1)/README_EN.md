@@ -16,7 +16,7 @@
 <p>You must implement the functions of the class such that each function works in&nbsp;<strong>average</strong>&nbsp;<code>O(1)</code>&nbsp;time complexity.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -53,7 +53,6 @@ randomizedSet.getRandom(); // Since 2 is the only number in the set, getRandom()
 
 ```python
 class RandomizedSet:
-
     def __init__(self):
         self.m = {}
         self.l = []
@@ -95,7 +94,6 @@ class RandomizedSet {
     private Random rnd = new Random();
 
     public RandomizedSet() {
-
     }
 
     public boolean insert(int val) {
@@ -141,9 +139,9 @@ class RandomizedSet {
 private:
     unordered_map<int, int> mp;
     vector<int> nums;
+
 public:
     RandomizedSet() {
-
     }
 
     bool insert(int val) {

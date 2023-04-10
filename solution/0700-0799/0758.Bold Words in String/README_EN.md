@@ -9,7 +9,7 @@
 <p>Return <code>s</code> <em>after adding the bold tags</em>. The returned string should use the least number of tags possible, and the tags should form a valid combination.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;ab&quot;,&quot;bc&quot;], s = &quot;aabcd&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> Note that returning <code>&quot;a&lt;b&gt;a&lt;b&gt;b&lt;/b&gt;c&lt;/b&gt;d&quot;</code> would use more tags, so it is incorrect.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;ab&quot;,&quot;cb&quot;], s = &quot;aabcd&quot;
@@ -95,9 +95,9 @@ class Solution:
                 break
             st, ed = t[j]
             if i < st:
-                ans.append(s[i: st])
+                ans.append(s[i:st])
             ans.append('<b>')
-            ans.append(s[st: ed + 1])
+            ans.append(s[st : ed + 1])
             ans.append('</b>')
             j += 1
             i = ed + 1
@@ -141,7 +141,7 @@ class Solution {
                 }
                 node = node.children[idx];
                 if (node.isEnd) {
-                    pairs.add(new int[]{i, j});
+                    pairs.add(new int[] {i, j});
                 }
             }
         }
@@ -153,14 +153,14 @@ class Solution {
         for (int j = 1; j < pairs.size(); ++j) {
             int a = pairs.get(j)[0], b = pairs.get(j)[1];
             if (ed + 1 < a) {
-                t.add(new int[]{st, ed});
+                t.add(new int[] {st, ed});
                 st = a;
                 ed = b;
             } else {
                 ed = Math.max(ed, b);
             }
         }
-        t.add(new int[]{st, ed});
+        t.add(new int[] {st, ed});
         int i = 0, j = 0;
         StringBuilder ans = new StringBuilder();
         while (i < n) {
@@ -199,8 +199,7 @@ public:
 
     void insert(string word) {
         Trie* node = this;
-        for (char c : word)
-        {
+        for (char c : word) {
             if (!node->children[c]) node->children[c] = new Trie();
             node = node->children[c];
         }
@@ -215,11 +214,9 @@ public:
         for (string w : words) trie->insert(w);
         int n = s.size();
         vector<pair<int, int>> pairs;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             Trie* node = trie;
-            for (int j = i; j < n; ++j)
-            {
+            for (int j = i; j < n; ++j) {
                 int idx = s[j];
                 if (!node->children[idx]) break;
                 node = node->children[idx];
@@ -229,23 +226,19 @@ public:
         if (pairs.empty()) return s;
         vector<pair<int, int>> t;
         int st = pairs[0].first, ed = pairs[0].second;
-        for (int i = 1; i < pairs.size(); ++i)
-        {
+        for (int i = 1; i < pairs.size(); ++i) {
             int a = pairs[i].first, b = pairs[i].second;
-            if (ed + 1 < a)
-            {
+            if (ed + 1 < a) {
                 t.push_back({st, ed});
                 st = a, ed = b;
-            }
-            else ed = max(ed, b);
+            } else
+                ed = max(ed, b);
         }
         t.push_back({st, ed});
         string ans = "";
         int i = 0, j = 0;
-        while (i < n)
-        {
-            if (j == t.size())
-            {
+        while (i < n) {
+            if (j == t.size()) {
                 ans += s.substr(i);
                 break;
             }

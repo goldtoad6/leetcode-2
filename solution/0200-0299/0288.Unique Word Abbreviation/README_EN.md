@@ -27,7 +27,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input</strong>
@@ -65,7 +65,6 @@ validWordAbbr.isUnique(&quot;cake&quot;); // return true, because &quot;cake&quo
 
 ```python
 class ValidWordAbbr:
-
     def __init__(self, dictionary: List[str]):
         self.words = defaultdict(set)
         for word in dictionary:
@@ -127,8 +126,7 @@ public:
     unordered_map<string, unordered_set<string>> words;
 
     ValidWordAbbr(vector<string>& dictionary) {
-        for (auto word : dictionary)
-        {
+        for (auto word : dictionary) {
             auto abbr = wordAbbr(word);
             words[abbr].insert(word);
         }

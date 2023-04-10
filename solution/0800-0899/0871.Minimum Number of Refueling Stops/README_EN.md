@@ -15,7 +15,7 @@
 <p>Note that if the car reaches a gas station with <code>0</code> fuel left, the car can still refuel there. If the car reaches the destination with <code>0</code> fuel left, it is still considered to have arrived.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> target = 1, startFuel = 1, stations = []
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong> We can reach the target without refueling.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> target = 100, startFuel = 1, stations = [[10,100]]
@@ -31,7 +31,7 @@
 <strong>Explanation:</strong> We can not reach the target (or even the first gas station).
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]
@@ -49,7 +49,7 @@ We made 2 refueling stops along the way, so we return 2.
 <ul>
 	<li><code>1 &lt;= target, startFuel &lt;= 10<sup>9</sup></code></li>
 	<li><code>0 &lt;= stations.length &lt;= 500</code></li>
-	<li><code>0 &lt;= position<sub>i</sub> &lt;= position<sub>i+1</sub> &lt; target</code></li>
+	<li><code>1 &lt;= position<sub>i</sub> &lt; position<sub>i+1</sub> &lt; target</code></li>
 	<li><code>1 &lt;= fuel<sub>i</sub> &lt; 10<sup>9</sup></code></li>
 </ul>
 
@@ -61,7 +61,9 @@ We made 2 refueling stops along the way, so we return 2.
 
 ```python
 class Solution:
-    def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+    def minRefuelStops(
+        self, target: int, startFuel: int, stations: List[List[int]]
+    ) -> int:
         q = []
         prev = ans = 0
         stations.append([target, 0])
@@ -115,12 +117,10 @@ public:
         priority_queue<int> q;
         stations.push_back({target, 0});
         int ans = 0, prev = 0;
-        for (auto& s : stations)
-        {
+        for (auto& s : stations) {
             int d = s[0] - prev;
             startFuel -= d;
-            while (startFuel < 0 && !q.empty())
-            {
+            while (startFuel < 0 && !q.empty()) {
                 startFuel += q.top();
                 q.pop();
                 ++ans;

@@ -48,6 +48,16 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：模拟**
+
+直接模拟题目中的操作即可。
+
+在实现上，我们使用两个指针 $p$ 和 $q$，初始时均指向链表 `list1` 的头节点。
+
+然后我们向后移动指针 $p$ 和 $q$，直到指针 $p$ 指向链表 `list1` 中第 $a$ 个节点的前一个节点，指针 $q$ 指向链表 `list1` 中第 $b$ 个节点。此时我们将 $p$ 的 `next` 指针指向链表 `list2` 的头节点，将链表 `list2` 的尾节点的 `next` 指针指向 $q$ 的 `next` 指针指向的节点，即可完成题目要求。
+
+时间复杂度 $O(m + n)$，空间复杂度 $O(1)$。其中 $m$ 和 $n$ 分别为链表 `list1` 和 `list2` 的长度。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -61,16 +71,19 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeInBetween(self, list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:
+    def mergeInBetween(
+        self, list1: ListNode, a: int, b: int, list2: ListNode
+    ) -> ListNode:
         p = q = list1
         for _ in range(a - 1):
             p = p.next
-        for _ in range(b + 1):
+        for _ in range(b):
             q = q.next
         p.next = list2
-        while list2.next:
-            list2 = list2.next
-        list2.next = q
+        while p.next:
+            p = p.next
+        p.next = q.next
+        q.next = None
         return list1
 ```
 
@@ -91,19 +104,154 @@ class Solution:
  */
 class Solution {
     public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
-        ListNode p = list1;
-        for (int i = 0; i < a - 1; ++i) {
+        ListNode p = list1, q = list1;
+        while (--a > 0) {
             p = p.next;
         }
-        ListNode q = list1;
-        for (int i = 0; i < b + 1; ++i) {
+        while (b-- > 0) {
             q = q.next;
         }
         p.next = list2;
-        while (list2.next != null) {
-            list2 = list2.next;
+        while (p.next != null) {
+            p = p.next;
         }
-        list2.next = q;
+        p.next = q.next;
+        q.next = null;
+        return list1;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+        auto p = list1, q = list1;
+        while (--a) {
+            p = p->next;
+        }
+        while (b--) {
+            q = q->next;
+        }
+        p->next = list2;
+        while (p->next) {
+            p = p->next;
+        }
+        p->next = q->next;
+        q->next = nullptr;
+        return list1;
+    }
+};
+```
+
+### **Go**
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func mergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
+	p, q := list1, list1
+	for ; a > 1; a-- {
+		p = p.Next
+	}
+	for ; b > 0; b-- {
+		q = q.Next
+	}
+	p.Next = list2
+	for p.Next != nil {
+		p = p.Next
+	}
+	p.Next = q.Next
+	q.Next = nil
+	return list1
+}
+```
+
+### **TypeScript**
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function mergeInBetween(
+    list1: ListNode | null,
+    a: number,
+    b: number,
+    list2: ListNode | null,
+): ListNode | null {
+    let p = list1;
+    let q = list1;
+    while (--a > 0) {
+        p = p.next;
+    }
+    while (b-- > 0) {
+        q = q.next;
+    }
+    p.next = list2;
+    while (p.next) {
+        p = p.next;
+    }
+    p.next = q.next;
+    q.next = null;
+    return list1;
+}
+```
+
+### **C#**
+
+```cs
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode MergeInBetween(ListNode list1, int a, int b, ListNode list2) {
+        ListNode p = list1, q = list1;
+        while (--a > 0) {
+            p = p.next;
+        }
+        while (b-- > 0) {
+            q = q.next;
+        }
+        p.next = list2;
+        while (p.next != null) {
+            p = p.next;
+        }
+        p.next = q.next;
+        q.next = null;
         return list1;
     }
 }

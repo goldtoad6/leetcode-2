@@ -9,7 +9,7 @@
 <p>A string <code>s</code> <b>matches</b> a <code>pattern</code> if there is some <strong>bijective mapping</strong> of single characters to strings such that if each character in <code>pattern</code> is replaced by the string it maps to, then the resulting string is <code>s</code>. A <strong>bijective mapping</strong> means that no two characters map to the same string, and no character maps to two different strings.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;abab&quot;, s = &quot;redblueredblue&quot;
@@ -18,7 +18,7 @@
 &#39;a&#39; -&gt; &quot;red&quot;
 &#39;b&#39; -&gt; &quot;blue&quot;</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;aaaa&quot;, s = &quot;asdasdasdasd&quot;
@@ -27,7 +27,7 @@
 &#39;a&#39; -&gt; &quot;asd&quot;
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> pattern = &quot;aabb&quot;, s = &quot;xyzabcxzyabc&quot;
@@ -57,7 +57,7 @@ class Solution:
             if i == m or j == n or n - j < m - i:
                 return False
             for k in range(j, n):
-                t = s[j: k + 1]
+                t = s[j : k + 1]
                 if d.get(pattern[i]) == t:
                     if dfs(i + 1, k + 1):
                         return True
@@ -143,15 +143,12 @@ public:
         if (i == m && j == n) return true;
         if (i == m || j == n || m - i > n - j) return false;
         char c = p[i];
-        for (int k = j + 1; k <= n; ++k)
-        {
+        for (int k = j + 1; k <= n; ++k) {
             string t = s.substr(j, k - j);
-            if (d.count(c) && d[c] == t)
-            {
+            if (d.count(c) && d[c] == t) {
                 if (dfs(i + 1, k, p, s, vis, d)) return true;
             }
-            if (!d.count(c) && !vis.count(t))
-            {
+            if (!d.count(c) && !vis.count(t)) {
                 d[c] = t;
                 vis.insert(t);
                 if (dfs(i + 1, k, p, s, vis, d)) return true;

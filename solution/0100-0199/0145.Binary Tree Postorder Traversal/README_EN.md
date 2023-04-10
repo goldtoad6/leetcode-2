@@ -7,21 +7,21 @@
 <p>Given the <code>root</code> of a&nbsp;binary tree, return <em>the postorder traversal of its nodes&#39; values</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0100-0199/0145.Binary%20Tree%20Postorder%20Traversal/images/pre1.jpg" style="width: 127px; height: 200px;" />
 <pre>
 <strong>Input:</strong> root = [1,null,2,3]
 <strong>Output:</strong> [3,2,1]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = []
 <strong>Output:</strong> []
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> root = [1]
@@ -380,28 +380,20 @@ class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> ans;
-        while (root)
-        {
-            if (!root->right)
-            {
+        while (root) {
+            if (!root->right) {
                 ans.push_back(root->val);
                 root = root->left;
-            }
-            else
-            {
+            } else {
                 TreeNode* next = root->right;
-                while (next->left && next->left != root)
-                {
+                while (next->left && next->left != root) {
                     next = next->left;
                 }
-                if (!next->left)
-                {
+                if (!next->left) {
                     ans.push_back(root->val);
                     next->left = root;
                     root = root->right;
-                }
-                else
-                {
+                } else {
                     next->left = nullptr;
                     root = root->left;
                 }

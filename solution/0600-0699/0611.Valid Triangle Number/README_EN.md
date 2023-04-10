@@ -7,7 +7,7 @@
 <p>Given an integer array <code>nums</code>, return <em>the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [2,2,3,4]
@@ -18,7 +18,7 @@
 2,2,3
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [4,2,3,4]
@@ -156,10 +156,8 @@ public:
     int triangleNumber(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         int ans = 0, n = nums.size();
-        for (int i = 0; i < n - 2; ++i)
-        {
-            for (int j = i + 1; j < n - 1; ++j)
-            {
+        for (int i = 0; i < n - 2; ++i) {
+            for (int j = i + 1; j < n - 1; ++j) {
                 int k = lower_bound(nums.begin() + j + 1, nums.end(), nums[i] + nums[j]) - nums.begin() - 1;
                 ans += k - j;
             }

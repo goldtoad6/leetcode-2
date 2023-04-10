@@ -8,6 +8,7 @@
 
 <ul>
 	<li><code>int query(int a, int b, int c, int d)</code>: where <code>0 &lt;= a &lt; b &lt; c &lt; d &lt; ArrayReader.length()</code>. The function returns the distribution of the value of the 4 elements and returns:
+
     <ul>
     	<li><strong>4 </strong>: if the values of the 4 elements are the same (0 or 1).</li>
     	<li><strong>2</strong> : if three elements have a value equal to 0 and one element has value equal to 1 or vice versa.</li>
@@ -23,7 +24,7 @@
 <p>Return <strong>any</strong> index of the most frequent value in <code>nums</code>, in case of tie, return -1.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,0,1,0,1,1,1,1]
@@ -37,14 +38,14 @@ we can infer that the most frequent value is found in the last 4 elements.
 Index 2, 4, 6, 7 is also a correct answer.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [0,0,1,1,0]
 <strong>Output:</strong> 0
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,0,1,0,1,0,1,0]

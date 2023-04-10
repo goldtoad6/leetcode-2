@@ -15,7 +15,7 @@
 <p>Return the number of different <strong>expressions</strong> that you can build, which evaluates to <code>target</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1,1,1], target = 3
@@ -28,7 +28,7 @@
 +1 + 1 + 1 + 1 - 1 = 3
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1], target = 1
@@ -167,10 +167,8 @@ public:
         int m = nums.size(), n = (s - target) / 2;
         vector<vector<int>> dp(m + 1, vector<int>(n + 1));
         dp[0][0] = 1;
-        for (int i = 1; i <= m; ++i)
-        {
-            for (int j = 0; j <= n; ++j)
-            {
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 0; j <= n; ++j) {
                 dp[i][j] += dp[i - 1][j];
                 if (nums[i - 1] <= j) dp[i][j] += dp[i - 1][j - nums[i - 1]];
             }

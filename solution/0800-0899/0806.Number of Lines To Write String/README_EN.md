@@ -16,7 +16,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> widths = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], s = &quot;abcdefghijklmnopqrstuvwxyz&quot;
@@ -27,7 +27,7 @@ klmnopqrst  // 100 pixels wide
 uvwxyz      // 60 pixels wide
 There are a total of 3 lines, and the last line is 60 pixels wide.</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> widths = [4,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], s = &quot;bbbcccdddaaa&quot;
@@ -84,7 +84,7 @@ class Solution {
                 last = w;
             }
         }
-        return new int[]{row, last};
+        return new int[] {row, last};
     }
 }
 ```
@@ -98,12 +98,11 @@ public:
 
     vector<int> numberOfLines(vector<int>& widths, string s) {
         int last = 0, row = 1;
-        for (char c : s)
-        {
+        for (char c : s) {
             int w = widths[c - 'a'];
-            if (last + w <= MAX_WIDTH) last += w;
-            else
-            {
+            if (last + w <= MAX_WIDTH)
+                last += w;
+            else {
                 ++row;
                 last = w;
             }

@@ -9,7 +9,7 @@
 <p>You are given a <strong>0-indexed</strong> integer array <code>amount</code> of length <code>3</code> where <code>amount[0]</code>, <code>amount[1]</code>, and <code>amount[2]</code> denote the number of cold, warm, and hot water cups you need to fill respectively. Return <em>the <strong>minimum</strong> number of seconds needed to fill up all the cups</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> amount = [1,4,2]
@@ -22,7 +22,7 @@ Second 4: Fill up a warm cup.
 It can be proven that 4 is the minimum number of seconds needed.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> amount = [5,4,4]
@@ -37,7 +37,7 @@ Second 6: Fill up a cold cup, and a warm cup.
 Second 7: Fill up a hot cup.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> amount = [5,0,0]
@@ -71,6 +71,15 @@ class Solution:
         return ans
 ```
 
+```python
+class Solution:
+    def fillCups(self, amount: List[int]) -> int:
+        amount.sort()
+        if amount[0] + amount[1] <= amount[2]:
+            return amount[2]
+        return (sum(amount) + 1) // 2
+```
+
 ### **Java**
 
 ```java
@@ -88,6 +97,18 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public int fillCups(int[] amount) {
+        Arrays.sort(amount);
+        if (amount[0] + amount[1] <= amount[2]) {
+            return amount[2];
+        }
+        return (amount[0] + amount[1] + amount[2] + 1) / 2;
+    }
+}
+```
+
 ### **C++**
 
 ```cpp
@@ -95,14 +116,26 @@ class Solution {
 public:
     int fillCups(vector<int>& amount) {
         int ans = 0;
-        while (amount[0] + amount[1] + amount[2])
-        {
+        while (amount[0] + amount[1] + amount[2]) {
             sort(amount.begin(), amount.end());
             ++ans;
             amount[2]--;
             amount[1] = max(0, amount[1] - 1);
         }
         return ans;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int fillCups(vector<int>& amount) {
+        sort(amount.begin(), amount.end());
+        if (amount[0] + amount[1] <= amount[2]) {
+            return amount[2];
+        }
+        return (amount[0] + amount[1] + amount[2] + 1) / 2;
     }
 };
 ```
@@ -124,17 +157,41 @@ func fillCups(amount []int) int {
 }
 ```
 
+```go
+func fillCups(amount []int) int {
+	sort.Ints(amount)
+	if amount[0]+amount[1] <= amount[2] {
+		return amount[2]
+	}
+	return (amount[0] + amount[1] + amount[2] + 1) / 2
+}
+```
+
 ### **TypeScript**
 
 ```ts
 function fillCups(amount: number[]): number {
     amount.sort((a, b) => a - b);
     let [a, b, c] = amount;
-    let diff =  (a + b) - c;
+    let diff = a + b - c;
     if (diff <= 0) return c;
-    else return Math.floor((diff + 1) / 2)  + c;
-};
+    else return Math.floor((diff + 1) / 2) + c;
+}
 ```
+
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn fill_cups(mut amount: Vec<i32>) -> i32 {
+        amount.sort();
+        let dif = amount[0] + amount[1] - amount[2];
+        if dif <= 0 {
+            return amount[2];
+        }
+        (dif + 1) / 2 + amount[2]
+    }
+}
 
 ### **...**
 
@@ -143,3 +200,4 @@ function fillCups(amount: number[]): number {
 ```
 
 <!-- tabs:end -->
+```

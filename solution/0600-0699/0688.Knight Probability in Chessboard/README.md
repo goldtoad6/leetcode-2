@@ -44,7 +44,7 @@
 <ul>
 	<li><code>1 &lt;= n &lt;= 25</code></li>
 	<li><code>0 &lt;= k &lt;= 100</code></li>
-	<li><code>0 &lt;= row, column &lt;= n</code></li>
+	<li><code>0 &lt;= row, column &lt;= n - 1</code></li>
 </ul>
 
 ## 解法
@@ -69,7 +69,16 @@ class Solution:
                     if l == 0:
                         dp[l][i][j] = 1
                     else:
-                        for a, b in ((-2, -1), (-2, 1), (2, -1), (2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2)):
+                        for a, b in (
+                            (-2, -1),
+                            (-2, 1),
+                            (2, -1),
+                            (2, 1),
+                            (-1, -2),
+                            (-1, 2),
+                            (1, -2),
+                            (1, 2),
+                        ):
                             x, y = i + a, j + b
                             if 0 <= x < n and 0 <= y < n:
                                 dp[l][i][j] += dp[l - 1][x][y] / 8
@@ -156,17 +165,13 @@ public:
     double knightProbability(int n, int k, int row, int column) {
         vector<vector<vector<double>>> dp(k + 1, vector<vector<double>>(n, vector<double>(n)));
         vector<int> dirs = {-2, -1, 2, 1, -2, 1, 2, -1, -2};
-        for (int l = 0; l <= k; ++l)
-        {
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    if (l == 0) dp[l][i][j] = 1;
-                    else
-                    {
-                        for (int d = 0; d < 8; ++d)
-                        {
+        for (int l = 0; l <= k; ++l) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    if (l == 0)
+                        dp[l][i][j] = 1;
+                    else {
+                        for (int d = 0; d < 8; ++d) {
                             int x = i + dirs[d], y = j + dirs[d + 1];
                             if (x >= 0 && x < n && y >= 0 && y < n)
                                 dp[l][i][j] += dp[l - 1][x][y] / 8;

@@ -77,7 +77,6 @@ from sortedcontainers import SortedDict
 
 
 class StockPrice:
-
     def __init__(self):
         self.last_ts = 0
         self.mp = {}
@@ -124,7 +123,6 @@ class StockPrice {
     private TreeMap<Integer, Integer> counter = new TreeMap<>();
 
     public StockPrice() {
-
     }
 
     public void update(int timestamp, int price) {
@@ -173,12 +171,10 @@ public:
     map<int, int> counter;
 
     StockPrice() {
-
     }
 
     void update(int timestamp, int price) {
-        if (mp.count(timestamp))
-        {
+        if (mp.count(timestamp)) {
             int oldPrice = mp[timestamp];
             --counter[oldPrice];
             if (counter[oldPrice] == 0) counter.erase(oldPrice);

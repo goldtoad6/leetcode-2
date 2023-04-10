@@ -25,7 +25,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;42&quot;
@@ -41,7 +41,7 @@ The parsed integer is 42.
 Since 42 is in the range [-2<sup>31</sup>, 2<sup>31</sup> - 1], the final result is 42.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;   -42&quot;
@@ -57,7 +57,7 @@ The parsed integer is -42.
 Since -42 is in the range [-2<sup>31</sup>, 2<sup>31</sup> - 1], the final result is -42.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;4193 with words&quot;
@@ -104,7 +104,7 @@ class Solution:
         sign = -1 if s[i] == '-' else 1
         if s[i] in ['-', '+']:
             i += 1
-        res, flag = 0, (2 ** 31 - 1) // 10
+        res, flag = 0, (2**31 - 1) // 10
         while i < n:
             # not a number, exit the loop
             if not s[i].isdigit():
@@ -112,7 +112,7 @@ class Solution:
             c = int(s[i])
             # if overflows
             if res > flag or (res == flag and c > 7):
-                return 2 ** 31 - 1 if sign > 0 else -2 ** 31
+                return 2**31 - 1 if sign > 0 else -(2**31)
             res = res * 10 + c
             i += 1
         return sign * res
@@ -139,7 +139,8 @@ class Solution {
             // not a number, exit the loop
             if (s.charAt(i) < '0' || s.charAt(i) > '9') break;
             // if overflows
-            if (res > flag || (res == flag && s.charAt(i) > '7')) return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            if (res > flag || (res == flag && s.charAt(i) > '7'))
+                return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             res = res * 10 + (s.charAt(i) - '0');
         }
         return sign * res;

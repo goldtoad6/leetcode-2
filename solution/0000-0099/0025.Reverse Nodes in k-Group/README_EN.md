@@ -11,14 +11,14 @@
 <p>You may not alter the values in the list&#39;s nodes, only nodes themselves may be changed.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0025.Reverse%20Nodes%20in%20k-Group/images/reverse_ex1.jpg" style="width: 542px; height: 222px;" />
 <pre>
 <strong>Input:</strong> head = [1,2,3,4,5], k = 2
 <strong>Output:</strong> [2,1,4,3,5]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0000-0099/0025.Reverse%20Nodes%20in%20k-Group/images/reverse_ex2.jpg" style="width: 542px; height: 222px;" />
 <pre>
 <strong>Input:</strong> head = [1,2,3,4,5], k = 3
@@ -38,6 +38,14 @@
 <p><strong>Follow-up:</strong> Can you solve the problem in <code>O(1)</code> extra memory space?</p>
 
 ## Solutions
+
+**Approach 1: Iteration**
+
+Time complexity $O(n)$, Space complexity $O(1)$.
+
+**Approach 2: Recursion**
+
+Time complexity $O(n)$, Space complexity $O(\log _k n)$.
 
 <!-- tabs:start -->
 
@@ -229,6 +237,8 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
 
 ### **Go**
 
+Iteration:
+
 ```go
 /**
  * Definition for singly-linked list.
@@ -238,40 +248,64 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
  * }
  */
 func reverseKGroup(head *ListNode, k int) *ListNode {
-    dummy := &ListNode{0, head}
-    pre := dummy
-    cur := dummy
-    for cur.Next != nil {
-        for i := 0; i < k && cur != nil; i++ {
-            cur = cur.Next
-        }
-        if cur == nil {
-            return dummy.Next
-        }
-        t := cur.Next
-        cur.Next = nil
-        start := pre.Next
-        pre.Next = reverseList(start)
-        start.Next = t
-        pre = start
-        cur = pre
-    }
-    return dummy.Next
+	var dummy *ListNode = &ListNode{}
+	p, cur := dummy, head
+	for cur != nil {
+		start := cur
+		for i := 0; i < k; i++ {
+			if cur == nil {
+				p.Next = start
+				return dummy.Next
+			}
+			cur = cur.Next
+		}
+		p.Next, p = reverse(start, cur), start
+	}
+	return dummy.Next
 }
 
-func reverseList(head *ListNode) *ListNode {
-    if head == nil ||head.Next == nil {
-        return head
-    }
-    dummyHead := &ListNode{}
-    cur := head
-    for cur != nil {
-        tmp := cur.Next
-        cur.Next = dummyHead.Next
-        dummyHead.Next = cur
-        cur = tmp
-    }
-    return dummyHead.Next
+func reverse(start, end *ListNode) *ListNode {
+	var pre *ListNode = nil
+	for start != end {
+		tmp := start.Next
+		start.Next, pre = pre, start
+		start = tmp
+	}
+	return pre
+}
+```
+
+Recursion:
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	start, end := head, head
+	for i := 0; i < k; i++ {
+		if end == nil {
+			return head
+		}
+		end = end.Next
+	}
+	res := reverse(start, end)
+	start.Next = reverseKGroup(end, k)
+	return res
+}
+
+func reverse(start, end *ListNode) *ListNode {
+	var pre *ListNode = nil
+	for start != end {
+		tmp := start.Next
+		start.Next, pre = pre, start
+		start = tmp
+	}
+	return pre
 }
 ```
 

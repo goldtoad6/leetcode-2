@@ -19,7 +19,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> url = &quot;https://leetcode.com/problems/design-tinyurl&quot;
@@ -28,7 +28,7 @@
 <strong>Explanation:</strong>
 Solution obj = new Solution();
 string tiny = obj.encode(url); // returns the encoded tiny url.
-string ans = obj.decode(tiny); // returns the original url after deconding it.
+string ans = obj.decode(tiny); // returns the original url after decoding it.
 </pre>
 
 <p>&nbsp;</p>
@@ -53,15 +53,13 @@ class Codec:
         self.domain = 'https://tinyurl.com/'
 
     def encode(self, longUrl: str) -> str:
-        """Encodes a URL to a shortened URL.
-        """
+        """Encodes a URL to a shortened URL."""
         self.idx += 1
         self.m[str(self.idx)] = longUrl
         return f'{self.domain}{self.idx}'
 
     def decode(self, shortUrl: str) -> str:
-        """Decodes a shortened URL to its original URL.
-        """
+        """Decodes a shortened URL to its original URL."""
         idx = shortUrl.split('/')[-1]
         return self.m[idx]
 
@@ -103,7 +101,6 @@ public class Codec {
 ```cpp
 class Solution {
 public:
-
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
         string v = to_string(++idx);

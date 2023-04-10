@@ -9,14 +9,14 @@
 <p>The closest is defined as the absolute difference minimized between two integers.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = &quot;123&quot;
 <strong>Output:</strong> &quot;121&quot;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> n = &quot;1&quot;
@@ -45,8 +45,8 @@ class Solution:
     def nearestPalindromic(self, n: str) -> str:
         x = int(n)
         l = len(n)
-        res = {10 ** (l - 1) - 1, 10 ** l + 1}
-        left = int(n[:(l + 1) >> 1])
+        res = {10 ** (l - 1) - 1, 10**l + 1}
+        left = int(n[: (l + 1) >> 1])
         for i in range(left - 1, left + 2):
             j = i if l % 2 == 0 else i // 10
             while j:
@@ -57,7 +57,11 @@ class Solution:
 
         ans = -1
         for t in res:
-            if ans == -1 or abs(t - x) < abs(ans - x) or (abs(t - x) == abs(ans - x) and t < ans):
+            if (
+                ans == -1
+                or abs(t - x) < abs(ans - x)
+                or (abs(t - x) == abs(ans - x) and t < ans)
+            ):
                 ans = t
         return str(ans)
 ```
@@ -70,7 +74,8 @@ class Solution {
         long x = Long.parseLong(n);
         long ans = -1;
         for (long t : get(n)) {
-            if (ans == -1 || Math.abs(t - x) < Math.abs(ans - x) || (Math.abs(t - x) == Math.abs(ans - x) && t < ans)) {
+            if (ans == -1 || Math.abs(t - x) < Math.abs(ans - x)
+                || (Math.abs(t - x) == Math.abs(ans - x) && t < ans)) {
                 ans = t;
             }
         }
@@ -115,8 +120,7 @@ public:
         res.insert((long)pow(10, l - 1) - 1);
         res.insert((long)pow(10, l) + 1);
         long left = stol(n.substr(0, (l + 1) / 2));
-        for (long i = left - 1; i <= left + 1; ++i)
-        {
+        for (long i = left - 1; i <= left + 1; ++i) {
             string prefix = to_string(i);
             string t = prefix + string(prefix.rbegin() + (l & 1), prefix.rend());
             res.insert(stol(t));

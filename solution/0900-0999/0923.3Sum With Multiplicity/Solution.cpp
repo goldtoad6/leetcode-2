@@ -1,20 +1,25 @@
 class Solution {
 public:
+    const int mod = 1e9 + 7;
+
     int threeSumMulti(vector<int>& arr, int target) {
-        unordered_map<int, long> c;
-        for (int a : arr) c[a]++;
-        long res = 0;
-        for (auto it : c)
-            for (auto it2 : c) {
-                int i = it.first, j = it2.first, k = target - i - j;
-                if (!c.count(k)) continue;
-                if (i == j && j == k)
-                    res += c[i] * (c[i] - 1) * (c[i] - 2) / 6;
-                else if (i == j && j != k)
-                    res += c[i] * (c[i] - 1) / 2 * c[k];
-                else if (i < j && j < k)
-                    res += c[i] * c[j] * c[k];
+        int cnt[101] = {0};
+        for (int& v : arr) {
+            ++cnt[v];
+        }
+        long ans = 0;
+        for (int j = 0; j < arr.size(); ++j) {
+            int b = arr[j];
+            --cnt[b];
+            for (int i = 0; i < j; ++i) {
+                int a = arr[i];
+                int c = target - a - b;
+                if (c >= 0 && c <= 100) {
+                    ans += cnt[c];
+                    ans %= mod;
+                }
             }
-        return res % int(1e9 + 7);
+        }
+        return ans;
     }
 };

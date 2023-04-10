@@ -31,14 +31,14 @@
 <p>Return an <code>answer</code> array (of length <code>seq.length</code>) that encodes such a&nbsp;choice of <code>A</code> and <code>B</code>:&nbsp; <code>answer[i] = 0</code> if <code>seq[i]</code> is part of <code>A</code>, else <code>answer[i] = 1</code>.&nbsp; Note that even though multiple answers may exist, you may return any of them.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> seq = &quot;(()())&quot;
 <strong>Output:</strong> [0,1,1,1,1,0]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> seq = &quot;()(())()&quot;
@@ -59,13 +59,126 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def maxDepthAfterSplit(self, seq: str) -> List[int]:
+        ans = [0] * len(seq)
+        a = b = 0
+        for i, c in enumerate(seq):
+            if c == "(":
+                if a < b:
+                    a += 1
+                else:
+                    b += 1
+                    ans[i] = 1
+            else:
+                if a > b:
+                    a -= 1
+                else:
+                    b -= 1
+                    ans[i] = 1
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int[] maxDepthAfterSplit(String seq) {
+        int[] res = new int[seq.length()];
+        for (int i = 0, cnt = 0; i < res.length; ++i) {
+            if (seq.charAt(i) == '(') {
+                res[i] = cnt++ & 1;
+            } else {
+                res[i] = --cnt & 1;
+            }
+        }
+        return res;
+    }
+}
+```
 
+```java
+class Solution {
+    public int[] maxDepthAfterSplit(String seq) {
+        int n = seq.length();
+        int[] ans = new int[n];
+        int a = 0, b = 0;
+        for (int i = 0; i < n; ++i) {
+            char c = seq.charAt(i);
+            if (c == '(') {
+                if (a < b) {
+                    ++a;
+                } else {
+                    ++b;
+                    ans[i] = 1;
+                }
+            } else {
+                if (a > b) {
+                    --a;
+                } else {
+                    --b;
+                    ans[i] = 1;
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+
+### **C++**
+
+```cpp
+class Solution {
+public:
+    vector<int> maxDepthAfterSplit(string seq) {
+        int n = seq.size();
+        vector<int> ans(n);
+        int a = 0, b = 0;
+        for (int i = 0; i < n; ++i) {
+            char c = seq[i];
+            if (c == '(') {
+                if (a < b)
+                    ++a;
+                else
+                    ++b, ans[i] = 1;
+            } else {
+                if (a > b)
+                    --a;
+                else
+                    --b, ans[i] = 1;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func maxDepthAfterSplit(seq string) []int {
+	ans := make([]int, len(seq))
+	a, b := 0, 0
+	for i, c := range seq {
+		if c == '(' {
+			if a < b {
+				a++
+			} else {
+				b++
+				ans[i] = 1
+			}
+		} else {
+			if a > b {
+				a--
+			} else {
+				b--
+				ans[i] = 1
+			}
+		}
+	}
+	return ans
+}
 ```
 
 ### **...**

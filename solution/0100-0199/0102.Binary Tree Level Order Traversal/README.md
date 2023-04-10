@@ -46,6 +46,15 @@
 
 **方法一：BFS**
 
+我们可以使用 BFS 的方法来解决这道题。首先将根节点入队，然后不断地进行以下操作，直到队列为空：
+
+-   遍历当前队列中的所有节点，将它们的值存储到一个临时数组 $t$ 中，然后将它们的孩子节点入队。
+-   将临时数组 $t$ 存储到答案数组中。
+
+最后返回答案数组即可。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点个数。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -60,10 +69,10 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        if root is None:
-            return []
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         ans = []
+        if root is None:
+            return ans
         q = deque([root])
         while q:
             t = []
@@ -144,12 +153,10 @@ public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> ans;
         if (!root) return ans;
-        queue<TreeNode*> q{{root}};
-        while (!q.empty())
-        {
+        queue<TreeNode*> q {{root}};
+        while (!q.empty()) {
             vector<int> t;
-            for (int n = q.size(); n; --n)
-            {
+            for (int n = q.size(); n; --n) {
                 auto node = q.front();
                 q.pop();
                 t.push_back(node->val);
@@ -174,14 +181,13 @@ public:
  *     Right *TreeNode
  * }
  */
-func levelOrder(root *TreeNode) [][]int {
-	var ans [][]int
+func levelOrder(root *TreeNode) (ans [][]int) {
 	if root == nil {
-		return ans
+		return
 	}
-	var q = []*TreeNode{root}
+	q := []*TreeNode{root}
 	for len(q) > 0 {
-		var t []int
+		t := []int{}
 		for n := len(q); n > 0; n-- {
 			node := q[0]
 			q = q[1:]
@@ -195,7 +201,7 @@ func levelOrder(root *TreeNode) [][]int {
 		}
 		ans = append(ans, t)
 	}
-	return ans
+	return
 }
 ```
 
@@ -223,14 +229,10 @@ var levelOrder = function (root) {
     while (q.length) {
         let t = [];
         for (let n = q.length; n; --n) {
-            const node = q.shift();
-            t.push(node.val);
-            if (node.left) {
-                q.push(node.left);
-            }
-            if (node.right) {
-                q.push(node.right);
-            }
+            const { val, left, right } = q.shift();
+            t.push(val);
+            left && q.push(left);
+            right && q.push(right);
         }
         ans.push(t);
     }

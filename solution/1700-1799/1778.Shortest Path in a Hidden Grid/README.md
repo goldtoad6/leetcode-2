@@ -116,6 +116,7 @@ The robot is initially standing on cell (1, 0), denoted by the -1.
 #
 #
 
+
 class Solution(object):
     def findShortestPath(self, master: 'GridMaster') -> int:
         def dfs(i, j):
@@ -132,8 +133,12 @@ class Solution(object):
 
         target = None
         s = set()
-        dirs = [['U', 'D', -1, 0], ['D', 'U', 1, 0],
-                ['L', 'R', 0, -1], ['R', 'L', 0, 1]]
+        dirs = [
+            ['U', 'D', -1, 0],
+            ['D', 'U', 1, 0],
+            ['L', 'R', 0, -1],
+            ['R', 'L', 0, 1],
+        ]
         dfs(0, 0)
         if target is None:
             return -1
@@ -187,7 +192,7 @@ class Solution {
         }
         s.remove(0);
         Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{0, 0});
+        q.offer(new int[] {0, 0});
         int ans = -1;
         while (!q.isEmpty()) {
             ++ans;
@@ -201,7 +206,7 @@ class Solution {
                     int x = i + dirs[k], y = j + dirs[k + 1];
                     if (s.contains(x * N + y)) {
                         s.remove(x * N + y);
-                        q.offer(new int[]{x, y});
+                        q.offer(new int[] {x, y});
                     }
                 }
             }
@@ -211,7 +216,7 @@ class Solution {
 
     private void dfs(int i, int j, GridMaster master) {
         if (master.isTarget()) {
-            target = new int[]{i, j};
+            target = new int[] {i, j};
         }
         for (int k = 0; k < 4; ++k) {
             char d = dir[k], nd = ndir[k];

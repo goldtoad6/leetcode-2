@@ -7,7 +7,7 @@
 <p>You are given a <strong>0-indexed</strong> array of positive integers <code>nums</code>. A triplet of three <strong>distinct</strong> indices <code>(i, j, k)</code> is called a <strong>single divisor triplet</strong> of <code>nums</code> if <code>nums[i] + nums[j] + nums[k]</code> is divisible by <strong>exactly one</strong> of <code>nums[i]</code>, <code>nums[j]</code>, or <code>nums[k]</code>.</p>
 Return <em>the number of <strong>single divisor triplets</strong> of </em><code>nums</code><em>.</em>
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [4,6,7,3,2]
@@ -20,7 +20,7 @@ The triplets (0, 2, 3), (0, 3, 2), (2, 0, 3), (2, 3, 0), (3, 0, 2), and (3, 2, 0
 There are 12 single divisor triplets in total.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,2,2]
@@ -31,7 +31,7 @@ The triplets (0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 2, 0), (2, 0, 1), and (2, 1, 0
 There are 6 single divisor triplets in total.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> nums = [1,1,1]
@@ -133,20 +133,21 @@ public:
         vector<int> counter(101);
         for (int& x : nums) ++counter[x];
         long long ans = 0;
-        for (int i = 1; i <= 100; ++i)
-        {
-            for (int j = 1; j <= 100; ++j)
-            {
-                for (int k = 1; k <= 100; ++k)
-                {
+        for (int i = 1; i <= 100; ++i) {
+            for (int j = 1; j <= 100; ++j) {
+                for (int k = 1; k <= 100; ++k) {
                     int cnt1 = counter[i], cnt2 = counter[j], cnt3 = counter[k];
                     int s = i + j + k;
                     int cnt = (s % i == 0) + (s % j == 0) + (s % k == 0);
                     if (cnt != 1) continue;
-                    if (i == j) ans += 1ll * cnt1 * (cnt1 - 1) * cnt3;
-                    else if (i == k) ans += 1ll * cnt1 * (cnt1 - 1) * cnt2;
-                    else if (j == k) ans += 1ll * cnt1 * cnt2 * (cnt2 - 1);
-                    else ans += 1ll * cnt1 * cnt2 * cnt3;
+                    if (i == j)
+                        ans += 1ll * cnt1 * (cnt1 - 1) * cnt3;
+                    else if (i == k)
+                        ans += 1ll * cnt1 * (cnt1 - 1) * cnt2;
+                    else if (j == k)
+                        ans += 1ll * cnt1 * cnt2 * (cnt2 - 1);
+                    else
+                        ans += 1ll * cnt1 * cnt2 * cnt3;
                 }
             }
         }

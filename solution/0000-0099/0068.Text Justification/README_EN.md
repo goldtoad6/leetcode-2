@@ -21,7 +21,7 @@
 </ul>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;This&quot;, &quot;is&quot;, &quot;an&quot;, &quot;example&quot;, &quot;of&quot;, &quot;text&quot;, &quot;justification.&quot;], maxWidth = 16
@@ -32,7 +32,7 @@
 &nbsp; &nbsp;&quot;justification. &nbsp;&quot;
 ]</pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;What&quot;,&quot;must&quot;,&quot;be&quot;,&quot;acknowledgment&quot;,&quot;shall&quot;,&quot;be&quot;], maxWidth = 16
@@ -45,7 +45,7 @@
 <strong>Explanation:</strong> Note that the last line is &quot;shall be    &quot; instead of &quot;shall     be&quot;, because the last line must be left-justified instead of fully-justified.
 Note that the second line is also left-justified because it contains only one word.</pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> words = [&quot;Science&quot;,&quot;is&quot;,&quot;what&quot;,&quot;we&quot;,&quot;understand&quot;,&quot;well&quot;,&quot;enough&quot;,&quot;to&quot;,&quot;explain&quot;,&quot;to&quot;,&quot;a&quot;,&quot;computer.&quot;,&quot;Art&quot;,&quot;is&quot;,&quot;everything&quot;,&quot;else&quot;,&quot;we&quot;,&quot;do&quot;], maxWidth = 20
@@ -175,7 +175,6 @@ class Solution {
         return ans;
     }
 }
-
 ```
 
 ### **C++**
@@ -186,35 +185,29 @@ public:
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
         int n = words.size();
         vector<string> result;
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             int begin = i;
             int wordLen = words[i].size();
-            while (i + 1 < n && words[i + 1].size() + wordLen + 1 <= maxWidth)
-            {
+            while (i + 1 < n && words[i + 1].size() + wordLen + 1 <= maxWidth) {
                 wordLen += words[++i].size() + 1;
             }
             int numberofWords = i - begin + 1;
             int space = 1;
             int extraSpace = 0;
-            if (numberofWords > 1 && i < n - 1)
-            {
+            if (numberofWords > 1 && i < n - 1) {
                 int remaining = maxWidth - wordLen;
                 space = remaining / (numberofWords - 1) + 1;
                 extraSpace = remaining % (numberofWords - 1);
             }
             string line = words[begin];
-            for (int j = 1; j < numberofWords; j++)
-            {
+            for (int j = 1; j < numberofWords; j++) {
                 line.append(space, ' ');
-                if (j <= extraSpace)
-                {
+                if (j <= extraSpace) {
                     line.push_back(' ');
                 }
                 line += words[begin + j];
             }
-            if (line.size() < maxWidth)
-            {
+            if (line.size() < maxWidth) {
                 line.append(maxWidth - line.size(), ' ');
             }
             result.emplace_back(line);

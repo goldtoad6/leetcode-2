@@ -31,7 +31,6 @@
 <ol>
 	<li>The length of the list is within the range[0, 20000].</li>
     <li>The values of the list elements are within the range [0, 20000].</li>
-
 </ol>
 
 <p><strong>Follow Up: </strong></p>
@@ -50,6 +49,7 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
 
 class Solution:
     def removeDuplicateNodes(self, head: ListNode) -> ListNode:
@@ -151,8 +151,8 @@ public:
             return head;
         }
         unordered_set<int> cache = {head->val};
-        ListNode *cur = head;
-        for (ListNode *p = head->next; p != nullptr; p = p->next) {
+        ListNode* cur = head;
+        for (ListNode* p = head->next; p != nullptr; p = p->next) {
             if (!cache.count(p->val)) {
                 cur->next = p;
                 cur = cur->next;

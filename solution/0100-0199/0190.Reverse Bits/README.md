@@ -60,7 +60,7 @@ class Solution:
     def reverseBits(self, n: int) -> int:
         res = 0
         for i in range(32):
-            res |= ((n & 1) << (31 - i))
+            res |= (n & 1) << (31 - i)
             n >>= 1
         return res
 ```
@@ -129,6 +129,19 @@ impl Solution {
         }
         res
     }
+}
+```
+
+### **Go**
+
+```go
+func reverseBits(num uint32) uint32 {
+	var ans uint32 = 0
+	for i := 0; i < 32; i++ {
+		ans |= (num & 1) << (31 - i)
+		num >>= 1
+	}
+	return ans
 }
 ```
 

@@ -11,7 +11,7 @@
 <p>Return <em>a 2D array representing <strong>any</strong> matrix that fulfills the requirements</em>. It&#39;s guaranteed that <strong>at least one </strong>matrix that fulfills the requirements exists.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> rowSum = [3,8], colSum = [4,7]
@@ -27,7 +27,7 @@ Another possible matrix is: [[1,2],
                              [3,5]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> rowSum = [5,7,10], colSum = [8,6,8]
@@ -42,7 +42,7 @@ Another possible matrix is: [[1,2],
 <ul>
 	<li><code>1 &lt;= rowSum.length, colSum.length &lt;= 500</code></li>
 	<li><code>0 &lt;= rowSum[i], colSum[i] &lt;= 10<sup>8</sup></code></li>
-	<li><code>sum(rows) == sum(columns)</code></li>
+	<li><code>sum(rowSum) == sum(colSum)</code></li>
 </ul>
 
 ## Solutions
@@ -94,10 +94,8 @@ public:
     vector<vector<int>> restoreMatrix(vector<int>& rowSum, vector<int>& colSum) {
         int m = rowSum.size(), n = colSum.size();
         vector<vector<int>> ans(m, vector<int>(n));
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 int x = min(rowSum[i], colSum[j]);
                 ans[i][j] = x;
                 rowSum[i] -= x;
@@ -134,6 +132,49 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} rowSum
+ * @param {number[]} colSum
+ * @return {number[][]}
+ */
+var restoreMatrix = function (rowSum, colSum) {
+    const m = rowSum.length;
+    const n = colSum.length;
+    const ans = Array.from(new Array(m), () => new Array(n).fill(0));
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            const x = Math.min(rowSum[i], colSum[j]);
+            ans[i][j] = x;
+            rowSum[i] -= x;
+            colSum[j] -= x;
+        }
+    }
+    return ans;
+};
+```
+
+### **TypeScript**
+
+```ts
+function restoreMatrix(rowSum: number[], colSum: number[]): number[][] {
+    const m = rowSum.length;
+    const n = colSum.length;
+    const ans = Array.from(new Array(m), () => new Array(n).fill(0));
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            const x = Math.min(rowSum[i], colSum[j]);
+            ans[i][j] = x;
+            rowSum[i] -= x;
+            colSum[j] -= x;
+        }
+    }
+    return ans;
 }
 ```
 

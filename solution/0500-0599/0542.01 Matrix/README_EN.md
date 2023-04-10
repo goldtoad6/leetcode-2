@@ -9,14 +9,14 @@
 <p>The distance between two adjacent cells is <code>1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0542.01%20Matrix/images/01-1-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0,0],[0,1,0],[0,0,0]]
 <strong>Output:</strong> [[0,0,0],[0,1,0],[0,0,0]]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0500-0599/0542.01%20Matrix/images/01-2-grid.jpg" style="width: 253px; height: 253px;" />
 <pre>
 <strong>Input:</strong> mat = [[0,0,0],[0,1,0],[1,1,1]]
@@ -79,11 +79,11 @@ class Solution {
             for (int j = 0; j < n; ++j) {
                 if (mat[i][j] == 0) {
                     ans[i][j] = 0;
-                    q.offer(new int[] { i, j });
+                    q.offer(new int[] {i, j});
                 }
             }
         }
-        int[] dirs = new int[] { -1, 0, 1, 0, -1 };
+        int[] dirs = new int[] {-1, 0, 1, 0, -1};
         while (!q.isEmpty()) {
             int[] t = q.poll();
             for (int i = 0; i < 4; ++i) {
@@ -91,14 +91,13 @@ class Solution {
                 int y = t[1] + dirs[i + 1];
                 if (x >= 0 && x < m && y >= 0 && y < n && ans[x][y] == -1) {
                     ans[x][y] = ans[t[0]][t[1]] + 1;
-                    q.offer(new int[] { x, y });
+                    q.offer(new int[] {x, y});
                 }
             }
         }
         return ans;
     }
 }
-
 ```
 
 ### **C++**
@@ -110,28 +109,22 @@ public:
         int m = mat.size(), n = mat[0].size();
         vector<vector<int>> ans(m, vector<int>(n, -1));
         queue<pair<int, int>> q;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                if (mat[i][j] == 0)
-                {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (mat[i][j] == 0) {
                     ans[i][j] = 0;
                     q.emplace(i, j);
                 }
             }
         }
         vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
-            for (int i = 0; i < 4; ++i)
-            {
+            for (int i = 0; i < 4; ++i) {
                 int x = p.first + dirs[i];
                 int y = p.second + dirs[i + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && ans[x][y] == -1)
-                {
+                if (x >= 0 && x < m && y >= 0 && y < n && ans[x][y] == -1) {
                     ans[x][y] = ans[p.first][p.second] + 1;
                     q.emplace(x, y);
                 }

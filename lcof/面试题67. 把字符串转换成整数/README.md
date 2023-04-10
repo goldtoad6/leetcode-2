@@ -93,7 +93,7 @@ class Solution:
         sign = -1 if str[i] == '-' else 1
         if str[i] in ['-', '+']:
             i += 1
-        res, flag = 0, (2 ** 31 - 1) // 10
+        res, flag = 0, (2**31 - 1) // 10
         while i < n:
             # 非数字，跳出循环体
             if not str[i].isdigit():
@@ -101,7 +101,7 @@ class Solution:
             c = int(str[i])
             # 溢出判断
             if res > flag or (res == flag and c > 7):
-                return 2 ** 31 - 1 if sign > 0 else -2 ** 31
+                return 2**31 - 1 if sign > 0 else -(2**31)
             res = res * 10 + c
             i += 1
         return sign * res
@@ -130,7 +130,8 @@ class Solution {
             // 非数字，跳出循环体
             if (str.charAt(i) < '0' || str.charAt(i) > '9') break;
             // 溢出判断
-            if (res > flag || (res == flag) && str.charAt(i) > '7') return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            if (res > flag || (res == flag) && str.charAt(i) > '7')
+                return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             res = res * 10 + (str.charAt(i) - '0');
         }
         return sign * res;
@@ -213,6 +214,67 @@ func strToInt(str string) int {
 		return math.MinInt32
 	}
 	return sign * x
+}
+```
+
+### **C#**
+
+```cs
+public class Solution {
+    public int StrToInt(string str) {
+        if (string.IsNullOrWhiteSpace(str))
+        {
+            return 0;
+        }
+
+        str = str.Trim();
+        int currentIndex = 0;
+        bool minus = false;
+        if (str[currentIndex] == '+')
+        {
+            minus = false;
+            currentIndex++;
+        }
+        else if (str[currentIndex] == '-')
+        {
+            minus = true;
+            currentIndex++;
+        }
+
+        long result = 0;
+        for (; currentIndex < str.Length; currentIndex++)
+        {
+            if (!char.IsDigit(str[currentIndex]))
+            {
+                break;
+            }
+
+            if (minus && result - 1 > int.MaxValue)
+            {
+                return int.MinValue;
+            }
+            else if (!minus && result > int.MaxValue)
+            {
+                return int.MaxValue;
+            }
+
+            result = result * 10 + (str[currentIndex] - '0');
+        }
+
+        if (minus && result - 1 > int.MaxValue)
+        {
+            return int.MinValue;
+        }
+        else if (!minus && result > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+        else
+        {
+            return (minus ? -1 : 1) * (int)result;
+        }
+
+    }
 }
 ```
 

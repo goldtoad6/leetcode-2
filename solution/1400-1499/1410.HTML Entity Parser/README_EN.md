@@ -22,7 +22,7 @@
 <p>Return <em>the text after replacing the entities by the special characters</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;&amp;amp; is an HTML entity but &amp;ambassador; is not.&quot;
@@ -30,7 +30,7 @@
 <strong>Explanation:</strong> The parser will replace the &amp;amp; entity by &amp;
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> text = &quot;and I quote: &amp;quot;...&amp;quot;&quot;
@@ -52,13 +52,103 @@
 ### **Python3**
 
 ```python
-
+class Solution:
+    def entityParser(self, text: str) -> str:
+        d = {
+            '&quot;': '"',
+            '&apos;': "'",
+            '&amp;': "&",
+            "&gt;": '>',
+            "&lt;": '<',
+            "&frasl;": '/',
+        }
+        i, n = 0, len(text)
+        ans = []
+        while i < n:
+            for l in range(1, 8):
+                j = i + l
+                if text[i:j] in d:
+                    ans.append(d[text[i:j]])
+                    i = j
+                    break
+            else:
+                ans.append(text[i])
+                i += 1
+        return ''.join(ans)
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public String entityParser(String text) {
+        Map<String, String> d = new HashMap<>();
+        d.put("&quot;", "\"");
+        d.put("&apos;", "'");
+        d.put("&amp;", "&");
+        d.put("&gt;", ">");
+        d.put("&lt;", "<");
+        d.put("&frasl;", "/");
+        StringBuilder ans = new StringBuilder();
+        int i = 0;
+        int n = text.length();
+        while (i < n) {
+            boolean find = false;
+            for (int l = 1; l < 8; ++l) {
+                int j = i + l;
+                if (j <= n) {
+                    String t = text.substring(i, j);
+                    if (d.containsKey(t)) {
+                        ans.append(d.get(t));
+                        i = j;
+                        find = true;
+                        break;
+                    }
+                }
+            }
+            if (!find) {
+                ans.append(text.charAt(i++));
+            }
+        }
+        return ans.toString();
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    string entityParser(string text) {
+        unordered_map<string, string> d;
+        d["&quot;"] = "\"";
+        d["&apos;"] = "'";
+        d["&amp;"] = "&";
+        d["&gt;"] = ">";
+        d["&lt;"] = "<";
+        d["&frasl;"] = "/";
+        string ans = "";
+        int i = 0, n = text.size();
+        while (i < n) {
+            bool find = false;
+            for (int l = 1; l < 8; ++l) {
+                int j = i + l;
+                if (j <= n) {
+                    string t = text.substr(i, l);
+                    if (d.count(t)) {
+                        ans += d[t];
+                        i = j;
+                        find = true;
+                        break;
+                    }
+                }
+            }
+            if (!find) ans += text[i++];
+        }
+        return ans;
+    }
+};
 ```
 
 ### **...**

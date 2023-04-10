@@ -65,7 +65,9 @@
 
 ```python
 class Solution:
-    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+    def kSmallestPairs(
+        self, nums1: List[int], nums2: List[int], k: int
+    ) -> List[List[int]]:
         q = [[u + nums2[0], i, 0] for i, u in enumerate(nums1[:k])]
         heapify(q)
         ans = []
@@ -87,7 +89,7 @@ class Solution {
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
         for (int i = 0; i < Math.min(nums1.length, k); ++i) {
-            q.offer(new int[]{nums1[i] + nums2[0], i, 0});
+            q.offer(new int[] {nums1[i] + nums2[0], i, 0});
         }
         List<List<Integer>> ans = new ArrayList<>();
         while (!q.isEmpty() && k > 0) {
@@ -95,7 +97,7 @@ class Solution {
             ans.add(Arrays.asList(nums1[e[1]], nums2[e[2]]));
             --k;
             if (e[2] + 1 < nums2.length) {
-                q.offer(new int[]{nums1[e[1]] + nums2[e[2] + 1], e[1], e[2] + 1});
+                q.offer(new int[] {nums1[e[1]] + nums2[e[2] + 1], e[1], e[2] + 1});
             }
         }
         return ans;
@@ -108,9 +110,8 @@ class Solution {
 ```cpp
 class Solution {
 public:
-    vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k) {
-        auto cmp = [&nums1, &nums2](const pair<int, int> &a, const pair<int, int> &b)
-        {
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        auto cmp = [&nums1, &nums2](const pair<int, int>& a, const pair<int, int>& b) {
             return nums1[a.first] + nums2[a.second] > nums1[b.first] + nums2[b.second];
         };
 
@@ -120,11 +121,10 @@ public:
         priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq(cmp);
         for (int i = 0; i < min(k, m); i++)
             pq.emplace(i, 0);
-        while (k-- && !pq.empty())
-        {
+        while (k-- && !pq.empty()) {
             auto [x, y] = pq.top();
             pq.pop();
-            ans.emplace_back(initializer_list<int>{nums1[x], nums2[y]});
+            ans.emplace_back(initializer_list<int> {nums1[x], nums2[y]});
             if (y + 1 < n)
                 pq.emplace(x, y + 1);
         }

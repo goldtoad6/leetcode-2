@@ -13,7 +13,7 @@
 <p>Return<em> the minimum number of rotations you need to perform to maximize your profit.</em> If there is <strong>no scenario</strong> where the profit is positive, return <code>-1</code>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1599.Maximum%20Profit%20of%20Operating%20a%20Centennial%20Wheel/images/wheeldiagram12.png" style="width: 700px; height: 225px;" />
 <pre>
 <strong>Input:</strong> customers = [8,3], boardingCost = 5, runningCost = 6
@@ -25,7 +25,7 @@
 The highest profit was $37 after rotating the wheel 3 times.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> customers = [10,9,6], boardingCost = 6, runningCost = 4
@@ -41,7 +41,7 @@ The highest profit was $37 after rotating the wheel 3 times.
 The highest profit was $122 after rotating the wheel 7 times.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> customers = [3,4,0,5,1], boardingCost = 1, runningCost = 92
@@ -72,13 +72,104 @@ The profit was never positive, so return -1.
 ### **Python3**
 
 ```python
-
+class Solution:
+    def minOperationsMaxProfit(
+        self, customers: List[int], boardingCost: int, runningCost: int
+    ) -> int:
+        ans = -1
+        mx = t = 0
+        wait = 0
+        i = 0
+        while wait or i < len(customers):
+            wait += customers[i] if i < len(customers) else 0
+            up = wait if wait < 4 else 4
+            wait -= up
+            t += up * boardingCost - runningCost
+            i += 1
+            if t > mx:
+                mx = t
+                ans = i
+        return ans
 ```
 
 ### **Java**
 
 ```java
+class Solution {
+    public int minOperationsMaxProfit(int[] customers, int boardingCost, int runningCost) {
+        int ans = -1;
+        int mx = 0, t = 0;
+        int wait = 0, i = 0;
+        while (wait > 0 || i < customers.length) {
+            wait += i < customers.length ? customers[i] : 0;
+            int up = Math.min(4, wait);
+            wait -= up;
+            ++i;
+            t += up * boardingCost - runningCost;
+            if (t > mx) {
+                mx = t;
+                ans = i;
+            }
+        }
+        return ans;
+    }
+}
+```
 
+### **C++**
+
+```cpp
+class Solution {
+public:
+    int minOperationsMaxProfit(vector<int>& customers, int boardingCost, int runningCost) {
+        int ans = -1;
+        int mx = 0, t = 0;
+        int wait = 0, i = 0;
+        while (wait || i < customers.size()) {
+            wait += i < customers.size() ? customers[i] : 0;
+            int up = min(4, wait);
+            wait -= up;
+            ++i;
+            t += up * boardingCost - runningCost;
+            if (t > mx) {
+                mx = t;
+                ans = i;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+### **Go**
+
+```go
+func minOperationsMaxProfit(customers []int, boardingCost int, runningCost int) int {
+	ans := -1
+	t, mx := 0, 0
+	wait, i := 0, 0
+	for wait > 0 || i < len(customers) {
+		if i < len(customers) {
+			wait += customers[i]
+		}
+		up := min(4, wait)
+		wait -= up
+		t += up*boardingCost - runningCost
+		i++
+		if t > mx {
+			mx = t
+			ans = i
+		}
+	}
+	return ans
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 ```
 
 ### **...**

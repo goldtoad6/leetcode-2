@@ -48,7 +48,7 @@
 
 我们在 `[0, n - 3]` 范围内枚举 i，在 `[i + 1, n - 2]` 范围内枚举 j，在 `[j + 1, n - 1]` 范围内进行二分查找，找出第一个大于等于 `nums[i] + nums[j]` 的下标 left，那么在 `[j + 1, left - 1]` 范围内的 k 满足条件，将其累加到结果 ans。
 
-时间复杂度：$O(n²logn)$。
+时间复杂度：$O(n^2\log n)$。
 
 <!-- tabs:start -->
 
@@ -173,10 +173,8 @@ public:
     int triangleNumber(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         int ans = 0, n = nums.size();
-        for (int i = 0; i < n - 2; ++i)
-        {
-            for (int j = i + 1; j < n - 1; ++j)
-            {
+        for (int i = 0; i < n - 2; ++i) {
+            for (int j = i + 1; j < n - 1; ++j) {
                 int k = lower_bound(nums.begin() + j + 1, nums.end(), nums[i] + nums[j]) - nums.begin() - 1;
                 ans += k - j;
             }

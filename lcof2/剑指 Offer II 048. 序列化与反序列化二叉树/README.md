@@ -72,8 +72,8 @@
 #         self.left = None
 #         self.right = None
 
-class Codec:
 
+class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
 
@@ -96,7 +96,6 @@ class Codec:
         preorder(root)
         return ''.join(res)
 
-
     def deserialize(self, data):
         """Decodes your encoded data to tree.
 
@@ -114,6 +113,7 @@ class Codec:
             return TreeNode(int(first), inner(), inner())
 
         return inner()
+
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
@@ -203,7 +203,6 @@ public class Codec {
  */
 class Codec {
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if (!root) return "";
@@ -213,9 +212,9 @@ public:
     }
 
     void preorder(TreeNode* root, string& s) {
-        if (!root) s += "# ";
-        else
-        {
+        if (!root)
+            s += "# ";
+        else {
             s += to_string(root->val) + " ";
             preorder(root->left, s);
             preorder(root->right, s);

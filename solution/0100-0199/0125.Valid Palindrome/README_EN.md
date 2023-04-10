@@ -9,7 +9,7 @@
 <p>Given a string <code>s</code>, return <code>true</code><em> if it is a <strong>palindrome</strong>, or </em><code>false</code><em> otherwise</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;A man, a plan, a canal: Panama&quot;
@@ -17,7 +17,7 @@
 <strong>Explanation:</strong> &quot;amanaplanacanalpanama&quot; is a palindrome.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;race a car&quot;
@@ -25,7 +25,7 @@
 <strong>Explanation:</strong> &quot;raceacar&quot; is not a palindrome.
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot; &quot;
@@ -96,9 +96,12 @@ public:
     bool isPalindrome(string s) {
         int i = 0, j = s.size() - 1;
         while (i < j) {
-            if (!isAlphaNum(s[i])) ++i;
-            else if (!isAlphaNum(s[j])) --j;
-            else if ((s[i] + 32 - 'a') % 32 != (s[j] + 32 - 'a') % 32) return false;
+            if (!isAlphaNum(s[i]))
+                ++i;
+            else if (!isAlphaNum(s[j]))
+                --j;
+            else if ((s[i] + 32 - 'a') % 32 != (s[j] + 32 - 'a') % 32)
+                return false;
             else {
                 ++i;
                 --j;
@@ -108,7 +111,7 @@ public:
     }
 
 private:
-    bool isAlphaNum(char &ch) {
+    bool isAlphaNum(char& ch) {
         if (ch >= 'a' && ch <= 'z') return true;
         if (ch >= 'A' && ch <= 'Z') return true;
         if (ch >= '0' && ch <= '9') return true;
@@ -260,6 +263,59 @@ impl Solution {
             }
         }
         true
+    }
+}
+```
+
+### **Go**
+
+```go
+func isPalindrome(s string) bool {
+	s = strings.ToLower(s)
+	left, right := 0, len(s) - 1
+	for left < right {
+		for left < right && !verify(s[left]) {
+			left++
+		}
+		for left < right && !verify(s[right]) {
+			right--
+		}
+		if left < right {
+			if s[left] != s[right] {
+				return false
+			}
+			left++
+			right--
+		}
+	}
+	return true
+}
+
+func verify(ch byte) bool {
+	return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')
+}
+```
+
+### **PHP**
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Boolean
+     */
+    function isPalindrome($s) {
+        $regex = "/[a-z0-9]/";
+        $s = strtolower($s);
+        preg_match_all($regex, $s, $matches);
+        if ($matches[0] == Null) return true;
+        $len = floor(count($matches[0]) / 2);
+        for ($i = 0; $i < $len; $i++) {
+            if ($matches[0][$i] != $matches[0][count($matches[0]) - 1 - $i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 ```

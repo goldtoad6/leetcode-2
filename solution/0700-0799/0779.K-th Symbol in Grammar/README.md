@@ -30,7 +30,7 @@
 <strong>输出:</strong> 0
 <strong>解释:</strong> 
 第一行: 0 
-第二行: 0<u>1</u>
+第二行: <u>0</u>1
 </pre>
 
 <p><strong>示例 3:</strong></p>
@@ -56,6 +56,59 @@
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：递归**
+
+我们先来看一下前几行的规律：
+
+```
+n = 1: 0
+n = 2: 0 1
+n = 3: 0 1 1 0
+n = 4: 0 1 1 0 1 0 0 1
+n = 5: 0 1 1 0 1 0 0 1 1 0 0 1 0 1 1 0
+...
+```
+
+可以发现，每一行的前半部分和上一行完全一致，后半部分是上一行的反转。注意，这里的“反转”指的是 $0$ 变 $1$, $1$ 变 $0$。
+
+如果 $k$ 在前半部分，那么第 $k$ 个字符就是上一行的第 $k$ 个字符，直接递归 $kthGrammar(n - 1, k)$ 即可。
+
+如果 $k$ 在后半部分，那么第 $k$ 个字符就是上一行的第 $k - 2^{n - 2}$ 个字符的反转，即 $kthGrammar(n - 1, k - 2^{n - 2}) \oplus 1 $。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。
+
+**方法二：位运算 + 脑筋急转弯**
+
+题目中索引从 $1$ 开始，我们将 $k$ 改成 $k-1$，将索引转换为从 $0$ 开始。在接下来的讨论中，索引均从 $0$ 开始。
+
+仔细观察，一行中的第 $i$ 个字符，会在第 $2i$ 和第 $2i+1$ 个位置产生两个字符。
+
+```
+0 1 1 0 1 0 0 1 1 0 0 1 0 1 1 0
+```
+
+如果第 $i$ 个字符是 $0$，那么在位置 $2i$ 和 $2i+1$ 产生的字符分别是 $0$ 和 $1$；如果第 $i$ 个字符是 $1$，产生的字符是 $1$ 和 $0$。
+
+```
+0 1 1 0 1 0 0 1 1 0 0 1 0 1 1 0
+      ^     * *
+```
+
+```
+0 1 1 0 1 0 0 1 1 0 0 1 0 1 1 0
+        ^       * *
+```
+
+可以发现，第 $2i$ （偶数位）个字符总是和第 $i$ 个字符相同，而第 $2i+1$ （奇数位）个字符是第 $i$ 个字符的反转。也就是说，奇数位上的字符总是发生了一次反转而来的。反转偶数次，字符不变；反转奇数次，相当于反转了一次。
+
+因此，我们只需要看 $k$ 这个数字是否是奇数，若是，累计一次反转。然后将 $k$ 除以 $2$，继续判断，并累计反转次数，直至 $k$ 为 $0$。
+
+最后判断反转的次数是否为奇数，是则答案为 $1$，否则为 $0$。
+
+以上累计反转次数的过程，实际上等价于求 $k$ 的二进制表示中，有多少位是 $1$。
+
+时间复杂度 $O(\log k)$，空间复杂度 $O(1)$。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -70,6 +123,12 @@ class Solution:
         if k <= (1 << (n - 2)):
             return self.kthGrammar(n - 1, k)
         return self.kthGrammar(n - 1, k - (1 << (n - 2))) ^ 1
+```
+
+```python
+class Solution:
+    def kthGrammar(self, n: int, k: int) -> int:
+        return (k - 1).bit_count() & 1
 ```
 
 ### **Java**
@@ -90,6 +149,14 @@ class Solution {
 }
 ```
 
+```java
+class Solution {
+    public int kthGrammar(int n, int k) {
+        return Integer.bitCount(k - 1) & 1;
+    }
+}
+```
+
 ### **C++**
 
 ```cpp
@@ -99,6 +166,15 @@ public:
         if (n == 1) return 0;
         if (k <= (1 << (n - 2))) return kthGrammar(n - 1, k);
         return kthGrammar(n - 1, k - (1 << (n - 2))) ^ 1;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int kthGrammar(int n, int k) {
+        return __builtin_popcount(k - 1) & 1;
     }
 };
 ```
@@ -114,6 +190,12 @@ func kthGrammar(n int, k int) int {
 		return kthGrammar(n-1, k)
 	}
 	return kthGrammar(n-1, k-(1<<(n-2))) ^ 1
+}
+```
+
+```go
+func kthGrammar(n int, k int) int {
+	return bits.OnesCount(uint(k-1)) & 1
 }
 ```
 

@@ -75,7 +75,7 @@
 1. **单点更新** `update(x, delta)`： 把序列 x 位置的数加上一个值 delta；
 1. **前缀和查询** `query(x)`：查询序列 `[1,...x]` 区间的区间和，即位置 x 的前缀和。
 
-这两个操作的时间复杂度均为 `O(log n)`。
+这两个操作的时间复杂度均为 $O(\log n)$。
 
 对于本题，要想得到在 k 次交换内字典序最小整数，我们可以「贪心」地从 num 的最高位开始考虑，即希望 num 的最高位尽可能小。我们可以依次枚举 `0~9`，对于当前枚举到的数位 x，判断是否可以将某个位置上的 x 通过最多 k 次交换移动到最高位。由于每一次交换只能交换相邻位置的两个数字，因此将一个距离最高位为 s 的数位移动到最高位，需要 s 次交换操作。例如当 `num = 97620` 时，0 与最高位的距离为 4，我们可以通过 4 次交换操作把 0 移动到最高位。
 
@@ -221,11 +221,12 @@ public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) { }
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -233,8 +234,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -254,17 +254,13 @@ public:
         for (int i = 0; i < n; ++i) pos[num[i] - '0'].push(i + 1);
         BinaryIndexedTree* tree = new BinaryIndexedTree(n);
         string ans = "";
-        for (int i = 1; i <= n; ++i)
-        {
-            for (int v = 0; v < 10; ++v)
-            {
+        for (int i = 1; i <= n; ++i) {
+            for (int v = 0; v < 10; ++v) {
                 auto& q = pos[v];
-                if (!q.empty())
-                {
+                if (!q.empty()) {
                     int j = q.front();
                     int dist = tree->query(n) - tree->query(j) + j - i;
-                    if (dist <= k)
-                    {
+                    if (dist <= k) {
                         k -= dist;
                         q.pop();
                         ans += (v + '0');

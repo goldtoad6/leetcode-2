@@ -6,32 +6,36 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给定一个 <strong>正整数</strong> <code>num</code> ，编写一个函数，如果 <code>num</code> 是一个完全平方数，则返回 <code>true</code> ，否则返回 <code>false</code> 。</p>
+<p>给你一个正整数 <code>num</code> 。如果 <code>num</code> 是一个完全平方数，则返回 <code>true</code> ，否则返回 <code>false</code> 。</p>
 
-<p><strong>进阶：不要</strong> 使用任何内置的库函数，如  <code>sqrt</code> 。</p>
+<p><strong>完全平方数</strong> 是一个可以写成某个整数的平方的整数。换句话说，它可以写成某个整数和自身的乘积。</p>
 
-<p> </p>
+<p>不能使用任何内置的库函数，如&nbsp; <code>sqrt</code> 。</p>
 
-<p><strong>示例 1：</strong></p>
+<p>&nbsp;</p>
+
+<p><strong class="example">示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>num = 16
 <strong>输出：</strong>true
+<strong>解释：</strong>返回 true ，因为 4 * 4 = 16 且 4 是一个整数。
 </pre>
 
-<p><strong>示例 2：</strong></p>
+<p><strong class="example">示例 2：</strong></p>
 
 <pre>
 <strong>输入：</strong>num = 14
 <strong>输出：</strong>false
+<strong>解释：</strong>返回 false ，因为 3.742 * 3.742 = 14 但 3.742 不是一个整数。
 </pre>
 
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
 <ul>
-	<li><code>1 <= num <= 2^31 - 1</code></li>
+	<li><code>1 &lt;= num &lt;= 2<sup>31</sup> - 1</code></li>
 </ul>
 
 ## 解法
@@ -40,13 +44,13 @@
 
 **方法一：二分查找**
 
-不断循环二分枚举数字，判断该数的平方与 $num$ 的大小关系，进而缩短空间，继续循环直至 `left < right` 不成立。循环结束判断 $left^2$ 与 $num$ 是否相等。
+不断循环二分枚举数字，判断该数的平方与 `num` 的大小关系，进而缩短空间，继续循环直至 $left \lt right$ 不成立。循环结束判断 $left^2$ 与 `num` 是否相等。
 
 时间复杂度：$O(logN)$。
 
 **方法二：转换为数学问题**
 
-由于 `n² = 1 + 3 + 5 + ... + (2n-1)`，对数字 $num$ 不断减去 i (`i = 1, 3, 5, ...`) 直至 $num$ 不大于 0，如果最终 $num$ 等于 0，说明是一个有效的完全平方数。
+由于 `n² = 1 + 3 + 5 + ... + (2n-1)`，对数字 `num` 不断减去 $i$ (`i = 1, 3, 5, ...`) 直至 `num` 不大于 0，如果最终 `num` 等于 0，说明是一个有效的完全平方数。
 
 时间复杂度：$O(sqrt(N))$。
 
@@ -118,11 +122,12 @@ class Solution {
 public:
     bool isPerfectSquare(int num) {
         long left = 1, right = num;
-        while (left < right)
-        {
+        while (left < right) {
             long mid = left + right >> 1;
-            if (mid * mid >= num) right = mid;
-            else left = mid + 1;
+            if (mid * mid >= num)
+                right = mid;
+            else
+                left = mid + 1;
         }
         return left * left == num;
     }

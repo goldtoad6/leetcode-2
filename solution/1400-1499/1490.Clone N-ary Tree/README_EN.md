@@ -18,7 +18,7 @@ class Node {
 <p><em>Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).</em></p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1490.Clone%20N-ary%20Tree/images/narytreeexample.png" style="width: 100%; max-width: 300px;" /></p>
 
@@ -27,7 +27,7 @@ class Node {
 <strong>Output:</strong> [1,null,3,2,4,null,5,6]
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1400-1499/1490.Clone%20N-ary%20Tree/images/sample_4_964.png" style="width: 296px; height: 241px;" /></p>
 
@@ -64,12 +64,13 @@ class Node:
         self.children = children if children is not None else []
 """
 
+
 class Solution:
     def cloneTree(self, root: 'Node') -> 'Node':
-        if root:
-            node = Node(val=root.val)
-            node.children = [self.cloneTree(child) for child in root.children]
-            return node
+        if root is None:
+            return None
+        children = [self.cloneTree(child) for child in root.children]
+        return Node(root.val, children)
 ```
 
 ### **Java**
@@ -103,11 +104,11 @@ class Solution {
         if (root == null) {
             return null;
         }
-        Node node = new Node(root.val);
+        ArrayList<Node> children = new ArrayList<>();
         for (Node child : root.children) {
-            node.children.add(cloneTree(child));
+            children.add(cloneTree(child));
         }
-        return node;
+        return new Node(root.val, children);
     }
 }
 ```
@@ -138,16 +139,14 @@ public:
 class Solution {
 public:
     Node* cloneTree(Node* root) {
-        if (root == nullptr) {
-            return nullptr;
+        if (!root) {
+            return root;
         }
-        Node* node = new Node(root->val);
         vector<Node*> children;
-        for (Node* node : root->children) {
-            children.push_back(cloneTree(node));
+        for (Node* child : root->children) {
+            children.emplace_back(cloneTree(child));
         }
-        node->children = children;
-        return node;
+        return new Node(root->val, children);
     }
 };
 ```
@@ -167,11 +166,11 @@ func cloneTree(root *Node) *Node {
 	if root == nil {
 		return nil
 	}
-	node := &Node{Val: root.Val}
+	children := []*Node{}
 	for _, child := range root.Children {
-		node.Children = append(node.Children, cloneTree(child))
+		children = append(children, cloneTree(child))
 	}
-	return node
+	return &Node{root.Val, children}
 }
 ```
 

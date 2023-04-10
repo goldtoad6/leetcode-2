@@ -10,7 +10,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 
@@ -38,7 +38,7 @@ For the table 10: Corina orders &quot;Beef Burrito&quot;.
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 
@@ -54,7 +54,7 @@ For the table 12: James, Ratesh and Amadeus order &quot;Fried Chicken&quot;.
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <pre>
 
@@ -69,11 +69,17 @@ For the table 12: James, Ratesh and Amadeus order &quot;Fried Chicken&quot;.
 <p><strong>Constraints:</strong></p>
 
 <ul>
+
     <li><code>1 &lt;=&nbsp;orders.length &lt;= 5 * 10^4</code></li>
+
     <li><code>orders[i].length == 3</code></li>
+
     <li><code>1 &lt;= customerName<sub>i</sub>.length, foodItem<sub>i</sub>.length &lt;= 20</code></li>
+
     <li><code>customerName<sub>i</sub></code> and <code>foodItem<sub>i</sub></code> consist of lowercase and uppercase English letters and the space character.</li>
+
     <li><code>tableNumber<sub>i</sub>&nbsp;</code>is a valid integer between <code>1</code> and <code>500</code>.</li>
+
 </ul>
 
 ## Solutions
@@ -150,8 +156,7 @@ public:
         unordered_set<int> tables;
         unordered_set<string> foods;
         unordered_map<string, int> mp;
-        for (auto& order : orders)
-        {
+        for (auto& order : orders) {
             int table = stoi(order[1]);
             string food = order[2];
             tables.insert(table);
@@ -169,12 +174,10 @@ public:
         title.push_back("Table");
         for (auto e : f) title.push_back(e);
         res.push_back(title);
-        for (int table : t)
-        {
+        for (int table : t) {
             vector<string> tmp;
             tmp.push_back(to_string(table));
-            for (string food : f)
-            {
+            for (string food : f) {
                 tmp.push_back(to_string(mp[to_string(table) + "." + food]));
             }
             res.push_back(tmp);

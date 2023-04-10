@@ -12,7 +12,7 @@
 
 <p>&nbsp;</p>
 
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1600-1699/1631.Path%20With%20Minimum%20Effort/images/ex1.png" style="width: 300px; height: 300px;" /></p>
 
@@ -28,7 +28,7 @@ This is better than the route of [1,2,2,2,5], where the maximum absolute differe
 
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1600-1699/1631.Path%20With%20Minimum%20Effort/images/ex2.png" style="width: 300px; height: 300px;" /></p>
 
@@ -42,7 +42,7 @@ This is better than the route of [1,2,2,2,5], where the maximum absolute differe
 
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1600-1699/1631.Path%20With%20Minimum%20Effort/images/ex3.png" style="width: 300px; height: 300px;" />
 
@@ -61,10 +61,15 @@ This is better than the route of [1,2,2,2,5], where the maximum absolute differe
 <p><strong>Constraints:</strong></p>
 
 <ul>
+
     <li><code>rows == heights.length</code></li>
+
     <li><code>columns == heights[i].length</code></li>
+
     <li><code>1 &lt;= rows, columns &lt;= 100</code></li>
+
     <li><code>1 &lt;= heights[i][j] &lt;= 10<sup>6</sup></code></li>
+
 </ul>
 
 ## Solutions
@@ -91,9 +96,21 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 if i < m - 1:
-                    e.append((abs(heights[i][j] - heights[i + 1][j]), i * n + j, (i + 1) * n + j))
+                    e.append(
+                        (
+                            abs(heights[i][j] - heights[i + 1][j]),
+                            i * n + j,
+                            (i + 1) * n + j,
+                        )
+                    )
                 if j < n - 1:
-                    e.append((abs(heights[i][j] - heights[i][j + 1]), i * n + j, i * n + j + 1))
+                    e.append(
+                        (
+                            abs(heights[i][j] - heights[i][j + 1]),
+                            i * n + j,
+                            i * n + j + 1,
+                        )
+                    )
         e.sort()
         for h, i, j in e:
             p[find(i)] = find(j)
@@ -241,7 +258,7 @@ class Solution {
         }
         dist[0][0] = 0;
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        q.offer(new int[]{0, 0, 0});
+        q.offer(new int[] {0, 0, 0});
         int[] dirs = {-1, 0, 1, 0, -1};
         while (!q.isEmpty()) {
             int[] p = q.poll();
@@ -252,7 +269,7 @@ class Solution {
                     int nd = Math.max(t, Math.abs(heights[x][y] - heights[i][j]));
                     if (nd < dist[x][y]) {
                         dist[x][y] = nd;
-                        q.offer(new int[]{nd, x, y});
+                        q.offer(new int[] {nd, x, y});
                     }
                 }
             }
@@ -276,17 +293,14 @@ public:
         p.resize(m * n);
         for (int i = 0; i < p.size(); ++i) p[i] = i;
         vector<vector<int>> edges;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
                 if (i < m - 1) edges.push_back({abs(heights[i][j] - heights[i + 1][j]), i * n + j, (i + 1) * n + j});
                 if (j < n - 1) edges.push_back({abs(heights[i][j] - heights[i][j + 1]), i * n + j, i * n + j + 1});
             }
         }
         sort(edges.begin(), edges.end());
-        for (auto& e : edges)
-        {
+        for (auto& e : edges) {
             int i = e[1], j = e[2];
             p[find(i)] = find(j);
             if (find(0) == find(m * n - 1)) return e[0];

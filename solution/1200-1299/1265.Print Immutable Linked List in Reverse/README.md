@@ -86,6 +86,7 @@
 #     def printValue(self) -> None: # print the value of this node.
 #     def getNext(self) -> 'ImmutableListNode': # return the next node.
 
+
 class Solution:
     def printLinkedListInReverse(self, head: 'ImmutableListNode') -> None:
         if head:
@@ -160,10 +161,10 @@ public:
  */
 
 func printLinkedListInReverse(head ImmutableListNode) {
-    if head != nil {
-        printLinkedListInReverse(head.getNext())
-        head.printValue()
-    }
+	if head != nil {
+		printLinkedListInReverse(head.getNext())
+		head.printValue()
+	}
 }
 ```
 

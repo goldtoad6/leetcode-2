@@ -7,7 +7,7 @@
 <p>Given a string <code>s</code> and an integer <code>k</code>, return <em>the number of substrings in </em><code>s</code><em> of length </em><code>k</code><em> with no repeated characters</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;havefunonleetcode&quot;, k = 5
@@ -15,7 +15,7 @@
 <strong>Explanation:</strong> There are 6 substrings they are: &#39;havef&#39;,&#39;avefu&#39;,&#39;vefun&#39;,&#39;efuno&#39;,&#39;etcod&#39;,&#39;tcode&#39;.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> s = &quot;home&quot;, k = 5
@@ -41,14 +41,17 @@
 ```python
 class Solution:
     def numKLenSubstrNoRepeats(self, s: str, k: int) -> int:
+        n = len(s)
+        if k > n or k > 26:
+            return 0
         ans = j = 0
-        mp = {}
+        cnt = Counter()
         for i, c in enumerate(s):
-            if c in mp:
-                j = max(j, mp[c] + 1)
-            mp[c] = i
-            if i - j + 1 >= k:
-                ans += 1
+            cnt[c] += 1
+            while cnt[c] > 1 or i - j + 1 > k:
+                cnt[s[j]] -= 1
+                j += 1
+            ans += i - j + 1 == k
         return ans
 ```
 
@@ -57,17 +60,18 @@ class Solution:
 ```java
 class Solution {
     public int numKLenSubstrNoRepeats(String s, int k) {
+        int n = s.length();
+        if (k > n || k > 26) {
+            return 0;
+        }
+        int[] cnt = new int[128];
         int ans = 0;
-        Map<Character, Integer> mp = new HashMap<>();
-        for (int i = 0, j = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            if (mp.containsKey(c)) {
-                j = Math.max(j, mp.get(c) + 1);
+        for (int i = 0, j = 0; i < n; ++i) {
+            ++cnt[s.charAt(i)];
+            while (cnt[s.charAt(i)] > 1 || i - j + 1 > k) {
+                cnt[s.charAt(j++)]--;
             }
-            mp.put(c, i);
-            if (i - j + 1 >= k) {
-                ++ans;
-            }
+            ans += i - j + 1 == k ? 1 : 0;
         }
         return ans;
     }
@@ -80,14 +84,18 @@ class Solution {
 class Solution {
 public:
     int numKLenSubstrNoRepeats(string s, int k) {
+        int n = s.size();
+        if (k > n || k > 26) {
+            return 0;
+        }
+        int cnt[128]{};
         int ans = 0;
-        unordered_map<int, int> mp;
-        for (int i = 0, j = 0; i < s.size(); ++i)
-        {
-            char c = s[i];
-            if (mp.count(c)) j = max(j, mp[c] + 1);
-            mp[c] = i;
-            if (i - j + 1 >= k) ++ans;
+        for (int i = 0, j = 0; i < n; ++i) {
+            ++cnt[s[i]];
+            while (cnt[s[i]] > 1 || i - j + 1 > k) {
+                --cnt[s[j++]];
+            }
+            ans += i - j + 1 == k;
         }
         return ans;
     }
@@ -97,26 +105,22 @@ public:
 ### **Go**
 
 ```go
-func numKLenSubstrNoRepeats(s string, k int) int {
-	mp := make(map[rune]int)
-	ans, j := 0, 0
-	for i, c := range s {
-		if v, ok := mp[c]; ok {
-			j = max(j, v+1)
+func numKLenSubstrNoRepeats(s string, k int) (ans int) {
+	if k > len(s) || k > 26 {
+		return 0
+	}
+	cnt := [128]int{}
+	for i, j := 0, 0; i < len(s); i++ {
+		cnt[s[i]]++
+		for cnt[s[i]] > 1 || i-j+1 > k {
+			cnt[s[j]]--
+			j++
 		}
-		mp[c] = i
-		if i-j+1 >= k {
+		if i-j+1 == k {
 			ans++
 		}
 	}
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return
 }
 ```
 

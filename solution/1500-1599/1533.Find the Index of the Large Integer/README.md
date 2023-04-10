@@ -10,6 +10,7 @@
 
 <ul>
 	<li><code>int compareSub(int l, int r, int x, int y)</code>：其中&nbsp;<code>0 &lt;= l, r, x, y &lt;&nbsp;ArrayReader.length()</code>，&nbsp;<code>l &lt;= r</code>&nbsp;且&nbsp;<code>x &lt;= y</code>。这个函数比较子数组&nbsp;<code>arr[l..r]</code>&nbsp;与子数组&nbsp;<code>arr[x..y]</code>&nbsp;的和。该函数返回：
+
     <ul>
     	<li><strong>1</strong>&nbsp;若&nbsp;<code>arr[l]+arr[l+1]+...+arr[r] &gt; arr[x]+arr[x+1]+...+arr[y]</code>&nbsp;。</li>
     	<li><strong>0</strong>&nbsp;若&nbsp;<code>arr[l]+arr[l+1]+...+arr[r] == arr[x]+arr[x+1]+...+arr[y]</code>&nbsp;。</li>
@@ -87,14 +88,14 @@ reader.compareSub(4, 4, 5, 5) // 返回 1。因此，可以确定 arr[4] 是数�
 # This is ArrayReader's API interface.
 # You should not implement it, or speculate about its implementation
 # """
-#class ArrayReader(object):
-#	 # Compares the sum of arr[l..r] with the sum of arr[x..y]
-#	 # return 1 if sum(arr[l..r]) > sum(arr[x..y])
-#	 # return 0 if sum(arr[l..r]) == sum(arr[x..y])
-#	 # return -1 if sum(arr[l..r]) < sum(arr[x..y])
+# class ArrayReader(object):
+# 	 # Compares the sum of arr[l..r] with the sum of arr[x..y]
+# 	 # return 1 if sum(arr[l..r]) > sum(arr[x..y])
+# 	 # return 0 if sum(arr[l..r]) == sum(arr[x..y])
+# 	 # return -1 if sum(arr[l..r]) < sum(arr[x..y])
 #    def compareSub(self, l: int, r: int, x: int, y: int) -> int:
 #
-#	 # Returns the length of the array
+# 	 # Returns the length of the array
 #    def length(self) -> int:
 #
 
@@ -103,7 +104,11 @@ class Solution:
     def getIndex(self, reader: 'ArrayReader') -> int:
         left, right = 0, reader.length() - 1
         while left < right:
-            t1, t2, t3 = left, left + (right - left) // 3, left + ((right - left) // 3) * 2 + 1
+            t1, t2, t3 = (
+                left,
+                left + (right - left) // 3,
+                left + ((right - left) // 3) * 2 + 1,
+            )
             cmp = reader.compareSub(t1, t2, t2 + 1, t3)
             if cmp == 0:
                 left = t3 + 1
@@ -175,7 +180,7 @@ class Solution {
 
 class Solution {
 public:
-    int getIndex(ArrayReader &reader) {
+    int getIndex(ArrayReader& reader) {
         int left = 0, right = reader.length() - 1;
         while (left < right) {
             int t1 = left, t2 = left + (right - left) / 3, t3 = left + (right - left) / 3 * 2 + 1;

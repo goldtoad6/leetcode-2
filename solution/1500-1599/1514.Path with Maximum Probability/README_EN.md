@@ -11,7 +11,7 @@
 <p>If there is no path from&nbsp;<code>start</code>&nbsp;to&nbsp;<code>end</code>, <strong>return&nbsp;0</strong>. Your answer will be accepted if it differs from the correct answer by at most <strong>1e-5</strong>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1514.Path%20with%20Maximum%20Probability/images/1558_ex1.png" style="width: 187px; height: 186px;" /></strong></p>
 
@@ -21,7 +21,7 @@
 <strong>Explanation:</strong>&nbsp;There are two paths from start to end, one having a probability of success = 0.2 and the other has 0.5 * 0.5 = 0.25.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1514.Path%20with%20Maximum%20Probability/images/1558_ex2.png" style="width: 189px; height: 186px;" /></strong></p>
 
@@ -30,7 +30,7 @@
 <strong>Output:</strong> 0.30000
 </pre>
 
-<p><strong>Example 3:</strong></p>
+<p><strong class="example">Example 3:</strong></p>
 
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1514.Path%20with%20Maximum%20Probability/images/1558_ex3.png" style="width: 215px; height: 191px;" /></strong></p>
 
@@ -62,7 +62,14 @@
 
 ```python
 class Solution:
-    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
+    def maxProbability(
+        self,
+        n: int,
+        edges: List[List[int]],
+        succProb: List[float],
+        start: int,
+        end: int,
+    ) -> float:
         g = defaultdict(list)
         for (a, b), s in zip(edges, succProb):
             g[a].append((b, s))
@@ -112,16 +119,15 @@ class Solution:
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
         List<Pair<Integer, Double>>[] g = new List[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int i = 0; i < edges.length; ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
             g[a].add(new Pair<>(b, s));
             g[b].add(new Pair<>(a, s));
         }
-        PriorityQueue<Pair<Double, Integer>> q = new PriorityQueue<>(Comparator.comparingDouble(Pair::getKey));
+        PriorityQueue<Pair<Double, Integer>> q
+            = new PriorityQueue<>(Comparator.comparingDouble(Pair::getKey));
         double[] d = new double[n];
         d[start] = 1.0;
         q.offer(new Pair<>(-1.0, start));
@@ -148,9 +154,7 @@ class Solution {
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
         List<Pair<Integer, Double>>[] g = new List[n];
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
+        Arrays.setAll(g, k -> new ArrayList<>());
         for (int i = 0; i < edges.length; ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
@@ -190,8 +194,7 @@ class Solution {
 public:
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start, int end) {
         vector<vector<pair<int, double>>> g(n);
-        for (int i = 0; i < edges.size(); ++i)
-        {
+        for (int i = 0; i < edges.size(); ++i) {
             int a = edges[i][0], b = edges[i][1];
             double s = succProb[i];
             g[a].push_back({b, s});
@@ -201,19 +204,16 @@ public:
         d[start] = 1.0;
         queue<pair<double, int>> q;
         q.push({1.0, start});
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             auto p = q.front();
             q.pop();
             double w = p.first;
             int u = p.second;
             if (d[u] > w) continue;
-            for (auto& e : g[u])
-            {
+            for (auto& e : g[u]) {
                 int v = e.first;
                 double t = e.second;
-                if (d[v] < d[u] * t)
-                {
+                if (d[v] < d[u] * t) {
                     d[v] = d[u] * t;
                     q.push({d[v], v});
                 }

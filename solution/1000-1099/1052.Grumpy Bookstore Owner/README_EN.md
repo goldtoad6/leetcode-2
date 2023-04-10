@@ -15,7 +15,7 @@
 <p>Return <em>the maximum number of customers that can be satisfied throughout the day</em>.</p>
 
 <p>&nbsp;</p>
-<p><strong>Example 1:</strong></p>
+<p><strong class="example">Example 1:</strong></p>
 
 <pre>
 <strong>Input:</strong> customers = [1,0,1,2,1,1,7,5], grumpy = [0,1,0,1,0,1,0,1], minutes = 3
@@ -24,7 +24,7 @@
 The maximum number of customers that can be satisfied = 1 + 1 + 1 + 1 + 7 + 5 = 16.
 </pre>
 
-<p><strong>Example 2:</strong></p>
+<p><strong class="example">Example 2:</strong></p>
 
 <pre>
 <strong>Input:</strong> customers = [1], grumpy = [0], minutes = 1
@@ -49,7 +49,9 @@ The maximum number of customers that can be satisfied = 1 + 1 + 1 + 1 + 7 + 5 = 
 
 ```python
 class Solution:
-    def maxSatisfied(self, customers: List[int], grumpy: List[int], minutes: int) -> int:
+    def maxSatisfied(
+        self, customers: List[int], grumpy: List[int], minutes: int
+    ) -> int:
         s = sum(a * b for a, b in zip(customers, grumpy))
         cs = sum(customers)
         t = ans = 0
@@ -94,18 +96,15 @@ public:
     int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int minutes) {
         int s = 0, cs = 0;
         int n = customers.size();
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             s += customers[i] * grumpy[i];
             cs += customers[i];
         }
         int t = 0, ans = 0;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             t += customers[i] * grumpy[i];
             int j = i - minutes + 1;
-            if (j >= 0)
-            {
+            if (j >= 0) {
                 ans = max(ans, cs - (s - t));
                 t -= customers[j] * grumpy[j];
             }

@@ -89,7 +89,7 @@ class Solution {
         int n = nums.length;
         int[] a = new int[(n + 1) >> 1];
         int[] b = new int[n >> 1];
-        for (int i = 0, j = 0; j < n >> 1; i += 2, ++j) {
+        for (int i = 0, j = 0; j<n> > 1; i += 2, ++j) {
             a[j] = nums[i];
             b[j] = nums[i + 1];
         }
@@ -119,10 +119,11 @@ public:
         int n = nums.size();
         vector<int> a;
         vector<int> b;
-        for (int i = 0; i < n; ++i)
-        {
-            if (i % 2 == 0) a.push_back(nums[i]);
-            else b.push_back(nums[i]);
+        for (int i = 0; i < n; ++i) {
+            if (i % 2 == 0)
+                a.push_back(nums[i]);
+            else
+                b.push_back(nums[i]);
         }
         sort(a.begin(), a.end());
         sort(b.begin(), b.end(), greater<int>());
