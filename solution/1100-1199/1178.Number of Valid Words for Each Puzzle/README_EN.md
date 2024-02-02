@@ -52,24 +52,163 @@ There are no valid words for &quot;gaswxyz&quot; cause none of the words in the 
 
 ## Solutions
 
+### Solution 1: State Compression + Hash Table + Subset Enumeration
+
+According to the problem description, for each puzzle $p$ in the puzzle array $puzzles$, we need to count how many words $w$ contain the first letter of the puzzle $p$, and every letter in $w$ can be found in $p$.
+
+Since each repeated letter in a word only needs to be counted once, we can use the method of binary state compression to convert each word $w$ into a binary number $mask$, where the $i$th bit of $mask$ is $1$ if and only if the letter $i$ appears in the word $w$. We use a hash table $cnt$ to count the number of times each compressed state of all words appears.
+
+Next, we traverse the puzzle array $puzzles$. For each puzzle $p$, we note that its length is fixed at $7$, so we only need to enumerate the subsets of $p$. If the subset contains the first letter of $p$, then we look up its corresponding value in the hash table and add it to the current puzzle's answer.
+
+After the traversal, we can get the number of puzzle solutions corresponding to each puzzle in the puzzle array $puzzles$, and return it.
+
+The time complexity is $O(m \times |w| + n \times 2^{|p|})$, and the space complexity is $O(m)$. Here, $m$ and $n$ are the lengths of the arrays $words$ and $puzzles$ respectively, and $|w|$ and $|p|$ are the maximum length of the words in the array $words$ and the length of the puzzles in the array $puzzles$, respectively.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
+class Solution:
+    def findNumOfValidWords(self, words: List[str], puzzles: List[str]) -> List[int]:
+        cnt = Counter()
+        for w in words:
+            mask = 0
+            for c in w:
+                mask |= 1 << (ord(c) - ord("a"))
+            cnt[mask] += 1
 
+        ans = []
+        for p in puzzles:
+            mask = 0
+            for c in p:
+                mask |= 1 << (ord(c) - ord("a"))
+            x, i, j = 0, ord(p[0]) - ord("a"), mask
+            while j:
+                if j >> i & 1:
+                    x += cnt[j]
+                j = (j - 1) & mask
+            ans.append(x)
+        return ans
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
+        Map<Integer, Integer> cnt = new HashMap<>(words.length);
+        for (var w : words) {
+            int mask = 0;
+            for (int i = 0; i < w.length(); ++i) {
+                mask |= 1 << (w.charAt(i) - 'a');
+            }
+            cnt.merge(mask, 1, Integer::sum);
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (var p : puzzles) {
+            int mask = 0;
+            for (int i = 0; i < p.length(); ++i) {
+                mask |= 1 << (p.charAt(i) - 'a');
+            }
+            int x = 0;
+            int i = p.charAt(0) - 'a';
+            for (int j = mask; j > 0; j = (j - 1) & mask) {
+                if ((j >> i & 1) == 1) {
+                    x += cnt.getOrDefault(j, 0);
+                }
+            }
+            ans.add(x);
+        }
+        return ans;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+        unordered_map<int, int> cnt;
+        for (auto& w : words) {
+            int mask = 0;
+            for (char& c : w) {
+                mask |= 1 << (c - 'a');
+            }
+            cnt[mask]++;
+        }
+        vector<int> ans;
+        for (auto& p : puzzles) {
+            int mask = 0;
+            for (char& c : p) {
+                mask |= 1 << (c - 'a');
+            }
+            int x = 0;
+            int i = p[0] - 'a';
+            for (int j = mask; j; j = (j - 1) & mask) {
+                if (j >> i & 1) {
+                    x += cnt[j];
+                }
+            }
+            ans.push_back(x);
+        }
+        return ans;
+    }
+};
 ```
 
+```go
+func findNumOfValidWords(words []string, puzzles []string) (ans []int) {
+	cnt := map[int]int{}
+	for _, w := range words {
+		mask := 0
+		for _, c := range w {
+			mask |= 1 << (c - 'a')
+		}
+		cnt[mask]++
+	}
+	for _, p := range puzzles {
+		mask := 0
+		for _, c := range p {
+			mask |= 1 << (c - 'a')
+		}
+		x, i := 0, p[0]-'a'
+		for j := mask; j > 0; j = (j - 1) & mask {
+			if j>>i&1 > 0 {
+				x += cnt[j]
+			}
+		}
+		ans = append(ans, x)
+	}
+	return
+}
+```
+
+```ts
+function findNumOfValidWords(words: string[], puzzles: string[]): number[] {
+    const cnt: Map<number, number> = new Map();
+    for (const w of words) {
+        let mask = 0;
+        for (const c of w) {
+            mask |= 1 << (c.charCodeAt(0) - 97);
+        }
+        cnt.set(mask, (cnt.get(mask) || 0) + 1);
+    }
+    const ans: number[] = [];
+    for (const p of puzzles) {
+        let mask = 0;
+        for (const c of p) {
+            mask |= 1 << (c.charCodeAt(0) - 97);
+        }
+        let x = 0;
+        const i = p.charCodeAt(0) - 97;
+        for (let j = mask; j; j = (j - 1) & mask) {
+            if ((j >> i) & 1) {
+                x += cnt.get(j) || 0;
+            }
+        }
+        ans.push(x);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

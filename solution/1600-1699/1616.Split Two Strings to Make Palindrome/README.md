@@ -56,9 +56,7 @@ b<sub>prefix</sub> = "jiz", b<sub>suffix</sub> = "alu"
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 我们可以使用双指针，其中一个指针 $i$ 从字符串 $a$ 的头部开始，另一个指针 $j$ 从字符串 $b$ 的尾部开始，如果两个指针指向的字符相等，那么两个指针同时往中间移动，直到遇到不同的字符或两指针交叉。
 
@@ -70,10 +68,6 @@ b<sub>prefix</sub> = "jiz", b<sub>suffix</sub> = "alu"
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def checkPalindromeFormation(self, a: str, b: str) -> bool:
@@ -84,14 +78,10 @@ class Solution:
             return i >= j or check2(a, i, j) or check2(b, i, j)
 
         def check2(a: str, i: int, j: int) -> bool:
-            return a[i: j + 1] == a[i: j + 1][::-1]
+            return a[i : j + 1] == a[i : j + 1][::-1]
 
         return check1(a, b) or check1(b, a)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -119,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -129,7 +117,7 @@ public:
     }
 
 private:
-    bool check1(string &a, string &b) {
+    bool check1(string& a, string& b) {
         int i = 0, j = b.size() - 1;
         while (i < j && a[i] == b[j]) {
             ++i;
@@ -138,7 +126,7 @@ private:
         return i >= j || check2(a, i, j) || check2(b, i, j);
     }
 
-    bool check2(string &a, int i, int j) {
+    bool check2(string& a, int i, int j) {
         while (i <= j && a[i] == a[j]) {
             ++i;
             --j;
@@ -147,8 +135,6 @@ private:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func checkPalindromeFormation(a string, b string) bool {
@@ -173,7 +159,28 @@ func check2(a string, i, j int) bool {
 }
 ```
 
-### **Rust**
+```ts
+function checkPalindromeFormation(a: string, b: string): boolean {
+    const check1 = (a: string, b: string) => {
+        let i = 0;
+        let j = b.length - 1;
+        while (i < j && a.charAt(i) === b.charAt(j)) {
+            i++;
+            j--;
+        }
+        return i >= j || check2(a, i, j) || check2(b, i, j);
+    };
+
+    const check2 = (a: string, i: number, j: number) => {
+        while (i < j && a.charAt(i) === a.charAt(j)) {
+            i++;
+            j--;
+        }
+        return i >= j;
+    };
+    return check1(a, b) || check1(b, a);
+}
+```
 
 ```rust
 impl Solution {
@@ -205,35 +212,6 @@ impl Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function checkPalindromeFormation(a: string, b: string): boolean {
-    const check1 = (a: string, b: string) => {
-        let i = 0;
-        let j = b.length - 1;
-        while (i < j && a.charAt(i) === b.charAt(j)) {
-            i++;
-            j--;
-        }
-        return i >= j || check2(a, i, j) || check2(b, i, j);
-    };
-
-    const check2 = (a: string, i: number, j: number) => {
-        while (i < j && a.charAt(i) === a.charAt(j)) {
-            i++;
-            j--;
-        }
-        return i >= j;
-    };
-    return check1(a, b) || check1(b, a);
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

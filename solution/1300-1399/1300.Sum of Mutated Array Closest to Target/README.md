@@ -44,9 +44,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 前缀和 + 二分查找 + 枚举**
+### 方法一：排序 + 前缀和 + 二分查找 + 枚举
 
 我们注意到，题目中要把所有大于 `value` 的值变成 `value`，并且求和，因此我们可以考虑先对数组 `arr` 进行排序，然后求出前缀和数组 $s$，其中 $s[i]$ 表示数组前 $i$ 个元素之和。
 
@@ -57,10 +55,6 @@
 时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `arr` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -76,10 +70,6 @@ class Solution:
                 ans = value
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -119,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -148,17 +136,14 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findBestValue(arr []int, target int) (ans int) {
 	sort.Ints(arr)
 	n := len(arr)
 	s := make([]int, n+1)
-	mx := 0
+	mx := slices.Max(arr)
 	for i, x := range arr {
 		s[i+1] = s[i] + x
-		mx = max(mx, x)
 	}
 	diff := 1 << 30
 	for value := 0; value <= mx; value++ {
@@ -178,19 +163,8 @@ func abs(x int) int {
 	}
 	return x
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

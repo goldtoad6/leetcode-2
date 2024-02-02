@@ -48,9 +48,19 @@ It can be proven that no distribution exists such that number of children gettin
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Case analysis
 
-### **Python3**
+If $money \lt children$, then there must be a child who did not receive money, return $-1$.
+
+If $money \gt 8 \times children$, then there are $children-1$ children who received $8$ dollars, and the remaining child received $money - 8 \times (children-1)$ dollars, return $children-1$.
+
+If $money = 8 \times children - 4$, then there are $children-2$ children who received $8$ dollars, and the remaining two children shared the remaining $12$ dollars (as long as it is not $4$, $8$ dollars is fine), return $children-2$.
+
+If we assume that there are $x$ children who received $8$ dollars, then the remaining money is $money- 8 \times x$, as long as it is greater than or equal to the number of remaining children $children-x$, it can meet the requirements. Therefore, we only need to find the maximum value of $x$, which is the answer.
+
+Time complexity $O(1)$, space complexity $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +74,6 @@ class Solution:
         # money-8x >= children-x, x <= (money-children)/7
         return (money - children) // 7
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +92,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -106,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func distMoney(money int, children int) int {
 	if money < children {
@@ -124,8 +128,6 @@ func distMoney(money int, children int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function distMoney(money: number, children: number): number {
     if (money < children) {
@@ -141,10 +143,26 @@ function distMoney(money: number, children: number): number {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn dist_money(money: i32, children: i32) -> i32 {
+        if money < children {
+            return -1;
+        }
 
-```
+        if money > children * 8 {
+            return children - 1;
+        }
 
+        if money == children * 8 - 4 {
+            return children - 2;
+        }
+
+        (money - children) / 7
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

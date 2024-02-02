@@ -1,7 +1,7 @@
 class Solution:
     def mctFromLeafValues(self, arr: List[int]) -> int:
         @cache
-        def dfs(i: int, j: int):
+        def dfs(i: int, j: int) -> Tuple:
             if i == j:
                 return 0, arr[i]
             s, mx = inf, -1

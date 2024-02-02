@@ -36,9 +36,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+Traverse the two arrays. If the elements pointed to by the two pointers are equal, return that element. If the elements pointed to by the two pointers are not equal, move the pointer pointing to the smaller element to the right by one bit until an equal element is found or the array is traversed.
+
+The time complexity is $O(m + n)$, where $m$ and $n$ are the lengths of the two arrays respectively. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +58,6 @@ class Solution:
                 j += 1
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -75,8 +77,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -98,8 +98,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getCommon(nums1 []int, nums2 []int) int {
 	m, n := len(nums1), len(nums2)
@@ -116,8 +114,6 @@ func getCommon(nums1 []int, nums2 []int) int {
 	return -1
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function getCommon(nums1: number[], nums2: number[]): number {
@@ -138,8 +134,6 @@ function getCommon(nums1: number[], nums2: number[]): number {
     return -1;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -163,10 +157,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-int getCommon(int *nums1, int nums1Size, int *nums2, int nums2Size) {
+int getCommon(int* nums1, int nums1Size, int* nums2, int nums2Size) {
     int i = 0;
     int j = 0;
     while (i < nums1Size && j < nums2Size) {
@@ -183,10 +175,35 @@ int getCommon(int *nums1, int nums1Size, int *nums2, int nums2Size) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn get_common(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
+        let mut iter1 = nums1.iter();
+        let mut iter2 = nums2.iter();
+        let mut num1 = iter1.next();
+        let mut num2 = iter2.next();
+
+        while let (Some(n1), Some(n2)) = (num1, num2) {
+            if n1 == n2 {
+                return *n1;
+            } else if n1 < n2 {
+                num1 = iter1.next();
+            } else {
+                num2 = iter2.next();
+            }
+        }
+
+        -1
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

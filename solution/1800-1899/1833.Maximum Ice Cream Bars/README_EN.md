@@ -51,11 +51,15 @@
 
 ## Solutions
 
-Pay attention to the data range. The question can easily mislead us to use the 01 backpack (it will overtime). In fact, this question is a simple "greedy problem" (choose low-priced ice cream first)
+### Solution 1: Greedy + Sorting
+
+To buy as many ice creams as possible, and they can be purchased in any order, we should prioritize choosing ice creams with lower prices.
+
+Sort the $costs$ array, and then start buying from the ice cream with the lowest price, one by one, until it is no longer possible to buy, and return the number of ice creams that can be bought.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$, where $n$ is the length of the $costs$ array.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -67,8 +71,6 @@ class Solution:
             coins -= c
         return len(costs)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +88,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -103,8 +103,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxIceCream(costs []int, coins int) int {
 	sort.Ints(costs)
@@ -118,7 +116,19 @@ func maxIceCream(costs []int, coins int) int {
 }
 ```
 
-### **JavaScript**
+```ts
+function maxIceCream(costs: number[], coins: number): number {
+    costs.sort((a, b) => a - b);
+    const n = costs.length;
+    for (let i = 0; i < n; ++i) {
+        if (coins < costs[i]) {
+            return i;
+        }
+        coins -= costs[i];
+    }
+    return n;
+}
+```
 
 ```js
 /**
@@ -139,10 +149,6 @@ var maxIceCream = function (costs, coins) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

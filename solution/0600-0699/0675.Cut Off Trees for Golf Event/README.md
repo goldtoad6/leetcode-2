@@ -61,9 +61,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS + 优先队列（A\* 算法）**
+### 方法一：BFS + 优先队列（A\* 算法）
 
 题目的一个关键信息是“所有树的高度都不同”，要按照从小到大的顺序依次砍树，因此，我们先遍历树林，找出所有树及对应的坐标点。然后将树按照高度升序排列。
 
@@ -78,10 +76,6 @@ A\* 算法主要思想如下：
 1. A\* 算法只能保证终点第一次出队时，即找到了一条从起点到终点的最小路径，不能保证其他点出队时也是从起点到当前点的最短路径。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -120,10 +114,6 @@ class Solution:
             i, j = x, y
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -194,8 +184,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -253,8 +241,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 var dirs = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
@@ -319,13 +305,16 @@ func cutOffTree(forest [][]int) int {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashSet;
 use std::collections::VecDeque;
 
-const DIRS: [[i32; 2]; 4] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+const DIRS: [[i32; 2]; 4] = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+];
 
 impl Solution {
     pub fn cut_off_tree(forest: Vec<Vec<i32>>) -> i32 {
@@ -346,14 +335,15 @@ impl Solution {
                     }
                     for k in 0..4 {
                         let x = state / col + DIRS[k][0];
-                        let y = state % col + DIRS[k][1];
+                        let y = (state % col) + DIRS[k][1];
                         let nxt = x * col + y;
-                        if x >= 0
-                            && x < row
-                            && y >= 0
-                            && y < col
-                            && forest[x as usize][y as usize] != 0
-                            && !vis.contains(&nxt)
+                        if
+                            x >= 0 &&
+                            x < row &&
+                            y >= 0 &&
+                            y < col &&
+                            forest[x as usize][y as usize] != 0 &&
+                            !vis.contains(&nxt)
                         {
                             queue.push_back(nxt);
                             vis.insert(nxt);
@@ -391,10 +381,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

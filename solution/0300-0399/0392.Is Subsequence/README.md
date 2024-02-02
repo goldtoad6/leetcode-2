@@ -46,30 +46,24 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：双指针
 
-**方法一：双指针**
+我们定义两个指针 $i$ 和 $j$，分别指向字符串 $s$ 和 $t$ 的初始位置。每次我们比较两个指针指向的字符，如果相同，则两个指针同时右移；如果不同，则只有 $j$ 右移。当指针 $i$ 移动到字符串 $s$ 的末尾时，说明 $s$ 是 $t$ 的子序列。
+
+时间复杂度 $O(m + n)$，其中 $m$ 和 $n$ 分别是字符串 $s$ 和 $t$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        i, j, m, n = 0, 0, len(s), len(t)
-        while i < m and j < n:
+        i = j = 0
+        while i < len(s) and j < len(t):
             if s[i] == t[j]:
                 i += 1
             j += 1
-        return i == m
+        return i == len(s)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -87,24 +81,21 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool isSubsequence(string s, string t) {
         int m = s.size(), n = t.size();
         int i = 0, j = 0;
-        while (i < m && j < n) {
-            if (s[i] == t[j]) ++i;
-            ++j;
+        for (; i < m && j < n; ++j) {
+            if (s[i] == t[j]) {
+                ++i;
+            }
         }
         return i == m;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isSubsequence(s string, t string) bool {
@@ -119,23 +110,19 @@ func isSubsequence(s string, t string) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function isSubsequence(s: string, t: string): boolean {
-    let m = s.length,
-        n = t.length;
+    const m = s.length;
+    const n = t.length;
     let i = 0;
-    for (let j = 0; j < n && i < m; ++j) {
-        if (s.charAt(i) == t.charAt(j)) {
+    for (let j = 0; i < m && j < n; ++j) {
+        if (s[i] === t[j]) {
             ++i;
         }
     }
-    return i == m;
+    return i === m;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -157,29 +144,35 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
-bool isSubsequence(char *s, char *t) {
-    int n = strlen(s);
-    int i = 0;
-    for (int j = 0; j < n; j++) {
-        while (t[i] && t[i] != s[j]) {
-            i++;
+```cs
+public class Solution {
+    public bool IsSubsequence(string s, string t) {
+        int m = s.Length, n = t.Length;
+        int i = 0, j = 0;
+        for (; i < m && j < n; ++j) {
+            if (s[i] == t[j]) {
+                ++i;
+            }
         }
-        if (!t[i]) {
-            return 0;
-        }
-        i++;
+        return i == m;
     }
-    return 1;
 }
 ```
 
-### **...**
-
-```
-
+```c
+bool isSubsequence(char* s, char* t) {
+    int m = strlen(s);
+    int n = strlen(t);
+    int i = 0;
+    for (int j = 0; i < m && j < n; ++j) {
+        if (s[i] == t[j]) {
+            ++i;
+        }
+    }
+    return i == m;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

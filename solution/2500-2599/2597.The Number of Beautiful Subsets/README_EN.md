@@ -41,9 +41,20 @@ It can be proved that there is only 1 beautiful subset in the array [1].
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting + Backtracking
 
-### **Python3**
+We use a hash table or an array $cnt$ to record the currently selected numbers and their counts, and use $ans$ to record the number of beautiful subsets, initially $ans = -1$, indicating that the empty set is excluded.
+
+For each number $x$ in the array $nums$, we have two choices:
+
+-   Do not choose $x$, and then directly recurse to the next number;
+-   Choose $x$, then we need to check whether $x + k$ and $x - k$ have appeared in $cnt$ before, if neither has appeared before, then we can choose $x$, at this time we add one to the number of $x$, and then recurse to the next number, and finally subtract one from the number of $x$.
+
+Finally, we return $ans$.
+
+Time complexity $O(2^n)$, space complexity $O(n)$, where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +75,6 @@ class Solution:
         dfs(0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -98,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -128,8 +135,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func beautifulSubsets(nums []int, k int) int {
 	ans := -1
@@ -155,8 +160,6 @@ func beautifulSubsets(nums []int, k int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function beautifulSubsets(nums: number[], k: number): number {
     let ans: number = -1;
@@ -181,10 +184,6 @@ function beautifulSubsets(nums: number[], k: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

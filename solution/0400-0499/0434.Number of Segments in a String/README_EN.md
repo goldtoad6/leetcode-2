@@ -35,40 +35,14 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def countSegments(self, s: str) -> int:
         return len(s.split())
-```
-
-```python
-class Solution:
-    def countSegments(self, s: str) -> int:
-        ans = 0
-        for i, c in enumerate(s):
-            if c != ' ' and (i == 0 or s[i - 1] == ' '):
-                ans += 1
-        return ans
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int countSegments(String s) {
-        int res = 0;
-        for (String t : s.split(" ")) {
-            if (!"".equals(t)) {
-                ++res;
-            }
-        }
-        return res;
-    }
-}
 ```
 
 ```java
@@ -85,8 +59,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -97,6 +69,67 @@ public:
         return ans;
     }
 };
+```
+
+```go
+func countSegments(s string) int {
+	ans := 0
+	for _, t := range strings.Split(s, " ") {
+		if len(t) > 0 {
+			ans++
+		}
+	}
+	return ans
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Integer
+     */
+    function countSegments($s) {
+        $arr = explode(' ', $s);
+        $cnt = 0;
+        for ($i = 0; $i < count($arr); $i++) {
+            if (strlen($arr[$i]) != 0) {
+                $cnt++;
+            }
+        }
+        return $cnt;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countSegments(self, s: str) -> int:
+        ans = 0
+        for i, c in enumerate(s):
+            if c != ' ' and (i == 0 or s[i - 1] == ' '):
+                ans += 1
+        return ans
+```
+
+```java
+class Solution {
+    public int countSegments(String s) {
+        int ans = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) != ' ' && (i == 0 || s.charAt(i - 1) == ' ')) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+}
 ```
 
 ```cpp
@@ -114,20 +147,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func countSegments(s string) int {
-	ans := 0
-	for _, t := range strings.Split(s, " ") {
-		if len(t) > 0 {
-			ans++
-		}
-	}
-	return ans
-}
-```
-
 ```go
 func countSegments(s string) int {
 	ans := 0
@@ -140,10 +159,6 @@ func countSegments(s string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

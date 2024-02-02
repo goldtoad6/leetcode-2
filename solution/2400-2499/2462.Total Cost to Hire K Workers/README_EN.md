@@ -58,9 +58,19 @@ The total hiring cost is 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Priority Queue (Min Heap)
 
-### **Python3**
+We maintain a priority queue (min heap) for the current candidate workers, and use variables $i$ and $j$ to mark the minimum index of the frontmost worker and the minimum index of the rearmost worker. Initially, $i = \text{candidates} - 1$ and $j = n - \text{candidates}$.
+
+First, we put the costs of the first $candidates$ workers into the priority queue, then we put the costs of the last $candidates$ workers into the priority queue. Before putting them in, we need to check whether they are already in the priority queue according to $i$ or $j$. If they are, we don't need to put them in again.
+
+We loop $k$ times, each time taking out the worker with the smallest cost from the priority queue and accumulating the cost. If the index $x$ of the current worker is in the index range $[0,..i]$ of the frontmost workers, we move $i$ one step to the right, and then check whether we need to put the cost of the worker corresponding to $i$ into the priority queue; if the index is in the index range $[j,..n-1]$ of the rearmost workers, we move $j$ one step to the left, and then check whether we need to put the cost of the worker corresponding to $j$ into the priority queue.
+
+After the traversal ends, we return the accumulated cost as the answer.
+
+The time complexity is $O(n \times \log n)$, where $n$ is the length of the array $costs$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -88,8 +98,6 @@ class Solution:
                     heappush(q, (costs[j], j))
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -131,8 +139,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using pii = pair<int, int>;
 
@@ -143,7 +149,8 @@ public:
         int n = costs.size();
         int i = candidates - 1, j = n - candidates;
         for (int h = 0; h < candidates; ++h) q.push({costs[h], h});
-        for (int h = n - candidates; h < n; ++h) if (h > i) q.push({costs[h], h});
+        for (int h = n - candidates; h < n; ++h)
+            if (h > i) q.push({costs[h], h});
         long long ans = 0;
         while (k--) {
             auto [c, x] = q.top();
@@ -164,8 +171,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func totalCost(costs []int, k int, candidates int) int64 {
@@ -205,23 +210,13 @@ func totalCost(costs []int, k int, candidates int) int64 {
 type pair struct{ c, x int }
 type hp []pair
 
-func (h hp) Len() int            { return len(h) }
-func (h hp) Less(i, j int) bool  { return h[i].c < h[j].c || h[i].c == h[j].c && h[i].x < h[j].x }
-func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
+func (h hp) Len() int           { return len(h) }
+func (h hp) Less(i, j int) bool { return h[i].c < h[j].c || h[i].c == h[j].c && h[i].x < h[j].x }
+func (h hp) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

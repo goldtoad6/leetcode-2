@@ -47,15 +47,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序**
+### 方法一：排序
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -63,10 +57,6 @@ class Solution:
         nums.sort()
         return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -81,22 +71,6 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function minimumDifference(nums: number[], k: number): number {
-    nums.sort((a, b) => a - b);
-    const n = nums.length;
-    let ans = nums[n - 1] - nums[0];
-    for (let i = 0; i + k - 1 < n; i++) {
-        ans = Math.min(nums[i + k - 1] - nums[i], ans);
-    }
-    return ans;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +84,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumDifference(nums []int, k int) int {
 	sort.Ints(nums)
@@ -121,16 +93,19 @@ func minimumDifference(nums []int, k int) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **Rust**
+```ts
+function minimumDifference(nums: number[], k: number): number {
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    let ans = nums[n - 1] - nums[0];
+    for (let i = 0; i + k - 1 < n; i++) {
+        ans = Math.min(nums[i + k - 1] - nums[i], ans);
+    }
+    return ans;
+}
+```
 
 ```rust
 impl Solution {
@@ -146,10 +121,24 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Integer
+     */
+    function minimumDifference($nums, $k) {
+        sort($nums);
+        $rs = 10 ** 5;
+        for ($i = 0; $i < count($nums) - $k + 1; $i++) {
+            $rs = min($rs, $nums[$i + $k - 1] - $nums[$i]);
+        }
+        return $rs;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

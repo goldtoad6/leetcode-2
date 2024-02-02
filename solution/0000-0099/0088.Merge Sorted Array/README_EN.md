@@ -55,17 +55,21 @@ Note that because m = 0, there are no elements in nums1. The 0 is only there to 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We use two pointers $i$ and $j$ pointing to the end of two arrays, and a pointer $k$ pointing to the end of the merged array.
+
+Every time we compare the two elements at the end of the two arrays, and move the larger one to the end of the merged array. Then we move the pointer one step forward, and repeat this process until the two pointers reach the start of the arrays.
+
+The time complexity is $O(m + n)$, where $m$ and $n$ are the lengths of two arrays. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
-        """
-        Do not return anything, modify nums1 in-place instead.
-        """
-        i, j, k = m - 1, n - 1, m + n - 1
+        k = m + n - 1
+        i, j = m - 1, n - 1
         while j >= 0:
             if i >= 0 and nums1[i] > nums2[j]:
                 nums1[k] = nums1[i]
@@ -76,83 +80,63 @@ class Solution:
             k -= 1
 ```
 
-```python
-class Solution:
-    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
-        """
-        Do not return anything, modify nums1 in-place instead.
-        """
-        i, j, k = m - 1, n - 1, m + n - 1
-        while j >= 0:
-            if i < 0 or nums1[i] < nums2[j]:
-                nums1[k] = nums2[j]
-                j -= 1
-            else:
-                nums1[k] = nums1[i]
-                i -= 1
-            k -= 1
-```
-
-### **Java**
-
 ```java
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int i = m - 1, j = n - 1, k = m + n - 1;
-        while (j >= 0) {
-            if (i >= 0 && nums1[i] > nums2[j]) {
-                nums1[k--] = nums1[i--];
-            } else {
-                nums1[k--] = nums2[j--];
-            }
+        for (int i = m - 1, j = n - 1, k = m + n - 1; j >= 0; --k) {
+            nums1[k] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
         }
     }
 }
 ```
 
-### **Go**
-
-```go
-func merge(nums1 []int, m int, nums2 []int, n int)  {
-    i, j, k := m - 1, n - 1, m + n - 1
-    for j >= 0 {
-        if i >= 0 && nums1[i] > nums2[j] {
-            nums1[k] = nums1[i]
-            i--
-        } else {
-            nums1[k] = nums2[j]
-            j--
-        }
-        k--
-    }
-}
-```
-
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums1
- * @param {number} m
- * @param {number[]} nums2
- * @param {number} n
- * @return {void} Do not return anything, modify nums1 in-place instead.
- */
-var merge = function (nums1, m, nums2, n) {
-    let i = m - 1,
-        j = n - 1,
-        k = m + n - 1;
-    while (j >= 0) {
-        if (i >= 0 && nums1[i] > nums2[j]) {
-            nums1[k--] = nums1[i--];
-        } else {
-            nums1[k--] = nums2[j--];
+```cpp
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        for (int i = m - 1, j = n - 1, k = m + n - 1; ~j; --k) {
+            nums1[k] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
         }
     }
 };
 ```
 
-### **Rust**
+```go
+func merge(nums1 []int, m int, nums2 []int, n int) {
+	for i, j, k := m-1, n-1, m+n-1; j >= 0; k-- {
+		if i >= 0 && nums1[i] > nums2[j] {
+			nums1[k] = nums1[i]
+			i--
+		} else {
+			nums1[k] = nums2[j]
+			j--
+		}
+	}
+}
+```
+
+```ts
+/**
+ Do not return anything, modify nums1 in-place instead.
+ */
+function merge(nums1: number[], m: number, nums2: number[], n: number): void {
+    for (let i = m - 1, j = n - 1, k = m + n - 1; j >= 0; --k) {
+        nums1[k] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
+    }
+}
+```
+
+```ts
+/**
+ Do not return anything, modify nums1 in-place instead.
+ */
+function merge(nums1: number[], m: number, nums2: number[], n: number): void {
+    nums1.length = m;
+    nums2.length = n;
+    nums1.push(...nums2);
+    nums1.sort((a, b) => a - b);
+}
+```
 
 ```rust
 impl Solution {
@@ -177,13 +161,26 @@ impl Solution {
                         nums2[n]
                     }
                 }
-            }
+            };
         }
     }
 }
 ```
 
-### **PHP**
+```js
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+var merge = function (nums1, m, nums2, n) {
+    for (let i = m - 1, j = n - 1, k = m + n - 1; j >= 0; --k) {
+        nums1[k] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
+    }
+};
+```
 
 ```php
 class Solution {
@@ -206,10 +203,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,35 +49,37 @@ The visible sticks are underlined.
 
 ## Solutions
 
+### Solution 1: Dynamic Programming
+
+We define $f[i][j]$ to represent the number of permutations of length $i$ in which exactly $j$ sticks can be seen. Initially, $f[0][0]=1$ and the rest $f[i][j]=0$. The answer is $f[n][k]$.
+
+Consider whether the last stick can be seen. If it can be seen, it must be the longest. Then there are $i - 1$ sticks in front of it, and exactly $j - 1$ sticks can be seen, which is $f[i - 1][j - 1]$. If the last stick cannot be seen, it can be any one except the longest stick. Then there are $i - 1$ sticks in front of it, and exactly $j$ sticks can be seen, which is $f[i - 1][j] \times (i - 1)$.
+
+Therefore, the state transition equation is:
+
+$$
+f[i][j] = f[i - 1][j - 1] + f[i - 1][j] \times (i - 1)
+$$
+
+The final answer is $f[n][k]$.
+
+We notice that $f[i][j]$ is only related to $f[i - 1][j - 1]$ and $f[i - 1][j]$, so we can use a one-dimensional array to optimize the space complexity.
+
+The time complexity is $O(n \times k)$, and the space complexity is $O(k)$. Here, $n$ and $k$ are the two integers given in the problem.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
 class Solution:
     def rearrangeSticks(self, n: int, k: int) -> int:
         mod = 10**9 + 7
-        f = [1] + [0] * k
+        f = [[0] * (k + 1) for _ in range(n + 1)]
+        f[0][0] = 1
         for i in range(1, n + 1):
-            for j in range(k, 0, -1):
-                f[j] = (f[j] * (i - 1) + f[j - 1]) % mod
-            f[0] = 0
-        return f[k]
+            for j in range(1, k + 1):
+                f[i][j] = (f[i - 1][j - 1] + f[i - 1][j] * (i - 1)) % mod
+        return f[n][k]
 ```
-
-```python
-class Solution:
-    def rearrangeSticks(self, n: int, k: int) -> int:
-        mod = 10**9 + 7
-        f = [1] + [0] * k
-        for i in range(1, n + 1):
-            for j in range(k, 0, -1):
-                f[j] = (f[j] * (i - 1) + f[j - 1]) % mod
-            f[0] = 0
-        return f[k]
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -95,25 +97,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int rearrangeSticks(int n, int k) {
-        final int mod = (int) 1e9 + 7;
-        int[] f = new int[k + 1];
-        f[0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = k; j > 0; --j) {
-                f[j] = (int) ((f[j] * (i - 1L) + f[j - 1]) % mod);
-            }
-            f[0] = 0;
-        }
-        return f[k];
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,6 +113,74 @@ public:
         return f[n][k];
     }
 };
+```
+
+```go
+func rearrangeSticks(n int, k int) int {
+	const mod = 1e9 + 7
+	f := make([][]int, n+1)
+	for i := range f {
+		f[i] = make([]int, k+1)
+	}
+	f[0][0] = 1
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= k; j++ {
+			f[i][j] = (f[i-1][j-1] + (i-1)*f[i-1][j]) % mod
+		}
+	}
+	return f[n][k]
+}
+```
+
+```ts
+function rearrangeSticks(n: number, k: number): number {
+    const mod = 10 ** 9 + 7;
+    const f: number[][] = Array.from({ length: n + 1 }, () =>
+        Array.from({ length: k + 1 }, () => 0),
+    );
+    f[0][0] = 1;
+    for (let i = 1; i <= n; ++i) {
+        for (let j = 1; j <= k; ++j) {
+            f[i][j] = (f[i - 1][j - 1] + (i - 1) * f[i - 1][j]) % mod;
+        }
+    }
+    return f[n][k];
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def rearrangeSticks(self, n: int, k: int) -> int:
+        mod = 10**9 + 7
+        f = [1] + [0] * k
+        for i in range(1, n + 1):
+            for j in range(k, 0, -1):
+                f[j] = (f[j] * (i - 1) + f[j - 1]) % mod
+            f[0] = 0
+        return f[k]
+```
+
+```java
+class Solution {
+    public int rearrangeSticks(int n, int k) {
+        final int mod = (int) 1e9 + 7;
+        int[] f = new int[k + 1];
+        f[0] = 1;
+        for (int i = 1; i <= n; ++i) {
+            for (int j = k; j > 0; --j) {
+                f[j] = (int) ((f[j] * (i - 1L) + f[j - 1]) % mod);
+            }
+            f[0] = 0;
+        }
+        return f[k];
+    }
+}
 ```
 
 ```cpp
@@ -151,25 +202,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func rearrangeSticks(n int, k int) int {
-	const mod = 1e9 + 7
-	f := make([][]int, n+1)
-	for i := range f {
-		f[i] = make([]int, k+1)
-	}
-	f[0][0] = 1
-	for i := 1; i <= n; i++ {
-		for j := 1; j <= k; j++ {
-			f[i][j] = (f[i-1][j-1] + (i-1)*f[i-1][j]) % mod
-		}
-	}
-	return f[n][k]
-}
-```
-
 ```go
 func rearrangeSticks(n int, k int) int {
 	const mod = 1e9 + 7
@@ -185,10 +217,21 @@ func rearrangeSticks(n int, k int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function rearrangeSticks(n: number, k: number): number {
+    const mod = 10 ** 9 + 7;
+    const f: number[] = Array(n + 1).fill(0);
+    f[0] = 1;
+    for (let i = 1; i <= n; ++i) {
+        for (let j = k; j; --j) {
+            f[j] = (f[j] * (i - 1) + f[j - 1]) % mod;
+        }
+        f[0] = 0;
+    }
+    return f[k];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

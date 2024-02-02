@@ -53,28 +53,32 @@ The total cost is 3 + 2 + 6 + 7 = 18</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def minCost(self, startPos: List[int], homePos: List[int], rowCosts: List[int], colCosts: List[int]) -> int:
+    def minCost(
+        self,
+        startPos: List[int],
+        homePos: List[int],
+        rowCosts: List[int],
+        colCosts: List[int],
+    ) -> int:
         i, j = startPos
         x, y = homePos
         ans = 0
         if i < x:
-            ans += sum(rowCosts[i + 1: x + 1])
+            ans += sum(rowCosts[i + 1 : x + 1])
         else:
-            ans += sum(rowCosts[x: i])
+            ans += sum(rowCosts[x:i])
         if j < y:
-            ans += sum(colCosts[j + 1: y + 1])
+            ans += sum(colCosts[j + 1 : y + 1])
         else:
-            ans += sum(colCosts[y: j])
+            ans += sum(colCosts[y:j])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -105,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -128,8 +130,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minCost(startPos []int, homePos []int, rowCosts []int, colCosts []int) (ans int) {
@@ -156,10 +156,6 @@ func sum(nums []int, i, j int) (s int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

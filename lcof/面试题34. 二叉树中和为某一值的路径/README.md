@@ -49,19 +49,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归**
+### 方法一：递归
 
 从根节点开始，递归遍历每个节点，每次递归时，将当前节点值加入到路径中，然后判断当前节点是否为叶子节点，如果是叶子节点并且路径和等于目标值，则将该路径加入到结果中。如果当前节点不是叶子节点，则递归遍历其左右子节点。递归遍历时，需要将当前节点从路径中移除，以确保返回父节点时路径刚好是从根节点到父节点。
 
 时间复杂度 $O(n^2)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -88,10 +82,6 @@ class Solution:
         dfs(root, target)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -134,8 +124,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -153,7 +141,7 @@ public:
     vector<vector<int>> pathSum(TreeNode* root, int target) {
         vector<vector<int>> ans;
         vector<int> t;
-        function<void(TreeNode* root, int s)> dfs = [&](TreeNode* root, int s) {
+        function<void(TreeNode * root, int s)> dfs = [&](TreeNode* root, int s) {
             if (!root) {
                 return;
             }
@@ -171,8 +159,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -193,9 +179,7 @@ func pathSum(root *TreeNode, target int) (ans [][]int) {
 		t = append(t, root.Val)
 		s -= root.Val
 		if root.Left == nil && root.Right == nil && s == 0 {
-			cp := make([]int, len(t))
-			copy(cp, t)
-			ans = append(ans, cp)
+			ans = append(ans, slices.Clone(t))
 		}
 		dfs(root.Left, s)
 		dfs(root.Right, s)
@@ -205,45 +189,6 @@ func pathSum(root *TreeNode, target int) (ans [][]int) {
 	return
 }
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @param {number} target
- * @return {number[][]}
- */
-var pathSum = function (root, target) {
-    const ans = [];
-    const t = [];
-    const dfs = (root, s) => {
-        if (!root) {
-            return;
-        }
-        t.push(root.val);
-        s -= root.val;
-        if (!root.left && !root.right && !s) {
-            ans.push([...t]);
-        }
-        dfs(root.left, s);
-        dfs(root.right, s);
-        t.pop();
-    };
-    dfs(root, target);
-    return ans;
-};
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -284,8 +229,6 @@ function pathSum(root: TreeNode | null, target: number): number[][] {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -312,7 +255,7 @@ impl Solution {
         root: &Option<Rc<RefCell<TreeNode>>>,
         mut target: i32,
         paths: &mut Vec<i32>,
-        res: &mut Vec<Vec<i32>>,
+        res: &mut Vec<Vec<i32>>
     ) {
         if let Some(node) = root.as_ref() {
             let node = node.borrow();
@@ -335,69 +278,40 @@ impl Solution {
 }
 ```
 
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-impl Solution {
-    fn dfs(
-        root: &Option<Rc<RefCell<TreeNode>>>,
-        mut target: i32,
-        paths: &mut Vec<i32>,
-    ) -> Vec<Vec<i32>> {
-        let node = root.as_ref().unwrap().borrow();
-        paths.push(node.val);
-        target -= node.val;
-        let mut res = vec![];
-        // 确定叶结点身份
-        if node.left.is_none() && node.right.is_none() {
-            if target == 0 {
-                res.push(paths.clone());
-            }
-        } else {
-            if node.left.is_some() {
-                let res_l = Self::dfs(&node.left, target, paths);
-                if !res_l.is_empty() {
-                    res = [res, res_l].concat();
-                }
-            }
-            if node.right.is_some() {
-                let res_r = Self::dfs(&node.right, target, paths);
-                if !res_r.is_empty() {
-                    res = [res, res_r].concat();
-                }
-            }
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} target
+ * @return {number[][]}
+ */
+var pathSum = function (root, target) {
+    const ans = [];
+    const t = [];
+    const dfs = (root, s) => {
+        if (!root) {
+            return;
         }
-        paths.pop();
-        res
-    }
-    pub fn path_sum(root: Option<Rc<RefCell<TreeNode>>>, target: i32) -> Vec<Vec<i32>> {
-        if root.is_none() {
-            return vec![];
+        t.push(root.val);
+        s -= root.val;
+        if (!root.left && !root.right && !s) {
+            ans.push([...t]);
         }
-        Self::dfs(&root, target, &mut vec![])
-    }
-}
+        dfs(root.left, s);
+        dfs(root.right, s);
+        t.pop();
+    };
+    dfs(root, target);
+    return ans;
+};
 ```
-
-### **C#**
 
 ```cs
 /**
@@ -438,10 +352,74 @@ public class Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    fn dfs(
+        root: &Option<Rc<RefCell<TreeNode>>>,
+        mut target: i32,
+        paths: &mut Vec<i32>
+    ) -> Vec<Vec<i32>> {
+        let node = root.as_ref().unwrap().borrow();
+        paths.push(node.val);
+        target -= node.val;
+        let mut res = vec![];
+        // 确定叶结点身份
+        if node.left.is_none() && node.right.is_none() {
+            if target == 0 {
+                res.push(paths.clone());
+            }
+        } else {
+            if node.left.is_some() {
+                let res_l = Self::dfs(&node.left, target, paths);
+                if !res_l.is_empty() {
+                    res = [res, res_l].concat();
+                }
+            }
+            if node.right.is_some() {
+                let res_r = Self::dfs(&node.right, target, paths);
+                if !res_r.is_empty() {
+                    res = [res, res_r].concat();
+                }
+            }
+        }
+        paths.pop();
+        res
+    }
+    pub fn path_sum(root: Option<Rc<RefCell<TreeNode>>>, target: i32) -> Vec<Vec<i32>> {
+        if root.is_none() {
+            return vec![];
+        }
+        Self::dfs(&root, target, &mut vec![])
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

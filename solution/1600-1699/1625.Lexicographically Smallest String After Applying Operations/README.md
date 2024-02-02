@@ -11,7 +11,7 @@
 <p>你可以在 <code>s</code> 上按任意顺序多次执行下面两个操作之一：</p>
 
 <ul>
-	<li>累加：将  <code>a</code> 加到 <code>s</code> 中所有下标为奇数的元素上（<strong>下标从 0 开始</strong>）。数字一旦超过 <code>9</code> 就会变成 <code>0</code>，如此循环往复。例如，<code>s = "3456"</code> 且 <code>a = 5</code>，则执行此操作后 <code>s</code> 变成 <code>"3951"</code>。</li>
+	<li>累加：将&nbsp; <code>a</code> 加到 <code>s</code> 中所有下标为奇数的元素上（<strong>下标从 0 开始</strong>）。数字一旦超过 <code>9</code> 就会变成 <code>0</code>，如此循环往复。例如，<code>s = "3456"</code> 且 <code>a = 5</code>，则执行此操作后 <code>s</code> 变成 <code>"3951"</code>。</li>
 	<li>轮转：将 <code>s</code> 向右轮转 <code>b</code> 位。例如，<code>s = "3456"</code> 且 <code>b = 1</code>，则执行此操作后 <code>s</code> 变成 <code>"6345"</code>。</li>
 </ul>
 
@@ -19,7 +19,7 @@
 
 <p>如果两个字符串长度相同，那么字符串 <code>a</code> 字典序比字符串 <code>b</code> 小可以这样定义：在 <code>a</code> 和 <code>b</code> 出现不同的第一个位置上，字符串 <code>a</code> 中的字符出现在字母表中的时间早于 <code>b</code> 中的对应字符。例如，<code>"0158”</code> 字典序比 <code>"0190"</code> 小，因为不同的第一个位置是在第三个字符，显然 <code>'5'</code> 出现在 <code>'9'</code> 之前。</p>
 
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>示例 1：</strong></p>
 
@@ -35,7 +35,7 @@
 累加："5222"
 累加："5121"
 轮转："2151"
-累加："2050"​​​​​​​​​​​​
+累加："2050"​​​​​
 无法获得字典序小于 "2050" 的字符串。
 </pre>
 
@@ -48,7 +48,7 @@
 初态："74"
 轮转："47"
 累加："42"
-轮转："24"​​​​​​​​​​​​
+轮转："24"​​​​​
 无法获得字典序小于 "24" 的字符串。
 </pre>
 
@@ -60,48 +60,25 @@
 <strong>解释：</strong>无法获得字典序小于 "0011" 的字符串。
 </pre>
 
-<p><strong>示例 4：</strong></p>
-
-<pre>
-<strong>输入：</strong>s = "43987654", a = 7, b = 3
-<strong>输出：</strong>"00553311"
-</pre>
-
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
 <ul>
-	<li><code>2 <= s.length <= 100</code></li>
+	<li><code>2 &lt;= s.length &lt;= 100</code></li>
 	<li><code>s.length</code> 是偶数</li>
 	<li><code>s</code> 仅由数字 <code>0</code> 到 <code>9</code> 组成</li>
-	<li><code>1 <= a <= 9</code></li>
-	<li><code>1 <= b <= s.length - 1</code></li>
+	<li><code>1 &lt;= a &lt;= 9</code></li>
+	<li><code>1 &lt;= b &lt;= s.length - 1</code></li>
 </ul>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS**
+### 方法一：BFS
 
 本题数据规模较小，我们可以使用 BFS 暴力搜索所有可能的状态，然后取字典序最小的状态即可。
 
-**方法二：枚举**
-
-我们观察发现，对于累加操作，数字最多累加 $10$ 次，就会回到原来的状态；对于轮转操作，字符串最多轮转 $n$ 次，也会回到原来的状态。
-
-因此，轮转操作最多产生 $n$ 种状态，如果轮转位数 $b$ 为偶数，累加操作只会对奇数位数字产生影响，因此总共产生 $n \times 10$ 种状态；如果轮转位数 $b$ 为奇数，累加操作既会对奇数位数字产生影响，也会对偶数位数字产生影响，因此总共产生 $n \times 10 \times 10$ 种状态。
-
-所以，我们直接枚举所有的字符串状态，取字典序最小的状态即可。
-
-时间复杂度 $O(n^2 \times 10^2)$，空间复杂度 $O(n)$。其中 $n$ 为字符串 $s$ 的长度。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -113,7 +90,9 @@ class Solution:
             s = q.popleft()
             if ans > s:
                 ans = s
-            t1 = ''.join([str((int(c) + a) % 10) if i & 1 else c for i, c in enumerate(s)])
+            t1 = ''.join(
+                [str((int(c) + a) % 10) if i & 1 else c for i, c in enumerate(s)]
+            )
             t2 = s[-b:] + s[:-b]
             for t in (t1, t2):
                 if t not in vis:
@@ -121,35 +100,6 @@ class Solution:
                     q.append(t)
         return ans
 ```
-
-```python
-class Solution:
-    def findLexSmallestString(self, s: str, a: int, b: int) -> str:
-        ans = s
-        n = len(s)
-        s = list(s)
-        for _ in range(n):
-            s = s[-b:] + s[:-b]
-            for j in range(10):
-                for k in range(1, n, 2):
-                    s[k] = str((int(s[k]) + a) % 10)
-                if b & 1:
-                    for p in range(10):
-                        for k in range(0, n, 2):
-                            s[k] = str((int(s[k]) + a) % 10)
-                        t = ''.join(s)
-                        if ans > t:
-                            ans = t
-                else:
-                    t = ''.join(s)
-                    if ans > t:
-                        ans = t
-        return ans
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -180,6 +130,102 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    string findLexSmallestString(string s, int a, int b) {
+        queue<string> q{{s}};
+        unordered_set<string> vis{{s}};
+        string ans = s;
+        int n = s.size();
+        while (!q.empty()) {
+            s = q.front();
+            q.pop();
+            ans = min(ans, s);
+            string t1 = s;
+            for (int i = 1; i < n; i += 2) {
+                t1[i] = (t1[i] - '0' + a) % 10 + '0';
+            }
+            string t2 = s.substr(n - b) + s.substr(0, n - b);
+            for (auto& t : {t1, t2}) {
+                if (!vis.count(t)) {
+                    vis.insert(t);
+                    q.emplace(t);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func findLexSmallestString(s string, a int, b int) string {
+	q := []string{s}
+	vis := map[string]bool{s: true}
+	ans := s
+	n := len(s)
+	for len(q) > 0 {
+		s = q[0]
+		q = q[1:]
+		if ans > s {
+			ans = s
+		}
+		t1 := []byte(s)
+		for i := 1; i < n; i += 2 {
+			t1[i] = byte((int(t1[i]-'0')+a)%10 + '0')
+		}
+		t2 := s[n-b:] + s[:n-b]
+		for _, t := range []string{string(t1), t2} {
+			if !vis[t] {
+				vis[t] = true
+				q = append(q, t)
+			}
+		}
+	}
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：枚举
+
+我们观察发现，对于累加操作，数字最多累加 $10$ 次，就会回到原来的状态；对于轮转操作，字符串最多轮转 $n$ 次，也会回到原来的状态。
+
+因此，轮转操作最多产生 $n$ 种状态，如果轮转位数 $b$ 为偶数，累加操作只会对奇数位数字产生影响，因此总共产生 $n \times 10$ 种状态；如果轮转位数 $b$ 为奇数，累加操作既会对奇数位数字产生影响，也会对偶数位数字产生影响，因此总共产生 $n \times 10 \times 10$ 种状态。
+
+所以，我们直接枚举所有的字符串状态，取字典序最小的状态即可。
+
+时间复杂度 $O(n^2 \times 10^2)$，空间复杂度 $O(n)$。其中 $n$ 为字符串 $s$ 的长度。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def findLexSmallestString(self, s: str, a: int, b: int) -> str:
+        ans = s
+        n = len(s)
+        s = list(s)
+        for _ in range(n):
+            s = s[-b:] + s[:-b]
+            for j in range(10):
+                for k in range(1, n, 2):
+                    s[k] = str((int(s[k]) + a) % 10)
+                if b & 1:
+                    for p in range(10):
+                        for k in range(0, n, 2):
+                            s[k] = str((int(s[k]) + a) % 10)
+                        t = ''.join(s)
+                        if ans > t:
+                            ans = t
+                else:
+                    t = ''.join(s)
+                    if ans > t:
+                        ans = t
+        return ans
 ```
 
 ```java
@@ -217,37 +263,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    string findLexSmallestString(string s, int a, int b) {
-        queue<string> q{{s}};
-        unordered_set<string> vis{{s}};
-        string ans = s;
-        int n = s.size();
-        while (!q.empty()) {
-            s = q.front();
-            q.pop();
-            ans = min(ans, s);
-            string t1 = s;
-            for (int i = 1; i < n; i += 2) {
-                t1[i] = (t1[i] - '0' + a) % 10 + '0';
-            }
-            string t2 = s.substr(n - b) + s.substr(0, n - b);
-            for (auto& t : {t1, t2}) {
-                if (!vis.count(t)) {
-                    vis.insert(t);
-                    q.emplace(t);
-                }
-            }
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -275,36 +290,6 @@ public:
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func findLexSmallestString(s string, a int, b int) string {
-	q := []string{s}
-	vis := map[string]bool{s: true}
-	ans := s
-	n := len(s)
-	for len(q) > 0 {
-		s = q[0]
-		q = q[1:]
-		if ans > s {
-			ans = s
-		}
-		t1 := []byte(s)
-		for i := 1; i < n; i += 2 {
-			t1[i] = byte((int(t1[i]-'0')+a)%10 + '0')
-		}
-		t2 := s[n-b:] + s[:n-b]
-		for _, t := range []string{string(t1), t2} {
-			if !vis[t] {
-				vis[t] = true
-				q = append(q, t)
-			}
-		}
-	}
-	return ans
-}
 ```
 
 ```go
@@ -340,10 +325,6 @@ func findLexSmallestString(s string, a int, b int) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

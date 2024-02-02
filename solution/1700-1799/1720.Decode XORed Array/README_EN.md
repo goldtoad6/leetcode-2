@@ -40,13 +40,9 @@
 
 ## Solutions
 
-XOR.
-
-`a = b ^ c` => `a ^ b = b ^ c ^ b` => `c = a ^ b`.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -56,8 +52,6 @@ class Solution:
             ans.append(ans[-1] ^ e)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -73,21 +67,17 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> decode(vector<int>& encoded, int first) {
-        vector<int> ans {{first}};
+        vector<int> ans{{first}};
         for (int i = 0; i < encoded.size(); ++i)
             ans.push_back(ans[i] ^ encoded[i]);
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func decode(encoded []int, first int) []int {
@@ -99,10 +89,6 @@ func decode(encoded []int, first int) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

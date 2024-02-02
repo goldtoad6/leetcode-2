@@ -49,9 +49,9 @@ mapSum.sum(&quot;ap&quot;);           // return 5 (<u>ap</u>ple + <u>ap</u>p = 3
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Trie:
@@ -79,7 +79,6 @@ class Trie:
 
 
 class MapSum:
-
     def __init__(self):
         self.d = defaultdict(int)
         self.tree = Trie()
@@ -92,13 +91,12 @@ class MapSum:
     def sum(self, prefix: str) -> int:
         return self.tree.search(prefix)
 
+
 # Your MapSum object will be instantiated and called as such:
 # obj = MapSum()
 # obj.insert(key,val)
 # param_2 = obj.sum(prefix)
 ```
-
-### **Java**
 
 ```java
 class Trie {
@@ -134,9 +132,7 @@ class MapSum {
     private Map<String, Integer> d = new HashMap<>();
     private Trie trie = new Trie();
 
-
     public MapSum() {
-
     }
 
     public void insert(String key, int val) {
@@ -157,8 +153,6 @@ class MapSum {
  * int param_2 = obj.sum(prefix);
  */
 ```
-
-### **C++**
 
 ```cpp
 class Trie {
@@ -224,8 +218,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type trie struct {
 	children [26]*trie
@@ -280,8 +272,6 @@ func (this *MapSum) Sum(prefix string) int {
  * param_2 := obj.Sum(prefix);
  */
 ```
-
-### **TypeScript**
 
 ```ts
 class Trie {
@@ -345,10 +335,6 @@ class MapSum {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

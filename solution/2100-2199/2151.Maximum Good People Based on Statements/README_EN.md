@@ -86,9 +86,9 @@ Note that there is more than one way to arrive at this conclusion.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -105,8 +105,6 @@ class Solution:
 
         return max(check(mask) for mask in range(1, 1 << len(statements)))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -137,8 +135,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -165,8 +161,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumGood(statements [][]int) int {
 	n := len(statements)
@@ -190,16 +184,7 @@ func maximumGood(statements [][]int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maximumGood(statements: number[][]): number {
@@ -227,10 +212,6 @@ function maximumGood(statements: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

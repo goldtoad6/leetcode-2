@@ -41,9 +41,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Enumeration
 
-### **Python3**
+We observe from the problem statement that each hourglass is a $3 \times 3$ matrix with the first and last elements of the middle row removed. Therefore, we can start from the top left corner, enumerate the middle coordinate $(i, j)$ of each hourglass, then calculate the sum of the elements in the hourglass, and take the maximum value.
+
+The time complexity is $O(m \times n)$, where $m$ and $n$ are the number of rows and columns of the matrix, respectively. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,13 +57,12 @@ class Solution:
         for i in range(1, m - 1):
             for j in range(1, n - 1):
                 s = -grid[i][j - 1] - grid[i][j + 1]
-                s += sum(grid[x][y] for x in range(i - 1, i + 2)
-                         for y in range(j - 1, j + 2))
+                s += sum(
+                    grid[x][y] for x in range(i - 1, i + 2) for y in range(j - 1, j + 2)
+                )
                 ans = max(ans, s)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -81,8 +84,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -106,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxSum(grid [][]int) (ans int) {
 	m, n := len(grid), len(grid[0])
@@ -124,16 +123,7 @@ func maxSum(grid [][]int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxSum(grid: number[][]): number {
@@ -155,10 +145,6 @@ function maxSum(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

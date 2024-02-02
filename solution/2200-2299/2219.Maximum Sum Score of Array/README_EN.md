@@ -51,9 +51,9 @@ The maximum sum score of nums is -3.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +61,6 @@ class Solution:
         s = [0] + list(accumulate(nums))
         return max(max(s[i + 1], s[-1] - s[i]) for i in range(len(nums)))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -81,7 +79,34 @@ class Solution {
 }
 ```
 
-### **TypeScript**
+```cpp
+class Solution {
+public:
+    long long maximumSumScore(vector<int>& nums) {
+        int n = nums.size();
+        vector<long long> s(n + 1);
+        for (int i = 0; i < n; ++i) s[i + 1] = s[i] + nums[i];
+        long long ans = INT_MIN;
+        for (int i = 0; i < n; ++i) ans = max(ans, max(s[i + 1], s[n] - s[i]));
+        return ans;
+    }
+};
+```
+
+```go
+func maximumSumScore(nums []int) int64 {
+	n := len(nums)
+	s := make([]int64, n+1)
+	for i, v := range nums {
+		s[i+1] = s[i] + int64(v)
+	}
+	var ans int64 = math.MinInt64
+	for i := 0; i < n; i++ {
+		ans = max(ans, max(s[i+1], s[n]-s[i]))
+	}
+	return ans
+}
+```
 
 ```ts
 function maximumSumScore(nums: number[]): number {
@@ -97,48 +122,6 @@ function maximumSumScore(nums: number[]): number {
     return ans;
 }
 ```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    long long maximumSumScore(vector<int>& nums) {
-        int n = nums.size();
-        vector<long long> s(n + 1);
-        for (int i = 0; i < n; ++i) s[i + 1] = s[i] + nums[i];
-        long long ans = INT_MIN;
-        for (int i = 0; i < n; ++i) ans = max(ans, max(s[i + 1], s[n] - s[i]));
-        return ans;
-    }
-};
-```
-
-### **Go**
-
-```go
-func maximumSumScore(nums []int) int64 {
-	n := len(nums)
-	s := make([]int64, n+1)
-	for i, v := range nums {
-		s[i+1] = s[i] + int64(v)
-	}
-	var ans int64 = math.MinInt64
-	for i := 0; i < n; i++ {
-		ans = max(ans, max(s[i+1], s[n]-s[i]))
-	}
-	return ans
-}
-
-func max(a, b int64) int64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **JavaScript**
 
 ```js
 /**
@@ -159,10 +142,6 @@ var maximumSumScore = function (nums) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

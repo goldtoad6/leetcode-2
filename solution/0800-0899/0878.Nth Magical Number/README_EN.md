@@ -33,9 +33,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -45,8 +45,6 @@ class Solution:
         r = (a + b) * n
         return bisect_left(range(r), x=n, key=lambda x: x // a + x // b - x // c) % mod
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -72,8 +70,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 
@@ -86,15 +82,15 @@ public:
         ll l = 0, r = 1ll * (a + b) * n;
         while (l < r) {
             ll mid = l + r >> 1;
-            if (mid / a + mid / b - mid / c >= n) r = mid;
-            else l = mid + 1;
+            if (mid / a + mid / b - mid / c >= n)
+                r = mid;
+            else
+                l = mid + 1;
         }
         return l % mod;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func nthMagicalNumber(n int, a int, b int) int {
@@ -112,10 +108,6 @@ func gcd(a, b int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

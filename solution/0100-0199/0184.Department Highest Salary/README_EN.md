@@ -15,8 +15,8 @@
 | salary       | int     |
 | departmentId | int     |
 +--------------+---------+
-id is the primary key column for this table.
-departmentId is a foreign key of the ID from the <code>Department </code>table.
+id is the primary key (column with unique values) for this table.
+departmentId is a foreign key (reference columns) of the ID from the <code>Department </code>table.
 Each row of this table indicates the ID, name, and salary of an employee. It also contains the ID of their department.
 </pre>
 
@@ -31,17 +31,17 @@ Each row of this table indicates the ID, name, and salary of an employee. It als
 | id          | int     |
 | name        | varchar |
 +-------------+---------+
-id is the primary key column for this table. It is guaranteed that department name is not <code>NULL.</code>
+id is the primary key (column with unique values) for this table. It is guaranteed that department name is not <code>NULL.</code>
 Each row of this table indicates the ID of a department and its name.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find employees who have the highest salary in each of the departments.</p>
+<p>Write a solution to find employees who have the highest salary in each of the departments.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -78,44 +78,55 @@ Department table:
 
 ## Solutions
 
+### Solution 1: Equi-Join + Subquery
+
+We can use an equi-join to join the `Employee` table and the `Department` table based on `Employee.departmentId = Department.id`, and then use a subquery to find the highest salary for each department. Finally, we can use a `WHERE` clause to filter out the employees with the highest salary in each department.
+
 <!-- tabs:start -->
-
-### **SQL**
-
-```sql
-SELECT
-	Department.NAME AS Department,
-	Employee.NAME AS Employee,
-	Salary
-FROM
-	Employee,
-	Department
-WHERE
-	Employee.DepartmentId = Department.Id
-	AND ( Employee.DepartmentId, Salary )
-    IN (SELECT DepartmentId, max( Salary )
-        FROM Employee
-        GROUP BY DepartmentId )
-```
 
 ```sql
 # Write your MySQL query statement below
-SELECT
-	d.NAME AS Department,
-	e1.NAME AS Employee,
-	e1.salary AS Salary
+SELECT d.name AS department, e.name AS employee, salary
 FROM
-	Employee AS e1
-	JOIN Department AS d ON e1.departmentId = d.id
+    Employee AS e
+    JOIN Department AS d ON e.departmentId = d.id
 WHERE
-	e1.salary = (
-	SELECT
-		MAX( Salary )
-	FROM
-		Employee AS e2
-	WHERE
-		e2.departmentId = d.id
-	)
+    (d.id, salary) IN (
+        SELECT departmentId, MAX(salary)
+        FROM Employee
+        GROUP BY 1
+    );
 ```
 
 <!-- tabs:end -->
+
+### Solution 2: Equi-Join + Window Function
+
+We can use an equi-join to join the `Employee` table and the `Department` table based on `Employee.departmentId = Department.id`, and then use the window function `rank()`, which assigns a rank to each employee in each department based on their salary. Finally, we can select the rows with a rank of $1$ for each department.
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            d.name AS department,
+            e.name AS employee,
+            salary,
+            RANK() OVER (
+                PARTITION BY d.name
+                ORDER BY salary DESC
+            ) AS rk
+        FROM
+            Employee AS e
+            JOIN Department AS d ON e.departmentId = d.id
+    )
+SELECT department, employee, salary
+FROM T
+WHERE rk = 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

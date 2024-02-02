@@ -61,9 +61,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Recursion
 
-### **Python3**
+If $val$ is the maximum number, then make $val$ the new root node, and $root$ the left subtree of the new root node.
+
+If $val$ is not the maximum number, since $val$ is the last appended number, it must be on the right side of $root$. Therefore, we can insert $val$ as a new node into the right subtree of $root$.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the number of nodes in the tree.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -73,34 +79,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def insertIntoMaxTree(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    def insertIntoMaxTree(
+        self, root: Optional[TreeNode], val: int
+    ) -> Optional[TreeNode]:
         if root is None or root.val < val:
             return TreeNode(val, root)
         root.right = self.insertIntoMaxTree(root.right, val)
         return root
 ```
-
-```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def insertIntoMaxTree(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-        if root.val < val:
-            return TreeNode(val, root)
-        curr = root
-        node = TreeNode(val)
-        while curr.right and curr.right.val > val:
-            curr = curr.right
-        node.left = curr.right
-        curr.right = node
-        return root
-```
-
-### **Java**
 
 ```java
 /**
@@ -127,6 +113,173 @@ class Solution {
         return root;
     }
 }
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* insertIntoMaxTree(TreeNode* root, int val) {
+        if (!root || root->val < val) return new TreeNode(val, root, nullptr);
+        root->right = insertIntoMaxTree(root->right, val);
+        return root;
+    }
+};
+```
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func insertIntoMaxTree(root *TreeNode, val int) *TreeNode {
+	if root == nil || root.Val < val {
+		return &TreeNode{val, root, nil}
+	}
+	root.Right = insertIntoMaxTree(root.Right, val)
+	return root
+}
+```
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function insertIntoMaxTree(root: TreeNode | null, val: number): TreeNode | null {
+    if (!root || root.val < val) {
+        return new TreeNode(val, root);
+    }
+    root.right = insertIntoMaxTree(root.right, val);
+    return root;
+}
+```
+
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    pub fn insert_into_max_tree(
+        mut root: Option<Rc<RefCell<TreeNode>>>,
+        val: i32
+    ) -> Option<Rc<RefCell<TreeNode>>> {
+        if root.is_none() || root.as_ref().unwrap().as_ref().borrow().val < val {
+            return Some(
+                Rc::new(
+                    RefCell::new(TreeNode {
+                        val,
+                        left: root.take(),
+                        right: None,
+                    })
+                )
+            );
+        }
+        {
+            let mut root = root.as_ref().unwrap().as_ref().borrow_mut();
+            root.right = Self::insert_into_max_tree(root.right.take(), val);
+        }
+        root
+    }
+}
+```
+
+```c
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+struct TreeNode* insertIntoMaxTree(struct TreeNode* root, int val) {
+    if (!root || root->val < val) {
+        struct TreeNode* res = (struct TreeNode*) malloc(sizeof(struct TreeNode));
+        res->val = val;
+        res->left = root;
+        res->right = NULL;
+        return res;
+    }
+    root->right = insertIntoMaxTree(root->right, val);
+    return root;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Iteration
+
+Search the right subtree, find the node where $curr.val \gt val \gt curr.right.val$, then create a new node $node$, point $node.left$ to $curr.right$, and then point $curr.right$ to $node$.
+
+Finally, return $root$.
+
+The time complexity is $O(n)$, where $n$ is the number of nodes in the tree. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def insertIntoMaxTree(
+        self, root: Optional[TreeNode], val: int
+    ) -> Optional[TreeNode]:
+        if root.val < val:
+            return TreeNode(val, root)
+        curr = root
+        node = TreeNode(val)
+        while curr.right and curr.right.val > val:
+            curr = curr.right
+        node.left = curr.right
+        curr.right = node
+        return root
 ```
 
 ```java
@@ -162,92 +315,6 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function insertIntoMaxTree(
-    root: TreeNode | null,
-    val: number,
-): TreeNode | null {
-    if (!root || root.val < val) {
-        return new TreeNode(val, root);
-    }
-    root.right = insertIntoMaxTree(root.right, val);
-    return root;
-}
-```
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function insertIntoMaxTree(
-    root: TreeNode | null,
-    val: number,
-): TreeNode | null {
-    if (root.val < val) {
-        return new TreeNode(val, root);
-    }
-    const node = new TreeNode(val);
-    let curr = root;
-    while (curr.right && curr.right.val > val) {
-        curr = curr.right;
-    }
-    node.left = curr.right;
-    curr.right = node;
-    return root;
-}
-```
-
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    TreeNode* insertIntoMaxTree(TreeNode* root, int val) {
-        if (!root || root->val < val) return new TreeNode(val, root, nullptr);
-        root->right = insertIntoMaxTree(root->right, val);
-        return root;
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -274,26 +341,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func insertIntoMaxTree(root *TreeNode, val int) *TreeNode {
-	if root == nil || root.Val < val {
-		return &TreeNode{val, root, nil}
-	}
-	root.Right = insertIntoMaxTree(root.Right, val)
-	return root
-}
-```
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -318,80 +365,36 @@ func insertIntoMaxTree(root *TreeNode, val int) *TreeNode {
 }
 ```
 
-### **C**
-
-```c
+```ts
 /**
  * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     struct TreeNode *left;
- *     struct TreeNode *right;
- * };
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
  */
 
-
-struct TreeNode *insertIntoMaxTree(struct TreeNode *root, int val) {
-    if (!root || root->val < val) {
-        struct TreeNode *res = (struct TreeNode *) malloc(sizeof(struct TreeNode));
-        res->val = val;
-        res->left = root;
-        res->right = NULL;
-        return res;
+function insertIntoMaxTree(root: TreeNode | null, val: number): TreeNode | null {
+    if (root.val < val) {
+        return new TreeNode(val, root);
     }
-    root->right = insertIntoMaxTree(root->right, val);
+    const node = new TreeNode(val);
+    let curr = root;
+    while (curr.right && curr.right.val > val) {
+        curr = curr.right;
+    }
+    node.left = curr.right;
+    curr.right = node;
     return root;
 }
 ```
 
-### **Rust**
-
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-impl Solution {
-    pub fn insert_into_max_tree(
-        mut root: Option<Rc<RefCell<TreeNode>>>,
-        val: i32,
-    ) -> Option<Rc<RefCell<TreeNode>>> {
-        if root.is_none() || root.as_ref().unwrap().as_ref().borrow().val < val {
-            return Some(Rc::new(RefCell::new(TreeNode {
-                val,
-                left: root.take(),
-                right: None,
-            })));
-        }
-        {
-            let mut root = root.as_ref().unwrap().as_ref().borrow_mut();
-            root.right = Self::insert_into_max_tree(root.right.take(), val);
-        }
-        root
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

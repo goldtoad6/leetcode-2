@@ -48,9 +48,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心**
+### 方法一：贪心
 
 我们先遍历字符串数组 `strs`，对于每个字符串 $s$，如果 $s$ 的反转字符串 $t$ 比 $s$ 大，那么我们就将 $s$ 替换为 $t$。
 
@@ -62,17 +60,13 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def splitLoopedString(self, strs: List[str]) -> str:
         strs = [s[::-1] if s[::-1] > s else s for s in strs]
         ans = ''.join(strs)
         for i, s in enumerate(strs):
-            t = ''.join(strs[i + 1:]) + ''.join(strs[: i])
+            t = ''.join(strs[i + 1 :]) + ''.join(strs[:i])
             for j in range(len(s)):
                 a = s[j:]
                 b = s[:j]
@@ -80,10 +74,6 @@ class Solution:
                 ans = max(ans, b[::-1] + t + a[::-1])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -129,8 +119,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -169,8 +157,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func splitLoopedString(strs []string) (ans string) {
@@ -213,10 +199,6 @@ func reverse(s string) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

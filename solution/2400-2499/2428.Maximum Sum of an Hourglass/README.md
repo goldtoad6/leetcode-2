@@ -43,19 +43,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举**
+### 方法一：枚举
 
 我们观察题目发现，每个沙漏就是一个 $3 \times 3$ 的矩阵挖去中间行的首尾两个元素。因此，我们可以从左上角开始，枚举每个沙漏的中间坐标 $(i, j)$，然后计算沙漏的元素和，取其中的最大值即可。
 
-时间复杂度 $O(m \times n)$，空间复杂度 $O(1)$。其中 $m$ 和 $n$ 分别是矩阵的行数和列数。
+时间复杂度 $O(m \times n)$，其中 $m$ 和 $n$ 分别是矩阵的行数和列数。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -65,15 +59,12 @@ class Solution:
         for i in range(1, m - 1):
             for j in range(1, n - 1):
                 s = -grid[i][j - 1] - grid[i][j + 1]
-                s += sum(grid[x][y] for x in range(i - 1, i + 2)
-                         for y in range(j - 1, j + 2))
+                s += sum(
+                    grid[x][y] for x in range(i - 1, i + 2) for y in range(j - 1, j + 2)
+                )
                 ans = max(ans, s)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -95,8 +86,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -120,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxSum(grid [][]int) (ans int) {
 	m, n := len(grid), len(grid[0])
@@ -138,16 +125,7 @@ func maxSum(grid [][]int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxSum(grid: number[][]): number {
@@ -169,10 +147,6 @@ function maxSum(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

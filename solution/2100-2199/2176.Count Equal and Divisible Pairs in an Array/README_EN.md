@@ -38,9 +38,9 @@ There are 4 pairs that meet all the requirements:
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -52,8 +52,6 @@ class Solution:
             for j in range(i + 1, n)
         )
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -72,8 +70,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -90,8 +86,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countPairs(nums []int, k int) int {
 	n := len(nums)
@@ -106,8 +100,6 @@ func countPairs(nums []int, k int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countPairs(nums: number[], k: number): number {
@@ -124,8 +116,6 @@ function countPairs(nums: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn count_pairs(nums: Vec<i32>, k: i32) -> i32 {
@@ -134,7 +124,7 @@ impl Solution {
         let mut ans = 0;
         for i in 0..n - 1 {
             for j in i + 1..n {
-                if nums[i] == nums[j] && i * j % k == 0 {
+                if nums[i] == nums[j] && (i * j) % k == 0 {
                     ans += 1;
                 }
             }
@@ -144,10 +134,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-int countPairs(int *nums, int numsSize, int k) {
+int countPairs(int* nums, int numsSize, int k) {
     int ans = 0;
     for (int i = 0; i < numsSize - 1; i++) {
         for (int j = i + 1; j < numsSize; j++) {
@@ -160,10 +148,6 @@ int countPairs(int *nums, int numsSize, int k) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

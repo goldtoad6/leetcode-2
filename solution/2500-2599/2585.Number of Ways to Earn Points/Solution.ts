@@ -14,4 +14,4 @@ function waysToReachTarget(target: number, types: number[][]): number {
         }
     }
     return f[n][target];
-};
+}

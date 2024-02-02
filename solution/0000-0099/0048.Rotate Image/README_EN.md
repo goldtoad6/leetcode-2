@@ -34,94 +34,121 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: In-place Rotation
 
-### **Python3**
+According to the problem requirements, we actually need to rotate $matrix[i][j]$ to $matrix[j][n - i - 1]$.
+
+We can first flip the matrix upside down, that is, swap $matrix[i][j]$ and $matrix[n - i - 1][j]$, and then flip the matrix along the main diagonal, that is, swap $matrix[i][j]$ and $matrix[j][i]$. This way, we can rotate $matrix[i][j]$ to $matrix[j][n - i - 1]$.
+
+The time complexity is $O(n^2)$, where $n$ is the side length of the matrix. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def rotate(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
-        s, n = 0, len(matrix)
-        while s < (n >> 1):
-            e = n - s - 1
-            for i in range(s, e):
-                t = matrix[i][e]
-                matrix[i][e] = matrix[s][i]
-                matrix[s][i] = matrix[n - i - 1][s]
-                matrix[n - i - 1][s] = matrix[e][n - i - 1]
-                matrix[e][n - i - 1] = t
-            s += 1
+        n = len(matrix)
+        for i in range(n >> 1):
+            for j in range(n):
+                matrix[i][j], matrix[n - i - 1][j] = matrix[n - i - 1][j], matrix[i][j]
+        for i in range(n):
+            for j in range(i):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public void rotate(int[][] matrix) {
-        int s = 0, n = matrix.length;
-        while (s < (n >> 1)) {
-            int e = n - s - 1;
-            for (int i = s; i < e; ++i) {
-                int t = matrix[i][e];
-                matrix[i][e] = matrix[s][i];
-                matrix[s][i] = matrix[n - i - 1][s];
-                matrix[n - i - 1][s] = matrix[e][n - i - 1];
-                matrix[e][n - i - 1] = t;
+        int n = matrix.length;
+        for (int i = 0; i < n >> 1; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = t;
             }
-            ++s;
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = t;
+            }
         }
     }
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {
-
         int n = matrix.size();
-        if (n <= 1) return;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                swap(matrix[i][j], matrix[j][i]);
+        for (int i = 0; i < n >> 1; ++i) {
+            for (int j = 0; j < n; ++j) {
+                swap(matrix[i][j], matrix[n - i - 1][j]);
             }
         }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                swap(matrix[i][j], matrix[i][n - 1 - j]);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                swap(matrix[i][j], matrix[j][i]);
             }
         }
     }
 };
 ```
 
-### **JavaScript**
+```go
+func rotate(matrix [][]int) {
+	n := len(matrix)
+	for i := 0; i < n>>1; i++ {
+		for j := 0; j < n; j++ {
+			matrix[i][j], matrix[n-i-1][j] = matrix[n-i-1][j], matrix[i][j]
+		}
+	}
+	for i := 0; i < n; i++ {
+		for j := 0; j < i; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+}
+```
 
-```js
+```ts
 /**
- * @param {number[][]} matrix
- * @return {void} Do not return anything, modify matrix in-place instead.
+ Do not return anything, modify matrix in-place instead.
  */
-var rotate = function (matrix) {
-    const n = matrix.length;
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j <= i; j++) {
-            [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+function rotate(matrix: number[][]): void {
+    matrix.reverse();
+    for (let i = 0; i < matrix.length; ++i) {
+        for (let j = 0; j < i; ++j) {
+            const t = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = t;
         }
     }
-    for (let i = 0, j = n - 1; i < j; i++, j--) {
-        for (let k = 0; k < n; k++) {
-            [matrix[k][i], matrix[k][j]] = [matrix[k][j], matrix[k][i]];
+}
+```
+
+```rust
+impl Solution {
+    pub fn rotate(matrix: &mut Vec<Vec<i32>>) {
+        let n = matrix.len();
+        for i in 0..n / 2 {
+            for j in 0..n {
+                let t = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = t;
+            }
+        }
+        for i in 0..n {
+            for j in 0..i {
+                let t = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = t;
+            }
         }
     }
-};
+}
 ```
 
 ```js
@@ -131,77 +158,36 @@ var rotate = function (matrix) {
  */
 var rotate = function (matrix) {
     matrix.reverse();
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < i; j++) {
+    for (let i = 0; i < matrix.length; ++i) {
+        for (let j = 0; j < i; ++j) {
             [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
         }
     }
 };
 ```
 
-### **TypeScript**
-
-```ts
-/**
- Do not return anything, modify matrix in-place instead.
- */
-function rotate(matrix: number[][]): void {
-    let n = matrix[0].length;
-    for (let i = 0; i < Math.floor(n / 2); i++) {
-        for (let j = 0; j < Math.floor((n + 1) / 2); j++) {
-            let tmp = matrix[i][j];
-            matrix[i][j] = matrix[n - 1 - j][i];
-            matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
-            matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
-            matrix[j][n - 1 - i] = tmp;
+```cs
+public class Solution {
+    public void Rotate(int[][] matrix) {
+        int n = matrix.Length;
+        for (int i = 0; i < n >> 1; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = t;
+            }
         }
-    }
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn rotate(matrix: &mut Vec<Vec<i32>>) {
-        let n = matrix.len();
-        for i in 0..n / 2 {
-            for j in i..n - i - 1 {
-                let t = matrix[i][j];
-                matrix[i][j] = matrix[n - j - 1][i];
-                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
-                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
-                matrix[j][n - i - 1] = t;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = t;
             }
         }
     }
 }
 ```
 
-### **Go**
-
-```go
-func rotate(matrix [][]int) {
-	n := len(matrix)
-	// matrix transpose
-	for i := 0; i < n; i++ {
-		for j := i; j < n; j++ {
-			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-		}
-	}
-	// reverse each matrix[i]
-	for i := 0; i < n; i++ {
-		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
-			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
-		}
-	}
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

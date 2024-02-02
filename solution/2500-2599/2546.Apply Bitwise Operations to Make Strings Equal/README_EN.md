@@ -46,17 +46,19 @@ Since we can make s equal to target, we return true.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Lateral Thinking
 
-### **Python3**
+We notice that $1$ is actually a "tool" for number conversion. Therefore, as long as both strings either have $1$ or neither have $1$, we can make the two strings equal through operations.
+
+The time complexity is $O(n)$, where $n$ is the length of the string. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def makeStringsEqual(self, s: str, target: str) -> bool:
         return ("1" in s) == ("1" in target)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -65,8 +67,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -79,23 +79,17 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func makeStringsEqual(s string, target string) bool {
 	return strings.Contains(s, "1") == strings.Contains(target, "1")
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function makeStringsEqual(s: string, target: string): boolean {
     return s.includes('1') === target.includes('1');
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -105,10 +99,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-bool makeStringsEqual(char *s, char *target) {
+bool makeStringsEqual(char* s, char* target) {
     int count = 0;
     for (int i = 0; s[i]; i++) {
         if (s[i] == '1') {
@@ -126,10 +118,6 @@ bool makeStringsEqual(char *s, char *target) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

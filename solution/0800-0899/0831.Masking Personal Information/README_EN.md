@@ -100,23 +100,21 @@ Thus, the resulting masked number is &quot;***-***-7890&quot;.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maskPII(self, s: str) -> str:
         if s[0].isalpha():
             s = s.lower()
-            return s[0] + '*****' + s[s.find('@') - 1:]
+            return s[0] + '*****' + s[s.find('@') - 1 :]
         s = ''.join(c for c in s if c.isdigit())
         cnt = len(s) - 10
         suf = '***-***-' + s[-4:]
         return suf if cnt == 0 else f'+{"*" * cnt}-{suf}'
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -141,8 +139,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -171,8 +167,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maskPII(s string) string {
 	i := strings.Index(s, "@")
@@ -196,8 +190,6 @@ func maskPII(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maskPII(s: string): string {
     const i = s.indexOf('@');
@@ -220,10 +212,6 @@ function maskPII(s: string): string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

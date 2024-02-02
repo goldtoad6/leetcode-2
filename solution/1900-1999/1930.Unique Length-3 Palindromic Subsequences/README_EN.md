@@ -58,9 +58,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -69,11 +69,9 @@ class Solution:
         for c in ascii_lowercase:
             l, r = s.find(c), s.rfind(c)
             if r - l > 1:
-                ans += len(set(s[l + 1: r]))
+                ans += len(set(s[l + 1 : r]))
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countPalindromicSubsequence(s string) (ans int) {
 	for c := 'a'; c <= 'z'; c++ {
@@ -126,10 +120,23 @@ func countPalindromicSubsequence(s string) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int CountPalindromicSubsequence(string s) {
+        int ans = 0;
+        for (char c = 'a'; c <= 'z'; ++c) {
+            int l = s.IndexOf(c), r = s.LastIndexOf(c);
+            HashSet<char> cs = new HashSet<char>();
+            for (int i = l + 1; i < r; ++i) {
+                cs.Add(s[i]);
+            }
+            ans += cs.Count;
+        }
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -57,17 +57,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：排序 + 贪心
 
-**方法一：排序 + 贪心**
+相似题目：
 
-相似题目： [452. 用最少数量的箭引爆气球](/solution/0400-0499/0452.Minimum%20Number%20of%20Arrows%20to%20Burst%20Balloons/README.md)
+-   [452. 用最少数量的箭引爆气球](https://github.com/doocs/leetcode/blob/main/solution/0400-0499/0452.Minimum%20Number%20of%20Arrows%20to%20Burst%20Balloons/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -86,10 +82,6 @@ class Solution:
                 s, e = e, b
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -116,8 +108,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -146,40 +136,34 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func intersectionSizeTwo(intervals [][]int) int {
-    sort.Slice(intervals, func(i, j int) bool {
-        a, b := intervals[i], intervals[j]
-        if a[1] == b[1] {
-            return a[0] > b[0]
-        }
-        return a[1] < b[1]
-    })
-    ans := 0
-    s, e := -1, -1
-    for _, v := range intervals {
-        a, b := v[0], v[1]
-        if a <= s {
-            continue
-        }
-        if a > e {
-            ans += 2
-            s, e = b - 1, b
-        } else {
-            ans += 1
-            s, e = e, b
-        }
-    }
-    return ans
+	sort.Slice(intervals, func(i, j int) bool {
+		a, b := intervals[i], intervals[j]
+		if a[1] == b[1] {
+			return a[0] > b[0]
+		}
+		return a[1] < b[1]
+	})
+	ans := 0
+	s, e := -1, -1
+	for _, v := range intervals {
+		a, b := v[0], v[1]
+		if a <= s {
+			continue
+		}
+		if a > e {
+			ans += 2
+			s, e = b-1, b
+		} else {
+			ans += 1
+			s, e = e, b
+		}
+	}
+	return ans
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

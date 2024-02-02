@@ -1,17 +1,10 @@
-func numTimesAllBlue(flips []int) int {
-	ans, mx := 0, 0
-	for i := 1; i <= len(flips); i++ {
-		mx = max(mx, flips[i-1])
-		if mx == i {
+func numTimesAllBlue(flips []int) (ans int) {
+	mx := 0
+	for i, x := range flips {
+		mx = max(mx, x)
+		if mx == i+1 {
 			ans++
 		}
 	}
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return
 }

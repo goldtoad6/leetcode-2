@@ -43,34 +43,36 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We can use a hash table or array $cnt$ to count the occurrences of each number in $arr$, then traverse $cnt$ to find the largest $x$ that satisfies $cnt[x] = x$. If there is no such $x$, return $-1$.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Where $n$ is the length of $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def findLucky(self, arr: List[int]) -> int:
-        counter = Counter(arr)
+        cnt = Counter(arr)
         ans = -1
-        for num, n in counter.items():
-            if num == n and ans < num:
-                ans = num
+        for x, v in cnt.items():
+            if x == v and ans < x:
+                ans = x
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int findLucky(int[] arr) {
-        Map<Integer, Integer> mp = new HashMap<>();
-        for (int num : arr) {
-            mp.put(num, mp.getOrDefault(num, 0) + 1);
+        int[] cnt = new int[510];
+        for (int x : cnt) {
+            ++cnt[x];
         }
         int ans = -1;
-        for (int num : arr) {
-            if (num == mp.get(num) && ans < num) {
-                ans = num;
+        for (int x = 1; x < cnt.length; ++x) {
+            if (cnt[x] == x) {
+                ans = x;
             }
         }
         return ans;
@@ -78,47 +80,80 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int findLucky(vector<int>& arr) {
-        int n = 510;
-        vector<int> counter(n);
-        for (int e : arr) ++counter[e];
+        int cnt[510];
+        memset(cnt, 0, sizeof(cnt));
+        for (int x : arr) {
+            ++cnt[x];
+        }
         int ans = -1;
-        for (int i = 1; i < n; ++i) {
-            if (i == counter[i] && ans < i) ans = i;
+        for (int x = 1; x < 510; ++x) {
+            if (cnt[x] == x) {
+                ans = x;
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func findLucky(arr []int) int {
-    n := 510
-    counter := make([]int, n)
-    for _, e := range arr {
-        counter[e]++
-    }
-    ans := -1
-    for i := 1; i < n; i++ {
-        if i == counter[i] && ans < i {
-            ans = i
-        }
-    }
-    return ans
+	cnt := [510]int{}
+	for _, x := range arr {
+		cnt[x]++
+	}
+	ans := -1
+	for x := 1; x < len(cnt); x++ {
+		if cnt[x] == x {
+			ans = x
+		}
+	}
+	return ans
 }
 ```
 
-### **...**
-
+```ts
+function findLucky(arr: number[]): number {
+    const cnt = new Array(510).fill(0);
+    for (const x of arr) {
+        ++cnt[x];
+    }
+    let ans = -1;
+    for (let x = 1; x < cnt.length; ++x) {
+        if (cnt[x] === x) {
+            ans = x;
+        }
+    }
+    return ans;
+}
 ```
 
+```php
+class Solution {
+    /**
+     * @param Integer[] $arr
+     * @return Integer
+     */
+    function findLucky($arr) {
+        $max = -1;
+        for ($i = 0; $i < count($arr); $i++) {
+            $hashtable[$arr[$i]] += 1;
+        }
+        $keys = array_keys($hashtable);
+        for ($j = 0; $j < count($keys); $j++) {
+            if ($hashtable[$keys[$j]] == $keys[$j]) {
+                $max = max($max, $keys[$j]);
+            }
+        }
+        return $max;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -54,9 +54,9 @@ The nodes that are reachable are highlighted in yellow.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -80,8 +80,6 @@ class Solution:
             ans += min(cnt, a + b)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -126,8 +124,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -166,8 +162,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func reachableNodes(edges [][]int, maxMoves int, n int) (ans int) {
@@ -211,31 +205,13 @@ func reachableNodes(edges [][]int, maxMoves int, n int) (ans int) {
 type pair struct{ v, i int }
 type hp []pair
 
-func (h hp) Len() int            { return len(h) }
-func (h hp) Less(i, j int) bool  { return h[i].v < h[j].v }
-func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
+func (h hp) Len() int           { return len(h) }
+func (h hp) Less(i, j int) bool { return h[i].v < h[j].v }
+func (h hp) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

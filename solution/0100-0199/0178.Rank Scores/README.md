@@ -15,13 +15,13 @@
 | id          | int     |
 | score       | decimal |
 +-------------+---------+
-Id是该表的主键。
-该表的每一行都包含了一场比赛的分数。Score是一个有两位小数点的浮点值。
+在 SQL 中，id 是该表的主键。
+该表的每一行都包含了一场比赛的分数。Score 是一个有两位小数点的浮点值。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写 SQL 查询对分数进行排序。排名按以下规则计算:</p>
+<p>查询并对分数进行排序。排名按以下规则计算:</p>
 
 <ul>
 	<li>分数应按从高到低排列。</li>
@@ -64,11 +64,7 @@ Scores 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-<!-- tabs:start -->
-
-### **MySQL8**
+### 方法一：使用窗口函数 `DENSE_RANK()`
 
 使用 `DENSE_RANK()` 函数，语法如下：
 
@@ -86,27 +82,60 @@ DENSE_RANK() OVER (
 
 与 `RANK()` 函数不同，`DENSE_RANK()` 函数始终返回连续的排名值。
 
-题解如下：
+<!-- tabs:start -->
+
+```python
+import pandas as pd
+
+
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    # Use the rank method to assign ranks to the scores in descending order with no gaps
+    scores["rank"] = scores["score"].rank(method="dense", ascending=False)
+
+    # Drop id column & Sort the DataFrame by score in descending order
+    result_df = scores.drop("id", axis=1).sort_values(by="score", ascending=False)
+
+    return result_df
+```
 
 ```sql
 # Write your MySQL query statement below
-SELECT Score, DENSE_RANK() OVER (ORDER BY Score DESC) 'Rank'
+SELECT
+    score,
+    DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
 FROM Scores;
 ```
 
-### **MySQL5**
+<!-- tabs:end -->
 
-MySQL 8 开始才提供了 `ROW_NUMBER()`，`RANK()`，`DENSE_RANK()` 等[窗口函数](https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html)，在之前的版本，可以使用变量实现类似的功能：
+### 方法二：变量
+
+MySQL 8 开始才提供了 `ROW_NUMBER()`，`RANK()`，`DENSE_RANK()` 等[窗口函数](https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html)，在之前的版本，可以使用变量实现类似的功能。
+
+<!-- tabs:start -->
 
 ```sql
-SELECT Score,
-       CONVERT(rk, SIGNED) `Rank`
-FROM (SELECT Score,
-             IF(@latest = Score, @rank, @rank := @rank + 1) rk,
-             @latest := Score
-      FROM Scores,
-           (SELECT @rank := 0, @latest := NULL) tmp
-      ORDER BY Score DESC) s;
+SELECT
+    Score,
+    CONVERT(rk, SIGNED) `Rank`
+FROM
+    (
+        SELECT
+            Score,
+            IF(@latest = Score, @rank, @rank := @rank + 1) rk,
+            @latest := Score
+        FROM
+            Scores,
+            (
+                SELECT
+                    @rank := 0,
+                    @latest := NULL
+            ) tmp
+        ORDER BY
+            Score DESC
+    ) s;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

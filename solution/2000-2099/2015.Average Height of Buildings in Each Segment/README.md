@@ -77,21 +77,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：差分有序哈希表**
+### 方法一：差分有序哈希表
 
 我们利用差分思想，使用有序哈希表 `height` 记录每个位置的高度变化，`cnt` 记录建筑物的数量变化。对有序哈希表求前缀和，即可得到每个位置的高度和建筑物数量。
 
 最后遍历有序哈希表，对于每个位置，如果高度和建筑物数量都不为 0，则说明该位置有建筑物，判断此时的建筑物是否与上个建筑物的平均高度相同，如果相同，则合并，否则加入结果集。
 
-时间复杂度为 $O(n\log n)$，其中 $n$ 为建筑物数量。
+时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 为建筑物数量。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -117,10 +111,6 @@ class Solution:
             n += cnt[j]
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -159,8 +149,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -190,8 +178,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func averageHeightOfBuildings(buildings [][]int) [][]int {
@@ -228,10 +214,6 @@ func averageHeightOfBuildings(buildings [][]int) [][]int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

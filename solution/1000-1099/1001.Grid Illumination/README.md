@@ -59,9 +59,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 假设一盏灯的坐标为 $(x, y)$，那么它所在的行的数值为 $x$，列的数值为 $y$，正对角线的数值为 $x-y$，反对角线的数值为 $x+y$。确定某一直线的唯一数值标识后，我们就可以通过哈希表来记录某一直线所拥有的灯的数目。
 
@@ -77,13 +75,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def gridIllumination(self, n: int, lamps: List[List[int]], queries: List[List[int]]) -> List[int]:
+    def gridIllumination(
+        self, n: int, lamps: List[List[int]], queries: List[List[int]]
+    ) -> List[int]:
         s = {(i, j) for i, j in lamps}
         row, col, diag1, diag2 = Counter(), Counter(), Counter(), Counter()
         for i, j in s:
@@ -105,10 +101,6 @@ class Solution:
                         diag2[x + y] -= 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -168,8 +160,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -214,8 +204,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func gridIllumination(n int, lamps [][]int, queries [][]int) []int {
 	row, col, diag1, diag2 := map[int]int{}, map[int]int{}, map[int]int{}, map[int]int{}
@@ -256,14 +244,8 @@ func gridIllumination(n int, lamps [][]int, queries [][]int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function gridIllumination(
-    n: number,
-    lamps: number[][],
-    queries: number[][],
-): number[] {
+function gridIllumination(n: number, lamps: number[][], queries: number[][]): number[] {
     const row = new Map<number, number>();
     const col = new Map<number, number>();
     const diag1 = new Map<number, number>();
@@ -281,12 +263,7 @@ function gridIllumination(
     }
     const ans: number[] = [];
     for (const [i, j] of queries) {
-        if (
-            row.get(i)! > 0 ||
-            col.get(j)! > 0 ||
-            diag1.get(i - j)! > 0 ||
-            diag2.get(i + j)! > 0
-        ) {
+        if (row.get(i)! > 0 || col.get(j)! > 0 || diag1.get(i - j)! > 0 || diag2.get(i + j)! > 0) {
             ans.push(1);
         } else {
             ans.push(0);
@@ -308,10 +285,6 @@ function gridIllumination(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

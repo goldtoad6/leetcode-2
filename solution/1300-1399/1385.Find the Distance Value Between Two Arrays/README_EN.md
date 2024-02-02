@@ -57,56 +57,23 @@ For arr1[2]=8 we have:
 
 ## Solutions
 
-**Method 1: Brute-force**
+### Solution 1: Sorting + Binary Search
 
-**Method 2: Binary search**
+We can first sort the array $arr2$, then for each element $a$ in array $arr1$, use binary search to find the first element in array $arr2$ that is greater than or equal to $a-d$. If such an element exists and is less than or equal to $a+d$, it means that it does not meet the distance requirement. Otherwise, it meets the distance requirement. We accumulate the number of elements that meet the distance requirement, which is the answer.
+
+The time complexity is $O((m + n) \times \log n)$, and the space complexity is $O(\log n)$. Where $m$ and $n$ are the lengths of arrays $arr1$ and $arr2$, respectively.
 
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
 class Solution:
     def findTheDistanceValue(self, arr1: List[int], arr2: List[int], d: int) -> int:
-        return sum(all(abs(a - b) > d for b in arr2) for a in arr1)
-```
-
-```python
-class Solution:
-    def findTheDistanceValue(self, arr1: List[int], arr2: List[int], d: int) -> int:
-        def check(a):
-            idx = bisect_left(arr2, a - d)
-            if idx != len(arr2) and arr2[idx] <= a + d:
-                return False
-            return True
+        def check(a: int) -> bool:
+            i = bisect_left(arr2, a - d)
+            return i == len(arr2) or arr2[i] > a + d
 
         arr2.sort()
         return sum(check(a) for a in arr1)
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
-        int ans = 0;
-        for (int a : arr1) {
-            if (check(arr2, a, d)) {
-                ++ans;
-            }
-        }
-        return ans;
-    }
-
-    private boolean check(int[] arr, int a, int d) {
-        for (int b : arr) {
-            if (Math.abs(a - b) <= d) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
 ```
 
 ```java
@@ -123,178 +90,74 @@ class Solution {
     }
 
     private boolean check(int[] arr, int a, int d) {
-        int left = 0, right = arr.length;
-        while (left < right) {
-            int mid = (left + right) >> 1;
+        int l = 0, r = arr.length;
+        while (l < r) {
+            int mid = (l + r) >> 1;
             if (arr[mid] >= a - d) {
-                right = mid;
+                r = mid;
             } else {
-                left = mid + 1;
+                l = mid + 1;
             }
         }
-        if (left != arr.length && arr[left] <= a + d) {
-            return false;
-        }
-        return true;
+        return l >= arr.length || arr[l] > a + d;
     }
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
-        int ans = 0;
-        for (int& a : arr1)
-            ans += check(arr2, a, d);
-        return ans;
-    }
-
-    bool check(vector<int>& arr, int a, int d) {
-        for (int& b : arr)
-            if (abs(a - b) <= d)
-                return false;
-        return true;
-    }
-};
-```
-
-```cpp
-class Solution {
-public:
-    int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
+        auto check = [&](int a) -> bool {
+            auto it = lower_bound(arr2.begin(), arr2.end(), a - d);
+            return it == arr2.end() || *it > a + d;
+        };
         sort(arr2.begin(), arr2.end());
         int ans = 0;
-        for (int& a : arr1)
-            if (check(arr2, a, d))
-                ++ans;
+        for (int& a : arr1) {
+            ans += check(a);
+        }
         return ans;
-    }
-
-    bool check(vector<int>& arr, int a, int d) {
-        int idx = lower_bound(arr.begin(), arr.end(), a - d) - arr.begin();
-        if (idx != arr.size() && arr[idx] <= a + d) return false;
-        return true;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func findTheDistanceValue(arr1 []int, arr2 []int, d int) int {
-	check := func(arr []int, a int) bool {
-		for _, b := range arr {
-			if -d <= a-b && a-b <= d {
-				return false
-			}
-		}
-		return true
-	}
-
-	ans := 0
-	for _, a := range arr1 {
-		if check(arr2, a) {
-			ans++
-		}
-	}
-	return ans
-}
-```
-
-```go
-func findTheDistanceValue(arr1 []int, arr2 []int, d int) int {
+func findTheDistanceValue(arr1 []int, arr2 []int, d int) (ans int) {
 	sort.Ints(arr2)
-	check := func(a int) bool {
-		left, right := 0, len(arr2)
-		for left < right {
-			mid := (left + right) >> 1
-			if arr2[mid] >= a-d {
-				right = mid
-			} else {
-				left = mid + 1
-			}
-		}
-		if left != len(arr2) && arr2[left] <= a+d {
-			return false
-		}
-		return true
-	}
-	ans := 0
 	for _, a := range arr1 {
-		if check(a) {
+		i := sort.SearchInts(arr2, a-d)
+		if i == len(arr2) || arr2[i] > a+d {
 			ans++
 		}
 	}
-	return ans
-}
-```
-
-### **TypeScript**
-
-```ts
-function findTheDistanceValue(
-    arr1: number[],
-    arr2: number[],
-    d: number,
-): number {
-    let res = 0;
-    for (const num of arr1) {
-        if (arr2.every(v => Math.abs(num - v) > d)) {
-            res++;
-        }
-    }
-    return res;
+	return
 }
 ```
 
 ```ts
-function findTheDistanceValue(
-    arr1: number[],
-    arr2: number[],
-    d: number,
-): number {
-    arr2.sort((a, b) => a - b);
-    const n = arr2.length;
-    let res = 0;
-    for (const num of arr1) {
-        let left = 0;
-        let right = n - 1;
-        while (left < right) {
-            const mid = (left + right) >>> 1;
-            if (arr2[mid] <= num) {
-                left = mid + 1;
+function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {
+    const check = (a: number) => {
+        let l = 0;
+        let r = arr2.length;
+        while (l < r) {
+            const mid = (l + r) >> 1;
+            if (arr2[mid] >= a - d) {
+                r = mid;
             } else {
-                right = mid;
+                l = mid + 1;
             }
         }
-        if (
-            Math.abs(num - arr2[left]) <= d ||
-            (left !== 0 && Math.abs(num - arr2[left - 1]) <= d)
-        ) {
-            continue;
+        return l === arr2.length || arr2[l] > a + d;
+    };
+    arr2.sort((a, b) => a - b);
+    let ans = 0;
+    for (const a of arr1) {
+        if (check(a)) {
+            ++ans;
         }
-        res++;
     }
-    return res;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn find_the_distance_value(arr1: Vec<i32>, arr2: Vec<i32>, d: i32) -> i32 {
-        let mut res = 0;
-        for num in arr1.iter() {
-            if arr2.iter().all(|v| i32::abs(num - v) > d) {
-                res += 1;
-            }
-        }
-        res
-    }
+    return ans;
 }
 ```
 
@@ -315,7 +178,10 @@ impl Solution {
                     right = mid;
                 }
             }
-            if i32::abs(num - arr2[left]) <= d || (left != 0 && i32::abs(num - arr2[left - 1]) <= d) {
+            if
+                i32::abs(num - arr2[left]) <= d ||
+                (left != 0 && i32::abs(num - arr2[left - 1]) <= d)
+            {
                 continue;
             }
             res += 1;
@@ -325,10 +191,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -16,16 +16,19 @@
 | director_id | int     |
 | timestamp   | int     |
 +-------------+---------+
-timestamp 是这张表的主键.
+timestamp 是这张表的主键(具有唯一值的列).
 </pre>
 
 <p>&nbsp;</p>
 
-<p>写一条SQL查询语句获取合作过至少三次的演员和导演的 id 对&nbsp;<code>(actor_id, director_id)</code></p>
+<p>编写解决方案找出合作过至少三次的演员和导演的 id 对&nbsp;<code>(actor_id, director_id)</code></p>
 
-<p><strong>示例：</strong></p>
+<p>&nbsp;</p>
+
+<p><strong>示例 1：</strong></p>
 
 <pre>
+<strong>输入：</strong>
 ActorDirector 表：
 +-------------+-------------+-------------+
 | actor_id    | director_id | timestamp   |
@@ -38,32 +41,31 @@ ActorDirector 表：
 | 2           | 1           | 5           |
 | 2           | 1           | 6           |
 +-------------+-------------+-------------+
-
-Result 表：
+<strong>输出：</strong>
 +-------------+-------------+
 | actor_id    | director_id |
 +-------------+-------------+
 | 1           | 1           |
 +-------------+-------------+
+<strong>解释：</strong>
 唯一的 id 对是 (1, 1)，他们恰好合作了 3 次。</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：分组统计
 
-`GROUP BY` + `HAVING` 解决。
+我们可以使用 `GROUP BY` 语句，按照 `actor_id` 和 `director_id` 字段进行分组，然后使用 `HAVING` 语句，筛选出现次数大于等于 $3$ 的 `actor_id` 和 `director_id`。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-    actor_id, director_id
-FROM
-    ActorDirector
-GROUP BY actor_id, director_id
-HAVING count(1) >= 3;
+# Write your MySQL query statement below
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY 1, 2
+HAVING COUNT(1) >= 3;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

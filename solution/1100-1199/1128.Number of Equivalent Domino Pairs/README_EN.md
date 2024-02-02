@@ -34,9 +34,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We can concatenate the two numbers of each domino in order of size to form a two-digit number, so that equivalent dominoes can be concatenated into the same two-digit number. For example, both `[1, 2]` and `[2, 1]` are concatenated into the two-digit number `12`, and both `[3, 4]` and `[4, 3]` are concatenated into the two-digit number `34`.
+
+Then we traverse all the dominoes, using an array $cnt$ of length $100$ to record the number of occurrences of each two-digit number. For each domino, the two-digit number we concatenate is $x$, then the answer will increase by $cnt[x]$, and then we add $1$ to the value of $cnt[x]$. Continue to traverse the next domino, and we can count the number of all equivalent domino pairs.
+
+The time complexity is $O(n)$, and the space complexity is $O(C)$. Here, $n$ is the number of dominoes, and $C$ is the maximum number of two-digit numbers concatenated in the dominoes, which is $100$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,20 +57,6 @@ class Solution:
         return ans
 ```
 
-```python
-class Solution:
-    def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
-        cnt = Counter()
-        ans = 0
-        for a, b in dominoes:
-            x = a * 10 + b if a < b else b * 10 + a
-            ans += cnt[x]
-            cnt[x] += 1
-        return ans
-```
-
-### **Java**
-
 ```java
 class Solution {
     public int numEquivDominoPairs(int[][] dominoes) {
@@ -78,8 +70,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -96,8 +86,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numEquivDominoPairs(dominoes [][]int) (ans int) {
 	cnt := [100]int{}
@@ -113,10 +101,24 @@ func numEquivDominoPairs(dominoes [][]int) (ans int) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
+        cnt = Counter()
+        ans = 0
+        for a, b in dominoes:
+            x = a * 10 + b if a < b else b * 10 + a
+            ans += cnt[x]
+            cnt[x] += 1
+        return ans
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -24,7 +24,7 @@
 <strong>Output:</strong> 4
 <strong>Explanation:</strong> Replace the one &#39;A&#39; in the middle with &#39;B&#39; and form &quot;AABBBBA&quot;.
 The substring &quot;BBBB&quot; has the longest repeating letters, which is 4.
-</pre>
+There may exists other ways to achieve this answer too.</pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
@@ -37,9 +37,9 @@ The substring &quot;BBBB&quot; has the longest repeating letters, which is 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
             i += 1
         return i - j
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -78,8 +76,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -100,8 +96,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func characterReplacement(s string, k int) int {
 	counter := make([]int, 26)
@@ -121,10 +115,6 @@ func characterReplacement(s string, k int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

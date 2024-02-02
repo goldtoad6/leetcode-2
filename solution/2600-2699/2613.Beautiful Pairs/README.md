@@ -1,4 +1,4 @@
-# [2613. Beautiful Pairs](https://leetcode.cn/problems/beautiful-pairs)
+# [2613. 美数对](https://leetcode.cn/problems/beautiful-pairs)
 
 [English Version](/solution/2600-2699/2613.Beautiful%20Pairs/README_EN.md)
 
@@ -6,36 +6,38 @@
 
 <!-- 这里写题目描述 -->
 
-<p>You are given two <strong>0-indexed</strong> integer arrays <code>nums1</code> and <code>nums2</code> of the same length. A pair of indices <code>(i,j)</code> is called <strong>beautiful</strong> if<code>|nums1[i] - nums1[j]| + |nums2[i] - nums2[j]|</code> is the smallest amongst all possible indices pairs where <code>i &lt; j</code>.</p>
+<p>给定两个长度相同的 <strong>下标从 0 开始</strong> 的整数数组 <code>nums1</code> 和 <code>nums2</code>&nbsp;，如果 <code>|nums1[i] - nums1[j]| + |nums2[i] - nums2[j]|</code> 在所有可能的下标对中是最小的，其中 <code>i &lt; j</code> ，则称下标对 <code>(i,j)</code> 为 <strong>美</strong> 数对，</p>
 
-<p>Return <em>the beautiful pair. In the case that there are multiple beautiful pairs, return the lexicographically smallest pair.</em></p>
+<p>返回美数对。如果有多个美数对，则返回字典序最小的美数对。</p>
 
-<p>Note that</p>
+<p>注意：</p>
 
 <ul>
-	<li><code>|x|</code> denotes the absolute value of <code>x</code>.</li>
-	<li>A pair of indices <code>(i<sub>1</sub>, j<sub>1</sub>)</code> is lexicographically smaller than <code>(i<sub>2</sub>, j<sub>2</sub>)</code> if <code>i<sub>1</sub> &lt; i<sub>2</sub></code> or <code>i<sub>1</sub> == i<sub>2</sub></code> and <code>j<sub>1</sub> &lt; j<sub>2</sub></code>.</li>
+	<li><code>|x|</code> 表示 <code>x</code> 的绝对值。</li>
+	<li>一对索引 <code>(i1, j1)</code> 在字典序意义下小于 <code>(i2, j2)</code> ，当且仅当 <code>i1 &lt; i2</code> 或 <code>i1 == i2</code> 且 <code>j1 &lt; j2</code>&nbsp;。</li>
 </ul>
 
 <p>&nbsp;</p>
-<p><strong class="example">Example 1:</strong></p>
+
+<p><strong class="example">示例 1 ：</strong></p>
 
 <pre>
-<strong>Input:</strong> nums1 = [1,2,3,2,4], nums2 = [2,3,1,2,3]
-<strong>Output:</strong> [0,3]
-<strong>Explanation:</strong> Consider index 0 and index 3. The value of |nums1[i]-nums1[j]| + |nums2[i]-nums2[j]| is 1, which is the smallest value we can achieve.
+<b>输入：</b>nums1 = [1,2,3,2,4], nums2 = [2,3,1,2,3]
+<b>输出：</b>[0,3]
+<b>解释：</b>取下标为 0 和下标为 3 的数对，计算出 |nums1[0]-nums1[3]| + |nums2[0]-nums2[3]| 的值为 1 ，这是我们能够得到的最小值。
 </pre>
 
-<p><strong class="example">Example 2:</strong></p>
+<p><strong class="example">示例 2 ：</strong></p>
 
 <pre>
-<strong>Input:</strong> nums1 = [1,2,4,3,2,5], nums2 = [1,4,2,3,5,1]
-<strong>Output:</strong> [1,4]
-<strong>Explanation:</strong> Consider index 1 and index 4. The value of |nums1[i]-nums1[j]| + |nums2[i]-nums2[j]| is 1, which is the smallest value we can achieve.
+<b>输入：</b>nums1 = [1,2,4,3,2,5], nums2 = [1,4,2,3,5,1]
+<b>输出：</b>[1,4]
+<b>解释：</b>取下标为 1 和下标为 4 的数对，计算出 |nums1[1]-nums1[4]| + |nums2[1]-nums2[4]| 的值为 1，这是我们可以达到的最小值。
 </pre>
 
 <p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+
+<p><strong>提示：</strong></p>
 
 <ul>
 	<li><code>2 &lt;= nums1.length, nums2.length &lt;= 10<sup>5</sup></code></li>
@@ -46,9 +48,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 分治**
+### 方法一：排序 + 分治
 
 本题相当于找出平面中两个点，使得它们的曼哈顿距离最小，如果有多个点满足条件，则返回下标字典序最小的点。
 
@@ -66,10 +66,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def beautifulPair(self, nums1: List[int], nums2: List[int]) -> List[int]:
@@ -85,7 +81,7 @@ class Solution:
             d2, pi2, pj2 = dfs(m + 1, r)
             if d1 > d2 or (d1 == d2 and (pi1 > pi2 or (pi1 == pi2 and pj1 > pj2))):
                 d1, pi1, pj1 = d2, pi2, pj2
-            t = [p for p in points[l: r + 1] if abs(p[0] - x) <= d1]
+            t = [p for p in points[l : r + 1] if abs(p[0] - x) <= d1]
             t.sort(key=lambda x: x[1])
             for i in range(len(t)):
                 for j in range(i + 1, len(t)):
@@ -110,10 +106,6 @@ class Solution:
         return [pi, pj]
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     private List<int[]> points = new ArrayList<>();
@@ -128,13 +120,13 @@ class Solution {
         for (int i = 0; i < n; ++i) {
             long z = f(nums1[i], nums2[i]);
             if (pl.get(z).size() > 1) {
-                return new int[]{i, pl.get(z).get(1)};
+                return new int[] {i, pl.get(z).get(1)};
             }
-            points.add(new int[]{nums1[i], nums2[i], i});
+            points.add(new int[] {nums1[i], nums2[i], i});
         }
         points.sort((a, b) -> a[0] - b[0]);
         int[] ans = dfs(0, points.size() - 1);
-        return new int[]{ans[1], ans[2]};
+        return new int[] {ans[1], ans[2]};
     }
 
     private long f(int x, int y) {
@@ -147,13 +139,14 @@ class Solution {
 
     private int[] dfs(int l, int r) {
         if (l >= r) {
-            return new int[]{1 << 30, -1, -1};
+            return new int[] {1 << 30, -1, -1};
         }
         int m = (l + r) >> 1;
         int x = points.get(m)[0];
         int[] t1 = dfs(l, m);
         int[] t2 = dfs(m + 1, r);
-        if (t1[0] > t2[0] || (t1[0] == t2[0] && (t1[1] > t2[1] || (t1[1] == t2[1] && t1[2] > t2[2])))) {
+        if (t1[0] > t2[0]
+            || (t1[0] == t2[0] && (t1[1] > t2[1] || (t1[1] == t2[1] && t1[2] > t2[2])))) {
             t1 = t2;
         }
         List<int[]> t = new ArrayList<>();
@@ -172,7 +165,7 @@ class Solution {
                 int pj = Math.max(t.get(i)[2], t.get(j)[2]);
                 int d = dist(t.get(i)[0], t.get(i)[1], t.get(j)[0], t.get(j)[1]);
                 if (d < t1[0] || (d == t1[0] && (pi < t1[1] || (pi == t1[1] && pj < t1[2])))) {
-                    t1 = new int[]{d, pi, pj};
+                    t1 = new int[] {d, pi, pj};
                 }
             }
         }
@@ -180,8 +173,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -252,8 +243,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func beautifulPair(nums1 []int, nums2 []int) []int {
 	n := len(nums1)
@@ -314,20 +303,6 @@ func dist(x1, y1, x2, y2 int) int {
 	return abs(x1-x2) + abs(y1-y2)
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -335,8 +310,6 @@ func abs(x int) int {
 	return x
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function beautifulPair(nums1: number[], nums2: number[]): number[] {
@@ -369,8 +342,7 @@ function beautifulPair(nums1: number[], nums2: number[]): number[] {
         let t2 = dfs(m + 1, r);
         if (
             t1[0] > t2[0] ||
-            (t1[0] == t2[0] &&
-                (t1[1] > t2[1] || (t1[1] == t2[1] && t1[2] > t2[2])))
+            (t1[0] == t2[0] && (t1[1] > t2[1] || (t1[1] == t2[1] && t1[2] > t2[2])))
         ) {
             t1 = t2;
         }
@@ -389,10 +361,7 @@ function beautifulPair(nums1: number[], nums2: number[]): number[] {
                 const pi = Math.min(t[i][2], t[j][2]);
                 const pj = Math.max(t[i][2], t[j][2]);
                 const d = dist(t[i][0], t[i][1], t[j][0], t[j][1]);
-                if (
-                    d < t1[0] ||
-                    (d == t1[0] && (pi < t1[1] || (pi == t1[1] && pj < t1[2])))
-                ) {
+                if (d < t1[0] || (d == t1[0] && (pi < t1[1] || (pi == t1[1] && pj < t1[2])))) {
                     t1 = [d, pi, pj];
                 }
             }
@@ -411,10 +380,6 @@ function f(x: number, y: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

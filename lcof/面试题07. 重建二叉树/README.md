@@ -34,7 +34,7 @@
 
 ## 解法
 
-**方法一：哈希表 + 递归**
+### 方法一：哈希表 + 递归
 
 由于我们每一次都需要在中序序列中找到根节点的位置，因此我们可以使用哈希表 $d$ 来存储中序序列的值和索引，这样可以将查找的时间复杂度降低到 $O(1)$。
 
@@ -49,8 +49,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点个数。
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 # Definition for a binary tree node.
@@ -76,8 +74,6 @@ class Solution:
         d = {v: i for i, v in enumerate(inorder)}
         return dfs(0, 0, len(preorder))
 ```
-
-### **Java**
 
 ```java
 /**
@@ -118,8 +114,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -154,8 +148,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -185,44 +177,6 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	return dfs(0, 0, len(inorder))
 }
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {number[]} preorder
- * @param {number[]} inorder
- * @return {TreeNode}
- */
-var buildTree = function (preorder, inorder) {
-    const d = new Map();
-    const n = inorder.length;
-    for (let i = 0; i < n; ++i) {
-        d.set(inorder[i], i);
-    }
-    const dfs = (i, j, n) => {
-        if (n < 1) {
-            return null;
-        }
-        const k = d.get(preorder[i]);
-        const l = k - j;
-        const root = new TreeNode(preorder[i]);
-        root.left = dfs(i + 1, j, l);
-        root.right = dfs(i + 1 + l, k + 1, n - l - 1);
-        return root;
-    };
-    return dfs(0, 0, n);
-};
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -260,6 +214,118 @@ function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
 }
 ```
 
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    fn help(preorder: &[i32], inorder: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
+        if inorder.is_empty() {
+            return None;
+        }
+        let val = preorder[0];
+        let i = inorder
+            .iter()
+            .position(|num| *num == val)
+            .unwrap();
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val,
+                    left: Self::help(&preorder[1..i + 1], &inorder[..i]),
+                    right: Self::help(&preorder[i + 1..], &inorder[i + 1..]),
+                })
+            )
+        )
+    }
+
+    pub fn build_tree(preorder: Vec<i32>, inorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+        Self::help(&preorder, &inorder)
+    }
+}
+```
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function (preorder, inorder) {
+    const d = new Map();
+    const n = inorder.length;
+    for (let i = 0; i < n; ++i) {
+        d.set(inorder[i], i);
+    }
+    const dfs = (i, j, n) => {
+        if (n < 1) {
+            return null;
+        }
+        const k = d.get(preorder[i]);
+        const l = k - j;
+        const root = new TreeNode(preorder[i]);
+        root.left = dfs(i + 1, j, l);
+        root.right = dfs(i + 1 + l, k + 1, n - l - 1);
+        return root;
+    };
+    return dfs(0, 0, n);
+};
+```
+
+```cs
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] preorder, int[] inorder) {
+        if (preorder.Length == 0) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[0]);
+        int idx = Array.IndexOf(inorder, root.val);
+        root.left = BuildTree(preorder[1..(index+1)], inorder[0..idx]);
+        root.right = BuildTree(preorder[(index+1)..], inorder[(idx+1)..]);
+        return root;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
 ```ts
 /**
  * Definition for a binary tree node.
@@ -289,79 +355,6 @@ function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
 }
 ```
 
-### **Rust**
-
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-impl Solution {
-    fn help(preorder: &[i32], inorder: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
-        if inorder.is_empty() {
-            return None;
-        }
-        let val = preorder[0];
-        let i = inorder.iter().position(|num| *num == val).unwrap();
-        Some(Rc::new(RefCell::new(TreeNode {
-            val,
-            left: Self::help(&preorder[1..i + 1], &inorder[..i]),
-            right: Self::help(&preorder[i + 1..], &inorder[i + 1..]),
-        })))
-    }
-
-    pub fn build_tree(preorder: Vec<i32>, inorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        Self::help(&preorder, &inorder)
-    }
-}
-```
-
-### **C#**
-
-```cs
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left;
- *     public TreeNode right;
- *     public TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public TreeNode BuildTree(int[] preorder, int[] inorder) {
-        if (preorder.Length == 0) {
-            return null;
-        }
-        TreeNode root = new TreeNode(preorder[0]);
-        int idx = Array.IndexOf(inorder, root.val);
-        root.left = BuildTree(preorder[1..(index+1)], inorder[0..idx]);
-        root.right = BuildTree(preorder[(index+1)..], inorder[(idx+1)..]);
-        return root;
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

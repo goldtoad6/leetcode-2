@@ -77,19 +77,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-使用两个指针 `cur1`, `cur2` 分别指向两个链表 `headA`, `headB`。
-
-同时遍历链表，当 `cur1` 到达链表 `headA` 的末尾时，重新定位到链表 `headB` 的头节点；当 `cur2` 到达链表 `headB` 的末尾时，重新定位到链表 `headA` 的头节点。
-
-若两指针相遇，所指向的结点就是第一个公共节点。若没相遇，说明两链表无公共节点，此时两个指针都指向 `null`。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for singly-linked list.
@@ -107,10 +97,6 @@ class Solution:
             cur2 = headA if cur2 is None else cur2.next
         return cur1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -136,8 +122,6 @@ public class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -161,7 +145,55 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+	cur1, cur2 := headA, headB
+	for cur1 != cur2 {
+		if cur1 == nil {
+			cur1 = headB
+		} else {
+			cur1 = cur1.Next
+		}
+		if cur2 == nil {
+			cur2 = headA
+		} else {
+			cur2 = cur2.Next
+		}
+	}
+	return cur1
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
+    let p1: ListNode | null = headA;
+    let p2: ListNode | null = headB;
+    while (p1 != p2) {
+        p1 = p1 == null ? headB : p1.next;
+        p2 = p2 == null ? headA : p2.next;
+    }
+    return p1;
+}
+```
 
 ```js
 /**
@@ -188,67 +220,6 @@ var getIntersectionNode = function (headA, headB) {
 };
 ```
 
-### **Go**
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
- func getIntersectionNode(headA, headB *ListNode) *ListNode {
-    cur1, cur2 := headA, headB
-    for cur1 != cur2 {
-        if cur1 == nil {
-            cur1 = headB
-        } else {
-            cur1 = cur1.Next
-        }
-        if cur2 == nil {
-            cur2 = headA
-        } else {
-            cur2 = cur2.Next
-        }
-    }
-    return cur1
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function getIntersectionNode(
-    headA: ListNode | null,
-    headB: ListNode | null,
-): ListNode | null {
-    let p1: ListNode | null = headA;
-    let p2: ListNode | null = headB;
-    while (p1 != p2) {
-        p1 = p1 == null ? headB : p1.next;
-        p2 = p2 == null ? headA : p2.next;
-    }
-    return p1;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

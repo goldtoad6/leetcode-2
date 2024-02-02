@@ -32,17 +32,15 @@ Given two integers <code>num1</code> and <code>num2</code>, return <em>the <stro
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def sum(self, num1: int, num2: int) -> int:
         return num1 + num2
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -51,16 +49,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function sum(num1: number, num2: number): number {
-    return num1 + num2;
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -71,23 +59,17 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func sum(num1 int, num2 int) int {
 	return num1 + num2
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function sum(num1: number, num2: number): number {
     return num1 + num2;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -97,18 +79,92 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 int sum(int num1, int num2) {
     return num1 + num2;
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def sum(self, num1: int, num2: int) -> int:
+        num1, num2 = num1 & 0xFFFFFFFF, num2 & 0xFFFFFFFF
+        while num2:
+            carry = ((num1 & num2) << 1) & 0xFFFFFFFF
+            num1, num2 = num1 ^ num2, carry
+        return num1 if num1 < 0x80000000 else ~(num1 ^ 0xFFFFFFFF)
 ```
 
+```java
+class Solution {
+    public int sum(int num1, int num2) {
+        while (num2 != 0) {
+            int carry = (num1 & num2) << 1;
+            num1 ^= num2;
+            num2 = carry;
+        }
+        return num1;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int sum(int num1, int num2) {
+        while (num2) {
+            unsigned int carry = (unsigned int) (num1 & num2) << 1;
+            num1 ^= num2;
+            num2 = carry;
+        }
+        return num1;
+    }
+};
+```
+
+```go
+func sum(num1 int, num2 int) int {
+	for num2 != 0 {
+		carry := (num1 & num2) << 1
+		num1 ^= num2
+		num2 = carry
+	}
+	return num1
+}
+```
+
+```ts
+function sum(num1: number, num2: number): number {
+    while (num2) {
+        const carry = (num1 & num2) << 1;
+        num1 ^= num2;
+        num2 = carry;
+    }
+    return num1;
+}
+```
+
+```rust
+impl Solution {
+    pub fn sum(num1: i32, num2: i32) -> i32 {
+        let mut num1 = num1;
+        let mut num2 = num2;
+        while num2 != 0 {
+            let carry = (num1 & num2) << 1;
+            num1 ^= num2;
+            num2 = carry;
+        }
+        num1
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

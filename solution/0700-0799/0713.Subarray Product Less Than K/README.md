@@ -37,9 +37,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 我们可以用双指针维护一个滑动窗口，窗口内所有元素的乘积小于 $k$。
 
@@ -62,10 +60,6 @@ for (int i = 0, j = 0; i < n; ++i) {
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
@@ -78,10 +72,6 @@ class Solution:
             ans += i - j + 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -99,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -116,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numSubarrayProductLessThanK(nums []int, k int) int {
 	ans := 0
@@ -131,8 +117,6 @@ func numSubarrayProductLessThanK(nums []int, k int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function numSubarrayProductLessThanK(nums: number[], k: number): number {
@@ -148,8 +132,6 @@ function numSubarrayProductLessThanK(nums: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn num_subarray_product_less_than_k(nums: Vec<i32>, k: i32) -> i32 {
@@ -160,20 +142,20 @@ impl Solution {
         let mut res = 0;
         let mut product = 1;
         let mut i = 0;
-        nums.iter().enumerate().for_each(|(j, v)| {
-            product *= v;
-            while product >= k {
-                product /= nums[i];
-                i += 1;
-            }
-            res += j - i + 1;
-        });
+        nums.iter()
+            .enumerate()
+            .for_each(|(j, v)| {
+                product *= v;
+                while product >= k {
+                    product /= nums[i];
+                    i += 1;
+                }
+                res += j - i + 1;
+            });
         res as i32
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -196,10 +178,6 @@ var numSubarrayProductLessThanK = function (nums, k) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

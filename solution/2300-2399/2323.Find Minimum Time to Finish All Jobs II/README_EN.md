@@ -49,9 +49,9 @@ It can be proven that 3 days is the minimum number of days needed.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +60,6 @@ class Solution:
         workers.sort()
         return max((a + b - 1) // b for a, b in zip(jobs, workers))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -77,8 +75,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -92,8 +88,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTime(jobs []int, workers []int) int {
 	sort.Ints(jobs)
@@ -105,25 +99,8 @@ func minimumTime(jobs []int, workers []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

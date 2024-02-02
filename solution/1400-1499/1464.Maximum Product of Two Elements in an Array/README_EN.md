@@ -40,40 +40,19 @@ Given the array of integers <code>nums</code>, you will choose two different ind
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         ans = 0
         for i, a in enumerate(nums):
-            for b in nums[i + 1:]:
+            for b in nums[i + 1 :]:
                 ans = max(ans, (a - 1) * (b - 1))
         return ans
 ```
-
-```python
-class Solution:
-    def maxProduct(self, nums: List[int]) -> int:
-        nums.sort()
-        return (nums[-1] - 1) * (nums[-2] - 1)
-```
-
-```python
-class Solution:
-    def maxProduct(self, nums: List[int]) -> int:
-        a = b = 0
-        for v in nums:
-            if v > a:
-                a, b = v, a
-            elif v > b:
-                b = v
-        return (a - 1) * (b - 1)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,35 +68,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public int maxProduct(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        return (nums[n - 1] - 1) * (nums[n - 2] - 1);
-    }
-}
-```
-
-```java
-class Solution {
-    public int maxProduct(int[] nums) {
-        int a = 0, b = 0;
-        for (int v : nums) {
-            if (v > a) {
-                b = a;
-                a = v;
-            } else if (v > b) {
-                b = v;
-            }
-        }
-        return (a - 1) * (b - 1);
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -135,36 +85,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int maxProduct(vector<int>& nums) {
-        sort(nums.rbegin(), nums.rend());
-        return (nums[0] - 1) * (nums[1] - 1);
-    }
-};
-```
-
-```cpp
-class Solution {
-public:
-    int maxProduct(vector<int>& nums) {
-        int a = 0, b = 0;
-        for (int v : nums) {
-            if (v > a) {
-                b = a;
-                a = v;
-            } else if (v > b) {
-                b = v;
-            }
-        }
-        return (a - 1) * (b - 1);
-    }
-};
-```
-
-### **Go**
-
 ```go
 func maxProduct(nums []int) int {
 	ans := 0
@@ -179,49 +99,6 @@ func maxProduct(nums []int) int {
 	return ans
 }
 ```
-
-```go
-func maxProduct(nums []int) int {
-	sort.Ints(nums)
-	n := len(nums)
-	return (nums[n-1] - 1) * (nums[n-2] - 1)
-}
-```
-
-```go
-func maxProduct(nums []int) int {
-	a, b := 0, 0
-	for _, v := range nums {
-		if v > a {
-			b, a = a, v
-		} else if v > b {
-			b = v
-		}
-	}
-	return (a - 1) * (b - 1)
-}
-```
-
-### **C**
-
-```c
-int maxProduct(int* nums, int numsSize){
-    int max = 0;
-    int submax = 0;
-    for (int i = 0; i < numsSize; i++) {
-        int num = nums[i];
-        if (num > max) {
-            submax = max;
-            max = num;
-        } else if (num > submax) {
-            submax = num;
-        }
-    }
-    return (max - 1) * (submax - 1);
-}
-```
-
-### **TypeScript**
 
 ```ts
 function maxProduct(nums: number[]): number {
@@ -238,24 +115,6 @@ function maxProduct(nums: number[]): number {
     return (nums[0] - 1) * (nums[1] - 1);
 }
 ```
-
-```ts
-function maxProduct(nums: number[]): number {
-    let max = 0;
-    let submax = 0;
-    for (const num of nums) {
-        if (num > max) {
-            submax = max;
-            max = num;
-        } else if (num > submax) {
-            submax = num;
-        }
-    }
-    return (max - 1) * (submax - 1);
-}
-```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -275,10 +134,169 @@ impl Solution {
 }
 ```
 
-### **...**
-
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function maxProduct($nums) {
+        $max = 0;
+        $submax = 0;
+        for ($i = 0; $i < count($nums); $i++) {
+            if ($nums[$i] > $max) {
+                $submax = $max;
+                $max = $nums[$i];
+            } elseif ($nums[$i] > $submax) {
+                $submax = $nums[$i];
+            }
+        }
+        return ($max - 1) * ($submax - 1);
+    }
+}
 ```
 
+```c
+int maxProduct(int* nums, int numsSize) {
+    int max = 0;
+    int submax = 0;
+    for (int i = 0; i < numsSize; i++) {
+        int num = nums[i];
+        if (num > max) {
+            submax = max;
+            max = num;
+        } else if (num > submax) {
+            submax = num;
+        }
+    }
+    return (max - 1) * (submax - 1);
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        nums.sort()
+        return (nums[-1] - 1) * (nums[-2] - 1)
+```
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        return (nums[n - 1] - 1) * (nums[n - 2] - 1);
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        sort(nums.rbegin(), nums.rend());
+        return (nums[0] - 1) * (nums[1] - 1);
+    }
+};
+```
+
+```go
+func maxProduct(nums []int) int {
+	sort.Ints(nums)
+	n := len(nums)
+	return (nums[n-1] - 1) * (nums[n-2] - 1)
+}
+```
+
+```ts
+function maxProduct(nums: number[]): number {
+    let max = 0;
+    let submax = 0;
+    for (const num of nums) {
+        if (num > max) {
+            submax = max;
+            max = num;
+        } else if (num > submax) {
+            submax = num;
+        }
+    }
+    return (max - 1) * (submax - 1);
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        a = b = 0
+        for v in nums:
+            if v > a:
+                a, b = v, a
+            elif v > b:
+                b = v
+        return (a - 1) * (b - 1)
+```
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        int a = 0, b = 0;
+        for (int v : nums) {
+            if (v > a) {
+                b = a;
+                a = v;
+            } else if (v > b) {
+                b = v;
+            }
+        }
+        return (a - 1) * (b - 1);
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int a = 0, b = 0;
+        for (int v : nums) {
+            if (v > a) {
+                b = a;
+                a = v;
+            } else if (v > b) {
+                b = v;
+            }
+        }
+        return (a - 1) * (b - 1);
+    }
+};
+```
+
+```go
+func maxProduct(nums []int) int {
+	a, b := 0, 0
+	for _, v := range nums {
+		if v > a {
+			b, a = a, v
+		} else if v > b {
+			b = v
+		}
+	}
+	return (a - 1) * (b - 1)
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -45,17 +45,11 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 表示房子的数量。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -65,10 +59,6 @@ class Solution:
             a, b, c = min(b, c) + ca, min(a, c) + cb, min(a, b) + cc
         return min(a, b, c)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -84,8 +74,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -103,8 +91,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCost(costs [][]int) int {
 	r, g, b := 0, 0, 0
@@ -116,16 +102,7 @@ func minCost(costs [][]int) int {
 	}
 	return min(r, min(g, b))
 }
-
-func min(x, y int) int {
-	if x < y {
-		return x
-	}
-	return y
-}
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -135,20 +112,12 @@ func min(x, y int) int {
 var minCost = function (costs) {
     let [a, b, c] = [0, 0, 0];
     for (let [ca, cb, cc] of costs) {
-        [a, b, c] = [
-            Math.min(b, c) + ca,
-            Math.min(a, c) + cb,
-            Math.min(a, b) + cc,
-        ];
+        [a, b, c] = [Math.min(b, c) + ca, Math.min(a, c) + cb, Math.min(a, b) + cc];
     }
     return Math.min(a, b, c);
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

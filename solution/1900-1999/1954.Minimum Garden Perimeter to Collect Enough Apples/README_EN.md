@@ -51,24 +51,149 @@ The perimeter is 2 * 4 = 8.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def minimumPerimeter(self, neededApples: int) -> int:
+        x = 1
+        while 2 * x * (x + 1) * (2 * x + 1) < neededApples:
+            x += 1
+        return x * 8
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public long minimumPerimeter(long neededApples) {
+        long x = 1;
+        while (2 * x * (x + 1) * (2 * x + 1) < neededApples) {
+            ++x;
+        }
+        return 8 * x;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    long long minimumPerimeter(long long neededApples) {
+        long long x = 1;
+        while (2 * x * (x + 1) * (2 * x + 1) < neededApples) {
+            ++x;
+        }
+        return 8 * x;
+    }
+};
 ```
 
+```go
+func minimumPerimeter(neededApples int64) int64 {
+	var x int64 = 1
+	for 2*x*(x+1)*(2*x+1) < neededApples {
+		x++
+	}
+	return 8 * x
+}
+```
+
+```ts
+function minimumPerimeter(neededApples: number): number {
+    let x = 1;
+    while (2 * x * (x + 1) * (2 * x + 1) < neededApples) {
+        ++x;
+    }
+    return 8 * x;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minimumPerimeter(self, neededApples: int) -> int:
+        l, r = 1, 100000
+        while l < r:
+            mid = (l + r) >> 1
+            if 2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples:
+                r = mid
+            else:
+                l = mid + 1
+        return l * 8
+```
+
+```java
+class Solution {
+    public long minimumPerimeter(long neededApples) {
+        long l = 1, r = 100000;
+        while (l < r) {
+            long mid = (l + r) >> 1;
+            if (2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l * 8;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    long long minimumPerimeter(long long neededApples) {
+        long long l = 1, r = 100000;
+        while (l < r) {
+            long mid = (l + r) >> 1;
+            if (2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l * 8;
+    }
+};
+```
+
+```go
+func minimumPerimeter(neededApples int64) int64 {
+	var l, r int64 = 1, 100000
+	for l < r {
+		mid := (l + r) >> 1
+		if 2*mid*(mid+1)*(2*mid+1) >= neededApples {
+			r = mid
+		} else {
+			l = mid + 1
+		}
+	}
+	return l * 8
+}
+```
+
+```ts
+function minimumPerimeter(neededApples: number): number {
+    let l = 1;
+    let r = 100000;
+    while (l < r) {
+        const mid = (l + r) >> 1;
+        if (2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return 8 * l;
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -40,17 +40,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Brute Force Enumeration
 
-### **Python3**
+Enumerate $k$ in the range $[0,.., num]$, and check whether $k + reverse(k)$ equals $num$.
+
+The time complexity is $O(n \times \log n)$, where $n$ is the size of $num$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def sumOfNumberAndReverse(self, num: int) -> bool:
         return any(k + int(str(k)[::-1]) == num for k in range(num + 1))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +72,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -93,8 +93,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func sumOfNumberAndReverse(num int) bool {
 	for x := 0; x <= num; x++ {
@@ -111,7 +109,40 @@ func sumOfNumberAndReverse(num int) bool {
 }
 ```
 
-### **C**
+```ts
+function sumOfNumberAndReverse(num: number): boolean {
+    for (let i = 0; i <= num; i++) {
+        if (i + Number([...(i + '')].reverse().join('')) === num) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+```rust
+impl Solution {
+    pub fn sum_of_number_and_reverse(num: i32) -> bool {
+        for i in 0..=num {
+            if
+                i +
+                    ({
+                        let mut t = i;
+                        let mut j = 0;
+                        while t > 0 {
+                            j = j * 10 + (t % 10);
+                            t /= 10;
+                        }
+                        j
+                    }) == num
+            {
+                return true;
+            }
+        }
+        false
+    }
+}
+```
 
 ```c
 bool sumOfNumberAndReverse(int num) {
@@ -130,47 +161,6 @@ bool sumOfNumberAndReverse(int num) {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function sumOfNumberAndReverse(num: number): boolean {
-    for (let i = 0; i <= num; i++) {
-        if (i + Number([...(i + '')].reverse().join('')) === num) {
-            return true;
-        }
-    }
-    return false;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn sum_of_number_and_reverse(num: i32) -> bool {
-        for i in 0..=num {
-            if i + {
-                let mut t = i;
-                let mut j = 0;
-                while t > 0 {
-                    j = j * 10 + t % 10;
-                    t /= 10;
-                }
-                j
-            } == num
-            {
-                return true;
-            }
-        }
-        false
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

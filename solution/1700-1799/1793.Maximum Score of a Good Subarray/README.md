@@ -40,21 +40,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：单调栈
 
-**方法一：单调栈**
-
-我们可以枚举 `nums` 中的每个元素 $nums[i]$ 作为子数组的最小值，利用单调栈找出其左边第一个小于 $nums[i]$ 的位置 $left[i]$ 和右边第一个小于等于 $nums[i]$ 的位置 $right[i]$，则以 $nums[i]$ 为最小值的子数组的分数为 $nums[i] \times (right[i] - left[i] - 1)$。
+我们可以枚举 $nums$ 中的每个元素 $nums[i]$ 作为子数组的最小值，利用单调栈找出其左边第一个小于 $nums[i]$ 的位置 $left[i]$ 和右边第一个小于等于 $nums[i]$ 的位置 $right[i]$，则以 $nums[i]$ 为最小值的子数组的分数为 $nums[i] \times (right[i] - left[i] - 1)$。
 
 需要注意的是，只有当左右边界 $left[i]$ 和 $right[i]$ 满足 $left[i]+1 \leq k \leq right[i]-1$ 时，答案才有可能更新。
 
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `nums` 的长度。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 $nums$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -83,10 +77,6 @@ class Solution:
                 ans = max(ans, v * (right[i] - left[i] - 1))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -129,8 +119,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -171,8 +159,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumScore(nums []int, k int) (ans int) {
 	n := len(nums)
@@ -210,19 +196,43 @@ func maximumScore(nums []int, k int) (ans int) {
 	}
 	return
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maximumScore(nums: number[], k: number): number {
+    const n = nums.length;
+    const left: number[] = Array(n).fill(-1);
+    const right: number[] = Array(n).fill(n);
+    const stk: number[] = [];
+    for (let i = 0; i < n; ++i) {
+        while (stk.length && nums[stk.at(-1)] >= nums[i]) {
+            stk.pop();
+        }
+        if (stk.length) {
+            left[i] = stk.at(-1);
+        }
+        stk.push(i);
+    }
+    stk.length = 0;
+    for (let i = n - 1; ~i; --i) {
+        while (stk.length && nums[stk.at(-1)] > nums[i]) {
+            stk.pop();
+        }
+        if (stk.length) {
+            right[i] = stk.at(-1);
+        }
+        stk.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; ++i) {
+        if (left[i] + 1 <= k && k <= right[i] - 1) {
+            ans = Math.max(ans, nums[i] * (right[i] - left[i] - 1));
+        }
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

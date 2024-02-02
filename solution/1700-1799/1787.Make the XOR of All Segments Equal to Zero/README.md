@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 注意到数组 `nums` 在修改之后，任意长度为 $k$ 的区间异或结果都等于 $0$，那么对于任意的 $i$，都有：
 
@@ -78,10 +76,6 @@ $$
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def minChanges(self, nums: List[int], k: int) -> int:
@@ -102,25 +96,21 @@ class Solution:
         return f[0]
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int minChanges(int[] nums, int k) {
         int n = 1 << 10;
         Map<Integer, Integer>[] cnt = new Map[k];
+        Arrays.setAll(cnt, i -> new HashMap<>());
         int[] size = new int[k];
-        for (int i = 0; i < k; ++i) {
-            cnt[i] = new HashMap<>();
-        }
         for (int i = 0; i < nums.length; ++i) {
-            cnt[i % k].put(nums[i], cnt[i % k].getOrDefault(nums[i], 0) + 1);
-            size[i % k]++;
+            int j = i % k;
+            cnt[j].merge(nums[i], 1, Integer::sum);
+            size[j]++;
         }
         int[] f = new int[n];
-        Arrays.fill(f, 0x3f3f3f3f);
+        final int inf = 1 << 30;
+        Arrays.fill(f, inf);
         f[0] = 0;
         for (int i = 0; i < k; ++i) {
             int[] g = new int[n];
@@ -146,20 +136,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int minChanges(vector<int>& nums, int k) {
         int n = 1 << 10;
-        vector<unordered_map<int, int>> cnt(k);
+        unordered_map<int, int> cnt[k];
         vector<int> size(k);
         for (int i = 0; i < nums.size(); ++i) {
             cnt[i % k][nums[i]]++;
             size[i % k]++;
         }
-        vector<int> f(n, 0x3f3f3f3f);
+        vector<int> f(n, 1 << 30);
         f[0] = 0;
         for (int i = 0; i < k; ++i) {
             int mi = *min_element(f.begin(), f.end());
@@ -175,8 +163,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minChanges(nums []int, k int) int {
@@ -196,7 +182,7 @@ func minChanges(nums []int, k int) int {
 	}
 	for i, sz := range size {
 		g := make([]int, n)
-		x := min(f...) + sz
+		x := slices.Min(f) + sz
 		for i := range g {
 			g[i] = x
 		}
@@ -209,22 +195,8 @@ func minChanges(nums []int, k int) int {
 	}
 	return f[0]
 }
-
-func min(a ...int) int {
-	mi := a[0]
-	for _, v := range a {
-		if mi > v {
-			mi = v
-		}
-	}
-	return mi
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -51,23 +51,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：枚举 + 数学
 
-**方法一：枚举 + 数学**
+对于数组 $nums$ 的所有子序列，其最大公约数一定不超过数组中的最大值 $mx$。
 
-对于数组 `nums` 的所有子序列，其最大公约数一定不超过数组中的最大值 $mx$。
+因此我们可以枚举 $[1,.. mx]$ 中的每个数 $x$，判断 $x$ 是否为数组 $nums$ 的子序列的最大公约数，如果是，则答案加一。
 
-因此我们可以枚举 $[1,.. mx]$ 中的每个数 $x$，判断 $x$ 是否为数组 `nums` 的子序列的最大公约数，如果是，则答案加一。
+那么问题转换为：判断 $x$ 是否为数组 $nums$ 的子序列的最大公约数。我们可以通过枚举 $x$ 的倍数 $y$，判断 $y$ 是否在数组 $nums$ 中，如果 $y$ 在数组 $nums$ 中，则计算 $y$ 的最大公约数 $g$，如果出现 $g = x$，则 $x$ 是数组 $nums$ 的子序列的最大公约数。
 
-那么问题转换为：判断 $x$ 是否为数组 `nums` 的子序列的最大公约数。我们可以通过枚举 $x$ 的倍数 $y$，判断 $y$ 是否在数组 `nums` 中，如果 $y$ 在数组 `nums` 中，则计算 $y$ 的最大公约数 $g$，如果出现 $g = x$，则 $x$ 是数组 `nums` 的子序列的最大公约数。
-
-时间复杂度 $O(n + M \times \log M)$，空间复杂度 $O(M)$。其中 $n$ 和 $M$ 分别是数组 `nums` 的长度和数组 `nums` 中的最大值。
+时间复杂度 $O(n + M \times \log M)$，空间复杂度 $O(M)$。其中 $n$ 和 $M$ 分别是数组 $nums$ 的长度和数组 $nums$ 中的最大值。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,10 +79,6 @@ class Solution:
                         break
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -120,8 +110,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -149,14 +137,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countDifferentSubsequenceGCDs(nums []int) (ans int) {
-	mx := 0
-	for _, x := range nums {
-		mx = max(mx, x)
-	}
+	mx := slices.Max(nums)
 	vis := make([]bool, mx+1)
 	for _, x := range nums {
 		vis[x] = true
@@ -176,13 +159,6 @@ func countDifferentSubsequenceGCDs(nums []int) (ans int) {
 	return
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func gcd(a, b int) int {
 	if b == 0 {
 		return a
@@ -191,10 +167,6 @@ func gcd(a, b int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

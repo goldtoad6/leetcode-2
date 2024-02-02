@@ -51,9 +51,21 @@ It can be shown that 2 is the minimum number of operations needed.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Two Pointers
 
-### **Python3**
+Define two pointers $i$ and $j$, pointing to the beginning and end of the array respectively, use variables $a$ and $b$ to represent the values of the first and last elements, and variable $ans$ to represent the number of operations.
+
+If $a < b$, we move the pointer $i$ one step to the right, i.e., $i \leftarrow i + 1$, then add the value of the element pointed to by $i$ to $a$, i.e., $a \leftarrow a + nums[i]$, and increment the operation count by one, i.e., $ans \leftarrow ans + 1$.
+
+If $a > b$, we move the pointer $j$ one step to the left, i.e., $j \leftarrow j - 1$, then add the value of the element pointed to by $j$ to $b$, i.e., $b \leftarrow b + nums[j]$, and increment the operation count by one, i.e., $ans \leftarrow ans + 1$.
+
+Otherwise, it means $a = b$, at this time we move the pointer $i$ one step to the right, i.e., $i \leftarrow i + 1$, move the pointer $j$ one step to the left, i.e., $j \leftarrow j - 1$, and update the values of $a$ and $b$, i.e., $a \leftarrow nums[i]$ and $b \leftarrow nums[j]$.
+
+Repeat the above process until $i \ge j$, return the operation count $ans$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -75,8 +87,6 @@ class Solution:
                 a, b = nums[i], nums[j]
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -100,8 +110,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -127,8 +135,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumOperations(nums []int) int {
 	i, j := 0, len(nums)-1
@@ -152,16 +158,6 @@ func minimumOperations(nums []int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -27,12 +27,4 @@ age 21 30
 
 ## Solutions
 
-<!-- tabs:start -->
-
-### **Bash**
-
-```sh
-
-```
-
-<!-- tabs:end -->
+<!-- end -->

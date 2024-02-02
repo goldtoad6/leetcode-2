@@ -45,9 +45,9 @@ Since not every customer received the correct change, the answer is false.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -70,12 +70,40 @@ class Solution:
         return True
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public boolean lemonadeChange(int[] bills) {
         int five = 0, ten = 0;
+        for (int v : bills) {
+            switch (v) {
+                case 5 -> ++five;
+                case 10 -> {
+                    ++ten;
+                    --five;
+                }
+                case 20 -> {
+                    if (ten > 0) {
+                        --ten;
+                        --five;
+                    } else {
+                        five -= 3;
+                    }
+                }
+            }
+            if (five < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        int five = 0, ten = 10;
         for (int v : bills) {
             if (v == 5) {
                 ++five;
@@ -83,7 +111,7 @@ class Solution {
                 ++ten;
                 --five;
             } else {
-                if (ten > 0) {
+                if (ten) {
                     --ten;
                     --five;
                 } else {
@@ -96,36 +124,8 @@ class Solution {
         }
         return true;
     }
-}
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    bool lemonadeChange(vector<int>& bills) {
-        int five = 0, ten = 0;
-        for (int v : bills) {
-            if (v == 5)
-                ++five;
-            else if (v == 10) {
-                ++ten;
-                --five;
-            } else {
-                if (ten)
-                    --ten, --five;
-                else
-                    five -= 3;
-            }
-            if (five < 0) return false;
-        }
-        return true;
-    }
 };
 ```
-
-### **Go**
 
 ```go
 func lemonadeChange(bills []int) bool {
@@ -151,8 +151,6 @@ func lemonadeChange(bills []int) bool {
 	return true
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function lemonadeChange(bills: number[]): boolean {
@@ -183,8 +181,6 @@ function lemonadeChange(bills: number[]): boolean {
     return true;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -218,10 +214,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

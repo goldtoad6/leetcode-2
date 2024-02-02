@@ -37,9 +37,13 @@ So the answer is 1 + 2 + 4 + 1 = 8.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We can use two pointers, where pointer $i$ points to the start of the current substring, and pointer $j$ moves to the right to the first position that is different from $s[i]$. Then, $[i,..j-1]$ is a substring with $s[i]$ as the only character, and its length is $j-i$. Therefore, the number of substrings with $s[i]$ as the only character is $\frac{(j-i+1)(j-i)}{2}$, which is added to the answer. Then, we set $i=j$ and continue to traverse until $i$ exceeds the range of string $s$.
+
+The time complexity is $O(n)$, where $n$ is the length of the string $s$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +58,6 @@ class Solution:
             i = j
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -74,8 +76,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -83,7 +83,9 @@ public:
         int ans = 0;
         for (int i = 0, n = s.size(); i < n;) {
             int j = i;
-            while (j < n && s[j] == s[i]) ++j;
+            while (j < n && s[j] == s[i]) {
+                ++j;
+            }
             ans += (1 + j - i) * (j - i) / 2;
             i = j;
         }
@@ -91,8 +93,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countLetters(s string) int {
@@ -109,10 +109,101 @@ func countLetters(s string) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function countLetters(s: string): number {
+    let ans = 0;
+    const n = s.length;
+    for (let i = 0; i < n; ) {
+        let j = i;
+        let cnt = 0;
+        while (j < n && s[j] === s[i]) {
+            ++j;
+            ans += ++cnt;
+        }
+        i = j;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countLetters(self, s: str) -> int:
+        ans = 0
+        i, n = 0, len(s)
+        while i < n:
+            j = i
+            cnt = 0
+            while j < n and s[j] == s[i]:
+                j += 1
+                cnt += 1
+                ans += cnt
+            i = j
+        return ans
+```
+
+```java
+class Solution {
+    public int countLetters(String s) {
+        int ans = 0;
+        int i = 0, n = s.length();
+        while (i < n) {
+            int j = i;
+            int cnt = 0;
+            while (j < n && s.charAt(j) == s.charAt(i)) {
+                ++j;
+                ans += ++cnt;
+            }
+            i = j;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int countLetters(string s) {
+        int ans = 0;
+        int i = 0, n = s.size();
+        while (i < n) {
+            int j = i;
+            int cnt = 0;
+            while (j < n && s[j] == s[i]) {
+                ++j;
+                ans += ++cnt;
+            }
+            i = j;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func countLetters(s string) (ans int) {
+	i, n := 0, len(s)
+	for i < n {
+		j := i
+		cnt := 0
+		for j < n && s[j] == s[i] {
+			j++
+			cnt++
+			ans += cnt
+		}
+		i = j
+	}
+	return
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

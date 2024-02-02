@@ -43,9 +43,9 @@ There are 2 steps to sort the array in non-decreasing order. Therefore, we retur
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +62,6 @@ class Solution:
             mx = nums[i] // k
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +82,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -108,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumReplacement(nums []int) (ans int64) {
 	n := len(nums)
@@ -126,8 +120,6 @@ func minimumReplacement(nums []int) (ans int64) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minimumReplacement(nums: number[]): number {
@@ -147,10 +139,35 @@ function minimumReplacement(nums: number[]): number {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn minimum_replacement(nums: Vec<i32>) -> i64 {
+        if nums.len() == 1 {
+            return 0;
+        }
 
-```
+        let n = nums.len();
+        let mut max = *nums.last().unwrap();
+        let mut ret = 0;
 
+        for i in (0..=n - 2).rev() {
+            if nums[i] <= max {
+                max = nums[i];
+                continue;
+            }
+            // Otherwise make the substitution
+            let k = (nums[i] + max - 1) / max;
+            ret += (k - 1) as i64;
+            // Update the max value, which should be the minimum among the substitution
+            max = nums[i] / k;
+        }
+
+        ret
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

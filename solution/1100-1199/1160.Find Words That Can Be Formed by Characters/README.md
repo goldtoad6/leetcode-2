@@ -18,35 +18,35 @@
 
 <p><strong>示例 1：</strong></p>
 
-<pre><strong>输入：</strong>words = [&quot;cat&quot;,&quot;bt&quot;,&quot;hat&quot;,&quot;tree&quot;], chars = &quot;atach&quot;
+<pre>
+<strong>输入：</strong>words = ["cat","bt","hat","tree"], chars = "atach"
 <strong>输出：</strong>6
 <strong>解释： </strong>
-可以形成字符串 &quot;cat&quot; 和 &quot;hat&quot;，所以答案是 3 + 3 = 6。
+可以形成字符串 "cat" 和 "hat"，所以答案是 3 + 3 = 6。
 </pre>
 
 <p><strong>示例 2：</strong></p>
 
-<pre><strong>输入：</strong>words = [&quot;hello&quot;,&quot;world&quot;,&quot;leetcode&quot;], chars = &quot;welldonehoneyr&quot;
+<pre>
+<strong>输入：</strong>words = ["hello","world","leetcode"], chars = "welldonehoneyr"
 <strong>输出：</strong>10
 <strong>解释：</strong>
-可以形成字符串 &quot;hello&quot; 和 &quot;world&quot;，所以答案是 5 + 5 = 10。
+可以形成字符串 "hello" 和 "world"，所以答案是 5 + 5 = 10。
 </pre>
 
 <p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
-<ol>
+<ul>
 	<li><code>1 &lt;= words.length &lt;= 1000</code></li>
 	<li><code>1 &lt;= words[i].length, chars.length&nbsp;&lt;= 100</code></li>
 	<li>所有字符串中都仅包含小写英文字母</li>
-</ol>
+</ul>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 我们可以用一个长度为 $26$ 的数组 $cnt$ 统计字符串 $chars$ 中每个字母出现的次数。
 
@@ -57,10 +57,6 @@
 时间复杂度 $(L)$，空间复杂度 $O(C)$。其中 $L$ 为题目中所有字符串的长度之和；而 $C$ 为字符集的大小，本题中 $C = 26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -73,10 +69,6 @@ class Solution:
                 ans += len(w)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +96,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -135,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countCharacters(words []string, chars string) (ans int) {
 	cnt := [26]int{}
@@ -161,8 +149,6 @@ func countCharacters(words []string, chars string) (ans int) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countCharacters(words: string[], chars: string): number {
@@ -189,10 +175,34 @@ function countCharacters(words: string[], chars: string): number {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String[] $words
+     * @param String $chars
+     * @return Integer
+     */
+    function countCharacters($words, $chars) {
+        $sum = 0;
+        for ($i = 0; $i < strlen($chars); $i++) {
+            $hashtable[$chars[$i]] += 1;
+        }
+        for ($j = 0; $j < count($words); $j++) {
+            $tmp = $hashtable;
+            $sum += strlen($words[$j]);
+            for ($k = 0; $k < strlen($words[$j]); $k++) {
+                if (!isset($tmp[$words[$j][$k]]) || $tmp[$words[$j][$k]] === 0) {
+                    $sum -= strlen($words[$j]);
+                    break;
+                }
+                $tmp[$words[$j][$k]] -= 1;
+            }
+        }
+        return $sum;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

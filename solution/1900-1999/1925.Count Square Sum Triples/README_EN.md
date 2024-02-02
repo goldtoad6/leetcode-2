@@ -34,9 +34,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -50,8 +50,6 @@ class Solution:
                     res += 1
         return res
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,8 +69,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -81,7 +77,7 @@ public:
         for (int a = 1; a <= n; ++a) {
             for (int b = 1; b <= n; ++b) {
                 int t = a * a + b * b;
-                int c = (int)sqrt(t);
+                int c = (int) sqrt(t);
                 if (c <= n && c * c == t) {
                     ++res;
                 }
@@ -91,8 +87,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countTriples(n int) int {
@@ -110,10 +104,6 @@ func countTriples(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

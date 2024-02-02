@@ -65,13 +65,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -80,10 +76,6 @@ class Solution:
         rest = s - mx
         return rest * 2 + 1 if mx > rest + 1 else s
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -114,14 +104,12 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfWeeks(milestones []int) int64 {
-	mx, s := 0, 0
-	for _, e := range milestones {
-		mx = max(mx, e)
-		s += e
+	mx := slices.Max(milestones)
+	s := 0
+	for _, x := range milestones {
+		s += x
 	}
 	rest := s - mx
 	if mx > rest+1 {
@@ -129,19 +117,8 @@ func numberOfWeeks(milestones []int) int64 {
 	}
 	return int64(s)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

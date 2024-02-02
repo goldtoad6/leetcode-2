@@ -35,19 +35,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：遍历数组**
+### 方法一：遍历数组
 
 直接遍历数组，统计连续奇数的个数，如果个数达到 3，则返回 `true`，否则遍历结束，返回 `false`。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$，其中 $n$ 为数组 `arr` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -62,19 +56,6 @@ class Solution:
                 return True
         return False
 ```
-
-```python
-class Solution:
-    def threeConsecutiveOdds(self, arr: List[int]) -> bool:
-        for i in range(len(arr) - 2):
-            if arr[i] % 2 + arr[i + 1] % 2 + arr[i + 2] % 2 == 3:
-                return True
-        return False
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -95,24 +76,22 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool threeConsecutiveOdds(vector<int>& arr) {
         int cnt = 0;
         for (int v : arr) {
-            if (v & 1) ++cnt;
-            else cnt = 0;
+            if (v & 1)
+                ++cnt;
+            else
+                cnt = 0;
             if (cnt == 3) return true;
         }
         return false;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func threeConsecutiveOdds(arr []int) bool {
@@ -131,8 +110,6 @@ func threeConsecutiveOdds(arr []int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function threeConsecutiveOdds(arr: number[]): boolean {
     let cnt = 0;
@@ -150,10 +127,21 @@ function threeConsecutiveOdds(arr: number[]): boolean {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def threeConsecutiveOdds(self, arr: List[int]) -> bool:
+        for i in range(len(arr) - 2):
+            if arr[i] % 2 + arr[i + 1] % 2 + arr[i + 2] % 2 == 3:
+                return True
+        return False
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

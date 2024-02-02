@@ -46,9 +46,9 @@ The additive sequence is: 1, 99, 100, 199.&nbsp;
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -75,8 +75,6 @@ class Solution:
                     return True
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -119,8 +117,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -141,7 +137,7 @@ public:
     bool dfs(long long a, long long b, string num) {
         if (num == "") return true;
         if (a + b > 0 && num[0] == '0') return false;
-        for (int i = 1; i < min((int)num.size() + 1, 19); ++i)
+        for (int i = 1; i < min((int) num.size() + 1, 19); ++i)
             if (a + b == stoll(num.substr(0, i)))
                 if (dfs(b, a + b, num.substr(i, num.size() - i)))
                     return true;
@@ -149,8 +145,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isAdditiveNumber(num string) bool {
@@ -190,19 +184,8 @@ func isAdditiveNumber(num string) bool {
 	}
 	return false
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -38,9 +38,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
                 return True
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -108,8 +106,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -122,21 +118,21 @@ public:
         unordered_set<int> vis;
         for (int i = 1; i < 1 << m; ++i) {
             int t = 0;
-            for (int j = 0; j < m; ++j) if (i >> j & 1) t += nums[j];
+            for (int j = 0; j < m; ++j)
+                if (i >> j & 1) t += nums[j];
             if (t == 0) return true;
             vis.insert(t);
         }
         for (int i = 1; i < 1 << (n - m); ++i) {
             int t = 0;
-            for (int j = 0; j < (n - m); ++j) if (i >> j & 1) t += nums[m + j];
+            for (int j = 0; j < (n - m); ++j)
+                if (i >> j & 1) t += nums[m + j];
             if (t == 0 || (i != (1 << (n - m)) - 1 && vis.count(-t))) return true;
         }
         return false;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func splitArraySameAverage(nums []int) bool {
@@ -180,10 +176,6 @@ func splitArraySameAverage(nums []int) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

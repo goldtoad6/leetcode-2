@@ -37,9 +37,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+First, we can check if `str1` and `str2` are equal. If they are, return `true` directly.
+
+Then we count the occurrence of each letter in `str2`. If the occurrence equals $26$, it means `str2` contains all lowercase letters. In this case, no matter how `str1` is transformed, it cannot become `str2`, so return `false` directly.
+
+Otherwise, we use an array or hash table `d` to record the letter each letter in `str1` is transformed to. We traverse the strings `str1` and `str2`. If a letter in `str1` has been transformed, the transformed letter must be the same as the corresponding letter in `str2`, otherwise return `false`.
+
+After the traversal, return `true`.
+
+The time complexity is $O(n)$, and the space complexity is $O(C)$. Here, $n$ is the length of the string `str1`, and $C$ is the size of the character set. In this problem, $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +66,6 @@ class Solution:
                 return False
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +99,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -125,8 +131,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func canConvert(str1 string, str2 string) bool {
 	if str1 == str2 {
@@ -152,10 +156,26 @@ func canConvert(str1 string, str2 string) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function canConvert(str1: string, str2: string): boolean {
+    if (str1 === str2) {
+        return true;
+    }
+    if (new Set(str2).size === 26) {
+        return false;
+    }
+    const d: Map<string, string> = new Map();
+    for (const [i, c] of str1.split('').entries()) {
+        if (!d.has(c)) {
+            d.set(c, str2[i]);
+        } else if (d.get(c) !== str2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

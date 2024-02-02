@@ -13,7 +13,7 @@
 | id            | int     |
 | name          | varchar |
 +---------------+---------+
-id is the primary key for this table.
+id is the column with unique values for this table.
 name is the name of the user.
 </pre>
 
@@ -29,17 +29,17 @@ name is the name of the user.
 | user_id       | int     |
 | distance      | int     |
 +---------------+---------+
-id is the primary key for this table.
+id is the column with unique values for this table.
 user_id is the id of the user who traveled the distance &quot;distance&quot;.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the distance traveled by each user.</p>
+<p>Write a solution&nbsp;to report the distance traveled by each user.</p>
 
 <p>Return the result table ordered by <code>travelled_distance</code> in <strong>descending order</strong>, if two or more users traveled the same distance, order them by their <code>name</code> in <strong>ascending order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -92,20 +92,22 @@ Donald did not have any rides, the distance traveled by him is 0.
 
 ## Solutions
 
+### Solution 1: LEFT JOIN + GROUP BY
+
+We can use a left join to join the `Users` table with the `Rides` table on the condition of user id, and then group by user id to calculate the travel distance for each user. Note that if a user has no travel records, the travel distance is $0$.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT name,
-    COALESCE(SUM(distance), 0) AS travelled_distance
-FROM Users AS u
+# Write your MySQL query statement below
+SELECT name, IFNULL(SUM(distance), 0) AS travelled_distance
+FROM
+    Users AS u
     LEFT JOIN Rides AS r ON u.id = r.user_id
-GROUP BY
-    name
-ORDER BY
-    travelled_distance DESC,
-    name;
+GROUP BY u.id
+ORDER BY 2 DESC, 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

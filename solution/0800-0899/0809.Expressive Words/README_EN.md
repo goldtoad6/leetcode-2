@@ -50,9 +50,9 @@ We can&#39;t extend &quot;helo&quot; to get &quot;heeellooo&quot; because the gr
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -80,8 +80,6 @@ class Solution:
 
         return sum(check(s, t) for t in words)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -126,13 +124,11 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int expressiveWords(string s, vector<string>& words) {
-        auto check = [](string&s, string& t) -> int {
+        auto check = [](string& s, string& t) -> int {
             int m = s.size(), n = t.size();
             if (n > m) return 0;
             int i = 0, j = 0;
@@ -156,8 +152,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func expressiveWords(s string, words []string) (ans int) {
@@ -197,10 +191,6 @@ func expressiveWords(s string, words []string) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

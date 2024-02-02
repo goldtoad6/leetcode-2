@@ -50,9 +50,9 @@ class Node {
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 """
@@ -77,8 +77,6 @@ class Solution:
             node = node.parent
         return node.parent
 ```
-
-### **Java**
 
 ```java
 /*
@@ -109,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /*
 // Definition for a Node.
@@ -137,8 +133,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for Node.
@@ -151,21 +145,19 @@ public:
  */
 
 func inorderSuccessor(node *Node) *Node {
-    if node.Right != nil {
-        node = node.Right
-        for node.Left != nil {
-            node = node.Left
-        }
-        return node
-    }
-    for node.Parent != nil && node == node.Parent.Right {
-        node = node.Parent
-    }
-    return node.Parent
+	if node.Right != nil {
+		node = node.Right
+		for node.Left != nil {
+			node = node.Left
+		}
+		return node
+	}
+	for node.Parent != nil && node == node.Parent.Right {
+		node = node.Parent
+	}
+	return node.Parent
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -193,10 +185,6 @@ var inorderSuccessor = function (node) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>You are given two integer arrays <code>nums1</code> and <code>nums2</code> sorted in <strong>ascending order</strong> and an integer <code>k</code>.</p>
+<p>You are given two integer arrays <code>nums1</code> and <code>nums2</code> sorted in <strong>non-decreasing&nbsp;order</strong> and an integer <code>k</code>.</p>
 
 <p>Define a pair <code>(u, v)</code> which consists of one element from the first array and one element from the second array.</p>
 
@@ -41,17 +41,16 @@
 <ul>
 	<li><code>1 &lt;= nums1.length, nums2.length &lt;= 10<sup>5</sup></code></li>
 	<li><code>-10<sup>9</sup> &lt;= nums1[i], nums2[i] &lt;= 10<sup>9</sup></code></li>
-	<li><code>nums1</code> and <code>nums2</code> both are sorted in <strong>ascending order</strong>.</li>
+	<li><code>nums1</code> and <code>nums2</code> both are sorted in <strong>non-decreasing order</strong>.</li>
 	<li><code>1 &lt;= k &lt;= 10<sup>4</sup></code></li>
+	<li><code>k &lt;=&nbsp;nums1.length *&nbsp;nums2.length</code></li>
 </ul>
 
 ## Solutions
 
-<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0300-0399/0373.Find%20K%20Pairs%20with%20Smallest%20Sums/images/demo.png"/>
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -69,8 +68,6 @@ class Solution:
                 heappush(q, [nums1[i] + nums2[j + 1], i, j + 1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -93,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -112,7 +107,7 @@ public:
         while (k-- && !pq.empty()) {
             auto [x, y] = pq.top();
             pq.pop();
-            ans.emplace_back(initializer_list<int> {nums1[x], nums2[y]});
+            ans.emplace_back(initializer_list<int>{nums1[x], nums2[y]});
             if (y + 1 < n)
                 pq.emplace(x, y + 1);
         }
@@ -121,8 +116,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func kSmallestPairs(nums1, nums2 []int, k int) (ans [][]int) {
@@ -153,15 +146,11 @@ func (h hp) Less(i, j int) bool {
 	a, b := h.data[i], h.data[j]
 	return h.nums1[a.i]+h.nums2[a.j] < h.nums1[b.i]+h.nums2[b.j]
 }
-func (h hp) Swap(i, j int)       { h.data[i], h.data[j] = h.data[j], h.data[i] }
-func (h *hp) Push(v interface{}) { h.data = append(h.data, v.(pair)) }
-func (h *hp) Pop() interface{}   { a := h.data; v := a[len(a)-1]; h.data = a[:len(a)-1]; return v }
-```
-
-### **...**
-
-```
-
+func (h hp) Swap(i, j int) { h.data[i], h.data[j] = h.data[j], h.data[i] }
+func (h *hp) Push(v any)   { h.data = append(h.data, v.(pair)) }
+func (h *hp) Pop() any     { a := h.data; v := a[len(a)-1]; h.data = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -8,6 +8,7 @@
 
 <ul>
 	<li>Operation 1: If the number contains the substring <code>&quot;00&quot;</code>, you can replace it with <code>&quot;10&quot;</code>.
+
     <ul>
     	<li>For example, <code>&quot;<u>00</u>010&quot; -&gt; &quot;<u>10</u>010</code>&quot;</li>
     </ul>
@@ -17,6 +18,7 @@
     	<li>For example, <code>&quot;000<u>10</u>&quot; -&gt; &quot;000<u>01</u>&quot;</code></li>
     </ul>
     </li>
+
 </ul>
 
 <p><em>Return the <strong>maximum binary string</strong> you can obtain after any number of operations. Binary string <code>x</code> is greater than binary string <code>y</code> if <code>x</code>&#39;s decimal representation is greater than <code>y</code>&#39;s decimal representation.</em></p>
@@ -53,9 +55,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Quick Thinking
 
-### **Python3**
+We observe that operation 2 can move all $1$s to the end of the string, and operation 1 can change all `0000..000` strings to `111..110`.
+
+Therefore, to get the maximum binary string, we should move all $1$s that are not at the beginning to the end of the string, making the string in the form of `111..11...00..11`, and then use operation 1 to change the middle `000..00` to `111..10`. In this way, we can finally get a binary string that contains at most one $0$, which is the maximum binary string we are looking for.
+
+The time complexity is $O(n)$, where $n$ is the length of the string `binary`. Ignoring the space consumption of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,11 +71,9 @@ class Solution:
         k = binary.find('0')
         if k == -1:
             return binary
-        k += binary[k + 1:].count('0')
+        k += binary[k + 1 :].count('0')
         return '1' * k + '0' + '1' * (len(binary) - k - 1)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -90,8 +96,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -108,8 +112,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maximumBinaryString(binary string) string {
@@ -131,10 +133,6 @@ func maximumBinaryString(binary string) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

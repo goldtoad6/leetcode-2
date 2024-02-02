@@ -36,9 +36,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,8 +65,6 @@ class Solution:
                 ans = t
         return str(ans)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -100,8 +98,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -117,8 +113,8 @@ public:
     unordered_set<long> get(string& n) {
         int l = n.size();
         unordered_set<long> res;
-        res.insert((long)pow(10, l - 1) - 1);
-        res.insert((long)pow(10, l) + 1);
+        res.insert((long) pow(10, l - 1) - 1);
+        res.insert((long) pow(10, l) + 1);
         long left = stol(n.substr(0, (l + 1) / 2));
         for (long i = left - 1; i <= left + 1; ++i) {
             string prefix = to_string(i);
@@ -130,8 +126,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func nearestPalindromic(n string) string {
@@ -168,10 +162,6 @@ func abs(x int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

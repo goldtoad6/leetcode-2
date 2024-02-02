@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>Given a <code>root</code> of an <a href="https://leetcode.com/articles/introduction-to-n-ary-trees/" target="_blank">N-ary tree</a>, you need to compute the length of the diameter of the tree.</p>
+<p>Given a <code>root</code> of an <code>N-ary tree</code>, you need to compute the length of the diameter of the tree.</p>
 
 <p>The diameter of an N-ary tree is the length of the <strong>longest</strong> path between any two nodes in the tree. This path may or may not pass through the root.</p>
 
@@ -48,9 +48,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 """
@@ -87,55 +87,6 @@ class Solution:
         dfs(root)
         return ans
 ```
-
-```python
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val=None, children=None):
-        self.val = val
-        self.children = children if children is not None else []
-"""
-
-
-class Solution:
-    def diameter(self, root: 'Node') -> int:
-        """
-        :type root: 'Node'
-        :rtype: int
-        """
-        def build(root):
-            nonlocal d
-            if root is None:
-                return
-            for child in root.children:
-                d[root].add(child)
-                d[child].add(root)
-                build(child)
-
-        def dfs(u, t):
-            nonlocal ans, vis, d, next
-            if u in vis:
-                return
-            vis.add(u)
-            for v in d[u]:
-                dfs(v, t + 1)
-            if ans < t:
-                ans = t
-                next = u
-
-        d = defaultdict(set)
-        vis = set()
-        build(root)
-        ans = 0
-        next = None
-        dfs(root, 0)
-        vis.clear()
-        dfs(next, 0)
-        return ans
-```
-
-### **Java**
 
 ```java
 /*
@@ -188,6 +139,141 @@ class Solution {
         return 1 + m1;
     }
 }
+```
+
+```cpp
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+public:
+    int ans;
+
+    int diameter(Node* root) {
+        ans = 0;
+        dfs(root);
+        return ans;
+    }
+
+    int dfs(Node* root) {
+        if (!root) return 0;
+        int m1 = 0, m2 = 0;
+        for (Node* child : root->children) {
+            int t = dfs(child);
+            if (t > m1) {
+                m2 = m1;
+                m1 = t;
+            } else if (t > m2)
+                m2 = t;
+        }
+        ans = max(ans, m1 + m2);
+        return 1 + m1;
+    }
+};
+```
+
+```go
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Children []*Node
+ * }
+ */
+
+func diameter(root *Node) int {
+	ans := 0
+	var dfs func(root *Node) int
+	dfs = func(root *Node) int {
+		if root == nil {
+			return 0
+		}
+		m1, m2 := 0, 0
+		for _, child := range root.Children {
+			t := dfs(child)
+			if t > m1 {
+				m2, m1 = m1, t
+			} else if t > m2 {
+				m2 = t
+			}
+		}
+		ans = max(ans, m1+m2)
+		return 1 + m1
+	}
+	dfs(root)
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children if children is not None else []
+"""
+
+
+class Solution:
+    def diameter(self, root: 'Node') -> int:
+        """
+        :type root: 'Node'
+        :rtype: int
+        """
+
+        def build(root):
+            nonlocal d
+            if root is None:
+                return
+            for child in root.children:
+                d[root].add(child)
+                d[child].add(root)
+                build(child)
+
+        def dfs(u, t):
+            nonlocal ans, vis, d, next
+            if u in vis:
+                return
+            vis.add(u)
+            for v in d[u]:
+                dfs(v, t + 1)
+            if ans < t:
+                ans = t
+                next = u
+
+        d = defaultdict(set)
+        vis = set()
+        build(root)
+        ans = 0
+        next = None
+        dfs(root, 0)
+        vis.clear()
+        dfs(next, 0)
+        return ans
 ```
 
 ```java
@@ -261,56 +347,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    vector<Node*> children;
-
-    Node() {}
-
-    Node(int _val) {
-        val = _val;
-    }
-
-    Node(int _val, vector<Node*> _children) {
-        val = _val;
-        children = _children;
-    }
-};
-*/
-
-class Solution {
-public:
-    int ans;
-
-    int diameter(Node* root) {
-        ans = 0;
-        dfs(root);
-        return ans;
-    }
-
-    int dfs(Node* root) {
-        if (!root) return 0;
-        int m1 = 0, m2 = 0;
-        for (Node* child : root->children) {
-            int t = dfs(child);
-            if (t > m1) {
-                m2 = m1;
-                m1 = t;
-            } else if (t > m2)
-                m2 = t;
-        }
-        ans = max(ans, m1 + m2);
-        return 1 + m1;
-    }
-};
-```
-
 ```cpp
 /*
 // Definition for a Node.
@@ -352,8 +388,7 @@ public:
     void dfs(Node* u, int t) {
         if (vis.count(u)) return;
         vis.insert(u);
-        if (ans < t)
-        {
+        if (ans < t) {
             ans = t;
             next = u;
         }
@@ -364,56 +399,13 @@ public:
 
     void build(Node* root) {
         if (!root) return;
-        for (Node* child : root->children)
-        {
+        for (Node* child : root->children) {
             g[root].insert(child);
             g[child].insert(root);
             build(child);
         }
     }
 };
-```
-
-### **Go**
-
-```go
-/**
- * Definition for a Node.
- * type Node struct {
- *     Val int
- *     Children []*Node
- * }
- */
-
-func diameter(root *Node) int {
-	ans := 0
-	var dfs func(root *Node) int
-	dfs = func(root *Node) int {
-		if root == nil {
-			return 0
-		}
-		m1, m2 := 0, 0
-		for _, child := range root.Children {
-			t := dfs(child)
-			if t > m1 {
-				m2, m1 = m1, t
-			} else if t > m2 {
-				m2 = t
-			}
-		}
-		ans = max(ans, m1+m2)
-		return 1 + m1
-	}
-	dfs(root)
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
 
 ```go
@@ -465,10 +457,6 @@ func diameter(root *Node) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

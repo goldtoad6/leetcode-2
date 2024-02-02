@@ -13,7 +13,7 @@
 | id          | int  |
 | p_id        | int  |
 +-------------+------+
-id is the primary key column for this table.
+id is the column with unique values for this table.
 Each row of this table contains information about the id of a node and the id of its parent node in a tree.
 The given structure is always a valid tree.
 </pre>
@@ -28,11 +28,11 @@ The given structure is always a valid tree.
 	<li><strong>&quot;Inner&quot;</strong>: If the node is neither a leaf node nor a root node.</li>
 </ul>
 
-<p>Write an SQL query to report the type of each node in the tree.</p>
+<p>Write a solution to report the type of each node in the tree.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -86,23 +86,28 @@ Tree table:
 
 ## Solutions
 
+### Solution 1: Conditional Statements + Subquery
+
+We can use the `CASE WHEN` conditional statement to determine the type of each node as follows:
+
+-   If a node's `p_id` is `NULL`, then it is a root node.
+-   Otherwise, if a node is the parent node of another node (we use a subquery to determine this), then it is an internal node.
+-   Otherwise, it is a leaf node.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT id,
-    (
-        CASE
-            WHEN p_id IS NULL THEN 'Root'
-            WHEN id IN (
-                SELECT p_id
-                FROM tree
-            ) THEN 'Inner'
-            ELSE 'Leaf'
-        END
-    ) AS type
-FROM tree;
+# Write your MySQL query statement below
+SELECT
+    id,
+    CASE
+        WHEN p_id IS NULL THEN 'Root'
+        WHEN id IN (SELECT p_id FROM Tree) THEN 'Inner'
+        ELSE 'Leaf'
+    END AS type
+FROM Tree;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

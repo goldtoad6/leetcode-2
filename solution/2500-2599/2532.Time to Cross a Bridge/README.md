@@ -83,9 +83,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：优先队列（大小根堆） + 模拟**
+### 方法一：优先队列（大小根堆） + 模拟
 
 我们先将工人按照效率从高到底排序，这样，下标越大的工人，效率越低。
 
@@ -111,10 +109,6 @@
 时间复杂度 $O(n \times \log k)$，空间复杂度 $O(k)$。其中 $n$ 和 $k$ 分别为工人数量和箱子数量。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -160,10 +154,6 @@ class Solution:
                 n -= 1
                 heappush(work_in_right, (cur + time[i][1], i))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -230,8 +220,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -301,8 +289,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findCrossingTime(n int, k int, time [][]int) int {
 	sort.SliceStable(time, func(i, j int) bool { return time[i][0]+time[i][2] < time[j][0]+time[j][2] })
@@ -358,9 +344,9 @@ func findCrossingTime(n int, k int, time [][]int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -370,24 +356,13 @@ func (h *hp) Pop() interface{} {
 type pair struct{ t, i int }
 type hp2 []pair
 
-func (h hp2) Len() int            { return len(h) }
-func (h hp2) Less(i, j int) bool  { return h[i].t < h[j].t }
-func (h hp2) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp2) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp2) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
+func (h hp2) Len() int           { return len(h) }
+func (h hp2) Less(i, j int) bool { return h[i].t < h[j].t }
+func (h hp2) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp2) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp2) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

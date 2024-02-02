@@ -57,15 +57,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：自定义排序**
+### 方法一：自定义排序
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -76,10 +70,6 @@ class Solution:
 
         return sorted(logs, key=cmp)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +94,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function reorderLogFiles(logs: string[]): string[] {
@@ -132,18 +120,18 @@ function reorderLogFiles(logs: string[]): string[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn reorder_log_files(mut logs: Vec<String>) -> Vec<String> {
         logs.sort_by(|s1, s2| {
             let (start1, content1) = s1.split_once(' ').unwrap();
             let (start2, content2) = s2.split_once(' ').unwrap();
-            match (
-                content1.chars().nth(0).unwrap().is_digit(10),
-                content2.chars().nth(0).unwrap().is_digit(10),
-            ) {
+            match
+                (
+                    content1.chars().nth(0).unwrap().is_digit(10),
+                    content2.chars().nth(0).unwrap().is_digit(10),
+                )
+            {
                 (true, true) => std::cmp::Ordering::Equal,
                 (true, false) => std::cmp::Ordering::Greater,
                 (false, true) => std::cmp::Ordering::Less,
@@ -155,10 +143,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -50,9 +50,9 @@ In the fourth semester, you can take course 5.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -83,8 +83,6 @@ class Solution:
                         q.append((nxt | cur, t + 1))
                     nxt = (nxt - 1) & x
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -129,11 +127,7 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
-using pii = pair<int, int>;
-
 class Solution {
 public:
     int minNumberOfSemesters(int n, vector<vector<int>>& relations, int k) {
@@ -141,7 +135,7 @@ public:
         for (auto& e : relations) {
             d[e[1]] |= 1 << e[0];
         }
-        queue<pii> q;
+        queue<pair<int, int>> q;
         q.push({0, 0});
         unordered_set<int> vis{{0}};
         while (!q.empty()) {
@@ -177,8 +171,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minNumberOfSemesters(n int, relations [][]int, k int) int {
@@ -223,10 +215,6 @@ func minNumberOfSemesters(n int, relations [][]int, k int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

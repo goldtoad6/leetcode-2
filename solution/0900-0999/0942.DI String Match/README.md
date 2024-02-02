@@ -48,15 +48,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-类似贪心思想，如果当前字母是 `I`，我们只需要选择当前可选的最小数字，就能保证后面的数字无论怎么排列，当前数字和下一个数字一定是递增关系。`D` 同理，选择当前可选的最大数字即可
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -74,10 +68,6 @@ class Solution:
         ans.append(low)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -97,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -120,8 +108,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func diStringMatch(s string) []int {
 	n := len(s)
@@ -141,8 +127,6 @@ func diStringMatch(s string) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function diStringMatch(s: string): number[] {
     const n = s.length;
@@ -161,8 +145,6 @@ function diStringMatch(s: string): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn di_string_match(s: String) -> Vec<i32> {
@@ -171,13 +153,15 @@ impl Solution {
         let mut res = Vec::with_capacity(n + 1);
         let (mut low, mut high) = (-1, (n + 1) as i32);
         for i in 0..n {
-            res.push(if s[i] == b'I' {
-                low += 1;
-                low
-            } else {
-                high -= 1;
-                high
-            });
+            res.push(
+                if s[i] == b'I' {
+                    low += 1;
+                    low
+                } else {
+                    high -= 1;
+                    high
+                }
+            );
         }
         res.push(low + 1);
         res
@@ -185,10 +169,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -54,35 +54,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
+我们不妨记字符串 $s$ 的长度为 $n$。接下来遍历数组 $shift$，累加得到最终的偏移量 $x$，然后将 $x$ 对 $n$ 取模，最终结果就是将 $s$ 的前 $n - x$ 个字符移动到末尾。
 
-遍历 `shift`，累加（减）得到最终偏移量 $x$，取模后对字符串 `s` 进行左移或右移。
-
-时间复杂度 $O(n+m)$。其中 $n$ 为字符串 `s` 的长度，$m$ 为 `shift` 的长度。
+时间复杂度 $O(n + m)$，其中 $n$ 和 $m$ 分别是字符串 $s$ 的长度和数组 $shift$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def stringShift(self, s: str, shift: List[List[int]]) -> str:
-        x = 0
-        for a, b in shift:
-            if a == 0:
-                b = -b
-            x += b
+        x = sum((b if a else -b) for a, b in shift)
         x %= len(s)
         return s[-x:] + s[:-x]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -90,7 +76,7 @@ class Solution {
         int x = 0;
         for (var e : shift) {
             if (e[0] == 0) {
-                e[1] = -e[1];
+                e[1] *= -1;
             }
             x += e[1];
         }
@@ -100,8 +86,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -121,8 +105,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func stringShift(s string, shift [][]int) string {
 	x := 0
@@ -138,10 +120,20 @@ func stringShift(s string, shift [][]int) string {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function stringShift(s: string, shift: number[][]): string {
+    let x = 0;
+    for (const [a, b] of shift) {
+        x += a === 0 ? -b : b;
+    }
+    x %= s.length;
+    if (x < 0) {
+        x += s.length;
+    }
+    return s.slice(-x) + s.slice(0, -x);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

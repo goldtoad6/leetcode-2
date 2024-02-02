@@ -54,9 +54,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心 + 优先队列（双堆）**
+### 方法一：贪心 + 优先队列（双堆）
 
 将每个项目放入优先队列 $q_1$ 中，按照启动资本从小到大排序。如果堆顶元素启动资本不超过当前已有的资金，则循环弹出，放入另一个优先队列 $q_2$ 中，按照纯利润从大到小排序。取出当前利润最大的项目，将其纯利润加入到当前资金中，重复上述操作 $k$ 次。
 
@@ -64,13 +62,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+    def findMaximizedCapital(
+        self, k: int, w: int, profits: List[int], capital: List[int]
+    ) -> int:
         h1 = [(c, p) for c, p in zip(capital, profits)]
         heapify(h1)
         h2 = []
@@ -83,10 +79,6 @@ class Solution:
             k -= 1
         return w
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -110,8 +102,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 using pii = pair<int, int>;
@@ -141,8 +131,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 	q1 := hp2{}
@@ -165,9 +153,9 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -177,17 +165,13 @@ func (h *hp) Pop() interface{} {
 type pair struct{ c, p int }
 type hp2 []pair
 
-func (h hp2) Len() int            { return len(h) }
-func (h hp2) Less(i, j int) bool  { return h[i].c < h[j].c }
-func (h hp2) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp2) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp2) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-```
-
-### **...**
-
-```
-
+func (h hp2) Len() int           { return len(h) }
+func (h hp2) Less(i, j int) bool { return h[i].c < h[j].c }
+func (h hp2) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp2) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp2) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

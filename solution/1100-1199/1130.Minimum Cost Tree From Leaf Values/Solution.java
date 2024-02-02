@@ -6,9 +6,9 @@ class Solution {
         int n = arr.length;
         f = new Integer[n][n];
         g = new int[n][n];
-        for (int i = 0; i < n; i++) {
+        for (int i = n - 1; i >= 0; --i) {
             g[i][i] = arr[i];
-            for (int j = i + 1; j < n; j++) {
+            for (int j = i + 1; j < n; ++j) {
                 g[i][j] = Math.max(g[i][j - 1], arr[j]);
             }
         }

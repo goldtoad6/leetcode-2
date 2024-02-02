@@ -31,9 +31,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -57,8 +57,6 @@ class Solution:
                 curr *= 10
         return curr
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -94,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -115,7 +111,7 @@ public:
                 curr *= 10;
             }
         }
-        return (int)curr;
+        return (int) curr;
     }
 
     int count(long long curr) {
@@ -130,8 +126,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findKthNumber(n int, k int) int {
@@ -159,19 +153,8 @@ func findKthNumber(n int, k int) int {
 	}
 	return curr
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

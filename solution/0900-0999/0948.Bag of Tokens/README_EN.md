@@ -57,9 +57,9 @@ There is no need to play the 1<sup>st</sup> token since you cannot play it face 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -79,8 +79,6 @@ class Solution:
                 break
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -105,8 +103,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func bagOfTokensScore(tokens []int, power int) int {
 	sort.Ints(tokens)
@@ -151,19 +145,8 @@ func bagOfTokensScore(tokens []int, power int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

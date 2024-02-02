@@ -65,9 +65,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS**
+### 方法一：BFS
 
 题目求的是蛇从起始位置到达目标位置的最少移动次数，我们考虑使用广度优先搜索 $BFS$ 来求解。
 
@@ -85,10 +83,6 @@
 时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。其中 $n$ 是二维迷宫的行数或列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -126,10 +120,6 @@ class Solution:
             ans += 1
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -185,8 +175,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -241,8 +229,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumMoves(grid [][]int) int {
 	n := len(grid)
@@ -296,8 +282,6 @@ func minimumMoves(grid [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minimumMoves(grid: number[][]): number {
     const n = grid.length;
@@ -307,16 +291,7 @@ function minimumMoves(grid: number[][]): number {
     vis[0][0] = true;
 
     const move = (i1: number, j1: number, i2: number, j2: number) => {
-        if (
-            i1 >= 0 &&
-            i1 < n &&
-            j1 >= 0 &&
-            j1 < n &&
-            i2 >= 0 &&
-            i2 < n &&
-            j2 >= 0 &&
-            j2 < n
-        ) {
+        if (i1 >= 0 && i1 < n && j1 >= 0 && j1 < n && i2 >= 0 && i2 < n && j2 >= 0 && j2 < n) {
             const a = i1 * n + j1;
             const b = i2 * n + j2;
             const status = i1 === i2 ? 0 : 1;
@@ -355,8 +330,6 @@ function minimumMoves(grid: number[][]): number {
 }
 ```
 
-### **JavaScript**
-
 ```js
 /**
  * @param {number[][]} grid
@@ -370,16 +343,7 @@ var minimumMoves = function (grid) {
     vis[0][0] = true;
 
     const move = (i1, j1, i2, j2) => {
-        if (
-            i1 >= 0 &&
-            i1 < n &&
-            j1 >= 0 &&
-            j1 < n &&
-            i2 >= 0 &&
-            i2 < n &&
-            j2 >= 0 &&
-            j2 < n
-        ) {
+        if (i1 >= 0 && i1 < n && j1 >= 0 && j1 < n && i2 >= 0 && i2 < n && j2 >= 0 && j2 < n) {
             const a = i1 * n + j1;
             const b = i2 * n + j2;
             const status = i1 === i2 ? 0 : 1;
@@ -418,10 +382,6 @@ var minimumMoves = function (grid) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

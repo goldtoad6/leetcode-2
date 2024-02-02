@@ -52,9 +52,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +67,6 @@ class Solution:
             mx = z - x - 2
         return [mi, mx]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +83,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -105,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numMovesStones(a int, b int, c int) []int {
 	x := min(a, min(b, c))
@@ -122,23 +116,7 @@ func numMovesStones(a int, b int, c int) []int {
 	}
 	return []int{mi, mx}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function numMovesStones(a: number, b: number, c: number): number[] {
@@ -155,10 +133,6 @@ function numMovesStones(a: number, b: number, c: number): number[] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

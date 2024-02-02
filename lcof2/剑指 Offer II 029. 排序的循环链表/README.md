@@ -58,18 +58,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-1. 头节点如果为空，直接返回 `node`
-2. 如果 `insertVal` 在链表的最小值和最大值之间，找到合适的位置插入
-3. 如果 `insertVal` 小于链表的最小值或大于链表的最大值，则在头节点和尾节点之间插入
-4. 链表的所有值和 `insertVal` 都相等，任意位置插入
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 """
@@ -96,7 +87,6 @@ class Solution:
                 and (insertVal <= p.next.val or insertVal >= p.val)
                 or p.next == head
             ):
-
                 node.next = p.next
                 p.next = node
                 break
@@ -104,10 +94,6 @@ class Solution:
             p = p.next
         return head
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /*
@@ -152,8 +138,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /*
 // Definition for a Node.
@@ -197,8 +181,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a Node.
@@ -226,8 +208,6 @@ func insert(head *Node, x int) *Node {
 	return head
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -273,10 +253,6 @@ function insert(head: Node | null, insertVal: number): Node | null {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

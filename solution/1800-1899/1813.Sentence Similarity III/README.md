@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 我们将两个句子按照空格分割成两个单词数组 `words1` 和 `words2`，假设 `words1` 和 `words2` 的长度分别为 $m$ 和 $n$，不妨设 $m \geq n$。
 
@@ -66,10 +64,6 @@
 时间复杂度 $O(L)$，空间复杂度 $O(L)$。其中 $L$ 为两个句子的长度之和。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -86,10 +80,6 @@ class Solution:
             j += 1
         return i + j >= n
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -113,8 +103,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -148,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func areSentencesSimilar(sentence1 string, sentence2 string) bool {
 	words1, words2 := strings.Fields(sentence1), strings.Fields(sentence2)
@@ -168,10 +154,25 @@ func areSentencesSimilar(sentence1 string, sentence2 string) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function areSentencesSimilar(sentence1: string, sentence2: string): boolean {
+    const words1 = sentence1.split(' ');
+    const words2 = sentence2.split(' ');
+    if (words1.length < words2.length) {
+        return areSentencesSimilar(sentence2, sentence1);
+    }
+    const [m, n] = [words1.length, words2.length];
+    let [i, j] = [0, 0];
+    while (i < n && words1[i] === words2[i]) {
+        ++i;
+    }
+    while (j < n && words1[m - 1 - j] === words2[n - 1 - j]) {
+        ++j;
+    }
+    return i + j >= n;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

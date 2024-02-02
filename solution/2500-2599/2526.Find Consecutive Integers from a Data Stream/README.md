@@ -48,9 +48,7 @@ dataStream.consec(3); // 最后 k 个整数分别是 [4,4,3] 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 维护一个计数器 $cnt$，记录当前连续整数为 `value` 的个数。
 
@@ -60,13 +58,8 @@ dataStream.consec(3); // 最后 k 个整数分别是 [4,4,3] 。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class DataStream:
-
     def __init__(self, value: int, k: int):
         self.val, self.k = value, k
         self.cnt = 0
@@ -80,10 +73,6 @@ class DataStream:
 # obj = DataStream(value, k)
 # param_1 = obj.consec(num)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class DataStream {
@@ -108,8 +97,6 @@ class DataStream {
  * boolean param_1 = obj.consec(num);
  */
 ```
-
-### **C++**
 
 ```cpp
 class DataStream {
@@ -136,8 +123,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type DataStream struct {
 	val, k, cnt int
@@ -163,10 +148,31 @@ func (this *DataStream) Consec(num int) bool {
  */
 ```
 
-### **...**
+```ts
+class DataStream {
+    private val: number;
+    private k: number;
+    private cnt: number;
 
-```
+    constructor(value: number, k: number) {
+        this.val = value;
+        this.k = k;
+        this.cnt = 0;
+    }
 
+    consec(num: number): boolean {
+        this.cnt = this.val === num ? this.cnt + 1 : 0;
+        return this.cnt >= this.k;
+    }
+}
+
+/**
+ * Your DataStream object will be instantiated and called as such:
+ * var obj = new DataStream(value, k)
+ * var param_1 = obj.consec(num)
+ */
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -16,7 +16,7 @@
 | FirstName   | varchar |
 | LastName    | varchar |
 +-------------+---------+
-personId 是该表的主键列。
+personId 是该表的主键（具有唯一值的列）。
 该表包含一些人的 ID 和他们的姓和名的信息。
 </pre>
 
@@ -33,15 +33,17 @@ personId 是该表的主键列。
 | City        | varchar |
 | State       | varchar |
 +-------------+---------+
-addressId 是该表的主键列。
+addressId 是该表的主键（具有唯一值的列）。
 该表的每一行都包含一个 ID = PersonId 的人的城市和州的信息。
 </pre>
 
-<p>编写一个SQL查询来报告 <code>Person</code> 表中每个人的姓、名、城市和州。如果 <code>personId</code> 的地址不在&nbsp;<code>Address</code>&nbsp;表中，则报告为空 &nbsp;<code>null</code>&nbsp;。</p>
+<p>&nbsp;</p>
+
+<p>编写解决方案，报告 <code>Person</code> 表中每个人的姓、名、城市和州。如果 <code>personId</code> 的地址不在&nbsp;<code>Address</code>&nbsp;表中，则报告为&nbsp;<code>null</code>&nbsp;。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -76,21 +78,30 @@ addressId = 1 包含了 personId = 2 的地址信息。</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：左连接
 
-左连接。
+我们可以使用左连接，将 `Person` 表左连接 `Address` 表，连接条件为 `Person.personId = Address.personId`，这样就可以得到每个人的姓、名、城市和州。如果 `personId` 的地址不在 `Address` 表中，则报告为空 `null`。
 
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
+
+
+def combine_two_tables(person: pd.DataFrame, address: pd.DataFrame) -> pd.DataFrame:
+    return pd.merge(left=person, right=address, how="left", on="personId")[
+        ["firstName", "lastName", "city", "state"]
+    ]
+```
 
 ```sql
-SELECT p.FirstName,
-    p.LastName,
-    a.City,
-    a.State
-FROM Person p
-    LEFT JOIN Address a ON p.PersonId = a.PersonId;
+# Write your MySQL query statement below
+SELECT firstName, lastName, city, state
+FROM
+    Person
+    LEFT JOIN Address USING (personId);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -29,7 +29,7 @@
 <p><img src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0800-0899/0864.Shortest%20Path%20to%20Get%20All%20Keys/images/lc-keys2.jpg" /></p>
 
 <pre>
-<strong>输入：</strong>grid = ["@.a.#","###.#","b.A.B"]
+<strong>输入：</strong>grid = ["@.a..","###.#","b.A.B"]
 <strong>输出：</strong>8
 <strong>解释：</strong>目标是获得所有钥匙，而不是打开所有锁。
 </pre>
@@ -65,9 +65,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：状态压缩 + BFS**
+### 方法一：状态压缩 + BFS
 
 根据题意，我们需要从起点出发，往上下左右四个方向走，获取所有钥匙，最后返回获取所有钥匙所需要的移动的最少次数。若无法获取所有钥匙，返回 $-1$。
 
@@ -101,10 +99,6 @@ f   d c b
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def shortestPathAllKeys(self, grid: List[str]) -> int:
@@ -132,7 +126,11 @@ class Solution:
                     if 0 <= x < m and 0 <= y < n:
                         c = grid[x][y]
                         # 是墙，或者是锁，但此时没有对应的钥匙，无法通过
-                        if c == '#' or c.isupper() and (state & (1 << (ord(c) - ord('A')))) == 0:
+                        if (
+                            c == '#'
+                            or c.isupper()
+                            and (state & (1 << (ord(c) - ord('A')))) == 0
+                        ):
                             continue
                         # 是钥匙
                         if c.islower():
@@ -146,10 +144,6 @@ class Solution:
             ans += 1
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -218,8 +212,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -235,7 +227,8 @@ public:
                 // 累加钥匙数量
                 if (islower(c)) ++k;
                 // 起点
-                else if (c == '@') si = i, sj = j;
+                else if (c == '@')
+                    si = i, sj = j;
             }
         }
         queue<tuple<int, int, int>> q{{{si, sj, 0}}};
@@ -274,8 +267,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func shortestPathAllKeys(grid []string) int {
@@ -336,10 +327,6 @@ func shortestPathAllKeys(grid []string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

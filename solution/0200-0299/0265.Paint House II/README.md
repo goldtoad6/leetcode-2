@@ -52,9 +52,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 定义 $f[i][j]$ 表示粉刷前 $i$ 个房子，且最后一个房子被粉刷成第 $j$ 种颜色的最小花费。答案为 $\min_{0 \leq j < k} f[n][j]$。
 
@@ -70,10 +68,6 @@ $$
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def minCostII(self, costs: List[List[int]]) -> int:
@@ -87,10 +81,6 @@ class Solution:
             f = g
         return min(f)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -114,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -141,10 +129,8 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func minCostII(costs [][]int) (ans int) {
+func minCostII(costs [][]int) int {
 	n, k := len(costs), len(costs[0])
 	f := cp(costs[0])
 	for i := 1; i < n; i++ {
@@ -160,13 +146,7 @@ func minCostII(costs [][]int) (ans int) {
 		}
 		f = g
 	}
-	ans = f[0]
-	for _, v := range f {
-		if ans > v {
-			ans = v
-		}
-	}
-	return
+	return slices.Min(f)
 }
 
 func cp(arr []int) []int {
@@ -176,10 +156,6 @@ func cp(arr []int) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -62,9 +62,9 @@ It can be shown that Bob cannot obtain a score higher than 27 points.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -89,8 +89,6 @@ class Solution:
         ans[0] = numArrows
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -124,8 +122,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -158,8 +154,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumBobPoints(numArrows int, aliceArrows []int) []int {
 	n := len(aliceArrows)
@@ -189,8 +183,6 @@ func maximumBobPoints(numArrows int, aliceArrows []int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maximumBobPoints(numArrows: number, aliceArrows: number[]): number[] {
     const dfs = (arr: number[], i: number, c: number): number[] => {
@@ -215,8 +207,6 @@ function maximumBobPoints(numArrows: number, aliceArrows: number[]): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     fn dfs(alice_arrows: &Vec<i32>, mut res: Vec<i32>, count: i32, i: usize) -> Vec<i32> {
@@ -228,12 +218,14 @@ impl Solution {
         if count > alice_arrows[i] {
             res[i] = alice_arrows[i] + 1;
             let r2 = Self::dfs(alice_arrows, res, count - alice_arrows[i] - 1, i - 1);
-            if r2
-                .iter()
-                .enumerate()
-                .map(|(i, v)| if v > &0 { i } else { 0 })
-                .sum::<usize>()
-                > r1.iter()
+            if
+                r2
+                    .iter()
+                    .enumerate()
+                    .map(|(i, v)| if v > &0 { i } else { 0 })
+                    .sum::<usize>() >
+                r1
+                    .iter()
                     .enumerate()
                     .map(|(i, v)| if v > &0 { i } else { 0 })
                     .sum::<usize>()
@@ -250,10 +242,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

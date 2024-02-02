@@ -33,9 +33,21 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Direct Calculation
 
-### **Python3**
+According to the problem, the given date is in the Gregorian calendar, so we can directly calculate which day of the year it is.
+
+First, calculate the year, month, and day from the given date, denoted as $y$, $m$, $d$.
+
+Then, calculate the number of days in February of that year according to the leap year rules of the Gregorian calendar. There are $29$ days in February of a leap year and $28$ days in a non-leap year.
+
+> The leap year calculation rule is: the year can be divided by $400$, or the year can be divided by $4$ but not by $100$.
+
+Finally, calculate which day of the year it is according to the given date, that is, add up the number of days in each previous month, and then add the number of days in the current month.
+
+The time complexity is $O(1)$, and the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -43,10 +55,8 @@ class Solution:
         y, m, d = (int(s) for s in date.split('-'))
         v = 29 if y % 400 == 0 or (y % 4 == 0 and y % 100) else 28
         days = [31, v, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        return sum(days[:m-1]) + d
+        return sum(days[: m - 1]) + d
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -65,15 +75,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int dayOfYear(string date) {
-        int y = stoi(date.substr(0, 4));
-        int m = stoi(date.substr(5, 2));
-        int d = stoi(date.substr(8));
+        int y, m, d;
+        sscanf(date.c_str(), "%d-%d-%d", &y, &m, &d);
         int v = y % 400 == 0 || (y % 4 == 0 && y % 100) ? 29 : 28;
         int days[] = {31, v, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int ans = d;
@@ -85,13 +92,10 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func dayOfYear(date string) (ans int) {
-	y, _ := strconv.Atoi(date[:4])
-	m, _ := strconv.Atoi(date[5:7])
-	d, _ := strconv.Atoi(date[8:])
+	var y, m, d int
+	fmt.Sscanf(date, "%d-%d-%d", &y, &m, &d)
 	days := []int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 	if y%400 == 0 || (y%4 == 0 && y%100 != 0) {
 		days[1] = 29
@@ -104,7 +108,16 @@ func dayOfYear(date string) (ans int) {
 }
 ```
 
-### **JavaScript**
+```ts
+function dayOfYear(date: string): number {
+    const y = +date.slice(0, 4);
+    const m = +date.slice(5, 7);
+    const d = +date.slice(8);
+    const v = y % 400 == 0 || (y % 4 == 0 && y % 100) ? 29 : 28;
+    const days = [31, v, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    return days.slice(0, m - 1).reduce((a, b) => a + b, d);
+}
+```
 
 ```js
 /**
@@ -121,10 +134,6 @@ var dayOfYear = function (date) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

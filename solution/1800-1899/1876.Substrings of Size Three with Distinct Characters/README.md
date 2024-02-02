@@ -45,13 +45,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -61,10 +57,6 @@ class Solution:
             count += s[i] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]
         return count
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -80,8 +72,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countGoodSubstrings(s: string): number {
@@ -99,10 +89,24 @@ function countGoodSubstrings(s: string): number {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Integer
+     */
+    function countGoodSubstrings($s) {
+        $cnt = 0;
+        for ($i = 0; $i < strlen($s) - 2; $i++) {
+            if ($s[$i] != $s[$i + 1] && $s[$i] != $s[$i + 2] && $s[$i + 1] != $s[$i + 2]) {
+                $cnt++;
+            }
+        }
+        return $cnt++;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

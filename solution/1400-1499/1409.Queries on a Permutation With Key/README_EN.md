@@ -7,71 +7,54 @@
 <p>Given the array <code>queries</code> of positive integers between <code>1</code> and <code>m</code>, you have to process all <code>queries[i]</code> (from <code>i=0</code> to <code>i=queries.length-1</code>) according to the following rules:</p>
 
 <ul>
-    <li>In the beginning, you have the permutation <code>P=[1,2,3,...,m]</code>.</li>
-    <li>For the current <code>i</code>, find the position of <code>queries[i]</code> in the permutation <code>P</code> (<strong>indexing from 0</strong>) and then move this at the beginning of the permutation <code>P.</code>&nbsp;Notice that the position of <code>queries[i]</code> in <code>P</code> is the result for <code>queries[i]</code>.</li>
+	<li>In the beginning, you have the permutation <code>P=[1,2,3,...,m]</code>.</li>
+	<li>For the current <code>i</code>, find the position of <code>queries[i]</code> in the permutation <code>P</code> (<strong>indexing from 0</strong>) and then move this at the beginning of the permutation <code>P</code>. Notice that the position of <code>queries[i]</code> in <code>P</code> is the result for <code>queries[i]</code>.</li>
 </ul>
 
 <p>Return an array containing the result for the given <code>queries</code>.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> queries = [3,1,2,1], m = 5
-
 <strong>Output:</strong> [2,1,2,1] 
-
 <strong>Explanation:</strong> The queries are processed as follow: 
-
 For i=0: queries[i]=3, P=[1,2,3,4,5], position of 3 in P is <strong>2</strong>, then we move 3 to the beginning of P resulting in P=[3,1,2,4,5]. 
-
 For i=1: queries[i]=1, P=[3,1,2,4,5], position of 1 in P is <strong>1</strong>, then we move 1 to the beginning of P resulting in P=[1,3,2,4,5]. 
-
 For i=2: queries[i]=2, P=[1,3,2,4,5], position of 2 in P is <strong>2</strong>, then we move 2 to the beginning of P resulting in P=[2,1,3,4,5]. 
-
 For i=3: queries[i]=1, P=[2,1,3,4,5], position of 1 in P is <strong>1</strong>, then we move 1 to the beginning of P resulting in P=[1,2,3,4,5]. 
-
 Therefore, the array containing the result is [2,1,2,1].  
-
 </pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> queries = [4,1,2,2], m = 4
-
 <strong>Output:</strong> [3,1,2,0]
-
 </pre>
 
 <p><strong class="example">Example 3:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> queries = [7,5,5,8,3], m = 8
-
 <strong>Output:</strong> [6,5,0,7,5]
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-    <li><code>1 &lt;= m &lt;= 10^3</code></li>
-    <li><code>1 &lt;= queries.length &lt;= m</code></li>
-    <li><code>1 &lt;= queries[i] &lt;= m</code></li>
+	<li><code>1 &lt;= m &lt;= 10^3</code></li>
+	<li><code>1 &lt;= queries.length &lt;= m</code></li>
+	<li><code>1 &lt;= queries[i] &lt;= m</code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -85,6 +68,79 @@ class Solution:
             p.insert(0, v)
         return ans
 ```
+
+```java
+class Solution {
+    public int[] processQueries(int[] queries, int m) {
+        List<Integer> p = new LinkedList<>();
+        for (int i = 1; i <= m; ++i) {
+            p.add(i);
+        }
+        int[] ans = new int[queries.length];
+        int i = 0;
+        for (int v : queries) {
+            int j = p.indexOf(v);
+            ans[i++] = j;
+            p.remove(j);
+            p.add(0, v);
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> processQueries(vector<int>& queries, int m) {
+        vector<int> p(m);
+        iota(p.begin(), p.end(), 1);
+        vector<int> ans;
+        for (int v : queries) {
+            int j = 0;
+            for (int i = 0; i < m; ++i) {
+                if (p[i] == v) {
+                    j = i;
+                    break;
+                }
+            }
+            ans.push_back(j);
+            p.erase(p.begin() + j);
+            p.insert(p.begin(), v);
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func processQueries(queries []int, m int) []int {
+	p := make([]int, m)
+	for i := range p {
+		p[i] = i + 1
+	}
+	ans := []int{}
+	for _, v := range queries {
+		j := 0
+		for i := range p {
+			if p[i] == v {
+				j = i
+				break
+			}
+		}
+		ans = append(ans, j)
+		p = append(p[:j], p[j+1:]...)
+		p = append([]int{v}, p...)
+	}
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 class BinaryIndexedTree:
@@ -108,6 +164,7 @@ class BinaryIndexedTree:
             x -= BinaryIndexedTree.lowbit(x)
         return s
 
+
 class Solution:
     def processQueries(self, queries: List[int], m: int) -> List[int]:
         n = len(queries)
@@ -125,28 +182,6 @@ class Solution:
             pos[v] = n - i
             tree.update(n - i, 1)
         return ans
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int[] processQueries(int[] queries, int m) {
-        List<Integer> p = new LinkedList<>();
-        for (int i = 1; i <= m; ++i) {
-            p.add(i);
-        }
-        int[] ans = new int[queries.length];
-        int i = 0;
-        for (int v : queries) {
-            int j = p.indexOf(v);
-            ans[i++] = j;
-            p.remove(j);
-            p.add(0, v);
-        }
-        return ans;
-    }
-}
 ```
 
 ```java
@@ -204,43 +239,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> processQueries(vector<int>& queries, int m) {
-        vector<int> p(m);
-        iota(p.begin(), p.end(), 1);
-        vector<int> ans;
-        for (int v : queries) {
-            int j = 0;
-            for (int i = 0; i < m; ++i) {
-                if (p[i] == v) {
-                    j = i;
-                    break;
-                }
-            }
-            ans.push_back(j);
-            p.erase(p.begin() + j);
-            p.insert(p.begin(), v);
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class BinaryIndexedTree {
 public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) {}
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -248,8 +258,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -267,14 +276,12 @@ public:
         int n = queries.size();
         vector<int> pos(m + 1);
         BinaryIndexedTree* tree = new BinaryIndexedTree(m + n);
-        for (int i = 1; i <= m; ++i)
-        {
+        for (int i = 1; i <= m; ++i) {
             pos[i] = n + i;
             tree->update(n + i, 1);
         }
         vector<int> ans;
-        for (int i = 0; i < n; ++i)
-        {
+        for (int i = 0; i < n; ++i) {
             int v = queries[i];
             int j = pos[v];
             tree->update(j, -1);
@@ -285,31 +292,6 @@ public:
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func processQueries(queries []int, m int) []int {
-	p := make([]int, m)
-	for i := range p {
-		p[i] = i + 1
-	}
-	ans := []int{}
-	for _, v := range queries {
-		j := 0
-		for i := range p {
-			if p[i] == v {
-				j = i
-				break
-			}
-		}
-		ans = append(ans, j)
-		p = append(p[:j], p[j+1:]...)
-		p = append([]int{v}, p...)
-	}
-	return ans
-}
 ```
 
 ```go
@@ -363,10 +345,6 @@ func processQueries(queries []int, m int) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

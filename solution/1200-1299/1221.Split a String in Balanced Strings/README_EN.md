@@ -50,9 +50,15 @@ Note that s cannot be split into &quot;RL&quot;, &quot;RR&quot;, &quot;RL&quot;,
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy
 
-### **Python3**
+We use a variable $l$ to maintain the current balance of the string, i.e., the value of $l$ is the number of 'L's minus the number of 'R's in the current string. When the value of $l$ is 0, we have found a balanced string.
+
+We traverse the string $s$. When we traverse to the $i$-th character, if $s[i] = L$, then the value of $l$ is increased by 1, otherwise, the value of $l$ is decreased by 1. When the value of $l$ is 0, we increase the answer by 1.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the string $s$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +73,6 @@ class Solution:
                 ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +93,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -108,8 +110,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func balancedStringSplit(s string) int {
 	ans, l := 0, 0
@@ -126,8 +126,6 @@ func balancedStringSplit(s string) int {
 	return ans
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -151,10 +149,6 @@ var balancedStringSplit = function (s) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

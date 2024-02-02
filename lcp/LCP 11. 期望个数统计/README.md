@@ -47,9 +47,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 根据题目描述，我们可以得到如下结论：
 
@@ -61,19 +59,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def expectNumber(self, scores: List[int]) -> int:
         return len(set(scores))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -87,8 +77,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -98,8 +86,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func expectNumber(scores []int) int {
@@ -111,10 +97,13 @@ func expectNumber(scores []int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function expectNumber(scores: number[]): number {
+    const s: Set<number> = new Set<number>(scores);
+    return s.size;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

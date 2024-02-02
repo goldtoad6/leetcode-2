@@ -48,9 +48,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 定义 $dp[i][j]$ 表示以 $s[i]$ 和 $s[j]$ 结尾的最长重复子串的长度。状态转移方程为：
 
@@ -67,13 +65,11 @@ $$
 
 其中 $n$ 为字符串 $s$ 的长度。
 
-相似题目：[1044. 最长重复子串](/solution/1000-1099/1044.Longest%20Duplicate%20Substring/README.md)
+相似题目：
+
+-   [1044. 最长重复子串](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1044.Longest%20Duplicate%20Substring/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -88,10 +84,6 @@ class Solution:
                     ans = max(ans, dp[i][j])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -112,8 +104,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -133,8 +123,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func longestRepeatingSubstring(s string) int {
@@ -158,19 +146,8 @@ func longestRepeatingSubstring(s string) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

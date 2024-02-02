@@ -45,9 +45,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 双指针**
+### 方法一：排序 + 双指针
 
 我们可以将两个人的空闲时间分别排序，然后使用双指针遍历两个数组，找到两个人的空闲时间段的交集，如果交集的长度大于等于 `duration`，则返回交集的起始时间和起始时间加上 `duration`。
 
@@ -55,13 +53,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def minAvailableDuration(self, slots1: List[List[int]], slots2: List[List[int]], duration: int) -> List[int]:
+    def minAvailableDuration(
+        self, slots1: List[List[int]], slots2: List[List[int]], duration: int
+    ) -> List[int]:
         slots1.sort()
         slots2.sort()
         m, n = len(slots1), len(slots2)
@@ -77,10 +73,6 @@ class Solution:
                 j += 1
         return []
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -105,8 +97,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -133,8 +123,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minAvailableDuration(slots1 [][]int, slots2 [][]int, duration int) []int {
 	sort.Slice(slots1, func(i, j int) bool { return slots1[i][0] < slots1[j][0] })
@@ -154,26 +142,56 @@ func minAvailableDuration(slots1 [][]int, slots2 [][]int, duration int) []int {
 	}
 	return []int{}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **...**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn min_available_duration(
+        slots1: Vec<Vec<i32>>,
+        slots2: Vec<Vec<i32>>,
+        duration: i32
+    ) -> Vec<i32> {
+        let mut slots1 = slots1;
+        let mut slots2 = slots2;
 
-```
+        // First sort the two vectors based on the beginning time
+        slots1.sort_by(|lhs, rhs| { lhs[0].cmp(&rhs[0]) });
+        slots2.sort_by(|lhs, rhs| { lhs[0].cmp(&rhs[0]) });
 
+        // Then traverse the two vector
+        let mut i: usize = 0;
+        let mut j: usize = 0;
+        let N = slots1.len();
+        let M = slots2.len();
+
+        while i < N && j < M {
+            let (start, end) = (slots1[i][0], slots1[i][1]);
+            while j < M && slots2[j][0] < end {
+                // If still in the scope
+                let (cur_x, cur_y) = (
+                    std::cmp::max(start, slots2[j][0]),
+                    std::cmp::min(end, slots2[j][1]),
+                );
+                if cur_y - cur_x >= duration {
+                    return vec![cur_x, cur_x + duration];
+                }
+                // Otherwise, keep iterating
+                if slots1[i][1] < slots2[j][1] {
+                    // Update i then
+                    break;
+                }
+                j += 1;
+            }
+            i += 1;
+        }
+
+        // The default is an empty vector
+        vec![]
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

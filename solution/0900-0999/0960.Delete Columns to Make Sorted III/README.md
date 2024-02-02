@@ -24,9 +24,9 @@
 <strong>输入：</strong>strs = ["babca","bbazb"]
 <strong>输出：</strong>3
 <strong>解释：
-</strong>删除 0、1 和 4 这三列后，最终得到的数组是 A = ["bc", "az"]。
-这两行是分别按字典序排列的（即，A[0][0] &lt;= A[0][1] 且 A[1][0] &lt;= A[1][1]）。
-注意，A[0] &gt; A[1] —— 数组 A 不一定是按字典序排列的。
+</strong>删除 0、1 和 4 这三列后，最终得到的数组是 strs = ["bc", "az"]。
+这两行是分别按字典序排列的（即，strs[0][0] &lt;= strs[0][1] 且 strs[1][0] &lt;= strs[1][1]）。
+注意，strs[0] &gt; strs[1] —— 数组 strs 不一定是按字典序排列的。
 </pre>
 
 <p><strong>示例 2：</strong></p>
@@ -59,13 +59,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +74,6 @@ class Solution:
                     dp[i] = max(dp[i], dp[j] + 1)
         return n - max(dp)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -112,8 +104,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -141,8 +131,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minDeletionSize(strs []string) int {
 	n := len(strs[0])
@@ -168,19 +156,8 @@ func minDeletionSize(strs []string) int {
 	}
 	return n - mx
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

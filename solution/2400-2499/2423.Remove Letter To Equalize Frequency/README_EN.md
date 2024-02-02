@@ -12,7 +12,7 @@
 
 <ul>
 	<li>The <b>frequency</b> of a letter <code>x</code> is the number of times it occurs in the string.</li>
-	<li>You <strong>must</strong> remove exactly one letter and cannot chose to do nothing.</li>
+	<li>You <strong>must</strong> remove exactly one letter and cannot choose to do nothing.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -42,40 +42,56 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting + Enumeration
 
-### **Python3**
+First, we use a hash table or an array of length $26$ named $cnt$ to count the number of occurrences of each letter in the string.
+
+Next, we enumerate the $26$ letters. If letter $c$ appears in the string, we decrement its count by one, then check whether the counts of the remaining letters are the same. If they are, return `true`. Otherwise, increment the count of $c$ by one and continue to enumerate the next letter.
+
+If the enumeration ends, it means that it is impossible to make the counts of the remaining letters the same by deleting one letter, so return `false`.
+
+The time complexity is $O(n + C^2)$, and the space complexity is $O(C)$. Here, $n$ is the length of the string $word$, and $C$ is the size of the character set. In this problem, $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def equalFrequency(self, word: str) -> bool:
-        for i in range(len(word)):
-            cnt = Counter(word[:i] + word[i + 1:])
-            if len(set(cnt.values())) == 1:
+        cnt = Counter(word)
+        for c in cnt.keys():
+            cnt[c] -= 1
+            if len(set(v for v in cnt.values() if v)) == 1:
                 return True
+            cnt[c] += 1
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean equalFrequency(String word) {
+        int[] cnt = new int[26];
         for (int i = 0; i < word.length(); ++i) {
-            int[] cnt = new int[26];
-            for (int j = 0; j < word.length(); ++j) {
-                if (j != i) {
-                    ++cnt[word.charAt(j) - 'a'];
+            ++cnt[word.charAt(i) - 'a'];
+        }
+        for (int i = 0; i < 26; ++i) {
+            if (cnt[i] > 0) {
+                --cnt[i];
+                int x = 0;
+                boolean ok = true;
+                for (int v : cnt) {
+                    if (v == 0) {
+                        continue;
+                    }
+                    if (x > 0 && v != x) {
+                        ok = false;
+                        break;
+                    }
+                    x = v;
                 }
-            }
-            Set<Integer> vis = new HashSet<>();
-            for (int v : cnt) {
-                if (v > 0) {
-                    vis.add(v);
+                if (ok) {
+                    return true;
                 }
-            }
-            if (vis.size() == 1) {
-                return true;
+                ++cnt[i];
             }
         }
         return false;
@@ -83,27 +99,33 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool equalFrequency(string word) {
-        for (int i = 0; i < word.size(); ++i) {
-            int cnt[26] = {0};
-            for (int j = 0; j < word.size(); ++j) {
-                if (j != i) {
-                    ++cnt[word[j] - 'a'];
+        int cnt[26]{};
+        for (char& c : word) {
+            ++cnt[c - 'a'];
+        }
+        for (int i = 0; i < 26; ++i) {
+            if (cnt[i]) {
+                --cnt[i];
+                int x = 0;
+                bool ok = true;
+                for (int v : cnt) {
+                    if (v == 0) {
+                        continue;
+                    }
+                    if (x && v != x) {
+                        ok = false;
+                        break;
+                    }
+                    x = v;
                 }
-            }
-            unordered_set<int> vis;
-            for (int v : cnt) {
-                if (v) {
-                    vis.insert(v);
+                if (ok) {
+                    return true;
                 }
-            }
-            if (vis.size() == 1) {
-                return true;
+                ++cnt[i];
             }
         }
         return false;
@@ -111,60 +133,68 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func equalFrequency(word string) bool {
-	for i := range word {
-		cnt := make([]int, 26)
-		for j, c := range word {
-			if j != i {
-				cnt[c-'a']++
+	cnt := [26]int{}
+	for _, c := range word {
+		cnt[c-'a']++
+	}
+	for i := range cnt {
+		if cnt[i] > 0 {
+			cnt[i]--
+			x := 0
+			ok := true
+			for _, v := range cnt {
+				if v == 0 {
+					continue
+				}
+				if x > 0 && v != x {
+					ok = false
+					break
+				}
+				x = v
 			}
-		}
-		vis := map[int]bool{}
-		for _, v := range cnt {
-			if v > 0 {
-				vis[v] = true
+			if ok {
+				return true
 			}
-		}
-		if len(vis) == 1 {
-			return true
+			cnt[i]++
 		}
 	}
 	return false
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function equalFrequency(word: string): boolean {
-    const map = new Map();
+    const cnt: number[] = new Array(26).fill(0);
     for (const c of word) {
-        map.set(c, (map.get(c) ?? 0) + 1);
+        cnt[c.charCodeAt(0) - 97]++;
     }
-    const count = new Map();
-    for (const v of map.values()) {
-        count.set(v, (count.get(v) ?? 0) + 1);
-    }
-    if (count.size === 1) {
-        return map.size == 1 || [...count.keys()][0] === 1;
-    }
-    if (count.size === 2) {
-        return [...count.entries()].some(
-            (v, i, arr) =>
-                (v[0] === 1 || v[0] - arr[i ^ 1][0] === 1) && v[1] === 1,
-        );
+    for (let i = 0; i < 26; ++i) {
+        if (cnt[i]) {
+            cnt[i]--;
+            let x = 0;
+            let ok = true;
+            for (const v of cnt) {
+                if (v === 0) {
+                    continue;
+                }
+                if (x && v !== x) {
+                    ok = false;
+                    break;
+                }
+                x = v;
+            }
+            if (ok) {
+                return true;
+            }
+            cnt[i]++;
+        }
     }
     return false;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

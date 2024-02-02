@@ -54,9 +54,9 @@ The remaining words have a length of at least 3, so the first letter of each rem
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
         words = [w.lower() if len(w) < 3 else w.capitalize() for w in title.split()]
         return " ".join(words)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -103,8 +99,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func capitalizeTitle(title string) string {
 	title = strings.ToLower(title)
@@ -118,16 +112,39 @@ func capitalizeTitle(title string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function capitalizeTitle(title: string): string {
+    const ans: string[] = [];
+    for (const s of title.split(' ')) {
+        if (s.length < 3) {
+            ans.push(s.toLowerCase());
+        } else {
+            ans.push(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+        }
+    }
+    return ans.join(' ');
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```ts
+function capitalizeTitle(title: string): string {
+    return title
+        .split(' ')
+        .map(s =>
+            s.length < 3
+                ? s.toLowerCase()
+                : s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase(),
+        )
+        .join(' ');
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

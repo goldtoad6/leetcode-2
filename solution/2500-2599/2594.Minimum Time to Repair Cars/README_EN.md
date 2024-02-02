@@ -49,20 +49,26 @@ It can be proved that the cars cannot be repaired in less than 16 minutes.​​
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Binary Search
 
-### **Python3**
+We notice that the longer the repair time, the more cars are repaired. Therefore, we can use the repair time as the target of binary search, and binary search for the minimum repair time.
+
+We define the left and right boundaries of the binary search as $left=0$, $right=ranks[0] \times cars \times cars$. Next, we binary search for the repair time $mid$, and the number of cars each mechanic can repair is $\lfloor \sqrt{\frac{mid}{r}} \rfloor$, where $\lfloor x \rfloor$ represents rounding down. If the number of cars repaired is greater than or equal to $cars$, it means that the repair time $mid$ is feasible, we reduce the right boundary to $mid$, otherwise we increase the left boundary to $mid+1$.
+
+Finally, we return the left boundary.
+
+The time complexity is $O(n \times \log M)$, and the space complexity is $O(1)$. Here, $n$ is the number of mechanics, and $M$ is the upper bound of the binary search.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def repairCars(self, ranks: List[int], cars: int) -> int:
-        def check(t):
+        def check(t: int) -> bool:
             return sum(int(sqrt(t // r)) for r in ranks) >= cars
 
         return bisect_left(range(ranks[0] * cars * cars), True, key=check)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +90,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -109,8 +113,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func repairCars(ranks []int, cars int) int64 {
 	return int64(sort.Search(ranks[0]*cars*cars, func(t int) bool {
@@ -122,8 +124,6 @@ func repairCars(ranks []int, cars int) int64 {
 	}))
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function repairCars(ranks: number[], cars: number): number {
@@ -145,10 +145,6 @@ function repairCars(ranks: number[], cars: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -47,9 +47,9 @@ Both result in the string &quot;51&quot;.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,21 +58,6 @@ class Solution:
             number[:i] + number[i + 1 :] for i, d in enumerate(number) if d == digit
         )
 ```
-
-```python
-class Solution:
-    def removeDigit(self, number: str, digit: str) -> str:
-        last = -1
-        n = len(number)
-        for i, d in enumerate(number):
-            if d == digit:
-                last = i
-                if i + 1 < n and d < number[i + 1]:
-                    break
-        return number[:last] + number[last + 1:]
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,27 +77,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public String removeDigit(String number, char digit) {
-        int last = -1;
-        int n = number.length();
-        for (int i = 0; i < n; ++i) {
-            char d = number.charAt(i);
-            if (d == digit) {
-                last = i;
-                if (i + 1 < n && d < number.charAt(i + 1)) {
-                    break;
-                }
-            }
-        }
-        return number.substring(0, last) + number.substring(last + 1);
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,6 +94,97 @@ public:
         return ans;
     }
 };
+```
+
+```go
+func removeDigit(number string, digit byte) string {
+	ans := "0"
+	for i, d := range number {
+		if d == rune(digit) {
+			t := number[:i] + number[i+1:]
+			if strings.Compare(ans, t) < 0 {
+				ans = t
+			}
+		}
+	}
+	return ans
+}
+```
+
+```ts
+function removeDigit(number: string, digit: string): string {
+    const n = number.length;
+    let last = -1;
+    for (let i = 0; i < n; ++i) {
+        if (number[i] === digit) {
+            last = i;
+            if (i + 1 < n && number[i] < number[i + 1]) {
+                break;
+            }
+        }
+    }
+    return number.substring(0, last) + number.substring(last + 1);
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String $number
+     * @param String $digit
+     * @return String
+     */
+    function removeDigit($number, $digit) {
+        $max = 0;
+        for ($i = 0; $i < strlen($number); $i++) {
+            if ($number[$i] == $digit) {
+                $tmp = substr($number, 0, $i) . substr($number, $i + 1);
+                if ($tmp > $max) {
+                    $max = $tmp;
+                }
+            }
+        }
+        return $max;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def removeDigit(self, number: str, digit: str) -> str:
+        last = -1
+        n = len(number)
+        for i, d in enumerate(number):
+            if d == digit:
+                last = i
+                if i + 1 < n and d < number[i + 1]:
+                    break
+        return number[:last] + number[last + 1 :]
+```
+
+```java
+class Solution {
+    public String removeDigit(String number, char digit) {
+        int last = -1;
+        int n = number.length();
+        for (int i = 0; i < n; ++i) {
+            char d = number.charAt(i);
+            if (d == digit) {
+                last = i;
+                if (i + 1 < n && d < number.charAt(i + 1)) {
+                    break;
+                }
+            }
+        }
+        return number.substring(0, last) + number.substring(last + 1);
+    }
+}
 ```
 
 ```cpp
@@ -152,23 +207,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func removeDigit(number string, digit byte) string {
-	ans := "0"
-	for i, d := range number {
-		if d == rune(digit) {
-			t := number[:i] + number[i+1:]
-			if strings.Compare(ans, t) < 0 {
-				ans = t
-			}
-		}
-	}
-	return ans
-}
-```
-
 ```go
 func removeDigit(number string, digit byte) string {
 	last := -1
@@ -185,28 +223,6 @@ func removeDigit(number string, digit byte) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function removeDigit(number: string, digit: string): string {
-    const n = number.length;
-    let last = -1;
-    for (let i = 0; i < n; ++i) {
-        if (number[i] === digit) {
-            last = i;
-            if (i + 1 < n && number[i] < number[i + 1]) {
-                break;
-            }
-        }
-    }
-    return number.substring(0, last) + number.substring(last + 1);
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

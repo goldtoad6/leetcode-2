@@ -28,41 +28,41 @@ minStack.getMin();   --&gt; return -2.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class MinStack:
-
     def __init__(self):
-        self.stk1 = []
-        self.stk2 = [inf]
+        """
+        initialize your data structure here.
+        """
+        self.s = []
+        self.mins = [inf]
 
-    def push(self, x: int) -> None:
-        self.stk1.append(x)
-        self.stk2.append(min(x, self.stk2[-1]))
+    def push(self, val: int) -> None:
+        self.s.append(val)
+        self.mins.append(min(self.mins[-1], val))
 
     def pop(self) -> None:
-        self.stk1.pop()
-        self.stk2.pop()
+        self.s.pop()
+        self.mins.pop()
 
     def top(self) -> int:
-        return self.stk1[-1]
+        return self.s[-1]
 
     def getMin(self) -> int:
-        return self.stk2[-1]
+        return self.mins[-1]
 
 
 # Your MinStack object will be instantiated and called as such:
 # obj = MinStack()
-# obj.push(x)
+# obj.push(val)
 # obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.getMin()
 ```
-
-### **Java**
 
 ```java
 class MinStack {
@@ -102,8 +102,6 @@ class MinStack {
  * int param_4 = obj.getMin();
  */
 ```
-
-### **C++**
 
 ```cpp
 class MinStack {
@@ -146,8 +144,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type MinStack struct {
 	stk1 []int
@@ -177,13 +173,6 @@ func (this *MinStack) GetMin() int {
 	return this.stk2[len(this.stk2)-1]
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your MinStack object will be instantiated and called as such:
  * obj := Constructor();
@@ -194,34 +183,31 @@ func min(a, b int) int {
  */
 ```
 
-### **TypeScript**
-
 ```ts
 class MinStack {
-    stk1: number[];
-    stk2: number[];
-
+    stack: number[];
+    mins: number[];
     constructor() {
-        this.stk1 = [];
-        this.stk2 = [Infinity];
+        this.stack = [];
+        this.mins = [];
     }
 
     push(x: number): void {
-        this.stk1.push(x);
-        this.stk2.push(Math.min(x, this.stk2[this.stk2.length - 1]));
+        this.stack.push(x);
+        this.mins.push(Math.min(this.getMin(), x));
     }
 
     pop(): void {
-        this.stk1.pop();
-        this.stk2.pop();
+        this.stack.pop();
+        this.mins.pop();
     }
 
     top(): number {
-        return this.stk1[this.stk1.length - 1];
+        return this.stack[this.stack.length - 1];
     }
 
     getMin(): number {
-        return this.stk2[this.stk2.length - 1];
+        return this.mins.length == 0 ? Infinity : this.mins[this.mins.length - 1];
     }
 }
 
@@ -235,8 +221,6 @@ class MinStack {
  */
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::VecDeque;
 struct MinStack {
@@ -244,13 +228,11 @@ struct MinStack {
     min_stack: VecDeque<i32>,
 }
 
-
 /**
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MinStack {
-
     /** initialize your data structure here. */
     fn new() -> Self {
         Self { stack: VecDeque::new(), min_stack: VecDeque::new() }
@@ -277,9 +259,7 @@ impl MinStack {
     fn get_min(&self) -> i32 {
         *self.min_stack.back().unwrap()
     }
-}
-
-/**
+}/**
  * Your MinStack object will be instantiated and called as such:
  * let obj = MinStack::new();
  * obj.push(x);
@@ -288,8 +268,6 @@ impl MinStack {
  * let ret_4: i32 = obj.get_min();
  */
 ```
-
-### **C#**
 
 ```cs
 public class MinStack {
@@ -330,10 +308,6 @@ public class MinStack {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

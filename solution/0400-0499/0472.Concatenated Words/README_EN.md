@@ -6,7 +6,7 @@
 
 <p>Given an array of strings <code>words</code> (<strong>without duplicates</strong>), return <em>all the <strong>concatenated words</strong> in the given list of</em> <code>words</code>.</p>
 
-<p>A <strong>concatenated word</strong> is defined as a string that is comprised entirely of at least two shorter words (not necesssarily distinct)&nbsp;in the given array.</p>
+<p>A <strong>concatenated word</strong> is defined as a string that is comprised entirely of at least two shorter words (not necessarily distinct)&nbsp;in the given array.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -38,9 +38,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Trie:
@@ -83,8 +83,6 @@ class Solution:
                 trie.insert(w)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Trie {
@@ -140,8 +138,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Trie {
 public:
@@ -149,7 +145,7 @@ public:
     bool isEnd;
     Trie()
         : children(26)
-        , isEnd(false) { }
+        , isEnd(false) {}
 
     void insert(string w) {
         Trie* node = this;
@@ -193,8 +189,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type Trie struct {
@@ -249,10 +243,6 @@ func findAllConcatenatedWordsInADict(words []string) (ans []string) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -21,21 +21,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：哈希表
 
-**方法一：哈希表**
-
-同时遍历两个字符串，算出对应位置字符相同的个数，累加到 $x$ 中，然后将两个字符串出现的字符以及出现的次数分别记录在哈希表 `cnt1` 和 `cnt2` 中。
+同时遍历两个字符串，算出对应位置字符相同的个数，累加到 $x$ 中，然后将两个字符串出现的字符以及出现的次数分别记录在哈希表 $cnt1$ 和 $cnt2$ 中。
 
 接着遍历两个哈希表，算出有多少共同出现的字符，累加到 $y$ 中。那么答案就是 $[x, y - x]$。
 
 时间复杂度 $O(C)$，空间复杂度 $O(C)$。本题中 $C=4$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -44,10 +38,6 @@ class Solution:
         y = sum((Counter(solution) & Counter(guess)).values())
         return [x, y - x]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -69,8 +59,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -88,8 +76,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func masterMind(solution string, guess string) []int {
@@ -109,16 +95,7 @@ func masterMind(solution string, guess string) []int {
 	}
 	return []int{x, y - x}
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -140,18 +117,11 @@ var masterMind = function (solution, guess) {
             counts2[s2] += 1;
         }
     }
-    let res2 = ['R', 'G', 'B', 'Y'].reduce(
-        (a, c) => a + Math.min(counts1[c], counts2[c]),
-        0,
-    );
+    let res2 = ['R', 'G', 'B', 'Y'].reduce((a, c) => a + Math.min(counts1[c], counts2[c]), 0);
     return [res1, res2];
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -67,9 +67,9 @@ The reason why cdata is NOT <b>&quot;&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;]]&gt;&qu
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -107,8 +107,6 @@ class Solution:
             i += 1
         return not stk
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -165,8 +163,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -207,8 +203,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isValid(code string) bool {
@@ -270,14 +264,17 @@ func check(tag string) bool {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn is_valid(code: String) -> bool {
         fn check(tag: &str) -> bool {
             let n = tag.len();
-            n >= 1 && n <= 9 && tag.as_bytes().iter().all(|b| b.is_ascii_uppercase())
+            n >= 1 &&
+                n <= 9 &&
+                tag
+                    .as_bytes()
+                    .iter()
+                    .all(|b| b.is_ascii_uppercase())
         }
 
         let mut stk = Vec::new();
@@ -288,8 +285,12 @@ impl Solution {
             }
             if code[i..].starts_with("<![CDATA[") {
                 match code[i + 9..].find("]]>") {
-                    Some(n) => i += n + 11,
-                    None => return false,
+                    Some(n) => {
+                        i += n + 11;
+                    }
+                    None => {
+                        return false;
+                    }
                 };
             } else if code[i..].starts_with("</") {
                 let j = i + 2;
@@ -301,7 +302,9 @@ impl Solution {
                         }
                         i += n + 2;
                     }
-                    None => return false,
+                    None => {
+                        return false;
+                    }
                 };
             } else if code[i..].starts_with("<") {
                 let j = i + 1;
@@ -313,7 +316,9 @@ impl Solution {
                         }
                         stk.push(t);
                     }
-                    None => return false,
+                    None => {
+                        return false;
+                    }
                 };
             }
             i += 1;
@@ -323,10 +328,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -48,150 +48,341 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：动态规划
 
-**方法一：动态规划**
+我们定义 $f[i]$ 表示以 $s[i-1]$ 结尾的最长有效括号的长度，那么答案就是 $\max\limits_{i=1}^n f[i]$。
 
-定义 `dp[i]` 表示以 `s[i]` 结尾的最长有效括号的长度，答案为 `max(dp[i])`。
+-   如果 $s[i-1]$ 是左括号，那么以 $s[i-1]$ 结尾的最长有效括号的长度一定为 $0$，因此 $f[i] = 0$。
+-   如果 $s[i-1]$ 是右括号，有以下两种情况：
+    -   如果 $s[i-2]$ 是左括号，那么以 $s[i-1]$ 结尾的最长有效括号的长度为 $f[i-2] + 2$。
+    -   如果 $s[i-2]$ 是右括号，那么以 $s[i-1]$ 结尾的最长有效括号的长度为 $f[i-1] + 2$，但是还需要考虑 $s[i-f[i-1]-2]$ 是否是左括号，如果是左括号，那么以 $s[i-1]$ 结尾的最长有效括号的长度为 $f[i-1] + 2 + f[i-f[i-1]-2]$。
 
-`dp[i]` 的值有以下几种情况：
+因此，我们可以得到状态转移方程：
 
--   若 `s[i]` 为 `(`，那么 `dp[i] = 0`；
--   若 `s[i]` 为 `)`，且 `s[i - 1]` 为 `(`，那么 `dp[i] = dp[i - 2] + 2`；
--   若 `s[i]` 为 `)`，且 `s[i - 1]` 为 `)` 且 `s[i - dp[i - 1] - 1]` 为 `(`，那么 `dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] - 2]`。
+$$
+\begin{cases}
+f[i] = 0, & \text{if } s[i-1] = '(',\\
+f[i] = f[i-2] + 2, & \text{if } s[i-1] = ')' \text{ and } s[i-2] = '(',\\
+f[i] = f[i-1] + 2 + f[i-f[i-1]-2], & \text{if } s[i-1] = ')' \text{ and } s[i-2] = ')' \text{ and } s[i-f[i-1]-2] = '(',\\
+\end{cases}
+$$
 
-以上需要注意边界的判断处理。
+最后返回 $\max\limits_{i=1}^n f[i]$ 即可。
 
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串 `s` 的长度。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         n = len(s)
-        if n < 2:
-            return 0
-        dp = [0] * n
-        for i in range(1, n):
-            if s[i] == ')':
-                if s[i - 1] == '(':
-                    dp[i] = 2 + (dp[i - 2] if i > 1 else 0)
+        f = [0] * (n + 1)
+        for i, c in enumerate(s, 1):
+            if c == ")":
+                if i > 1 and s[i - 2] == "(":
+                    f[i] = f[i - 2] + 2
                 else:
-                    j = i - dp[i - 1] - 1
-                    if j >= 0 and s[j] == '(':
-                        dp[i] = 2 + dp[i - 1] + (dp[j - 1] if j else 0)
-        return max(dp)
+                    j = i - f[i - 1] - 1
+                    if j and s[j - 1] == "(":
+                        f[i] = f[i - 1] + 2 + f[j - 1]
+        return max(f)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public int longestValidParentheses(String s) {
         int n = s.length();
-        if (n < 2) {
-            return 0;
-        }
-        char[] cs = s.toCharArray();
-        int[] dp = new int[n];
+        int[] f = new int[n + 1];
         int ans = 0;
-        for (int i = 1; i < n; ++i) {
-            if (cs[i] == ')') {
-                if (cs[i - 1] == '(') {
-                    dp[i] = 2 + (i > 1 ? dp[i - 2] : 0);
+        for (int i = 2; i <= n; ++i) {
+            if (s.charAt(i - 1) == ')') {
+                if (s.charAt(i - 2) == '(') {
+                    f[i] = f[i - 2] + 2;
                 } else {
-                    int j = i - dp[i - 1] - 1;
-                    if (j >= 0 && cs[j] == '(') {
-                        dp[i] = 2 + dp[i - 1] + (j > 0 ? dp[j - 1] : 0);
+                    int j = i - f[i - 1] - 1;
+                    if (j > 0 && s.charAt(j - 1) == '(') {
+                        f[i] = f[i - 1] + 2 + f[j - 1];
                     }
                 }
-                ans = Math.max(ans, dp[i]);
+                ans = Math.max(ans, f[i]);
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int longestValidParentheses(string s) {
         int n = s.size();
-        if (n < 2) return 0;
-        vector<int> dp(n);
-        int ans = 0;
-        for (int i = 1; i < n; ++i) {
-            if (s[i] == ')') {
-                if (s[i - 1] == '(') {
-                    dp[i] = 2 + (i > 1 ? dp[i - 2] : 0);
+        int f[n + 1];
+        memset(f, 0, sizeof(f));
+        for (int i = 2; i <= n; ++i) {
+            if (s[i - 1] == ')') {
+                if (s[i - 2] == '(') {
+                    f[i] = f[i - 2] + 2;
                 } else {
-                    int j = i - dp[i - 1] - 1;
-                    if (~j && s[j] == '(') {
-                        dp[i] = 2 + dp[i - 1] + (j ? dp[j - 1] : 0);
+                    int j = i - f[i - 1] - 1;
+                    if (j && s[j - 1] == '(') {
+                        f[i] = f[i - 1] + 2 + f[j - 1];
                     }
                 }
-                ans = max(ans, dp[i]);
             }
         }
-        return ans;
+        return *max_element(f, f + n + 1);
     }
 };
 ```
 
-### **Go**
-
 ```go
 func longestValidParentheses(s string) int {
 	n := len(s)
-	if n < 2 {
-		return 0
+	f := make([]int, n+1)
+	for i := 2; i <= n; i++ {
+		if s[i-1] == ')' {
+			if s[i-2] == '(' {
+				f[i] = f[i-2] + 2
+			} else if j := i - f[i-1] - 1; j > 0 && s[j-1] == '(' {
+				f[i] = f[i-1] + 2 + f[j-1]
+			}
+		}
 	}
-	dp := make([]int, n)
+	return slices.Max(f)
+}
+```
+
+```ts
+function longestValidParentheses(s: string): number {
+    const n = s.length;
+    const f: number[] = new Array(n + 1).fill(0);
+    for (let i = 2; i <= n; ++i) {
+        if (s[i - 1] === ')') {
+            if (s[i - 2] === '(') {
+                f[i] = f[i - 2] + 2;
+            } else {
+                const j = i - f[i - 1] - 1;
+                if (j && s[j - 1] === '(') {
+                    f[i] = f[i - 1] + 2 + f[j - 1];
+                }
+            }
+        }
+    }
+    return Math.max(...f);
+}
+```
+
+```rust
+impl Solution {
+    pub fn longest_valid_parentheses(s: String) -> i32 {
+        let mut ans = 0;
+        let mut f = vec![0; s.len() + 1];
+        for i in 2..=s.len() {
+            if
+                s
+                    .chars()
+                    .nth(i - 1)
+                    .unwrap() == ')'
+            {
+                if
+                    s
+                        .chars()
+                        .nth(i - 2)
+                        .unwrap() == '('
+                {
+                    f[i] = f[i - 2] + 2;
+                } else if
+                    (i as i32) - f[i - 1] - 1 > 0 &&
+                    s
+                        .chars()
+                        .nth(i - (f[i - 1] as usize) - 2)
+                        .unwrap() == '('
+                {
+                    f[i] = f[i - 1] + 2 + f[i - (f[i - 1] as usize) - 2];
+                }
+                ans = ans.max(f[i]);
+            }
+        }
+        ans
+    }
+}
+```
+
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var longestValidParentheses = function (s) {
+    const n = s.length;
+    const f = new Array(n + 1).fill(0);
+    for (let i = 2; i <= n; ++i) {
+        if (s[i - 1] === ')') {
+            if (s[i - 2] === '(') {
+                f[i] = f[i - 2] + 2;
+            } else {
+                const j = i - f[i - 1] - 1;
+                if (j && s[j - 1] === '(') {
+                    f[i] = f[i - 1] + 2 + f[j - 1];
+                }
+            }
+        }
+    }
+    return Math.max(...f);
+};
+```
+
+```cs
+public class Solution {
+    public int LongestValidParentheses(string s) {
+        int n = s.Length;
+        int[] f = new int[n + 1];
+        int ans = 0;
+        for (int i = 2; i <= n; ++i) {
+            if (s[i - 1] == ')') {
+                if (s[i - 2] == '(') {
+                    f[i] = f[i - 2] + 2;
+                } else {
+                    int j = i - f[i - 1] - 1;
+                    if (j > 0 && s[j - 1] == '(') {
+                        f[i] = f[i - 1] + 2 + f[j - 1];
+                    }
+                }
+                ans = Math.Max(ans, f[i]);
+            }
+        }
+        return ans;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：使用栈
+
+-   使用栈来存储左括号的索引，栈底元素初始化为 `-1`，用于辅助计算有效括号的长度。
+-   遍历字符串，对于每个字符：
+    -   如果是左括号，将当前位置压入栈。
+    -   如果是右括号，弹出栈顶元素表示匹配了一个左括号。
+        -   如果栈为空，说明当前右括号无法匹配，将当前位置压入栈作为新的起点。
+        -   如果栈不为空，计算当前有效括号子串的长度，更新最大长度。
+-   最终返回最大长度。
+
+总结：这个算法的关键在于维护一个线，栈内存放的是左括号的索引，通过弹出和压入的操作来更新有效括号子串的长度。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串的长度。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        stack = [-1]
+        ans = 0
+        for i in range(len(s)):
+            if s[i] == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if not stack:
+                    stack.append(i)
+                else:
+                    ans = max(ans, i - stack[-1])
+        return ans
+```
+
+```go
+func longestValidParentheses(s string) int {
 	ans := 0
-	for i := 1; i < n; i++ {
-		if s[i] == ')' {
-			if s[i-1] == '(' {
-				dp[i] = 2
-				if i > 1 {
-					dp[i] += dp[i-2]
-				}
+	stack := []int{-1}
+	for i, v := range s {
+		if v == '(' {
+			stack = append(stack, i)
+		} else {
+			stack = stack[:len(stack)-1]
+			if len(stack) == 0 {
+				stack = append(stack, i)
 			} else {
-				j := i - dp[i-1] - 1
-				if j >= 0 && s[j] == '(' {
-					dp[i] = 2 + dp[i-1]
-					if j > 0 {
-						dp[i] += dp[j-1]
-					}
+				if ans < i-stack[len(stack)-1] {
+					ans = i - stack[len(stack)-1]
 				}
 			}
-			ans = max(ans, dp[i])
 		}
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function longestValidParentheses(s: string): number {
+    let max_length: number = 0;
+    const stack: number[] = [-1];
+    for (let i = 0; i < s.length; i++) {
+        if (s.charAt(i) == '(') {
+            stack.push(i);
+        } else {
+            stack.pop();
+
+            if (stack.length === 0) {
+                stack.push(i);
+            } else {
+                max_length = Math.max(max_length, i - stack[stack.length - 1]);
+            }
+        }
+    }
+
+    return max_length;
 }
 ```
 
-### **...**
-
+```rust
+impl Solution {
+    pub fn longest_valid_parentheses(s: String) -> i32 {
+        let mut stack = vec![-1];
+        let mut res = 0;
+        for i in 0..s.len() {
+            if let Some('(') = s.chars().nth(i) {
+                stack.push(i as i32);
+            } else {
+                stack.pop().unwrap();
+                if stack.is_empty() {
+                    stack.push(i as i32);
+                } else {
+                    res = std::cmp::max(res, (i as i32) - stack.last().unwrap());
+                }
+            }
+        }
+        res
+    }
+}
 ```
 
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var longestValidParentheses = function (s) {
+    let ans = 0;
+    const stack = [-1];
+    for (i = 0; i < s.length; i++) {
+        if (s.charAt(i) === '(') {
+            stack.push(i);
+        } else {
+            stack.pop();
+            if (stack.length === 0) {
+                stack.push(i);
+            } else {
+                ans = Math.max(ans, i - stack[stack.length - 1]);
+            }
+        }
+    }
+    return ans;
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

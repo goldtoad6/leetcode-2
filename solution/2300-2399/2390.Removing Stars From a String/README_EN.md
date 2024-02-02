@@ -53,9 +53,9 @@ There are no more stars, so we return &quot;lecoe&quot;.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +68,6 @@ class Solution:
                 ans.append(c)
         return ''.join(ans)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +84,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -106,8 +102,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func removeStars(s string) string {
 	ans := []rune{}
@@ -122,8 +116,6 @@ func removeStars(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function removeStars(s: string): string {
     const ans: string[] = [];
@@ -137,8 +129,6 @@ function removeStars(s: string): string {
     return ans.join('');
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -156,10 +146,26 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function removeStars($s) {
+        $rs = [];
+        for ($i = 0; $i < strlen($s); $i++) {
+            if ($s[$i] == '*') {
+                array_pop($rs);
+            } else {
+                array_push($rs, $s[$i]);
+            }
+        }
+        return join($rs);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

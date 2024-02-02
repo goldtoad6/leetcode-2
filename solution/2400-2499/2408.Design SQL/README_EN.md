@@ -61,13 +61,16 @@ sql.selectCell(&quot;two&quot;, 2, 2); // return &quot;fifth&quot;, finds the va
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+Create a hash table `tables` to store the mapping of table names to table data rows. Directly simulate the operations in the problem.
+
+The time complexity of each operation is $O(1)$, and the space complexity is $O(n)$.
+
+<!-- tabs:start -->
 
 ```python
 class SQL:
-
     def __init__(self, names: List[str], columns: List[int]):
         self.tables = defaultdict(list)
 
@@ -87,8 +90,6 @@ class SQL:
 # obj.deleteRow(name,rowId)
 # param_3 = obj.selectCell(name,rowId,columnId)
 ```
-
-### **Java**
 
 ```java
 class SQL {
@@ -119,8 +120,6 @@ class SQL {
  */
 ```
 
-### **C++**
-
 ```cpp
 class SQL {
 public:
@@ -148,8 +147,6 @@ public:
  * string param_3 = obj->selectCell(name,rowId,columnId);
  */
 ```
-
-### **Go**
 
 ```go
 type SQL struct {
@@ -181,17 +178,6 @@ func (this *SQL) SelectCell(name string, rowId int, columnId int) string {
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

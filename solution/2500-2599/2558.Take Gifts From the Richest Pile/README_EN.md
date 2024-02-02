@@ -51,9 +51,15 @@ So, the total gifts remaining are 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Priority Queue (Max Heap)
 
-### **Python3**
+We can store the array $gifts$ in a max heap, and then loop $k$ times, each time taking out the top element of the heap, taking the square root of it, and putting the result back into the heap.
+
+Finally, we add up all the elements in the heap as the answer.
+
+The time complexity is $O(n + k \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $gifts$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +70,6 @@ class Solution:
             heapreplace(h, -int(sqrt(-h[0])))
         return -sum(h)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -102,8 +104,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func pickGifts(gifts []int, k int) (ans int64) {
@@ -122,14 +122,49 @@ func pickGifts(gifts []int, k int) (ans int64) {
 type hp struct{ sort.IntSlice }
 
 func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
-func (hp) Pop() (_ interface{}) { return }
-func (hp) Push(interface{})     {}
+func (hp) Pop() (_ any)         { return }
+func (hp) Push(any)             {}
 ```
 
-### **...**
-
+```ts
+function pickGifts(gifts: number[], k: number): number {
+    const pq = new MaxPriorityQueue();
+    gifts.forEach(v => pq.enqueue(v));
+    while (k--) {
+        let v = pq.dequeue().element;
+        v = Math.floor(Math.sqrt(v));
+        pq.enqueue(v);
+    }
+    let ans = 0;
+    while (!pq.isEmpty()) {
+        ans += pq.dequeue().element;
+    }
+    return ans;
+}
 ```
 
+```rust
+impl Solution {
+    pub fn pick_gifts(gifts: Vec<i32>, k: i32) -> i64 {
+        let mut h = std::collections::BinaryHeap::from(gifts);
+        let mut ans = 0;
+
+        for _ in 0..k {
+            if let Some(mut max_gift) = h.pop() {
+                max_gift = (max_gift as f64).sqrt().floor() as i32;
+                h.push(max_gift);
+            }
+        }
+
+        for x in h {
+            ans += x as i64;
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -58,9 +58,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 我们先遍历字符串 $s$，统计其中字符 $1$ 的个数 $cnt$，如果 $cnt$ 不能被 $3$ 整除，那么无法分割，直接返回 $0$。如果 $cnt$ 为 $0$，说明字符串中没有字符 $1$，我们可以在 $n-1$ 个位置中任意选择两个位置，将字符串分割成三个子串，那么方案数就是 $C_{n-1}^2$。
 
@@ -74,13 +72,9 @@
 
 相似题目：
 
--   [927. 三等分](/solution/0900-0999/0927.Three%20Equal%20Parts/README.md)
+-   [927. 三等分](https://github.com/doocs/leetcode/blob/main/solution/0900-0999/0927.Three%20Equal%20Parts/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -91,6 +85,7 @@ class Solution:
                 t += int(c == '1')
                 if t == x:
                     return i
+
         cnt, m = divmod(sum(c == '1' for c in s), 3)
         if m:
             return 0
@@ -102,10 +97,6 @@ class Solution:
         j1, j2 = find(cnt * 2), find(cnt * 2 + 1)
         return (i2 - i1) * (j2 - j1) % (10**9 + 7)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -146,8 +137,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -168,7 +157,7 @@ public:
         cnt /= 3;
         auto find = [&](int x) {
             int t = 0;
-            for (int i = 0; ; ++i) {
+            for (int i = 0;; ++i) {
                 t += s[i] == '1';
                 if (t == x) {
                     return i;
@@ -181,8 +170,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numWays(s string) int {
@@ -219,10 +206,6 @@ func numWays(s string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

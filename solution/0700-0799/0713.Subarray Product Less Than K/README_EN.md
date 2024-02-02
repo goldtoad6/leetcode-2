@@ -35,9 +35,9 @@ Note that [10, 5, 2] is not included as the product of 100 is not strictly less 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,8 +51,6 @@ class Solution:
             ans += i - j + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +68,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -87,8 +83,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numSubarrayProductLessThanK(nums []int, k int) int {
 	ans := 0
@@ -102,8 +96,6 @@ func numSubarrayProductLessThanK(nums []int, k int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function numSubarrayProductLessThanK(nums: number[], k: number): number {
@@ -119,8 +111,6 @@ function numSubarrayProductLessThanK(nums: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn num_subarray_product_less_than_k(nums: Vec<i32>, k: i32) -> i32 {
@@ -131,20 +121,20 @@ impl Solution {
         let mut res = 0;
         let mut product = 1;
         let mut i = 0;
-        nums.iter().enumerate().for_each(|(j, v)| {
-            product *= v;
-            while product >= k {
-                product /= nums[i];
-                i += 1;
-            }
-            res += j - i + 1;
-        });
+        nums.iter()
+            .enumerate()
+            .for_each(|(j, v)| {
+                product *= v;
+                while product >= k {
+                    product /= nums[i];
+                    i += 1;
+                }
+                res += j - i + 1;
+            });
         res as i32
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -167,10 +157,6 @@ var numSubarrayProductLessThanK = function (nums, k) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -57,9 +57,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心**
+### 方法一：贪心
 
 设机器人当前位置为 $(i, j)$，目标位置为 $(x, y)$。
 
@@ -72,30 +70,28 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def minCost(self, startPos: List[int], homePos: List[int], rowCosts: List[int], colCosts: List[int]) -> int:
+    def minCost(
+        self,
+        startPos: List[int],
+        homePos: List[int],
+        rowCosts: List[int],
+        colCosts: List[int],
+    ) -> int:
         i, j = startPos
         x, y = homePos
         ans = 0
         if i < x:
-            ans += sum(rowCosts[i + 1: x + 1])
+            ans += sum(rowCosts[i + 1 : x + 1])
         else:
-            ans += sum(rowCosts[x: i])
+            ans += sum(rowCosts[x:i])
         if j < y:
-            ans += sum(colCosts[j + 1: y + 1])
+            ans += sum(colCosts[j + 1 : y + 1])
         else:
-            ans += sum(colCosts[y: j])
+            ans += sum(colCosts[y:j])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -126,8 +122,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -149,8 +143,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minCost(startPos []int, homePos []int, rowCosts []int, colCosts []int) (ans int) {
@@ -177,10 +169,6 @@ func sum(nums []int, i, j int) (s int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

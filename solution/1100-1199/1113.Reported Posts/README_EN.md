@@ -16,19 +16,19 @@
 | action        | enum    |
 | extra         | varchar |
 +---------------+---------+
-There is no primary key for this table, it may have duplicate rows.
-The action column is an ENUM type of (&#39;view&#39;, &#39;like&#39;, &#39;reaction&#39;, &#39;comment&#39;, &#39;report&#39;, &#39;share&#39;).
+This table may have duplicate rows.
+The action column is an ENUM (category) type of (&#39;view&#39;, &#39;like&#39;, &#39;reaction&#39;, &#39;comment&#39;, &#39;report&#39;, &#39;share&#39;).
 The extra column has optional information about the action, such as a reason for the report or a type of reaction.
 extra is never NULL.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query that reports the number of posts reported yesterday for each report reason. Assume today is <code>2019-07-05</code>.</p>
+<p>Write a solution to report&nbsp;the number of posts reported yesterday for each report reason. Assume today is <code>2019-07-05</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -65,12 +65,18 @@ Actions table:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT extra AS report_reason, COUNT(DISTINCT post_id) AS report_count
+FROM Actions
+WHERE action_date = '2019-07-04' AND action = 'report'
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

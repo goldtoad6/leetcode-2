@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 滑动窗口**
+### 方法一：排序 + 滑动窗口
 
 将每个数字 $v$ 及其所在的组 $i$，构成数据项 $(v, i)$，存放在一个新的列表或者数组中，记为 `t`。
 
@@ -59,10 +57,6 @@
 时间复杂度 $O(n\log n)$。其中 $n$ 是所有数字的总数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -86,10 +80,6 @@ class Solution:
                 j += 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -133,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -175,8 +163,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func smallestRange(nums [][]int) []int {
 	t := [][]int{}
@@ -209,10 +195,47 @@ func smallestRange(nums [][]int) []int {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn smallest_range(nums: Vec<Vec<i32>>) -> Vec<i32> {
+        let mut t = vec![];
+        for (i, x) in nums.iter().enumerate() {
+            for &v in x {
+                t.push((v, i));
+            }
+        }
+        t.sort_unstable();
+        let (mut ans, n) = (vec![-1000000, 1000000], nums.len());
+        let mut j = 0;
+        let mut cnt = std::collections::HashMap::new();
 
-```
-
+        for (b, v) in t.iter() {
+            let (b, v) = (*b, *v);
+            if let Some(x) = cnt.get_mut(&v) {
+                *x += 1;
+            } else {
+                cnt.insert(v, 1);
+            }
+            while cnt.len() == n {
+                let (a, w) = t[j];
+                let x = b - a - (ans[1] - ans[0]);
+                if x < 0 || (x == 0 && a < ans[0]) {
+                    ans = vec![a, b];
+                }
+                if let Some(x) = cnt.get_mut(&w) {
+                    *x -= 1;
+                }
+                if cnt[&w] == 0 {
+                    cnt.remove(&w);
+                }
+                j += 1;
+            }
+        }
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

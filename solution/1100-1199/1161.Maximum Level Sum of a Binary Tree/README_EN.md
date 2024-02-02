@@ -38,9 +38,13 @@ So we return the level with the maximum sum which is level 2.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: BFS
 
-### **Python3**
+We can use BFS to traverse the tree level by level, calculate the sum of nodes at each level, and find the level with the maximum sum. If there are multiple levels with the maximum sum, return the smallest level.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the number of nodes in the binary tree.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -69,32 +73,6 @@ class Solution:
                 ans = i
         return ans
 ```
-
-```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def maxLevelSum(self, root: Optional[TreeNode]) -> int:
-        def dfs(node, i):
-            if node is None:
-                return
-            if i == len(s):
-                s.append(node.val)
-            else:
-                s[i] += node.val
-            dfs(node.left, i + 1)
-            dfs(node.right, i + 1)
-
-        s = []
-        dfs(root, 0)
-        return s.index(max(s)) + 1
-```
-
-### **Java**
 
 ```java
 /**
@@ -140,6 +118,152 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int maxLevelSum(TreeNode* root) {
+        queue<TreeNode*> q{{root}};
+        int mx = INT_MIN;
+        int ans = 0;
+        int i = 0;
+        while (!q.empty()) {
+            ++i;
+            int s = 0;
+            for (int n = q.size(); n; --n) {
+                root = q.front();
+                q.pop();
+                s += root->val;
+                if (root->left) q.push(root->left);
+                if (root->right) q.push(root->right);
+            }
+            if (mx < s) mx = s, ans = i;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func maxLevelSum(root *TreeNode) int {
+	q := []*TreeNode{root}
+	mx := -0x3f3f3f3f
+	i := 0
+	ans := 0
+	for len(q) > 0 {
+		i++
+		s := 0
+		for n := len(q); n > 0; n-- {
+			root = q[0]
+			q = q[1:]
+			s += root.Val
+			if root.Left != nil {
+				q = append(q, root.Left)
+			}
+			if root.Right != nil {
+				q = append(q, root.Right)
+			}
+		}
+		if mx < s {
+			mx = s
+			ans = i
+		}
+	}
+	return ans
+}
+```
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function maxLevelSum(root: TreeNode | null): number {
+    const queue = [root];
+    let res = 1;
+    let max = -Infinity;
+    let h = 1;
+    while (queue.length !== 0) {
+        const n = queue.length;
+        let sum = 0;
+        for (let i = 0; i < n; i++) {
+            const { val, left, right } = queue.shift();
+            sum += val;
+            left && queue.push(left);
+            right && queue.push(right);
+        }
+        if (sum > max) {
+            max = sum;
+            res = h;
+        }
+        h++;
+    }
+    return res;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: DFS
+
+We can also use DFS to solve this problem. We use an array $s$ to store the sum of nodes at each level. The index of the array represents the level, and the value of the array represents the sum of nodes. We use DFS to traverse the binary tree, adding the value of each node to the sum of nodes at the corresponding level. Finally, we return the index corresponding to the maximum value in $s$.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the number of nodes in the binary tree.
+
+<!-- tabs:start -->
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxLevelSum(self, root: Optional[TreeNode]) -> int:
+        def dfs(node, i):
+            if node is None:
+                return
+            if i == len(s):
+                s.append(node.val)
+            else:
+                s[i] += node.val
+            dfs(node.left, i + 1)
+            dfs(node.right, i + 1)
+
+        s = []
+        dfs(root, 0)
+        return s.index(max(s)) + 1
 ```
 
 ```java
@@ -189,44 +313,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    int maxLevelSum(TreeNode* root) {
-        queue<TreeNode*> q {{root}};
-        int mx = INT_MIN;
-        int ans = 0;
-        int i = 0;
-        while (!q.empty()) {
-            ++i;
-            int s = 0;
-            for (int n = q.size(); n; --n) {
-                root = q.front();
-                q.pop();
-                s += root->val;
-                if (root->left) q.push(root->left);
-                if (root->right) q.push(root->right);
-            }
-            if (mx < s) mx = s, ans = i;
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -246,57 +332,21 @@ public:
         dfs(root, 0, s);
         int mx = INT_MIN;
         int ans = 0;
-        for (int i = 0; i < s.size(); ++i) if (mx < s[i]) mx = s[i], ans = i + 1;
+        for (int i = 0; i < s.size(); ++i)
+            if (mx < s[i]) mx = s[i], ans = i + 1;
         return ans;
     }
 
     void dfs(TreeNode* root, int i, vector<int>& s) {
         if (!root) return;
-        if (s.size() == i) s.push_back(root->val);
-        else s[i] += root->val;
+        if (s.size() == i)
+            s.push_back(root->val);
+        else
+            s[i] += root->val;
         dfs(root->left, i + 1, s);
         dfs(root->right, i + 1, s);
     }
 };
-```
-
-### **Go**
-
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func maxLevelSum(root *TreeNode) int {
-	q := []*TreeNode{root}
-	mx := -0x3f3f3f3f
-	i := 0
-	ans := 0
-	for len(q) > 0 {
-		i++
-		s := 0
-		for n := len(q); n > 0; n-- {
-			root = q[0]
-			q = q[1:]
-			s += root.Val
-			if root.Left != nil {
-				q = append(q, root.Left)
-			}
-			if root.Right != nil {
-				q = append(q, root.Right)
-			}
-		}
-		if mx < s {
-			mx = s
-			ans = i
-		}
-	}
-	return ans
-}
 ```
 
 ```go
@@ -335,51 +385,6 @@ func maxLevelSum(root *TreeNode) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function maxLevelSum(root: TreeNode | null): number {
-    const queue = [root];
-    let res = 1;
-    let max = -Infinity;
-    let h = 1;
-    while (queue.length !== 0) {
-        const n = queue.length;
-        let sum = 0;
-        for (let i = 0; i < n; i++) {
-            const { val, left, right } = queue.shift();
-            sum += val;
-            left && queue.push(left);
-            right && queue.push(right);
-        }
-        if (sum > max) {
-            max = sum;
-            res = h;
-        }
-        h++;
-    }
-    return res;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

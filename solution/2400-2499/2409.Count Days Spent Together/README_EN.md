@@ -40,24 +40,26 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We convert the dates into days, and then calculate the number of days both people are in Rome.
+
+The time complexity is $O(C)$, and the space complexity is $O(C)$. Here, $C$ is a constant.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def countDaysTogether(self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str) -> int:
-        if leaveAlice < arriveBob or leaveBob < arriveAlice:
-            return 0
+    def countDaysTogether(
+        self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str
+    ) -> int:
         a = max(arriveAlice, arriveBob)
         b = min(leaveAlice, leaveBob)
-        days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        x = sum(days[:int(a[:2]) - 1]) + int(a[3:])
-        y = sum(days[:int(b[:2]) - 1]) + int(b[3:])
-        return y - x + 1
+        days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        x = sum(days[: int(a[:2]) - 1]) + int(a[3:])
+        y = sum(days[: int(b[:2]) - 1]) + int(b[3:])
+        return max(y - x + 1, 0)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +85,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -109,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countDaysTogether(arriveAlice string, leaveAlice string, arriveBob string, leaveBob string) int {
@@ -141,17 +139,6 @@ func countDaysTogether(arriveAlice string, leaveAlice string, arriveBob string, 
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

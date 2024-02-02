@@ -61,9 +61,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们定义 $cur$ 表示当前已经从 `list` 中读取到的数字，初始时 $cur = 0$，用一个数组 $ans$ 存储答案。
 
@@ -74,10 +72,6 @@
 时间复杂度 $O(n)$，其中 $n$ 为数组 `target` 的长度。忽略答案的空间消耗，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -91,10 +85,6 @@ class Solution:
             ans.append('Push')
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -112,8 +102,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -133,8 +121,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func buildArray(target []int, n int) []string {
 	cur := 0
@@ -149,33 +135,6 @@ func buildArray(target []int, n int) []string {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-char **buildArray(int *target, int targetSize, int n, int *returnSize) {
-    char **res = (char **) malloc(sizeof(char *) * n * 2);
-    int cur = 1;
-    int i = 0;
-    for (int j = 0; j < targetSize; j++) {
-        while (++cur < target[j]) {
-            res[i] = (char *) malloc(sizeof(char) * 8);
-            strcpy(res[i++], "Push");
-            res[i] = (char *) malloc(sizeof(char) * 8);
-            strcpy(res[i++], "Pop");
-        }
-        res[i] = (char *) malloc(sizeof(char) * 8);
-        strcpy(res[i++], "Push");
-    }
-    *returnSize = i;
-    return res;
-}
-```
-
-### **TypeScript**
-
 ```ts
 function buildArray(target: number[], n: number): string[] {
     const res = [];
@@ -189,8 +148,6 @@ function buildArray(target: number[], n: number): string[] {
     return res;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -211,10 +168,29 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** buildArray(int* target, int targetSize, int n, int* returnSize) {
+    char** res = (char**) malloc(sizeof(char*) * n * 2);
+    int cur = 1;
+    int i = 0;
+    for (int j = 0; j < targetSize; j++) {
+        while (++cur < target[j]) {
+            res[i] = (char*) malloc(sizeof(char) * 8);
+            strcpy(res[i++], "Push");
+            res[i] = (char*) malloc(sizeof(char) * 8);
+            strcpy(res[i++], "Pop");
+        }
+        res[i] = (char*) malloc(sizeof(char) * 8);
+        strcpy(res[i++], "Push");
+    }
+    *returnSize = i;
+    return res;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

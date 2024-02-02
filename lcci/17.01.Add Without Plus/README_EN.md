@@ -10,11 +10,7 @@
 
 <pre>
 
-
-
 <strong>Input:</strong> a = 1, b = 1
-
-
 
 <strong>Output:</strong> 2</pre>
 
@@ -29,16 +25,9 @@
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
-
-### **Python3**
-
-```python
-
-
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -55,11 +44,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -14,17 +14,17 @@
 | y           | int  |
 | z           | int  |
 +-------------+------+
-(x, y, z) is the primary key column for this table.
+In SQL, (x, y, z) is the primary key column for this table.
 Each row of this table contains the lengths of three line segments.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report for every three line segments whether they can form a triangle.</p>
+<p>Report for every three line segments whether they can form a triangle.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -49,12 +49,20 @@ Triangle table:
 
 ## Solutions
 
+### Solution 1: IF Statement + Triangle Inequality
+
+The condition for whether three sides can form a triangle is that the sum of any two sides is greater than the third side. Therefore, we can use an `IF` statement to determine whether this condition is satisfied. If it is satisfied, we return `Yes`, otherwise we return `No`.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    *,
+    IF(x + y > z AND x + z > y AND y + z > x, 'Yes', 'No') AS triangle
+FROM Triangle;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

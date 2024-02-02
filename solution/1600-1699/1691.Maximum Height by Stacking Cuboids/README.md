@@ -61,9 +61,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 动态规划**
+### 方法一：排序 + 动态规划
 
 根据题目描述，长方体 $j$ 能够放在长方体 $i$ 上，当且仅当长方体 $j$ 的“长、宽、高”分别小于等于长方体 $i$ 的“长、宽、高”。
 
@@ -87,10 +85,6 @@ $$
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def maxHeight(self, cuboids: List[List[int]]) -> int:
@@ -106,10 +100,6 @@ class Solution:
             f[i] += cuboids[i][2]
         return max(f)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -134,8 +124,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -157,10 +145,8 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func maxHeight(cuboids [][]int) (ans int) {
+func maxHeight(cuboids [][]int) int {
 	for _, c := range cuboids {
 		sort.Ints(c)
 	}
@@ -177,20 +163,10 @@ func maxHeight(cuboids [][]int) (ans int) {
 			}
 		}
 		f[i] += cuboids[i][2]
-		ans = max(ans, f[i])
 	}
-	return
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return slices.Max(f)
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -210,9 +186,7 @@ var maxHeight = function (cuboids) {
     const f = new Array(n).fill(0);
     for (let i = 0; i < n; ++i) {
         for (let j = 0; j < i; ++j) {
-            const ok =
-                cuboids[j][1] <= cuboids[i][1] &&
-                cuboids[j][2] <= cuboids[i][2];
+            const ok = cuboids[j][1] <= cuboids[i][1] && cuboids[j][2] <= cuboids[i][2];
             if (ok) f[i] = Math.max(f[i], f[j]);
         }
         f[i] += cuboids[i][2];
@@ -221,10 +195,6 @@ var maxHeight = function (cuboids) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

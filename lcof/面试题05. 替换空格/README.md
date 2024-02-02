@@ -19,38 +19,19 @@
 
 ## 解法
 
-**方法一：字符串内置方法**
+### 方法一：字符串内置方法
 
 使用 `replace()` 方法。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串长度。
 
-**方法二：遍历替换**
-
-我们直接遍历字符串，遇到空格就替换成 `%20` 即可。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串长度。
-
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def replaceSpace(self, s: str) -> str:
         return s.replace(' ', '%20')
 ```
-
-```python
-class Solution:
-    def replaceSpace(self, s: str) -> str:
-        ans = []
-        for c in s:
-            ans.append('%20' if c == ' ' else c)
-        return ''.join(ans)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -59,20 +40,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public String replaceSpace(String s) {
-        StringBuilder ans = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            ans.append(c == ' ' ? "%20" : c);
-        }
-        return ans.toString();
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -90,11 +57,92 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func replaceSpace(s string) string {
 	return strings.Replace(s, " ", "%20", -1)
+}
+```
+
+```ts
+function replaceSpace(s: string): string {
+    return s.replace(/\s/g, '%20');
+}
+```
+
+```rust
+impl Solution {
+    pub fn replace_space(s: String) -> String {
+        s.replace(' ', "%20")
+    }
+}
+```
+
+```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var replaceSpace = function (s) {
+    return s.split(' ').join('%20');
+};
+```
+
+```cs
+public class Solution {
+    public string ReplaceSpace(string s) {
+        return s.Replace(" ", "%20");
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function replaceSpace($s) {
+        $rs = '';
+        for ($i = 0; $i < strlen($s); $i++) {
+            if ($s[$i] === ' ') {
+                $rs = $rs . '%20';
+            } else {
+                $rs = $rs . $s[$i];
+            }
+        }
+        return $rs;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：遍历替换
+
+我们直接遍历字符串，遇到空格就替换成 `%20` 即可。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串长度。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def replaceSpace(self, s: str) -> str:
+        ans = []
+        for c in s:
+            ans.append('%20' if c == ' ' else c)
+        return ''.join(ans)
+```
+
+```java
+class Solution {
+    public String replaceSpace(String s) {
+        StringBuilder ans = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            ans.append(c == ' ' ? "%20" : c);
+        }
+        return ans.toString();
+    }
 }
 ```
 
@@ -112,50 +160,6 @@ func replaceSpace(s string) string {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {string} s
- * @return {string}
- */
-var replaceSpace = function (s) {
-    return s.split(' ').join('%20');
-};
-```
-
-```js
-/**
- * @param {string} s
- * @return {string}
- */
-var replaceSpace = function (s) {
-    return s.replace(/\s/g, '%20');
-};
-```
-
-```js
-/**
- * @param {string} s
- * @return {string}
- */
-var replaceSpace = function (s) {
-    const ans = [];
-    for (const c of s) {
-        ans.push(c === ' ' ? '%20' : c);
-    }
-    return ans.join('');
-};
-```
-
-### **TypeScript**
-
-```ts
-function replaceSpace(s: string): string {
-    return s.replace(/\s/g, '%20');
-}
-```
-
 ```ts
 function replaceSpace(s: string): string {
     const strArr = [];
@@ -163,16 +167,6 @@ function replaceSpace(s: string): string {
         strArr.push(c === ' ' ? '%20' : c);
     }
     return strArr.join('');
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn replace_space(s: String) -> String {
-        s.replace(' ', "%20")
-    }
 }
 ```
 
@@ -192,14 +186,14 @@ impl Solution {
 }
 ```
 
-### **C#**
-
-```cs
-public class Solution {
-    public string ReplaceSpace(string s) {
-        return s.Replace(" ", "%20");
-    }
-}
+```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var replaceSpace = function (s) {
+    return s.replace(/\s/g, '%20');
+};
 ```
 
 ```cs
@@ -218,10 +212,26 @@ public class Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法三
 
+<!-- tabs:start -->
+
+```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var replaceSpace = function (s) {
+    const ans = [];
+    for (const c of s) {
+        ans.push(c === ' ' ? '%20' : c);
+    }
+    return ans.join('');
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

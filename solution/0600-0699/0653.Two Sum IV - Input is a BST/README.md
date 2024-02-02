@@ -37,25 +37,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表 + DFS**
+### 方法一：哈希表 + DFS
 
 DFS 遍历二叉搜索树，对于每个节点，判断 `k - node.val` 是否在哈希表中，如果在，则返回 `true`，否则将 `node.val` 加入哈希表中。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉搜索树的节点个数。
 
-**方法二：哈希表 + BFS**
-
-与方法一类似，只是使用 BFS 遍历二叉搜索树。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉搜索树的节点个数。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -77,34 +65,6 @@ class Solution:
         vis = set()
         return dfs(root)
 ```
-
-```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
-        q = deque([root])
-        vis = set()
-        while q:
-            for _ in range(len(q)):
-                node = q.popleft()
-                if k - node.val in vis:
-                    return True
-                vis.add(node.val)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-        return False
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -142,6 +102,172 @@ class Solution {
         return dfs(root.left) || dfs(root.right);
     }
 }
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        unordered_set<int> vis;
+
+        function<bool(TreeNode*)> dfs = [&](TreeNode* root) {
+            if (!root) {
+                return false;
+            }
+            if (vis.count(k - root->val)) {
+                return true;
+            }
+            vis.insert(root->val);
+            return dfs(root->left) || dfs(root->right);
+        };
+        return dfs(root);
+    }
+};
+```
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func findTarget(root *TreeNode, k int) bool {
+	vis := map[int]bool{}
+	var dfs func(*TreeNode) bool
+	dfs = func(root *TreeNode) bool {
+		if root == nil {
+			return false
+		}
+		if vis[k-root.Val] {
+			return true
+		}
+		vis[root.Val] = true
+		return dfs(root.Left) || dfs(root.Right)
+	}
+	return dfs(root)
+}
+```
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function findTarget(root: TreeNode | null, k: number): boolean {
+    const dfs = (root: TreeNode | null) => {
+        if (!root) {
+            return false;
+        }
+        if (vis.has(k - root.val)) {
+            return true;
+        }
+        vis.add(root.val);
+        return dfs(root.left) || dfs(root.right);
+    };
+    const vis = new Set<number>();
+    return dfs(root);
+}
+```
+
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::collections::{ HashSet, VecDeque };
+impl Solution {
+    pub fn find_target(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> bool {
+        let mut set = HashSet::new();
+        let mut q = VecDeque::new();
+        q.push_back(root);
+        while let Some(node) = q.pop_front() {
+            if let Some(node) = node {
+                let mut node = node.as_ref().borrow_mut();
+                if set.contains(&node.val) {
+                    return true;
+                }
+                set.insert(k - node.val);
+                q.push_back(node.left.take());
+                q.push_back(node.right.take());
+            }
+        }
+        false
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：哈希表 + BFS
+
+与方法一类似，只是使用 BFS 遍历二叉搜索树。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉搜索树的节点个数。
+
+<!-- tabs:start -->
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        q = deque([root])
+        vis = set()
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                if k - node.val in vis:
+                    return True
+                vis.add(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        return False
 ```
 
 ```java
@@ -185,40 +311,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    bool findTarget(TreeNode* root, int k) {
-        unordered_set<int> vis;
-
-        function<bool(TreeNode*)> dfs = [&](TreeNode* root) {
-            if (!root) {
-                return false;
-            }
-            if (vis.count(k - root->val)) {
-                return true;
-            }
-            vis.insert(root->val);
-            return dfs(root->left) || dfs(root->right);
-        };
-        return dfs(root);
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -257,34 +349,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func findTarget(root *TreeNode, k int) bool {
-	vis := map[int]bool{}
-	var dfs func(*TreeNode) bool
-	dfs = func(root *TreeNode) bool {
-		if root == nil {
-			return false
-		}
-		if vis[k-root.Val] {
-			return true
-		}
-		vis[root.Val] = true
-		return dfs(root.Left) || dfs(root.Right)
-	}
-	return dfs(root)
-}
-```
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -314,39 +378,6 @@ func findTarget(root *TreeNode, k int) bool {
 		}
 	}
 	return false
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function findTarget(root: TreeNode | null, k: number): boolean {
-    const dfs = (root: TreeNode | null) => {
-        if (!root) {
-            return false;
-        }
-        if (vis.has(k - root.val)) {
-            return true;
-        }
-        vis.add(root.val);
-        return dfs(root.left) || dfs(root.right);
-    };
-    const vis = new Set<number>();
-    return dfs(root);
 }
 ```
 
@@ -383,55 +414,6 @@ function findTarget(root: TreeNode | null, k: number): boolean {
 }
 ```
 
-### **Rust**
-
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-use std::collections::{HashSet, VecDeque};
-impl Solution {
-    pub fn find_target(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> bool {
-        let mut set = HashSet::new();
-        let mut q = VecDeque::new();
-        q.push_back(root);
-        while let Some(node) = q.pop_front() {
-            if let Some(node) = node {
-                let mut node = node.as_ref().borrow_mut();
-                if set.contains(&node.val) {
-                    return true;
-                }
-                set.insert(k - node.val);
-                q.push_back(node.left.take());
-                q.push_back(node.right.take());
-            }
-        }
-        false
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

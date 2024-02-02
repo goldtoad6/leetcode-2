@@ -6,13 +6,13 @@
 
 <p>You are given a 0-indexed two-dimensional integer array <code>nums</code>.</p>
 
-<p>Return <em>the largest <strong>prime</strong> number that lies on at least one of the <b>diagonals</b> of </em><code>nums</code>. In case, no prime is present on any of the diagonals, <em>return 0.</em></p>
+<p>Return <em>the largest <strong>prime</strong> number that lies on at least one of the <b>diagonals</b> of </em><code>nums</code>. In case, no prime is present on any of the diagonals, return<em> 0.</em></p>
 
 <p>Note that:</p>
 
 <ul>
 	<li>An integer is <strong>prime</strong> if it is greater than <code>1</code> and has no positive integer divisors other than <code>1</code> and itself.</li>
-	<li>An integer <code>val</code> is on one of the<strong>diagonals</strong> of <code>nums</code> if there exists an integer <code>i</code> for which <code>nums[i][i] = val</code> or an <code>i</code> for which <code>nums[i][nums.length - i - 1]= val</code>.</li>
+	<li>An integer <code>val</code> is on one of the <strong>diagonals</strong> of <code>nums</code> if there exists an integer <code>i</code> for which <code>nums[i][i] = val</code> or an <code>i</code> for which <code>nums[i][nums.length - i - 1] = val</code>.</li>
 </ul>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2600-2699/2614.Prime%20In%20Diagonal/images/screenshot-2023-03-06-at-45648-pm.png" style="width: 181px; height: 121px;" /></p>
@@ -47,9 +47,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Math + Simulation
 
-### **Python3**
+We implement a function `is_prime` to check whether a number is prime.
+
+Then we iterate the array and check whether the numbers on the diagonals are prime. If so, we update the answer.
+
+The time complexity is $O(n \times \sqrt{M})$, where $n$ and $M$ are the number of rows of the array and the maximum value in the array, respectively. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +74,6 @@ class Solution:
                 ans = max(ans, row[n - i - 1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -100,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -134,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func diagonalPrime(nums [][]int) (ans int) {
 	n := len(nums)
@@ -161,19 +161,43 @@ func isPrime(x int) bool {
 	}
 	return true
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```rust
+impl Solution {
+    pub fn diagonal_prime(nums: Vec<Vec<i32>>) -> i32 {
+        let mut ans = 0;
+        let n = nums.len();
+
+        for (i, row) in nums.iter().enumerate() {
+            if Self::is_prime(row[i]) && row[i] > ans {
+                ans = row[i];
+            }
+            if Self::is_prime(row[n - i - 1]) && row[n - i - 1] > ans {
+                ans = row[n - i - 1];
+            }
+        }
+
+        ans
+    }
+
+    fn is_prime(n: i32) -> bool {
+        if n < 2 {
+            return false;
+        }
+
+        let upper = (n as f64).sqrt() as i32;
+        for i in 2..=upper {
+            if n % i == 0 {
+                return false;
+            }
+        }
+
+        true
+    }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

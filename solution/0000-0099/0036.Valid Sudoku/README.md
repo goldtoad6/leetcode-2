@@ -70,9 +70,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：一次遍历**
+### 方法一：一次遍历
 
 有效的数独满足以下三个条件：
 
@@ -85,10 +83,6 @@
 时间复杂度 $O(C)$，空间复杂度 $O(C)$，其中 $C$ 是数独中的空格数。本题中 $C=81$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -110,10 +104,6 @@ class Solution:
                 sub[k][num] = True
         return True
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -142,8 +132,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -170,8 +158,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isValidSudoku(board [][]byte) bool {
 	row, col, sub := [9][9]bool{}, [9][9]bool{}, [9][9]bool{}
@@ -194,7 +180,35 @@ func isValidSudoku(board [][]byte) bool {
 }
 ```
 
-### **JavaScript**
+```ts
+function isValidSudoku(board: string[][]): boolean {
+    const row: boolean[][] = Array.from({ length: 9 }, () =>
+        Array.from({ length: 9 }, () => false),
+    );
+    const col: boolean[][] = Array.from({ length: 9 }, () =>
+        Array.from({ length: 9 }, () => false),
+    );
+    const sub: boolean[][] = Array.from({ length: 9 }, () =>
+        Array.from({ length: 9 }, () => false),
+    );
+    for (let i = 0; i < 9; ++i) {
+        for (let j = 0; j < 9; ++j) {
+            const num = board[i][j].charCodeAt(0) - '1'.charCodeAt(0);
+            if (num < 0 || num > 8) {
+                continue;
+            }
+            const k = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+            if (row[i][num] || col[j][num] || sub[k][num]) {
+                return false;
+            }
+            row[i][num] = true;
+            col[j][num] = true;
+            sub[k][num] = true;
+        }
+    }
+    return true;
+}
+```
 
 ```js
 /**
@@ -202,13 +216,13 @@ func isValidSudoku(board [][]byte) bool {
  * @return {boolean}
  */
 var isValidSudoku = function (board) {
-    let row = [...Array(9)].map(() => Array(9).fill(false));
-    let col = [...Array(9)].map(() => Array(9).fill(false));
-    let sub = [...Array(9)].map(() => Array(9).fill(false));
+    const row = [...Array(9)].map(() => Array(9).fill(false));
+    const col = [...Array(9)].map(() => Array(9).fill(false));
+    const sub = [...Array(9)].map(() => Array(9).fill(false));
     for (let i = 0; i < 9; ++i) {
         for (let j = 0; j < 9; ++j) {
             const num = board[i][j].charCodeAt() - '1'.charCodeAt();
-            if (num < 0 || num > 9) {
+            if (num < 0 || num > 8) {
                 continue;
             }
             const k = Math.floor(i / 3) * 3 + Math.floor(j / 3);
@@ -224,10 +238,6 @@ var isValidSudoku = function (board) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

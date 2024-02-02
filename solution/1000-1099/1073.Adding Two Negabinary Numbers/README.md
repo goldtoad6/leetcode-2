@@ -51,25 +51,25 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：进位转换**
+我们遍历两个数组，从最低位开始，记两个数组当前位的数字为 $a$ 和 $b$，进位为 $c$，三个数相加的结果为 $x$。
 
-如果两个数对应的位与进位 $c$ 相加的结果大于 $1$，那么先执行操作：将结果减去 $2$，并向高位进位 $-1$。如果相加的结果为 $-1$，那么执行操作：将结果加上 $2$，并向高位进位 $1$。此时我们将结果加入到答案数组中，然后继续处理下一位。
+-   先将进位 $c$ 置为 $0$。
+-   如果 $x \geq 2$，由于 $(-2)^{i} + (-2)^{i} = -(-2)^{i+1}$，所以我们可以将 $x$ 减去 $2$，并向高位进位 $-1$。
+-   如果 $x = -1$，由于 $-(-2)^{i} = (-2)^{i} + (-2)^{i+1}$，所以我们可以将 $x$ 置为 $1$，并向高位进位 $1$。
 
-最后，我们需要去除答案数组中末尾的 $0$，并将数组反转，即可得到最终的答案。
+然后，我们将 $x$ 加入到答案数组中，然后继续处理下一位。
+
+遍历结束后，去除答案数组中末尾的 $0$，并将数组反转，即可得到最终的答案。
 
 时间复杂度 $O(\max(n, m))$，其中 $n$ 和 $m$ 分别是两个数组的长度。忽略答案的空间消耗，空间复杂度 $O(1)$。
 
 相似题目：
 
--   [1017. 负二进制转换](/solution/1000-1099/1017.Convert%20to%20Base%20-2/README.md)
+-   [1017. 负二进制转换](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1017.Convert%20to%20Base%20-2/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -82,11 +82,11 @@ class Solution:
             b = 0 if j < 0 else arr2[j]
             x = a + b + c
             c = 0
-            if x > 1:
+            if x >= 2:
                 x -= 2
                 c -= 1
-            if x < 0:
-                x += 2
+            elif x == -1:
+                x = 1
                 c += 1
             ans.append(x)
             i, j = i - 1, j - 1
@@ -94,10 +94,6 @@ class Solution:
             ans.pop()
         return ans[::-1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -109,12 +105,11 @@ class Solution {
             int b = j < 0 ? 0 : arr2[j];
             int x = a + b + c;
             c = 0;
-            if (x > 1) {
+            if (x >= 2) {
                 x -= 2;
                 c -= 1;
-            }
-            if (x < 0) {
-                x += 2;
+            } else if (x == -1) {
+                x = 1;
                 c += 1;
             }
             ans.add(x);
@@ -128,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -141,12 +134,11 @@ public:
             int b = j < 0 ? 0 : arr2[j];
             int x = a + b + c;
             c = 0;
-            if (x > 1) {
+            if (x >= 2) {
                 x -= 2;
                 c -= 1;
-            }
-            if (x < 0) {
-                x += 2;
+            } else if (x == -1) {
+                x = 1;
                 c += 1;
             }
             ans.push_back(x);
@@ -160,8 +152,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func addNegabinary(arr1 []int, arr2 []int) (ans []int) {
 	i, j := len(arr1)-1, len(arr2)-1
@@ -174,12 +164,11 @@ func addNegabinary(arr1 []int, arr2 []int) (ans []int) {
 			x += arr2[j]
 		}
 		c = 0
-		if x > 1 {
+		if x >= 2 {
 			x -= 2
 			c -= 1
-		}
-		if x < 0 {
-			x += 2
+		} else if x == -1 {
+			x = 1
 			c += 1
 		}
 		ans = append(ans, x)
@@ -194,8 +183,6 @@ func addNegabinary(arr1 []int, arr2 []int) (ans []int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function addNegabinary(arr1: number[], arr2: number[]): number[] {
     let i = arr1.length - 1,
@@ -206,12 +193,11 @@ function addNegabinary(arr1: number[], arr2: number[]): number[] {
         const b = j < 0 ? 0 : arr2[j];
         let x = a + b + c;
         c = 0;
-        if (x > 1) {
+        if (x >= 2) {
             x -= 2;
             c -= 1;
-        }
-        if (x < 0) {
-            x += 2;
+        } else if (x === -1) {
+            x = 1;
             c += 1;
         }
         ans.push(x);
@@ -223,10 +209,34 @@ function addNegabinary(arr1: number[], arr2: number[]): number[] {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int[] AddNegabinary(int[] arr1, int[] arr2) {
+        int i = arr1.Length - 1, j = arr2.Length - 1;
+        List<int> ans = new List<int>();
+        for (int c = 0; i >= 0 || j >= 0 || c != 0; --i, --j) {
+            int a = i < 0 ? 0 : arr1[i];
+            int b = j < 0 ? 0 : arr2[j];
+            int x = a + b + c;
+            c = 0;
+            if (x >= 2) {
+                x -= 2;
+                c -= 1;
+            } else if (x == -1) {
+                x = 1;
+                c = 1;
+            }
+            ans.Add(x);
+        }
+        while (ans.Count > 1 && ans[ans.Count - 1] == 0) {
+            ans.RemoveAt(ans.Count - 1);
+        }
+        ans.Reverse();
+        return ans.ToArray();
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

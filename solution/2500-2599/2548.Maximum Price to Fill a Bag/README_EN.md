@@ -51,9 +51,15 @@ It can be proved that 55.0 is the maximum total price that we can achieve.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Sorting
 
-### **Python3**
+We sort the items in descending order by unit price, and then take out the items one by one until the backpack is full.
+
+If the backpack is not full in the end, return $-1$, otherwise return the total price.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$, where $n$ is the number of items.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,8 +71,6 @@ class Solution:
             capacity -= v
         return -1 if capacity else ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,13 +88,11 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     double maxPrice(vector<vector<int>>& items, int capacity) {
-        sort(items.begin(), items.end(), [&](const auto& a, const auto& b) { return a[1] * b[0] < a[0] * b[1];});
+        sort(items.begin(), items.end(), [&](const auto& a, const auto& b) { return a[1] * b[0] < a[0] * b[1]; });
         double ans = 0;
         for (auto& e : items) {
             int p = e[0], w = e[1];
@@ -102,8 +104,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxPrice(items [][]int, capacity int) (ans float64) {
@@ -119,16 +119,7 @@ func maxPrice(items [][]int, capacity int) (ans float64) {
 	}
 	return
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxPrice(items: number[][], capacity: number): number {
@@ -143,10 +134,6 @@ function maxPrice(items: number[][], capacity: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

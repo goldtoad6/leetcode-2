@@ -1,6 +1,8 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        a, b = 0, nums[0]
-        for num in nums[1:]:
-            a, b = b, max(num + a, b)
-        return b
+        n = len(nums)
+        f = [0] * (n + 1)
+        f[1] = nums[0]
+        for i in range(2, n + 1):
+            f[i] = max(f[i - 1], f[i - 2] + nums[i - 1])
+        return f[n]

@@ -45,9 +45,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -77,8 +77,6 @@ class Solution:
                 dp[i][j] = (dp[i][j - 1] + v) % mod
         return dp[n][n]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -117,8 +115,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -159,8 +155,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfCombinations(num string) int {
 	n := len(num)
@@ -198,19 +192,8 @@ func numberOfCombinations(num string) int {
 	}
 	return dp[n][n]
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

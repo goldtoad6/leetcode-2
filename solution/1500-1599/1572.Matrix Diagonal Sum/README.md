@@ -54,9 +54,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：逐行遍历**
+### 方法一：逐行遍历
 
 我们可以遍历矩阵的每一行 $row[i]$，对于每一行，我们可以计算出两个对角线上的元素，即 $row[i][i]$ 和 $row[i][n - i - 1]$，其中 $n$ 是矩阵的行数。如果 $i = n - i - 1$，则说明当前行的对角线上只有一个元素，否则有两个元素。我们将其加到答案中即可。
 
@@ -65,10 +63,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 是矩阵的行数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -80,10 +74,6 @@ class Solution:
             ans += row[i] + (0 if j == i else row[j])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -98,8 +88,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -116,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func diagonalSum(mat [][]int) (ans int) {
 	n := len(mat)
@@ -131,7 +117,52 @@ func diagonalSum(mat [][]int) (ans int) {
 }
 ```
 
-### **TypeScript**
+```ts
+function diagonalSum(mat: number[][]): number {
+    let ans = 0;
+    const n = mat.length;
+    for (let i = 0; i < n; ++i) {
+        const j = n - i - 1;
+        ans += mat[i][i] + (i === j ? 0 : mat[i][j]);
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    pub fn diagonal_sum(mat: Vec<Vec<i32>>) -> i32 {
+        let n = mat.len();
+        let mut ans = 0;
+        for i in 0..n {
+            ans += mat[i][i] + mat[n - 1 - i][i];
+        }
+        if (n & 1) == 1 {
+            ans -= mat[n >> 1][n >> 1];
+        }
+        ans
+    }
+}
+```
+
+```c
+int diagonalSum(int** mat, int matSize, int* matColSize) {
+    int ans = 0;
+    for (int i = 0; i < matSize; i++) {
+        ans += mat[i][i] + mat[i][matSize - 1 - i];
+    }
+    if (matSize & 1) {
+        ans -= mat[matSize >> 1][matSize >> 1];
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
 
 ```ts
 function diagonalSum(mat: number[][]): number {
@@ -147,43 +178,6 @@ function diagonalSum(mat: number[][]): number {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn diagonal_sum(mat: Vec<Vec<i32>>) -> i32 {
-        let n = mat.len();
-        let mut ans = 0;
-        for i in 0..n {
-            ans += mat[i][i] + mat[n - 1 - i][i];
-        }
-        if n & 1 == 1 {
-            ans -= mat[n >> 1][n >> 1];
-        }
-        ans
-    }
-}
-```
-
-### **C**
-
-```c
-int diagonalSum(int **mat, int matSize, int *matColSize) {
-    int ans = 0;
-    for (int i = 0; i < matSize; i++) {
-        ans += mat[i][i] + mat[i][matSize - 1 - i];
-    }
-    if (matSize & 1) {
-        ans -= mat[matSize >> 1][matSize >> 1];
-    }
-    return ans;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

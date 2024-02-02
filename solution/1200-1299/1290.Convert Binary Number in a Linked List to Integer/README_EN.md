@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -55,8 +55,6 @@ class Solution:
             head = head.next
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -79,8 +77,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -105,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for singly-linked list.
@@ -122,31 +116,6 @@ func getDecimalValue(head *ListNode) (ans int) {
 	return
 }
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-/**
- * @param {ListNode} head
- * @return {number}
- */
-var getDecimalValue = function (head) {
-    let ans = 0;
-    for (; head; head = head.next) {
-        ans = (ans << 1) | head.val;
-    }
-    return ans;
-};
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -169,8 +138,6 @@ function getDecimalValue(head: ListNode | null): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for singly-linked list.
@@ -202,32 +169,28 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
+```js
 /**
  * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
  */
-
-
-int getDecimalValue(struct ListNode *head) {
-    int ans = 0;
-    struct ListNode *cur = head;
-    while (cur) {
-        ans = (ans << 1) | cur->val;
-        cur = cur->next;
+/**
+ * @param {ListNode} head
+ * @return {number}
+ */
+var getDecimalValue = function (head) {
+    let ans = 0;
+    for (; head; head = head.next) {
+        ans = (ans << 1) | head.val;
     }
     return ans;
-}
+};
 ```
 
-### **PHP**
-
-```PHP
+```php
 /**
  * Definition for a singly-linked list.
  * class ListNode {
@@ -240,13 +203,12 @@ int getDecimalValue(struct ListNode *head) {
  * }
  */
 class Solution {
-
     /**
      * @param ListNode $head
      * @return Integer
      */
     function getDecimalValue($head) {
-        $rs = array();
+        $rs = [];
         while ($head != null) {
             array_push($rs, $head->val);
             $head = $head->next;
@@ -257,10 +219,26 @@ class Solution {
 }
 ```
 
-### **...**
+```c
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
 
-```
-
+int getDecimalValue(struct ListNode* head) {
+    int ans = 0;
+    struct ListNode* cur = head;
+    while (cur) {
+        ans = (ans << 1) | cur->val;
+        cur = cur->next;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

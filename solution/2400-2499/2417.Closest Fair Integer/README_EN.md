@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +62,6 @@ class Solution:
         return self.closestFair(n + 1)
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int closestFair(int n) {
@@ -81,7 +79,7 @@ class Solution {
         if (k % 2 == 1) {
             int x = (int) Math.pow(10, k);
             int y = 0;
-            for (int i = 0; i<k> > 1; ++i) {
+            for (int i = 0; i < k >> 1; ++i) {
                 y = y * 10 + 1;
             }
             return x + y;
@@ -93,8 +91,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -127,8 +123,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func closestFair(n int) int {
 	a, b := 0, 0
@@ -157,16 +151,6 @@ func closestFair(n int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -32,9 +32,9 @@ One possible answer is: [0,-3,9,-10,null,5]，which represents the following tre
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -43,6 +43,7 @@ One possible answer is: [0,-3,9,-10,null,5]，which represents the following tre
 #         self.val = x
 #         self.left = None
 #         self.right = None
+
 
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
@@ -54,8 +55,6 @@ class Solution:
 
         return dfs(0, len(nums) - 1)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -85,8 +84,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -110,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -134,8 +129,6 @@ func sortedArrayToBST(nums []int) *TreeNode {
 	return dfs(0, len(nums)-1)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -164,8 +157,6 @@ function sortedArrayToBST(nums: number[]): TreeNode | null {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -193,11 +184,15 @@ impl Solution {
             return None;
         }
         let mid = start + (end - start) / 2;
-        Some(Rc::new(RefCell::new(TreeNode {
-            val: nums[mid],
-            left: Self::dfs(nums, start, mid),
-            right: Self::dfs(nums, mid + 1, end),
-        })))
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val: nums[mid],
+                    left: Self::dfs(nums, start, mid),
+                    right: Self::dfs(nums, mid + 1, end),
+                })
+            )
+        )
     }
     pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
         let end = nums.len();
@@ -205,8 +200,6 @@ impl Solution {
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -233,10 +226,6 @@ var sortedArrayToBST = function (nums) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -2,11 +2,8 @@ class Solution:
     def twoSumLessThanK(self, nums: List[int], k: int) -> int:
         nums.sort()
         ans = -1
-        i, j = 0, len(nums) - 1
-        while i < j:
-            if (t := nums[i] + nums[j]) < k:
-                ans = max(ans, t)
-                i += 1
-            else:
-                j -= 1
+        for i, x in enumerate(nums):
+            j = bisect_left(nums, k - x, lo=i + 1) - 1
+            if i < j:
+                ans = max(ans, x + nums[j])
         return ans

@@ -65,26 +65,22 @@ nums       index     target
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
+
+我们创建一个列表 $target$，用于存储目标数组。由于题目保证数字插入位置总是存在，因此我们可以直接按照给定的顺序插入到对应的位置。
+
+时间复杂度 $O(n^2)$，空间复杂度 $O(n)$。其中 $n$ 是数组的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def createTargetArray(self, nums: List[int], index: List[int]) -> List[int]:
         target = []
-        for i in range(len(nums)):
-            target.insert(index[i], nums[i])
+        for x, i in zip(nums, index):
+            target.insert(i, x)
         return target
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -94,28 +90,15 @@ class Solution {
         for (int i = 0; i < n; ++i) {
             target.add(index[i], nums[i]);
         }
-        int[] res = new int[n];
+        // return target.stream().mapToInt(i -> i).toArray();
+        int[] ans = new int[n];
         for (int i = 0; i < n; ++i) {
-            res[i] = target.get(i);
+            ans[i] = target.get(i);
         }
-        return res;
+        return ans;
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function createTargetArray(nums: number[], index: number[]): number[] {
-    let ans = [];
-    for (let i = 0; i < nums.length; i++) {
-        ans.splice(index[i], 0, nums[i]);
-    }
-    return ans;
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -130,23 +113,27 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func createTargetArray(nums []int, index []int) []int {
 	target := make([]int, len(nums))
-	for i, v := range nums {
+	for i, x := range nums {
 		copy(target[index[i]+1:], target[index[i]:])
-		target[index[i]] = v
+		target[index[i]] = x
 	}
 	return target
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function createTargetArray(nums: number[], index: number[]): number[] {
+    const ans: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+        ans.splice(index[i], 0, nums[i]);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

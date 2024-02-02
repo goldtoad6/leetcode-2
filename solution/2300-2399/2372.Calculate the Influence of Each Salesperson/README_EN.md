@@ -13,7 +13,7 @@
 | salesperson_id | int     |
 | name           | varchar |
 +----------------+---------+
-salesperson_id is the primary key for this table.
+salesperson_id contains unique values.
 Each row in this table shows the ID of a salesperson.
 </pre>
 
@@ -28,8 +28,8 @@ Each row in this table shows the ID of a salesperson.
 | customer_id    | int  |
 | salesperson_id | int  |
 +----------------+------+
-customer_id is the primary key for this table.
-salesperson_id is a foreign key from the Salesperson table.
+customer_id contains unique values.
+salesperson_id is a foreign key (reference column) from the Salesperson table.
 Each row in this table shows the ID of a customer and the ID of the salesperson. 
 </pre>
 
@@ -45,18 +45,18 @@ Each row in this table shows the ID of a customer and the ID of the salesperson.
 | customer_id | int  |
 | price       | int  |
 +-------------+------+
-sale_id is the primary key for this table.
-customer_id is a foreign key from the Customer table.
+sale_id contains unique values.
+customer_id is a foreign key (reference column) from the Customer table.
 Each row in this table shows ID of a customer and the price they paid for the sale with sale_id.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the sum of prices paid by the customers of each salesperson. If a salesperson does not have any customers, the total value should be <code>0</code>.</p>
+<p>Write a solution to report the sum of prices paid by the customers of each salesperson. If a salesperson does not have any customers, the total value should be <code>0</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is shown in the following example.</p>
+<p>The&nbsp;result format is shown in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -112,12 +112,20 @@ The total for Jerry is 0.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT sp.salesperson_id, name, IFNULL(SUM(price), 0) AS total
+FROM
+    Salesperson AS sp
+    LEFT JOIN Customer AS c ON sp.salesperson_id = c.salesperson_id
+    LEFT JOIN Sales AS s ON s.customer_id = c.customer_id
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -52,9 +52,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心 + 位运算**
+### 方法一：贪心 + 位运算
 
 我们将整数 $n$ 转换为二进制，从最低位开始：
 
@@ -66,10 +64,6 @@
 时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。其中 $n$ 为题目给定的整数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -88,10 +82,6 @@ class Solution:
             ans += 2
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -112,8 +102,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -133,8 +121,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minOperations(n int) (ans int) {
@@ -160,10 +146,26 @@ func minOperations(n int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function minOperations(n: number): number {
+    let [ans, cnt] = [0, 0];
+    for (; n; n >>= 1) {
+        if (n & 1) {
+            ++cnt;
+        } else if (cnt) {
+            ++ans;
+            cnt = cnt === 1 ? 0 : 1;
+        }
+    }
+    if (cnt === 1) {
+        ++ans;
+    } else if (cnt > 1) {
+        ans += 2;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

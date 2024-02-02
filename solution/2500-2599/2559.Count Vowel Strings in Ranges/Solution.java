@@ -1,30 +1,33 @@
 class Solution {
+    private List<Integer> nums = new ArrayList<>();
+
     public int[] vowelStrings(String[] words, int[][] queries) {
-        List<Integer> t = new ArrayList<>();
         Set<Character> vowels = Set.of('a', 'e', 'i', 'o', 'u');
         for (int i = 0; i < words.length; ++i) {
             char a = words[i].charAt(0), b = words[i].charAt(words[i].length() - 1);
             if (vowels.contains(a) && vowels.contains(b)) {
-                t.add(i);
+                nums.add(i);
             }
         }
-        int[] ans = new int[queries.length];
-        for (int i = 0; i < ans.length; ++i) {
-            ans[i] = search(t, queries[i][1] + 1) - search(t, queries[i][0]);
+        int m = queries.length;
+        int[] ans = new int[m];
+        for (int i = 0; i < m; ++i) {
+            int l = queries[i][0], r = queries[i][1];
+            ans[i] = search(r + 1) - search(l);
         }
         return ans;
     }
 
-    private int search(List<Integer> nums, int x) {
-        int left = 0, right = nums.size();
-        while (left < right) {
-            int mid = (left + right) >> 1;
+    private int search(int x) {
+        int l = 0, r = nums.size();
+        while (l < r) {
+            int mid = (l + r) >> 1;
             if (nums.get(mid) >= x) {
-                right = mid;
+                r = mid;
             } else {
-                left = mid + 1;
+                l = mid + 1;
             }
         }
-        return left;
+        return l;
     }
 }

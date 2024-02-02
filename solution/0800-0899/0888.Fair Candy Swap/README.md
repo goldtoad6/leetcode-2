@@ -55,15 +55,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-哈希表实现。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -75,10 +69,6 @@ class Solution:
             if target in s:
                 return [a, target]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,7 +94,26 @@ class Solution {
 }
 ```
 
-### **TypeScript**
+```cpp
+class Solution {
+public:
+    vector<int> fairCandySwap(vector<int>& aliceSizes, vector<int>& bobSizes) {
+        int s1 = accumulate(aliceSizes.begin(), aliceSizes.end(), 0);
+        int s2 = accumulate(bobSizes.begin(), bobSizes.end(), 0);
+        int diff = (s1 - s2) >> 1;
+        unordered_set<int> s(bobSizes.begin(), bobSizes.end());
+        vector<int> ans;
+        for (int& a : aliceSizes) {
+            int target = a - diff;
+            if (s.count(target)) {
+                ans = vector<int>{a, target};
+                break;
+            }
+        }
+        return ans;
+    }
+};
+```
 
 ```ts
 function fairCandySwap(aliceSizes: number[], bobSizes: number[]): number[] {
@@ -120,33 +129,6 @@ function fairCandySwap(aliceSizes: number[], bobSizes: number[]): number[] {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> fairCandySwap(vector<int>& aliceSizes, vector<int>& bobSizes) {
-        int s1 = accumulate(aliceSizes.begin(), aliceSizes.end(), 0);
-        int s2 = accumulate(bobSizes.begin(), bobSizes.end(), 0);
-        int diff = (s1 - s2) >> 1;
-        unordered_set<int> s(bobSizes.begin(), bobSizes.end());
-        vector<int> ans;
-        for (int& a : aliceSizes) {
-            int target = a - diff;
-            if (s.count(target)) {
-                ans = vector<int> {a, target};
-                break;
-            }
-        }
-        return ans;
-    }
-};
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -60,9 +60,9 @@ We can build the buildings with heights [0,1,2,3,3,4,4,5,4,3], and the tallest b
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -83,8 +83,6 @@ class Solution:
             ans = max(ans, t)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -116,8 +114,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -143,8 +139,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxBuilding(n int, restrictions [][]int) (ans int) {
 	r := restrictions
@@ -166,26 +160,8 @@ func maxBuilding(n int, restrictions [][]int) (ans int) {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

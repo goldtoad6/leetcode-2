@@ -56,9 +56,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序**
+### 方法一：排序
 
 先计算每个工人和每个自行车之间的曼哈顿距离，然后按照曼哈顿距离从小到大排序，遍历排序后的数组，如果当前工人和自行车都未被分配，则分配给当前工人和自行车。
 
@@ -66,18 +64,15 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> List[int]:
+    def assignBikes(
+        self, workers: List[List[int]], bikes: List[List[int]]
+    ) -> List[int]:
         n, m = len(workers), len(bikes)
         arr = []
         for i, j in product(range(n), range(m)):
-            dist = abs(workers[i][0] - bikes[j][0]) + \
-                abs(workers[i][1] - bikes[j][1])
+            dist = abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])
             arr.append((dist, i, j))
         arr.sort()
         vis1 = [False] * n
@@ -89,10 +84,6 @@ class Solution:
                 ans[i] = j
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -131,8 +122,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -159,8 +148,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func assignBikes(workers [][]int, bikes [][]int) []int {
@@ -203,10 +190,6 @@ func abs(x int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

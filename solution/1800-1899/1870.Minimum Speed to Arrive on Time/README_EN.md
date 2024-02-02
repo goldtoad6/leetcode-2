@@ -62,47 +62,9 @@
 
 ## Solutions
 
-Binary search.
-
-Template 1:
-
-```java
-boolean check(int x) {}
-
-int search(int left, int right) {
-    while (left < right) {
-        int mid = (left + right) >> 1;
-        if (check(mid)) {
-            right = mid;
-        } else {
-            left = mid + 1;
-        }
-    }
-    return left;
-}
-```
-
-Template 2:
-
-```java
-boolean check(int x) {}
-
-int search(int left, int right) {
-    while (left < right) {
-        int mid = (left + right + 1) >> 1;
-        if (check(mid)) {
-            left = mid;
-        } else {
-            right = mid - 1;
-        }
-    }
-    return left;
-}
-```
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -117,8 +79,6 @@ class Solution:
         ans = bisect_left(range(1, r), True, key=check) + 1
         return -1 if ans == r else ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -145,8 +105,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -175,8 +133,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minSpeedOnTime(dist []int, hour float64) int {
 	n := len(dist)
@@ -197,7 +153,41 @@ func minSpeedOnTime(dist []int, hour float64) int {
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    pub fn min_speed_on_time(dist: Vec<i32>, hour: f64) -> i32 {
+        let n = dist.len();
+
+        let check = |speed| {
+            let mut cur = 0.0;
+            for (i, &d) in dist.iter().enumerate() {
+                if i == n - 1 {
+                    cur += (d as f64) / (speed as f64);
+                } else {
+                    cur += ((d as f64) / (speed as f64)).ceil();
+                }
+            }
+            cur <= hour
+        };
+
+        let mut left = 1;
+        let mut right = 1e7 as i32;
+        while left < right {
+            let mid = left + (right - left) / 2;
+            if !check(mid) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        if check(left) {
+            return left;
+        }
+        -1
+    }
+}
+```
 
 ```js
 /**
@@ -234,48 +224,6 @@ function arriveOnTime(dist, speed, hour) {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn min_speed_on_time(dist: Vec<i32>, hour: f64) -> i32 {
-        let n = dist.len();
-
-        let check = |speed| {
-            let mut cur = 0.;
-            for (i, &d) in dist.iter().enumerate() {
-                if i == n - 1 {
-                    cur += d as f64 / speed as f64;
-                } else {
-                    cur += (d as f64 / speed as f64).ceil();
-                }
-            }
-            cur <= hour
-        };
-
-        let mut left = 1;
-        let mut right = 1e7 as i32;
-        while left < right {
-            let mid = left + (right - left) / 2;
-            if !check(mid) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-
-        if check(left) {
-            return left;
-        }
-        -1
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

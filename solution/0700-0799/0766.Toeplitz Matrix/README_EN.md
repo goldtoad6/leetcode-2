@@ -49,18 +49,20 @@ The diagonal &quot;[1, 2]&quot; has different elements.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
         m, n = len(matrix), len(matrix[0])
-        return all(matrix[i][j] == matrix[i - 1][j - 1] for i in range(1, m) for j in range(1, n))
+        return all(
+            matrix[i][j] == matrix[i - 1][j - 1]
+            for i in range(1, m)
+            for j in range(1, n)
+        )
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -77,8 +79,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -97,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isToeplitzMatrix(matrix [][]int) bool {
 	m, n := len(matrix), len(matrix[0])
@@ -112,8 +110,6 @@ func isToeplitzMatrix(matrix [][]int) bool {
 	return true
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -134,10 +130,6 @@ var isToeplitzMatrix = function (matrix) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

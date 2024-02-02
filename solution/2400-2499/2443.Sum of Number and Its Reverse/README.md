@@ -46,29 +46,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：暴力枚举**
+### 方法一：暴力枚举
 
 在 $[0,.., num]$ 范围内枚举 $k$，判断 $k + reverse(k)$ 是否等于 $num$ 即可。
 
-时间复杂度 $O(n\times \log n)。其中 $n$ 为 `num` 的大小。
+时间复杂度 $O(n \times \log n)。其中 $n$ 为 $num$ 的大小。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def sumOfNumberAndReverse(self, num: int) -> bool:
         return any(k + int(str(k)[::-1]) == num for k in range(num + 1))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -88,8 +78,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -111,8 +99,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func sumOfNumberAndReverse(num int) bool {
 	for x := 0; x <= num; x++ {
@@ -129,7 +115,40 @@ func sumOfNumberAndReverse(num int) bool {
 }
 ```
 
-### **C**
+```ts
+function sumOfNumberAndReverse(num: number): boolean {
+    for (let i = 0; i <= num; i++) {
+        if (i + Number([...(i + '')].reverse().join('')) === num) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+```rust
+impl Solution {
+    pub fn sum_of_number_and_reverse(num: i32) -> bool {
+        for i in 0..=num {
+            if
+                i +
+                    ({
+                        let mut t = i;
+                        let mut j = 0;
+                        while t > 0 {
+                            j = j * 10 + (t % 10);
+                            t /= 10;
+                        }
+                        j
+                    }) == num
+            {
+                return true;
+            }
+        }
+        false
+    }
+}
+```
 
 ```c
 bool sumOfNumberAndReverse(int num) {
@@ -148,47 +167,6 @@ bool sumOfNumberAndReverse(int num) {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function sumOfNumberAndReverse(num: number): boolean {
-    for (let i = 0; i <= num; i++) {
-        if (i + Number([...(i + '')].reverse().join('')) === num) {
-            return true;
-        }
-    }
-    return false;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn sum_of_number_and_reverse(num: i32) -> bool {
-        for i in 0..=num {
-            if i + {
-                let mut t = i;
-                let mut j = 0;
-                while t > 0 {
-                    j = j * 10 + t % 10;
-                    t /= 10;
-                }
-                j
-            } == num
-            {
-                return true;
-            }
-        }
-        false
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

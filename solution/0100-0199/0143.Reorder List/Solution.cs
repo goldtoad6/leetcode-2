@@ -11,24 +11,21 @@
  */
 public class Solution {
     public void ReorderList(ListNode head) {
-        if (head == null || head.next == null)
-        {
-            return;
-        }
+        // 快慢指针找到链表中点
         ListNode slow = head;
-        ListNode fast = head.next;
-        while (fast != null && fast.next != null)
-        {
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
+        // cur 指向右半部分链表
         ListNode cur = slow.next;
         slow.next = null;
 
+        // 反转右半部分链表
         ListNode pre = null;
-        while (cur != null)
-        {
+        while (cur != null) {
             ListNode t = cur.next;
             cur.next = pre;
             pre = cur;
@@ -36,8 +33,9 @@ public class Solution {
         }
         cur = head;
 
-        while (pre != null)
-        {
+        // 此时 cur, pre 分别指向链表左右两半的第一个节点
+        // 合并
+        while (pre != null) {
             ListNode t = pre.next;
             pre.next = cur.next;
             cur.next = pre;

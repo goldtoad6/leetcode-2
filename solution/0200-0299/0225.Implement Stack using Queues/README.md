@@ -62,9 +62,7 @@ myStack.empty(); // 返回 False
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：两个队列**
+### 方法一：两个队列
 
 我们使用两个队列 $q_1$ 和 $q_2$，其中 $q_1$ 用于存储栈中的元素，而 $q_2$ 用于辅助实现栈的操作。
 
@@ -77,13 +75,8 @@ myStack.empty(); // 返回 False
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class MyStack:
-
     def __init__(self):
         self.q1 = deque()
         self.q2 = deque()
@@ -112,10 +105,6 @@ class MyStack:
 # param_4 = obj.empty()
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 import java.util.Deque;
 
@@ -124,7 +113,6 @@ class MyStack {
     private Deque<Integer> q2 = new ArrayDeque<>();
 
     public MyStack() {
-
     }
 
     public void push(int x) {
@@ -160,13 +148,10 @@ class MyStack {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MyStack {
 public:
     MyStack() {
-
     }
 
     void push(int x) {
@@ -206,8 +191,6 @@ private:
  * bool param_4 = obj->empty();
  */
 ```
-
-### **Go**
 
 ```go
 type MyStack struct {
@@ -252,8 +235,6 @@ func (this *MyStack) Empty() bool {
  */
 ```
 
-### **TypeScript**
-
 ```ts
 class MyStack {
     q1: number[] = [];
@@ -292,10 +273,58 @@ class MyStack {
  */
 ```
 
-### **...**
+```rust
+use std::collections::VecDeque;
 
-```
+struct MyStack {
+    /// There could only be two status at all time
+    /// 1. One contains N elements, the other is empty
+    /// 2. One contains N - 1 elements, the other contains exactly 1 element
+    q_1: VecDeque<i32>,
+    q_2: VecDeque<i32>,
+    // Either 1 or 2, originally begins from 1
+    index: i32,
+}
 
+impl MyStack {
+    fn new() -> Self {
+        Self {
+            q_1: VecDeque::new(),
+            q_2: VecDeque::new(),
+            index: 1,
+        }
+    }
+
+    fn move_data(&mut self) {
+        // Always move from q1 to q2
+        assert!(self.q_2.len() == 1);
+        while !self.q_1.is_empty() {
+            self.q_2.push_back(self.q_1.pop_front().unwrap());
+        }
+        let tmp = self.q_1.clone();
+        self.q_1 = self.q_2.clone();
+        self.q_2 = tmp;
+    }
+
+    fn push(&mut self, x: i32) {
+        self.q_2.push_back(x);
+        self.move_data();
+    }
+
+    fn pop(&mut self) -> i32 {
+        self.q_1.pop_front().unwrap()
+    }
+
+    fn top(&mut self) -> i32 {
+        *self.q_1.front().unwrap()
+    }
+
+    fn empty(&self) -> bool {
+        self.q_1.is_empty()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

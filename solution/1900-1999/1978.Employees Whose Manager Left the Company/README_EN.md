@@ -15,17 +15,17 @@
 | manager_id  | int      |
 | salary      | int      |
 +-------------+----------+
-employee_id is the primary key for this table.
+In SQL, employee_id is the primary key for this table.
 This table contains information about the employees, their salary, and the ID of their manager. Some employees do not have a manager (manager_id is null). 
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the IDs of the employees whose salary is strictly less than <code>$30000</code> and whose manager left the company. When a manager leaves the company, their information is deleted from the <code>Employees</code> table, but the reports still have their <code>manager_id</code> set to the manager that left.</p>
+<p>Find the IDs of the employees whose salary is strictly less than <code>$30000</code> and whose manager left the company. When a manager leaves the company, their information is deleted from the <code>Employees</code> table, but the reports still have their <code>manager_id</code> set to the manager that left.</p>
 
 <p>Return the result table ordered by <code>employee_id</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -58,12 +58,38 @@ Joziah&#39;s manager is employee 6, who left the company because there is no row
 
 ## Solutions
 
+### Solution 1: Left Join
+
+We can use a left join to connect the employee table with itself, and then filter out the employees whose salary is less than $30000$ and have a superior manager who has left the company.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT e1.employee_id
+FROM
+    Employees AS e1
+    LEFT JOIN Employees AS e2 ON e1.manager_id = e2.employee_id
+WHERE e1.salary < 30000 AND e1.manager_id IS NOT NULL AND e2.employee_id IS NULL
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2: Subquery
+
+We can also use a subquery to first find all the managers who have left the company, and then find the employees whose salary is less than $30000$ and whose superior manager is not in the list of managers who have left the company.
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT employee_id
+FROM Employees
+WHERE salary < 30000 AND manager_id NOT IN (SELECT employee_id FROM Employees)
+ORDER BY 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

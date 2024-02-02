@@ -14,8 +14,8 @@
 | experience  | enum |
 | salary      | int  |
 +-------------+------+
-employee_id is the primary key column for this table.
-experience is an enum with one of the values (&#39;Senior&#39;, &#39;Junior&#39;).
+employee_id is the column with unique values for this table.
+experience is an ENUM (category) of types (&#39;Senior&#39;, &#39;Junior&#39;).
 Each row of this table indicates the id of a candidate, their monthly salary, and their experience.
 The salary of each candidate is guaranteed to be <strong>unique</strong>.</pre>
 
@@ -29,11 +29,11 @@ The salary of each candidate is guaranteed to be <strong>unique</strong>.</pre>
 	<li>Keep hiring the junior with the smallest salary until you cannot hire any more juniors.</li>
 </ol>
 
-<p>Write an SQL query to find the ids of seniors and juniors hired under the mentioned criteria.</p>
+<p>Write a solution to find the ids of seniors and juniors hired under the mentioned criteria.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -95,12 +95,44 @@ We can hire all three juniors with the remaining budget.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    s AS (
+        SELECT
+            employee_id,
+            SUM(salary) OVER (ORDER BY salary) AS cur
+        FROM Candidates
+        WHERE experience = 'Senior'
+    ),
+    j AS (
+        SELECT
+            employee_id,
+            IFNULL(
+                SELECT
+                    MAX(cur)
+                FROM s
+                WHERE cur <= 70000,
+                0
+            ) + SUM(salary) OVER (ORDER BY salary) AS cur
+        FROM Candidates
+        WHERE experience = 'Junior'
+    )
+SELECT
+    employee_id
+FROM s
+WHERE cur <= 70000
+UNION
+SELECT
+    employee_id
+FROM j
+WHERE cur <= 70000;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

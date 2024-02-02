@@ -28,7 +28,7 @@
 <strong>解释：</strong>存在 16 个满足题意的元组：
 (1,10,2,5) , (1,10,5,2) , (10,1,2,5) , (10,1,5,2)
 (2,5,1,10) , (2,5,10,1) , (5,2,1,10) , (5,2,10,1)
-(2,10,4,5) , (2,10,5,4) , (10,2,4,5) , (10,2,4,5)
+(2,10,4,5) , (2,10,5,4) , (10,2,4,5) , (10,2,5,4)
 (4,5,2,10) , (4,5,10,2) , (5,4,2,10) , (5,4,10,2)
 </pre>
 
@@ -44,21 +44,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：组合数 + 哈希表
 
-**方法一：组合数+哈希表**
+假设存在 $n$ 组数，对于其中任意两组数 $a, b$ 和 $c, d$，均满足 $a \times b = c \times d$ 的条件，则这样的组合一共有 $\mathrm{C}_n^2 = \frac{n \times (n-1)}{2}$ 个。
 
-假设存在 `n` 组数，对于其中任意两组数 `a、b` 和 `c、d`，均满足 $a * b = c * d$ 的条件，则这样的组合一共有 $\mathrm{C}_n^2 = \frac{n*(n-1)}{2}$ 个。
+根据题意每一组满足上述条件的组合可以构成 $8$ 个满足题意的元组，故将各个相同乘积的组合数乘以 $8$ 相加（等价于：左移 $3$ 位）即可得到结果。
 
-根据题意每一组满足上述条件的组合可以构成 `8` 个满足题意的元组，故将各个相同乘积的组合数乘以 `8` 相加即可得到结果。
-
-时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。
+时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。其中 $n$ 为数组长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -71,10 +65,6 @@ class Solution:
         return sum(v * (v - 1) // 2 for v in cnt.values()) << 3
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int tupleSameProduct(int[] nums) {
@@ -82,7 +72,7 @@ class Solution {
         for (int i = 1; i < nums.length; ++i) {
             for (int j = 0; j < i; ++j) {
                 int x = nums[i] * nums[j];
-                cnt.put(x, cnt.getOrDefault(x, 0) + 1);
+                cnt.merge(x, 1, Integer::sum);
             }
         }
         int ans = 0;
@@ -93,8 +83,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -116,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func tupleSameProduct(nums []int) int {
 	cnt := map[int]int{}
@@ -135,10 +121,47 @@ func tupleSameProduct(nums []int) int {
 }
 ```
 
-### **...**
-
+```ts
+function tupleSameProduct(nums: number[]): number {
+    const cnt: Map<number, number> = new Map();
+    for (let i = 1; i < nums.length; ++i) {
+        for (let j = 0; j < i; ++j) {
+            const x = nums[i] * nums[j];
+            cnt.set(x, (cnt.get(x) ?? 0) + 1);
+        }
+    }
+    let ans = 0;
+    for (const [_, v] of cnt) {
+        ans += (v * (v - 1)) / 2;
+    }
+    return ans << 3;
+}
 ```
 
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn tuple_same_product(nums: Vec<i32>) -> i32 {
+        let mut cnt: HashMap<i32, i32> = HashMap::new();
+        let mut ans = 0;
+
+        for i in 1..nums.len() {
+            for j in 0..i {
+                let x = nums[i] * nums[j];
+                *cnt.entry(x).or_insert(0) += 1;
+            }
+        }
+
+        for v in cnt.values() {
+            ans += (v * (v - 1)) / 2;
+        }
+
+        ans << 3
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

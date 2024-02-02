@@ -26,20 +26,18 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def reverseString(self, s: List[str]) -> None:
-        """
-        Do not return anything, modify s in-place instead.
-        """
-        s[:] = s[::-1]
+        i, j = 0, len(s) - 1
+        while i < j:
+            s[i], s[j] = s[j], s[i]
+            i, j = i + 1, j - 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -53,19 +51,16 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     void reverseString(vector<char>& s) {
-        for (int i = 0, j = s.size() - 1; i < j; ++i, --j)
-            swap(s[i], s[j]);
+        for (int i = 0, j = s.size() - 1; i < j;) {
+            swap(s[i++], s[j--]);
+        }
     }
 };
 ```
-
-### **Go**
 
 ```go
 func reverseString(s []byte) {
@@ -75,7 +70,30 @@ func reverseString(s []byte) {
 }
 ```
 
-### **JavaScript**
+```ts
+/**
+ Do not return anything, modify s in-place instead.
+ */
+function reverseString(s: string[]): void {
+    for (let i = 0, j = s.length - 1; i < j; ++i, --j) {
+        [s[i], s[j]] = [s[j], s[i]];
+    }
+}
+```
+
+```rust
+impl Solution {
+    pub fn reverse_string(s: &mut Vec<char>) {
+        let mut i = 0;
+        let mut j = s.len() - 1;
+        while i < j {
+            s.swap(i, j);
+            i += 1;
+            j -= 1;
+        }
+    }
+}
+```
 
 ```js
 /**
@@ -89,27 +107,27 @@ var reverseString = function (s) {
 };
 ```
 
-### **Rust**
+<!-- tabs:end -->
 
-```rust
-impl Solution {
-    pub fn reverse_string(s: &mut Vec<char>) {
-        let n = s.len();
-        let mut l = 0;
-        let mut r = n - 1;
-        while l < r {
-            s.swap(l, r);
-            l += 1;
-            r -= 1;
-        }
-    }
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        s[:] = s[::-1]
+```
+
+```ts
+/**
+ Do not return anything, modify s in-place instead.
+ */
+function reverseString(s: string[]): void {
+    s.reverse();
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

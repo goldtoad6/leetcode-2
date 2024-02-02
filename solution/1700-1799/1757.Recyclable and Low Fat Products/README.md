@@ -16,19 +16,24 @@
 | low_fats    | enum    |
 | recyclable  | enum    |
 +-------------+---------+
-product_id 是这个表的主键。
+<code>product_id</code> 是该表的主键（具有唯一值的列）。
 low_fats 是枚举类型，取值为以下两种 ('Y', 'N')，其中 'Y' 表示该产品是低脂产品，'N' 表示不是低脂产品。
 recyclable 是枚举类型，取值为以下两种 ('Y', 'N')，其中 'Y' 表示该产品可回收，而 'N' 表示不可回收。</pre>
 
-<p> </p>
+<p>&nbsp;</p>
 
-<p>写出 SQL 语句，查找既是低脂又是可回收的产品编号。</p>
+<p>编写解决方案找出既是低脂又是可回收的产品编号。</p>
 
 <p>返回结果 <strong>无顺序要求</strong> 。</p>
 
-<p>查询结果格式如下例所示：</p>
+<p>返回结果格式如下例所示：</p>
+
+<p>&nbsp;</p>
+
+<p><strong>示例 1：</strong></p>
 
 <pre>
+<strong>输入：</strong>
 Products 表：
 +-------------+----------+------------+
 | product_id  | low_fats | recyclable |
@@ -39,32 +44,42 @@ Products 表：
 | 3           | Y        | Y          |
 | 4           | N        | N          |
 +-------------+----------+------------+
-Result 表：
+<strong>输出：</strong>
 +-------------+
 | product_id  |
 +-------------+
 | 1           |
 | 3           |
 +-------------+
+<strong>解释：</strong>
 只有产品 id 为 1 和 3 的产品，既是低脂又是可回收的产品。
 </pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：条件筛选
+
+我们直接筛选出 `low_fats` 为 `Y` 且 `recyclable` 为 `Y` 的产品编号即可。
 
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
+
+
+def find_products(products: pd.DataFrame) -> pd.DataFrame:
+    rs = products[(products["low_fats"] == "Y") & (products["recyclable"] == "Y")]
+    rs = rs[["product_id"]]
+    return rs
+```
 
 ```sql
 SELECT
     product_id
-FROM
-    Products
-WHERE
-    low_fats = 'Y'
-    AND recyclable = 'Y';
+FROM Products
+WHERE low_fats = 'Y' AND recyclable = 'Y';
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

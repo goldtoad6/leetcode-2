@@ -67,9 +67,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 我们创建哈希表 `d`，其中键是文件内容，值是具有相同内容的文件路径列表。
 
@@ -81,10 +79,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def findDuplicate(self, paths: List[str]) -> List[List[str]]:
@@ -93,14 +87,10 @@ class Solution:
             ps = p.split()
             for f in ps[1:]:
                 i = f.find('(')
-                name, content = f[:i], f[i + 1: -1]
+                name, content = f[:i], f[i + 1 : -1]
                 d[content].append(ps[0] + '/' + name)
         return [v for v in d.values() if len(v) > 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -125,8 +115,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -163,8 +151,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findDuplicate(paths []string) [][]string {
 	d := map[string][]string{}
@@ -187,8 +173,6 @@ func findDuplicate(paths []string) [][]string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findDuplicate(paths: string[]): string[][] {
     const d = new Map<string, string[]>();
@@ -205,10 +189,6 @@ function findDuplicate(paths: string[]): string[][] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

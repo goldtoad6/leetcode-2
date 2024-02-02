@@ -14,17 +14,17 @@
 | accepter_id    | int     |
 | accept_date    | date    |
 +----------------+---------+
-(requester_id, accepter_id) is the primary key for this table.
+(requester_id, accepter_id) is the primary key (combination of columns with unique values) for this table.
 This table contains the ID of the user who sent the request, the ID of the user who received the request, and the date when the request was accepted.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the people who have the most friends and the most friends number.</p>
+<p>Write a solution to find the people who have the most friends and the most friends number.</p>
 
 <p>The test cases are generated so that only one person has the most friends.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -55,24 +55,25 @@ The person with id 3 is a friend of people 1, 2, and 4, so he has three friends 
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-    ids AS id, COUNT(*) num
-FROM
-    (SELECT
-        requester_id AS ids
-    FROM
-        RequestAccepted UNION ALL SELECT
-        accepter_id
-    FROM
-        RequestAccepted) t
-GROUP BY ids
-ORDER BY num DESC
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT requester_id, accepter_id FROM RequestAccepted
+        UNION
+        SELECT accepter_id, requester_id FROM RequestAccepted
+    )
+SELECT requester_id AS id, COUNT(accepter_id) AS num
+FROM T
+GROUP BY 1
+ORDER BY 2 DESC
 LIMIT 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

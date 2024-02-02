@@ -53,24 +53,146 @@ The fourth number in the sorted array is 7.
 
 ## Solutions
 
+### Solution 1: Custom Sorting
+
+First, we define a function $f(x)$, which represents the number of steps required to change the number $x$ to $1$, i.e., the weight of the number $x$.
+
+Then, we sort all the numbers in the interval $[lo, hi]$ in ascending order of weight. If the weights are the same, we sort them in ascending order of the numbers themselves.
+
+Finally, we return the $k$-th number after sorting.
+
+The time complexity is $O(n \times \log n \times M)$, and the space complexity is $O(n)$. Where $n$ is the number of numbers in the interval $[lo, hi]$, and $M$ is the maximum value of $f(x)$. In this problem, the maximum value of $M$ is $178$.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
+@cache
+def f(x: int) -> int:
+    ans = 0
+    while x != 1:
+        if x % 2 == 0:
+            x //= 2
+        else:
+            x = 3 * x + 1
+        ans += 1
+    return ans
 
+
+class Solution:
+    def getKth(self, lo: int, hi: int, k: int) -> int:
+        return sorted(range(lo, hi + 1), key=f)[k - 1]
 ```
-
-### **Java**
 
 ```java
+class Solution {
+    public int getKth(int lo, int hi, int k) {
+        Integer[] nums = new Integer[hi - lo + 1];
+        for (int i = lo; i <= hi; ++i) {
+            nums[i - lo] = i;
+        }
+        Arrays.sort(nums, (a, b) -> {
+            int fa = f(a), fb = f(b);
+            return fa == fb ? a - b : fa - fb;
+        });
+        return nums[k - 1];
+    }
 
+    private int f(int x) {
+        int ans = 0;
+        for (; x != 1; ++ans) {
+            if (x % 2 == 0) {
+                x /= 2;
+            } else {
+                x = x * 3 + 1;
+            }
+        }
+        return ans;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int getKth(int lo, int hi, int k) {
+        auto f = [](int x) {
+            int ans = 0;
+            for (; x != 1; ++ans) {
+                if (x % 2 == 0) {
+                    x /= 2;
+                } else {
+                    x = 3 * x + 1;
+                }
+            }
+            return ans;
+        };
+        vector<int> nums;
+        for (int i = lo; i <= hi; ++i) {
+            nums.push_back(i);
+        }
+        sort(nums.begin(), nums.end(), [&](int x, int y) {
+            int fx = f(x), fy = f(y);
+            if (fx != fy) {
+                return fx < fy;
+            } else {
+                return x < y;
+            }
+        });
+        return nums[k - 1];
+    }
+};
 ```
 
+```go
+func getKth(lo int, hi int, k int) int {
+	f := func(x int) (ans int) {
+		for ; x != 1; ans++ {
+			if x%2 == 0 {
+				x /= 2
+			} else {
+				x = 3*x + 1
+			}
+		}
+		return
+	}
+	nums := make([]int, hi-lo+1)
+	for i := range nums {
+		nums[i] = lo + i
+	}
+	sort.Slice(nums, func(i, j int) bool {
+		fx, fy := f(nums[i]), f(nums[j])
+		if fx != fy {
+			return fx < fy
+		}
+		return nums[i] < nums[j]
+	})
+	return nums[k-1]
+}
+```
+
+```ts
+function getKth(lo: number, hi: number, k: number): number {
+    const f = (x: number): number => {
+        let ans = 0;
+        for (; x !== 1; ++ans) {
+            if (x % 2 === 0) {
+                x >>= 1;
+            } else {
+                x = x * 3 + 1;
+            }
+        }
+        return ans;
+    };
+    const nums = new Array(hi - lo + 1).fill(0).map((_, i) => i + lo);
+    nums.sort((a, b) => {
+        const fa = f(a),
+            fb = f(b);
+        return fa === fb ? a - b : fa - fb;
+    });
+    return nums[k - 1];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

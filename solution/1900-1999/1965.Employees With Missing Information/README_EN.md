@@ -13,7 +13,7 @@
 | employee_id | int     |
 | name        | varchar |
 +-------------+---------+
-employee_id is the primary key for this table.
+employee_id is the column with unique values for this table.
 Each row of this table indicates the name of the employee whose ID is employee_id.
 </pre>
 
@@ -28,13 +28,13 @@ Each row of this table indicates the name of the employee whose ID is employee_i
 | employee_id | int     |
 | salary      | int     |
 +-------------+---------+
-employee_id is the primary key for this table.
+employee_id is the column with unique values for this table.
 Each row of this table indicates the salary of the employee whose ID is employee_id.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the IDs of all the employees with <strong>missing information</strong>. The information of an employee is missing if:</p>
+<p>Write a solution to report the IDs of all the employees with <strong>missing information</strong>. The information of an employee is missing if:</p>
 
 <ul>
 	<li>The employee&#39;s <strong>name</strong> is missing, or</li>
@@ -43,7 +43,7 @@ Each row of this table indicates the salary of the employee whose ID is employee
 
 <p>Return the result table ordered by <code>employee_id</code> <strong>in ascending order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -81,25 +81,24 @@ The salary of employee 2 is missing.
 
 ## Solutions
 
+### Solution 1: Subquery + Union
+
+We can first find all `employee_id` that are not in the `Salaries` table from the `Employees` table, and then find all `employee_id` that are not in the `Employees` table from the `Salaries` table. Finally, we can combine the two results using the `UNION` operator, and sort the result by `employee_id`.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
+# Write your MySQL query statement below
 SELECT employee_id
-FROM Employees AS e
-WHERE e.employee_id NOT IN (
-        SELECT employee_id
-        FROM Salaries
-    )
+FROM Employees
+WHERE employee_id NOT IN (SELECT employee_id FROM Salaries)
 UNION
 SELECT employee_id
-FROM Salaries AS s
-WHERE s.employee_id NOT IN (
-        SELECT employee_id
-        FROM Employees
-    )
-ORDER BY employee_id;
+FROM Salaries
+WHERE employee_id NOT IN (SELECT employee_id FROM Employees)
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -16,7 +16,7 @@
 +-------------+------+
 | num         | int  |
 +-------------+------+
-这张表没有主键。可能包含重复数字。
+该表可能包含重复项（换句话说，在SQL中，该表没有主键）。
 这张表的每一行都含有一个整数。
 </pre>
 
@@ -24,7 +24,7 @@
 
 <p><strong>单一数字</strong> 是在 <code>MyNumbers</code> 表中只出现一次的数字。</p>
 
-<p>请你编写一个 SQL 查询来报告最大的 <strong>单一数字</strong> 。如果不存在 <strong>单一数字</strong> ，查询需报告 <code>null</code> 。</p>
+<p>找出最大的 <strong>单一数字</strong> 。如果不存在 <strong>单一数字</strong> ，则返回&nbsp;<code>null</code> 。</p>
 
 <p>查询结果如下例所示。</p>
 <ptable> </ptable>
@@ -89,20 +89,45 @@ MyNumbers table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：分组 + 子查询
+
+我们可以先将 `MyNumbers` 表按照 `num` 进行分组统计，找出只出现一次的数字，然后使用子查询找出最大的数字即可。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT MAX(a.num) AS num
-FROM (
-	SELECT num
-	FROM MyNumbers
-	GROUP BY num
-	HAVING count(*) = 1
-) a;
+# Write your MySQL query statement below
+SELECT MAX(num) AS num
+FROM
+    (
+        SELECT num
+        FROM MyNumbers
+        GROUP BY 1
+        HAVING COUNT(1) = 1
+    ) AS t;
 ```
 
 <!-- tabs:end -->
+
+### 方法二：分组 + `CASE` 表达式
+
+与方法一类似，我们可以先将 `MyNumbers` 表按照 `num` 进行分组统计，然后使用 `CASE` 表达式，找出只出现一次的数字，然后按数字降序排序，取第一个即可。
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    CASE
+        WHEN COUNT(1) = 1 THEN num
+        ELSE NULL
+    END AS num
+FROM MyNumbers
+GROUP BY num
+ORDER BY 1 DESC
+LIMIT 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

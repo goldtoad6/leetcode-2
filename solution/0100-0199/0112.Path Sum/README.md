@@ -50,19 +50,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归**
+### 方法一：递归
 
 从根节点开始，递归地对树进行遍历，并在遍历过程中更新节点的值为从根节点到该节点的路径和。当遍历到叶子节点时，判断该路径和是否等于目标值，如果相等则返回 `true`，否则返回 `false`。
 
 时间复杂度 $O(n)$，其中 $n$ 是二叉树的节点数。对每个节点访问一次。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -83,10 +77,6 @@ class Solution:
 
         return dfs(root, 0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -122,8 +112,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -150,8 +138,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -177,8 +163,6 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -195,20 +179,16 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
  */
 
 function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
-    if (root == null) {
+    if (root === null) {
         return false;
     }
     const { val, left, right } = root;
-    if (left == null && right == null) {
+    if (left === null && right === null) {
         return targetSum - val === 0;
     }
-    return (
-        hasPathSum(left, targetSum - val) || hasPathSum(right, targetSum - val)
-    );
+    return hasPathSum(left, targetSum - val) || hasPathSum(right, targetSum - val);
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -242,15 +222,13 @@ impl Solution {
                     return target_sum - node.val == 0;
                 }
                 let val = node.val;
-                Self::has_path_sum(node.left.take(), target_sum - val)
-                    || Self::has_path_sum(node.right.take(), target_sum - val)
+                Self::has_path_sum(node.left.take(), target_sum - val) ||
+                    Self::has_path_sum(node.right.take(), target_sum - val)
             }
         }
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -277,10 +255,6 @@ var hasPathSum = function (root, targetSum) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

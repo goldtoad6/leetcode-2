@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -71,8 +71,6 @@ class Solution:
         dfs(root)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -115,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -149,8 +145,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -179,8 +173,6 @@ func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -217,8 +209,6 @@ function findDuplicateSubtrees(root: TreeNode | null): Array<TreeNode | null> {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -245,7 +235,7 @@ impl Solution {
     fn dfs(
         root: &Option<Rc<RefCell<TreeNode>>>,
         map: &mut HashMap<String, i32>,
-        res: &mut Vec<Option<Rc<RefCell<TreeNode>>>>,
+        res: &mut Vec<Option<Rc<RefCell<TreeNode>>>>
     ) -> String {
         if root.is_none() {
             return String::from('#');
@@ -268,7 +258,7 @@ impl Solution {
     }
 
     pub fn find_duplicate_subtrees(
-        root: Option<Rc<RefCell<TreeNode>>>,
+        root: Option<Rc<RefCell<TreeNode>>>
     ) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
         let mut map = HashMap::new();
         let mut res = Vec::new();
@@ -278,10 +268,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,9 +49,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -75,8 +75,6 @@ class Solution:
         ans = dp[-1][-1][1]
         return -1 if ans < 0 else ans % mod
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -114,8 +112,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 const int mod = 1e9 + 7;
@@ -151,8 +147,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxProductPath(grid [][]int) int {
@@ -192,26 +186,8 @@ func maxProductPath(grid [][]int) int {
 	var mod int = 1e9 + 7
 	return ans % mod
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

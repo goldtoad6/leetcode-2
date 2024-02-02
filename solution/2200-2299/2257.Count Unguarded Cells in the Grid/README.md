@@ -51,11 +51,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
-
-我们创建一个 $m \times n$ 的二维数组 $g$，其中 $g[i][j]$ 表示第 $i$ 行第 $j$ 列的格子。初始时，$g[i][j]$ 的值为 $0$，表示该格子没有被保卫。
+我们创建一个 $m \times n$ 的二维数组 $g$，其中 $g[i][j]$ 表示第 $i$ 行第 $j$ 列的格子。初始时 $g[i][j]$ 的值为 $0$，表示该格子没有被保卫。
 
 然后遍历所有的警卫和墙，将 $g[i][j]$ 的值置为 $2$，这些位置不能被访问。
 
@@ -66,10 +64,6 @@
 时间复杂度 $O(m \times n)$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别为网格的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -90,10 +84,6 @@ class Solution:
                     g[x][y] = 1
         return sum(v == 0 for row in g for v in row)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -130,8 +120,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -164,8 +152,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countUnguarded(m int, n int, guards [][]int, walls [][]int) (ans int) {
@@ -201,16 +187,37 @@ func countUnguarded(m int, n int, guards [][]int, walls [][]int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function countUnguarded(m: number, n: number, guards: number[][], walls: number[][]): number {
+    const g: number[][] = Array.from({ length: m }, () => Array.from({ length: n }, () => 0));
+    for (const [i, j] of guards) {
+        g[i][j] = 2;
+    }
+    for (const [i, j] of walls) {
+        g[i][j] = 2;
+    }
+    const dirs: number[] = [-1, 0, 1, 0, -1];
+    for (const [i, j] of guards) {
+        for (let k = 0; k < 4; ++k) {
+            let [x, y] = [i, j];
+            let [a, b] = [dirs[k], dirs[k + 1]];
+            while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && g[x + a][y + b] < 2) {
+                x += a;
+                y += b;
+                g[x][y] = 1;
+            }
+        }
+    }
+    let ans = 0;
+    for (const row of g) {
+        for (const v of row) {
+            ans += v === 0 ? 1 : 0;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

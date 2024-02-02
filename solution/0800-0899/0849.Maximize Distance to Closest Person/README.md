@@ -57,23 +57,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：一次遍历
 
-**方法一：一次遍历**
+我们定义两个变量 $first$ 和 $last$ 分别表示第一个人和最后一个人的位置，用变量 $d$ 表示两个人之间的最大距离。
 
-我们定义两个变量 `first` 和 `last` 分别表示第一个人和最后一个人的位置，用变量 `d` 表示两个人之间的最大距离。
-
-然后遍历数组 `seats`，如果当前位置有人，如果此前 `last` 更新过，说明此前有人，此时更新 $d = \max(d, i - last)$；如果此前 `first` 没有更新过，说明此前没有人，此时更新 `first = i`，然后更新 `last = i`。
+然后遍历数组 $seats$，如果当前位置有人，如果此前 $last$ 更新过，说明此前有人，此时更新 $d = \max(d, i - last)$；如果此前 $first$ 没有更新过，说明此前没有人，此时更新 $first = i$。接下来更新 $last = i$。
 
 最后返回 $\max(first, n - last - 1, d / 2)$ 即可。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `seats` 的长度。
+时间复杂度 $O(n)$，其中 $n$ 为数组 $seats$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -89,10 +83,6 @@ class Solution:
                 last = i
         return max(first, len(seats) - last - 1, d // 2)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -114,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -139,8 +127,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxDistToClosest(seats []int) int {
 	first, last := -1, -1
@@ -158,19 +144,29 @@ func maxDistToClosest(seats []int) int {
 	}
 	return max(d/2, max(first, len(seats)-last-1))
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maxDistToClosest(seats: number[]): number {
+    let first = -1,
+        last = -1;
+    let d = 0,
+        n = seats.length;
+    for (let i = 0; i < n; ++i) {
+        if (seats[i] === 1) {
+            if (last !== -1) {
+                d = Math.max(d, i - last);
+            }
+            if (first === -1) {
+                first = i;
+            }
+            last = i;
+        }
+    }
+    return Math.max(first, n - last - 1, d >> 1);
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

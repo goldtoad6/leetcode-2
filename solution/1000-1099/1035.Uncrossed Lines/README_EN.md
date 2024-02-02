@@ -51,19 +51,9 @@ We cannot draw 3 uncrossed lines, because the line from nums1[1] = 4 to nums2[2]
 
 ## Solutions
 
-Longest common sub-sequences
-
-$$
-dp[i][j]=
-\begin{cases}
-dp[i-1][j-1]+1, & nums1[i-1]=nums2[j-1] \\
-\max(dp[i-1][j], dp[i][j-1]), & nums1[i-1]\neq nums2[j-1]
-\end{cases}
-$$
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -78,8 +68,6 @@ class Solution:
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
         return dp[m][n]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -123,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxUncrossedLines(nums1 []int, nums2 []int) int {
 	m, n := len(nums1), len(nums2)
@@ -143,16 +127,7 @@ func maxUncrossedLines(nums1 []int, nums2 []int) int {
 	}
 	return dp[m][n]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxUncrossedLines(nums1: number[], nums2: number[]): number {
@@ -171,10 +146,6 @@ function maxUncrossedLines(nums1: number[], nums2: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

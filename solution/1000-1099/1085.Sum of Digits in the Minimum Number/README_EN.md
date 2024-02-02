@@ -33,9 +33,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -47,8 +47,6 @@ class Solution:
             x //= 10
         return s & 1 ^ 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -66,8 +64,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -82,28 +78,16 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func sumOfDigits(nums []int) int {
-	x := 100
-	for _, v := range nums {
-		if v < x {
-			x = v
-		}
-	}
 	s := 0
-	for ; x > 0; x /= 10 {
+	for x := slices.Min(nums); x > 0; x /= 10 {
 		s += x % 10
 	}
 	return s&1 ^ 1
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

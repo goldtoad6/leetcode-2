@@ -37,9 +37,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数学**
+### 方法一：数学
 
 先统计 $[1,n]$ 范围内的质数个数，我们记为 $cnt$。然后求 $cnt$ 以及 $n-cnt$ 阶乘的乘积得到答案，注意取模操作。
 
@@ -49,15 +47,11 @@
 
 设 $primes[i]$ 表示数 $i$ 是不是质数，如果是质数则为 $true$，否则为 $false$。
 
-我们在 $[2,n]$ 范围内顺序遍历每个数 $i$，如果这个数为质数（$primes[i]==true$），质数个数增 1，然后将其所有的倍数 $j$ 都标记为合数（除了该质数本身），即 $primes[j]=false$，这样在运行结束的时候我们即能知道质数的个数。
+我们在 $[2,n]$ 范围内顺序遍历每个数 $i$，如果这个数为质数，质数个数增 $1$，然后将其所有的倍数 $j$ 都标记为合数（除了该质数本身），即 $primes[j]=false$，这样在运行结束的时候我们即能知道质数的个数。
 
-时间复杂度 $O(nloglogn)$。
+时间复杂度 $O(n \times \log \log n)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -76,10 +70,6 @@ class Solution:
         ans = factorial(cnt) * factorial(n - cnt)
         return ans % (10**9 + 7)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -116,8 +106,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 const int MOD = 1e9 + 7;
@@ -127,7 +115,7 @@ public:
     int numPrimeArrangements(int n) {
         int cnt = count(n);
         ll ans = f(cnt) * f(n - cnt);
-        return (int)(ans % MOD);
+        return (int) (ans % MOD);
     }
 
     ll f(int n) {
@@ -149,8 +137,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numPrimeArrangements(n int) int {
@@ -186,10 +172,6 @@ func numPrimeArrangements(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

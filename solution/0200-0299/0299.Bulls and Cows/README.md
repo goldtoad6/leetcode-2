@@ -56,13 +56,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +77,6 @@ class Solution:
             y += min(cnt1[i], cnt2[i])
         return f'{x}A{y}B'
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -109,8 +101,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -133,8 +123,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getHint(secret string, guess string) string {
 	x, y := 0, 0
@@ -154,16 +142,7 @@ func getHint(secret string, guess string) string {
 	}
 	return fmt.Sprintf("%dA%dB", x, y)
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -177,8 +156,11 @@ class Solution {
         $cntB = 0;
         $len = strlen($secret);
         for ($i = 0; $i < $len; $i++) {
-            if ($secret[$i] == $guess[$i]) $cntA++;
-            else $hashtable[$secret[$i]] += 1;
+            if ($secret[$i] == $guess[$i]) {
+                $cntA++;
+            } else {
+                $hashtable[$secret[$i]] += 1;
+            }
         }
         for ($i = 0; $i < $len; $i++) {
             if ($secret[$i] != $guess[$i] && $hashtable[$guess[$i]] > 0) {
@@ -186,15 +168,11 @@ class Solution {
                 $hashtable[$guess[$i]] -= 1;
             }
         }
-        return $cntA."A".$cntB."B";
+        return $cntA . 'A' . $cntB . 'B';
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -62,15 +62,23 @@ The pattern (&quot;home&quot;, &quot;home&quot;, &quot;home&quot;) has score 0 (
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Sorting
 
-### **Python3**
+First, we use a hash table $d$ to record the websites each user visits. Then we traverse $d$. For each user, we enumerate all the triplets they visited, count the occurrence of distinct triplets, and finally traverse all triplets, returning the one with the highest occurrence and the smallest lexicographic order.
+
+The time complexity is $O(n^3)$, and the space complexity is $O(n^3)$. Here, $n$ is the length of `username`.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
+    def mostVisitedPattern(
+        self, username: List[str], timestamp: List[int], website: List[str]
+    ) -> List[str]:
         d = defaultdict(list)
-        for user, _, site in sorted(zip(username, timestamp, website), key=lambda x: x[1]):
+        for user, _, site in sorted(
+            zip(username, timestamp, website), key=lambda x: x[1]
+        ):
             d[user].append(site)
 
         cnt = Counter()
@@ -86,8 +94,6 @@ class Solution:
                 cnt[t] += 1
         return sorted(cnt.items(), key=lambda x: (-x[1], x[0]))[0][0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -144,8 +150,6 @@ class Node {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -199,8 +203,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func mostVisitedPattern(username []string, timestamp []int, website []string) []string {
 	d := map[string][]pair{}
@@ -243,10 +245,6 @@ type pair struct {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

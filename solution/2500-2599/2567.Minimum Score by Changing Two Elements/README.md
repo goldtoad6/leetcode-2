@@ -53,13 +53,11 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：排序 + 贪心
 
-**方法一：排序 + 贪心**
+根据题意我们知道，最小得分实际上是排序数组相邻两个元素的最小差值，最大得分是排序数组首尾元素的差值。数组 $nums$ 的分数是最小得分与最大得分的和。
 
-根据题意我们知道，最小得分实际上是排序数组相邻两个元素的最小差值，最大得分是排序数组首尾元素的差值。数组 `nums` 的分数是最小得分与最大得分的和。
-
-因此，我们可以先对数组进行排序。由于题目允许我们修改数组中最多两个元素的值，我们可以通过修改一个数，让其跟数组中的另一个数相同，使得最小得分为 $0$，那么数组 `nums` 的分数实际上就是最大得分。我们可以选择进行如下修改之一：
+因此，我们可以先对数组进行排序。由于题目允许我们修改数组中最多两个元素的值，我们可以通过修改一个数，让其跟数组中的另一个数相同，使得最小得分为 $0$，那么数组 $nums$ 的分数实际上就是最大得分。我们可以选择进行如下修改之一：
 
 1. 修改最小的两个数为 $nums[2]$，那么最大得分为 $nums[n - 1] - nums[2]$；
 1. 修改最小的一个数为 $nums[1]$，最大的一个数为 $nums[n - 2]$，那么最大得分为 $nums[n - 2] - nums[1]$；
@@ -67,17 +65,13 @@
 
 最后，我们返回上述三种修改的得分的最小值即可。
 
-时间复杂度 $O(n \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组 `nums` 的长度。
+时间复杂度 $O(n \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组 $nums$ 的长度。
 
 相似题目：
 
--   [1509. 三次操作后最大值与最小值的最小差](/solution/1500-1599/1509.Minimum%20Difference%20Between%20Largest%20and%20Smallest%20Value%20in%20Three%20Moves/README.md)
+-   [1509. 三次操作后最大值与最小值的最小差](https://github.com/doocs/leetcode/blob/main/solution/1500-1599/1509.Minimum%20Difference%20Between%20Largest%20and%20Smallest%20Value%20in%20Three%20Moves/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,10 +79,6 @@ class Solution:
         nums.sort()
         return min(nums[-1] - nums[2], nums[-2] - nums[1], nums[-3] - nums[0])
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -103,8 +93,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -116,70 +104,45 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimizeSum(nums []int) int {
 	sort.Ints(nums)
 	n := len(nums)
 	return min(nums[n-1]-nums[2], min(nums[n-2]-nums[1], nums[n-3]-nums[0]))
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minimizeSum(nums: number[]): number {
     nums.sort((a, b) => a - b);
     const n = nums.length;
-    return Math.min(
-        nums[n - 3] - nums[0],
-        nums[n - 2] - nums[1],
-        nums[n - 1] - nums[2],
-    );
+    return Math.min(nums[n - 3] - nums[0], nums[n - 2] - nums[1], nums[n - 1] - nums[2]);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
     pub fn minimize_sum(mut nums: Vec<i32>) -> i32 {
         nums.sort();
         let n = nums.len();
-        (nums[n - 1] - nums[2])
-            .min(nums[n - 2] - nums[1])
-            .min(nums[n - 3] - nums[0])
+        (nums[n - 1] - nums[2]).min(nums[n - 2] - nums[1]).min(nums[n - 3] - nums[0])
     }
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int cmp(const void *a, const void *b) {
-    return *(int *) a - *(int *) b;
+int cmp(const void* a, const void* b) {
+    return *(int*) a - *(int*) b;
 }
 
-int minimizeSum(int *nums, int numsSize) {
+int minimizeSum(int* nums, int numsSize) {
     qsort(nums, numsSize, sizeof(int), cmp);
     return min(nums[numsSize - 1] - nums[2], min(nums[numsSize - 2] - nums[1], nums[numsSize - 3] - nums[0]));
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

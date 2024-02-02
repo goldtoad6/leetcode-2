@@ -65,58 +65,97 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: One Pass
 
-### **Python3**
+We use the variable $k$ to record the number of elements that are not equal to $val$.
+
+Traverse the array $nums$, if the current element $x$ is not equal to $val$, then assign $x$ to $nums[k]$, and increment $k$ by $1$.
+
+Finally, return $k$.
+
+The time complexity is $O(n)$ and the space complexity is $O(1)$, where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        cnt, n = 0, len(nums)
-        for i in range(n):
-            if nums[i] == val:
-                cnt += 1
-            else:
-                nums[i - cnt] = nums[i]
-        return n - cnt
+        k = 0
+        for x in nums:
+            if x != val:
+                nums[k] = x
+                k += 1
+        return k
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int removeElement(int[] nums, int val) {
-        int cnt = 0, n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] == val)
-                ++cnt;
-            else
-                nums[i - cnt] = nums[i];
+        int k = 0;
+        for (int x : nums) {
+            if (x != val) {
+                nums[k++] = x;
+            }
         }
-        return n - cnt;
+        return k;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int removeElement(vector<int>& nums, int val) {
-        int cnt = 0, n = nums.size();
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] == val)
-                ++cnt;
-            else
-                nums[i - cnt] = nums[i];
+        int k = 0;
+        for (int x : nums) {
+            if (x != val) {
+                nums[k++] = x;
+            }
         }
-        return n - cnt;
+        return k;
     }
 };
 ```
 
-### **JavaScript**
+```go
+func removeElement(nums []int, val int) int {
+	k := 0
+	for _, x := range nums {
+		if x != val {
+			nums[k] = x
+			k++
+		}
+	}
+	return k
+}
+```
+
+```ts
+function removeElement(nums: number[], val: number): number {
+    let k: number = 0;
+    for (const x of nums) {
+        if (x !== val) {
+            nums[k++] = x;
+        }
+    }
+    return k;
+}
+```
+
+```rust
+impl Solution {
+    pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
+        let mut k = 0;
+        for i in 0..nums.len() {
+            if nums[i] != val {
+                nums[k] = nums[i];
+                k += 1;
+            }
+        }
+        k as i32
+    }
+}
+```
 
 ```js
 /**
@@ -125,54 +164,18 @@ public:
  * @return {number}
  */
 var removeElement = function (nums, val) {
-    let cnt = 0;
-    const n = nums.length;
-    for (let i = 0; i < n; ++i) {
-        if (nums[i] == val) ++cnt;
-        else nums[i - cnt] = nums[i];
+    let k = 0;
+    for (const x of nums) {
+        if (x !== val) {
+            nums[k++] = x;
+        }
     }
-    return n - cnt;
+    return k;
 };
 ```
 
-### **Go**
-
-```go
-func removeElement(nums []int, val int) int {
-    cnt, n := 0, len(nums)
-    for i := 0; i < n; i++ {
-        if (nums[i] == val) {
-            cnt++
-        } else {
-            nums[i - cnt] = nums[i]
-        }
-    }
-    return n - cnt
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
-        let mut len = 0;
-        for i in 0..nums.len() {
-            if nums[i] != val {
-                nums[len] = nums[i];
-                len += 1;
-            }
-        }
-        len as i32
-    }
-}
-```
-
-### **PHP**
-
 ```php
 class Solution {
-
     /**
      * @param Integer[] $nums
      * @param Integer $val
@@ -188,10 +191,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

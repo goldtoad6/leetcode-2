@@ -52,9 +52,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们只需要遍历区间 $[left,.. right]$ 内的字符串，判断其是否以元音字母开头和结尾即可。若是，则答案加一。
 
@@ -64,19 +62,13 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def vowelStrings(self, words: List[str], left: int, right: int) -> int:
-        return sum(w[0] in 'aeiou' and w[-1] in 'aeiou' for w in words[left: right + 1])
+        return sum(
+            w[0] in 'aeiou' and w[-1] in 'aeiou' for w in words[left : right + 1]
+        )
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -97,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -116,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func vowelStrings(words []string, left int, right int) (ans int) {
 	check := func(c byte) bool {
@@ -132,15 +120,13 @@ func vowelStrings(words []string, left int, right int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function vowelStrings(words: string[], left: number, right: number): number {
     let ans = 0;
     const check: string[] = ['a', 'e', 'i', 'o', 'u'];
     for (let i = left; i <= right; ++i) {
-        var w = words[i];
-        if (check.includes(w[0]) && check.includes(w[w.length - 1])) {
+        const w = words[i];
+        if (check.includes(w[0]) && check.includes(w.at(-1))) {
             ++ans;
         }
     }
@@ -148,10 +134,26 @@ function vowelStrings(words: string[], left: number, right: number): number {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn vowel_strings(words: Vec<String>, left: i32, right: i32) -> i32 {
+        let check = |c: u8| -> bool {
+            c == b'a' || c == b'e' || c == b'i' || c == b'o' || c == b'u'
+        };
 
-```
+        let mut ans = 0;
+        for i in left..=right {
+            let w = words[i as usize].as_bytes();
+            if check(w[0]) && check(w[w.len() - 1]) {
+                ans += 1;
+            }
+        }
 
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

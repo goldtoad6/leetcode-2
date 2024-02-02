@@ -60,71 +60,108 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Single Pass
 
-### **Python3**
+We use a variable $k$ to record the current length of the array that has been processed. Initially, $k=0$, representing an empty array.
+
+Then we traverse the array from left to right. For each element $x$ we traverse, if $k < 2$ or $x \neq nums[k-2]$, we put $x$ in the position of $nums[k]$, and then increment $k$ by $1$. Otherwise, $x$ is the same as $nums[k-2]$, we directly skip this element. Continue to traverse until the entire array is traversed.
+
+In this way, when the traversal ends, the first $k$ elements in $nums$ are the answer we want, and $k$ is the length of the answer.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array.
+
+Supplement:
+
+The original problem requires that the same number appears at most $2$ times. We can extend it to keep at most $k$ identical numbers.
+
+-   Since the same number can be kept at most $k$ times, we can directly keep the first $k$ elements of the original array;
+-   For the later numbers, the premise of being able to keep them is: the current number $x$ compares with the $k$th element from the end of the previously kept numbers. If they are different, keep it, otherwise skip it.
+
+Similar problems:
+
+-   [26. Remove Duplicates from Sorted Array](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0026.Remove%20Duplicates%20from%20Sorted%20Array/README_EN.md)
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        i = 0
-        for num in nums:
-            if i < 2 or num != nums[i - 2]:
-                nums[i] = num
-                i += 1
-        return i
+        k = 0
+        for x in nums:
+            if k < 2 or x != nums[k - 2]:
+                nums[k] = x
+                k += 1
+        return k
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int removeDuplicates(int[] nums) {
-        int i = 0;
-        for (int num : nums) {
-            if (i < 2 || num != nums[i - 2]) {
-                nums[i++] = num;
+        int k = 0;
+        for (int x : nums) {
+            if (k < 2 || x != nums[k - 2]) {
+                nums[k++] = x;
             }
         }
-        return i;
+        return k;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        int i = 0;
-        for (int& num : nums)
-            if (i < 2 || num != nums[i - 2])
-                nums[i++] = num;
-        return i;
+        int k = 0;
+        for (int x : nums) {
+            if (k < 2 || x != nums[k - 2]) {
+                nums[k++] = x;
+            }
+        }
+        return k;
     }
 };
 ```
 
-### **C#**
-
-```cs
-public class Solution {
-    public int RemoveDuplicates(int[] nums) {
-        int i = 0;
-        foreach(int num in nums)
-        {
-            if (i < 2 || num != nums[i - 2])
-            {
-                nums[i++] = num;
-            }
-        }
-        return i;
-    }
+```go
+func removeDuplicates(nums []int) int {
+	k := 0
+	for _, x := range nums {
+		if k < 2 || x != nums[k-2] {
+			nums[k] = x
+			k++
+		}
+	}
+	return k
 }
 ```
 
-### **JavaScript**
+```ts
+function removeDuplicates(nums: number[]): number {
+    let k = 0;
+    for (const x of nums) {
+        if (k < 2 || x !== nums[k - 2]) {
+            nums[k++] = x;
+        }
+    }
+    return k;
+}
+```
+
+```rust
+impl Solution {
+    pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+        let mut k = 0;
+        for i in 0..nums.len() {
+            if k < 2 || nums[i] != nums[k - 2] {
+                nums[k] = nums[i];
+                k += 1;
+            }
+        }
+        k as i32
+    }
+}
+```
 
 ```js
 /**
@@ -132,52 +169,30 @@ public class Solution {
  * @return {number}
  */
 var removeDuplicates = function (nums) {
-    let i = 0;
-    for (const num of nums) {
-        if (i < 2 || num != nums[i - 2]) {
-            nums[i++] = num;
+    let k = 0;
+    for (const x of nums) {
+        if (k < 2 || x !== nums[k - 2]) {
+            nums[k++] = x;
         }
     }
-    return i;
+    return k;
 };
 ```
 
-### **Go**
-
-```go
-func removeDuplicates(nums []int) int {
-	i := 0
-	for _, num := range nums {
-		if i < 2 || num != nums[i-2] {
-			nums[i] = num
-			i++
-		}
-	}
-	return i
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
-        let mut len = 0;
-        for i in 0..nums.len() {
-            if i < 2 || nums[i] != nums[len - 2] {
-                nums[len] = nums[i];
-                len += 1;
+```cs
+public class Solution {
+    public int RemoveDuplicates(int[] nums) {
+        int k = 0;
+        foreach (int x in nums) {
+            if (k < 2 || x != nums[k - 2]) {
+                nums[k++] = x;
             }
         }
-        len as i32
+        return k;
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

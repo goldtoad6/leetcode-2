@@ -52,9 +52,7 @@ seatManager.unreserve(5); // 将座位 5 变为可以预约，现在可预约的
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：优先队列（小根堆）**
+### 方法一：优先队列（小根堆）
 
 我们可以使用优先队列（小根堆）来维护可预约座位的最小编号。
 
@@ -68,13 +66,8 @@ seatManager.unreserve(5); // 将座位 5 变为可以预约，现在可预约的
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class SeatManager:
-
     def __init__(self, n: int):
         self.q = list(range(1, n + 1))
         heapify(self.q)
@@ -91,10 +84,6 @@ class SeatManager:
 # param_1 = obj.reserve()
 # obj.unreserve(seatNumber)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class SeatManager {
@@ -122,8 +111,6 @@ class SeatManager {
  * obj.unreserve(seatNumber);
  */
 ```
-
-### **C++**
 
 ```cpp
 class SeatManager {
@@ -156,8 +143,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type SeatManager struct {
 	q hp
@@ -181,9 +166,9 @@ func (this *SeatManager) Unreserve(seatNumber int) {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -198,10 +183,36 @@ func (h *hp) Pop() interface{} {
  */
 ```
 
-### **...**
+```cs
+public class SeatManager {
+    private SortedSet<int> availableSeats;
 
-```
+    public SeatManager(int n) {
+        availableSeats = new SortedSet<int>();
+        for (int i = 1; i <= n; i++) {
+            availableSeats.Add(i);
+        }
+    }
 
+    public int Reserve() {
+        int reservedSeat = availableSeats.Min;
+        availableSeats.Remove(reservedSeat);
+        return reservedSeat;
+    }
+
+    public void Unreserve(int seatNumber) {
+        availableSeats.Add(seatNumber);
+    }
+}
+
+/**
+ * Your SeatManager object will be instantiated and called as such:
+ * SeatManager obj = new SeatManager(n);
+ * int param_1 = obj.Reserve();
+ * obj.Unreserve(seatNumber);
+ */
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

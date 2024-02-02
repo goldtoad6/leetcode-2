@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们定义 $f[i]$ 表示以 $nums[i]$ 结尾的子数组的和的最大值，定义 $g[i]$ 表示以 $nums[i]$ 结尾的子数组的和的最小值。那么 $f[i]$ 和 $g[i]$ 的状态转移方程如下：
 
@@ -67,10 +65,6 @@ $$
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def maxAbsoluteSum(self, nums: List[int]) -> int:
@@ -82,10 +76,6 @@ class Solution:
             ans = max(ans, f, abs(g))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -102,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,8 +107,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxAbsoluteSum(nums []int) (ans int) {
@@ -139,26 +125,38 @@ func abs(x int) int {
 	}
 	return x
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function maxAbsoluteSum(nums: number[]): number {
+    let f = 0;
+    let g = 0;
+    let ans = 0;
+    for (const x of nums) {
+        f = Math.max(f, 0) + x;
+        g = Math.min(g, 0) + x;
+        ans = Math.max(ans, f, -g);
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
+```rust
+impl Solution {
+    pub fn max_absolute_sum(nums: Vec<i32>) -> i32 {
+        let mut f = 0;
+        let mut g = 0;
+        let mut ans = 0;
+        for x in nums {
+            f = i32::max(f, 0) + x;
+            g = i32::min(g, 0) + x;
+            ans = i32::max(ans, f.max(-g));
+        }
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

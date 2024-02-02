@@ -38,9 +38,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: BFS
 
-### **Python3**
+The approach is the same as in [102. Binary Tree Level Order Traversal](https://github.com/doocs/leetcode/blob/main/solution/0100-0199/0102.Binary%20Tree%20Level%20Order%20Traversal/README_EN.md), just reverse the result in the end.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the number of nodes in the binary tree.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -67,8 +71,6 @@ class Solution:
             ans.append(t)
         return ans[::-1]
 ```
-
-### **Java**
 
 ```java
 /**
@@ -113,8 +115,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -150,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -186,7 +184,62 @@ func levelOrderBottom(root *TreeNode) [][]int {
 }
 ```
 
-### **JavaScript**
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::{ rc::Rc, cell::RefCell, collections::VecDeque };
+impl Solution {
+    #[allow(dead_code)]
+    pub fn level_order_bottom(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
+        if root.is_none() {
+            return vec![];
+        }
+        let mut ret_vec = Vec::new();
+        let mut q = VecDeque::new();
+
+        q.push_back(root);
+
+        while !q.is_empty() {
+            let mut cur_vec = Vec::new();
+            let mut next_q = VecDeque::new();
+            while !q.is_empty() {
+                let cur_front = q.front().unwrap().clone();
+                q.pop_front();
+                cur_vec.push(cur_front.as_ref().unwrap().borrow().val);
+                let left = cur_front.as_ref().unwrap().borrow().left.clone();
+                let right = cur_front.as_ref().unwrap().borrow().right.clone();
+                if !left.is_none() {
+                    next_q.push_back(left);
+                }
+                if !right.is_none() {
+                    next_q.push_back(right);
+                }
+            }
+            ret_vec.push(cur_vec);
+            q = next_q;
+        }
+
+        ret_vec.reverse();
+        ret_vec
+    }
+}
+```
 
 ```js
 /**
@@ -202,11 +255,11 @@ func levelOrderBottom(root *TreeNode) [][]int {
  * @return {number[][]}
  */
 var levelOrderBottom = function (root) {
-    let ans = [];
+    const ans = [];
     if (!root) return ans;
-    let q = [root];
+    const q = [root];
     while (q.length) {
-        let t = [];
+        const t = [];
         for (let i = q.length; i > 0; --i) {
             const node = q.shift();
             t.push(node.val);
@@ -219,10 +272,6 @@ var levelOrderBottom = function (root) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

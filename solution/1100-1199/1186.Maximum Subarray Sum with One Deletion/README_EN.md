@@ -42,9 +42,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Preprocessing + Enumeration
 
-### **Python3**
+We can first preprocess the array $arr$ to find the maximum subarray sum ending at and starting from each element, and store them in the arrays $left$ and $right$ respectively.
+
+If we do not delete any element, then the maximum subarray sum is the maximum value in $left[i]$ or $right[i]$. If we delete one element, we can enumerate each position $i$ in $[1..n-2]$, calculate the value of $left[i-1] + right[i+1]$, and take the maximum value.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -52,21 +58,19 @@ class Solution:
         n = len(arr)
         left = [0] * n
         right = [0] * n
-        t = 0
-        for i, v in enumerate(arr):
-            t = max(t, 0) + v
-            left[i] = t
-        t = 0
+        s = 0
+        for i, x in enumerate(arr):
+            s = max(s, 0) + x
+            left[i] = s
+        s = 0
         for i in range(n - 1, -1, -1):
-            t = max(t, 0) + arr[i]
-            right[i] = t
+            s = max(s, 0) + arr[i]
+            right[i] = s
         ans = max(left)
         for i in range(1, n - 1):
             ans = max(ans, left[i - 1] + right[i + 1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -74,17 +78,16 @@ class Solution {
         int n = arr.length;
         int[] left = new int[n];
         int[] right = new int[n];
-        int t = 0;
-        for (int i = 0; i < n; ++i) {
-            t = Math.max(t, 0) + arr[i];
-            left[i] = t;
+        int ans = -(1 << 30);
+        for (int i = 0, s = 0; i < n; ++i) {
+            s = Math.max(s, 0) + arr[i];
+            left[i] = s;
+            ans = Math.max(ans, left[i]);
         }
-        t = 0;
-        for (int i = n - 1; i >= 0; --i) {
-            t = Math.max(t, 0) + arr[i];
-            right[i] = t;
+        for (int i = n - 1, s = 0; i >= 0; --i) {
+            s = Math.max(s, 0) + arr[i];
+            right[i] = s;
         }
-        int ans = Arrays.stream(left).max().getAsInt();
         for (int i = 1; i < n - 1; ++i) {
             ans = Math.max(ans, left[i - 1] + right[i + 1]);
         }
@@ -93,8 +96,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -102,13 +103,13 @@ public:
         int n = arr.size();
         int left[n];
         int right[n];
-        for (int i = 0, t = 0; i < n; ++i) {
-            t = max(t, 0) + arr[i];
-            left[i] = t;
+        for (int i = 0, s = 0; i < n; ++i) {
+            s = max(s, 0) + arr[i];
+            left[i] = s;
         }
-        for (int i = n - 1, t = 0; ~i; --i) {
-            t = max(t, 0) + arr[i];
-            right[i] = t;
+        for (int i = n - 1, s = 0; ~i; --i) {
+            s = max(s, 0) + arr[i];
+            right[i] = s;
         }
         int ans = *max_element(left, left + n);
         for (int i = 1; i < n - 1; ++i) {
@@ -119,43 +120,48 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumSum(arr []int) int {
 	n := len(arr)
 	left := make([]int, n)
 	right := make([]int, n)
-	t := 0
-	ans := math.MinInt32
-	for i, v := range arr {
-		t = max(t, 0) + v
-		left[i] = t
-		ans = max(ans, left[i])
+	for i, s := 0, 0; i < n; i++ {
+		s = max(s, 0) + arr[i]
+		left[i] = s
 	}
-	t = 0
-	for i := n - 1; i >= 0; i-- {
-		t = max(t, 0) + arr[i]
-		right[i] = t
+	for i, s := n-1, 0; i >= 0; i-- {
+		s = max(s, 0) + arr[i]
+		right[i] = s
 	}
+	ans := slices.Max(left)
 	for i := 1; i < n-1; i++ {
 		ans = max(ans, left[i-1]+right[i+1])
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maximumSum(arr: number[]): number {
+    const n = arr.length;
+    const left: number[] = Array(n).fill(0);
+    const right: number[] = Array(n).fill(0);
+    for (let i = 0, s = 0; i < n; ++i) {
+        s = Math.max(s, 0) + arr[i];
+        left[i] = s;
+    }
+    for (let i = n - 1, s = 0; i >= 0; --i) {
+        s = Math.max(s, 0) + arr[i];
+        right[i] = s;
+    }
+    let ans = Math.max(...left);
+    for (let i = 1; i < n - 1; ++i) {
+        ans = Math.max(ans, left[i - 1] + right[i + 1]);
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

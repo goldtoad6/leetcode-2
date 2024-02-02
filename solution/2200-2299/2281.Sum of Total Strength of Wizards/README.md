@@ -64,17 +64,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：单调栈 + 前缀和
 
-**方法一：单调栈 + 前缀和**
+相似题目：
 
-相似题目：[907. 子数组的最小值之和](/solution/0900-0999/0907.Sum%20of%20Subarray%20Minimums/README.md)
+-   [907. 子数组的最小值之和](https://github.com/doocs/leetcode/blob/main/solution/0900-0999/0907.Sum%20of%20Subarray%20Minimums/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -107,10 +103,6 @@ class Solution:
             ans = (ans + (a - b) * v) % mod
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -162,8 +154,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -192,16 +182,14 @@ public:
         for (int i = 0; i < n; ++i) {
             int v = strength[i];
             int l = left[i] + 1, r = right[i] - 1;
-            long a = (long)(i - l + 1) * (ss[r + 2] - ss[i + 1]);
-            long b = (long)(r - i + 1) * (ss[i + 1] - ss[l]);
+            long a = (long) (i - l + 1) * (ss[r + 2] - ss[i + 1]);
+            long b = (long) (r - i + 1) * (ss[i + 1] - ss[l]);
             ans = (ans + v * ((a - b) % mod)) % mod;
         }
-        return (int)(ans + mod) % mod;
+        return (int) (ans + mod) % mod;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func totalStrength(strength []int) int {
@@ -252,16 +240,6 @@ func totalStrength(strength []int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

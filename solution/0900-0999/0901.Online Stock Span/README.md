@@ -56,27 +56,21 @@ stockSpanner.next(85);  // 返回 6
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：单调栈
 
-**方法一：单调栈**
-
-根据题目描述，我们可以知道，对于当日价格 `price`，从这个价格开始往前找，找到第一个比这个价格大的价格，这两个价格的下标差 `cnt` 就是当日价格的跨度。
+根据题目描述，我们可以知道，对于当日价格 $price$，从这个价格开始往前找，找到第一个比这个价格大的价格，这两个价格的下标差 $cnt$ 就是当日价格的跨度。
 
 这实际上是经典的单调栈模型，找出左侧第一个比当前元素大的元素。
 
-我们维护一个从栈底到栈顶价格单调递减的栈，栈中每个元素存放的是 `(price, cnt)` 数据对，其中 `price` 表示价格，`cnt` 表示当前价格的跨度。
+我们维护一个从栈底到栈顶价格单调递减的栈，栈中每个元素存放的是 $(price, cnt)$ 数据对，其中 $price$ 表示价格，而 $cnt$ 表示当前价格的跨度。
 
-出现价格 `price` 时，我们将其与栈顶元素进行比较，如果栈顶元素的价格小于等于 `price`，则将当日价格的跨度 `cnt` 加上栈顶元素的跨度，然后将栈顶元素出栈，直到栈顶元素的价格大于 `price`，或者栈为空为止。
+出现价格 $price$ 时，我们将其与栈顶元素进行比较，如果栈顶元素的价格小于等于 $price$，则将当日价格的跨度 $cnt$ 加上栈顶元素的跨度，然后将栈顶元素出栈，直到栈顶元素的价格大于 $price$，或者栈为空为止。
 
-最后将 `(price, cnt)` 入栈，返回 `cnt` 即可。
+最后将 $(price, cnt)$ 入栈，返回 $cnt$ 即可。
 
-时间复杂度 $O(n)$，其中 $n$ 为 `next` 函数的调用次数。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是调用 `next(price)` 的次数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class StockSpanner:
@@ -95,10 +89,6 @@ class StockSpanner:
 # obj = StockSpanner()
 # param_1 = obj.next(price)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class StockSpanner {
@@ -124,13 +114,10 @@ class StockSpanner {
  */
 ```
 
-### **C++**
-
 ```cpp
 class StockSpanner {
 public:
     StockSpanner() {
-
     }
 
     int next(int price) {
@@ -139,7 +126,7 @@ public:
             cnt += stk.top().second;
             stk.pop();
         }
-        stk.push({price, cnt});
+        stk.emplace(price, cnt);
         return cnt;
     }
 
@@ -153,8 +140,6 @@ private:
  * int param_1 = obj->next(price);
  */
 ```
-
-### **Go**
 
 ```go
 type StockSpanner struct {
@@ -184,23 +169,21 @@ type pair struct{ price, cnt int }
  */
 ```
 
-### **TypeScript**
-
 ```ts
 class StockSpanner {
-    private stack: [number, number][];
+    private stk: number[][];
 
     constructor() {
-        this.stack = [[Infinity, -1]];
+        this.stk = [];
     }
 
     next(price: number): number {
-        let res = 1;
-        while (this.stack[this.stack.length - 1][0] <= price) {
-            res += this.stack.pop()[1];
+        let cnt = 1;
+        while (this.stk.length && this.stk.at(-1)[0] <= price) {
+            cnt += this.stk.pop()[1];
         }
-        this.stack.push([price, res]);
-        return res;
+        this.stk.push([price, cnt]);
+        return cnt;
     }
 }
 
@@ -211,14 +194,11 @@ class StockSpanner {
  */
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::VecDeque;
 struct StockSpanner {
-    stack: VecDeque<(i32, i32)>,
+    stk: VecDeque<(i32, i32)>,
 }
-
 
 /**
  * `&self` means the method takes an immutable reference.
@@ -227,31 +207,25 @@ struct StockSpanner {
 impl StockSpanner {
     fn new() -> Self {
         Self {
-            stack: vec![(i32::MAX, -1)].into_iter().collect()
+            stk: vec![(i32::MAX, -1)].into_iter().collect(),
         }
     }
 
     fn next(&mut self, price: i32) -> i32 {
-        let mut res = 1;
-        while self.stack.back().unwrap().0 <= price {
-            res += self.stack.pop_back().unwrap().1;
+        let mut cnt = 1;
+        while self.stk.back().unwrap().0 <= price {
+            cnt += self.stk.pop_back().unwrap().1;
         }
-        self.stack.push_back((price, res));
-        res
+        self.stk.push_back((price, cnt));
+        cnt
     }
-}
-
-/**
+}/**
  * Your StockSpanner object will be instantiated and called as such:
  * let obj = StockSpanner::new();
  * let ret_1: i32 = obj.next(price);
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -54,27 +54,21 @@ Hence, you should return &quot;What is the solution&quot;.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We traverse the string $s$ from the beginning. For the current character $s[i]$, if it is a space, we decrement $k$. When $k$ becomes $0$, it means that we have extracted $k$ words, so we return the substring $s[0..i)$.
+
+After the traversal, we return $s$.
+
+The time complexity is $O(n)$, where $n$ is the length of the string $s$. Ignoring the space complexity of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def truncateSentence(self, s: str, k: int) -> str:
         return ' '.join(s.split()[:k])
 ```
-
-```python
-class Solution:
-    def truncateSentence(self, s: str, k: int) -> str:
-        for i, c in enumerate(s):
-            k -= c == ' '
-            if k == 0:
-                return s[:i]
-        return s
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +82,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -105,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func truncateSentence(s string, k int) string {
 	for i, c := range s {
@@ -121,7 +111,16 @@ func truncateSentence(s string, k int) string {
 }
 ```
 
-### **JavaScript**
+```ts
+function truncateSentence(s: string, k: number): string {
+    for (let i = 0; i < s.length; ++i) {
+        if (s[i] === ' ' && --k === 0) {
+            return s.slice(0, i);
+        }
+    }
+    return s;
+}
+```
 
 ```js
 /**
@@ -131,7 +130,7 @@ func truncateSentence(s string, k int) string {
  */
 var truncateSentence = function (s, k) {
     for (let i = 0; i < s.length; ++i) {
-        if (s[i] == ' ' && --k == 0) {
+        if (s[i] === ' ' && --k === 0) {
             return s.slice(0, i);
         }
     }
@@ -139,10 +138,22 @@ var truncateSentence = function (s, k) {
 };
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def truncateSentence(self, s: str, k: int) -> str:
+        for i, c in enumerate(s):
+            k -= c == ' '
+            if k == 0:
+                return s[:i]
+        return s
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

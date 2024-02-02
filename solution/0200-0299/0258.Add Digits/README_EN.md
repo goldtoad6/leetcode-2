@@ -37,17 +37,15 @@ Since 2 has only one digit, return it.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def addDigits(self, num: int) -> int:
         return 0 if num == 0 else (num - 1) % 9 + 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -56,8 +54,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -68,8 +64,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func addDigits(num int) int {
 	if num == 0 {
@@ -79,8 +73,6 @@ func addDigits(num int) int {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn add_digits(num: i32) -> i32 {
@@ -88,27 +80,30 @@ impl Solution {
             return num;
         }
         Self::add_digits(
-            num.to_string()
+            num
+                .to_string()
                 .chars()
                 .map(|c| c.to_string().parse::<i32>().unwrap())
-                .sum::<i32>(),
+                .sum::<i32>()
         )
     }
 }
 ```
 
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```rust
 impl Solution {
     pub fn add_digits(mut num: i32) -> i32 {
-        (num - 1) % 9 + 1
+        ((num - 1) % 9) + 1
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

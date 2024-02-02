@@ -95,9 +95,9 @@ Note that &quot;abc&quot; is the file&#39;s content, not buf. buf is the destina
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 """
@@ -136,8 +136,6 @@ class Solution:
         return i
 ```
 
-### **Java**
-
 ```java
 /**
  * The read4 API is defined in the parent class Reader4.
@@ -167,8 +165,6 @@ public class Solution extends Reader4 {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * The read4 API is defined in the parent class Reader4.
@@ -182,7 +178,7 @@ public:
      * @param n   Number of characters to read
      * @return    The number of actual characters read
      */
-    int read(char *buf, int n) {
+    int read(char* buf, int n) {
         char buf4[4];
         int i = 0, v = 5;
         while (v >= 4) {
@@ -198,8 +194,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -235,10 +229,6 @@ var solution = func(read4 func([]byte) int) func([]byte, int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

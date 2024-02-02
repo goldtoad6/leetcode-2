@@ -13,17 +13,17 @@
 | tweet_id       | int     |
 | content        | varchar |
 +----------------+---------+
-tweet_id is the primary key for this table.
+tweet_id is the primary key (column with unique values) for this table.
 This table contains all the tweets in a social media app.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is <strong>strictly greater</strong> than <code>15</code>.</p>
+<p>Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is <strong>strictly greater</strong> than <code>15</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -50,18 +50,24 @@ Tweet 2 has length = 32. It is an invalid tweet.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Using `CHAR_LENGTH` Function
 
-### **SQL**
+The `CHAR_LENGTH()` function returns the length of a string, where Chinese characters, numbers, and letters are all counted as $1$ byte.
+
+The `LENGTH()` function returns the length of a string, where under utf8 encoding, Chinese characters are counted as $3$ bytes, while numbers and letters are counted as $1$ byte; under gbk encoding, Chinese characters are counted as $2$ bytes, while numbers and letters are counted as $1$ byte.
+
+For this problem, we can directly use the `CHAR_LENGTH` function to get the length of the string, and filter out the tweet IDs with a length greater than $15$.
+
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
 SELECT
     tweet_id
-FROM
-    Tweets
-WHERE
-    CHAR_LENGTH(content) > 15;
+FROM Tweets
+WHERE CHAR_LENGTH(content) > 15;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

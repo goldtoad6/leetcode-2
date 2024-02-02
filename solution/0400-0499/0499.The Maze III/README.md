@@ -68,15 +68,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS**
+### 方法一：BFS
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -112,10 +106,6 @@ class Solution:
                         q.append((x, y))
         return path[rh][ch] or 'impossible'
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -163,8 +153,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -185,7 +173,7 @@ public:
             int i = p.first, j = p.second;
             for (auto& dir : dirs) {
                 int a = dir[0], b = dir[1];
-                char d = (char)dir[2];
+                char d = (char) dir[2];
                 int x = i, y = j;
                 int step = dist[i][j];
                 while (x + a >= 0 && x + a < m && y + b >= 0 && y + b < n && maze[x + a][y + b] == 0 && (x != rh || y != ch)) {
@@ -204,8 +192,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 import "math"
@@ -256,10 +242,6 @@ func findShortestWay(maze [][]int, ball []int, hole []int) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

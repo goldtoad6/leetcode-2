@@ -54,11 +54,9 @@ The total number of cherries picked up is 5, and this is the maximum possible.
 
 ## Solutions
 
-Dynamic programming.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -88,8 +86,6 @@ class Solution:
                                 )
         return max(0, dp[-1][-1][-1])
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -125,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -152,8 +146,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func cherryPickup(grid [][]int) int {
@@ -190,16 +182,7 @@ func cherryPickup(grid [][]int) int {
 	}
 	return max(0, dp[n*2-2][n-1][n-1])
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -238,10 +221,7 @@ var cherryPickup = function (grid) {
                 for (let x1 = i1 - 1; x1 <= i1; ++x1) {
                     for (let x2 = i2 - 1; x2 <= i2; ++x2) {
                         if (x1 >= 0 && x2 >= 0) {
-                            dp[k][i1][i2] = Math.max(
-                                dp[k][i1][i2],
-                                dp[k - 1][x1][x2] + t,
-                            );
+                            dp[k][i1][i2] = Math.max(dp[k][i1][i2], dp[k - 1][x1][x2] + t);
                         }
                     }
                 }
@@ -252,10 +232,6 @@ var cherryPickup = function (grid) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

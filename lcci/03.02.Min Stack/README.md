@@ -9,9 +9,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双栈**
+### 方法一：双栈
 
 我们用两个栈来实现，其中`stk1` 用来存储数据，`stk2` 用来存储当前栈中的最小值。初始时，`stk2` 中存储一个极大值。
 
@@ -23,10 +21,6 @@
 时间复杂度：对于每个操作，时间复杂度均为 $O(1)$，空间复杂度 $O(n)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class MinStack:
@@ -59,10 +53,6 @@ class MinStack:
 # param_3 = obj.top()
 # param_4 = obj.getMin()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class MinStack {
@@ -102,8 +92,6 @@ class MinStack {
  * int param_4 = obj.getMin();
  */
 ```
-
-### **C++**
 
 ```cpp
 class MinStack {
@@ -146,50 +134,6 @@ private:
  */
 ```
 
-### **TypeScript**
-
-```ts
-class MinStack {
-    stack: number[];
-    mins: number[];
-    constructor() {
-        this.stack = [];
-        this.mins = [];
-    }
-
-    push(x: number): void {
-        this.stack.push(x);
-        this.mins.push(Math.min(this.getMin(), x));
-    }
-
-    pop(): void {
-        this.stack.pop();
-        this.mins.pop();
-    }
-
-    top(): number {
-        return this.stack[this.stack.length - 1];
-    }
-
-    getMin(): number {
-        return this.mins.length == 0
-            ? Infinity
-            : this.mins[this.mins.length - 1];
-    }
-}
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * var obj = new MinStack()
- * obj.push(x)
- * obj.pop()
- * var param_3 = obj.top()
- * var param_4 = obj.getMin()
- */
-```
-
-### **Go**
-
 ```go
 type MinStack struct {
 	stk1 []int
@@ -219,13 +163,6 @@ func (this *MinStack) GetMin() int {
 	return this.stk2[len(this.stk2)-1]
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your MinStack object will be instantiated and called as such:
  * obj := Constructor();
@@ -236,7 +173,43 @@ func min(a, b int) int {
  */
 ```
 
-### **Rust**
+```ts
+class MinStack {
+    stack: number[];
+    mins: number[];
+    constructor() {
+        this.stack = [];
+        this.mins = [];
+    }
+
+    push(x: number): void {
+        this.stack.push(x);
+        this.mins.push(Math.min(this.getMin(), x));
+    }
+
+    pop(): void {
+        this.stack.pop();
+        this.mins.pop();
+    }
+
+    top(): number {
+        return this.stack[this.stack.length - 1];
+    }
+
+    getMin(): number {
+        return this.mins.length == 0 ? Infinity : this.mins[this.mins.length - 1];
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * var obj = new MinStack()
+ * obj.push(x)
+ * obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.getMin()
+ */
+```
 
 ```rust
 use std::collections::VecDeque;
@@ -245,13 +218,11 @@ struct MinStack {
     min_stack: VecDeque<i32>,
 }
 
-
 /**
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MinStack {
-
     /** initialize your data structure here. */
     fn new() -> Self {
         Self { stack: VecDeque::new(), min_stack: VecDeque::new() }
@@ -278,9 +249,7 @@ impl MinStack {
     fn get_min(&self) -> i32 {
         *self.min_stack.back().unwrap()
     }
-}
-
-/**
+}/**
  * Your MinStack object will be instantiated and called as such:
  * let obj = MinStack::new();
  * obj.push(x);
@@ -289,8 +258,6 @@ impl MinStack {
  * let ret_4: i32 = obj.get_min();
  */
 ```
-
-### **C#**
 
 ```cs
 public class MinStack {
@@ -331,10 +298,6 @@ public class MinStack {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

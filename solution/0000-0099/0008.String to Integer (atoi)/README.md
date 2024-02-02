@@ -86,17 +86,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：遍历字符串
 
-遍历字符串，注意做溢出处理。
+我们首先判断字符串是否为空，如果是，直接返回 $0$。
 
-同[面试题 67. 把字符串转换成整数](/lcof/面试题67.%20把字符串转换成整数/README.md)。
+否则，我们需要遍历字符串，跳过前导空格，判断第一个非空格字符是否为正负号。
+
+接着遍历后面的字符，如果是数字，我们判断添加该数字是否会导致整数溢出，如果会，我们根据正负号返回结果。否则我们将数字添加到结果中。继续遍历后面的字符，直到遇到非数字字符或者遍历结束。
+
+遍历结束后，我们根据正负号返回结果。
+
+时间复杂度 $O(n)$，其中 $n$ 为字符串的长度。我们只需要依次处理所有字符。空间复杂度 $O(1)$。
+
+同[面试题 67. 把字符串转换成整数](https://github.com/doocs/leetcode/blob/main/lcof/面试题67.%20把字符串转换成整数/README.md)。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -129,10 +133,6 @@ class Solution:
         return sign * res
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int myAtoi(String s) {
@@ -160,8 +160,6 @@ class Solution {
     }
 }
 ```
-
-### **Go**
 
 ```go
 func myAtoi(s string) int {
@@ -201,10 +199,102 @@ func myAtoi(s string) int {
 }
 ```
 
-### **...**
-
+```js
+const myAtoi = function (str) {
+    str = str.trim();
+    if (!str) return 0;
+    let isPositive = 1;
+    let i = 0,
+        ans = 0;
+    if (str[i] === '+') {
+        isPositive = 1;
+        i++;
+    } else if (str[i] === '-') {
+        isPositive = 0;
+        i++;
+    }
+    for (; i < str.length; i++) {
+        let t = str.charCodeAt(i) - 48;
+        if (t > 9 || t < 0) break;
+        if (ans > 2147483647 / 10 || ans > (2147483647 - t) / 10) {
+            return isPositive ? 2147483647 : -2147483648;
+        } else {
+            ans = ans * 10 + t;
+        }
+    }
+    return isPositive ? ans : -ans;
+};
 ```
 
+```cs
+﻿// https://leetcode.com/problems/string-to-integer-atoi/
+
+public partial class Solution
+{
+    public int MyAtoi(string str)
+    {
+        int i = 0;
+        long result = 0;
+        bool minus = false;
+        while (i < str.Length && char.IsWhiteSpace(str[i]))
+        {
+            ++i;
+        }
+        if (i < str.Length)
+        {
+            if (str[i] == '+')
+            {
+                ++i;
+            }
+            else if (str[i] == '-')
+            {
+                minus = true;
+                ++i;
+            }
+        }
+        while (i < str.Length && char.IsDigit(str[i]))
+        {
+            result = result * 10 + str[i] - '0';
+            if (result > int.MaxValue)
+            {
+                break;
+            }
+            ++i;
+        }
+        if (minus) result = -result;
+        if (result > int.MaxValue)
+        {
+            result = int.MaxValue;
+        }
+        if (result < int.MinValue)
+        {
+            result = int.MinValue;
+        }
+        return (int)result;
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param string $s
+     * @return int
+     */
+
+    function myAtoi($s) {
+        $s = str_replace('e', 'x', $s);
+        if (intval($s) < pow(-2, 31)) {
+            return -2147483648;
+        }
+        if (intval($s) > pow(2, 31) - 1) {
+            return 2147483647;
+        }
+        return intval($s);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们遍历字符串，对于每个位置，如果该位置是 `?`，则枚举字符 `'a'`、`'b'`、`'c'`，如果该字符 $c$ 与前后字符都不相同，则将该位置替换为该字符，否则继续枚举下一个字符。
 
@@ -57,10 +55,6 @@
 时间复杂度 $O(n)$，其中 $n$ 为字符串的长度。忽略答案的空间消耗，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -76,10 +70,6 @@ class Solution:
                     break
         return "".join(s)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -102,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -125,8 +113,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func modifyString(s string) string {
 	n := len(s)
@@ -146,8 +132,6 @@ func modifyString(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function modifyString(s: string): string {
     const cs = s.split('');
@@ -155,10 +139,7 @@ function modifyString(s: string): string {
     for (let i = 0; i < n; ++i) {
         if (cs[i] === '?') {
             for (const c of 'abc') {
-                if (
-                    (i > 0 && cs[i - 1] === c) ||
-                    (i + 1 < n && cs[i + 1] === c)
-                ) {
+                if ((i > 0 && cs[i - 1] === c) || (i + 1 < n && cs[i + 1] === c)) {
                     continue;
                 }
                 cs[i] = c;
@@ -170,10 +151,6 @@ function modifyString(s: string): string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

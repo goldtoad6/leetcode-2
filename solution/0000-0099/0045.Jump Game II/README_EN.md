@@ -42,126 +42,96 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy Algorithm
 
-### **Python3**
+We can use a variable $mx$ to record the farthest position that can be reached from the current position, a variable $last$ to record the position of the last jump, and a variable $ans$ to record the number of jumps.
+
+Next, we traverse each position $i$ in $[0,..n - 2]$. For each position $i$, we can calculate the farthest position that can be reached from the current position through $i + nums[i]$. We use $mx$ to record this farthest position, that is, $mx = max(mx, i + nums[i])$. Then, we check whether the current position has reached the boundary of the last jump, that is, $i = last$. If it has reached, then we need to make a jump, update $last$ to $mx$, and increase the number of jumps $ans$ by $1$.
+
+Finally, we return the number of jumps $ans$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+Similar problems:
+
+-   [55. Jump Game](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0055.Jump%20Game/README_EN.md)
+-   [1024. Video Stitching](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1024.Video%20Stitching/README_EN.md)
+-   [1326. Minimum Number of Taps to Open to Water a Garden](https://github.com/doocs/leetcode/blob/main/solution/1300-1399/1326.Minimum%20Number%20of%20Taps%20to%20Open%20to%20Water%20a%20Garden/README_EN.md)
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        end = mx = steps = 0
-        for i, num in enumerate(nums[:-1]):
-            mx = max(mx, i + num)
-            if i == end:
-                end = mx
-                steps += 1
-        return steps
+        ans = mx = last = 0
+        for i, x in enumerate(nums[:-1]):
+            mx = max(mx, i + x)
+            if last == i:
+                ans += 1
+                last = mx
+        return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int jump(int[] nums) {
-        int end = 0;
-        int mx = 0;
-        int steps = 0;
+        int ans = 0, mx = 0, last = 0;
         for (int i = 0; i < nums.length - 1; ++i) {
             mx = Math.max(mx, i + nums[i]);
-            if (i == end) {
-                end = mx;
-                ++steps;
+            if (last == i) {
+                ++ans;
+                last = mx;
             }
         }
-        return steps;
+        return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int mx = 0, steps = 0, end = 0;
+        int ans = 0, mx = 0, last = 0;
         for (int i = 0; i < nums.size() - 1; ++i) {
             mx = max(mx, i + nums[i]);
-            if (i == end) {
-                end = mx;
-                ++steps;
+            if (last == i) {
+                ++ans;
+                last = mx;
             }
         }
-        return steps;
+        return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func jump(nums []int) int {
-	mx, steps, end := 0, 0, 0
-	for i := 0; i < len(nums)-1; i++ {
-		mx = max(mx, i+nums[i])
-		if i == end {
-			end = mx
-			steps++
+func jump(nums []int) (ans int) {
+	mx, last := 0, 0
+	for i, x := range nums[:len(nums)-1] {
+		mx = max(mx, i+x)
+		if last == i {
+			ans++
+			last = mx
 		}
 	}
-	return steps
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return
 }
 ```
 
-### **C#**
-
-```cs
-public class Solution {
-    public int Jump(int[] nums) {
-        int end = 0;
-        int mx = 0;
-        int steps = 0;
-        for (int i = 0; i < nums.Length - 1; ++i)
-        {
-            mx = Math.Max(mx, i + nums[i]);
-            if (i == end)
-            {
-                end = mx;
-                ++steps;
-            }
-        }
-        return steps;
-    }
-}
-```
-
-### **C**
-
-```c
-#define min(a, b) a < b ? a : b
-int jump(int* nums, int numsSize) {
-    int dp[numsSize];
-    for (int i = 0; i < numsSize; i++) {
-        dp[i] = numsSize;
-    }
-    dp[0] = 0;
-    for (int i = 0; i < numsSize - 1; i++) {
-        for (int j = i + 1; j < (min(i + nums[i] + 1, numsSize)); j++) {
-            dp[j] = min(dp[j], dp[i] + 1);
+```ts
+function jump(nums: number[]): number {
+    let [ans, mx, last] = [0, 0, 0];
+    for (let i = 0; i < nums.length - 1; ++i) {
+        mx = Math.max(mx, i + nums[i]);
+        if (last === i) {
+            ++ans;
+            last = mx;
         }
     }
-    return dp[numsSize - 1];
+    return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -182,10 +152,39 @@ impl Solution {
 }
 ```
 
-### **...**
-
+```cs
+public class Solution {
+    public int Jump(int[] nums) {
+        int ans = 0, mx = 0, last = 0;
+        for (int i = 0; i < nums.Length - 1; ++i) {
+            mx = Math.Max(mx, i + nums[i]);
+            if (last == i) {
+                ++ans;
+                last = mx;
+            }
+        }
+        return ans;
+    }
+}
 ```
 
+```c
+#define min(a, b) a < b ? a : b
+int jump(int* nums, int numsSize) {
+    int dp[numsSize];
+    for (int i = 0; i < numsSize; i++) {
+        dp[i] = numsSize;
+    }
+    dp[0] = 0;
+    for (int i = 0; i < numsSize - 1; i++) {
+        for (int j = i + 1; j < (min(i + nums[i] + 1, numsSize)); j++) {
+            dp[j] = min(dp[j], dp[i] + 1);
+        }
+    }
+    return dp[numsSize - 1];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

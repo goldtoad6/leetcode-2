@@ -32,9 +32,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：遍历**
+### 方法一：遍历
 
 我们首先明确顺子不成立的核心条件：
 
@@ -46,10 +44,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -66,10 +60,6 @@ class Solution:
             mx = max(mx, x)
         return mx - mi <= 4
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -91,8 +81,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -116,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isStraight(nums []int) bool {
 	vis := map[int]bool{}
@@ -135,23 +121,39 @@ func isStraight(nums []int) bool {
 	}
 	return mx-mi <= 4
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function isStraight(nums: number[]): boolean {
+    nums.sort((a, b) => a - b);
+    let j = 0;
+    for (let i = 0; i < 4; i++) {
+        if (nums[i] === 0) {
+            j++;
+        } else if (nums[i] === nums[i + 1]) {
+            return false;
+        }
+    }
+    return nums[4] - nums[j] <= 4;
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    pub fn is_straight(mut nums: Vec<i32>) -> bool {
+        nums.sort();
+        let mut j = 0;
+        for i in 0..4 {
+            if nums[i] == 0 {
+                j += 1;
+            } else if nums[i] == nums[i + 1] {
+                return false;
+            }
+        }
+        nums[4] - nums[j] <= 4
+    }
+}
+```
 
 ```js
 /**
@@ -177,44 +179,6 @@ var isStraight = function (nums) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function isStraight(nums: number[]): boolean {
-    nums.sort((a, b) => a - b);
-    let j = 0;
-    for (let i = 0; i < 4; i++) {
-        if (nums[i] === 0) {
-            j++;
-        } else if (nums[i] === nums[i + 1]) {
-            return false;
-        }
-    }
-    return nums[4] - nums[j] <= 4;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn is_straight(mut nums: Vec<i32>) -> bool {
-        nums.sort();
-        let mut j = 0;
-        for i in 0..4 {
-            if nums[i] == 0 {
-                j += 1;
-            } else if nums[i] == nums[i + 1] {
-                return false;
-            }
-        }
-        nums[4] - nums[j] <= 4
-    }
-}
-```
-
-### **C#**
-
 ```cs
 public class Solution {
     public bool IsStraight(int[] nums) {
@@ -236,10 +200,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

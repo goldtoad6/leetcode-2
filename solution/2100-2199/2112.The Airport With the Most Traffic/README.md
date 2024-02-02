@@ -89,16 +89,28 @@ Flights 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT * FROM Flights
+        UNION
+        SELECT arrival_airport, departure_airport, flights_count FROM Flights
+    ),
+    P AS (
+        SELECT departure_airport, SUM(flights_count) AS cnt
+        FROM T
+        GROUP BY 1
+    )
+SELECT departure_airport AS airport_id
+FROM P
+WHERE cnt = (SELECT MAX(cnt) FROM P);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

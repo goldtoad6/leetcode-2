@@ -8,7 +8,7 @@
 
 <p>对于字符串&nbsp;<code>s</code> 和&nbsp;<code>t</code>，只有在&nbsp;<code>s = t + ... + t</code>（<code>t</code> 自身连接 1 次或多次）时，我们才认定&nbsp;“<code>t</code> 能除尽 <code>s</code>”。</p>
 
-<p>给定两个字符串&nbsp;<code>str1</code>&nbsp;和&nbsp;<code>str2</code>&nbsp;。返回 <em>最长字符串&nbsp;<code>x</code>，要求满足&nbsp;<code>x</code> 能除尽 <code>str1</code> 且&nbsp;<code>X</code> 能除尽 <code>str2</code></em> 。</p>
+<p>给定两个字符串&nbsp;<code>str1</code>&nbsp;和&nbsp;<code>str2</code>&nbsp;。返回 <em>最长字符串&nbsp;<code>x</code>，要求满足&nbsp;<code>x</code> 能除尽 <code>str1</code> 且 <code>x</code> 能除尽 <code>str2</code></em> 。</p>
 
 <p>&nbsp;</p>
 
@@ -44,13 +44,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -68,19 +64,6 @@ class Solution:
         return ''
 ```
 
-```python
-class Solution:
-    def gcdOfStrings(self, str1: str, str2: str) -> str:
-        if str1 + str2 != str2 + str1:
-            return ''
-        n = gcd(len(str1), len(str2))
-        return str1[:n]
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public String gcdOfStrings(String str1, String str2) {
@@ -97,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -109,8 +90,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func gcdOfStrings(str1 string, str2 string) string {
@@ -129,10 +108,40 @@ func gcd(a, b int) int {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn gcd_of_strings(str1: String, str2: String) -> String {
+        if str1.clone() + &str2 != str2.clone() + &str1 {
+            return String::from("");
+        }
+        fn gcd(a: usize, b: usize) -> usize {
+            if b == 0 {
+                return a;
+            }
+            gcd(b, a % b)
+        }
 
-```
-
+        let (m, n) = (str1.len().max(str2.len()), str1.len().min(str2.len()));
+        str1[..gcd(m, n)].to_string()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def gcdOfStrings(self, str1: str, str2: str) -> str:
+        if str1 + str2 != str2 + str1:
+            return ''
+        n = gcd(len(str1), len(str2))
+        return str1[:n]
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -49,9 +49,22 @@ The array answer is [|0 - 0|] = [0].
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Prefix Sum
 
-### **Python3**
+We define a variable $left$ to represent the sum of the elements to the left of index $i$ in the array `nums`, and a variable $right$ to represent the sum of the elements to the right of index $i$ in the array `nums`. Initially, $left = 0$, $right = \sum_{i = 0}^{n - 1} nums[i]$.
+
+We iterate over the array `nums`. For the current number $x$ we are iterating over, we update $right = right - x$. At this point, $left$ and $right$ represent the sum of the elements to the left and right of index $i$ in the array `nums`, respectively. We add the absolute difference between $left$ and $right$ to the answer array `ans`, and then update $left = left + x$.
+
+After the iteration is complete, we return the answer array `ans`.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Where $n$ is the length of the array `nums`.
+
+Similar problems:
+
+-   [0724. Find Pivot Index](https://github.com/doocs/leetcode/blob/main/solution/0700-0799/0724.Find%20Pivot%20Index/README_EN.md)
+-   [1991. Find the Middle Index in Array](https://github.com/doocs/leetcode/blob/main/solution/1900-1999/1991.Find%20the%20Middle%20Index%20in%20Array/README_EN.md)
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +77,6 @@ class Solution:
             left += x
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +94,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -100,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func leftRigthDifference(nums []int) (ans []int) {
@@ -125,8 +132,6 @@ func abs(x int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function leftRigthDifference(nums: number[]): number[] {
     let left = 0,
@@ -140,21 +145,6 @@ function leftRigthDifference(nums: number[]): number[] {
     return ans;
 }
 ```
-
-```ts
-function leftRigthDifference(nums: number[]): number[] {
-    let left = 0;
-    let right = nums.reduce((r, v) => r + v);
-    return nums.map(v => {
-        right -= v;
-        const res = Math.abs(left - right);
-        left += v;
-        return res;
-    });
-}
-```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -173,19 +163,17 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int *leftRigthDifference(int *nums, int numsSize, int *returnSize) {
+int* leftRigthDifference(int* nums, int numsSize, int* returnSize) {
     int left = 0;
     int right = 0;
     for (int i = 0; i < numsSize; i++) {
         right += nums[i];
     }
-    int *ans = malloc(sizeof(int) * numsSize);
+    int* ans = malloc(sizeof(int) * numsSize);
     for (int i = 0; i < numsSize; i++) {
         right -= nums[i];
         ans[i] = abs(left - right);
@@ -196,10 +184,73 @@ int *leftRigthDifference(int *nums, int numsSize, int *returnSize) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```ts
+function leftRigthDifference(nums: number[]): number[] {
+    let left = 0;
+    let right = nums.reduce((r, v) => r + v);
+    return nums.map(v => {
+        right -= v;
+        const res = Math.abs(left - right);
+        left += v;
+        return res;
+    });
+}
 ```
 
+```rust
+impl Solution {
+    pub fn left_right_difference(nums: Vec<i32>) -> Vec<i32> {
+        let mut ans = vec![];
+
+        for i in 0..nums.len() {
+            let mut left = 0;
+            for j in 0..i {
+                left += nums[j];
+            }
+
+            let mut right = 0;
+            for k in i + 1..nums.len() {
+                right += nums[k];
+            }
+
+            ans.push((left - right).abs());
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn left_right_difference(nums: Vec<i32>) -> Vec<i32> {
+        let mut left = 0;
+        let mut right: i32 = nums.iter().sum();
+        let mut ans = vec![];
+
+        for &x in &nums {
+            right -= x;
+            ans.push((left - right).abs());
+            left += x;
+        }
+
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

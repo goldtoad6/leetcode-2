@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -68,8 +68,9 @@ class Solution:
 
         if root is None:
             return 0
-        ans = self.countPairs(root.left, distance) + \
-            self.countPairs(root.right, distance)
+        ans = self.countPairs(root.left, distance) + self.countPairs(
+            root.right, distance
+        )
         cnt1 = Counter()
         cnt2 = Counter()
         dfs(root.left, cnt1, 1)
@@ -81,8 +82,6 @@ class Solution:
                     ans += v1 * v2
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -134,8 +133,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -179,8 +176,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -222,10 +217,6 @@ func dfs(root *TreeNode, cnt []int, i int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

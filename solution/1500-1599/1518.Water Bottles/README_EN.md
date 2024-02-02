@@ -39,68 +39,98 @@ Number of water bottles you can drink: 15 + 3 + 1 = 19.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def numWaterBottles(self, numBottles: int, numExchange: int) -> int:
         ans = numBottles
         while numBottles >= numExchange:
-            numBottles -= (numExchange - 1)
+            numBottles -= numExchange - 1
             ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int numWaterBottles(int numBottles, int numExchange) {
         int ans = numBottles;
-        while (numBottles >= numExchange) {
+        for (; numBottles >= numExchange; ++ans) {
             numBottles -= (numExchange - 1);
-            ++ans;
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int numWaterBottles(int numBottles, int numExchange) {
         int ans = numBottles;
-        while (numBottles >= numExchange) {
+        for (; numBottles >= numExchange; ++ans) {
             numBottles -= (numExchange - 1);
-            ++ans;
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func numWaterBottles(numBottles int, numExchange int) int {
 	ans := numBottles
-	for numBottles >= numExchange {
+	for ; numBottles >= numExchange; ans++ {
 		numBottles -= (numExchange - 1)
-		ans++
 	}
 	return ans
 }
 ```
 
-### **...**
-
+```ts
+function numWaterBottles(numBottles: number, numExchange: number): number {
+    let ans = numBottles;
+    for (; numBottles >= numExchange; ++ans) {
+        numBottles -= numExchange - 1;
+    }
+    return ans;
+}
 ```
 
+```js
+/**
+ * @param {number} numBottles
+ * @param {number} numExchange
+ * @return {number}
+ */
+var numWaterBottles = function (numBottles, numExchange) {
+    let ans = numBottles;
+    for (; numBottles >= numExchange; ++ans) {
+        numBottles -= numExchange - 1;
+    }
+    return ans;
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer $numBottles
+     * @param Integer $numExchange
+     * @return Integer
+     */
+    function numWaterBottles($numBottles, $numExchange) {
+        $ans = $numBottles;
+        while ($numBottles >= $numExchange) {
+            $numBottles = $numBottles - $numExchange + 1;
+            $ans++;
+        }
+        return $ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

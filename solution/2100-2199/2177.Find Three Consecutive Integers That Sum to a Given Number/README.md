@@ -35,26 +35,20 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：数学
 
-**方法一：数学**
+假设三个连续的整数分别为 $x-1$, $x$, $x+1$，则它们的和为 $3x$，因此 $num$ 必须是 $3$ 的倍数。如果 $num$ 不是 $3$ 的倍数，则无法表示成三个连续整数的和，返回空数组。否则，令 $x = \frac{num}{3}$，则 $x-1$, $x$, $x+1$ 就是三个连续整数，它们的和为 $num$。
+
+时间复杂度 $O(1)$，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def sumOfThree(self, num: int) -> List[int]:
-        a, b = divmod(num, 3)
-        return [] if b else [a - 1, a, a + 1]
+        x, mod = divmod(num, 3)
+        return [] if mod else [x - 1, x, x + 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -68,20 +62,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<long long> sumOfThree(long long num) {
-        if (num % 3) return {};
+        if (num % 3) {
+            return {};
+        }
         long long x = num / 3;
         return {x - 1, x, x + 1};
     }
 };
 ```
-
-### **Go**
 
 ```go
 func sumOfThree(num int64) []int64 {
@@ -93,16 +85,16 @@ func sumOfThree(num int64) []int64 {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function sumOfThree(num: number): number[] {
+    if (num % 3) {
+        return [];
+    }
+    const x = Math.floor(num / 3);
+    return [x - 1, x, x + 1];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

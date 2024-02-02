@@ -53,9 +53,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,8 +63,6 @@ class Solution:
         cnt = Counter(x & y for x in nums for y in nums)
         return sum(v for xy, v in cnt.items() for z in nums if xy & z == 0)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,14 +115,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countTriplets(nums []int) (ans int) {
-	mx := 0
-	for _, x := range nums {
-		mx = max(mx, x)
-	}
+	mx := slices.Max(nums)
 	cnt := make([]int, mx+1)
 	for _, x := range nums {
 		for _, y := range nums {
@@ -142,19 +133,29 @@ func countTriplets(nums []int) (ans int) {
 	}
 	return
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function countTriplets(nums: number[]): number {
+    const mx = Math.max(...nums);
+    const cnt: number[] = Array(mx + 1).fill(0);
+    for (const x of nums) {
+        for (const y of nums) {
+            cnt[x & y]++;
+        }
+    }
+    let ans = 0;
+    for (let xy = 0; xy <= mx; ++xy) {
+        for (const z of nums) {
+            if ((xy & z) === 0) {
+                ans += cnt[xy];
+            }
+        }
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

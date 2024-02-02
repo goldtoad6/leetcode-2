@@ -55,9 +55,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -73,20 +73,6 @@ class Solution:
                     ans = t
         return ans
 ```
-
-```python
-class Solution:
-    def maximalNetworkRank(self, n: int, roads: List[List[int]]) -> int:
-        g = [[0] * n for _ in range(n)]
-        cnt = [0] * n
-        for a, b in roads:
-            g[a][b] = g[b][a] = 1
-            cnt[a] += 1
-            cnt[b] += 1
-        return max(cnt[a] + cnt[b] - g[a][b] for a in range(n) for b in range(a + 1, n))
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -110,8 +96,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -138,8 +122,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximalNetworkRank(n int, roads [][]int) (ans int) {
 	g := make([][]int, n)
@@ -160,16 +142,7 @@ func maximalNetworkRank(n int, roads [][]int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maximalNetworkRank(n: number, roads: number[][]): number {
@@ -191,10 +164,24 @@ function maximalNetworkRank(n: number, roads: number[][]): number {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maximalNetworkRank(self, n: int, roads: List[List[int]]) -> int:
+        g = [[0] * n for _ in range(n)]
+        cnt = [0] * n
+        for a, b in roads:
+            g[a][b] = g[b][a] = 1
+            cnt[a] += 1
+            cnt[b] += 1
+        return max(cnt[a] + cnt[b] - g[a][b] for a in range(n) for b in range(a + 1, n))
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

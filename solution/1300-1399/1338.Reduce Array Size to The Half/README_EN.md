@@ -38,9 +38,9 @@ Choosing set {2,7} is not possible as it will make the new array [3,3,3,3,5,5,5]
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +54,6 @@ class Solution:
                 break
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +82,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,14 +109,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minSetSize(arr []int) (ans int) {
-	mx := 0
-	for _, x := range arr {
-		mx = max(mx, x)
-	}
+	mx := slices.Max(arr)
 	cnt := make([]int, mx+1)
 	for _, x := range arr {
 		cnt[x]++
@@ -136,16 +127,7 @@ func minSetSize(arr []int) (ans int) {
 		}
 	}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minSetSize(arr: number[]): number {
@@ -168,10 +150,6 @@ function minSetSize(arr: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

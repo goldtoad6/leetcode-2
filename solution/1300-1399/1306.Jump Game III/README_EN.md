@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>Given an array of non-negative integers <code>arr</code>, you are initially positioned at <code>start</code>&nbsp;index of the array. When you are at index <code>i</code>, you can jump&nbsp;to <code>i + arr[i]</code> or <code>i - arr[i]</code>, check if you can reach to <strong>any</strong> index with value 0.</p>
+<p>Given an array of non-negative integers <code>arr</code>, you are initially positioned at <code>start</code>&nbsp;index of the array. When you are at index <code>i</code>, you can jump&nbsp;to <code>i + arr[i]</code> or <code>i - arr[i]</code>, check if you can reach&nbsp;<strong>any</strong> index with value 0.</p>
 
 <p>Notice that you can not jump outside of the array at any time.</p>
 
@@ -49,11 +49,9 @@ index 0 -&gt; index 4 -&gt; index 1 -&gt; index 3
 
 ## Solutions
 
-BFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -70,8 +68,6 @@ class Solution:
                     q.append(j)
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -95,8 +91,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -122,8 +116,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func canReach(arr []int, start int) bool {
 	q := []int{start}
@@ -145,8 +137,6 @@ func canReach(arr []int, start int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function canReach(arr: number[], start: number): boolean {
     const q: number[] = [start];
@@ -167,10 +157,6 @@ function canReach(arr: number[], start: number): boolean {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

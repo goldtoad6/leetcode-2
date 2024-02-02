@@ -33,35 +33,32 @@
 
 ## Solutions
 
+### Solution 1: Counting
+
+We can use a hash table or array $cnt$ to record the frequency of each number in the array $arr$. Then, we traverse each number $x$ in $cnt$. If $x+1$ also exists in $cnt$, we add $cnt[x]$ to the answer.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $arr$.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
 class Solution:
     def countElements(self, arr: List[int]) -> int:
-        return sum(x + 1 in arr for x in arr)
+        cnt = Counter(arr)
+        return sum(v for x, v in cnt.items() if cnt[x + 1])
 ```
-
-```python
-class Solution:
-    def countElements(self, arr: List[int]) -> int:
-        s = set(arr)
-        return sum(x + 1 in s for x in arr)
-```
-
-### **Java**
 
 ```java
 class Solution {
     public int countElements(int[] arr) {
-        int ans = 0;
+        int[] cnt = new int[1001];
         for (int x : arr) {
-            for (int v : arr) {
-                if (x + 1 == v) {
-                    ++ans;
-                    break;
-                }
+            ++cnt[x];
+        }
+        int ans = 0;
+        for (int x = 0; x < 1000; ++x) {
+            if (cnt[x + 1] > 0) {
+                ans += cnt[x];
             }
         }
         return ans;
@@ -69,37 +66,18 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int countElements(int[] arr) {
-        Set<Integer> s = new HashSet<>();
-        for (int num : arr) {
-            s.add(num);
-        }
-        int res = 0;
-        for (int num : arr) {
-            if (s.contains(num + 1)) {
-                ++res;
-            }
-        }
-        return res;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int countElements(vector<int>& arr) {
-        int ans = 0;
+        int cnt[1001]{};
         for (int x : arr) {
-            for (int v : arr) {
-                if (x + 1 == v) {
-                    ++ans;
-                    break;
-                }
+            ++cnt[x];
+        }
+        int ans = 0;
+        for (int x = 0; x < 1000; ++x) {
+            if (cnt[x + 1]) {
+                ans += cnt[x];
             }
         }
         return ans;
@@ -107,67 +85,54 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int countElements(vector<int>& arr) {
-        unordered_set<int> s(arr.begin(), arr.end());
-        int ans = 0;
-        for (int x : arr) {
-            ans += s.count(x + 1);
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
-
 ```go
-func countElements(arr []int) int {
-	ans := 0
+func countElements(arr []int) (ans int) {
+	mx := slices.Max(arr)
+	cnt := make([]int, mx+1)
 	for _, x := range arr {
-		for _, v := range arr {
-			if x+1 == v {
-				ans++
-				break
-			}
+		cnt[x]++
+	}
+	for x := 0; x < mx; x++ {
+		if cnt[x+1] > 0 {
+			ans += cnt[x]
 		}
 	}
-	return ans
+	return
 }
 ```
 
-```go
-func countElements(arr []int) int {
-	s := map[int]bool{}
-	for _, x := range arr {
-		s[x] = true
-	}
-	ans := 0
-	for _, x := range arr {
-		if s[x+1] {
-			ans++
-		}
-	}
-	return ans
-}
-```
-
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} arr
- * @return {number}
- */
-var countElements = function (arr) {
-    let ans = 0;
+```ts
+function countElements(arr: number[]): number {
+    const mx = Math.max(...arr);
+    const cnt = Array(mx + 1).fill(0);
     for (const x of arr) {
-        ans += arr.includes(x + 1);
+        ++cnt[x];
+    }
+    let ans = 0;
+    for (let i = 0; i < mx; ++i) {
+        if (cnt[i + 1] > 0) {
+            ans += cnt[i];
+        }
     }
     return ans;
-};
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn count_elements(arr: Vec<i32>) -> i32 {
+        let mut cnt = HashMap::new();
+        for &num in &arr {
+            *cnt.entry(num).or_insert(0) += 1;
+        }
+        cnt.iter()
+            .filter(|(&x, _)| cnt.contains_key(&(x + 1)))
+            .map(|(_, &v)| v)
+            .sum()
+    }
+}
 ```
 
 ```js
@@ -176,24 +141,40 @@ var countElements = function (arr) {
  * @return {number}
  */
 var countElements = function (arr) {
-    const s = new Set();
+    const mx = Math.max(...arr);
+    const cnt = Array(mx + 1).fill(0);
     for (const x of arr) {
-        s.add(x);
+        ++cnt[x];
     }
     let ans = 0;
-    for (const x of arr) {
-        if (s.has(x + 1)) {
-            ++ans;
+    for (let i = 0; i < mx; ++i) {
+        if (cnt[i + 1] > 0) {
+            ans += cnt[i];
         }
     }
     return ans;
 };
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param Integer[] $arr
+     * @return Integer
+     */
+    function countElements($arr) {
+        $cnt = array_count_values($arr);
+        $ans = 0;
+        foreach ($cnt as $x => $v) {
+            if (isset($cnt[$x + 1])) {
+                $ans += $v;
+            }
+        }
+        return $ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

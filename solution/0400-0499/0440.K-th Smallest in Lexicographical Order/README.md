@@ -35,13 +35,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -65,10 +61,6 @@ class Solution:
                 curr *= 10
         return curr
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +96,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -125,7 +115,7 @@ public:
                 curr *= 10;
             }
         }
-        return (int)curr;
+        return (int) curr;
     }
 
     int count(long long curr) {
@@ -140,8 +130,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findKthNumber(n int, k int) int {
@@ -169,19 +157,8 @@ func findKthNumber(n int, k int) int {
 	}
 	return curr
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -15,18 +15,19 @@
 | seat_id     | int  |
 | free        | bool |
 +-------------+------+
-Seat_id是该表的自动递增主键列。
-该表的每一行表示第i个座位是否空闲。1表示空闲，0表示被占用。</pre>
+Seat_id 是该表的自动递增主键列。
+在 PostgreSQL 中，<code>free</code> 存储为整数。请使用 <code>::boolean</code> 将其转换为布尔格式。
+该表的每一行表示第 i 个座位是否空闲。1 表示空闲，0 表示被占用。</pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个SQL查询来报告电影院所有连续可用的座位。</p>
+<p>查找电影院所有连续可用的座位。</p>
 
 <p>返回按 <code>seat_id</code> <strong>升序排序&nbsp;</strong>的结果表。</p>
 
 <p>测试用例的生成使得两个以上的座位连续可用。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>结果表格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -55,21 +56,68 @@ Cinema 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：自连接
+
+我们可以使用自连接的方式，将相邻的两个座位连接起来，然后筛选出连续空余的座位并去重排序即可。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT c1.seat_id
-FROM   Cinema c1,
-       Cinema c2
-WHERE  ( ( c1.seat_id = c2.seat_id + 1 )
-          OR ( c1.seat_id = c2.seat_id - 1 ) )
-       AND ( c1.free = 1
-             AND c2.free = 1 )
-GROUP BY seat_id;
+# Write your MySQL query statement below
+SELECT DISTINCT a.seat_id
+FROM
+    Cinema AS a
+    JOIN Cinema AS b ON ABS(a.seat_id - b.seat_id) = 1 AND a.free AND b.free
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+### 方法二：窗口函数
+
+我们也可以使用 `LAG` 和 `LEAD` 函数（或者 `SUM() OVER(ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING)`）来获取相邻的座位信息，然后筛选出连续空余的座位并去重排序即可。
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            seat_id,
+            (free + (LAG(free) OVER (ORDER BY seat_id))) AS a,
+            (free + (LEAD(free) OVER (ORDER BY seat_id))) AS b
+        FROM Cinema
+    )
+SELECT seat_id
+FROM T
+WHERE a = 2 OR b = 2;
+```
+
+<!-- tabs:end -->
+
+### 方法三
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            *,
+            SUM(free = 1) OVER (
+                ORDER BY seat_id
+                ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING
+            ) AS cnt
+        FROM Cinema
+    )
+SELECT seat_id
+FROM T
+WHERE free = 1 AND cnt > 1
+ORDER BY 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

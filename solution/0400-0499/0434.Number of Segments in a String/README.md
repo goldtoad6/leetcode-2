@@ -19,45 +19,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：字符串分割**
+### 方法一：字符串分割
 
 将字符串 `s` 按照空格进行分割，然后统计不为空的单词个数。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。
 
-**方法二：模拟**
-
-直接模拟，遍历字符串，检测每个字符，统计个数。
-
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def countSegments(self, s: str) -> int:
         return len(s.split())
 ```
-
-```python
-class Solution:
-    def countSegments(self, s: str) -> int:
-        ans = 0
-        for i, c in enumerate(s):
-            if c != ' ' and (i == 0 or s[i - 1] == ' '):
-                ans += 1
-        return ans
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -73,6 +47,69 @@ class Solution {
 }
 ```
 
+```cpp
+class Solution {
+public:
+    int countSegments(string s) {
+        int ans = 0;
+        istringstream ss(s);
+        while (ss >> s) ++ans;
+        return ans;
+    }
+};
+```
+
+```go
+func countSegments(s string) int {
+	ans := 0
+	for _, t := range strings.Split(s, " ") {
+		if len(t) > 0 {
+			ans++
+		}
+	}
+	return ans
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Integer
+     */
+    function countSegments($s) {
+        $arr = explode(' ', $s);
+        $cnt = 0;
+        for ($i = 0; $i < count($arr); $i++) {
+            if (strlen($arr[$i]) != 0) {
+                $cnt++;
+            }
+        }
+        return $cnt;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：模拟
+
+直接模拟，遍历字符串，检测每个字符，统计个数。
+
+时间复杂度 $O(n)$，空间复杂度 $O(1)$。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countSegments(self, s: str) -> int:
+        ans = 0
+        for i, c in enumerate(s):
+            if c != ' ' and (i == 0 or s[i - 1] == ' '):
+                ans += 1
+        return ans
+```
+
 ```java
 class Solution {
     public int countSegments(String s) {
@@ -85,20 +122,6 @@ class Solution {
         return ans;
     }
 }
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int countSegments(string s) {
-        int ans = 0;
-        istringstream ss(s);
-        while (ss >> s) ++ans;
-        return ans;
-    }
-};
 ```
 
 ```cpp
@@ -116,20 +139,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func countSegments(s string) int {
-	ans := 0
-	for _, t := range strings.Split(s, " ") {
-		if len(t) > 0 {
-			ans++
-		}
-	}
-	return ans
-}
-```
-
 ```go
 func countSegments(s string) int {
 	ans := 0
@@ -142,10 +151,6 @@ func countSegments(s string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

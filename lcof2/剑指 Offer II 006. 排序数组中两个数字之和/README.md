@@ -52,95 +52,95 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：二分查找
 
-双指针
+我们注意到数组按照非递减顺序排列，因此对于每个 $numbers[i]$，可以通过二分查找的方式找到 $target - numbers[i]$ 的位置，如果存在，那么返回 $[i, j]$ 即可。
+
+时间复杂度 $O(n \times \log n)$，其中 $n$ 为数组 $numbers$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        i, j = 0, len(numbers) - 1
-        while True:
-            if numbers[i] + numbers[j] < target:
-                i += 1
-            elif numbers[i] + numbers[j] > target:
-                j -= 1
-            else:
+        n = len(numbers)
+        for i in range(n - 1):
+            x = target - numbers[i]
+            j = bisect_left(numbers, x, lo=i + 1)
+            if j < n and numbers[j] == x:
                 return [i, j]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public int[] twoSum(int[] numbers, int target) {
-        int i = 0, j = numbers.length - 1;
-        for (;;) {
-            if (numbers[i] + numbers[j] < target) {
-                i++;
-            } else if (numbers[i] + numbers[j] > target) {
-                j--;
-            } else {
-                return new int[] {i, j};
+        for (int i = 0, n = numbers.length;; ++i) {
+            int x = target - numbers[i];
+            int l = i + 1, r = n - 1;
+            while (l < r) {
+                int mid = (l + r) >> 1;
+                if (numbers[mid] >= x) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            if (numbers[l] == x) {
+                return new int[] {i, l};
             }
         }
     }
 }
 ```
 
-### **Go**
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        for (int i = 0, n = numbers.size();; ++i) {
+            int x = target - numbers[i];
+            int j = lower_bound(numbers.begin() + i + 1, numbers.end(), x) - numbers.begin();
+            if (j < n && numbers[j] == x) {
+                return {i, j};
+            }
+        }
+    }
+};
+```
 
 ```go
 func twoSum(numbers []int, target int) []int {
-	for i, j := 0, len(numbers)-1; ; {
-		if numbers[i]+numbers[j] < target {
-			i++
-		} else if numbers[i]+numbers[j] > target {
-			j--
-		} else {
+	for i, n := 0, len(numbers); ; i++ {
+		x := target - numbers[i]
+		j := sort.SearchInts(numbers[i+1:], x) + i + 1
+		if j < n && numbers[j] == x {
 			return []int{i, j}
 		}
 	}
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int i = 0;
-        int j = numbers.size() - 1;
-        vector<int> res;
-
-        while (i < j) {
-            int sum = numbers[i] + numbers[j];
-            if (sum < target) {
-                i++;
-            } else if (sum > target) {
-                j--;
+```ts
+function twoSum(numbers: number[], target: number): number[] {
+    const n = numbers.length;
+    for (let i = 0; ; ++i) {
+        const x = target - numbers[i];
+        let l = i + 1;
+        let r = n - 1;
+        while (l < r) {
+            const mid = (l + r) >> 1;
+            if (numbers[mid] >= x) {
+                r = mid;
             } else {
-                res.push_back(i);
-                res.push_back(j);
-                break;
+                l = mid + 1;
             }
         }
-
-        return res;
+        if (numbers[l] === x) {
+            return [i, l];
+        }
     }
-};
+}
 ```
-
-### **Rust**
 
 ```rust
 use std::cmp::Ordering;
@@ -152,12 +152,111 @@ impl Solution {
         let mut r = n - 1;
         loop {
             match target.cmp(&(numbers[l] + numbers[r])) {
-                Ordering::Less => r -= 1,
-                Ordering::Greater => l += 1,
-                Ordering::Equal => break,
+                Ordering::Less => {
+                    r -= 1;
+                }
+                Ordering::Greater => {
+                    l += 1;
+                }
+                Ordering::Equal => {
+                    break;
+                }
             }
         }
         vec![l as i32, r as i32]
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：双指针
+
+我们定义两个指针 $i$ 和 $j$，分别指向数组的第一个元素和最后一个元素。每次计算 $numbers[i] + numbers[j]$，如果和等于目标值，那么返回 $[i, j]$ 即可。如果和小于目标值，那么将 $i$ 右移一位，如果和大于目标值，那么将 $j$ 左移一位。
+
+时间复杂度 $O(n)$，其中 $n$ 为数组 $numbers$ 的长度。空间复杂度 $O(1)$。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        i, j = 0, len(numbers) - 1
+        while i < j:
+            x = numbers[i] + numbers[j]
+            if x == target:
+                return [i, j]
+            if x < target:
+                i += 1
+            else:
+                j -= 1
+```
+
+```java
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        for (int i = 0, j = numbers.length - 1;;) {
+            int x = numbers[i] + numbers[j];
+            if (x == target) {
+                return new int[] {i, j};
+            }
+            if (x < target) {
+                ++i;
+            } else {
+                --j;
+            }
+        }
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        for (int i = 0, j = numbers.size() - 1;;) {
+            int x = numbers[i] + numbers[j];
+            if (x == target) {
+                return {i, j};
+            }
+            if (x < target) {
+                ++i;
+            } else {
+                --j;
+            }
+        }
+    }
+};
+```
+
+```go
+func twoSum(numbers []int, target int) []int {
+	for i, j := 0, len(numbers)-1; ; {
+		x := numbers[i] + numbers[j]
+		if x == target {
+			return []int{i, j}
+		}
+		if x < target {
+			i++
+		} else {
+			j--
+		}
+	}
+}
+```
+
+```ts
+function twoSum(numbers: number[], target: number): number[] {
+    for (let i = 0, j = numbers.length - 1; ; ) {
+        const x = numbers[i] + numbers[j];
+        if (x === target) {
+            return [i, j];
+        }
+        if (x < target) {
+            ++i;
+        } else {
+            --j;
+        }
     }
 }
 ```
@@ -175,9 +274,15 @@ impl Solution {
             while l <= r {
                 let mid = l + (r - l) / 2;
                 match num.cmp(&numbers[mid]) {
-                    Ordering::Less => r = mid - 1,
-                    Ordering::Greater => l = mid + 1,
-                    Ordering::Equal => return vec![i as i32, mid as i32],
+                    Ordering::Less => {
+                        r = mid - 1;
+                    }
+                    Ordering::Greater => {
+                        l = mid + 1;
+                    }
+                    Ordering::Equal => {
+                        return vec![i as i32, mid as i32];
+                    }
                 }
             }
         }
@@ -186,10 +291,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

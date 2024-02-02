@@ -45,9 +45,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：DFS + 剪枝**
+### 方法一：DFS + 剪枝
 
 我们首先处理得到字符串 $s$ 待删除的左、右括号的最小数量，分别记为 $l$ 和 $r$。
 
@@ -74,10 +72,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
@@ -92,8 +86,7 @@ class Solution:
                 dfs(i + 1, l - 1, r, lcnt, rcnt, t)
             elif s[i] == ')' and r:
                 dfs(i + 1, l, r - 1, lcnt, rcnt, t)
-            dfs(i + 1, l, r, lcnt + (s[i] == '('),
-                rcnt + (s[i] == ')'), t + s[i])
+            dfs(i + 1, l, r, lcnt + (s[i] == '('), rcnt + (s[i] == ')'), t + s[i])
 
         l = r = 0
         for c in s:
@@ -109,10 +102,6 @@ class Solution:
         dfs(0, l, r, 0, 0, '')
         return list(ans)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -163,8 +152,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -209,8 +196,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func removeInvalidParentheses(s string) []string {
@@ -261,10 +246,6 @@ func removeInvalidParentheses(s string) []string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

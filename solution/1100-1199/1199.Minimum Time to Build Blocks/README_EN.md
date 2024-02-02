@@ -52,9 +52,21 @@ The cost is 1 + max(3, 1 + max(1, 2)) = 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Priority Queue (Min Heap)
 
-### **Python3**
+First, consider the case where there is only one block. In this case, there is no need to split the worker, just let him build the block directly. The time cost is $block[0]$.
+
+If there are two blocks, you need to split the worker into two, and then let them build the blocks separately. The time cost is $split + \max(block[0], block[1])$.
+
+If there are more than two blocks, at each step you need to consider how many workers to split. This is not easy to handle with forward thinking.
+
+We might as well use reverse thinking, not splitting workers, but merging blocks. We select any two blocks $i$, $j$ for merging. The time to build a new block is $split + \max(block[i], block[j])$.
+
+In order to let the blocks with long time consumption participate in the merge as little as possible, we can greedily select the two blocks with the smallest time consumption for merging each time. Therefore, we can maintain a min heap, take out the two smallest blocks for merging each time, until there is only one block left. The build time of the last remaining block is the answer.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the number of blocks.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,8 +77,6 @@ class Solution:
             heappush(blocks, heappop(blocks) + split)
         return blocks[0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +93,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -103,8 +111,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minBuildTime(blocks []int, split int) int {
 	q := hp{}
@@ -120,8 +126,8 @@ func minBuildTime(blocks []int, split int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h *hp) Push(v any) { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -129,10 +135,43 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
+```ts
+function minBuildTime(blocks: number[], split: number): number {
+    const pq = new MinPriorityQueue();
+    for (const x of blocks) {
+        pq.enqueue(x);
+    }
+    while (pq.size() > 1) {
+        pq.dequeue()!;
+        pq.enqueue(pq.dequeue()!.element + split);
+    }
+    return pq.dequeue()!.element;
+}
 ```
 
+```rust
+use std::collections::BinaryHeap;
+use std::cmp::Reverse;
+
+impl Solution {
+    pub fn min_build_time(blocks: Vec<i32>, split: i32) -> i32 {
+        let mut pq = BinaryHeap::new();
+
+        for x in blocks {
+            pq.push(Reverse(x));
+        }
+
+        while pq.len() > 1 {
+            pq.pop();
+            let new_element = pq.pop().unwrap().0 + split;
+            pq.push(Reverse(new_element));
+        }
+
+        pq.pop().unwrap().0
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -58,9 +58,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：回溯**
+### 方法一：回溯
 
 我们可以先遍历整个网格，找出起点 $(x, y)$，并且统计空白格的数量 $cnt$。
 
@@ -72,18 +70,14 @@
 
 最后，我们返回从起点出发的路径数即可，即 $dfs(x, y, 1)$。
 
-时间复杂度 $O(4^{m \times n})$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别为网格的行数和列数。
+时间复杂度 $O(3^{m \times n})$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别为网格的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def uniquePathsIII(self, grid: List[List[int]]) -> int:
-        def dfs(i, j, k):
+        def dfs(i: int, j: int, k: int) -> int:
             if grid[i][j] == 2:
                 return int(k == cnt + 1)
             ans = 0
@@ -96,17 +90,12 @@ class Solution:
             return ans
 
         m, n = len(grid), len(grid[0])
-        start = next((i, j) for i in range(m)
-                     for j in range(n) if grid[i][j] == 1)
+        start = next((i, j) for i in range(m) for j in range(n) if grid[i][j] == 1)
         dirs = (-1, 0, 1, 0, -1)
-        cnt = sum(grid[i][j] == 0 for i in range(m) for j in range(n))
+        cnt = sum(row.count(0) for row in grid)
         vis = {start}
         return dfs(*start, 0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -155,8 +144,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -199,8 +186,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func uniquePathsIII(grid [][]int) int {
 	m, n := len(grid), len(grid[0])
@@ -242,10 +227,45 @@ func uniquePathsIII(grid [][]int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function uniquePathsIII(grid: number[][]): number {
+    const m = grid.length;
+    const n = grid[0].length;
+    let [x, y] = [0, 0];
+    let cnt = 0;
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (grid[i][j] === 0) {
+                ++cnt;
+            } else if (grid[i][j] == 1) {
+                [x, y] = [i, j];
+            }
+        }
+    }
+    const vis: boolean[][] = Array(m)
+        .fill(0)
+        .map(() => Array(n).fill(false));
+    vis[x][y] = true;
+    const dirs = [-1, 0, 1, 0, -1];
+    const dfs = (i: number, j: number, k: number): number => {
+        if (grid[i][j] === 2) {
+            return k === cnt + 1 ? 1 : 0;
+        }
+        let ans = 0;
+        for (let d = 0; d < 4; ++d) {
+            const [x, y] = [i + dirs[d], j + dirs[d + 1]];
+            if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && grid[x][y] !== -1) {
+                vis[x][y] = true;
+                ans += dfs(x, y, k + 1);
+                vis[x][y] = false;
+            }
+        }
+        return ans;
+    };
+    return dfs(x, y, 0);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

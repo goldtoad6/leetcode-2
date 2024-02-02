@@ -58,9 +58,7 @@ authenticationManager.<code>countUnexpiredTokens</code>(15); // tokenId 为 "bbb
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 我们可以简单维护一个哈希表 $d$，键为 `tokenId`，值为过期时间。
 
@@ -74,13 +72,8 @@ authenticationManager.<code>countUnexpiredTokens</code>(15); // tokenId 为 "bbb
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class AuthenticationManager:
-
     def __init__(self, timeToLive: int):
         self.t = timeToLive
         self.d = defaultdict(int)
@@ -103,10 +96,6 @@ class AuthenticationManager:
 # obj.renew(tokenId,currentTime)
 # param_3 = obj.countUnexpiredTokens(currentTime)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class AuthenticationManager {
@@ -148,8 +137,6 @@ class AuthenticationManager {
  */
 ```
 
-### **C++**
-
 ```cpp
 class AuthenticationManager {
 public:
@@ -185,8 +172,6 @@ private:
  * int param_3 = obj->countUnexpiredTokens(currentTime);
  */
 ```
-
-### **Go**
 
 ```go
 type AuthenticationManager struct {
@@ -227,8 +212,6 @@ func (this *AuthenticationManager) CountUnexpiredTokens(currentTime int) int {
  * param_3 := obj.CountUnexpiredTokens(currentTime);
  */
 ```
-
-### **TypeScript**
 
 ```ts
 class AuthenticationManager {
@@ -271,8 +254,6 @@ class AuthenticationManager {
  */
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 struct AuthenticationManager {
@@ -304,12 +285,12 @@ impl AuthenticationManager {
     }
 
     fn count_unexpired_tokens(&self, current_time: i32) -> i32 {
-        self.map.values().filter(|&time| *time > current_time).count() as i32
+        self.map
+            .values()
+            .filter(|&time| *time > current_time)
+            .count() as i32
     }
-}
-
-
-/**
+}/**
  * Your AuthenticationManager object will be instantiated and called as such:
  * let obj = AuthenticationManager::new(timeToLive);
  * obj.generate(tokenId, currentTime);
@@ -318,10 +299,6 @@ impl AuthenticationManager {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

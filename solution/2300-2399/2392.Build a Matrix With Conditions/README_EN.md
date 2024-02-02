@@ -63,15 +63,15 @@ No matrix can satisfy all the conditions, so we return the empty matrix.
 
 ## Solutions
 
-Topological Sort.
+### Solution 1
 
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
 class Solution:
-    def buildMatrix(self, k: int, rowConditions: List[List[int]], colConditions: List[List[int]]) -> List[List[int]]:
+    def buildMatrix(
+        self, k: int, rowConditions: List[List[int]], colConditions: List[List[int]]
+    ) -> List[List[int]]:
         def f(cond):
             g = defaultdict(list)
             indeg = [0] * (k + 1)
@@ -102,8 +102,6 @@ class Solution:
             ans[i][m[v]] = v
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -159,8 +157,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -213,8 +209,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func buildMatrix(k int, rowConditions [][]int, colConditions [][]int) [][]int {
@@ -272,14 +266,8 @@ func buildMatrix(k int, rowConditions [][]int, colConditions [][]int) [][]int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function buildMatrix(
-    k: number,
-    rowConditions: number[][],
-    colConditions: number[][],
-): number[][] {
+function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {
     function f(cond) {
         const g = Array.from({ length: k + 1 }, () => []);
         const indeg = new Array(k + 1).fill(0);
@@ -323,11 +311,6 @@ function buildMatrix(
 }
 ```
 
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

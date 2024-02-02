@@ -44,11 +44,9 @@
 
 ## Solutions
 
-Segment Tree.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class BinaryIndexedTree:
@@ -95,8 +93,6 @@ class Solution:
                         break
         return ''.join(ans)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -162,8 +158,6 @@ class BinaryIndexedTree {
 }
 ```
 
-### **C++**
-
 ```cpp
 class BinaryIndexedTree {
 public:
@@ -172,7 +166,7 @@ public:
 
     BinaryIndexedTree(int _n)
         : n(_n)
-        , c(_n + 1) { }
+        , c(_n + 1) {}
 
     void update(int x, int delta) {
         while (x <= n) {
@@ -223,8 +217,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type BinaryIndexedTree struct {
@@ -284,10 +276,6 @@ func minInteger(num string, k int) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

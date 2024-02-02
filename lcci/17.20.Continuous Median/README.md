@@ -33,9 +33,7 @@ findMedian() -&gt; 2
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：优先队列（双堆）**
+### 方法一：优先队列（双堆）
 
 创建大根堆、小根堆，其中：大根堆存放较小的一半元素，小根堆存放较大的一半元素。
 
@@ -49,13 +47,8 @@ findMedian() -&gt; 2
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class MedianFinder:
-
     def __init__(self):
         """
         initialize your data structure here.
@@ -80,10 +73,6 @@ class MedianFinder:
 # obj.addNum(num)
 # param_2 = obj.findMedian()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class MedianFinder {
@@ -118,14 +107,11 @@ class MedianFinder {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MedianFinder {
 public:
     /** initialize your data structure here. */
     MedianFinder() {
-
     }
 
     void addNum(int num) {
@@ -157,8 +143,6 @@ private:
  * double param_2 = obj->findMedian();
  */
 ```
-
-### **Go**
 
 ```go
 type MedianFinder struct {
@@ -195,9 +179,9 @@ func (this *MedianFinder) FindMedian() float64 {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -205,10 +189,6 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

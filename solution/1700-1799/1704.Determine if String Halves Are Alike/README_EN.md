@@ -39,9 +39,13 @@ Notice that the vowel o is counted twice.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+Traverse the string. If the number of vowels in the first half of the string is equal to the number of vowels in the second half, return `true`. Otherwise, return `false`.
+
+The time complexity is $O(n)$, where $n$ is the length of the string. The space complexity is $O(C)$, where $C$ is the number of vowel characters.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,16 +57,6 @@ class Solution:
             cnt -= s[i + n] in vowels
         return cnt == 0
 ```
-
-```python
-class Solution:
-    def halvesAreAlike(self, s: str) -> bool:
-        vowels = set('aeiouAEIOU')
-        a, b = s[:len(s) >> 1], s[len(s) >> 1:]
-        return sum(c in vowels for c in a) == sum(c in vowels for c in b)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,8 +74,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -96,8 +88,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func halvesAreAlike(s string) bool {
@@ -118,8 +108,6 @@ func halvesAreAlike(s string) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function halvesAreAlike(s: string): boolean {
     const set = new Set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']);
@@ -132,8 +120,6 @@ function halvesAreAlike(s: string): boolean {
     return count === 0;
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashSet;
@@ -158,10 +144,57 @@ impl Solution {
 }
 ```
 
-### **...**
-
+```js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var halvesAreAlike = function (s) {
+    const str = 'aeiouAEIOU';
+    let cnt = 0;
+    for (let i = 0; i < s.length / 2; i++) {
+        if (str.indexOf(s[i]) > -1) cnt++;
+        if (str.indexOf(s[s.length - 1 - i]) > -1) cnt--;
+    }
+    return cnt === 0;
+};
 ```
 
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return Boolean
+     */
+    function halvesAreAlike($s) {
+        $cnt = 0;
+        for ($i = 0; $i < strlen($s) / 2; $i++) {
+            if (strpos('aeiouAEIOU', $s[$i]) !== false) {
+                $cnt++;
+            }
+            if (strpos('aeiouAEIOU', $s[strlen($s) / 2 + $i]) !== false) {
+                $cnt--;
+            }
+        }
+        return $cnt == 0;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def halvesAreAlike(self, s: str) -> bool:
+        vowels = set('aeiouAEIOU')
+        a, b = s[: len(s) >> 1], s[len(s) >> 1 :]
+        return sum(c in vowels for c in a) == sum(c in vowels for c in b)
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

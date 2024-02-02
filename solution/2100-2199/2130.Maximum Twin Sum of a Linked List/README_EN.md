@@ -57,9 +57,9 @@ There is only one node with a twin in the linked list having twin sum of 1 + 100
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -76,6 +76,149 @@ class Solution:
         n = len(s)
         return max(s[i] + s[-(i + 1)] for i in range(n >> 1))
 ```
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int pairSum(ListNode head) {
+        List<Integer> s = new ArrayList<>();
+        for (; head != null; head = head.next) {
+            s.add(head.val);
+        }
+        int ans = 0, n = s.size();
+        for (int i = 0; i < (n >> 1); ++i) {
+            ans = Math.max(ans, s.get(i) + s.get(n - 1 - i));
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        vector<int> s;
+        for (; head != nullptr; head = head->next) s.push_back(head->val);
+        int ans = 0, n = s.size();
+        for (int i = 0; i < (n >> 1); ++i) ans = max(ans, s[i] + s[n - i - 1]);
+        return ans;
+    }
+};
+```
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func pairSum(head *ListNode) int {
+	var s []int
+	for ; head != nil; head = head.Next {
+		s = append(s, head.Val)
+	}
+	ans, n := 0, len(s)
+	for i := 0; i < (n >> 1); i++ {
+		if ans < s[i]+s[n-i-1] {
+			ans = s[i] + s[n-i-1]
+		}
+	}
+	return ans
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function pairSum(head: ListNode | null): number {
+    const arr = [];
+    let node = head;
+    while (node) {
+        arr.push(node.val);
+        node = node.next;
+    }
+    const n = arr.length;
+    let ans = 0;
+    for (let i = 0; i < n >> 1; i++) {
+        ans = Math.max(ans, arr[i] + arr[n - 1 - i]);
+    }
+    return ans;
+}
+```
+
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn pair_sum(head: Option<Box<ListNode>>) -> i32 {
+        let mut arr = Vec::new();
+        let mut node = &head;
+        while node.is_some() {
+            let t = node.as_ref().unwrap();
+            arr.push(t.val);
+            node = &t.next;
+        }
+        let n = arr.len();
+        let mut ans = 0;
+        for i in 0..n >> 1 {
+            ans = ans.max(arr[i] + arr[n - 1 - i]);
+        }
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -108,34 +251,6 @@ class Solution:
             pa = pa.next
             pb = pb.next
         return ans
-```
-
-### **Java**
-
-```java
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-class Solution {
-    public int pairSum(ListNode head) {
-        List<Integer> s = new ArrayList<>();
-        for (; head != null; head = head.next) {
-            s.add(head.val);
-        }
-        int ans = 0, n = s.size();
-        for (int i = 0; i < (n >> 1); ++i) {
-            ans = Math.max(ans, s.get(i) + s.get(n - 1 - i));
-        }
-        return ans;
-    }
-}
 ```
 
 ```java
@@ -184,31 +299,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-class Solution {
-public:
-    int pairSum(ListNode* head) {
-        vector<int> s;
-        for (; head != nullptr; head = head->next) s.push_back(head->val);
-        int ans = 0, n = s.size();
-        for (int i = 0; i < (n >> 1); ++i) ans = max(ans, s[i] + s[n - i - 1]);
-        return ans;
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -225,8 +315,7 @@ public:
     int pairSum(ListNode* head) {
         ListNode* slow = head;
         ListNode* fast = head->next;
-        while (fast && fast->next)
-        {
+        while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
@@ -235,8 +324,7 @@ public:
         slow->next = nullptr;
         ListNode* pb = reverse(q);
         int ans = 0;
-        while (pa)
-        {
+        while (pa) {
             ans = max(ans, pa->val + pb->val);
             pa = pa->next;
             pb = pb->next;
@@ -247,8 +335,7 @@ public:
     ListNode* reverse(ListNode* head) {
         ListNode* dummy = new ListNode();
         ListNode* curr = head;
-        while (curr)
-        {
+        while (curr) {
             ListNode* next = curr->next;
             curr->next = dummy->next;
             dummy->next = curr;
@@ -257,31 +344,6 @@ public:
         return dummy->next;
     }
 };
-```
-
-### **Go**
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func pairSum(head *ListNode) int {
-	var s []int
-	for ; head != nil; head = head.Next {
-		s = append(s, head.Val)
-	}
-	ans, n := 0, len(s)
-	for i := 0; i < (n >> 1); i++ {
-		if ans < s[i]+s[n-i-1] {
-			ans = s[i] + s[n-i-1]
-		}
-	}
-	return ans
-}
 ```
 
 ```go
@@ -319,44 +381,6 @@ func pairSum(head *ListNode) int {
 		pb = pb.Next
 	}
 	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function pairSum(head: ListNode | null): number {
-    const arr = [];
-    let node = head;
-    while (node) {
-        arr.push(node.val);
-        node = node.next;
-    }
-    const n = arr.length;
-    let ans = 0;
-    for (let i = 0; i < n >> 1; i++) {
-        ans = Math.max(ans, arr[i] + arr[n - 1 - i]);
-    }
-    return ans;
 }
 ```
 
@@ -399,48 +423,6 @@ function pairSum(head: ListNode | null): number {
 }
 ```
 
-### **Rust**
-
-```rust
-// Definition for singly-linked list.
-// #[derive(PartialEq, Eq, Clone, Debug)]
-// pub struct ListNode {
-//   pub val: i32,
-//   pub next: Option<Box<ListNode>>
-// }
-//
-// impl ListNode {
-//   #[inline]
-//   fn new(val: i32) -> Self {
-//     ListNode {
-//       next: None,
-//       val
-//     }
-//   }
-// }
-impl Solution {
-    pub fn pair_sum(head: Option<Box<ListNode>>) -> i32 {
-        let mut arr = Vec::new();
-        let mut node = &head;
-        while node.is_some() {
-            let t = node.as_ref().unwrap();
-            arr.push(t.val);
-            node = &t.next;
-        }
-        let n = arr.len();
-        let mut ans = 0;
-        for i in 0..n >> 1 {
-            ans = ans.max(arr[i] + arr[n - 1 - i]);
-        }
-        ans
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

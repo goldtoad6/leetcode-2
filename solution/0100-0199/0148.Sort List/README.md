@@ -49,15 +49,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-先用快慢指针找到链表中点，然后分成左右两个链表，递归排序左右链表。最后合并两个排序的链表即可。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for singly-linked list.
@@ -88,10 +82,6 @@ class Solution:
         cur.next = l1 or l2
         return dummy.next
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -136,8 +126,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -181,8 +169,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for singly-linked list.
@@ -223,7 +209,108 @@ func sortList(head *ListNode) *ListNode {
 }
 ```
 
-### **JavaScript**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function sortList(head: ListNode | null): ListNode | null {
+    if (head == null || head.next == null) return head;
+    // 快慢指针定位中点
+    let slow: ListNode = head,
+        fast: ListNode = head.next;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    // 归并排序
+    let mid: ListNode = slow.next;
+    slow.next = null;
+    let l1: ListNode = sortList(head);
+    let l2: ListNode = sortList(mid);
+    let dummy: ListNode = new ListNode();
+    let cur: ListNode = dummy;
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            cur.next = l1;
+            l1 = l1.next;
+        } else {
+            cur.next = l2;
+            l2 = l2.next;
+        }
+        cur = cur.next;
+    }
+    cur.next = l1 == null ? l2 : l1;
+    return dummy.next;
+}
+```
+
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        fn merge(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+            match (l1, l2) {
+                (None, Some(node)) | (Some(node), None) => Some(node),
+                (Some(mut node1), Some(mut node2)) => {
+                    if node1.val < node2.val {
+                        node1.next = merge(node1.next.take(), Some(node2));
+                        Some(node1)
+                    } else {
+                        node2.next = merge(Some(node1), node2.next.take());
+                        Some(node2)
+                    }
+                }
+                _ => None,
+            }
+        }
+
+        fn sort(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+            if head.is_none() || head.as_ref().unwrap().next.is_none() {
+                return head;
+            }
+            let mut head = head;
+            let mut length = 0;
+            let mut cur = &head;
+            while cur.is_some() {
+                length += 1;
+                cur = &cur.as_ref().unwrap().next;
+            }
+            let mut cur = &mut head;
+            for _ in 0..length / 2 - 1 {
+                cur = &mut cur.as_mut().unwrap().next;
+            }
+            let right = cur.as_mut().unwrap().next.take();
+
+            merge(sort(head), sort(right))
+        }
+        sort(head)
+    }
+}
+```
 
 ```js
 /**
@@ -267,8 +354,6 @@ var sortList = function (head) {
     return dummy.next;
 };
 ```
-
-### **C#**
 
 ```cs
 /**
@@ -320,56 +405,6 @@ public class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function sortList(head: ListNode | null): ListNode | null {
-    if (head == null || head.next == null) return head;
-    // 快慢指针定位中点
-    let slow: ListNode = head,
-        fast: ListNode = head.next;
-    while (fast != null && fast.next != null) {
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    // 归并排序
-    let mid: ListNode = slow.next;
-    slow.next = null;
-    let l1: ListNode = sortList(head);
-    let l2: ListNode = sortList(mid);
-    let dummy: ListNode = new ListNode();
-    let cur: ListNode = dummy;
-    while (l1 != null && l2 != null) {
-        if (l1.val <= l2.val) {
-            cur.next = l1;
-            l1 = l1.next;
-        } else {
-            cur.next = l2;
-            l2 = l2.next;
-        }
-        cur = cur.next;
-    }
-    cur.next = l1 == null ? l2 : l1;
-    return dummy.next;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

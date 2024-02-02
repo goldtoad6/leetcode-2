@@ -37,15 +37,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-双队列存储。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class AnimalShelf:
@@ -80,10 +74,6 @@ class AnimalShelf:
 # param_3 = obj.dequeueDog()
 # param_4 = obj.dequeueCat()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class AnimalShelf {
@@ -127,8 +117,6 @@ class AnimalShelf {
  * int[] param_4 = obj.dequeueCat();
  */
 ```
-
-### **TypeScript**
 
 ```ts
 class AnimalShelf {
@@ -183,8 +171,6 @@ class AnimalShelf {
  */
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::VecDeque;
 
@@ -219,11 +205,7 @@ impl AnimalShelf {
             (true, false) => self.dequeue_dog(),
             (false, true) => self.dequeue_cat(),
             (false, false) => {
-                if self.dogs[0] < self.cats[0] {
-                    self.dequeue_dog()
-                } else {
-                    self.dequeue_cat()
-                }
+                if self.dogs[0] < self.cats[0] { self.dequeue_dog() } else { self.dequeue_cat() }
             }
         }
     }
@@ -241,9 +223,7 @@ impl AnimalShelf {
         }
         vec![self.cats.pop_front().unwrap(), 0]
     }
-}
-
-/**
+}/**
  * Your AnimalShelf object will be instantiated and called as such:
  * let obj = AnimalShelf::new();
  * obj.enqueue(animal);
@@ -253,10 +233,6 @@ impl AnimalShelf {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：二分查找**
+### 方法一：二分查找
 
 根据题目描述，如果我们确定了 $nums[index]$ 的值为 $x$，此时我们可以找到一个最小的数组总和。也就是说，在 $index$ 左侧的数组元素从 $x-1$ 一直递减到 $1$，如果还有剩余的元素，那么剩余的元素都为 $1$；同理，在 $index$ 及右侧的数组元素从 $x$ 一直递减到 $1$，如果还有剩余的元素，那么剩余的元素都为 $1$。
 
@@ -63,19 +61,17 @@
 
 最后将 $left$ 作为答案返回即可。
 
-时间复杂度 $O(\log M)$，空间复杂度 $O(1)$。其中 $M=maxSum$。
+时间复杂度 $O(\log M)$，其中 $M=maxSum$。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def maxValue(self, n: int, index: int, maxSum: int) -> int:
         def sum(x, cnt):
-            return (x + x - cnt + 1) * cnt // 2 if x >= cnt else (x + 1) * x // 2 + cnt - x
+            return (
+                (x + x - cnt + 1) * cnt // 2 if x >= cnt else (x + 1) * x // 2 + cnt - x
+            )
 
         left, right = 1, maxSum
         while left < right:
@@ -86,10 +82,6 @@ class Solution:
                 right = mid - 1
         return left
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -112,8 +104,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -135,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxValue(n int, index int, maxSum int) int {
 	sum := func(x, cnt int) int {
@@ -152,10 +140,6 @@ func maxValue(n int, index int, maxSum int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

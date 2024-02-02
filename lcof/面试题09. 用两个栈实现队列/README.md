@@ -31,7 +31,7 @@
 
 ## 解法
 
-**方法一：双栈**
+### 方法一：双栈
 
 我们可以使用两个栈来实现队列，其中一个栈 `stk1` 用来存储输入的元素，另一个栈 `stk2` 用来输出元素。
 
@@ -42,8 +42,6 @@
 时间复杂度上，对于 `appendTail()` 方法，时间复杂度为 $O(1)$；对于 `deleteHead()` 方法，时间复杂度为 $O(n)$；空间复杂度为 $O(n)$。其中 $n$ 为队列中的元素个数。
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class CQueue:
@@ -66,8 +64,6 @@ class CQueue:
 # obj.appendTail(value)
 # param_2 = obj.deleteHead()
 ```
-
-### **Java**
 
 ```java
 class CQueue {
@@ -99,13 +95,10 @@ class CQueue {
  */
 ```
 
-### **C++**
-
 ```cpp
 class CQueue {
 public:
     CQueue() {
-
     }
 
     void appendTail(int value) {
@@ -138,8 +131,6 @@ private:
  * int param_2 = obj->deleteHead();
  */
 ```
-
-### **Go**
 
 ```go
 type CQueue struct {
@@ -177,7 +168,78 @@ func (this *CQueue) DeleteHead() int {
  */
 ```
 
-### **JavaScript**
+```ts
+class CQueue {
+    private stk1: number[];
+    private stk2: number[];
+
+    constructor() {
+        this.stk1 = [];
+        this.stk2 = [];
+    }
+
+    appendTail(value: number): void {
+        this.stk1.push(value);
+    }
+
+    deleteHead(): number {
+        if (this.stk2.length == 0) {
+            while (this.stk1.length) {
+                this.stk2.push(this.stk1.pop());
+            }
+        }
+        return this.stk2.length == 0 ? -1 : this.stk2.pop();
+    }
+}
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * var obj = new CQueue()
+ * obj.appendTail(value)
+ * var param_2 = obj.deleteHead()
+ */
+```
+
+```rust
+struct CQueue {
+    s1: Vec<i32>,
+    s2: Vec<i32>,
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl CQueue {
+    fn new() -> Self {
+        CQueue {
+            s1: Vec::new(),
+            s2: Vec::new(),
+        }
+    }
+
+    fn append_tail(&mut self, value: i32) {
+        self.s1.push(value);
+    }
+
+    fn delete_head(&mut self) -> i32 {
+        match self.s2.pop() {
+            Some(value) => value,
+            None => {
+                while !self.s1.is_empty() {
+                    self.s2.push(self.s1.pop().unwrap());
+                }
+                self.s2.pop().unwrap_or(-1)
+            }
+        }
+    }
+}/**
+ * Your CQueue object will be instantiated and called as such:
+ * let obj = CQueue::new();
+ * obj.append_tail(value);
+ * let ret_2: i32 = obj.delete_head();
+ */
+```
 
 ```js
 var CQueue = function () {
@@ -213,89 +275,6 @@ CQueue.prototype.deleteHead = function () {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class CQueue {
-    private stk1: number[];
-    private stk2: number[];
-
-    constructor() {
-        this.stk1 = [];
-        this.stk2 = [];
-    }
-
-    appendTail(value: number): void {
-        this.stk1.push(value);
-    }
-
-    deleteHead(): number {
-        if (this.stk2.length == 0) {
-            while (this.stk1.length) {
-                this.stk2.push(this.stk1.pop());
-            }
-        }
-        return this.stk2.length == 0 ? -1 : this.stk2.pop();
-    }
-}
-
-/**
- * Your CQueue object will be instantiated and called as such:
- * var obj = new CQueue()
- * obj.appendTail(value)
- * var param_2 = obj.deleteHead()
- */
-```
-
-### **Rust**
-
-```rust
-struct CQueue {
-    s1: Vec<i32>,
-    s2: Vec<i32>
-}
-
-
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
-impl CQueue {
-
-    fn new() -> Self {
-        CQueue {
-            s1: Vec::new(),
-            s2: Vec::new(),
-        }
-    }
-
-    fn append_tail(&mut self, value: i32) {
-        self.s1.push(value);
-    }
-
-    fn delete_head(&mut self) -> i32 {
-        match self.s2.pop() {
-            Some(value) => value,
-            None => {
-                while !self.s1.is_empty() {
-                    self.s2.push(self.s1.pop().unwrap());
-                }
-                self.s2.pop().unwrap_or(-1)
-            }
-        }
-    }
-}
-
-/**
- * Your CQueue object will be instantiated and called as such:
- * let obj = CQueue::new();
- * obj.append_tail(value);
- * let ret_2: i32 = obj.delete_head();
- */
-```
-
-### **C#**
-
 ```cs
 public class CQueue {
     private Stack<int> stk1 = new Stack<int>();
@@ -327,10 +306,6 @@ public class CQueue {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

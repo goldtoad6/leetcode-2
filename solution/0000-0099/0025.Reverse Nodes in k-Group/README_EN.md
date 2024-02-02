@@ -39,17 +39,11 @@
 
 ## Solutions
 
-**Approach 1: Iteration**
+### Solution 1: Iteration
 
-Time complexity $O(n)$, Space complexity $O(1)$.
-
-**Approach 2: Recursion**
-
-Time complexity $O(n)$, Space complexity $O(\log _k n)$.
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the linked list.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 # Definition for singly-linked list.
@@ -84,8 +78,6 @@ class Solution:
             cur = pre
         return dummy.next
 ```
-
-### **Java**
 
 ```java
 /**
@@ -133,7 +125,41 @@ class Solution {
 }
 ```
 
-### **TypeScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	var dummy *ListNode = &ListNode{}
+	p, cur := dummy, head
+	for cur != nil {
+		start := cur
+		for i := 0; i < k; i++ {
+			if cur == nil {
+				p.Next = start
+				return dummy.Next
+			}
+			cur = cur.Next
+		}
+		p.Next, p = reverse(start, cur), start
+	}
+	return dummy.Next
+}
+
+func reverse(start, end *ListNode) *ListNode {
+	var pre *ListNode = nil
+	for start != end {
+		tmp := start.Next
+		start.Next, pre = pre, start
+		start = tmp
+	}
+	return pre
+}
+```
 
 ```ts
 /**
@@ -186,130 +212,63 @@ function reverse(head: ListNode, tail: ListNode) {
 }
 ```
 
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
-    if (k === 1) {
-        return head;
-    }
-
-    const dummy = new ListNode(0, head);
-    let root = dummy;
-    while (root != null) {
-        let pre = root;
-        let cur = root;
-
-        let count = 0;
-        while (count !== k) {
-            count++;
-            cur = cur.next;
-            if (cur == null) {
-                return dummy.next;
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
+        fn reverse(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+            let mut head = head;
+            let mut pre = None;
+            while let Some(mut node) = head {
+                head = node.next.take();
+                node.next = pre.take();
+                pre = Some(node);
             }
+            pre
         }
 
-        const nextRoot = pre.next;
-        pre.next = cur;
+        let mut dummy = Some(Box::new(ListNode::new(0)));
+        let mut pre = &mut dummy;
+        let mut cur = head;
+        while cur.is_some() {
+            let mut q = &mut cur;
+            for _ in 0..k - 1 {
+                if q.is_none() {
+                    break;
+                }
+                q = &mut q.as_mut().unwrap().next;
+            }
+            if q.is_none() {
+                pre.as_mut().unwrap().next = cur;
+                return dummy.unwrap().next;
+            }
 
-        let node = nextRoot;
-        let next = node.next;
-        node.next = cur.next;
-        while (node != cur) {
-            [next.next, node, next] = [node, next, next.next];
+            let b = q.as_mut().unwrap().next.take();
+            pre.as_mut().unwrap().next = reverse(cur);
+            while pre.is_some() && pre.as_mut().unwrap().next.is_some() {
+                pre = &mut pre.as_mut().unwrap().next;
+            }
+            cur = b;
         }
-        root = nextRoot;
+        dummy.unwrap().next
     }
-
-    return dummy.next;
 }
 ```
-
-### **Go**
-
-Iteration:
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func reverseKGroup(head *ListNode, k int) *ListNode {
-	var dummy *ListNode = &ListNode{}
-	p, cur := dummy, head
-	for cur != nil {
-		start := cur
-		for i := 0; i < k; i++ {
-			if cur == nil {
-				p.Next = start
-				return dummy.Next
-			}
-			cur = cur.Next
-		}
-		p.Next, p = reverse(start, cur), start
-	}
-	return dummy.Next
-}
-
-func reverse(start, end *ListNode) *ListNode {
-	var pre *ListNode = nil
-	for start != end {
-		tmp := start.Next
-		start.Next, pre = pre, start
-		start = tmp
-	}
-	return pre
-}
-```
-
-Recursion:
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func reverseKGroup(head *ListNode, k int) *ListNode {
-	start, end := head, head
-	for i := 0; i < k; i++ {
-		if end == nil {
-			return head
-		}
-		end = end.Next
-	}
-	res := reverse(start, end)
-	start.Next = reverseKGroup(end, k)
-	return res
-}
-
-func reverse(start, end *ListNode) *ListNode {
-	var pre *ListNode = nil
-	for start != end {
-		tmp := start.Next
-		start.Next, pre = pre, start
-		start = tmp
-	}
-	return pre
-}
-```
-
-### **C#**
 
 ```cs
 /**
@@ -362,10 +321,95 @@ public class Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2: Recursion
+
+The time complexity is $O(n)$, and the space complexity is $O(\log_k n)$. Here, $n$ is the length of the linked list.
+
+<!-- tabs:start -->
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	start, end := head, head
+	for i := 0; i < k; i++ {
+		if end == nil {
+			return head
+		}
+		end = end.Next
+	}
+	res := reverse(start, end)
+	start.Next = reverseKGroup(end, k)
+	return res
+}
+
+func reverse(start, end *ListNode) *ListNode {
+	var pre *ListNode = nil
+	for start != end {
+		tmp := start.Next
+		start.Next, pre = pre, start
+		start = tmp
+	}
+	return pre
+}
 ```
 
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
+    if (k === 1) {
+        return head;
+    }
+
+    const dummy = new ListNode(0, head);
+    let root = dummy;
+    while (root != null) {
+        let pre = root;
+        let cur = root;
+
+        let count = 0;
+        while (count !== k) {
+            count++;
+            cur = cur.next;
+            if (cur == null) {
+                return dummy.next;
+            }
+        }
+
+        const nextRoot = pre.next;
+        pre.next = cur;
+
+        let node = nextRoot;
+        let next = node.next;
+        node.next = cur.next;
+        while (node != cur) {
+            [next.next, node, next] = [node, next, next.next];
+        }
+        root = nextRoot;
+    }
+
+    return dummy.next;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

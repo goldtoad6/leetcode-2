@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>Two strings <code>X</code>&nbsp;and <code>Y</code>&nbsp;are similar if we can swap two letters (in different positions) of <code>X</code>, so that&nbsp;it equals <code>Y</code>. Also two strings <code>X</code> and <code>Y</code> are similar if they are equal.</p>
+<p>Two strings, <code>X</code> and <code>Y</code>, are considered similar if either they are identical or we can make them equivalent by swapping at most two letters (in distinct positions) within the string <code>X</code>.</p>
 
 <p>For example, <code>&quot;tars&quot;</code>&nbsp;and <code>&quot;rats&quot;</code>&nbsp;are similar (swapping at positions <code>0</code> and <code>2</code>), and <code>&quot;rats&quot;</code> and <code>&quot;arts&quot;</code> are similar, but <code>&quot;star&quot;</code> is not similar to <code>&quot;tars&quot;</code>, <code>&quot;rats&quot;</code>, or <code>&quot;arts&quot;</code>.</p>
 
@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +60,6 @@ class Solution:
         return sum(i == find(i) for i in range(n))
 ```
 
-### **Java**
-
 ```java
 class Solution {
     private int[] p;
@@ -79,13 +77,24 @@ class Solution {
                 }
             }
         }
-        int ans = 0;
+        int res = 0;
         for (int i = 0; i < n; ++i) {
             if (i == find(i)) {
-                ++ans;
+                ++res;
             }
         }
-        return ans;
+        return res;
+    }
+
+    private boolean check(String a, String b) {
+        int cnt = 0;
+        int n = a.length();
+        for (int i = 0; i < n; ++i) {
+            if (a.charAt(i) != b.charAt(i)) {
+                ++cnt;
+            }
+        }
+        return cnt <= 2;
     }
 
     private int find(int x) {
@@ -94,20 +103,8 @@ class Solution {
         }
         return p[x];
     }
-
-    private boolean check(String a, String b) {
-        int cnt = 0;
-        for (int i = 0; i < a.length(); ++i) {
-            if (a.charAt(i) != b.charAt(i)) {
-                ++cnt;
-            }
-        }
-        return cnt <= 2;
-    }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -143,8 +140,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numSimilarGroups(strs []string) int {
@@ -186,10 +181,6 @@ func numSimilarGroups(strs []string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

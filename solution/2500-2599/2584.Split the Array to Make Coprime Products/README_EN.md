@@ -46,9 +46,9 @@ There is no valid split.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -79,8 +79,6 @@ class Solution:
             mx = max(mx, x)
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -125,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -169,8 +165,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findValidSplit(nums []int) int {
 	first := map[int]int{}
@@ -209,19 +203,8 @@ func findValidSplit(nums []int) int {
 	}
 	return -1
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

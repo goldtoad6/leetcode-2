@@ -55,9 +55,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,8 +71,6 @@ class Solution:
             y = y * 10 + d[v]
         return y != n
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func confusingNumber(n int) bool {
 	d := []int{0, 1, -1, -1, -1, -1, 9, -1, 8, 6}
@@ -131,10 +125,29 @@ func confusingNumber(n int) bool {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param Integer $n
+     * @return Boolean
+     */
+    function confusingNumber($n) {
+        $d = [0, 1, -1, -1, -1, -1, 9, -1, 8, 6];
+        $x = $n;
+        $y = 0;
+        while ($x > 0) {
+            $v = $x % 10;
+            if ($d[$v] < 0) {
+                return false;
+            }
+            $y = $y * 10 + $d[$v];
+            $x = intval($x / 10);
+        }
+        return $y != $n;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

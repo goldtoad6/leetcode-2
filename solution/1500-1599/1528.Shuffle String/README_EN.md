@@ -38,9 +38,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -50,8 +50,6 @@ class Solution:
             ans[indices[i]] = c
         return ''.join(ans)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -65,8 +63,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -82,8 +78,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func restoreString(s string, indices []int) string {
 	ans := make([]rune, len(s))
@@ -94,10 +88,21 @@ func restoreString(s string, indices []int) string {
 }
 ```
 
-### **...**
-
-```
-
+```js
+/**
+ * @param {string} s
+ * @param {number[]} indices
+ * @return {string}
+ */
+var restoreString = function (s, indices) {
+    let rs = [];
+    for (let i = 0; i < s.length; i++) {
+        rs[indices[i]] = s[i];
+    }
+    return rs.join('');
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

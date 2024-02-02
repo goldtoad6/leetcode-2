@@ -50,9 +50,20 @@ So, the maximum time needed is 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting + Binary Search
 
-### **Python3**
+First, sort the chickens and grains by their position from left to right. Then enumerate the time $t$ using binary search to find the smallest $t$ such that all the grains can be eaten up in $t$ seconds.
+
+For each chicken, we use the pointer $j$ to point to the leftmost grain that has not been eaten, and the current position of the chicken is $x$ and the position of the grain is $y$. There are the following cases:
+
+-   If $y \leq x$, we note that $d = x - y$. If $d \gt t$, the current grain cannot be eaten, so directly return `false`. Otherwise, move the pointer $j$ to the right until $j=m$ or $grains[j] \gt x$. At this point, we need to check whether the chicken can eat the grain pointed to by $j$. If it can, continue to move the pointer $j$ to the right until $j=m$ or $min(d, grains[j] - x) + grains[j] - y \gt t$.
+-   If $y \lt x$, move the pointer $j$ to the right until $j=m$ or $grains[j] - x \gt t$.
+
+If $j=m$, it means that all the grains have been eaten, return `true`, otherwise return `false`.
+
+Time complexity $O(n \times \log n + m \times \log m + (m + n) \times \log U)$, space complexity $O(\log m + \log n)$. $n$ and $m$ are the number of chickens and grains respectively, and $U$ is the maximum value of all the chicken and grain positions.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +93,6 @@ class Solution:
         r = abs(hens[0] - grains[0]) + grains[-1] - grains[0] + 1
         return bisect_left(range(r), True, key=check)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -139,8 +148,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -189,8 +196,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTime(hens []int, grains []int) int {
 	sort.Ints(hens)
@@ -234,13 +239,6 @@ func minimumTime(hens []int, grains []int) int {
 	return l
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -248,8 +246,6 @@ func abs(x int) int {
 	return x
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minimumTime(hens: number[], grains: number[]): number {
@@ -274,10 +270,7 @@ function minimumTime(hens: number[], grains: number[]): number {
                 while (j < m && grains[j] <= x) {
                     ++j;
                 }
-                while (
-                    j < m &&
-                    Math.min(d, grains[j] - x) + grains[j] - y <= t
-                ) {
+                while (j < m && Math.min(d, grains[j] - x) + grains[j] - y <= t) {
                     ++j;
                 }
             } else {
@@ -301,10 +294,6 @@ function minimumTime(hens: number[], grains: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

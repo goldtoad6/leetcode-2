@@ -51,9 +51,9 @@ It can be shown that we cannot reduce the sum by at least half in less than 3 op
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,22 +71,20 @@ class Solution:
         return ans
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int halveArray(int[] nums) {
-        long s = 0;
+        double s = 0;
         PriorityQueue<Double> q = new PriorityQueue<>(Collections.reverseOrder());
         for (int v : nums) {
             q.offer(v * 1.0);
             s += v;
         }
-        double d = s / 2.0;
+        s /= 2.0;
         int ans = 0;
-        while (d > 0) {
+        while (s > 0) {
             double t = q.poll();
-            d -= t / 2.0;
+            s -= t / 2.0;
             q.offer(t / 2.0);
             ++ans;
         }
@@ -95,24 +93,22 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int halveArray(vector<int>& nums) {
         priority_queue<double> q;
-        long long s = 0;
+        double s = 0;
         for (int& v : nums) {
             s += v;
             q.push(v);
         }
-        double d = s / 2.0;
+        s /= 2.0;
         int ans = 0;
-        while (d > 0) {
+        while (s > 0) {
             double t = q.top() / 2;
             q.pop();
-            d -= t;
+            s -= t;
             q.push(t);
             ++ans;
         }
@@ -121,42 +117,85 @@ public:
 };
 ```
 
-### **Go**
+```go
+func halveArray(nums []int) (ans int) {
+	var s float64
+	q := hp{}
+	for _, x := range nums {
+		s += float64(x)
+		heap.Push(&q, float64(x))
+	}
+	s /= 2
+	for s > 0 {
+		x := heap.Pop(&q).(float64)
+		ans++
+		s -= x / 2
+		heap.Push(&q, x/2)
+	}
+	return
+}
+
+type hp struct{ sort.Float64Slice }
+
+func (h hp) Less(i, j int) bool { return h.Float64Slice[i] > h.Float64Slice[j] }
+func (h *hp) Push(v any)        { h.Float64Slice = append(h.Float64Slice, v.(float64)) }
+func (h *hp) Pop() any {
+	a := h.Float64Slice
+	v := a[len(a)-1]
+	h.Float64Slice = a[:len(a)-1]
+	return v
+}
+```
+
+```ts
+function halveArray(nums: number[]): number {
+    let s: number = nums.reduce((a, b) => a + b) / 2;
+    const h = new MaxPriorityQueue();
+    for (const v of nums) {
+        h.enqueue(v, v);
+    }
+    let ans: number = 0;
+    while (s > 0) {
+        let { element: t } = h.dequeue();
+        t /= 2;
+        s -= t;
+        h.enqueue(t, t);
+        ans += 1;
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```go
 func halveArray(nums []int) (ans int) {
-    half := 0
-    for i := range nums {
-        nums[i] <<= 20
-        half += nums[i]
-    }
-    h := hp{nums}
-    heap.Init(&h)
-    for half >>= 1; half > 0; ans++ {
-        half -= h.IntSlice[0] >> 1
-        h.IntSlice[0] >>= 1
-        heap.Fix(&h, 0)
-    }
-    return
+	half := 0
+	for i := range nums {
+		nums[i] <<= 20
+		half += nums[i]
+	}
+	h := hp{nums}
+	heap.Init(&h)
+	for half >>= 1; half > 0; ans++ {
+		half -= h.IntSlice[0] >> 1
+		h.IntSlice[0] >>= 1
+		heap.Fix(&h, 0)
+	}
+	return
 }
 
 type hp struct{ sort.IntSlice }
 
 func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
-func (hp) Push(interface{})     {}
-func (hp) Pop() (_ interface{}) { return }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
+func (hp) Push(any)             {}
+func (hp) Pop() (_ any)         { return }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

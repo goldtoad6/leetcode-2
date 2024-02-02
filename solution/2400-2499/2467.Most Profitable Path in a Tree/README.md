@@ -82,9 +82,7 @@ Alice 按照路径 0-&gt;1 移动，同时 Bob 按照路径 1-&gt;0 移动。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：两次 DFS**
+### 方法一：两次 DFS
 
 根据题意，我们可以知道，Bob 的移动路径是固定的，即从节点 $bob$ 出发，最终到达节点 $0$。因此，我们可以先跑一遍 DFS，求出 Bob 到达每个节点的时间，记在数组 $ts$ 中。
 
@@ -100,13 +98,11 @@ Alice 按照路径 0-&gt;1 移动，同时 Bob 按照路径 1-&gt;0 移动。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def mostProfitablePath(self, edges: List[List[int]], bob: int, amount: List[int]) -> int:
+    def mostProfitablePath(
+        self, edges: List[List[int]], bob: int, amount: List[int]
+    ) -> int:
         def dfs1(i, fa, t):
             if i == 0:
                 ts[i] = min(ts[i], t)
@@ -142,10 +138,6 @@ class Solution:
         dfs2(0, -1, 0, 0)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -205,8 +197,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -236,21 +226,22 @@ public:
         ts[bob] = 0;
         int ans = INT_MIN;
         function<void(int i, int fa, int t, int v)> dfs2 = [&](int i, int fa, int t, int v) {
-            if (t == ts[i]) v += amount[i] >> 1;
-            else if (t < ts[i]) v += amount[i];
+            if (t == ts[i])
+                v += amount[i] >> 1;
+            else if (t < ts[i])
+                v += amount[i];
             if (g[i].size() == 1 && g[i][0] == fa) {
                 ans = max(ans, v);
                 return;
             }
-            for (int j : g[i]) if (j != fa) dfs2(j, i, t + 1, v);
+            for (int j : g[i])
+                if (j != fa) dfs2(j, i, t + 1, v);
         };
         dfs2(0, -1, 0, 0);
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func mostProfitablePath(edges [][]int, bob int, amount []int) int {
@@ -302,32 +293,8 @@ func mostProfitablePath(edges [][]int, bob int, amount []int) int {
 	dfs2(0, -1, 0, 0)
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

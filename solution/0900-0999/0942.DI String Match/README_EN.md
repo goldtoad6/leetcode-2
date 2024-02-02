@@ -34,9 +34,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +54,6 @@ class Solution:
         ans.append(low)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -75,8 +73,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -98,8 +94,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func diStringMatch(s string) []int {
 	n := len(s)
@@ -119,8 +113,6 @@ func diStringMatch(s string) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function diStringMatch(s: string): number[] {
     const n = s.length;
@@ -139,8 +131,6 @@ function diStringMatch(s: string): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn di_string_match(s: String) -> Vec<i32> {
@@ -149,13 +139,15 @@ impl Solution {
         let mut res = Vec::with_capacity(n + 1);
         let (mut low, mut high) = (-1, (n + 1) as i32);
         for i in 0..n {
-            res.push(if s[i] == b'I' {
-                low += 1;
-                low
-            } else {
-                high -= 1;
-                high
-            });
+            res.push(
+                if s[i] == b'I' {
+                    low += 1;
+                    low
+                } else {
+                    high -= 1;
+                    high
+                }
+            );
         }
         res.push(low + 1);
         res
@@ -163,10 +155,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

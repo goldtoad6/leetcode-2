@@ -46,9 +46,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -81,8 +81,6 @@ class Solution:
             i, j = i - 1, j - 1
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -125,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -163,8 +159,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func backspaceCompare(s string, t string) bool {
@@ -205,8 +199,6 @@ func backspaceCompare(s string, t string) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function backspaceCompare(s: string, t: string): boolean {
     let i = s.length - 1;
@@ -244,8 +236,6 @@ function backspaceCompare(s: string, t: string): boolean {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn backspace_compare(s: String, t: String) -> bool {
@@ -261,7 +251,7 @@ impl Solution {
                 } else {
                     break;
                 }
-                i -= 1
+                i -= 1;
             }
             skip = 0;
             while j != 0 {
@@ -272,7 +262,7 @@ impl Solution {
                 } else {
                     break;
                 }
-                j -= 1
+                j -= 1;
             }
             if i == 0 && j == 0 {
                 break;
@@ -291,10 +281,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

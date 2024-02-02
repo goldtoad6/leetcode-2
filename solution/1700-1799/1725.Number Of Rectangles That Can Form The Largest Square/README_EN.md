@@ -13,78 +13,70 @@
 <p>Return <em>the <strong>number</strong> of rectangles that can make a square with a side length of </em><code>maxLen</code>.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> rectangles = [[5,8],[3,9],[5,12],[16,5]]
-
 <strong>Output:</strong> 3
-
 <strong>Explanation:</strong> The largest squares you can get from each rectangle are of lengths [5,3,5,5].
-
 The largest possible square is of length 5, and you can get it out of 3 rectangles.
-
 </pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> rectangles = [[2,3],[3,7],[4,3],[3,7]]
-
 <strong>Output:</strong> 3
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-
-    <li><code>1 &lt;= rectangles.length &lt;= 1000</code></li>
-
-    <li><code>rectangles[i].length == 2</code></li>
-
-    <li><code>1 &lt;= l<sub>i</sub>, w<sub>i</sub> &lt;= 10<sup>9</sup></code></li>
-
-    <li><code>l<sub>i</sub> != w<sub>i</sub></code></li>
-
+	<li><code>1 &lt;= rectangles.length &lt;= 1000</code></li>
+	<li><code>rectangles[i].length == 2</code></li>
+	<li><code>1 &lt;= l<sub>i</sub>, w<sub>i</sub> &lt;= 10<sup>9</sup></code></li>
+	<li><code>l<sub>i</sub> != w<sub>i</sub></code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Single Pass
 
-### **Python3**
+We define a variable $ans$ to record the count of squares with the current maximum side length, and another variable $mx$ to record the current maximum side length.
+
+We traverse the array $rectangles$. For each rectangle $[l, w]$, we take $x = \min(l, w)$. If $mx < x$, it means we have found a larger side length, so we update $mx$ to $x$ and update $ans$ to $1$. If $mx = x$, it means we have found a side length equal to the current maximum side length, so we increase $ans$ by $1$.
+
+Finally, we return $ans$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array $rectangles$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def countGoodRectangles(self, rectangles: List[List[int]]) -> int:
         ans = mx = 0
         for l, w in rectangles:
-            t = min(l, w)
-            if mx < t:
-                mx, ans = t, 1
-            elif mx == t:
+            x = min(l, w)
+            if mx < x:
+                ans = 1
+                mx = x
+            elif mx == x:
                 ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int countGoodRectangles(int[][] rectangles) {
         int ans = 0, mx = 0;
-        for (int[] r : rectangles) {
-            int t = Math.min(r[0], r[1]);
-            if (mx < t) {
-                mx = t;
+        for (var e : rectangles) {
+            int x = Math.min(e[0], e[1]);
+            if (mx < x) {
+                mx = x;
                 ans = 1;
-            } else if (mx == t) {
+            } else if (mx == x) {
                 ++ans;
             }
         }
@@ -93,69 +85,57 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function countGoodRectangles(rectangles: number[][]): number {
-    let maxLen = 0,
-        ans = 0;
-    for (let [l, w] of rectangles) {
-        let k = Math.min(l, w);
-        if (k == maxLen) {
-            ans++;
-        } else if (k > maxLen) {
-            maxLen = k;
-            ans = 1;
-        }
-    }
-    return ans;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int countGoodRectangles(vector<vector<int>>& rectangles) {
         int ans = 0, mx = 0;
-        for (auto& r : rectangles) {
-            int t = min(r[0], r[1]);
-            if (mx < t) {
-                mx = t;
+        for (auto& e : rectangles) {
+            int x = min(e[0], e[1]);
+            if (mx < x) {
+                mx = x;
                 ans = 1;
-            } else if (mx == t)
+            } else if (mx == x) {
                 ++ans;
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func countGoodRectangles(rectangles [][]int) int {
-	ans, mx := 0, 0
-	for _, r := range rectangles {
-		t := r[0]
-		if t > r[1] {
-			t = r[1]
-		}
-		if mx < t {
-			mx, ans = t, 1
-		} else if mx == t {
+func countGoodRectangles(rectangles [][]int) (ans int) {
+	mx := 0
+	for _, e := range rectangles {
+		x := min(e[0], e[1])
+		if mx < x {
+			mx = x
+			ans = 1
+		} else if mx == x {
 			ans++
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function countGoodRectangles(rectangles: number[][]): number {
+    let [ans, mx] = [0, 0];
+    for (const [l, w] of rectangles) {
+        const x = Math.min(l, w);
+        if (mx < x) {
+            mx = x;
+            ans = 1;
+        } else if (mx === x) {
+            ++ans;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

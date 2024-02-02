@@ -24,9 +24,9 @@ activity_type 列是 ENUM 类型，可以取（“ open_session”，“ end_ses
 
 <p>&nbsp;</p>
 
-<p>编写 SQL 查询以查找截至 <code>2019-07-27</code>（含）的 <code>30</code> 天内每个用户的平均会话数，<strong>四舍五入到小数点后两位</strong>。只统计那些会话期间用户至少进行一项活动的有效会话。</p>
+<p>编写解决方案，统计截至 <code>2019-07-27</code>（含）的 <code>30</code> 天内每个用户的平均会话数，<strong>四舍五入到小数点后两位</strong>。只统计那些会话期间用户至少进行一项活动的有效会话。</p>
 
-<p>查询结果格式如下例所示。</p>
+<p>结果格式如下例所示。</p>
 
 <p>&nbsp;</p>
 
@@ -64,14 +64,40 @@ Activity 表：
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            COUNT(DISTINCT session_id) AS sessions
+        FROM Activity
+        WHERE activity_date <= '2019-07-27' AND DATEDIFF('2019-07-27', activity_date) < 30
+        GROUP BY user_id
+    )
+SELECT IFNULL(ROUND(AVG(sessions), 2), 0) AS average_sessions_per_user
+FROM T;
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```sql
+SELECT
+    IFNULL(
+        ROUND(COUNT(DISTINCT session_id) / COUNT(DISTINCT user_id), 2),
+        0
+    ) AS average_sessions_per_user
+FROM Activity
+WHERE DATEDIFF('2019-07-27', activity_date) < 30;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

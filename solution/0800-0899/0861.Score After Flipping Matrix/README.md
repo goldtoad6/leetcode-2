@@ -47,21 +47,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：贪心
 
-**方法一：贪心**
+我们注意到，对于任意一个翻转方案，翻转的次序不影响最后的结果。因此我们可以先考虑所有的行翻转，再考虑所有的列翻转。
 
-每一行的数字要尽可能大，因此，遍历每一行，若行首元素为 0，则将该行每个元素进行翻转，即 `grid[i][j] ^= 1`。
+每一行的数字要尽可能大，因此，我们遍历每一行，若行首元素为 $0$，则将该行进行翻转。
 
-接着，遍历每一列，若该列中 1 的个数小于 0 的个数，则将该列进行翻转。实际过程中，并不需要对列进行翻转，只需要取 `max(cnt, m - cnt)`，即表示 1 的个数，再乘上该位的大小 `1 << (n - j - 1)`，即求得当前列的大小。累加每一列大小即可。
+接下来，对于每一列 $j$，我们统计该列中 $0$ 和 $1$ 的数量，令 $cnt$ 为其中的最大值，则该列的贡献为 $cnt \times 2^{n - j - 1}$。对所有列的贡献进行累加，即可得到答案。
 
-时间复杂度 $O(m\times n)$，空间复杂度 $O(1)$。其中 $m$, $n$ 分别为矩阵的行数和列数。
+时间复杂度 $O(m \times n)$，空间复杂度 $O(1)$。其中 $m$, $n$ 分别为矩阵的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -77,10 +73,6 @@ class Solution:
             ans += max(cnt, m - cnt) * (1 << (n - j - 1))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -105,8 +97,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -133,8 +123,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func matrixScore(grid [][]int) int {
 	m, n := len(grid), len(grid[0])
@@ -160,8 +148,6 @@ func matrixScore(grid [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function matrixScore(grid: number[][]): number {
     const m = grid.length;
@@ -185,10 +171,32 @@ function matrixScore(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int MatrixScore(int[][] grid) {
+        int m = grid.Length, n = grid[0].Length;
+        for (int i = 0; i < m; ++i) {
+            if (grid[i][0] == 0) {
+                for (int j = 0; j < n; ++j) {
+                    grid[i][j] ^= 1;
+                }
+            }
+        }
+        int ans = 0;
+        for (int j = 0; j < n; ++j) {
+            int cnt = 0;
+            for (int i = 0; i < m; ++i) {
+                if (grid[i][j] == 1) {
+                    ++cnt;
+                }
+            }
+            ans += Math.Max(cnt, m - cnt) * (1 << (n - j - 1));
+        }
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -34,11 +34,9 @@
 
 ## Solutions
 
-Dynamic programming.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -57,8 +55,6 @@ class Solution:
                     dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1])
         return dp[-1][-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +81,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -107,8 +101,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minDistance(word1 string, word2 string) int {
@@ -132,16 +124,7 @@ func minDistance(word1 string, word2 string) int {
 	}
 	return dp[m][n]
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minDistance(word1: string, word2: string): number {
@@ -162,8 +145,6 @@ function minDistance(word1: string, word2: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_distance(word1: String, word2: String) -> i32 {
@@ -176,19 +157,15 @@ impl Solution {
                     dp[i - 1][j - 1] + 1
                 } else {
                     dp[i - 1][j].max(dp[i][j - 1])
-                }
+                };
             }
         }
         let max = dp[m][n];
-        ((m - max) + (n - max)) as i32
+        (m - max + (n - max)) as i32
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

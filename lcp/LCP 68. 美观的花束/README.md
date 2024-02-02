@@ -42,9 +42,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 我们用双指针 $j$ 和 $i$ 分别指向当前窗口的左右端点，用数组或哈希表 $d$ 记录当前窗口内的元素以及出现的次数。
 
@@ -55,10 +53,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(m)$。其中 $n$ 和 $m$ 分别为数组 $flowers$ 的长度以及数组 $flowers$ 中的最大值。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -74,10 +68,6 @@ class Solution:
             ans = (ans + i - j + 1) % mod
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,8 +91,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -124,14 +112,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func beautifulBouquet(flowers []int, cnt int) (ans int) {
-	mx := 0
-	for _, x := range flowers {
-		mx = max(mx, x)
-	}
+	mx := slices.Max(flowers)
 	d := make([]int, mx+1)
 	j := 0
 	const mod = 1e9 + 7
@@ -145,19 +128,8 @@ func beautifulBouquet(flowers []int, cnt int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

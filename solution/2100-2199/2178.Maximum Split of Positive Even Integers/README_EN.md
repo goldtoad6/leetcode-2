@@ -51,9 +51,9 @@ Note that [10,2,4,12], [6,2,4,16], etc. are also accepted.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -69,8 +69,6 @@ class Solution:
         ans[-1] += finalSum
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +87,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -107,33 +103,52 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func maximumEvenSplit(finalSum int64) []int64 {
-	ans := []int64{}
+func maximumEvenSplit(finalSum int64) (ans []int64) {
 	if finalSum%2 == 1 {
-		return ans
+		return
 	}
 	for i := int64(2); i <= finalSum; i += 2 {
 		ans = append(ans, i)
 		finalSum -= i
 	}
 	ans[len(ans)-1] += finalSum
-	return ans
+	return
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
+function maximumEvenSplit(finalSum: number): number[] {
+    const ans: number[] = [];
+    if (finalSum % 2 === 1) {
+        return ans;
+    }
+    for (let i = 2; i <= finalSum; i += 2) {
+        ans.push(i);
+        finalSum -= i;
+    }
+    ans[ans.length - 1] += finalSum;
+    return ans;
+}
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public IList<long> MaximumEvenSplit(long finalSum) {
+        IList<long> ans = new List<long>();
+        if (finalSum % 2 == 1) {
+            return ans;
+        }
+        for (long i = 2; i <= finalSum; i += 2) {
+            ans.Add(i);
+            finalSum -= i;
+        }
+        ans[ans.Count - 1] += finalSum;
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

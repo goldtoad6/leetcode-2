@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,6 +51,85 @@ class Solution:
                 d[r + 1] -= c
         return list(accumulate(d))
 ```
+
+```java
+class Solution {
+    public int[] getModifiedArray(int length, int[][] updates) {
+        int[] d = new int[length];
+        for (var e : updates) {
+            int l = e[0], r = e[1], c = e[2];
+            d[l] += c;
+            if (r + 1 < length) {
+                d[r + 1] -= c;
+            }
+        }
+        for (int i = 1; i < length; ++i) {
+            d[i] += d[i - 1];
+        }
+        return d;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
+        vector<int> d(length);
+        for (auto& e : updates) {
+            int l = e[0], r = e[1], c = e[2];
+            d[l] += c;
+            if (r + 1 < length) d[r + 1] -= c;
+        }
+        for (int i = 1; i < length; ++i) d[i] += d[i - 1];
+        return d;
+    }
+};
+```
+
+```go
+func getModifiedArray(length int, updates [][]int) []int {
+	d := make([]int, length)
+	for _, e := range updates {
+		l, r, c := e[0], e[1], e[2]
+		d[l] += c
+		if r+1 < length {
+			d[r+1] -= c
+		}
+	}
+	for i := 1; i < length; i++ {
+		d[i] += d[i-1]
+	}
+	return d
+}
+```
+
+```js
+/**
+ * @param {number} length
+ * @param {number[][]} updates
+ * @return {number[]}
+ */
+var getModifiedArray = function (length, updates) {
+    const d = new Array(length).fill(0);
+    for (const [l, r, c] of updates) {
+        d[l] += c;
+        if (r + 1 < length) {
+            d[r + 1] -= c;
+        }
+    }
+    for (let i = 1; i < length; ++i) {
+        d[i] += d[i - 1];
+    }
+    return d;
+};
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 class BinaryIndexedTree:
@@ -82,27 +161,6 @@ class Solution:
             tree.update(start + 1, inc)
             tree.update(end + 2, -inc)
         return [tree.query(i + 1) for i in range(length)]
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int[] getModifiedArray(int length, int[][] updates) {
-        int[] d = new int[length];
-        for (var e : updates) {
-            int l = e[0], r = e[1], c = e[2];
-            d[l] += c;
-            if (r + 1 < length) {
-                d[r + 1] -= c;
-            }
-        }
-        for (int i = 1; i < length; ++i) {
-            d[i] += d[i - 1];
-        }
-        return d;
-    }
-}
 ```
 
 ```java
@@ -153,35 +211,18 @@ class BinaryIndexedTree {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
-        vector<int> d(length);
-        for (auto& e : updates) {
-            int l = e[0], r = e[1], c = e[2];
-            d[l] += c;
-            if (r + 1 < length) d[r + 1] -= c;
-        }
-        for (int i = 1; i < length; ++i) d[i] += d[i - 1];
-        return d;
-    }
-};
-```
-
 ```cpp
 class BinaryIndexedTree {
 public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) {}
 
     void update(int x, int delta) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] += delta;
             x += lowbit(x);
         }
@@ -189,8 +230,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s += c[x];
             x -= lowbit(x);
         }
@@ -206,8 +246,7 @@ class Solution {
 public:
     vector<int> getModifiedArray(int length, vector<vector<int>>& updates) {
         BinaryIndexedTree* tree = new BinaryIndexedTree(length);
-        for (auto& e : updates)
-        {
+        for (auto& e : updates) {
             int start = e[0], end = e[1], inc = e[2];
             tree->update(start + 1, inc);
             tree->update(end + 2, -inc);
@@ -217,25 +256,6 @@ public:
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func getModifiedArray(length int, updates [][]int) []int {
-	d := make([]int, length)
-	for _, e := range updates {
-		l, r, c := e[0], e[1], e[2]
-		d[l] += c
-		if r+1 < length {
-			d[r+1] -= c
-		}
-	}
-	for i := 1; i < length; i++ {
-		d[i] += d[i-1]
-	}
-	return d
-}
 ```
 
 ```go
@@ -284,33 +304,6 @@ func getModifiedArray(length int, updates [][]int) []int {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number} length
- * @param {number[][]} updates
- * @return {number[]}
- */
-var getModifiedArray = function (length, updates) {
-    const d = new Array(length).fill(0);
-    for (const [l, r, c] of updates) {
-        d[l] += c;
-        if (r + 1 < length) {
-            d[r + 1] -= c;
-        }
-    }
-    for (let i = 1; i < length; ++i) {
-        d[i] += d[i - 1];
-    }
-    return d;
-};
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

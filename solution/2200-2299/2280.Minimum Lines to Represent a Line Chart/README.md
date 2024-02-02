@@ -50,9 +50,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：斜率比较**
+### 方法一：斜率比较
 
 需要注意：
 
@@ -60,10 +58,6 @@
 1. 利用除法计算斜率时，会有浮点误差，可以改成乘法比较。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +72,6 @@ class Solution:
             dx, dy = dx1, dy1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +94,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -117,7 +105,7 @@ public:
             int x = stockPrices[i - 1][0], y = stockPrices[i - 1][1];
             int x1 = stockPrices[i][0], y1 = stockPrices[i][1];
             int dx1 = x1 - x, dy1 = y1 - y;
-            if ((long long)dy * dx1 != (long long)dx * dy1) ++ans;
+            if ((long long) dy * dx1 != (long long) dx * dy1) ++ans;
             dx = dx1;
             dy = dy1;
         }
@@ -125,8 +113,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minimumLines(stockPrices [][]int) int {
@@ -144,8 +130,6 @@ func minimumLines(stockPrices [][]int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minimumLines(stockPrices: number[][]): number {
@@ -165,10 +149,6 @@ function minimumLines(stockPrices: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

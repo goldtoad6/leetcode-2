@@ -54,9 +54,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -83,8 +83,6 @@ class Solution:
         dfs(root)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -123,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -157,41 +153,6 @@ public:
 };
 ```
 
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
-        stack<TreeNode *> stk;
-        TreeNode *cur = root;
-        while (cur != nullptr || !stk.empty()) {
-            if (cur == nullptr) {
-                cur = stk.top();
-                stk.pop();
-                if (cur->val > p->val) {
-                    return cur;
-                }
-                cur = cur->right;
-            } else {
-                stk.push(cur);
-                cur = cur->left;
-            }
-        }
-        return cur;
-    }
-};
-```
-
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -220,8 +181,6 @@ func inorderSuccessor(root *TreeNode, p *TreeNode) *TreeNode {
 }
 ```
 
-### **JavaScript**
-
 ```js
 /**
  * Definition for a binary tree node.
@@ -248,6 +207,45 @@ var inorderSuccessor = function (root, p) {
         return root;
     }
     return inorderSuccessor(right, p);
+};
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        stack<TreeNode*> stk;
+        TreeNode* cur = root;
+        while (cur != nullptr || !stk.empty()) {
+            if (cur == nullptr) {
+                cur = stk.top();
+                stk.pop();
+                if (cur->val > p->val) {
+                    return cur;
+                }
+                cur = cur->right;
+            } else {
+                stk.push(cur);
+                cur = cur->left;
+            }
+        }
+        return cur;
+    }
 };
 ```
 
@@ -283,10 +281,6 @@ var inorderSuccessor = function (root, p) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -79,8 +79,6 @@ class Solution:
         g = lca(root, p, q)
         return dfs(g, p) + dfs(g, q)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -136,8 +134,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -176,8 +172,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -220,19 +214,8 @@ func findDistance(root *TreeNode, p int, q int) int {
 	g := lca(root, p, q)
 	return dfs(g, p) + dfs(g, q)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

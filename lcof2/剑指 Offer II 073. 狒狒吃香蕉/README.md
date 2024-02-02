@@ -54,15 +54,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-二分查找。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -77,10 +71,6 @@ class Solution:
                 left = mid + 1
         return left
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -107,8 +97,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -128,15 +116,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minEatingSpeed(piles []int, h int) int {
-	mx := 0
-	for _, pile := range piles {
-		mx = max(mx, pile)
-	}
-	left, right := 1, mx
+	left, right := 1, slices.Max(piles)
 	for left < right {
 		mid := (left + right) >> 1
 		s := 0
@@ -151,16 +133,7 @@ func minEatingSpeed(piles []int, h int) int {
 	}
 	return left
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -188,10 +161,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,9 +49,75 @@
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **Python3**
+```python
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        return [i.bit_count() for i in range(n + 1)]
+```
+
+```java
+class Solution {
+    public int[] countBits(int n) {
+        int[] ans = new int[n + 1];
+        for (int i = 0; i <= n; ++i) {
+            ans[i] = Integer.bitCount(i);
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int> ans(n + 1);
+        for (int i = 0; i <= n; ++i) {
+            ans[i] = __builtin_popcount(i);
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func countBits(n int) []int {
+	ans := make([]int, n+1)
+	for i := 0; i <= n; i++ {
+		ans[i] = bits.OnesCount(uint(i))
+	}
+	return ans
+}
+```
+
+```ts
+function countBits(n: number): number[] {
+    const ans: number[] = Array(n + 1).fill(0);
+    for (let i = 0; i <= n; ++i) {
+        ans[i] = bitCount(i);
+    }
+    return ans;
+}
+
+function bitCount(n: number): number {
+    let count = 0;
+    while (n) {
+        n &= n - 1;
+        ++count;
+    }
+    return count;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +127,6 @@ class Solution:
             ans[i] = ans[i & (i - 1)] + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,20 +140,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> countBits(int n) {
         vector<int> ans(n + 1);
-        for (int i = 1; i <= n; ++i) ans[i] = ans[i & (i - 1)] + 1;
+        for (int i = 1; i <= n; ++i) {
+            ans[i] = ans[i & (i - 1)] + 1;
+        }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countBits(n int) []int {
@@ -101,10 +163,16 @@ func countBits(n int) []int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function countBits(n: number): number[] {
+    const ans: number[] = Array(n + 1).fill(0);
+    for (let i = 1; i <= n; ++i) {
+        ans[i] = ans[i & (i - 1)] + 1;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

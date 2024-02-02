@@ -58,11 +58,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：状态压缩 + BFS + 子集枚举
 
-**方法一：状态压缩 + BFS + 枚举子集**
-
-我们用数组 $d[i]$ 表示课程 $i$ 的先修课程的集合。由于数据规模 $n\lt 15$，我们可以用一个整数的二进制位来表示集合，其中第 $j$ 位为 $1$ 表示课程 $j$ 是课程 $i$ 的先修课程。
+我们用数组 $d[i]$ 表示课程 $i$ 的先修课程的集合。由于数据规模 $n\lt 15$，我们可以用一个整数的二进制位（状态压缩）来表示集合，其中第 $j$ 位为 $1$ 表示课程 $j$ 是课程 $i$ 的先修课程。
 
 我们用一个状态变量 $cur$ 表示当前已经上过的课程的集合，初始时 $cur=0$。如果 $cur=2^{n+1}-2$，表示所有课程都上过了，返回当前学期即可。
 
@@ -70,13 +68,9 @@
 
 如果 $nxt$ 的二进制表示中 $1$ 的个数小于等于 $k$，说明后续学期可以上的课程数不超过 $k$，我们就可以将 $nxt$ 加入队列中。否则，说明后续学期可以上的课程数超过 $k$，那么我们就应该从后续可以上的课程中选择 $k$ 门课程，这样才能保证后续学期可以上的课程数不超过 $k$。我们可以枚举 $nxt$ 的所有子集，将子集加入队列中。
 
-时间复杂度 $O(2^n\times n)$，空间复杂度 $O(2^n\times)$。
+时间复杂度 $O(3^n)$，空间复杂度 $O(2^n)$。其中 $n$ 是题目给定的课程数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -107,10 +101,6 @@ class Solution:
                         q.append((nxt | cur, t + 1))
                     nxt = (nxt - 1) & x
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -155,11 +145,7 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
-using pii = pair<int, int>;
-
 class Solution {
 public:
     int minNumberOfSemesters(int n, vector<vector<int>>& relations, int k) {
@@ -167,7 +153,7 @@ public:
         for (auto& e : relations) {
             d[e[1]] |= 1 << e[0];
         }
-        queue<pii> q;
+        queue<pair<int, int>> q;
         q.push({0, 0});
         unordered_set<int> vis{{0}};
         while (!q.empty()) {
@@ -203,8 +189,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minNumberOfSemesters(n int, relations [][]int, k int) int {
@@ -249,10 +233,6 @@ func minNumberOfSemesters(n int, relations [][]int, k int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

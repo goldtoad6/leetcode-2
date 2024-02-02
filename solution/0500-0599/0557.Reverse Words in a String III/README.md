@@ -20,8 +20,8 @@
 <p><strong>示例 2:</strong></p>
 
 <pre>
-<strong>输入：</strong> s = "God Ding"
-<strong>输出：</strong>"doG gniD"
+<strong>输入：</strong> s = "Mr Ding"
+<strong>输出：</strong>"rM gniD"
 </pre>
 
 <p>&nbsp;</p>
@@ -38,23 +38,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def reverseWords(self, s: str) -> str:
         return ' '.join([t[::-1] for t in s.split(' ')])
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -71,8 +63,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -88,8 +78,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func reverseWords(s string) string {
@@ -108,8 +96,6 @@ func reverseWords(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function reverseWords(s: string): string {
     return s
@@ -125,8 +111,6 @@ function reverseWords(s: string): string {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn reverse_words(s: String) -> String {
@@ -137,8 +121,6 @@ impl Solution {
     }
 }
 ```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -151,15 +133,11 @@ class Solution {
         for ($i = 0; $i < count($sArr); $i++) {
             $sArr[$i] = strrev($sArr[$i]);
         }
-        return implode(" ", $sArr);
+        return implode(' ', $sArr);
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

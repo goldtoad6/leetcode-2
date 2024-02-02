@@ -53,13 +53,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def leadsToDestination(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    def leadsToDestination(
+        self, n: int, edges: List[List[int]], source: int, destination: int
+    ) -> bool:
         @cache
         def dfs(i):
             if i == destination:
@@ -78,8 +80,6 @@ class Solution:
         vis = set()
         return dfs(source)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -123,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -160,8 +158,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func leadsToDestination(n int, edges [][]int, source int, destination int) bool {
 	vis := make([]bool, n)
@@ -195,10 +191,6 @@ func leadsToDestination(n int, edges [][]int, source int, destination int) bool 
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

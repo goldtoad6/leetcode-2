@@ -38,9 +38,9 @@ Among all possible differences, the maximum value of 7 is obtained by |8 - 1| = 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -65,8 +65,6 @@ class Solution:
         dfs(root, root.val, root.val)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -106,8 +104,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -140,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -167,20 +161,6 @@ func maxAncestorDiff(root *TreeNode) (ans int) {
 	return
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -189,7 +169,37 @@ func abs(x int) int {
 }
 ```
 
-### **JavaScript**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function maxAncestorDiff(root: TreeNode | null): number {
+    const dfs = (root: TreeNode | null, mi: number, mx: number): void => {
+        if (!root) {
+            return;
+        }
+        ans = Math.max(ans, Math.abs(root.val - mi), Math.abs(root.val - mx));
+        mi = Math.min(mi, root.val);
+        mx = Math.max(mx, root.val);
+        dfs(root.left, mi, mx);
+        dfs(root.right, mi, mx);
+    };
+    let ans: number = 0;
+    dfs(root, root.val, root.val);
+    return ans;
+}
+```
 
 ```js
 /**
@@ -221,10 +231,6 @@ var maxAncestorDiff = function (root) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

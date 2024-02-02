@@ -13,40 +13,28 @@
 <p>In case there is no path, return&nbsp;<code>[0, 0]</code>.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
-
 <pre><strong>Input:</strong> board = ["E23","2X2","12S"]
-
 <strong>Output:</strong> [7,1]
-
 </pre><p><strong class="example">Example 2:</strong></p>
-
 <pre><strong>Input:</strong> board = ["E12","1X1","21S"]
-
 <strong>Output:</strong> [4,2]
-
 </pre><p><strong class="example">Example 3:</strong></p>
-
 <pre><strong>Input:</strong> board = ["E11","XXX","11S"]
-
 <strong>Output:</strong> [0,0]
-
 </pre>
-
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-    <li><code>2 &lt;= board.length == board[i].length &lt;= 100</code></li>
+	<li><code>2 &lt;= board.length == board[i].length &lt;= 100</code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -74,8 +62,6 @@ class Solution:
         mod = 10**9 + 7
         return [0, 0] if f[0][0] == -1 else [f[0][0], g[0][0] % mod]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -131,8 +117,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -180,8 +164,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func pathsWithMaxScore(board []string) []int {
 	n := len(board)
@@ -227,10 +209,6 @@ func pathsWithMaxScore(board []string) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

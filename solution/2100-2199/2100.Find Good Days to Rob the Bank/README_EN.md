@@ -59,9 +59,9 @@ Thus, no day is a good day to rob the bank, so return an empty list.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -78,8 +78,6 @@ class Solution:
                 right[i] = right[i + 1] + 1
         return [i for i in range(n) if time <= min(left[i], right[i])]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -111,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -136,8 +132,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func goodDaysToRobBank(security []int, time int) []int {
 	n := len(security)
@@ -157,7 +151,7 @@ func goodDaysToRobBank(security []int, time int) []int {
 		}
 	}
 	var ans []int
-	for i := time; i < n - time; i++ {
+	for i := time; i < n-time; i++ {
 		if time <= left[i] && time <= right[i] {
 			ans = append(ans, i)
 		}
@@ -165,8 +159,6 @@ func goodDaysToRobBank(security []int, time int) []int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function goodDaysToRobBank(security: number[], time: number): number[] {
@@ -194,8 +186,6 @@ function goodDaysToRobBank(security: number[], time: number): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::cmp::Ordering;
 
@@ -212,17 +202,17 @@ impl Solution {
                 Ordering::Less => -1,
                 Ordering::Greater => 1,
                 Ordering::Equal => 0,
-            }
+            };
         }
         let (mut a, mut b) = (vec![0; n + 1], vec![0; n + 1]);
         for i in 1..=n {
-            a[i] = a[i - 1] + if g[i - 1] == 1 { 1 } else { 0 };
-            b[i] = b[i - 1] + if g[i - 1] == -1 { 1 } else { 0 };
+            a[i] = a[i - 1] + (if g[i - 1] == 1 { 1 } else { 0 });
+            b[i] = b[i - 1] + (if g[i - 1] == -1 { 1 } else { 0 });
         }
         let mut res = vec![];
         for i in time..n - time {
             if a[i + 1] - a[i + 1 - time] == 0 && b[i + 1 + time] - b[i + 1] == 0 {
-                res.push((i) as i32);
+                res.push(i as i32);
             }
         }
         res
@@ -230,10 +220,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

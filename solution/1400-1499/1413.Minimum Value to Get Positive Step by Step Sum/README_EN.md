@@ -51,9 +51,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,15 +64,6 @@ class Solution:
             t = min(t, s)
         return max(1, 1 - t)
 ```
-
-```python
-class Solution:
-    def minStartValue(self, nums: List[int]) -> int:
-        s = list(accumulate(nums))
-        return 1 if min(s) >= 0 else abs(min(s)) + 1
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +79,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -103,8 +92,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minStartValue(nums []int) int {
@@ -122,8 +109,6 @@ func minStartValue(nums []int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minStartValue(nums: number[]): number {
     let sum = 0;
@@ -136,8 +121,6 @@ function minStartValue(nums: number[]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_start_value(nums: Vec<i32>) -> i32 {
@@ -147,15 +130,24 @@ impl Solution {
             sum += num;
             min = min.min(sum);
         }
-        1.max(1 - min)
+        (1).max(1 - min)
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minStartValue(self, nums: List[int]) -> int:
+        s = list(accumulate(nums))
+        return 1 if min(s) >= 0 else abs(min(s)) + 1
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

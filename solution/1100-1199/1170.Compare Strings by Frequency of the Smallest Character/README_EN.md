@@ -39,56 +39,55 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting + Binary Search
 
-### **Python3**
+First, according to the problem description, we implement a function $f(s)$, which returns the frequency of the smallest letter in the string $s$ in lexicographical order.
+
+Next, we calculate $f(w)$ for each string $w$ in $words$, sort them, and store them in an array $nums$.
+
+Then, we traverse each string $q$ in $queries$, and binary search in $nums$ for the first position $i$ that is greater than $f(q)$. Then, the elements at index $i$ and after in $nums$ all satisfy $f(q) < f(W)$, so the answer to the current query is $n - i$.
+
+The time complexity is $O((n + q) \times M)$, and the space complexity is $O(n)$. Here, $n$ and $q$ are the lengths of the arrays $words$ and $queries$ respectively, and $M$ is the maximum length of the strings.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def numSmallerByFrequency(self, queries: List[str], words: List[str]) -> List[int]:
-        def f(s):
+        def f(s: str) -> int:
             cnt = Counter(s)
-            for c in ascii_lowercase:
-                if cnt[c]:
-                    return cnt[c]
+            return next(cnt[c] for c in ascii_lowercase if cnt[c])
 
-        arr = [f(s) for s in words]
-        arr.sort()
-        n = len(arr)
-        return [n - bisect_right(arr, f(q)) for q in queries]
+        n = len(words)
+        nums = sorted(f(w) for w in words)
+        return [n - bisect_right(nums, f(q)) for q in queries]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int[] numSmallerByFrequency(String[] queries, String[] words) {
         int n = words.length;
-        int[] arr = new int[n];
+        int[] nums = new int[n];
         for (int i = 0; i < n; ++i) {
-            arr[i] = f(words[i]);
+            nums[i] = f(words[i]);
         }
-        Arrays.sort(arr);
+        Arrays.sort(nums);
         int m = queries.length;
         int[] ans = new int[m];
         for (int i = 0; i < m; ++i) {
             int x = f(queries[i]);
-            ans[i] = n - search(arr, x);
+            int l = 0, r = n;
+            while (l < r) {
+                int mid = (l + r) >> 1;
+                if (nums[mid] > x) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            ans[i] = n - l;
         }
         return ans;
-    }
-
-    private int search(int[] arr, int x) {
-        int left = 0, right = arr.length;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (arr[mid] > x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
     }
 
     private int f(String s) {
@@ -96,9 +95,9 @@ class Solution {
         for (int i = 0; i < s.length(); ++i) {
             ++cnt[s.charAt(i) - 'a'];
         }
-        for (int v : cnt) {
-            if (v > 0) {
-                return v;
+        for (int x : cnt) {
+            if (x > 0) {
+                return x;
             }
         }
         return 0;
@@ -106,40 +105,37 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
-        auto f = [](string& s) {
+        auto f = [](string s) {
             int cnt[26] = {0};
-            for (char& c : s) {
+            for (char c : s) {
                 cnt[c - 'a']++;
             }
-            for (int i = 0; i < 26; ++i) {
-                if (cnt[i]) {
-                    return cnt[i];
+            for (int x : cnt) {
+                if (x) {
+                    return x;
                 }
             }
             return 0;
         };
-        vector<int> arr;
-        for (auto& s : words) {
-            arr.emplace_back(f(s));
+        int n = words.size();
+        int nums[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = f(words[i]);
         }
-        sort(arr.begin(), arr.end());
+        sort(nums, nums + n);
         vector<int> ans;
         for (auto& q : queries) {
             int x = f(q);
-            ans.emplace_back(arr.end() - upper_bound(arr.begin(), arr.end(), x));
+            ans.push_back(n - (upper_bound(nums, nums + n, x) - nums));
         }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numSmallerByFrequency(queries []string, words []string) (ans []int) {
@@ -148,31 +144,56 @@ func numSmallerByFrequency(queries []string, words []string) (ans []int) {
 		for _, c := range s {
 			cnt[c-'a']++
 		}
-		for _, v := range cnt {
-			if v > 0 {
-				return v
+		for _, x := range cnt {
+			if x > 0 {
+				return x
 			}
 		}
 		return 0
 	}
-	arr := []int{}
-	for _, s := range words {
-		arr = append(arr, f(s))
+	n := len(words)
+	nums := make([]int, n)
+	for i, w := range words {
+		nums[i] = f(w)
 	}
-	sort.Ints(arr)
-	n := len(arr)
+	sort.Ints(nums)
 	for _, q := range queries {
 		x := f(q)
-		ans = append(ans, n-sort.Search(n, func(i int) bool { return arr[i] > x }))
+		ans = append(ans, n-sort.SearchInts(nums, x+1))
 	}
 	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function numSmallerByFrequency(queries: string[], words: string[]): number[] {
+    const f = (s: string): number => {
+        const cnt = new Array(26).fill(0);
+        for (const c of s) {
+            cnt[c.charCodeAt(0) - 'a'.charCodeAt(0)]++;
+        }
+        return cnt.find(x => x > 0);
+    };
+    const nums = words.map(f).sort((a, b) => a - b);
+    const ans: number[] = [];
+    for (const q of queries) {
+        const x = f(q);
+        let l = 0,
+            r = nums.length;
+        while (l < r) {
+            const mid = (l + r) >> 1;
+            if (nums[mid] > x) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        ans.push(nums.length - l);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

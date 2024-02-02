@@ -47,9 +47,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -67,8 +67,6 @@ class Solution:
             cur2 = headA if cur2 is None else cur2.next
         return cur1
 ```
-
-### **Java**
 
 ```java
 /**
@@ -94,8 +92,6 @@ public class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -119,7 +115,31 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+	cur1, cur2 := headA, headB
+	for cur1 != cur2 {
+		if cur1 == nil {
+			cur1 = headB
+		} else {
+			cur1 = cur1.Next
+		}
+		if cur2 == nil {
+			cur2 = headA
+		} else {
+			cur2 = cur2.Next
+		}
+	}
+	return cur1
+}
+```
 
 ```js
 /**
@@ -146,38 +166,6 @@ var getIntersectionNode = function (headA, headB) {
 };
 ```
 
-### **Go**
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
- func getIntersectionNode(headA, headB *ListNode) *ListNode {
-    cur1, cur2 := headA, headB
-    for cur1 != cur2 {
-        if cur1 == nil {
-            cur1 = headB
-        } else {
-            cur1 = cur1.Next
-        }
-        if cur2 == nil {
-            cur2 = headA
-        } else {
-            cur2 = cur2.Next
-        }
-    }
-    return cur1
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

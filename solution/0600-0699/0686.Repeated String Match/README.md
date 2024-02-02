@@ -49,15 +49,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-新串由 a 通过重复最小 ans 次得来，假设新串包含子字符串 b，那么新串的起始匹配位置一定不超过 a。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,10 +66,6 @@ class Solution:
             t.append(a)
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -95,8 +85,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -115,8 +103,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func repeatedStringMatch(a string, b string) int {
 	m, n := len(a), len(b)
@@ -133,10 +119,25 @@ func repeatedStringMatch(a string, b string) int {
 }
 ```
 
-### **...**
+```ts
+function repeatedStringMatch(a: string, b: string): number {
+    const m: number = a.length,
+        n: number = b.length;
+    let ans: number = Math.ceil(n / m);
+    let t: string = a.repeat(ans);
 
-```
+    for (let i = 0; i < 3; i++) {
+        if (t.includes(b)) {
+            return ans;
+        }
+        ans++;
+        t += a;
+    }
 
+    return -1;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

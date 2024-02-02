@@ -50,23 +50,21 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We can denote the length of the string $s$ as $n$. Next, we traverse the array $shift$, accumulate to get the final offset $x$, then take $x$ modulo $n$, the final result is to move the first $n - x$ characters of $s$ to the end.
+
+The time complexity is $O(n + m)$, where $n$ and $m$ are the lengths of the string $s$ and the array $shift$ respectively. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def stringShift(self, s: str, shift: List[List[int]]) -> str:
-        x = 0
-        for a, b in shift:
-            if a == 0:
-                b = -b
-            x += b
+        x = sum((b if a else -b) for a, b in shift)
         x %= len(s)
         return s[-x:] + s[:-x]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -74,7 +72,7 @@ class Solution {
         int x = 0;
         for (var e : shift) {
             if (e[0] == 0) {
-                e[1] = -e[1];
+                e[1] *= -1;
             }
             x += e[1];
         }
@@ -84,8 +82,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -105,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func stringShift(s string, shift [][]int) string {
 	x := 0
@@ -122,10 +116,20 @@ func stringShift(s string, shift [][]int) string {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function stringShift(s: string, shift: number[][]): string {
+    let x = 0;
+    for (const [a, b] of shift) {
+        x += a === 0 ? -b : b;
+    }
+    x %= s.length;
+    if (x < 0) {
+        x += s.length;
+    }
+    return s.slice(-x) + s.slice(0, -x);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

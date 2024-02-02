@@ -46,9 +46,9 @@ myCalendarThree.book(25, 55); // return 3
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Node:
@@ -126,8 +126,6 @@ class MyCalendarThree:
 # obj = MyCalendarThree()
 # param_1 = obj.book(start,end)
 ```
-
-### **Java**
 
 ```java
 class Node {
@@ -237,8 +235,6 @@ class MyCalendarThree {
  */
 ```
 
-### **C++**
-
 ```cpp
 class Node {
 public:
@@ -339,8 +335,6 @@ public:
  */
 ```
 
-### **Go**
-
 ```go
 type node struct {
 	left      *node
@@ -355,13 +349,6 @@ func newNode(l, r int) *node {
 		r:   r,
 		mid: int(uint(l+r) >> 1),
 	}
-}
-
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
 }
 
 type segmentTree struct {
@@ -451,10 +438,6 @@ func (this *MyCalendarThree) Book(start int, end int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

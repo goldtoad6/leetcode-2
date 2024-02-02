@@ -15,7 +15,7 @@
 | supervisor  | int     |
 | salary      | int     |
 +-------------+---------+
-empId is the primary key column for this table.
+empId is the column with unique values for this table.
 Each row of this table indicates the name and the ID of an employee in addition to their salary and the id of their manager.
 </pre>
 
@@ -30,18 +30,18 @@ Each row of this table indicates the name and the ID of an employee in addition 
 | empId       | int  |
 | bonus       | int  |
 +-------------+------+
-empId is the primary key column for this table.
-empId is a foreign key to empId from the Employee table.
+empId is the column of unique values for this table.
+empId is a foreign key (reference column) to empId from the Employee table.
 Each row of this table contains the id of an employee and their respective bonus.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the name and bonus amount of each employee with a bonus <strong>less than</strong> <code>1000</code>.</p>
+<p>Write a solution to report the name and bonus amount of each employee with a bonus <strong>less than</strong> <code>1000</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -76,19 +76,21 @@ Bonus table:
 
 ## Solutions
 
+### Solution 1: Left Join
+
+We can use a left join to join the `Employee` table and the `Bonus` table on `empId`, and then filter out the employees whose bonus is less than $1000$. Note that the employees with `NULL` bonus values after the join should also be filtered out, so we need to use the `IFNULL` function to convert `NULL` values to $0$.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-    e.name, b.bonus
+# Write your MySQL query statement below
+SELECT name, bonus
 FROM
-    Employee e
-        LEFT JOIN
-    Bonus b ON e.empid = b.empid
-WHERE
-    b.bonus < 1000 OR b.bonus IS NULL;
+    Employee
+    LEFT JOIN Bonus USING (empId)
+WHERE IFNULL(bonus, 0) < 1000;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

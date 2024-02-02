@@ -48,9 +48,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -72,8 +72,6 @@ class Solution:
         dfs.cache_clear()
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -110,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -139,8 +135,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func removeBoxes(boxes []int) int {
@@ -174,19 +168,8 @@ func removeBoxes(boxes []int) int {
 	}
 	return dfs(0, n-1, 0)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

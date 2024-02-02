@@ -43,9 +43,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -67,8 +67,6 @@ class Solution:
         root.right = self.sufficientSubset(root.right, limit)
         return None if root.left is None and root.right is None else root
 ```
-
-### **Java**
 
 ```java
 /**
@@ -102,7 +100,34 @@ class Solution {
 }
 ```
 
-### **Go**
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sufficientSubset(TreeNode* root, int limit) {
+        if (!root) {
+            return nullptr;
+        }
+        limit -= root->val;
+        if (!root->left && !root->right) {
+            return limit > 0 ? nullptr : root;
+        }
+        root->left = sufficientSubset(root->left, limit);
+        root->right = sufficientSubset(root->right, limit);
+        return !root->left && !root->right ? nullptr : root;
+    }
+};
+```
 
 ```go
 /**
@@ -136,34 +161,34 @@ func sufficientSubset(root *TreeNode, limit int) *TreeNode {
 }
 ```
 
-### **C++**
-
-```cpp
+```ts
 /**
  * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
  */
-class Solution {
-public:
-    TreeNode* sufficientSubset(TreeNode* root, int limit) {
-        if (!root) return nullptr;
-        limit -= root->val;
-        if (!root->left && !root->right) return limit > 0 ? nullptr : root;
-        root->left = sufficientSubset(root->left, limit);
-        root->right = sufficientSubset(root->right, limit);
-        return !root->left && !root->right ? nullptr : root;
-    }
-};
-```
 
-### **JavaScript**
+function sufficientSubset(root: TreeNode | null, limit: number): TreeNode | null {
+    if (root === null) {
+        return null;
+    }
+    limit -= root.val;
+    if (root.left === null && root.right === null) {
+        return limit > 0 ? null : root;
+    }
+    root.left = sufficientSubset(root.left, limit);
+    root.right = sufficientSubset(root.right, limit);
+    return root.left === null && root.right === null ? null : root;
+}
+```
 
 ```js
 /**
@@ -180,23 +205,19 @@ public:
  * @return {TreeNode}
  */
 var sufficientSubset = function (root, limit) {
-    if (!root) {
+    if (root === null) {
         return null;
     }
     limit -= root.val;
-    if (!root.left && !root.right) {
+    if (root.left === null && root.right === null) {
         return limit > 0 ? null : root;
     }
     root.left = sufficientSubset(root.left, limit);
     root.right = sufficientSubset(root.right, limit);
-    return !root.left && !root.right ? null : root;
+    return root.left === null && root.right === null ? null : root;
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -34,9 +34,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -48,22 +48,19 @@
 class Solution:
     def allPossibleFBT(self, n: int) -> List[Optional[TreeNode]]:
         @cache
-        def dfs(n):
+        def dfs(n: int) -> List[Optional[TreeNode]]:
             if n == 1:
                 return [TreeNode()]
-            res = []
-            if n % 2:
-                for i in range(n - 1):
-                    j = n - i - 1
-                    for left in dfs(i):
-                        for right in dfs(j):
-                            res.append(TreeNode(0, left, right))
-            return res
+            ans = []
+            for i in range(n - 1):
+                j = n - 1 - i
+                for left in dfs(i):
+                    for right in dfs(j):
+                        ans.append(TreeNode(0, left, right))
+            return ans
 
         return dfs(n)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -82,9 +79,10 @@ class Solution:
  * }
  */
 class Solution {
-    private List<TreeNode>[] f = new List[21];
+    private List<TreeNode>[] f;
 
     public List<TreeNode> allPossibleFBT(int n) {
+        f = new List[n + 1];
         return dfs(n);
     }
 
@@ -93,24 +91,21 @@ class Solution {
             return f[n];
         }
         if (n == 1) {
-            return Collections.singletonList(new TreeNode());
+            return List.of(new TreeNode());
         }
-        List<TreeNode> res = new ArrayList<>();
+        List<TreeNode> ans = new ArrayList<>();
         for (int i = 0; i < n - 1; ++i) {
-            int j = n - i - 1;
-            for (TreeNode left : dfs(i)) {
-                for (TreeNode right : dfs(j)) {
-                    res.add(new TreeNode(0, left, right));
+            int j = n - 1 - i;
+            for (var left : dfs(i)) {
+                for (var right : dfs(j)) {
+                    ans.add(new TreeNode(0, left, right));
                 }
             }
         }
-        f[n] = res;
-        return res;
+        return f[n] = ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -127,27 +122,29 @@ class Solution {
 class Solution {
 public:
     vector<TreeNode*> allPossibleFBT(int n) {
-        vector<TreeNode*> f[21];
+        vector<vector<TreeNode*>> f(n + 1);
         function<vector<TreeNode*>(int)> dfs = [&](int n) -> vector<TreeNode*> {
-            if (f[n].size()) return f[n];
-            if (n == 1) return vector<TreeNode*>{new TreeNode()};
-            vector<TreeNode*> res;
+            if (f[n].size()) {
+                return f[n];
+            }
+            if (n == 1) {
+                return vector<TreeNode*>{new TreeNode()};
+            }
+            vector<TreeNode*> ans;
             for (int i = 0; i < n - 1; ++i) {
-                int j = n - i - 1;
+                int j = n - 1 - i;
                 for (auto left : dfs(i)) {
                     for (auto right : dfs(j)) {
-                        res.push_back(new TreeNode(0, left, right));
+                        ans.push_back(new TreeNode(0, left, right));
                     }
                 }
             }
-            return f[n] = res;
+            return f[n] = ans;
         };
         return dfs(n);
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -159,35 +156,153 @@ public:
  * }
  */
 func allPossibleFBT(n int) []*TreeNode {
-	f := map[int][]*TreeNode{}
-	var dfs func(n int) []*TreeNode
+	f := make([][]*TreeNode, n+1)
+	var dfs func(int) []*TreeNode
 	dfs = func(n int) []*TreeNode {
-		if v, ok := f[n]; ok {
-			return v
+		if len(f[n]) > 0 {
+			return f[n]
 		}
 		if n == 1 {
 			return []*TreeNode{&TreeNode{Val: 0}}
 		}
-		res := []*TreeNode{}
+		ans := []*TreeNode{}
 		for i := 0; i < n-1; i++ {
-			j := n - i - 1
+			j := n - 1 - i
 			for _, left := range dfs(i) {
 				for _, right := range dfs(j) {
-					res = append(res, &TreeNode{0, left, right})
+					ans = append(ans, &TreeNode{0, left, right})
 				}
 			}
 		}
-		f[n] = res
-		return res
+		f[n] = ans
+		return ans
 	}
 	return dfs(n)
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
 
+function allPossibleFBT(n: number): Array<TreeNode | null> {
+    const f: Array<Array<TreeNode | null>> = new Array(n + 1).fill(0).map(() => []);
+    const dfs = (n: number): Array<TreeNode | null> => {
+        if (f[n].length) {
+            return f[n];
+        }
+        if (n === 1) {
+            f[n].push(new TreeNode(0));
+            return f[n];
+        }
+        const ans: Array<TreeNode | null> = [];
+        for (let i = 0; i < n - 1; ++i) {
+            const j = n - 1 - i;
+            for (const left of dfs(i)) {
+                for (const right of dfs(j)) {
+                    ans.push(new TreeNode(0, left, right));
+                }
+            }
+        }
+        return (f[n] = ans);
+    };
+    return dfs(n);
+}
 ```
 
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+
+impl TreeNode {
+    pub fn new_with_node(
+        left: Option<Rc<RefCell<TreeNode>>>,
+        right: Option<Rc<RefCell<TreeNode>>>
+    ) -> Self {
+        Self {
+            val: 0,
+            left,
+            right,
+        }
+    }
+}
+
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    #[allow(dead_code)]
+    pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        let mut record_vec = vec![vec![]; n as usize + 1];
+        Self::dfs(n, &mut record_vec)
+    }
+
+    #[allow(dead_code)]
+    fn dfs(
+        n: i32,
+        record_vec: &mut Vec<Vec<Option<Rc<RefCell<TreeNode>>>>>
+    ) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        if record_vec[n as usize].len() != 0 {
+            return record_vec[n as usize].clone();
+        }
+        if n == 1 {
+            // Just directly return a single node
+            return vec![Some(Rc::new(RefCell::new(TreeNode::new(0))))];
+        }
+        // Otherwise, need to construct return vector
+        let mut ret_vec = Vec::new();
+
+        // Enumerate the node number for left subtree from 0 -> n - 1
+        for i in 0..n - 1 {
+            // The number of right subtree node
+            let j = n - i - 1;
+            for left in Self::dfs(i, record_vec) {
+                for right in Self::dfs(j, record_vec) {
+                    // Construct the ret vector
+                    ret_vec.push(
+                        Some(
+                            Rc::new(
+                                RefCell::new(TreeNode::new_with_node(left.clone(), right.clone()))
+                            )
+                        )
+                    );
+                }
+            }
+        }
+
+        record_vec[n as usize] = ret_vec;
+
+        record_vec[n as usize].clone()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

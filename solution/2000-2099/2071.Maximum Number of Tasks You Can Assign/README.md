@@ -73,9 +73,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心 + 二分查找**
+### 方法一：贪心 + 二分查找
 
 将任务按照完成时间从小到大排序，将工人按照能力从小到大排序。
 
@@ -93,13 +91,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int, strength: int) -> int:
+    def maxTaskAssign(
+        self, tasks: List[int], workers: List[int], pills: int, strength: int
+    ) -> int:
         def check(x):
             i = 0
             q = deque()
@@ -131,10 +127,6 @@ class Solution:
                 right = mid - 1
         return left
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -191,8 +183,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -236,8 +226,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxTaskAssign(tasks []int, workers []int, pills int, strength int) int {
 	sort.Ints(tasks)
@@ -277,19 +265,8 @@ func maxTaskAssign(tasks []int, workers []int, pills int, strength int) int {
 	}
 	return left
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -56,24 +56,18 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：两遍扫描
 
-**方法一：两遍扫描**
+我们先从左向右扫描，将多余的右括号删除，再从右向左扫描，将多余的左括号删除。
 
-先从左向右扫描，将多余的右括号删除，再从右向左扫描，将多余的左括号删除。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是字符串 $s$ 的长度。
 
 相似题目：
 
--   [678. 有效的括号字符串](/solution/0600-0699/0678.Valid%20Parenthesis%20String/README.md)
--   [2116. 判断一个括号字符串是否有效](/solution/2100-2199/2116.Check%20if%20a%20Parentheses%20String%20Can%20Be%20Valid/README.md)
+-   [678. 有效的括号字符串](https://github.com/doocs/leetcode/blob/main/solution/0600-0699/0678.Valid%20Parenthesis%20String/README.md)
+-   [2116. 判断一个括号字符串是否有效](https://github.com/doocs/leetcode/blob/main/solution/2100-2199/2116.Check%20if%20a%20Parentheses%20String%20Can%20Be%20Valid/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -100,10 +94,6 @@ class Solution:
             ans.append(c)
         return ''.join(ans[::-1])
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -141,8 +131,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -151,8 +139,10 @@ public:
         int x = 0;
         for (char& c : s) {
             if (c == ')' && x == 0) continue;
-            if (c == '(') ++x;
-            else if (c == ')') --x;
+            if (c == '(')
+                ++x;
+            else if (c == ')')
+                --x;
             stk.push_back(c);
         }
         string ans;
@@ -161,8 +151,10 @@ public:
             char c = stk.back();
             stk.pop_back();
             if (c == '(' && x == 0) continue;
-            if (c == ')') ++x;
-            else if (c == '(') --x;
+            if (c == ')')
+                ++x;
+            else if (c == '(')
+                --x;
             ans.push_back(c);
         }
         reverse(ans.begin(), ans.end());
@@ -170,8 +162,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minRemoveToMakeValid(s string) string {
@@ -210,8 +200,6 @@ func minRemoveToMakeValid(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minRemoveToMakeValid(s: string): string {
     let left = 0;
@@ -248,8 +236,6 @@ function minRemoveToMakeValid(s: string): string {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_remove_to_make_valid(s: String) -> String {
@@ -259,8 +245,12 @@ impl Solution {
             let mut right = 0;
             for c in bs.iter() {
                 match c {
-                    &b'(' => left += 1,
-                    &b')' if right < left => right += 1,
+                    &b'(' => {
+                        left += 1;
+                    }
+                    &b')' if right < left => {
+                        right += 1;
+                    }
                     _ => {}
                 }
             }
@@ -293,10 +283,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

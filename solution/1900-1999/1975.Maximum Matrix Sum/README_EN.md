@@ -45,9 +45,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
             return s
         return s - mi * 2
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -90,8 +88,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +106,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxMatrixSum(matrix [][]int) int64 {
@@ -132,13 +126,6 @@ func maxMatrixSum(matrix [][]int) int64 {
 	return int64(s)
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -146,8 +133,6 @@ func abs(x int) int {
 	return x
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -172,10 +157,6 @@ var maxMatrixSum = function (matrix) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

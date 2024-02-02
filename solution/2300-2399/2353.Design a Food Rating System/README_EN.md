@@ -71,9 +71,9 @@ foodRatings.highestRated(&quot;japanese&quot;); // return &quot;ramen&quot;
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 from sortedcontainers import SortedSet
@@ -103,14 +103,6 @@ class FoodRatings:
 # obj.changeRating(food,newRating)
 # param_2 = obj.highestRated(cuisine)
 ```
-
-### **Java**
-
-```java
-
-```
-
-### **C++**
 
 ```cpp
 using pis = pair<int, string>;
@@ -150,16 +142,6 @@ public:
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

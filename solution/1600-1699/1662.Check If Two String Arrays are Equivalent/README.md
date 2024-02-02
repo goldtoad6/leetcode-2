@@ -49,15 +49,84 @@ word2 表示的字符串为 "a" + "bc" -> "abc"
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：字符串拼接**
+### 方法一：字符串拼接
 
 将两个数组中的字符串拼接成两个字符串，然后比较两个字符串是否相等。
 
 时间复杂度 $O(m)$，空间复杂度 $O(m)$。其中 $m$ 为数组中字符串的总长度。
 
-**方法二：直接遍历**
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def arrayStringsAreEqual(self, word1: List[str], word2: List[str]) -> bool:
+        return ''.join(word1) == ''.join(word2)
+```
+
+```java
+class Solution {
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+        return String.join("", word1).equals(String.join("", word2));
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool arrayStringsAreEqual(vector<string>& word1, vector<string>& word2) {
+        return reduce(word1.cbegin(), word1.cend()) == reduce(word2.cbegin(), word2.cend());
+    }
+};
+```
+
+```go
+func arrayStringsAreEqual(word1 []string, word2 []string) bool {
+	return strings.Join(word1, "") == strings.Join(word2, "")
+}
+```
+
+```ts
+function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {
+    return word1.join('') === word2.join('');
+}
+```
+
+```rust
+impl Solution {
+    pub fn array_strings_are_equal(word1: Vec<String>, word2: Vec<String>) -> bool {
+        word1.join("") == word2.join("")
+    }
+}
+```
+
+```c
+bool arrayStringsAreEqual(char** word1, int word1Size, char** word2, int word2Size) {
+    int i = 0;
+    int j = 0;
+    int x = 0;
+    int y = 0;
+    while (i < word1Size && j < word2Size) {
+        if (word1[i][x++] != word2[j][y++]) {
+            return 0;
+        }
+
+        if (word1[i][x] == '\0') {
+            x = 0;
+            i++;
+        }
+        if (word2[j][y] == '\0') {
+            y = 0;
+            j++;
+        }
+    }
+    return i == word1Size && j == word2Size;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：直接遍历
 
 方法一中，我们是将两个数组中的字符串拼接成两个新的字符串，有额外的空间开销。我们也可以直接遍历两个数组，逐个字符比较。
 
@@ -70,16 +139,6 @@ word2 表示的字符串为 "a" + "bc" -> "abc"
 时间复杂度 $O(m)$，空间复杂度 $O(1)$。其中 $m$ 为数组中字符串的总长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-class Solution:
-    def arrayStringsAreEqual(self, word1: List[str], word2: List[str]) -> bool:
-        return ''.join(word1) == ''.join(word2)
-```
 
 ```python
 class Solution:
@@ -94,18 +153,6 @@ class Solution:
             if y == len(word2[j]):
                 y, j = 0, j + 1
         return i == len(word1) and j == len(word2)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
-        return String.join("", word1).equals(String.join("", word2));
-    }
-}
 ```
 
 ```java
@@ -131,17 +178,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    bool arrayStringsAreEqual(vector<string>& word1, vector<string>& word2) {
-        return reduce(word1.cbegin(), word1.cend()) == reduce(word2.cbegin(), word2.cend());
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -155,14 +191,6 @@ public:
         return i == word1.size() && j == word2.size();
     }
 };
-```
-
-### **Go**
-
-```go
-func arrayStringsAreEqual(word1 []string, word2 []string) bool {
-	return strings.Join(word1, "") == strings.Join(word2, "")
-}
 ```
 
 ```go
@@ -184,40 +212,6 @@ func arrayStringsAreEqual(word1 []string, word2 []string) bool {
 }
 ```
 
-### **C**
-
-```c
-bool arrayStringsAreEqual(char **word1, int word1Size, char **word2, int word2Size) {
-    int i = 0;
-    int j = 0;
-    int x = 0;
-    int y = 0;
-    while (i < word1Size && j < word2Size) {
-        if (word1[i][x++] != word2[j][y++]) {
-            return 0;
-        }
-
-        if (word1[i][x] == '\0') {
-            x = 0;
-            i++;
-        }
-        if (word2[j][y] == '\0') {
-            y = 0;
-            j++;
-        }
-    }
-    return i == word1Size && j == word2Size;
-}
-```
-
-### **TypeScript**
-
-```ts
-function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {
-    return word1.join('') === word2.join('');
-}
-```
-
 ```ts
 function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {
     let [i, j, x, y] = [0, 0, 0, 0];
@@ -235,16 +229,6 @@ function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {
         }
     }
     return i === word1.length && j === word2.length;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn array_strings_are_equal(word1: Vec<String>, word2: Vec<String>) -> bool {
-        word1.join("") == word2.join("")
-    }
 }
 ```
 
@@ -273,10 +257,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

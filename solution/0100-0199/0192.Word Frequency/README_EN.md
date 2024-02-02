@@ -41,12 +41,4 @@ day 1
 
 ## Solutions
 
-<!-- tabs:start -->
-
-### **Bash**
-
-```sh
-
-```
-
-<!-- tabs:end -->
+<!-- end -->

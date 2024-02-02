@@ -14,15 +14,15 @@
 | customer_id | int  |
 | amount      | int  |
 +-------------+------+
-bill_id is the primary key for this table.
+bill_id is the primary key (column with unique values) for this table.
 Each row contains information about the amount of one bill and the customer associated with it.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the number of customers who had <strong>at least one</strong> bill with an amount <strong>strictly greater</strong> than <code>500</code>.</p>
+<p>Write a solution to report the number of customers who had <strong>at least one</strong> bill with an amount <strong>strictly greater</strong> than <code>500</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -53,18 +53,18 @@ Customer 3 has one bill with an amount strictly greater than 500.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **SQL**
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
 SELECT
-    COUNT(DISTINCT(customer_id)) AS rich_count
-FROM
-    Store
-WHERE
-    amount > 500;
+    COUNT(DISTINCT customer_id) AS rich_count
+FROM Store
+WHERE amount > 500;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

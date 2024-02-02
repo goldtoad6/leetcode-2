@@ -58,9 +58,7 @@ atm.withdraw(550);        // 返回 [0,1,0,0,1] ，机器会返回 1 张 $50 的
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们用一个数组 $d$ 记录钞票面额，用一个数组 $cnt$ 记录每种面额的钞票数量。
 
@@ -69,10 +67,6 @@ atm.withdraw(550);        // 返回 [0,1,0,0,1] ，机器会返回 1 张 $50 的
 对于 `withdraw` 操作，我们从大到小枚举每种面额的钞票，取出尽可能多且不超过 $amount$ 的钞票，然后将 $amount$ 减去取出的钞票面额之和，如果最后 $amount$ 仍大于 $0$，说明无法取出 $amount$ 的钞票，返回 $-1$ 即可。否则，返回取出的钞票数量即可。时间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class ATM:
@@ -101,10 +95,6 @@ class ATM:
 # obj.deposit(banknotesCount)
 # param_2 = obj.withdraw(amount)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class ATM {
@@ -144,13 +134,10 @@ class ATM {
  */
 ```
 
-### **C++**
-
 ```cpp
 class ATM {
 public:
     ATM() {
-
     }
 
     void deposit(vector<int> banknotesCount) {
@@ -187,8 +174,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type ATM struct {
 	d   [5]int
@@ -220,13 +205,6 @@ func (this *ATM) Withdraw(amount int) []int {
 	return ans
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your ATM object will be instantiated and called as such:
  * obj := Constructor();
@@ -235,16 +213,6 @@ func min(a, b int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

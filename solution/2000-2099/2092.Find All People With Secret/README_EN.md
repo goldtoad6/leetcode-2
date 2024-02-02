@@ -66,11 +66,9 @@ Thus, people 0, 1, 2, 3, and 4 know the secret after all the meetings.
 
 ## Solutions
 
-BFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -101,8 +99,6 @@ class Solution:
             i = j + 1
         return [i for i, v in enumerate(vis) if v]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -153,8 +149,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -201,8 +195,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findAllPeople(n int, meetings [][]int, firstPerson int) []int {
@@ -251,14 +243,8 @@ func findAllPeople(n int, meetings [][]int, firstPerson int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function findAllPeople(
-    n: number,
-    meetings: number[][],
-    firstPerson: number,
-): number[] {
+function findAllPeople(n: number, meetings: number[][], firstPerson: number): number[] {
     let parent: Array<number> = Array.from({ length: n + 1 }, (v, i) => i);
     parent[firstPerson] = 0;
 
@@ -308,10 +294,6 @@ function findAllPeople(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

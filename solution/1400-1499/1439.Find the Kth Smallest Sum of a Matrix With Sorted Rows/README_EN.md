@@ -50,22 +50,18 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def kthSmallest(self, mat: List[List[int]], k: int) -> int:
         pre = [0]
         for cur in mat:
-            t = [a + b for a in pre for b in cur[:k]]
-            t.sort()
-            pre = t[:k]
-        return pre[k - 1]
+            pre = sorted(a + b for a in pre for b in cur[:k])[:k]
+        return pre[-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -120,8 +114,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func kthSmallest(mat [][]int, k int) int {
 	pre := []int{0}
@@ -137,19 +129,24 @@ func kthSmallest(mat [][]int, k int) int {
 	}
 	return pre[k-1]
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function kthSmallest(mat: number[][], k: number): number {
+    let pre: number[] = [0];
+    for (const cur of mat) {
+        const next: number[] = [];
+        for (const a of pre) {
+            for (const b of cur) {
+                next.push(a + b);
+            }
+        }
+        pre = next.sort((a, b) => a - b).slice(0, k);
+    }
+    return pre[k - 1];
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

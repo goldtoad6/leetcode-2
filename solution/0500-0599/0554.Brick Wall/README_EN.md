@@ -39,11 +39,9 @@
 
 ## Solutions
 
-The question can be understood as, let the vertical line pass through the edge of the brick as much as possible, use the hash table to process the frequency of the brick edge in different positions (not including the two vertical edges), and the final answer is the total number of rows minus the maximum Frequency.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -58,8 +56,6 @@ class Solution:
             return len(wall)
         return len(wall) - cnt[max(cnt, key=cnt.get)]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -78,15 +74,13 @@ class Solution {
 }
 ```
 
-### **Go**
-
 ```go
 func leastBricks(wall [][]int) int {
 	cnt := make(map[int]int)
 	for _, row := range wall {
-        width := 0
+		width := 0
 		for _, brick := range row[:len(row)-1] {
-            width += brick
+			width += brick
 			cnt[width]++
 		}
 	}
@@ -99,8 +93,6 @@ func leastBricks(wall [][]int) int {
 	return len(wall) - max
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -124,10 +116,6 @@ var leastBricks = function (wall) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

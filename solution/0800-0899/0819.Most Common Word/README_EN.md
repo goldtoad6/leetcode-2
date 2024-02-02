@@ -42,9 +42,9 @@ and that &quot;hit&quot; isn&#39;t the answer even though it occurs more because
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,8 +53,6 @@ class Solution:
         p = Counter(re.findall('[a-z]+', paragraph.lower()))
         return next(word for word, _ in p.most_common() if word not in s)
 ```
-
-### **Java**
 
 ```java
 import java.util.regex.Matcher;
@@ -90,8 +88,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,8 +115,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func mostCommonWord(paragraph string, banned []string) string {
@@ -156,8 +150,6 @@ func mostCommonWord(paragraph string, banned []string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function mostCommonWord(paragraph: string, banned: string[]): string {
     const s = paragraph.toLocaleLowerCase();
@@ -169,17 +161,12 @@ function mostCommonWord(paragraph: string, banned: string[]): string {
         }
         map.set(word, (map.get(word) ?? 0) + 1);
     }
-    return [...map.entries()].reduce(
-        (r, v) => (v[1] > r[1] ? v : r),
-        ['', 0],
-    )[0];
+    return [...map.entries()].reduce((r, v) => (v[1] > r[1] ? v : r), ['', 0])[0];
 }
 ```
 
-### **Rust**
-
 ```rust
-use std::collections::{HashMap, HashSet};
+use std::collections::{ HashMap, HashSet };
 impl Solution {
     pub fn most_common_word(mut paragraph: String, banned: Vec<String>) -> String {
         paragraph.make_ascii_lowercase();
@@ -195,16 +182,11 @@ impl Solution {
         map.into_iter()
             .max_by_key(|&(_, v)| v)
             .unwrap()
-            .0
-            .to_string()
+            .0.to_string()
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

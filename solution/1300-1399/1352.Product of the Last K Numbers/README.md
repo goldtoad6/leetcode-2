@@ -60,9 +60,7 @@ productOfNumbers.getProduct(2); // 返回 32 。最后 2 个数字的乘积是 4
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀积**
+### 方法一：前缀积
 
 我们初始化一个数组 $s$，其中 $s[i]$ 表示前 $i$ 个数字的乘积。
 
@@ -74,13 +72,8 @@ productOfNumbers.getProduct(2); // 返回 32 。最后 2 个数字的乘积是 4
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class ProductOfNumbers:
-
     def __init__(self):
         self.s = [1]
 
@@ -99,10 +92,6 @@ class ProductOfNumbers:
 # obj.add(num)
 # param_2 = obj.getProduct(k)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class ProductOfNumbers {
@@ -134,8 +123,6 @@ class ProductOfNumbers {
  * int param_2 = obj.getProduct(k);
  */
 ```
-
-### **C++**
 
 ```cpp
 class ProductOfNumbers {
@@ -170,8 +157,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type ProductOfNumbers struct {
 	s []int
@@ -205,10 +190,6 @@ func (this *ProductOfNumbers) GetProduct(k int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

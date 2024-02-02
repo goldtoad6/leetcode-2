@@ -51,9 +51,9 @@ Note that only one of the two unmatched 1s is counted as a cow since the non-bul
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -72,8 +72,6 @@ class Solution:
             y += min(cnt1[i], cnt2[i])
         return f'{x}A{y}B'
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -98,8 +96,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -122,8 +118,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getHint(secret string, guess string) string {
 	x, y := 0, 0
@@ -143,16 +137,7 @@ func getHint(secret string, guess string) string {
 	}
 	return fmt.Sprintf("%dA%dB", x, y)
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -166,8 +151,11 @@ class Solution {
         $cntB = 0;
         $len = strlen($secret);
         for ($i = 0; $i < $len; $i++) {
-            if ($secret[$i] == $guess[$i]) $cntA++;
-            else $hashtable[$secret[$i]] += 1;
+            if ($secret[$i] == $guess[$i]) {
+                $cntA++;
+            } else {
+                $hashtable[$secret[$i]] += 1;
+            }
         }
         for ($i = 0; $i < $len; $i++) {
             if ($secret[$i] != $guess[$i] && $hashtable[$guess[$i]] > 0) {
@@ -175,15 +163,11 @@ class Solution {
                 $hashtable[$guess[$i]] -= 1;
             }
         }
-        return $cntA."A".$cntB."B";
+        return $cntA . 'A' . $cntB . 'B';
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

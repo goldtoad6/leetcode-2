@@ -58,15 +58,13 @@
 
 ## 解法
 
-**方法一：双指针**
+### 方法一：双指针
 
 我们可以用两个指针 $a$ 和 $b$ 分别指向两个链表的头节点，然后同时分别向后遍历，当 $a$ 到达链表 $A$ 的末尾时，令 $a$ 指向链表 $B$ 的头节点；当 $b$ 到达链表 $B$ 的末尾时，令 $b$ 指向链表 $A$ 的头节点。这样，当它们相遇时，所指向的节点就是第一个公共节点。
 
 时间复杂度 $O(m + n)$，空间复杂度 $O(1)$。其中 $m$ 和 $n$ 分别为两个链表的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 # Definition for singly-linked list.
@@ -84,8 +82,6 @@ class Solution:
             b = b.next if b else headA
         return a
 ```
-
-### **Java**
 
 ```java
 /**
@@ -111,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -124,8 +118,8 @@ class Solution {
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        ListNode  *a = headA, *b = headB;
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        ListNode *a = headA, *b = headB;
         while (a != b) {
             a = a ? a->next : headB;
             b = b ? b->next : headA;
@@ -134,8 +128,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -163,7 +155,29 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 }
 ```
 
-### **JavaScript**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
+    let a = headA;
+    let b = headB;
+    while (a != b) {
+        a = a ? a.next : headB;
+        b = b ? b.next : headA;
+    }
+    return a;
+}
+```
 
 ```js
 /**
@@ -190,37 +204,6 @@ var getIntersectionNode = function (headA, headB) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function getIntersectionNode(
-    headA: ListNode | null,
-    headB: ListNode | null,
-): ListNode | null {
-    let a = headA;
-    let b = headB;
-    while (a != b) {
-        a = a ? a.next : headB;
-        b = b ? b.next : headA;
-    }
-    return a;
-}
-```
-
-### **C#**
-
 ```cs
 /**
  * Definition for singly-linked list.
@@ -242,10 +225,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

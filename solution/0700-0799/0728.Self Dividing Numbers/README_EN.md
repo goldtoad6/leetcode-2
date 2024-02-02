@@ -31,9 +31,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -44,8 +44,6 @@ class Solution:
             if all(i != '0' and num % int(i) == 0 for i in str(num))
         ]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,34 +69,6 @@ class Solution {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
-        let mut res = vec![];
-        for i in left..=right {
-            let mut num = i;
-            if loop {
-                if num == 0 {
-                    break true;
-                }
-                let j = num % 10;
-                if j == 0 || i % j != 0 {
-                    break false;
-                }
-                num /= 10;
-            } {
-                res.push(i);
-            }
-        }
-        res
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,8 +89,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func selfDividingNumbers(left int, right int) []int {
@@ -144,10 +112,32 @@ func selfDividingNumbers(left int, right int) []int {
 }
 ```
 
-### **...**
-
-```
-
+```rust
+impl Solution {
+    pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
+        let mut res = vec![];
+        for i in left..=right {
+            let mut num = i;
+            if (
+                loop {
+                    if num == 0 {
+                        break true;
+                    }
+                    let j = num % 10;
+                    if j == 0 || i % j != 0 {
+                        break false;
+                    }
+                    num /= 10;
+                }
+            ) {
+                res.push(i);
+            }
+        }
+        res
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

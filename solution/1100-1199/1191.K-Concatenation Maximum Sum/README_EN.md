@@ -45,9 +45,23 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Prefix Sum + Case Discussion
 
-### **Python3**
+We denote the sum of all elements in the array $arr$ as $s$, the maximum prefix sum as $mxPre$, the minimum prefix sum as $miPre$, and the maximum subarray sum as $mxSub$.
+
+We traverse the array $arr$. For each element $x$, we update $s = s + x$, $mxPre = \max(mxPre, s)$, $miPre = \min(miPre, s)$, $mxSub = \max(mxSub, s - miPre)$.
+
+Next, we consider the value of $k$:
+
+-   When $k = 1$, the answer is $mxSub$.
+-   When $k \ge 2$, if the maximum subarray spans two $arr$, then the answer is $mxPre + mxSuf$, where $mxSuf = s - miPre$.
+-   When $k \ge 2$ and $s > 0$, if the maximum subarray spans three $arr$, then the answer is $(k - 2) \times s + mxPre + mxSuf$.
+
+Finally, we return the result of the answer modulo $10^9 + 7$.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +82,6 @@ class Solution:
             ans = max(ans, (k - 2) * s + mx_pre + mx_suf)
         return ans % mod
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -95,8 +107,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -124,8 +134,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func kConcatenationMaxSum(arr []int, k int) int {
 	var s, mxPre, miPre, mxSub int
@@ -147,26 +155,8 @@ func kConcatenationMaxSum(arr []int, k int) int {
 	}
 	return ans % mod
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

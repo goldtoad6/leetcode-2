@@ -60,9 +60,7 @@ findSumPairs.count(7);  // 返回 11 ；下标对 (2,1), (2,2), (2,4), (3,1), (3
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 我们可以用哈希表 `cnt` 统计数组 `nums2` 中每个数字出现的次数。
 
@@ -74,13 +72,8 @@ findSumPairs.count(7);  // 返回 11 ；下标对 (2,1), (2,2), (2,4), (3,1), (3
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class FindSumPairs:
-
     def __init__(self, nums1: List[int], nums2: List[int]):
         self.nums1 = nums1
         self.nums2 = nums2
@@ -101,10 +94,6 @@ class FindSumPairs:
 # obj.add(index,val)
 # param_2 = obj.count(tot)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class FindSumPairs {
@@ -143,8 +132,6 @@ class FindSumPairs {
  * int param_2 = obj.count(tot);
  */
 ```
-
-### **C++**
 
 ```cpp
 class FindSumPairs {
@@ -186,8 +173,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type FindSumPairs struct {
 	nums1 []int
@@ -225,10 +210,6 @@ func (this *FindSumPairs) Count(tot int) (ans int) {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

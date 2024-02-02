@@ -34,7 +34,7 @@
 <pre>
 <strong>输入：</strong>grid = [[2,1,1],[0,1,1],[1,0,1]]
 <strong>输出：</strong>-1
-<strong>解释：</strong>左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。
+<strong>解释：</strong>左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个方向上。
 </pre>
 
 <p><strong>示例 3：</strong></p>
@@ -58,25 +58,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-首先需要确定的是，网格当中存在多少个新鲜橘子，这关系到什么时候结束。
-
-其次，腐烂橘子的坐标在哪，这些坐标要作为中心点，将腐烂传播给四方的新鲜橘子。
-
-步骤：
-
-1. 扫描网格，统计新鲜橘子的数量，记录腐烂橘子的坐标。
-2. 如果新鲜橘子的数量为 0，返回重复 2 - 5 步骤的轮数（也就是分钟）。
-3. 如果不存在**有效**的腐烂橘子，而现存的新鲜橘子不为 0，则为不可能，返回 -1。
-4. 遍历当前已记录的腐烂橘子，将四方的新鲜橘子污染。如果有新鲜橘子被污染成功，便记录该橘子的坐标，在下一轮使用（不参与本轮行动）。
-5. 回到第 2 步。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -103,10 +87,6 @@ class Solution:
                         q.append((x, y))
         return ans if cnt == 0 else -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -144,10 +124,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```cpp
 class Solution {
@@ -188,8 +164,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func orangesRotting(grid [][]int) int {
 	m, n := len(grid), len(grid[0])
@@ -228,8 +202,6 @@ func orangesRotting(grid [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function orangesRotting(grid: number[][]): number {
     const m = grid.length;
@@ -253,13 +225,7 @@ function orangesRotting(grid: number[][]): number {
             for (let j = 0; j < 4; j++) {
                 const newX = x + dris[j];
                 const newY = y + dris[j + 1];
-                if (
-                    newX >= 0 &&
-                    newX < m &&
-                    newY >= 0 &&
-                    newY <= n &&
-                    grid[newX][newY] === 1
-                ) {
+                if (newX >= 0 && newX < m && newY >= 0 && newY <= n && grid[newX][newY] === 1) {
                     grid[newX][newY] = 2;
                     queue.push([newX, newY]);
                     count--;
@@ -275,8 +241,6 @@ function orangesRotting(grid: number[][]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::VecDeque;
 
@@ -290,7 +254,9 @@ impl Solution {
         for i in 0..m {
             for j in 0..n {
                 match grid[i][j] {
-                    1 => count += 1,
+                    1 => {
+                        count += 1;
+                    }
                     2 => queue.push_back([i as i32, j as i32]),
                     _ => (),
                 }
@@ -305,11 +271,12 @@ impl Solution {
                 for i in 0..4 {
                     let new_x = x + dirs[i];
                     let new_y = y + dirs[i + 1];
-                    if new_x >= 0
-                        && new_x < m as i32
-                        && new_y >= 0
-                        && new_y < n as i32
-                        && grid[new_x as usize][new_y as usize] == 1
+                    if
+                        new_x >= 0 &&
+                        new_x < (m as i32) &&
+                        new_y >= 0 &&
+                        new_y < (n as i32) &&
+                        grid[new_x as usize][new_y as usize] == 1
                     {
                         grid[new_x as usize][new_y as usize] = 2;
                         queue.push_back([new_x, new_y]);
@@ -328,10 +295,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

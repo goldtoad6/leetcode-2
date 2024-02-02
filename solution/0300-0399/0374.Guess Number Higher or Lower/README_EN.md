@@ -52,9 +52,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # The guess API is already defined for you.
@@ -74,21 +74,6 @@ class Solution:
                 left = mid + 1
         return left
 ```
-
-```python
-# The guess API is already defined for you.
-# @param num, your guess
-# @return -1 if num is higher than the picked number
-#          1 if num is lower than the picked number
-#          otherwise return 0
-# def guess(num: int) -> int:
-
-class Solution:
-    def guessNumber(self, n: int) -> int:
-        return bisect.bisect(range(1, n + 1), 0, key=lambda x: -guess(x))
-```
-
-### **Java**
 
 ```java
 /**
@@ -115,8 +100,6 @@ public class Solution extends GuessGame {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -145,8 +128,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Forward declaration of guess API.
@@ -171,25 +152,63 @@ func guessNumber(n int) int {
 }
 ```
 
-```go
+```ts
 /**
  * Forward declaration of guess API.
- * @param  num   your guess
- * @return 	     -1 if num is higher than the picked number
- *			      1 if num is lower than the picked number
- *               otherwise return 0
- * func guess(num int) int;
+ * @param {number} num   your guess
+ * @return 	            -1 if num is lower than the guess number
+ *			             1 if num is higher than the guess number
+ *                       otherwise return 0
+ * var guess = function(num) {}
  */
 
-func guessNumber(n int) int {
-	return sort.Search(n, func(i int) bool {
-		i++
-		return guess(i) <= 0
-	}) + 1
+function guessNumber(n: number): number {
+    let l = 1;
+    let r = n;
+    while (l < r) {
+        const mid = (l + r) >>> 1;
+        if (guess(mid) <= 0) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
 }
 ```
 
-### **C#**
+```rust
+
+/**
+ * Forward declaration of guess API.
+ * @param  num   your guess
+ * @return 	     -1 if num is lower than the guess number
+ *			      1 if num is higher than the guess number
+ *               otherwise return 0
+ * unsafe fn guess(num: i32) -> i32 {}
+ */
+
+impl Solution {
+    unsafe fn guessNumber(n: i32) -> i32 {
+        let mut l = 1;
+        let mut r = n;
+        loop {
+            let mid = l + (r - l) / 2;
+            match guess(mid) {
+                -1 => {
+                    r = mid - 1;
+                }
+                1 => {
+                    l = mid + 1;
+                }
+                _ => {
+                    break mid;
+                }
+            }
+        }
+    }
+}
+```
 
 ```cs
 /**
@@ -217,65 +236,44 @@ public class Solution : GuessGame {
 }
 ```
 
-### **TypeScript**
+<!-- tabs:end -->
 
-```ts
-/**
- * Forward declaration of guess API.
- * @param {number} num   your guess
- * @return 	            -1 if num is lower than the guess number
- *			             1 if num is higher than the guess number
- *                       otherwise return 0
- * var guess = function(num) {}
- */
+### Solution 2
 
-function guessNumber(n: number): number {
-    let l = 1;
-    let r = n;
-    while (l < r) {
-        const mid = (l + r) >>> 1;
-        if (guess(mid) <= 0) {
-            r = mid;
-        } else {
-            l = mid + 1;
-        }
-    }
-    return l;
-}
+<!-- tabs:start -->
+
+```python
+# The guess API is already defined for you.
+# @param num, your guess
+# @return -1 if num is higher than the picked number
+#          1 if num is lower than the picked number
+#          otherwise return 0
+# def guess(num: int) -> int:
+
+
+class Solution:
+    def guessNumber(self, n: int) -> int:
+        return bisect.bisect(range(1, n + 1), 0, key=lambda x: -guess(x))
 ```
 
-### **Rust**
-
-```rust
+```go
 /**
  * Forward declaration of guess API.
  * @param  num   your guess
- * @return 	     -1 if num is lower than the guess number
- *			      1 if num is higher than the guess number
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
  *               otherwise return 0
- * unsafe fn guess(num: i32) -> i32 {}
+ * func guess(num int) int;
  */
 
-impl Solution {
-    unsafe fn guessNumber(n: i32) -> i32 {
-        let mut l = 1;
-        let mut r = n;
-        loop {
-            let mid = l + (r - l) / 2;
-            match guess(mid) {
-                -1 => r = mid - 1,
-                1 => l = mid + 1,
-                _ => break mid,
-            }
-        }
-    }
+func guessNumber(n int) int {
+	return sort.Search(n, func(i int) bool {
+		i++
+		return guess(i) <= 0
+	}) + 1
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

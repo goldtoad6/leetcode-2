@@ -16,7 +16,7 @@
 | store       | varchar |
 | price       | int     |
 +-------------+---------+
-(product_id, store) 是该表的主键。
+(product_id, store) 是该表的主键（具有唯一值的列的组合）。
 该表的每一行都表示商店中的 product_id 的价格。
 表中最多有 30 个不同的商店 store。
 price 就是这家店商品的价格。
@@ -24,7 +24,7 @@ price 就是这家店商品的价格。
 
 <p>&nbsp;</p>
 
-<p>重要提示<strong>:</strong> 这个问题针对的是那些对 SQL 有丰富经验的人。如果你是初学者，我们建议你现在跳过它。</p>
+<p><strong>重要提示：</strong>这个问题针对的是那些对 SQL 有丰富经验的人。如果你是初学者，我们建议你现在跳过它。</p>
 
 <p>实现 <code>PivotProducts</code> 过程来重新组织 <code>Products</code> 表，以便每行都有一个商品的 id 及其在每个商店中的价格。如果商品不在商店出售，价格应为 <code>null</code>。表的列应该包含每个商店，并且它们应该按 <strong>字典顺序排序</strong>。</p>
 
@@ -32,7 +32,7 @@ price 就是这家店商品的价格。
 
 <p data-group="1-1">以 <strong>任意顺序&nbsp;</strong>返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>返回结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -67,16 +67,30 @@ Products 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+CREATE PROCEDURE PivotProducts()
+BEGIN
+	# Write your MySQL query statement below.
+	SET group_concat_max_len = 5000;
+    SELECT GROUP_CONCAT(DISTINCT 'MAX(CASE WHEN store = \'',
+               store,
+               '\' THEN price ELSE NULL END) AS ',
+               store
+               ORDER BY store) INTO @sql
+    FROM Products;
+    SET @sql =  CONCAT('SELECT product_id, ',
+                    @sql,
+                    ' FROM Products GROUP BY product_id');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,16 +54,6 @@ class Solution:
         return n > 0 and (n & (n - 1)) == 0
 ```
 
-lowbit:
-
-```python
-class Solution:
-    def isPowerOfTwo(self, n: int) -> bool:
-        return n > 0 and n == n & (-n)
-```
-
-### **Java**
-
 ```java
 class Solution {
     public boolean isPowerOfTwo(int n) {
@@ -71,18 +61,6 @@ class Solution {
     }
 }
 ```
-
-lowbit:
-
-```java
-class Solution {
-    public boolean isPowerOfTwo(int n) {
-        return n > 0 && n == (n & (-n));
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -92,41 +70,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    bool isPowerOfTwo(int n) {
-        return n > 0 && n == (n & (-n));
-    }
-};
-```
-
-### **JavaScript**
-
-```js
-/**
- * @param {number} n
- * @return {boolean}
- */
-var isPowerOfTwo = function (n) {
-    return n > 0 && (n & (n - 1)) == 0;
-};
-```
-
-lowbit:
-
-```js
-/**
- * @param {number} n
- * @return {boolean}
- */
-var isPowerOfTwo = function (n) {
-    return n > 0 && n == (n & -n);
-};
-```
-
-### **Go**
 
 ```go
 func isPowerOfTwo(n int) bool {
@@ -134,7 +77,50 @@ func isPowerOfTwo(n int) bool {
 }
 ```
 
-lowbit:
+```ts
+function isPowerOfTwo(n: number): boolean {
+    return n > 0 && (n & (n - 1)) === 0;
+}
+```
+
+```js
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfTwo = function (n) {
+    return n > 0 && (n & (n - 1)) == 0;
+};
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        return n > 0 and n == n & (-n)
+```
+
+```java
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && n == (n & (-n));
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        return n > 0 && n == (n & (-n));
+    }
+};
+```
 
 ```go
 func isPowerOfTwo(n int) bool {
@@ -142,26 +128,22 @@ func isPowerOfTwo(n int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function isPowerOfTwo(n: number): boolean {
-    return n > 0 && (n & (n - 1)) == 0;
+    return n > 0 && (n & (n - 1)) === 0;
 }
 ```
 
-lowbit:
-
-```ts
-function isPowerOfTwo(n: number): boolean {
+```js
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfTwo = function (n) {
     return n > 0 && n == (n & -n);
-}
-```
-
-### **...**
-
-```
-
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>During the NBA playoffs, we always set the rather strong team to play with the rather weak team, like make the rank <code>1</code> team play with the rank <code>n<sup>th</sup></code> team, which is a good strategy to make the contest more interesting.</p>
+<p>During the NBA playoffs, we always set the rather strong team to play with the rather weak team, like making&nbsp;the rank <code>1</code> team play with the rank <code>n<sup>th</sup></code> team, which is a good strategy to make the contest more interesting.</p>
 
 <p>Given <code>n</code> teams, return <em>their final contest matches in the form of a string</em>.</p>
 
@@ -46,9 +46,9 @@ Since the third round will generate the final winner, you need to output the ans
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +60,6 @@ class Solution:
             n >>= 1
         return team[0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,8 +78,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -89,7 +85,7 @@ public:
         vector<string> team(n);
         for (int i = 0; i < n; ++i) team[i] = to_string(i + 1);
         for (; n > 1; n >>= 1) {
-            for (int i = 0; i<n> > 1; ++i) {
+            for (int i = 0; i < n >> 1; ++i) {
                 team[i] = "(" + team[i] + "," + team[n - 1 - i] + ")";
             }
         }
@@ -97,8 +93,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findContestMatch(n int) string {
@@ -116,10 +110,6 @@ func findContestMatch(n int) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

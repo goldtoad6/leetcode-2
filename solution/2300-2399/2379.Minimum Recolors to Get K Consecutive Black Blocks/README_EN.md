@@ -47,9 +47,9 @@ Therefore, we return 0.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +61,6 @@ class Solution:
             ans = min(ans, cnt)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -99,8 +95,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minimumRecolors(blocks string, k int) int {
@@ -121,8 +115,6 @@ func minimumRecolors(blocks string, k int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minimumRecolors(blocks: string, k: number): number {
     let cnt = 0;
@@ -138,8 +130,6 @@ function minimumRecolors(blocks: string, k: number): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -168,12 +158,39 @@ impl Solution {
 }
 ```
 
-### **C**
+```php
+class Solution {
+    /**
+     * @param String $blocks
+     * @param Integer $k
+     * @return Integer
+     */
+    function minimumRecolors($blocks, $k) {
+        $cnt = 0;
+        for ($i = 0; $i < $k; $i++) {
+            if ($blocks[$i] === 'W') {
+                $cnt++;
+            }
+        }
+        $min = $cnt;
+        for ($i = $k; $i < strlen($blocks); $i++) {
+            if ($blocks[$i] === 'W') {
+                $cnt++;
+            }
+            if ($blocks[$i - $k] === 'W') {
+                $cnt--;
+            }
+            $min = min($min, $cnt);
+        }
+        return $min;
+    }
+}
+```
 
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int minimumRecolors(char *blocks, int k) {
+int minimumRecolors(char* blocks, int k) {
     int n = strlen(blocks);
     int count = 0;
     for (int i = 0; i < k; i++) {
@@ -189,11 +206,6 @@ int minimumRecolors(char *blocks, int k) {
 }
 ```
 
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

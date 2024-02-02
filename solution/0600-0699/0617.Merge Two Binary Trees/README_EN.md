@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -49,7 +49,9 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+    def mergeTrees(
+        self, root1: Optional[TreeNode], root2: Optional[TreeNode]
+    ) -> Optional[TreeNode]:
         if root1 is None:
             return root2
         if root2 is None:
@@ -59,8 +61,6 @@ class Solution:
         node.right = self.mergeTrees(root1.right, root2.right)
         return node
 ```
-
-### **Java**
 
 ```java
 /**
@@ -94,8 +94,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -121,8 +119,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -146,8 +142,6 @@ func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -163,20 +157,15 @@ func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
  * }
  */
 
-function mergeTrees(
-    root1: TreeNode | null,
-    root2: TreeNode | null,
-): TreeNode | null {
-    if (root1 == null && root2 == null) return null;
-    if (root1 == null) return root2;
-    if (root2 == null) return root1;
-    let left = mergeTrees(root1.left, root2.left);
-    let right = mergeTrees(root1.right, root2.right);
+function mergeTrees(root1: TreeNode | null, root2: TreeNode | null): TreeNode | null {
+    if (root1 === null && root2 === null) return null;
+    if (root1 === null) return root2;
+    if (root2 === null) return root1;
+    const left = mergeTrees(root1.left, root2.left);
+    const right = mergeTrees(root1.right, root2.right);
     return new TreeNode(root1.val + root2.val, left, right);
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -202,7 +191,7 @@ use std::cell::RefCell;
 impl Solution {
     pub fn merge_trees(
         root1: Option<Rc<RefCell<TreeNode>>>,
-        root2: Option<Rc<RefCell<TreeNode>>>,
+        root2: Option<Rc<RefCell<TreeNode>>>
     ) -> Option<Rc<RefCell<TreeNode>>> {
         match (root1.is_some(), root2.is_some()) {
             (false, false) => None,
@@ -222,8 +211,6 @@ impl Solution {
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -253,10 +240,6 @@ var mergeTrees = function (root1, root2) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

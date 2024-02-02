@@ -51,9 +51,9 @@ You need at least 3 days to eat the 6 oranges.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +66,6 @@ class Solution:
 
         return dfs(n)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -112,8 +108,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minDays(n int) int {
 	f := map[int]int{0: 0, 1: 1}
@@ -128,19 +122,8 @@ func minDays(n int) int {
 	}
 	return dfs(n)
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

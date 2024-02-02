@@ -35,9 +35,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+A valid palindrome string can have at most one character that appears an odd number of times, and the rest of the characters appear an even number of times.
+
+Therefore, we can first traverse the string $s$, count the number of times each character appears, and record it in an array or hash table $cnt$.
+
+Then, we traverse $cnt$, for each character $c$, if $cnt[c]$ is even, then directly add $cnt[c]$ to the answer $ans$; if $cnt[c]$ is odd, then add $cnt[c] - 1$ to $ans$, if $ans$ is even, then increase $ans$ by $1$.
+
+Finally, we return $ans$.
+
+The time complexity is $O(n)$, and the space complexity is $O(C)$. Here, $n$ is the length of the string $s$; and $C$ is the size of the character set, in this problem $C = 128$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -49,8 +59,6 @@ class Solution:
             ans += (ans & 1 ^ 1) and (v & 1)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +78,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -93,8 +99,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestPalindrome(s string) (ans int) {
 	cnt := [128]int{}
@@ -111,8 +115,6 @@ func longestPalindrome(s string) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function longestPalindrome(s: string): number {
     let n = s.length;
@@ -128,6 +130,35 @@ function longestPalindrome(s: string): number {
     return ans < s.length ? ans + 1 : ans;
 }
 ```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn longest_palindrome(s: String) -> i32 {
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for c in s.chars() {
+            map.insert(c, map.get(&c).unwrap_or(&0) + 1);
+        }
+        let mut has_odd = false;
+        let mut res = 0;
+        for v in map.values() {
+            res += v;
+            if v % 2 == 1 {
+                has_odd = true;
+                res -= 1;
+            }
+        }
+        res + (if has_odd { 1 } else { 0 })
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```ts
 function longestPalindrome(s: string): number {
@@ -148,35 +179,6 @@ function longestPalindrome(s: string): number {
 }
 ```
 
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-
-impl Solution {
-    pub fn longest_palindrome(s: String) -> i32 {
-        let mut map: HashMap<char, i32> = HashMap::new();
-        for c in s.chars() {
-            map.insert(c, map.get(&c).unwrap_or(&0) + 1);
-        }
-        let mut has_odd = false;
-        let mut res = 0;
-        for v in map.values() {
-            res += v;
-            if v % 2 == 1 {
-                has_odd = true;
-                res -= 1;
-            }
-        }
-        res + if has_odd { 1 } else { 0 }
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

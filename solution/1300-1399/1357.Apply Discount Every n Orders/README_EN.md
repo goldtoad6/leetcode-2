@@ -40,7 +40,7 @@ cashier.getBill([7,3],[10,10]);                      // return 4000.0. 5<sup>th<
 cashier.getBill([7,5,3,1,6,4,2],[10,10,10,9,9,9,7]); // return 7350.0. 6<sup>th</sup> customer, 50% discount.
                                                      // Original bill = 14700, but with
                                                      // Actual bill = 14700 * ((100 - 50) / 100) = 7350.
-cashier.getBill([2,3,5],[5,3,2]);                    // return 2500.0.  6<sup>th</sup> customer, no discount.
+cashier.getBill([2,3,5],[5,3,2]);                    // return 2500.0.  7<sup>th</sup> customer, no discount.
 </pre>
 
 <p>&nbsp;</p>
@@ -65,13 +65,16 @@ cashier.getBill([2,3,5],[5,3,2]);                    // return 2500.0.  6<sup>th
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Simulation
 
-### **Python3**
+Use a hash table $d$ to store the product ID and price, then traverse the product ID and quantity, calculate the total price, and then calculate the price after discount based on the discount.
+
+The time complexity of initialization is $O(n)$, where $n$ is the number of products. The time complexity of the `getBill` function is $O(m)$, where $m$ is the number of products purchased. The space complexity is $O(n)$.
+
+<!-- tabs:start -->
 
 ```python
 class Cashier:
-
     def __init__(self, n: int, discount: int, products: List[int], prices: List[int]):
         self.i = 0
         self.n = n
@@ -92,8 +95,6 @@ class Cashier:
 # obj = Cashier(n, discount, products, prices)
 # param_1 = obj.getBill(product,amount)
 ```
-
-### **Java**
 
 ```java
 class Cashier {
@@ -129,8 +130,6 @@ class Cashier {
  */
 ```
 
-### **C++**
-
 ```cpp
 class Cashier {
 public:
@@ -165,8 +164,6 @@ private:
  * double param_1 = obj->getBill(product,amount);
  */
 ```
-
-### **Go**
 
 ```go
 type Cashier struct {
@@ -204,10 +201,6 @@ func (this *Cashier) GetBill(product []int, amount []int) (ans float64) {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

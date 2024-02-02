@@ -49,9 +49,9 @@ Window position                Median
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class MedianFinder:
@@ -120,8 +120,6 @@ class Solution:
             ans.append(finder.find_median())
         return ans
 ```
-
-### **Java**
 
 ```java
 class MedianFinder {
@@ -210,8 +208,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class MedianFinder {
 public:
@@ -258,7 +254,7 @@ private:
     int largeSize = 0;
     int k;
 
-    template<typename T>
+    template <typename T>
     void prune(T& pq) {
         while (!pq.empty() && delayed[pq.top()]) {
             if (--delayed[pq.top()] == 0) {
@@ -302,8 +298,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type MedianFinder struct {
@@ -396,9 +390,9 @@ func medianSlidingWindow(nums []int, k int) []float64 {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -406,10 +400,6 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

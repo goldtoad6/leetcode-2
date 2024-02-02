@@ -59,13 +59,18 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：DFS
+
+我们设计一个函数 $dfs(root)$，它将返回一个二元组 $(l, d)$，其中 $l$ 是节点 $root$ 的最深公共祖先，而 $d$ 是节点 $root$ 的深度。函数 $dfs(root)$ 的执行逻辑如下：
+
+-   如果 $root$ 为空，则返回二元组 $(None, 0)$；
+-   否则，我们递归调用 $dfs(root.left)$ 和 $dfs(root.right)$，得到二元组 $(l, d_1)$ 和 $(r, d_2)$。如果 $d_1 \gt d_2$，则 $root$ 的最深公共祖先节点为 $l$，深度为 $d_1 + 1$；如果 $d_1 \lt d_2$，则 $root$ 的最深公共祖先节点为 $r$，深度为 $d_2 + 1$；如果 $d_1 = d_2$，则 $root$ 的最深公共祖先节点为 $root$，深度为 $d_1 + 1$。
+
+我们在主函数中调用 $dfs(root)$，并返回其返回值的第一个元素，即可得到最深公共祖先节点。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -89,10 +94,6 @@ class Solution:
 
         return dfs(root)[0]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -133,8 +134,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -147,26 +146,28 @@ class Solution {
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-using pti = pair<TreeNode*, int>;
 class Solution {
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         return dfs(root).first;
     }
 
-    pti dfs(TreeNode* root) {
-        if (!root) return {nullptr, 0};
-        pti l = dfs(root->left);
-        pti r = dfs(root->right);
-        int d1 = l.second, d2 = r.second;
-        if (d1 > d2) return {l.first, d1 + 1};
-        if (d1 < d2) return {r.first, d2 + 1};
+    pair<TreeNode*, int> dfs(TreeNode* root) {
+        if (!root) {
+            return {nullptr, 0};
+        }
+        auto [l, d1] = dfs(root->left);
+        auto [r, d2] = dfs(root->right);
+        if (d1 > d2) {
+            return {l, d1 + 1};
+        }
+        if (d1 < d2) {
+            return {r, d2 + 1};
+        }
         return {root, d1 + 1};
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -202,10 +203,40 @@ func lcaDeepestLeaves(root *TreeNode) *TreeNode {
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
 
-```
-
+function lcaDeepestLeaves(root: TreeNode | null): TreeNode | null {
+    const dfs = (root: TreeNode | null): [TreeNode | null, number] => {
+        if (root === null) {
+            return [null, 0];
+        }
+        const [l, d1] = dfs(root.left);
+        const [r, d2] = dfs(root.right);
+        if (d1 > d2) {
+            return [l, d1 + 1];
+        }
+        if (d1 < d2) {
+            return [r, d2 + 1];
+        }
+        return [root, d1 + 1];
+    };
+    return dfs(root)[0];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

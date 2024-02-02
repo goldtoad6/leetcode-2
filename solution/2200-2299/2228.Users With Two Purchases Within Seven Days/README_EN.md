@@ -14,17 +14,17 @@
 | user_id       | int  |
 | purchase_date | date |
 +---------------+------+
-purchase_id is the primary key for this table.
+purchase_id contains unique values.
 This table contains logs of the dates that users purchased from a certain retailer.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the IDs of the users that made any two purchases <strong>at most</strong> <code>7</code> days apart.</p>
+<p>Write a solution to report the IDs of the users that made any two purchases <strong>at most</strong> <code>7</code> days apart.</p>
 
 <p>Return the result table ordered by <code>user_id</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -57,12 +57,31 @@ User 7 had two purchases on the same day so we add their ID.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    t AS (
+        SELECT
+            user_id,
+            DATEDIFF(
+                purchase_date,
+                LAG(purchase_date, 1) OVER (
+                    PARTITION BY user_id
+                    ORDER BY purchase_date
+                )
+            ) AS d
+        FROM Purchases
+    )
+SELECT DISTINCT user_id
+FROM t
+WHERE d <= 7
+ORDER BY user_id;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

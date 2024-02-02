@@ -39,110 +39,122 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We use a hash table $d$ to store the nearest index of the number it has visited.
+
+We traverse the array `nums`. For the current element $nums[i]$, if it exists in the hash table, and the difference between its index and the current index is no larger than $k$, then return `true`. Otherwise, we add the current element into the hash table.
+
+After the traversal, return `false`.
+
+The time complexity is $O(n)$ and the space complexity is $O(n)$. Here $n$ is the length of array `nums`.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        mp = {}
-        for i, v in enumerate(nums):
-            if v in mp and i - mp[v] <= k:
+        d = {}
+        for i, x in enumerate(nums):
+            if x in d and i - d[x] <= k:
                 return True
-            mp[v] = i
+            d[x] = i
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        Map<Integer, Integer> mp = new HashMap<>();
+        Map<Integer, Integer> d = new HashMap<>();
         for (int i = 0; i < nums.length; ++i) {
-            if (mp.containsKey(nums[i]) && i - mp.get(nums[i]) <= k) {
+            if (i - d.getOrDefault(nums[i], -1000000) <= k) {
                 return true;
             }
-            mp.put(nums[i], i);
+            d.put(nums[i], i);
         }
         return false;
     }
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        unordered_map<int, int> mp;
+        unordered_map<int, int> d;
         for (int i = 0; i < nums.size(); ++i) {
-            if (mp.count(nums[i]) && i - mp[nums[i]] <= k) return true;
-            mp[nums[i]] = i;
+            if (d.count(nums[i]) && i - d[nums[i]] <= k) {
+                return true;
+            }
+            d[nums[i]] = i;
         }
         return false;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func containsNearbyDuplicate(nums []int, k int) bool {
-	mp := make(map[int]int)
-	for i, v := range nums {
-		if j, ok := mp[v]; ok {
-			if i-j <= k {
-				return true
-			}
+	d := map[int]int{}
+	for i, x := range nums {
+		if j, ok := d[x]; ok && i-j <= k {
+			return true
 		}
-		mp[v] = i
+		d[x] = i
 	}
 	return false
 }
 ```
 
-### **C#**
+```ts
+function containsNearbyDuplicate(nums: number[], k: number): boolean {
+    const d: Map<number, number> = new Map();
+    for (let i = 0; i < nums.length; ++i) {
+        if (d.has(nums[i]) && i - d.get(nums[i])! <= k) {
+            return true;
+        }
+        d.set(nums[i], i);
+    }
+    return false;
+}
+```
 
 ```cs
 public class Solution {
     public bool ContainsNearbyDuplicate(int[] nums, int k) {
-        var mp = new Dictionary<int, int>();
-        for (int i = 0; i < nums.Length; ++i)
-        {
-            if (mp.ContainsKey(nums[i]) && i - mp[nums[i]] <= k)
-            {
+        var d = new Dictionary<int, int>();
+        for (int i = 0; i < nums.Length; ++i) {
+            if (d.ContainsKey(nums[i]) && i - d[nums[i]] <= k) {
                 return true;
             }
-            mp[nums[i]] = i;
+            d[nums[i]] = i;
         }
         return false;
     }
 }
 ```
 
-### **TypeScript**
-
-```ts
-function containsNearbyDuplicate(nums: number[], k: number): boolean {
-    const map = new Map();
-    for (let i = 0; i < nums.length; i++) {
-        const t = nums[i];
-        if (map.has(t) && i - map.get(t) <= k) {
-            return true;
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Boolean
+     */
+    function containsNearbyDuplicate($nums, $k) {
+        $hashtable = [];
+        for ($i = 0; $i < count($nums); $i++) {
+            $tmp = $nums[$i];
+            if (array_key_exists($tmp, $hashtable) && $k >= $i - $hashtable[$tmp]) {
+                return true;
+            }
+            $hashtable[$tmp] = $i;
         }
-        map.set(t, i);
+        return false;
     }
-    return false;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

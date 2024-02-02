@@ -47,9 +47,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We can traverse every string in `queries` and check whether it matches `pattern` or not. If it matches, we add `true` to the answer array, otherwise we add `false`.
+
+Next, we implement a function $check(s, t)$ to check whether the string $s$ matches the string $t$.
+
+We can use two pointers $i$ and $j$ to traverse the two strings. If the characters pointed to by $i$ and $j$ are not the same and $s[i]$ is a lowercase letter, then we move the pointer $i$ to the next position.
+
+If the pointer $i$ has reached the end of the string $s$ or the characters pointed to by $i$ and $j$ are not the same, we return `false`. Otherwise, we move both pointers $i$ and $j$ to the next position. When the pointer $j$ reaches the end of the string $t$, we need to check if the remaining characters in the string $s$ are all lowercase letters. If so, we return `true`, otherwise we return `false`.
+
+Time complexity $(n \times m)$, where $n$ and $m$ are the length of the array `queries` and the string `pattern` respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -69,8 +79,6 @@ class Solution:
 
         return [check(q, pattern) for q in queries]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -132,8 +138,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func camelMatch(queries []string, pattern string) (ans []bool) {
 	check := func(s, t string) bool {
@@ -158,8 +162,6 @@ func camelMatch(queries []string, pattern string) (ans []bool) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function camelMatch(queries: string[], pattern: string): boolean[] {
@@ -189,10 +191,6 @@ function camelMatch(queries: string[], pattern: string): boolean[] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

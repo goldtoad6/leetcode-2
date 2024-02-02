@@ -26,7 +26,7 @@
 <pre>
 <strong>Input:</strong> houses = [1,2,3,4], heaters = [1,4]
 <strong>Output:</strong> 1
-<strong>Explanation:</strong> The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.
+<strong>Explanation:</strong> The two heaters were placed at positions 1 and 4. We need to use a radius 1 standard, then all the houses can be warmed.
 </pre>
 
 <p><strong class="example">Example 3:</strong></p>
@@ -46,9 +46,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +82,6 @@ class Solution:
         return left
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int findRadius(int[] houses, int[] heaters) {
@@ -102,32 +100,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function findRadius(houses: number[], heaters: number[]): number {
-    houses.sort((a, b) => a - b);
-    heaters.sort((a, b) => a - b);
-    const m = houses.length,
-        n = heaters.length;
-    let ans = 0;
-    for (let i = 0, j = 0; i < m; i++) {
-        let cur = Math.abs(houses[i] - heaters[j]);
-        while (
-            j + 1 < n &&
-            Math.abs(houses[i] - heaters[j]) >=
-                Math.abs(houses[i] - heaters[j + 1])
-        ) {
-            cur = Math.min(Math.abs(houses[i] - heaters[++j]), cur);
-        }
-        ans = Math.max(cur, ans);
-    }
-    return ans;
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -163,8 +135,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findRadius(houses []int, heaters []int) int {
@@ -203,10 +173,27 @@ func findRadius(houses []int, heaters []int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function findRadius(houses: number[], heaters: number[]): number {
+    houses.sort((a, b) => a - b);
+    heaters.sort((a, b) => a - b);
+    const m = houses.length,
+        n = heaters.length;
+    let ans = 0;
+    for (let i = 0, j = 0; i < m; i++) {
+        let cur = Math.abs(houses[i] - heaters[j]);
+        while (
+            j + 1 < n &&
+            Math.abs(houses[i] - heaters[j]) >= Math.abs(houses[i] - heaters[j + 1])
+        ) {
+            cur = Math.min(Math.abs(houses[i] - heaters[++j]), cur);
+        }
+        ans = Math.max(cur, ans);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

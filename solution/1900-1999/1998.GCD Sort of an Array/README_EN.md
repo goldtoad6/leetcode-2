@@ -52,11 +52,9 @@ We can sort [10,5,9,3,15] by performing the following operations:
 
 ## Solutions
 
-Union find.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -86,8 +84,6 @@ class Solution:
                 return False
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -137,8 +133,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -172,8 +166,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 var p []int
@@ -221,19 +213,8 @@ func find(x int) int {
 	}
 	return p[x]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

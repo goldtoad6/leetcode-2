@@ -42,19 +42,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-先用哈希表 mp 记录 list2 的每个字符串以及对应的下标。初始化最小的索引和 mi = 2000，ans 表示结果列表，初始值为空。
-
-遍历 list1 每个字符串 v，若 v 在 mp 中，则计算两个字符串的索引和 t，并更新 ans 和 mi。
-
-最后返回 ans 即可。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,10 +62,6 @@ class Solution:
                     ans.append(v)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -131,9 +115,7 @@ public:
 };
 ```
 
-### **Go**
-
-```cpp
+```go
 func findRestaurant(list1 []string, list2 []string) []string {
 	mp := make(map[string]int)
 	for i, v := range list2 {
@@ -156,8 +138,6 @@ func findRestaurant(list1 []string, list2 []string) []string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findRestaurant(list1: string[], list2: string[]): string[] {
     let minI = Infinity;
@@ -179,8 +159,6 @@ function findRestaurant(list1: string[], list2: string[]): string[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 use std::iter::FromIterator;
@@ -190,27 +168,57 @@ impl Solution {
         let map: HashMap<String, usize> = HashMap::from_iter(list1.into_iter().zip(0..));
         let mut res = vec![];
         let mut min_i = usize::MAX;
-        list2.into_iter().enumerate().for_each(|(i, key)| {
-            if map.contains_key(&key) {
-                let sum_i = map.get(&key).unwrap() + i;
-                if sum_i <= min_i {
-                    if (sum_i < min_i) {
-                        min_i = sum_i;
-                        res.clear();
+        list2
+            .into_iter()
+            .enumerate()
+            .for_each(|(i, key)| {
+                if map.contains_key(&key) {
+                    let sum_i = map.get(&key).unwrap() + i;
+                    if sum_i <= min_i {
+                        if sum_i < min_i {
+                            min_i = sum_i;
+                            res.clear();
+                        }
+                        res.push(key);
                     }
-                    res.push(key);
                 }
-            }
-        });
+            });
         res
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```cpp
+func findRestaurant(list1[] string, list2[] string)[] string {
+mp:= make(map[string]int)
+	for i, v := range list2 {
+		mp[v] = i
+	}
+	mi := 2000
+	var ans []string
+	for i, v := range list1 {
+        if _
+            , ok : = mp[v];
+        ok {
+        t:
+            = i + mp[v] if t < mi {
+                ans = [] string { v } mi = t
+            }
+            else if t == mi {
+                ans = append(ans, v)
+            }
+        }
+    }
+    return ans
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -60,9 +60,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 直接模拟。
 
@@ -71,10 +69,6 @@
 时间复杂度 $O(n\log n)$。其中 $n$ 为数组 `arr` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,10 +79,6 @@ class Solution:
         t = arr[start:end]
         return round(sum(t) / len(t), 5)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,7 +94,31 @@ class Solution {
 }
 ```
 
-### **TypeScript**
+```cpp
+class Solution {
+public:
+    double trimMean(vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        double s = 0;
+        for (int start = (int) (n * 0.05), i = start; i < n - start; ++i)
+            s += arr[i];
+        return s / (n * 0.9);
+    }
+};
+```
+
+```go
+func trimMean(arr []int) float64 {
+	sort.Ints(arr)
+	n := len(arr)
+	sum := 0.0
+	for i := n / 20; i < n-n/20; i++ {
+		sum += float64(arr[i])
+	}
+	return sum / (float64(n) * 0.9)
+}
+```
 
 ```ts
 function trimMean(arr: number[]): number {
@@ -119,57 +133,21 @@ function trimMean(arr: number[]): number {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    double trimMean(vector<int>& arr) {
-        sort(arr.begin(), arr.end());
-        int n = arr.size();
-        double s = 0;
-        for (int start = (int)(n * 0.05), i = start; i < n - start; ++i)
-            s += arr[i];
-        return s / (n * 0.9);
-    }
-};
-```
-
-### **Go**
-
-```go
-func trimMean(arr []int) float64 {
-	sort.Ints(arr)
-	n := len(arr)
-	sum := 0.0
-	for i := n / 20; i < n-n/20; i++ {
-		sum += float64(arr[i])
-	}
-	return sum / (float64(n) * 0.9)
-}
-```
-
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
         arr.sort();
         let n = arr.len();
-        let count = (n as f64 * 0.05).floor() as usize;
+        let count = ((n as f64) * 0.05).floor() as usize;
         let mut sum = 0;
         for i in count..n - count {
             sum += arr[i];
         }
-        sum as f64 / (n as f64 * 0.9)
+        (sum as f64) / ((n as f64) * 0.9)
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

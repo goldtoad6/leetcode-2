@@ -41,7 +41,7 @@ Task 0 started at 0 and ended at 1 with 1 unit of times.
 Task 1 started at 1 and ended at 7 with 6 units of times.
 Task 2 started at 7 and ended at 12 with 5 units of times.
 Task 3 started at 12 and ended at 17 with 5 units of times.
-The tasks with the longest time is task 1. The employees that worked on it is 3, so we return 3.
+The tasks with the longest time is task 1. The employee that worked on it is 3, so we return 3.
 </pre>
 
 <p><strong class="example">Example 3:</strong></p>
@@ -70,25 +70,29 @@ The tasks with the longest time are tasks 0 and 1. The employees that worked on 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Direct Traversal
 
-### **Python3**
+We use a variable $last$ to record the end time of the last task, a variable $mx$ to record the longest working time, and a variable $ans$ to record the employee with the longest working time and the smallest $id$. Initially, all three variables are $0$.
+
+Next, we traverse the array $logs$. For each employee, we subtract the end time of the last task from the time the employee completes the task to get the working time $t$ of this employee. If $mx$ is less than $t$, or $mx$ equals $t$ and the $id$ of this employee is less than $ans$, then we update $mx$ and $ans$. Then we update $last$ to be the end time of the last task plus $t$. Continue to traverse until the entire array is traversed.
+
+Finally, return the answer $ans$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array $logs$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def hardestWorker(self, n: int, logs: List[List[int]]) -> int:
-        last = 0
-        ans = mx = 0
+        last = mx = ans = 0
         for uid, t in logs:
             t -= last
             if mx < t or (mx == t and ans > uid):
-                ans = uid
-                mx = t
+                ans, mx = uid, t
             last += t
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -109,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,8 +132,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func hardestWorker(n int, logs [][]int) (ans int) {
 	var mx, last int
@@ -148,29 +148,6 @@ func hardestWorker(n int, logs [][]int) (ans int) {
 }
 ```
 
-### **C**
-
-```c
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-
-int hardestWorker(int n, int **logs, int logsSize, int *logsColSize) {
-    int res = 0;
-    int max = 0;
-    int pre = 0;
-    for (int i = 0; i < logsSize; i++) {
-        int t = logs[i][1] - pre;
-        if (t > max || (t == max && res > logs[i][0])) {
-            res = logs[i][0];
-            max = t;
-        }
-        pre = logs[i][1];
-    }
-    return res;
-}
-```
-
-### **TypeScript**
-
 ```ts
 function hardestWorker(n: number, logs: number[][]): number {
     let [ans, mx, last] = [0, 0, 0];
@@ -186,8 +163,6 @@ function hardestWorker(n: number, logs: number[][]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn hardest_worker(n: i32, logs: Vec<Vec<i32>>) -> i32 {
@@ -196,7 +171,7 @@ impl Solution {
         let mut pre = 0;
         for log in logs.iter() {
             let t = log[1] - pre;
-            if t > max || t == max && res > log[0] {
+            if t > max || (t == max && res > log[0]) {
                 res = log[0];
                 max = t;
             }
@@ -207,10 +182,56 @@ impl Solution {
 }
 ```
 
-### **...**
+```c
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 
-```
-
+int hardestWorker(int n, int** logs, int logsSize, int* logsColSize) {
+    int res = 0;
+    int max = 0;
+    int pre = 0;
+    for (int i = 0; i < logsSize; i++) {
+        int t = logs[i][1] - pre;
+        if (t > max || (t == max && res > logs[i][0])) {
+            res = logs[i][0];
+            max = t;
+        }
+        pre = logs[i][1];
+    }
+    return res;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn hardest_worker(n: i32, logs: Vec<Vec<i32>>) -> i32 {
+        let mut ans = 0;
+        let mut mx = 0;
+        let mut last = 0;
+
+        for log in logs {
+            let uid = log[0];
+            let t = log[1];
+
+            let diff = t - last;
+            last = t;
+
+            if diff > mx || (diff == mx && uid < ans) {
+                ans = uid;
+                mx = diff;
+            }
+        }
+
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

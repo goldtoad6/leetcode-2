@@ -48,9 +48,9 @@ All other nodes are lonely.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -75,8 +75,6 @@ class Solution:
         dfs(root)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -118,8 +116,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -136,7 +132,7 @@ class Solution {
 public:
     vector<int> getLonelyNodes(TreeNode* root) {
         vector<int> ans;
-        function<void(TreeNode* root)> dfs;
+        function<void(TreeNode * root)> dfs;
         dfs = [&](TreeNode* root) {
             if (!root || (!root->left && !root->right)) return;
             if (!root->left) ans.push_back(root->right->val);
@@ -149,8 +145,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -182,10 +176,6 @@ func getLonelyNodes(root *TreeNode) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

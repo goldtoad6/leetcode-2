@@ -6,7 +6,7 @@
 
 <!-- 这里写题目描述 -->
 
-<p>Table: <code>Users</code></p>
+<p>表：&nbsp;<code>Users</code></p>
 
 <pre>
 +----------------+---------+
@@ -16,13 +16,13 @@
 | join_date      | date    |
 | favorite_brand | varchar |
 +----------------+---------+
-此表主键是 user_id。
+user_id 是此表主键（具有唯一值的列）。
 表中描述了购物网站的用户信息，用户可以在此网站上进行商品买卖。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Table: <code>Orders</code></p>
+<p>表：&nbsp;<code>Orders</code></p>
 
 <pre>
 +---------------+---------+
@@ -34,13 +34,14 @@
 | buyer_id      | int     |
 | seller_id     | int     |
 +---------------+---------+
-此表主键是 order_id。
-外键是 item_id 和（buyer_id，seller_id）。
+order_id 是此表主键（具有唯一值的列）。
+item_id 是 Items 表的外键（reference 列）。
+（buyer_id，seller_id）是 User 表的外键。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Table: <code>Items</code></p>
+<p>表：<code>Items</code></p>
 
 <pre>
 +---------------+---------+
@@ -49,12 +50,12 @@
 | item_id       | int     |
 | item_brand    | varchar |
 +---------------+---------+
-此表主键是 item_id。
+item_id 是此表的主键（具有唯一值的列）。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>请写出一条SQL语句以查询每个用户的注册日期和在 <strong><code>2019</code> </strong>年作为买家的订单总数。</p>
+<p>编写解决方案找出每个用户的注册日期和在 <strong><code>2019</code> </strong>年作为买家的订单总数。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
@@ -107,36 +108,40 @@ Items 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT user_id AS buyer_id,
-    join_date,
+# Write your MySQL query statement below
+SELECT
+    u.user_id AS buyer_id,
+    u.join_date,
     COUNT(order_id) AS orders_in_2019
-FROM users AS u
-    LEFT JOIN orders AS o ON u.user_id = o.buyer_id
-    AND YEAR(order_date) = 2019
+FROM
+    Users AS u
+    LEFT JOIN Orders AS o ON u.user_id = o.buyer_id AND YEAR(order_date) = 2019
 GROUP BY user_id;
 ```
 
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
 ```sql
+# Write your MySQL query statement below
 SELECT
     user_id AS buyer_id,
     join_date,
-    (
-        SELECT
-            COUNT(*)
-        FROM
-            orders AS o
-        WHERE
-            u.user_id = o.buyer_id AND YEAR(order_date) = 2019
-    ) AS orders_in_2019
+    IFNULL(SUM(YEAR(order_date) = 2019), 0) AS orders_in_2019
 FROM
-    users AS u;
+    Users AS u
+    LEFT JOIN Orders AS o ON u.user_id = buyer_id
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

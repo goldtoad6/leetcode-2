@@ -70,19 +70,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归**
+### 方法一：递归
 
 递归搜索二叉树，如果当前节点的左右子节点都不为空，则继续递归搜索左右子树；如果当前节点的左右子节点有一个为空，则将不为空的子节点的值加入结果数组中，然后继续递归搜索左右子树。
 
 时间复杂度 $O(n)$，其中 $n$ 为二叉树的节点个数。需要对二叉树进行一次遍历。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -107,10 +101,6 @@ class Solution:
         dfs(root)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -152,8 +142,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -170,7 +158,7 @@ class Solution {
 public:
     vector<int> getLonelyNodes(TreeNode* root) {
         vector<int> ans;
-        function<void(TreeNode* root)> dfs;
+        function<void(TreeNode * root)> dfs;
         dfs = [&](TreeNode* root) {
             if (!root || (!root->left && !root->right)) return;
             if (!root->left) ans.push_back(root->right->val);
@@ -183,8 +171,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -216,10 +202,6 @@ func getLonelyNodes(root *TreeNode) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

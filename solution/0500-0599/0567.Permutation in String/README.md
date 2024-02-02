@@ -38,9 +38,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：滑动窗口**
+### 方法一：滑动窗口
 
 我们观察发现，题目实际上等价于判断字符串 $s2$ 中是否存在窗口大小为 $n$，且窗口内的字符及其个数与字符串 $s1$ 相同的子串。
 
@@ -50,17 +48,7 @@
 
 时间复杂度 $(n + m \times C)$，空间复杂度 $O(C)$。其中 $n$ 和 $m$ 分别为字符串 $s1$ 和 $s2$ 的长度；而 $C$ 为字符集的大小，本题中 $C=26$。
 
-**方法二：滑动窗口优化**
-
-在方法一中，我们每次加入和移除一个字符时，都需要比较两个哈希表或数组，时间复杂度较高。我们可以维护一个变量 $diff$，表示两个大小为 $n$ 的字符串中，有多少种字符出现的个数不同。当 $diff=0$ 时，说明两个字符串中的字符个数相同。
-
-时间复杂度 $O(n + m)$，空间复杂度 $O(C)$。其中 $n$ 和 $m$ 分别为字符串 $s1$ 和 $s2$ 的长度；而 $C$ 为字符集的大小，本题中 $C=26$。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -77,6 +65,194 @@ class Solution:
                 return True
         return False
 ```
+
+```java
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        if (n > m) {
+            return false;
+        }
+        int[] cnt1 = new int[26];
+        int[] cnt2 = new int[26];
+        for (int i = 0; i < n; ++i) {
+            ++cnt1[s1.charAt(i) - 'a'];
+            ++cnt2[s2.charAt(i) - 'a'];
+        }
+        if (Arrays.equals(cnt1, cnt2)) {
+            return true;
+        }
+        for (int i = n; i < m; ++i) {
+            ++cnt2[s2.charAt(i) - 'a'];
+            --cnt2[s2.charAt(i - n) - 'a'];
+            if (Arrays.equals(cnt1, cnt2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n = s1.size(), m = s2.size();
+        if (n > m) {
+            return false;
+        }
+        vector<int> cnt1(26), cnt2(26);
+        for (int i = 0; i < n; ++i) {
+            ++cnt1[s1[i] - 'a'];
+            ++cnt2[s2[i] - 'a'];
+        }
+        if (cnt1 == cnt2) {
+            return true;
+        }
+        for (int i = n; i < m; ++i) {
+            ++cnt2[s2[i] - 'a'];
+            --cnt2[s2[i - n] - 'a'];
+            if (cnt1 == cnt2) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+
+```go
+func checkInclusion(s1 string, s2 string) bool {
+	n, m := len(s1), len(s2)
+	if n > m {
+		return false
+	}
+	cnt1 := [26]int{}
+	cnt2 := [26]int{}
+	for i := range s1 {
+		cnt1[s1[i]-'a']++
+		cnt2[s2[i]-'a']++
+	}
+	if cnt1 == cnt2 {
+		return true
+	}
+	for i := n; i < m; i++ {
+		cnt2[s2[i]-'a']++
+		cnt2[s2[i-n]-'a']--
+		if cnt1 == cnt2 {
+			return true
+		}
+	}
+	return false
+}
+```
+
+```ts
+function checkInclusion(s1: string, s2: string): boolean {
+    // 滑动窗口方案
+    if (s1.length > s2.length) {
+        return false;
+    }
+
+    const n = s1.length;
+    const m = s2.length;
+
+    const toCode = (s: string) => s.charCodeAt(0) - 97;
+    const isMatch = () => {
+        for (let i = 0; i < 26; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    const arr1 = new Array(26).fill(0);
+    for (const s of s1) {
+        const index = toCode(s);
+        arr1[index]++;
+    }
+
+    const arr2 = new Array(26).fill(0);
+    for (let i = 0; i < n; i++) {
+        const index = toCode(s2[i]);
+        arr2[index]++;
+    }
+
+    for (let l = 0, r = n; r < m; l++, r++) {
+        if (isMatch()) {
+            return true;
+        }
+
+        const i = toCode(s2[l]);
+        const j = toCode(s2[r]);
+        arr2[i]--;
+        arr2[j]++;
+    }
+    return isMatch();
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    // 测试两个哈希表是否匹配
+    fn is_match(m1: &HashMap<char, i32>, m2: &HashMap<char, i32>) -> bool {
+        for (k, v) in m1.iter() {
+            if m2.get(k).unwrap_or(&0) != v {
+                return false;
+            }
+        }
+        true
+    }
+    pub fn check_inclusion(s1: String, s2: String) -> bool {
+        if s1.len() > s2.len() {
+            return false;
+        }
+        let mut m1 = HashMap::new();
+        let mut m2 = HashMap::new();
+        // 初始化表 1
+        for c in s1.chars() {
+            m1.insert(c, m1.get(&c).unwrap_or(&0) + 1);
+        }
+        let cs: Vec<char> = s2.chars().collect();
+        // 初始化窗口
+        let mut i = 0;
+        while i < s1.len() {
+            m2.insert(cs[i], m2.get(&cs[i]).unwrap_or(&0) + 1);
+            i += 1;
+        }
+        if Self::is_match(&m1, &m2) {
+            return true;
+        }
+        // 持续滑动窗口，直到匹配或超出边界
+        let mut j = 0;
+        while i < cs.len() {
+            m2.insert(cs[j], m2.get(&cs[j]).unwrap_or(&1) - 1);
+            m2.insert(cs[i], m2.get(&cs[i]).unwrap_or(&0) + 1);
+            j += 1;
+            i += 1;
+            if Self::is_match(&m1, &m2) {
+                return true;
+            }
+        }
+        false
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：滑动窗口优化
+
+在方法一中，我们每次加入和移除一个字符时，都需要比较两个哈希表或数组，时间复杂度较高。我们可以维护一个变量 $diff$，表示两个大小为 $n$ 的字符串中，有多少种字符出现的个数不同。当 $diff=0$ 时，说明两个字符串中的字符个数相同。
+
+时间复杂度 $O(n + m)$，空间复杂度 $O(C)$。其中 $n$ 和 $m$ 分别为字符串 $s1$ 和 $s2$ 的长度；而 $C$ 为字符集的大小，本题中 $C=26$。
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -109,39 +285,6 @@ class Solution:
             if diff == 0:
                 return True
         return False
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public boolean checkInclusion(String s1, String s2) {
-        int n = s1.length();
-        int m = s2.length();
-        if (n > m) {
-            return false;
-        }
-        int[] cnt1 = new int[26];
-        int[] cnt2 = new int[26];
-        for (int i = 0; i < n; ++i) {
-            ++cnt1[s1.charAt(i) - 'a'];
-            ++cnt2[s2.charAt(i) - 'a'];
-        }
-        if (Arrays.equals(cnt1, cnt2)) {
-            return true;
-        }
-        for (int i = n; i < m; ++i) {
-            ++cnt2[s2.charAt(i) - 'a'];
-            --cnt2[s2.charAt(i - n) - 'a'];
-            if (Arrays.equals(cnt1, cnt2)) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
 ```
 
 ```java
@@ -190,36 +333,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    bool checkInclusion(string s1, string s2) {
-        int n = s1.size(), m = s2.size();
-        if (n > m) {
-            return false;
-        }
-        vector<int> cnt1(26), cnt2(26);
-        for (int i = 0; i < n; ++i) {
-            ++cnt1[s1[i] - 'a'];
-            ++cnt2[s2[i] - 'a'];
-        }
-        if (cnt1 == cnt2) {
-            return true;
-        }
-        for (int i = n; i < m; ++i) {
-            ++cnt2[s2[i] - 'a'];
-            --cnt2[s2[i - n] - 'a'];
-            if (cnt1 == cnt2) {
-                return true;
-            }
-        }
-        return false;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -266,34 +379,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func checkInclusion(s1 string, s2 string) bool {
-	n, m := len(s1), len(s2)
-	if n > m {
-		return false
-	}
-	cnt1 := [26]int{}
-	cnt2 := [26]int{}
-	for i := range s1 {
-		cnt1[s1[i]-'a']++
-		cnt2[s2[i]-'a']++
-	}
-	if cnt1 == cnt2 {
-		return true
-	}
-	for i := n; i < m; i++ {
-		cnt2[s2[i]-'a']++
-		cnt2[s2[i-n]-'a']--
-		if cnt1 == cnt2 {
-			return true
-		}
-	}
-	return false
-}
-```
-
 ```go
 func checkInclusion(s1 string, s2 string) bool {
 	n, m := len(s1), len(s2)
@@ -338,107 +423,11 @@ func checkInclusion(s1 string, s2 string) bool {
 }
 ```
 
-### **TypeScript**
+<!-- tabs:end -->
 
-```ts
-function checkInclusion(s1: string, s2: string): boolean {
-    // 滑动窗口方案
-    if (s1.length > s2.length) {
-        return false;
-    }
+### 方法三
 
-    const n = s1.length;
-    const m = s2.length;
-
-    const toCode = (s: string) => s.charCodeAt(0) - 97;
-    const isMatch = () => {
-        for (let i = 0; i < 26; i++) {
-            if (arr1[i] !== arr2[i]) {
-                return false;
-            }
-        }
-        return true;
-    };
-
-    const arr1 = new Array(26).fill(0);
-    for (const s of s1) {
-        const index = toCode(s);
-        arr1[index]++;
-    }
-
-    const arr2 = new Array(26).fill(0);
-    for (let i = 0; i < n; i++) {
-        const index = toCode(s2[i]);
-        arr2[index]++;
-    }
-
-    for (let l = 0, r = n; r < m; l++, r++) {
-        if (isMatch()) {
-            return true;
-        }
-
-        const i = toCode(s2[l]);
-        const j = toCode(s2[r]);
-        arr2[i]--;
-        arr2[j]++;
-    }
-    return isMatch();
-}
-```
-
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-
-
-impl Solution {
-    // 测试两个哈希表是否匹配
-    fn is_match(m1: &HashMap<char, i32>, m2: &HashMap<char, i32>) -> bool {
-        for (k, v) in m1.iter() {
-            if m2.get(k).unwrap_or(&0) != v {
-                return false;
-            }
-        }
-        true
-    }
-    pub fn check_inclusion(s1: String, s2: String) -> bool {
-        if s1.len() > s2.len() {
-            return false;
-        }
-        let mut m1 = HashMap::new();
-        let mut m2 = HashMap::new();
-        // 初始化表 1
-        for c in s1.chars() {
-            m1.insert(c, m1.get(&c).unwrap_or(&0) + 1);
-        }
-        let cs: Vec<char> = s2.chars().collect();
-        // 初始化窗口
-        let mut i = 0;
-        while i < s1.len() {
-            m2.insert(cs[i], m2.get(&cs[i]).unwrap_or(&0) + 1);
-            i += 1;
-        }
-        if Self::is_match(&m1, &m2) {
-            return true;
-        }
-        // 持续滑动窗口，直到匹配或超出边界
-        let mut j = 0;
-        while i < cs.len() {
-            m2.insert(cs[j], m2.get(&cs[j]).unwrap_or(&1) - 1);
-            m2.insert(cs[i], m2.get(&cs[i]).unwrap_or(&0) + 1);
-            j += 1;
-            i += 1;
-            if Self::is_match(&m1, &m2) {
-                return true;
-            }
-        }
-        false
-    }
-}
-```
-
-### **Go**
+<!-- tabs:start -->
 
 ```go
 func checkInclusion(s1 string, s2 string) bool {
@@ -469,10 +458,6 @@ func checkInclusion(s1 string, s2 string) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

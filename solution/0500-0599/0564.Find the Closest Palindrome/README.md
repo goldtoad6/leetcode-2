@@ -40,20 +40,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
--   用原数的前半部分替换后半部分得到的回文整数。
--   用原数的前半部分加一后的结果替换后半部分得到的回文整数。
--   用原数的前半部分减一后的结果替换后半部分得到的回文整数。
--   为防止位数变化导致构造的回文整数错误，因此直接构造 999999…999 和 100…001 作为备选答案。
-
-求以上数字中，最接近原数且不等于原数的最小数字。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -80,10 +69,6 @@ class Solution:
                 ans = t
         return str(ans)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -117,8 +102,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -134,8 +117,8 @@ public:
     unordered_set<long> get(string& n) {
         int l = n.size();
         unordered_set<long> res;
-        res.insert((long)pow(10, l - 1) - 1);
-        res.insert((long)pow(10, l) + 1);
+        res.insert((long) pow(10, l - 1) - 1);
+        res.insert((long) pow(10, l) + 1);
         long left = stol(n.substr(0, (l + 1) / 2));
         for (long i = left - 1; i <= left + 1; ++i) {
             string prefix = to_string(i);
@@ -147,8 +130,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func nearestPalindromic(n string) string {
@@ -185,10 +166,6 @@ func abs(x int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

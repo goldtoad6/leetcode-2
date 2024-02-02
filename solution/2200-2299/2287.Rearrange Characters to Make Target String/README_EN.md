@@ -53,9 +53,9 @@ We can make at most one copy of &quot;aaaaa&quot;, so we return 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
         cnt2 = Counter(target)
         return min(cnt1[c] // v for c, v in cnt2.items())
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +86,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -114,8 +110,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func rearrangeCharacters(s string, target string) int {
 	var cnt1, cnt2 [26]int
@@ -133,16 +127,7 @@ func rearrangeCharacters(s string, target string) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function rearrangeCharacters(s: string, target: string): number {
@@ -164,8 +149,6 @@ function rearrangeCharacters(s: string, target: string): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -189,12 +172,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int rearrangeCharacters(char *s, char *target) {
+int rearrangeCharacters(char* s, char* target) {
     int count1[26] = {0};
     int count2[26] = {0};
     for (int i = 0; s[i]; i++) {
@@ -213,10 +194,6 @@ int rearrangeCharacters(char *s, char *target) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

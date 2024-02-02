@@ -53,21 +53,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：双指针
 
-**方法一：双指针**
+我们先用哈希表或数组 $cnt$ 统计字符串 $text$ 中每个字符出现的次数。
 
-我们先统计每个字符出现的次数，记录在数组 `cnt` 中。
+接下来，我们定义一个指针 $i$，初始时 $i = 0$。每一次，我们将指针 $j$ 指向 $i$，并不断地向右移动 $j$，直到 $j$ 指向的字符与 $i$ 指向的字符不同，此时我们得到了一个长度为 $l = j - i$ 的子串 $text[i..j-1]$，其中所有字符都相同。
 
-然后我们使用双指针 $i$ 和 $j$，初始时 $i = j = 0$，然后我们不断地向右移动 $j$，直到 $j$ 指向的字符与 $i$ 指向的字符不同，此时我们得到了一个长度为 $l = j - i$ 的子串，其中所有字符都相同。然后我们跳过第 $j$ 个字符，用指针 $k$ 继续向右移动，直到 $k$ 指向的字符与 $i$ 指向的字符不同，此时我们得到了一个长度为 $r = k - j - 1$ 的子串，其中所有字符都相同。此时我们可以得到的最长子串长度为 $min(l + r + 1, cnt[text[i]])$，其中 $cnt[text[i]]$ 表示字符 $text[i]$ 出现的次数。我们将这个值与当前的最大值进行比较，取较大值作为答案。
+然后我们跳过指针 $j$ 指向的字符，用指针 $k$ 继续向右移动，直到 $k$ 指向的字符与 $i$ 指向的字符不同，此时我们得到了一个长度为 $r = k - j - 1$ 的子串 $text[j+1..k-1]$，其中所有字符都相同。那么我们最多通过一次交换操作，可以得到的最长单字符重复子串的长度为 $\min(l + r + 1, cnt[text[i]])$。接下来，我们将指针 $i$ 移动到 $j$，继续寻找下一个子串。我们取所有满足条件的子串的最大长度即可。
 
-时间复杂度为 $O(n)$，空间复杂度 $O(C)$。其中 $n$ 为字符串的长度，而 $C$ 为字符集的大小。本题中 $C = 26$。
+时间复杂度为 $O(n)$，空间复杂度 $O(C)$。其中 $n$ 为字符串的长度；而 $C$ 为字符集的大小，本题中 $C = 26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -88,10 +84,6 @@ class Solution:
             i = j
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -120,8 +112,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -152,8 +142,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxRepOpt1(text string) (ans int) {
 	cnt := [26]int{}
@@ -176,26 +164,36 @@ func maxRepOpt1(text string) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **...**
-
-```
-
+```ts
+function maxRepOpt1(text: string): number {
+    const idx = (c: string) => c.charCodeAt(0) - 'a'.charCodeAt(0);
+    const cnt: number[] = new Array(26).fill(0);
+    for (const c of text) {
+        cnt[idx(c)]++;
+    }
+    let ans = 0;
+    let i = 0;
+    const n = text.length;
+    while (i < n) {
+        let j = i;
+        while (j < n && text[j] === text[i]) {
+            ++j;
+        }
+        const l = j - i;
+        let k = j + 1;
+        while (k < n && text[k] === text[i]) {
+            ++k;
+        }
+        const r = k - j - 1;
+        ans = Math.max(ans, Math.min(cnt[idx(text[i])], l + r + 1));
+        i = j;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

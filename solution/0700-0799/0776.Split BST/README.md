@@ -41,9 +41,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归**
+### 方法一：递归
 
 判断 `root` 节点的情况：
 
@@ -55,10 +53,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 # Definition for a binary tree node.
 # class TreeNode:
@@ -67,7 +61,9 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def splitBST(self, root: Optional[TreeNode], target: int) -> List[Optional[TreeNode]]:
+    def splitBST(
+        self, root: Optional[TreeNode], target: int
+    ) -> List[Optional[TreeNode]]:
         def dfs(root):
             if root is None:
                 return [None, None]
@@ -82,10 +78,6 @@ class Solution:
 
         return dfs(root)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -130,8 +122,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -170,8 +160,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -198,8 +186,6 @@ func splitBST(root *TreeNode, target int) []*TreeNode {
 	}
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -233,10 +219,6 @@ var splitBST = function (root, target) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

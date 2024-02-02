@@ -55,9 +55,9 @@ No more pairs can be formed. A total of 1 pair has been formed, and there are 0 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +66,6 @@ class Solution:
         s = sum(v // 2 for v in cnt.values())
         return [s, len(nums) - s * 2]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +82,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -104,8 +100,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfPairs(nums []int) []int {
 	cnt := [101]int{}
@@ -120,8 +114,6 @@ func numberOfPairs(nums []int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function numberOfPairs(nums: number[]): number[] {
     const n = nums.length;
@@ -133,8 +125,6 @@ function numberOfPairs(nums: number[]): number[] {
     return [sum, n - sum * 2];
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -153,31 +143,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int *numberOfPairs(int *nums, int numsSize, int *returnSize) {
-    int count[101] = {0};
-    for (int i = 0; i < numsSize; i++) {
-        count[nums[i]]++;
-    }
-    int sum = 0;
-    for (int i = 0; i < 101; i++) {
-        sum += count[i] >> 1;
-    }
-    int *ans = malloc(sizeof(int) * 2);
-    ans[0] = sum;
-    ans[1] = numsSize - sum * 2;
-    *returnSize = 2;
-    return ans;
-}
-```
-
-### **JavaScript**
-
 ```js
 /**
  * @param {number[]} nums
@@ -192,8 +157,6 @@ var numberOfPairs = function (nums) {
     return [s, nums.length - s * 2];
 };
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -211,10 +174,27 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* numberOfPairs(int* nums, int numsSize, int* returnSize) {
+    int count[101] = {0};
+    for (int i = 0; i < numsSize; i++) {
+        count[nums[i]]++;
+    }
+    int sum = 0;
+    for (int i = 0; i < 101; i++) {
+        sum += count[i] >> 1;
+    }
+    int* ans = malloc(sizeof(int) * 2);
+    ans[0] = sum;
+    ans[1] = numsSize - sum * 2;
+    *returnSize = 2;
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

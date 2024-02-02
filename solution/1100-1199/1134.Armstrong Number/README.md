@@ -39,9 +39,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们可以先计算出数字的位数 $k$，然后计算每一位上的数字的 $k$ 次幂的总和 $s$，最后判断 $s$ 是否等于 $n$ 即可。
 
@@ -49,24 +47,16 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def isArmstrong(self, n: int) -> bool:
         k = len(str(n))
         s, x = 0, n
         while x:
-            s += (x % 10)**k
+            s += (x % 10) ** k
             x //= 10
         return s == n
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -80,8 +70,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -97,8 +85,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isArmstrong(n int) bool {
 	k := 0
@@ -113,7 +99,16 @@ func isArmstrong(n int) bool {
 }
 ```
 
-### **JavaScript**
+```ts
+function isArmstrong(n: number): boolean {
+    const k = String(n).length;
+    let s = 0;
+    for (let x = n; x; x = Math.floor(x / 10)) {
+        s += Math.pow(x % 10, k);
+    }
+    return s == n;
+}
+```
 
 ```js
 /**
@@ -130,23 +125,6 @@ var isArmstrong = function (n) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function isArmstrong(n: number): boolean {
-    const k = String(n).length;
-    let s = 0;
-    for (let x = n; x; x = Math.floor(x / 10)) {
-        s += Math.pow(x % 10, k);
-    }
-    return s == n;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

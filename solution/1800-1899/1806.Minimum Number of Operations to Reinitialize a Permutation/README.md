@@ -58,9 +58,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：找规律 + 模拟**
+### 方法一：找规律 + 模拟
 
 我们观察数字的变化规律，发现：
 
@@ -77,10 +75,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def reinitializePermutation(self, n: int) -> int:
@@ -94,10 +88,6 @@ class Solution:
             if i == 1:
                 return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -118,14 +108,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int reinitializePermutation(int n) {
         int ans = 0;
-        for (int i = 1; ; ) {
+        for (int i = 1;;) {
             ++ans;
             if (i < (n >> 1)) {
                 i <<= 1;
@@ -139,8 +127,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func reinitializePermutation(n int) (ans int) {
@@ -158,10 +144,6 @@ func reinitializePermutation(n int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

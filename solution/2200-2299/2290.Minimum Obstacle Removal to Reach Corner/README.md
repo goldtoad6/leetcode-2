@@ -56,9 +56,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双端队列 BFS**
+### 方法一：双端队列 BFS
 
 本题实际上也是最短路模型，只不过求解的是移除障碍物的最小数目。
 
@@ -68,13 +66,11 @@
 
 时间复杂度 $O(m \times n)$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别是网格的行数和列数。
 
-相似题目：[1368. 使网格图至少有一条有效路径的最小代价](/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/README.md)
+相似题目：
+
+-   [1368. 使网格图至少有一条有效路径的最小代价](https://github.com/doocs/leetcode/blob/main/solution/1300-1399/1368.Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -98,10 +94,6 @@ class Solution:
                     else:
                         q.append((x, y, k + 1))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -136,8 +128,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -171,8 +161,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minimumObstacles(grid [][]int) int {
@@ -211,8 +199,6 @@ func minimumObstacles(grid [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minimumObstacles(grid: number[][]): number {
     const m = grid.length,
@@ -241,10 +227,6 @@ function minimumObstacles(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

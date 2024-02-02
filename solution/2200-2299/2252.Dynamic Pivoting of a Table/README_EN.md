@@ -14,7 +14,7 @@
 | store       | varchar |
 | price       | int     |
 +-------------+---------+
-(product_id, store) is the primary key for this table.
+(product_id, store) is the primary key (combination of columns with unique values) for this table.
 Each row of this table indicates the price of product_id in store.
 There will be at most 30 different stores in the table.
 price is the price of the product at this store.
@@ -30,7 +30,7 @@ price is the price of the product at this store.
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -65,12 +65,30 @@ For product 3, the price is 1000 in Shop and 1900 in Souq. It is not sold in the
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+CREATE PROCEDURE PivotProducts()
+BEGIN
+	# Write your MySQL query statement below.
+	SET group_concat_max_len = 5000;
+    SELECT GROUP_CONCAT(DISTINCT 'MAX(CASE WHEN store = \'',
+               store,
+               '\' THEN price ELSE NULL END) AS ',
+               store
+               ORDER BY store) INTO @sql
+    FROM Products;
+    SET @sql =  CONCAT('SELECT product_id, ',
+                    @sql,
+                    ' FROM Products GROUP BY product_id');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -13,7 +13,7 @@
 | customer_id   | int     |
 | name          | varchar |
 +---------------+---------+
-customer_id is the primary key for this table.
+customer_id is the column with unique values for this table.
 This table contains information about the customers.
 </pre>
 
@@ -30,7 +30,7 @@ This table contains information about the customers.
 | customer_id   | int     |
 | product_id    | int     |
 +---------------+---------+
-order_id is the primary key for this table.
+order_id is the column with unique values for this table.
 This table contains information about the orders made by customer_id.
 No customer will order the same product <strong>more than once</strong> in a single day.</pre>
 
@@ -46,19 +46,19 @@ No customer will order the same product <strong>more than once</strong> in a sin
 | product_name  | varchar |
 | price         | int     |
 +---------------+---------+
-product_id is the primary key for this table.
+product_id is the column with unique values for this table.
 This table contains information about the products.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the most frequently ordered product(s) for each customer.</p>
+<p>Write a solution to find the most frequently ordered product(s) for each customer.</p>
 
 <p>The result table should have the <code>product_id</code> and <code>product_name</code> for each <code>customer_id</code> who ordered at least one order.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -120,24 +120,33 @@ John (customer 5) did not order anything, so we do not include them in the resul
 
 ## Solutions
 
+### Solution 1: Group By + Window Function
+
+We group the `Orders` table by `customer_id` and `product_id`, and then use the window function `rank()`, which assigns a rank to each `product_id` in each `customer_id` group based on its frequency in descending order. Finally, we select the `product_id` with a rank of $1$ for each `customer_id`, which is the most frequently ordered product for that `customer_id`.
+
 <!-- tabs:start -->
 
-### **Python3**
-
-```python
-
-```
-
-### **Java**
-
-```java
-
-```
-
-### **...**
-
-```
-
+```sql
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            customer_id,
+            product_id,
+            RANK() OVER (
+                PARTITION BY customer_id
+                ORDER BY COUNT(1) DESC
+            ) AS rk
+        FROM Orders
+        GROUP BY 1, 2
+    )
+SELECT customer_id, product_id, product_name
+FROM
+    T
+    JOIN Products USING (product_id)
+WHERE rk = 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

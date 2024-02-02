@@ -35,16 +35,14 @@
 <ul>
 	<li><code>1 &lt;= words.length &lt;= 10<sup>4</sup></code></li>
 	<li><code>1 &lt;= words[i].length &lt;= 30</code></li>
-	<li><code>words[i]</code>&nbsp;仅由小写英文字母组成。</li>
-	<li>&nbsp;<code>words</code>&nbsp;中的所有字符串都是 <strong>唯一</strong> 的。</li>
+	<li><code>words[i]</code>&nbsp;仅由小写英文字母组成。&nbsp;</li>
+	<li><code>words</code>&nbsp;中的所有字符串都是 <strong>唯一</strong> 的。</li>
 	<li><code>1 &lt;= sum(words[i].length) &lt;= 10<sup>5</sup></code></li>
 </ul>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀树 + DFS**
+### 方法一：前缀树 + DFS
 
 判断一个单词是不是连接词，需要判断这个单词是否完全由至少两个给定数组中的更短的非空单词（可以重复）组成。判断更短的单词是否在给定数组中，可以使用字典树实现。
 
@@ -62,10 +60,6 @@
 说明：由于一个连接词由多个更短的非空单词组成，如果存在一个较长的连接词的组成部分之一是一个较短的连接词，则一定可以将这个较短的连接词换成多个更短的非空单词，因此**不需要将连接词加入字典树**。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Trie:
@@ -108,10 +102,6 @@ class Solution:
                 trie.insert(w)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Trie {
@@ -167,8 +157,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Trie {
 public:
@@ -176,7 +164,7 @@ public:
     bool isEnd;
     Trie()
         : children(26)
-        , isEnd(false) { }
+        , isEnd(false) {}
 
     void insert(string w) {
         Trie* node = this;
@@ -220,8 +208,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type Trie struct {
@@ -276,10 +262,6 @@ func findAllConcatenatedWordsInADict(words []string) (ans []string) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

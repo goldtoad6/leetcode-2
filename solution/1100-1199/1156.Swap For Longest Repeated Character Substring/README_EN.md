@@ -43,9 +43,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+First, we use a hash table or array $cnt$ to count the occurrence of each character in the string $text$.
+
+Next, we define a pointer $i$, initially $i = 0$. Each time, we set the pointer $j$ to $i$, and continuously move $j$ to the right until the character pointed by $j$ is different from the character pointed by $i$. At this time, we get a substring $text[i..j-1]$ of length $l = j - i$, where all characters are the same.
+
+Then we skip the character pointed by the pointer $j$, and continue to move the pointer $k$ to the right until the character pointed by $k$ is different from the character pointed by $i$. At this time, we get a substring $text[j+1..k-1]$ of length $r = k - j - 1$, where all characters are the same. So the longest single-character repeated substring we can get by at most one swap operation is $\min(l + r + 1, cnt[text[i]])$. Next, we move the pointer $i$ to $j$ and continue to find the next substring. We take the maximum length of all substrings that meet the conditions.
+
+The time complexity is $O(n)$, and the space complexity is $O(C)$. Here, $n$ is the length of the string, and $C$ is the size of the character set. In this problem, $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +74,6 @@ class Solution:
             i = j
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -96,8 +102,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -128,8 +132,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxRepOpt1(text string) (ans int) {
 	cnt := [26]int{}
@@ -152,26 +154,36 @@ func maxRepOpt1(text string) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **...**
-
-```
-
+```ts
+function maxRepOpt1(text: string): number {
+    const idx = (c: string) => c.charCodeAt(0) - 'a'.charCodeAt(0);
+    const cnt: number[] = new Array(26).fill(0);
+    for (const c of text) {
+        cnt[idx(c)]++;
+    }
+    let ans = 0;
+    let i = 0;
+    const n = text.length;
+    while (i < n) {
+        let j = i;
+        while (j < n && text[j] === text[i]) {
+            ++j;
+        }
+        const l = j - i;
+        let k = j + 1;
+        while (k < n && text[k] === text[i]) {
+            ++k;
+        }
+        const r = k - j - 1;
+        ans = Math.max(ans, Math.min(cnt[idx(text[i])], l + r + 1));
+        i = j;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数 + 枚举**
+### 方法一：计数 + 枚举
 
 我们先统计字符串 $a$ 和 $b$ 中每个字母出现的次数，记为 $cnt_1$ 和 $cnt_2$。
 
@@ -64,10 +62,6 @@
 时间复杂度 $O(m + n + C^2)$，其中 $m$ 和 $n$ 分别为字符串 $a$ 和 $b$ 的长度，而 $C$ 为字符集大小。本题中 $C = 26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -92,10 +86,6 @@ class Solution:
         f(cnt2, cnt1)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -135,8 +125,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -162,8 +150,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minCharacters(a string, b string) int {
@@ -196,16 +182,7 @@ func minCharacters(a string, b string) int {
 	f(cnt2, cnt1)
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minCharacters(a: string, b: string): number {
@@ -229,12 +206,7 @@ function minCharacters(a: string, b: string): number {
         pre1 += count1[i];
         pre2 += count2[i];
         // case1， case2， case3
-        ans = Math.min(
-            ans,
-            m - pre1 + pre2,
-            pre1 + n - pre2,
-            m + n - count1[i] - count2[i],
-        );
+        ans = Math.min(ans, m - pre1 + pre2, pre1 + n - pre2, m + n - count1[i] - count2[i]);
     }
     ans = Math.min(ans, m + n - count1[25] - count2[25]);
 
@@ -242,10 +214,6 @@ function minCharacters(a: string, b: string): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -56,15 +56,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-不失一般性，可以设 `x >= y`。因此，可以先删除所有 "ab"，再删除所有 "ba"，获取最终得分 ans。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -94,10 +88,6 @@ class Solution:
                     stk2.append(c)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -137,8 +127,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -180,8 +168,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumGain(s string, x int, y int) int {
 	if x < y {
@@ -222,10 +208,6 @@ func maximumGain(s string, x int, y int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

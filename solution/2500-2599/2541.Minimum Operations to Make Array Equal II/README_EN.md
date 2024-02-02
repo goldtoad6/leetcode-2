@@ -45,9 +45,17 @@ One can prove that it is impossible to make arrays equal in fewer operations.</p
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Single Pass
 
-### **Python3**
+We use a variable $x$ to record the difference in the number of additions and subtractions, and a variable $ans$ to record the number of operations.
+
+We traverse the array, and for each position $i$, if $k=0$ and $a_i \neq b_i$, then it is impossible to make the two arrays equal, so we return $-1$. Otherwise, if $k \neq 0$, then $a_i - b_i$ must be a multiple of $k$, otherwise it is impossible to make the two arrays equal, so we return $-1$. Next, we update $x$ and $ans$.
+
+Finally, if $x \neq 0$, then it is impossible to make the two arrays equal, so we return $-1$. Otherwise, we return $\frac{ans}{2}$.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$, where $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,8 +73,6 @@ class Solution:
             x += y
         return -1 if x else ans // 2
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,8 +98,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -118,8 +122,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minOperations(nums1 []int, nums2 []int, k int) int64 {
@@ -153,8 +155,6 @@ func abs(x int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function minOperations(nums1: number[], nums2: number[], k: number): number {
     const n = nums1.length;
@@ -178,15 +178,18 @@ function minOperations(nums1: number[], nums2: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_operations(nums1: Vec<i32>, nums2: Vec<i32>, k: i32) -> i64 {
         let k = k as i64;
         let n = nums1.len();
         if k == 0 {
-            return if nums1.iter().enumerate().all(|(i, &v)| v == nums2[i]) {
+            return if
+                nums1
+                    .iter()
+                    .enumerate()
+                    .all(|(i, &v)| v == nums2[i])
+            {
                 0
             } else {
                 -1
@@ -210,10 +213,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-long long minOperations(int *nums1, int nums1Size, int *nums2, int nums2Size, int k) {
+long long minOperations(int* nums1, int nums1Size, int* nums2, int nums2Size, int k) {
     if (k == 0) {
         for (int i = 0; i < nums1Size; i++) {
             if (nums1[i] != nums2[i]) {
@@ -239,10 +240,6 @@ long long minOperations(int *nums1, int nums1Size, int *nums2, int nums2Size, in
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

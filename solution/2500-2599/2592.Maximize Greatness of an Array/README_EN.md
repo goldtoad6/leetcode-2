@@ -38,9 +38,17 @@ At indices = 0, 1, and 2, perm[i] &gt; nums[i]. Hence, we return 3.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy
 
-### **Python3**
+We can sort the array $nums$ first.
+
+Then we define a pointer $i$ pointing to the first element of the array $nums$. We traverse the array $nums$, and for each element $x$ we encounter, if $x$ is greater than $nums[i]$, then we move the pointer $i$ to the right.
+
+Finally, we return the value of the pointer $i$.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$, where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,8 +59,6 @@ class Solution:
             i += x > nums[i]
         return i
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -69,8 +75,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -85,8 +89,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximizeGreatness(nums []int) int {
 	sort.Ints(nums)
@@ -99,8 +101,6 @@ func maximizeGreatness(nums []int) int {
 	return i
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function maximizeGreatness(nums: number[]): number {
@@ -115,10 +115,6 @@ function maximizeGreatness(nums: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -56,27 +56,39 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
-
+class Solution:
+    def validIPAddress(self, IP: str) -> str:
+        if "." in IP:
+            segments = IP.split(".")
+            if len(segments) != 4:
+                return "Neither"
+            for segment in segments:
+                if (
+                    not segment.isdigit()
+                    or not 0 <= int(segment) <= 255
+                    or (segment[0] == "0" and len(segment) > 1)
+                ):
+                    return "Neither"
+            return "IPv4"
+        elif ":" in IP:
+            segments = IP.split(":")
+            if len(segments) != 8:
+                return "Neither"
+            for segment in segments:
+                if (
+                    not segment
+                    or len(segment) > 4
+                    or not all(c in string.hexdigits for c in segment)
+                ):
+                    return "Neither"
+            return "IPv6"
+        return "Neither"
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-
-```
-
-### **TypeScript**
 
 ```ts
 function validIPAddress(queryIP: string): string {
@@ -103,11 +115,7 @@ function validIPAddress(queryIP: string): string {
                 return false;
             }
             for (const c of s) {
-                if (
-                    (c >= '0' && c <= '9') ||
-                    (c >= 'a' && c <= 'f') ||
-                    (c >= 'A' && c <= 'F')
-                ) {
+                if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')) {
                     continue;
                 }
                 return false;
@@ -125,8 +133,6 @@ function validIPAddress(queryIP: string): string {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     fn is_IPv4(s: &String) -> bool {
@@ -136,7 +142,9 @@ impl Solution {
         }
         for s in ss {
             match s.parse::<i32>() {
-                Err(_) => return false,
+                Err(_) => {
+                    return false;
+                }
                 Ok(num) => {
                     if num < 0 || num > 255 || num.to_string() != s.to_string() {
                         return false;
@@ -146,7 +154,6 @@ impl Solution {
         }
         true
     }
-
 
     fn is_IPv6(s: &String) -> bool {
         let ss = s.split(':').collect::<Vec<&str>>();
@@ -158,7 +165,11 @@ impl Solution {
                 return false;
             }
             for &c in s.as_bytes() {
-                if c >= b'0' && c <= b'9' || c >= b'a' && c <= b'f' || c >= b'A' && c <= b'F' {
+                if
+                    (c >= b'0' && c <= b'9') ||
+                    (c >= b'a' && c <= b'f') ||
+                    (c >= b'A' && c <= b'F')
+                {
                     continue;
                 }
                 return false;
@@ -166,7 +177,6 @@ impl Solution {
         }
         true
     }
-
 
     pub fn valid_ip_address(query_ip: String) -> String {
         if Self::is_IPv4(&query_ip) {
@@ -180,10 +190,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

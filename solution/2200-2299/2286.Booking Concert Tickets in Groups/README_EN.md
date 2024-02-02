@@ -61,9 +61,9 @@ bms.scatter(5, 1); // return False
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Node:
@@ -128,7 +128,6 @@ class SegmentTree:
 
 
 class BookMyShow:
-
     def __init__(self, n: int, m: int):
         self.n = n
         self.tree = SegmentTree(n, m)
@@ -162,8 +161,6 @@ class BookMyShow:
 # param_1 = obj.gather(k,maxRow)
 # param_2 = obj.scatter(k,maxRow)
 ```
-
-### **Java**
 
 ```java
 class Node {
@@ -299,8 +296,6 @@ class BookMyShow {
  * boolean param_2 = obj.scatter(k,maxRow);
  */
 ```
-
-### **C++**
 
 ```cpp
 class Node {
@@ -440,8 +435,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type BookMyShow struct {
 	n, m int
@@ -563,13 +556,6 @@ func (t *segmentTree) pushup(u int) {
 	t.tr[u].mx = max(t.tr[u<<1].mx, t.tr[u<<1|1].mx)
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your BookMyShow object will be instantiated and called as such:
  * obj := Constructor(n, m);
@@ -578,16 +564,6 @@ func max(a, b int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

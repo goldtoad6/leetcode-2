@@ -51,9 +51,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：记忆化搜索**
+### 方法一：记忆化搜索
 
 在这道题中，由于每次操作都是 $25$ 的倍数，因此，我们可以将每 $25ml$ 的汤视为一份。这样就能将数据规模缩小到 $\left \lceil \frac{n}{25} \right \rceil$。
 
@@ -82,15 +80,11 @@ $$
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def soupServings(self, n: int) -> float:
         @cache
-        def dfs(i, j):
+        def dfs(i: int, j: int) -> float:
             if i <= 0 and j <= 0:
                 return 0.5
             if i <= 0:
@@ -106,10 +100,6 @@ class Solution:
 
         return 1 if n > 4800 else dfs((n + 24) // 25, (n + 24) // 25)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -140,8 +130,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -160,8 +148,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func soupServings(n int) float64 {
@@ -191,10 +177,30 @@ func soupServings(n int) float64 {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function soupServings(n: number): number {
+    const f = new Array(200).fill(0).map(() => new Array(200).fill(-1));
+    const dfs = (i: number, j: number): number => {
+        if (i <= 0 && j <= 0) {
+            return 0.5;
+        }
+        if (i <= 0) {
+            return 1;
+        }
+        if (j <= 0) {
+            return 0;
+        }
+        if (f[i][j] !== -1) {
+            return f[i][j];
+        }
+        f[i][j] =
+            0.25 * (dfs(i - 4, j) + dfs(i - 3, j - 1) + dfs(i - 2, j - 2) + dfs(i - 1, j - 3));
+        return f[i][j];
+    };
+    return n >= 4800 ? 1 : dfs(Math.ceil(n / 25), Math.ceil(n / 25));
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

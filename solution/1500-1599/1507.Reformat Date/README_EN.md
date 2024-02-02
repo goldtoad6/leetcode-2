@@ -51,9 +51,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +66,6 @@ class Solution:
         return "-".join(s)
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public String reformatDate(String date) {
@@ -79,8 +77,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -97,8 +93,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func reformatDate(date string) string {
 	s := strings.Split(date, " ")
@@ -110,10 +104,49 @@ func reformatDate(date string) string {
 }
 ```
 
-### **...**
-
+```ts
+function reformatDate(date: string): string {
+    const s = date.split(' ');
+    const months = ' JanFebMarAprMayJunJulAugSepOctNovDec';
+    const day = parseInt(s[0].substring(0, s[0].length - 2));
+    const month = Math.floor(months.indexOf(s[1]) / 3) + 1;
+    return `${s[2]}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+}
 ```
 
+```php
+class Solution {
+    /**
+     * @param String $date
+     * @return String
+     */
+    function reformatDate($date) {
+        $arr = explode(' ', $date);
+        $months = [
+            'Jan' => '01',
+            'Feb' => '02',
+            'Mar' => '03',
+            'Apr' => '04',
+            'May' => '05',
+            'Jun' => '06',
+            'Jul' => '07',
+            'Aug' => '08',
+            'Sep' => '09',
+            'Oct' => '10',
+            'Nov' => '11',
+            'Dec' => '12',
+        ];
+        $year = $arr[2];
+        $month = $months[$arr[1]];
+        $day = intval($arr[0]);
+        if ($day > 0 && $day < 10) {
+            $day = '0' . $day;
+        }
+        return $year . '-' . $month . '-' . $day;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

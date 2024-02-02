@@ -8,22 +8,24 @@
 
 <p>给你&nbsp;<code>n</code>&nbsp;笔订单，每笔订单都需要快递服务。</p>
 
-<p>请你统计所有有效的 收件/配送 序列的数目，确保第 <code>i</code> 个物品的配送服务&nbsp;<code>delivery(i)</code> 总是在其收件服务&nbsp;<code>pickup(i)</code> 之后。</p>
+<p>计算所有有效的 取货 / 交付 可能的顺序，使 delivery(i) 总是在 pickup(i) 之后。</p>
 
-<p>由于答案可能很大，请返回答案对 <code>10^9 + 7</code> 取余的结果。</p>
+<p>由于答案可能很大，请返回答案对 10^9 + 7 取余的结果。</p>
 
 <p>&nbsp;</p>
 
 <p><strong>示例 1：</strong></p>
 
-<pre><strong>输入：</strong>n = 1
+<pre>
+<strong>输入：</strong>n = 1
 <strong>输出：</strong>1
 <strong>解释：</strong>只有一种序列 (P1, D1)，物品 1 的配送服务（D1）在物品 1 的收件服务（P1）后。
 </pre>
 
 <p><strong>示例 2：</strong></p>
 
-<pre><strong>输入：</strong>n = 2
+<pre>
+<strong>输入：</strong>n = 2
 <strong>输出：</strong>6
 <strong>解释：</strong>所有可能的序列包括：
 (P1,P2,D1,D2)，(P1,P2,D2,D1)，(P1,D1,P2,D2)，(P2,P1,D1,D2)，(P2,P1,D2,D1) 和 (P2,D2,P1,D1)。
@@ -32,7 +34,8 @@
 
 <p><strong>示例 3：</strong></p>
 
-<pre><strong>输入：</strong>n = 3
+<pre>
+<strong>输入：</strong>n = 3
 <strong>输出：</strong>90
 </pre>
 
@@ -46,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们定义 $f[i]$ 表示 $i$ 个订单的所有有效的收件/配送序列的数目。初始时 $f[1] = 1$。
 
@@ -62,13 +63,9 @@ $$
 
 我们注意到 $f[i]$ 的值只与 $f[i - 1]$ 有关，所以可以用一个变量代替数组，降低空间复杂度。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为订单数目。
+时间复杂度 $O(n)$，其中 $n$ 为订单数目。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -79,10 +76,6 @@ class Solution:
             f = (f * i * (2 * i - 1)) % mod
         return f
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -96,8 +89,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countOrders(n int) int {
 	const mod = 1e9 + 7
@@ -126,10 +115,21 @@ func countOrders(n int) int {
 }
 ```
 
-### **...**
+```rust
+const MOD: i64 = (1e9 as i64) + 7;
 
-```
-
+impl Solution {
+    #[allow(dead_code)]
+    pub fn count_orders(n: i32) -> i32 {
+        let mut f = 1;
+        for i in 2..=n as i64 {
+            f = (i * (2 * i - 1) * f) % MOD;
+        }
+        f as i32
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

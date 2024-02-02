@@ -53,19 +53,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：两次 DFS
 
-**方法一：DFS**
+我们可以用两次 DFS 来解决这个问题。
 
-先通过 $sum$ 函数求得二叉树所有节点值的和，记为 $s$。然后 $DFS$ 求得以每个节点（除了根节点）作为子树根节点的所有节点值之和，记为 $t$，求得 $t \times (s - t)$ 的最大值，就是答案。注意取模操作。
+第一次，我们用一个 $sum(root)$ 函数递归求出整棵树所有节点的和，记为 $s$。
+
+第二次，我们用一个 $dfs(root)$ 函数递归遍历每个节点，求出以当前节点为根的子树的节点和 $t$，那么当前节点与其父节点分裂后两棵子树的节点和分别为 $t$ 和 $s - t$，它们的乘积为 $t \times (s - t)$，我们遍历所有节点，求出乘积的最大值，即为答案。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -76,30 +74,26 @@
 #         self.right = right
 class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
-        def sum(root):
+        def sum(root: Optional[TreeNode]) -> int:
             if root is None:
                 return 0
             return root.val + sum(root.left) + sum(root.right)
 
-        def dfs(root):
-            nonlocal s, ans
+        def dfs(root: Optional[TreeNode]) -> int:
             if root is None:
                 return 0
             t = root.val + dfs(root.left) + dfs(root.right)
+            nonlocal ans, s
             if t < s:
                 ans = max(ans, t * (s - t))
             return t
 
+        mod = 10**9 + 7
         s = sum(root)
         ans = 0
         dfs(root)
-        ans %= (10**9 + 7)
-        return ans
+        return ans % mod
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -120,20 +114,12 @@ class Solution:
 class Solution {
     private long ans;
     private long s;
-    private static final int MOD = (int) 1e9 + 7;
 
     public int maxProduct(TreeNode root) {
+        final int mod = (int) 1e9 + 7;
         s = sum(root);
         dfs(root);
-        ans %= MOD;
-        return (int) ans;
-    }
-
-    private long sum(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        return root.val + sum(root.left) + sum(root.right);
+        return (int) (ans % mod);
     }
 
     private long dfs(TreeNode root) {
@@ -146,10 +132,15 @@ class Solution {
         }
         return t;
     }
+
+    private long sum(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return root.val + sum(root.left) + sum(root.right);
+    }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -163,38 +154,38 @@ class Solution {
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-using ll = long long;
-const int MOD = 1e9 + 7;
-
 class Solution {
 public:
-    ll ans;
-    ll s;
-
     int maxProduct(TreeNode* root) {
-        s = sum(root);
+        using ll = long long;
+        ll ans = 0;
+        const int mod = 1e9 + 7;
+
+        function<ll(TreeNode*)> sum = [&](TreeNode* root) -> ll {
+            if (!root) {
+                return 0;
+            }
+            return root->val + sum(root->left) + sum(root->right);
+        };
+
+        ll s = sum(root);
+
+        function<ll(TreeNode*)> dfs = [&](TreeNode* root) -> ll {
+            if (!root) {
+                return 0;
+            }
+            ll t = root->val + dfs(root->left) + dfs(root->right);
+            if (t < s) {
+                ans = max(ans, t * (s - t));
+            }
+            return t;
+        };
+
         dfs(root);
-        ans %= MOD;
-        return (int) ans;
-    }
-
-    ll sum(TreeNode* root) {
-        if (!root) return 0;
-        return root->val + sum(root->left) + sum(root->right);
-    }
-
-    ll dfs(TreeNode* root) {
-        if (!root) return 0;
-        ll t = root->val + dfs(root->left) + dfs(root->right);
-        if (t < s) {
-            ans = max(ans, t * (s - t));
-        }
-        return t;
+        return ans % mod;
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -205,8 +196,8 @@ public:
  *     Right *TreeNode
  * }
  */
-func maxProduct(root *TreeNode) int {
-	mod := int(1e9) + 7
+func maxProduct(root *TreeNode) (ans int) {
+	const mod = 1e9 + 7
 	var sum func(*TreeNode) int
 	sum = func(root *TreeNode) int {
 		if root == nil {
@@ -215,7 +206,6 @@ func maxProduct(root *TreeNode) int {
 		return root.Val + sum(root.Left) + sum(root.Right)
 	}
 	s := sum(root)
-	ans := 0
 	var dfs func(*TreeNode) int
 	dfs = func(root *TreeNode) int {
 		if root == nil {
@@ -228,21 +218,51 @@ func maxProduct(root *TreeNode) int {
 		return t
 	}
 	dfs(root)
-	return ans % mod
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	ans %= mod
+	return
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
 
-```
-
+function maxProduct(root: TreeNode | null): number {
+    const sum = (root: TreeNode | null): number => {
+        if (!root) {
+            return 0;
+        }
+        return root.val + sum(root.left) + sum(root.right);
+    };
+    const s = sum(root);
+    let ans = 0;
+    const mod = 1e9 + 7;
+    const dfs = (root: TreeNode | null): number => {
+        if (!root) {
+            return 0;
+        }
+        const t = root.val + dfs(root.left) + dfs(root.right);
+        if (t < s) {
+            ans = Math.max(ans, t * (s - t));
+        }
+        return t;
+    };
+    dfs(root);
+    return ans % mod;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

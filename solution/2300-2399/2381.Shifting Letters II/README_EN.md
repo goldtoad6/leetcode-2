@@ -42,9 +42,9 @@ Finally, shift the characters from index 1 to index 1 forward. Now s = &quot;cat
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,10 +58,10 @@ class Solution:
             d[j + 1] -= v
         for i in range(1, n + 1):
             d[i] += d[i - 1]
-        return ''.join(chr(ord('a') + (ord(s[i]) - ord('a') + d[i] + 26) % 26) for i in range(n))
+        return ''.join(
+            chr(ord('a') + (ord(s[i]) - ord('a') + d[i] + 26) % 26) for i in range(n)
+        )
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -87,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -116,8 +114,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func shiftingLetters(s string, shifts [][]int) string {
 	n := len(s)
@@ -141,17 +137,6 @@ func shiftingLetters(s string, shifts [][]int) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

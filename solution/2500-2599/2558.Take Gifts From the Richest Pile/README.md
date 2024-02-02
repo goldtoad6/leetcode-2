@@ -55,21 +55,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：优先队列（大根堆）
 
-**方法一：优先队列（大根堆）**
-
-我们将数组 `gifts` 转存到大根堆中，然后循环 $k$ 次，每次取出堆顶元素，将堆顶元素开根号的结果再放入堆中。
+我们将数组 $gifts$ 转存到大根堆中，然后循环 $k$ 次，每次取出堆顶元素，将堆顶元素开根号的结果再放入堆中。
 
 最后累加堆中所有元素之和作为答案。
 
-时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 是数组 `gifts` 的长度。
+时间复杂度 $O(n + k \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 是数组 $gifts$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -80,10 +74,6 @@ class Solution:
             heapreplace(h, -int(sqrt(-h[0])))
         return -sum(h)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +94,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -120,8 +108,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func pickGifts(gifts []int, k int) (ans int64) {
@@ -140,14 +126,49 @@ func pickGifts(gifts []int, k int) (ans int64) {
 type hp struct{ sort.IntSlice }
 
 func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
-func (hp) Pop() (_ interface{}) { return }
-func (hp) Push(interface{})     {}
+func (hp) Pop() (_ any)         { return }
+func (hp) Push(any)             {}
 ```
 
-### **...**
-
+```ts
+function pickGifts(gifts: number[], k: number): number {
+    const pq = new MaxPriorityQueue();
+    gifts.forEach(v => pq.enqueue(v));
+    while (k--) {
+        let v = pq.dequeue().element;
+        v = Math.floor(Math.sqrt(v));
+        pq.enqueue(v);
+    }
+    let ans = 0;
+    while (!pq.isEmpty()) {
+        ans += pq.dequeue().element;
+    }
+    return ans;
+}
 ```
 
+```rust
+impl Solution {
+    pub fn pick_gifts(gifts: Vec<i32>, k: i32) -> i64 {
+        let mut h = std::collections::BinaryHeap::from(gifts);
+        let mut ans = 0;
+
+        for _ in 0..k {
+            if let Some(mut max_gift) = h.pop() {
+                max_gift = (max_gift as f64).sqrt().floor() as i32;
+                h.push(max_gift);
+            }
+        }
+
+        for x in h {
+            ans += x as i64;
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

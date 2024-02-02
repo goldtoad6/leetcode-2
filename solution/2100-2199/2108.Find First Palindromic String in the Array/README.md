@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 遍历数组 `words`，对于每个字符串 `w`，判断其是否为回文字符串，如果是，则返回 `w`，否则继续遍历。
 
@@ -58,19 +56,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def firstPalindrome(self, words: List[str]) -> str:
         return next((w for w in words if w == w[::-1]), "")
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -90,8 +80,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func firstPalindrome(words []string) string {
 	for _, w := range words {
@@ -131,8 +117,6 @@ func firstPalindrome(words []string) string {
 	return ""
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function firstPalindrome(words: string[]): string {
@@ -154,8 +138,6 @@ function firstPalindrome(words: string[]): string {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn first_palindrome(words: Vec<String>) -> String {
@@ -163,8 +145,8 @@ impl Solution {
             let s = word.as_bytes();
             let mut left = 0;
             let mut right = s.len() - 1;
-            while (left < right) {
-                if (s[left] != s[right]) {
+            while left < right {
+                if s[left] != s[right] {
                     break;
                 }
                 left += 1;
@@ -179,10 +161,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-char *firstPalindrome(char **words, int wordsSize) {
+char* firstPalindrome(char** words, int wordsSize) {
     for (int i = 0; i < wordsSize; i++) {
         int left = 0;
         int right = strlen(words[i]) - 1;
@@ -201,10 +181,6 @@ char *firstPalindrome(char **words, int wordsSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

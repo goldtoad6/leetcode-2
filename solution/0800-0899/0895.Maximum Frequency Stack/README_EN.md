@@ -53,13 +53,12 @@ freqStack.pop();   // return 4, as 4, 5 and 7 is the most frequent, but 4 is clo
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class FreqStack:
-
     def __init__(self):
         self.cnt = defaultdict(int)
         self.q = []
@@ -82,9 +81,118 @@ class FreqStack:
 # param_2 = obj.pop()
 ```
 
+```java
+class FreqStack {
+    private Map<Integer, Integer> cnt = new HashMap<>();
+    private PriorityQueue<int[]> q
+        = new PriorityQueue<>((a, b) -> a[0] == b[0] ? b[1] - a[1] : b[0] - a[0]);
+    private int ts;
+
+    public FreqStack() {
+    }
+
+    public void push(int val) {
+        cnt.put(val, cnt.getOrDefault(val, 0) + 1);
+        q.offer(new int[] {cnt.get(val), ++ts, val});
+    }
+
+    public int pop() {
+        int val = q.poll()[2];
+        cnt.put(val, cnt.get(val) - 1);
+        return val;
+    }
+}
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack obj = new FreqStack();
+ * obj.push(val);
+ * int param_2 = obj.pop();
+ */
+```
+
+```cpp
+class FreqStack {
+public:
+    FreqStack() {
+    }
+
+    void push(int val) {
+        ++cnt[val];
+        q.emplace(cnt[val], ++ts, val);
+    }
+
+    int pop() {
+        auto [a, b, val] = q.top();
+        q.pop();
+        --cnt[val];
+        return val;
+    }
+
+private:
+    unordered_map<int, int> cnt;
+    priority_queue<tuple<int, int, int>> q;
+    int ts = 0;
+};
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack* obj = new FreqStack();
+ * obj->push(val);
+ * int param_2 = obj->pop();
+ */
+```
+
+```go
+type FreqStack struct {
+	cnt map[int]int
+	q   hp
+	ts  int
+}
+
+func Constructor() FreqStack {
+	return FreqStack{map[int]int{}, hp{}, 0}
+}
+
+func (this *FreqStack) Push(val int) {
+	this.cnt[val]++
+	this.ts++
+	heap.Push(&this.q, tuple{this.cnt[val], this.ts, val})
+}
+
+func (this *FreqStack) Pop() int {
+	val := heap.Pop(&this.q).(tuple).val
+	this.cnt[val]--
+	return val
+}
+
+type tuple struct{ cnt, ts, val int }
+type hp []tuple
+
+func (h hp) Len() int { return len(h) }
+func (h hp) Less(i, j int) bool {
+	return h[i].cnt > h[j].cnt || h[i].cnt == h[j].cnt && h[i].ts > h[j].ts
+}
+func (h hp) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v any)   { *h = append(*h, v.(tuple)) }
+func (h *hp) Pop() any     { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(val);
+ * param_2 := obj.Pop();
+ */
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```python
 class FreqStack:
-
     def __init__(self):
         self.cnt = defaultdict(int)
         self.d = defaultdict(list)
@@ -107,38 +215,6 @@ class FreqStack:
 # obj = FreqStack()
 # obj.push(val)
 # param_2 = obj.pop()
-```
-
-### **Java**
-
-```java
-class FreqStack {
-    private Map<Integer, Integer> cnt = new HashMap<>();
-    private PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] == b[0] ? b[1] - a[1] : b[0] - a[0]);
-    private int ts;
-
-    public FreqStack() {
-
-    }
-
-    public void push(int val) {
-        cnt.put(val, cnt.getOrDefault(val, 0) + 1);
-        q.offer(new int[] {cnt.get(val), ++ts, val});
-    }
-
-    public int pop() {
-        int val = q.poll()[2];
-        cnt.put(val, cnt.get(val) - 1);
-        return val;
-    }
-}
-
-/**
- * Your FreqStack object will be instantiated and called as such:
- * FreqStack obj = new FreqStack();
- * obj.push(val);
- * int param_2 = obj.pop();
- */
 ```
 
 ```java
@@ -175,46 +251,10 @@ class FreqStack {
  */
 ```
 
-### **C++**
-
 ```cpp
 class FreqStack {
 public:
     FreqStack() {
-
-    }
-
-    void push(int val) {
-        ++cnt[val];
-        q.emplace(cnt[val], ++ts, val);
-    }
-
-    int pop() {
-        auto [a, b, val] = q.top();
-        q.pop();
-        --cnt[val];
-        return val;
-    }
-
-private:
-    unordered_map<int, int> cnt;
-    priority_queue<tuple<int, int, int>> q;
-    int ts = 0;
-};
-
-/**
- * Your FreqStack object will be instantiated and called as such:
- * FreqStack* obj = new FreqStack();
- * obj->push(val);
- * int param_2 = obj->pop();
- */
-```
-
-```cpp
-class FreqStack {
-public:
-    FreqStack() {
-
     }
 
     void push(int val) {
@@ -245,50 +285,6 @@ private:
  */
 ```
 
-### **Go**
-
-```go
-type FreqStack struct {
-	cnt map[int]int
-	q   hp
-	ts  int
-}
-
-func Constructor() FreqStack {
-	return FreqStack{map[int]int{}, hp{}, 0}
-}
-
-func (this *FreqStack) Push(val int) {
-	this.cnt[val]++
-	this.ts++
-	heap.Push(&this.q, tuple{this.cnt[val], this.ts, val})
-}
-
-func (this *FreqStack) Pop() int {
-	val := heap.Pop(&this.q).(tuple).val
-	this.cnt[val]--
-	return val
-}
-
-type tuple struct{ cnt, ts, val int }
-type hp []tuple
-
-func (h hp) Len() int { return len(h) }
-func (h hp) Less(i, j int) bool {
-	return h[i].cnt > h[j].cnt || h[i].cnt == h[j].cnt && h[i].ts > h[j].ts
-}
-func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp) Push(v interface{}) { *h = append(*h, v.(tuple)) }
-func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-
-/**
- * Your FreqStack object will be instantiated and called as such:
- * obj := Constructor();
- * obj.Push(val);
- * param_2 := obj.Pop();
- */
-```
-
 ```go
 type FreqStack struct {
 	cnt map[int]int
@@ -316,13 +312,6 @@ func (this *FreqStack) Pop() int {
 	return val
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your FreqStack object will be instantiated and called as such:
  * obj := Constructor();
@@ -331,10 +320,6 @@ func max(a, b int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

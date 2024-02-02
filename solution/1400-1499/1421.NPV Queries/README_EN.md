@@ -14,7 +14,7 @@
 | year          | int     |
 | npv           | int     |
 +---------------+---------+
-(id, year) is the primary key of this table.
+(id, year) is the primary key (combination of columns with unique values) of this table.
 The table has information about the id and the year of each inventory and the corresponding net present value.
 </pre>
 
@@ -29,17 +29,17 @@ The table has information about the id and the year of each inventory and the co
 | id            | int     |
 | year          | int     |
 +---------------+---------+
-(id, year) is the primary key of this table.
+(id, year) is the primary key (combination of columns with unique values) of this table.
 The table has information about the id and the year of each inventory query.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the <code>npv</code> of each query of the <code>Queries</code> table.</p>
+<p>Write a solution to find the <code>npv</code> of each query of the <code>Queries</code> table.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -90,12 +90,18 @@ The npv values of all other queries can be found in the NPV table.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT q.*, IFNULL(npv, 0) AS npv
+FROM
+    Queries AS q
+    LEFT JOIN NPV AS n USING (id, year);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

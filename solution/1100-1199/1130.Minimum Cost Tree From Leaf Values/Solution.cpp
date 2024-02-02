@@ -5,7 +5,7 @@ public:
         int f[n][n];
         int g[n][n];
         memset(f, 0, sizeof(f));
-        for (int i = 0; i < n; ++i) {
+        for (int i = n - 1; ~i; --i) {
             g[i][i] = arr[i];
             for (int j = i + 1; j < n; ++j) {
                 g[i][j] = max(g[i][j - 1], arr[j]);

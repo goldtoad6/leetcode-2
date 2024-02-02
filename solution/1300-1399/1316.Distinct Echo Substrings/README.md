@@ -41,9 +41,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：字符串哈希**
+### 方法一：字符串哈希
 
 **字符串哈希**是把一个任意长度的字符串映射成一个非负整数，并且其冲突的概率几乎为 0。字符串哈希用于计算字符串哈希值，快速判断两个字符串是否相等。
 
@@ -54,10 +52,6 @@
 除了在极特殊构造的数据上，上述 hash 算法很难产生冲突，一般情况下上述 hash 算法完全可以出现在题目的标准答案中。我们还可以多取一些恰当的 BASE 和 MOD 的值（例如大质数），多进行几组 hash 运算，当结果都相同时才认为原字符串相等，就更加难以构造出使这个 hash 产生错误的数据。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -84,10 +78,6 @@ class Solution:
                     vis.add(a)
         return len(vis)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -125,8 +115,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 typedef unsigned long long ull;
 
@@ -161,8 +149,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func distinctEchoSubstrings(text string) int {
 	n := len(text)
@@ -192,10 +178,51 @@ func distinctEchoSubstrings(text string) int {
 }
 ```
 
-### **...**
+```rust
+use std::collections::HashSet;
 
-```
+const BASE: u64 = 131;
 
+impl Solution {
+    #[allow(dead_code)]
+    pub fn distinct_echo_substrings(text: String) -> i32 {
+        let n = text.len();
+        let mut vis: HashSet<u64> = HashSet::new();
+        let mut base_vec: Vec<u64> = vec![1; n + 1];
+        let mut hash_vec: Vec<u64> = vec![0; n + 1];
+
+        // Initialize the base vector & hash vector
+        for i in 0..n {
+            let cur_char = ((text.chars().nth(i).unwrap() as u8) - ('a' as u8) + 1) as u64;
+            // Update base vector
+            base_vec[i + 1] = base_vec[i] * BASE;
+            // Update hash vector
+            hash_vec[i + 1] = hash_vec[i] * BASE + cur_char;
+        }
+
+        // Traverse the text to find the result pair, using rolling hash
+        for i in 0..n - 1 {
+            for j in i + 1..n {
+                // Prevent overflow
+                let k = i + (j - i) / 2;
+                let left = Self::get_hash(i + 1, k + 1, &base_vec, &hash_vec);
+                let right = Self::get_hash(k + 2, j + 1, &base_vec, &hash_vec);
+                if left == right {
+                    vis.insert(left);
+                }
+            }
+        }
+
+        vis.len() as i32
+    }
+
+    #[allow(dead_code)]
+    fn get_hash(start: usize, end: usize, base_vec: &Vec<u64>, hash_vec: &Vec<u64>) -> u64 {
+        hash_vec[end] - hash_vec[start - 1] * base_vec[end - start + 1]
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

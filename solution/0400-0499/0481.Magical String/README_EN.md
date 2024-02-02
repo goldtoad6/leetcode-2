@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,12 +51,11 @@ class Solution:
         while len(s) < n:
             pre = s[-1]
             cur = 3 - pre
+            # cur 表示这一组的数字，s[i] 表示这一组数字出现的次数
             s += [cur] * s[i]
             i += 1
         return s[:n].count(1)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,8 +79,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -98,8 +95,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func magicalString(n int) (ans int) {
@@ -120,8 +115,6 @@ func magicalString(n int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function magicalString(n: number): number {
     const cs = [...'1221121'];
@@ -138,8 +131,6 @@ function magicalString(n: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn magical_string(n: i32) -> i32 {
@@ -154,15 +145,15 @@ impl Solution {
             }
             i += 1;
         }
-        s.as_bytes()[0..n].iter().filter(|&v| v == &b'1').count() as i32
+        s
+            .as_bytes()
+            [0..n].iter()
+            .filter(|&v| v == &b'1')
+            .count() as i32
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

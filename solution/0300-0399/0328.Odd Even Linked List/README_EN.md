@@ -37,9 +37,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Single Pass
 
-### **Python3**
+We can use two pointers $a$ and $b$ to represent the tail nodes of the odd and even nodes respectively. Initially, pointer $a$ points to the head node $head$ of the list, and pointer $b$ points to the second node $head.next$ of the list. In addition, we use a pointer $c$ to point to the head node $head.next$ of the even nodes, which is the initial position of pointer $b$.
+
+We traverse the list, set pointer $a$ to point to the next node of $b$, i.e., $a.next = b.next$, then move pointer $a$ back by one position, i.e., $a = a.next$; set pointer $b$ to point to the next node of $a$, i.e., $b.next = a.next$, then move pointer $b$ back by one position, i.e., $b = b.next$. Continue to traverse until $b$ reaches the end of the list.
+
+Finally, we set the tail node $a$ of the odd nodes to point to the head node $c$ of the even nodes, i.e., $a.next = c$, then return the head node $head$ of the list.
+
+The time complexity is $O(n)$, where $n$ is the length of the list, and we need to traverse the list once. The space complexity is $O(1)$. We only need to maintain a limited number of pointers.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -48,21 +56,19 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def oddEvenList(self, head: ListNode) -> ListNode:
+    def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if head is None:
-            return head
-        odd, even = head, head.next
-        even_head = even
-        while even and even.next:
-            odd.next = even.next
-            odd = odd.next
-            even.next = odd.next
-            even = even.next
-        odd.next = even_head
+            return None
+        a = head
+        b = c = head.next
+        while b and b.next:
+            a.next = b.next
+            a = a.next
+            b.next = a.next
+            b = b.next
+        a.next = c
         return head
 ```
-
-### **Java**
 
 ```java
 /**
@@ -78,54 +84,21 @@ class Solution:
 class Solution {
     public ListNode oddEvenList(ListNode head) {
         if (head == null) {
-            return head;
+            return null;
         }
-        ListNode odd = head, even = head.next;
-        ListNode evenHead = even;
-        while (even != null && even.next != null) {
-            odd.next = even.next;
-            odd = odd.next;
-            even.next = odd.next;
-            even = even.next;
+        ListNode a = head;
+        ListNode b = head.next, c = b;
+        while (b != null && b.next != null) {
+            a.next = b.next;
+            a = a.next;
+            b.next = a.next;
+            b = b.next;
         }
-        odd.next = evenHead;
+        a.next = c;
         return head;
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function oddEvenList(head: ListNode | null): ListNode | null {
-    if (head == null) return head;
-    let odd: ListNode = head,
-        even: ListNode = head.next;
-    let evenHead = even;
-    while (even != null && even.next != null) {
-        odd.next = even.next;
-        odd = odd.next;
-        even.next = odd.next;
-        even = even.next;
-    }
-    odd.next = evenHead;
-    return head;
-}
-```
-
-### **C++**
 
 ```cpp
 /**
@@ -142,23 +115,21 @@ class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
         if (!head) {
-            return head;
+            return nullptr;
         }
-        ListNode *odd = head, *even = head->next;
-        ListNode* evenHead = even;
-        while (even && even->next) {
-            odd->next = even->next;
-            odd = odd->next;
-            even->next = odd->next;
-            even = even->next;
+        ListNode* a = head;
+        ListNode *b = head->next, *c = b;
+        while (b && b->next) {
+            a->next = b->next;
+            a = a->next;
+            b->next = a->next;
+            b = b->next;
         }
-        odd->next = evenHead;
+        a->next = c;
         return head;
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -169,26 +140,51 @@ public:
  * }
  */
 func oddEvenList(head *ListNode) *ListNode {
-    if head == nil {
-        return head
-    }
-    odd, even := head, head.Next
-    evenHead := even
-    for even != nil && even.Next != nil {
-        odd.Next = even.Next
-        odd = odd.Next
-        even.Next = odd.Next
-        even = even.Next
-    }
-    odd.Next = evenHead
-    return head
+	if head == nil {
+		return nil
+	}
+	a := head
+	b, c := head.Next, head.Next
+	for b != nil && b.Next != nil {
+		a.Next = b.Next
+		a = a.Next
+		b.Next = a.Next
+		b = b.Next
+	}
+	a.Next = c
+	return head
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 
-```
-
+function oddEvenList(head: ListNode | null): ListNode | null {
+    if (!head) {
+        return null;
+    }
+    let [a, b, c] = [head, head.next, head.next];
+    while (b && b.next) {
+        a.next = b.next;
+        a = a.next;
+        b.next = a.next;
+        b = b.next;
+    }
+    a.next = c;
+    return head;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

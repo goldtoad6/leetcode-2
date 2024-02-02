@@ -70,17 +70,11 @@ Bob 获得总分 8 + 9 + 10 = 27 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：二进制枚举**
+### 方法一：二进制枚举
 
 枚举 bob 射箭的最终状态，寻找满足题意的、且使得 bob 得分最大的状态。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -105,10 +99,6 @@ class Solution:
         ans[0] = numArrows
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -142,8 +132,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -176,8 +164,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumBobPoints(numArrows int, aliceArrows []int) []int {
 	n := len(aliceArrows)
@@ -207,8 +193,6 @@ func maximumBobPoints(numArrows int, aliceArrows []int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maximumBobPoints(numArrows: number, aliceArrows: number[]): number[] {
     const dfs = (arr: number[], i: number, c: number): number[] => {
@@ -233,8 +217,6 @@ function maximumBobPoints(numArrows: number, aliceArrows: number[]): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     fn dfs(alice_arrows: &Vec<i32>, mut res: Vec<i32>, count: i32, i: usize) -> Vec<i32> {
@@ -246,12 +228,14 @@ impl Solution {
         if count > alice_arrows[i] {
             res[i] = alice_arrows[i] + 1;
             let r2 = Self::dfs(alice_arrows, res, count - alice_arrows[i] - 1, i - 1);
-            if r2
-                .iter()
-                .enumerate()
-                .map(|(i, v)| if v > &0 { i } else { 0 })
-                .sum::<usize>()
-                > r1.iter()
+            if
+                r2
+                    .iter()
+                    .enumerate()
+                    .map(|(i, v)| if v > &0 { i } else { 0 })
+                    .sum::<usize>() >
+                r1
+                    .iter()
                     .enumerate()
                     .map(|(i, v)| if v > &0 { i } else { 0 })
                     .sum::<usize>()
@@ -268,10 +252,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,44 +49,47 @@ The odd array out is [1, 1], so we return the corresponding string, &quot;abc&qu
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table Simulation
 
-### **Python3**
+We use a hash table $d$ to maintain the mapping relationship between the difference array of the string and the string itself, where the difference array is an array composed of the differences of adjacent characters in the string. Since the problem guarantees that except for one string, the difference arrays of other strings are the same, we only need to find the string with a different difference array.
+
+The time complexity is $O(m \times n)$, and the space complexity is $O(m + n)$. Here, $m$ and $n$ are the length of the string and the number of strings, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def oddString(self, words: List[str]) -> str:
-        cnt = defaultdict(list)
-        for w in words:
-            d = [str(ord(b) - ord(a)) for a, b in pairwise(w)]
-            cnt[','.join(d)].append(w)
-        return next(v[0] for v in cnt.values() if len(v) == 1)
+        d = defaultdict(list)
+        for s in words:
+            t = tuple(ord(b) - ord(a) for a, b in pairwise(s))
+            d[t].append(s)
+        return next(ss[0] for ss in d.values() if len(ss) == 1)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public String oddString(String[] words) {
-        Map<String, List<String>> cnt = new HashMap<>();
-        for (var w : words) {
-            List<String> d = new ArrayList<>();
-            for (int i = 0; i < w.length() - 1; ++i) {
-                d.add(String.valueOf(w.charAt(i + 1) - w.charAt(i)));
+        var d = new HashMap<String, List<String>>();
+        for (var s : words) {
+            int m = s.length();
+            var cs = new char[m - 1];
+            for (int i = 0; i < m - 1; ++i) {
+                cs[i] = (char) (s.charAt(i + 1) - s.charAt(i));
             }
-            cnt.computeIfAbsent(String.join(",", d), k -> new ArrayList<>()).add(w);
+            var t = String.valueOf(cs);
+            d.putIfAbsent(t, new ArrayList<>());
+            d.get(t).add(s);
         }
-        for (var v : cnt.values()) {
-            if (v.size() == 1) {
-                return v.get(0);
+        for (var ss : d.values()) {
+            if (ss.size() == 1) {
+                return ss.get(0);
             }
         }
         return "";
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -111,52 +114,49 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func oddString(words []string) string {
-	cnt := map[string][]string{}
-	for _, w := range words {
-		d := make([]byte, len(w)-1)
-		for i := 0; i < len(w)-1; i++ {
-			d[i] = w[i+1] - w[i]
+	d := map[string][]string{}
+	for _, s := range words {
+		m := len(s)
+		cs := make([]byte, m-1)
+		for i := 0; i < m-1; i++ {
+			cs[i] = s[i+1] - s[i]
 		}
-		t := string(d)
-		cnt[t] = append(cnt[t], w)
+		t := string(cs)
+		d[t] = append(d[t], s)
 	}
-	for _, v := range cnt {
-		if len(v) == 1 {
-			return v[0]
+	for _, ss := range d {
+		if len(ss) == 1 {
+			return ss[0]
 		}
 	}
 	return ""
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function oddString(words: string[]): string {
-    const n = words[0].length;
-    const map = new Map<string, [boolean, number]>();
-    words.forEach((word, i) => {
-        const diff: number[] = [];
-        for (let j = 1; j < n; j++) {
-            diff.push(word[j].charCodeAt(0) - word[j - 1].charCodeAt(0));
+    const d: Map<string, string[]> = new Map();
+    for (const s of words) {
+        const cs: number[] = [];
+        for (let i = 0; i < s.length - 1; ++i) {
+            cs.push(s[i + 1].charCodeAt(0) - s[i].charCodeAt(0));
         }
-        const k = diff.join();
-        map.set(k, [!map.has(k), i]);
-    });
-    for (const [isOnly, i] of map.values()) {
-        if (isOnly) {
-            return words[i];
+        const t = cs.join(',');
+        if (!d.has(t)) {
+            d.set(t, []);
+        }
+        d.get(t)!.push(s);
+    }
+    for (const [_, ss] of d) {
+        if (ss.length === 1) {
+            return ss[0];
         }
     }
     return '';
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashMap;
@@ -183,10 +183,47 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn odd_string(words: Vec<String>) -> String {
+        let mut h = HashMap::new();
+
+        for w in words {
+            let bytes: Vec<i32> = w
+                .bytes()
+                .zip(w.bytes().skip(1))
+                .map(|(current, next)| (next - current) as i32)
+                .collect();
+
+            let s: String = bytes
+                .iter()
+                .map(|&b| char::from(b as u8))
+                .collect();
+
+            h.entry(s)
+                .or_insert(vec![])
+                .push(w);
+        }
+
+        for strs in h.values() {
+            if strs.len() == 1 {
+                return strs[0].clone();
+            }
+        }
+
+        String::from("")
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

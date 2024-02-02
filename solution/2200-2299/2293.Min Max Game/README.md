@@ -56,19 +56,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 根据题意，我们可以模拟整个过程，最后剩下的数字即为答案。在实现上，我们不需要额外创建数组，直接在原数组上进行操作即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `nums` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +75,6 @@ class Solution:
                 nums[i] = min(a, b) if i % 2 == 0 else max(a, b)
         return nums[0]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,8 +90,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -119,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minMaxGame(nums []int) int {
 	for n := len(nums); n > 1; {
@@ -136,23 +122,7 @@ func minMaxGame(nums []int) int {
 	}
 	return nums[0]
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minMaxGame(nums: number[]): number {
@@ -168,8 +138,6 @@ function minMaxGame(nums: number[]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_max_game(mut nums: Vec<i32>) -> i32 {
@@ -177,11 +145,10 @@ impl Solution {
         while n != 1 {
             n >>= 1;
             for i in 0..n {
-                nums[i] = (if i & 1 == 1 {
-                    i32::max
-                } else {
-                    i32::min
-                })(nums[i << 1], nums[i << 1 | 1])
+                nums[i] = (if (i & 1) == 1 { i32::max } else { i32::min })(
+                    nums[i << 1],
+                    nums[(i << 1) | 1]
+                );
             }
         }
         nums[0]
@@ -189,13 +156,11 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int minMaxGame(int *nums, int numsSize) {
+int minMaxGame(int* nums, int numsSize) {
     while (numsSize != 1) {
         numsSize >>= 1;
         for (int i = 0; i < numsSize; i++) {
@@ -208,10 +173,6 @@ int minMaxGame(int *nums, int numsSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

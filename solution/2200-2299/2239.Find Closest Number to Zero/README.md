@@ -41,37 +41,35 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：一次遍历
+
+我们定义一个变量 $d$ 来记录当前最小的距离，初始时 $d=\infty$。然后我们遍历数组，对于每个元素 $x$，我们计算 $y=|x|$，如果 $y \lt d$ 或者 $y=d$ 且 $x \gt ans$，我们就更新答案 $ans=x$ 和 $d=y$。
+
+遍历结束后返回答案即可。
+
+时间复杂度 $O(n)$，其中 $n$ 是数组的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def findClosestNumber(self, nums: List[int]) -> int:
-        ans, d = 0, 1000000
-        for v in nums:
-            if (t := abs(v)) < d or (t == d and v > ans):
-                ans, d = v, t
+        ans, d = 0, inf
+        for x in nums:
+            if (y := abs(x)) < d or (y == d and x > ans):
+                ans, d = x, y
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public int findClosestNumber(int[] nums) {
-        int ans = 0, d = 1000000;
-        for (int v : nums) {
-            int t = Math.abs(v);
-            if (t < d || (t == d && v > ans)) {
-                ans = v;
-                d = t;
+        int ans = 0, d = 1 << 30;
+        for (int x : nums) {
+            int y = Math.abs(x);
+            if (y < d || (y == d && x > ans)) {
+                ans = x;
+                d = y;
             }
         }
         return ans;
@@ -79,18 +77,16 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int findClosestNumber(vector<int>& nums) {
-        int ans = 0, d = 1e6;
-        for (int& v : nums) {
-            int t = abs(v);
-            if (t < d || (t == d && v > ans)) {
-                ans = v;
-                d = t;
+        int ans = 0, d = 1 << 30;
+        for (int x : nums) {
+            int y = abs(x);
+            if (y < d || (y == d && x > ans)) {
+                ans = x;
+                d = y;
             }
         }
         return ans;
@@ -98,15 +94,12 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findClosestNumber(nums []int) int {
-	ans, d := 0, 1000000
-	for _, v := range nums {
-		t := abs(v)
-		if t < d || (t == d && v > ans) {
-			ans, d = v, t
+	ans, d := 0, 1<<30
+	for _, x := range nums {
+		if y := abs(x); y < d || (y == d && x > ans) {
+			ans, d = x, y
 		}
 	}
 	return ans
@@ -120,16 +113,19 @@ func abs(x int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function findClosestNumber(nums: number[]): number {
+    let [ans, d] = [0, 1 << 30];
+    for (const x of nums) {
+        const y = Math.abs(x);
+        if (y < d || (y == d && x > ans)) {
+            [ans, d] = [x, y];
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

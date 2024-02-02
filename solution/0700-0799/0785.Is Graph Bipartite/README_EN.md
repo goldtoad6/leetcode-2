@@ -47,11 +47,9 @@
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
-
-### **Python3**
-
-Graph coloring:
 
 ```python
 class Solution:
@@ -73,29 +71,6 @@ class Solution:
                 return False
         return True
 ```
-
-Union find:
-
-```python
-class Solution:
-    def isBipartite(self, graph: List[List[int]]) -> bool:
-        def find(x):
-            if p[x] != x:
-                p[x] = find(p[x])
-            return p[x]
-
-        p = list(range(len(graph)))
-        for u, g in enumerate(graph):
-            for v in g:
-                if find(u) == find(v):
-                    return False
-                p[find(v)] = find(g[0])
-        return True
-```
-
-### **Java**
-
-Graph coloring:
 
 ```java
 class Solution {
@@ -130,7 +105,148 @@ class Solution {
 }
 ```
 
-Union find:
+```cpp
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> color(n);
+        for (int i = 0; i < n; ++i)
+            if (!color[i] && !dfs(i, 1, color, graph))
+                return false;
+        return true;
+    }
+
+    bool dfs(int u, int c, vector<int>& color, vector<vector<int>>& g) {
+        color[u] = c;
+        for (int& v : g[u]) {
+            if (!color[v]) {
+                if (!dfs(v, 3 - c, color, g)) return false;
+            } else if (color[v] == c)
+                return false;
+        }
+        return true;
+    }
+};
+```
+
+```go
+func isBipartite(graph [][]int) bool {
+	n := len(graph)
+	color := make([]int, n)
+	var dfs func(u, c int) bool
+	dfs = func(u, c int) bool {
+		color[u] = c
+		for _, v := range graph[u] {
+			if color[v] == 0 {
+				if !dfs(v, 3-c) {
+					return false
+				}
+			} else if color[v] == c {
+				return false
+			}
+		}
+		return true
+	}
+	for i := range graph {
+		if color[i] == 0 && !dfs(i, 1) {
+			return false
+		}
+	}
+	return true
+}
+```
+
+```ts
+function isBipartite(graph: number[][]): boolean {
+    const n = graph.length;
+    let valid = true;
+    // 0 未遍历， 1 红色标记， 2 绿色标记
+    let colors = new Array(n).fill(0);
+    function dfs(idx: number, color: number, graph: number[][]) {
+        colors[idx] = color;
+        const nextColor = 3 - color;
+        for (let j of graph[idx]) {
+            if (!colors[j]) {
+                dfs(j, nextColor, graph);
+                if (!valid) return;
+            } else if (colors[j] != nextColor) {
+                valid = false;
+                return;
+            }
+        }
+    }
+
+    for (let i = 0; i < n && valid; i++) {
+        if (!colors[i]) {
+            dfs(i, 1, graph);
+        }
+    }
+    return valid;
+}
+```
+
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
+        let mut graph = graph;
+        let n = graph.len();
+        let mut color_vec: Vec<usize> = vec![0; n];
+        for i in 0..n {
+            if color_vec[i] == 0 && !Self::traverse(i, 1, &mut color_vec, &mut graph) {
+                return false;
+            }
+        }
+        true
+    }
+
+    #[allow(dead_code)]
+    fn traverse(
+        v: usize,
+        color: usize,
+        color_vec: &mut Vec<usize>,
+        graph: &mut Vec<Vec<i32>>
+    ) -> bool {
+        color_vec[v] = color;
+        for n in graph[v].clone() {
+            if color_vec[n as usize] == 0 {
+                // This node hasn't been colored
+                if !Self::traverse(n as usize, 3 - color, color_vec, graph) {
+                    return false;
+                }
+            } else if color_vec[n as usize] == color {
+                // The color is the same
+                return false;
+            }
+        }
+        true
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        def find(x):
+            if p[x] != x:
+                p[x] = find(p[x])
+            return p[x]
+
+        p = list(range(len(graph)))
+        for u, g in enumerate(graph):
+            for v in g:
+                if find(u) == find(v):
+                    return False
+                p[find(v)] = find(g[0])
+        return True
+```
 
 ```java
 class Solution {
@@ -163,37 +279,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-Graph coloring:
-
-```cpp
-class Solution {
-public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int> color(n);
-        for (int i = 0; i < n; ++i)
-            if (!color[i] && !dfs(i, 1, color, graph))
-                return false;
-        return true;
-    }
-
-    bool dfs(int u, int c, vector<int>& color, vector<vector<int>>& g) {
-        color[u] = c;
-        for (int& v : g[u]) {
-            if (!color[v]) {
-                if (!dfs(v, 3 - c, color, g)) return false;
-            } else if (color[v] == c)
-                return false;
-        }
-        return true;
-    }
-};
-```
-
-Union find:
-
 ```cpp
 class Solution {
 public:
@@ -203,11 +288,9 @@ public:
         int n = graph.size();
         p.resize(n);
         for (int i = 0; i < n; ++i) p[i] = i;
-        for (int u = 0; u < n; ++u)
-        {
+        for (int u = 0; u < n; ++u) {
             auto& g = graph[u];
-            for (int v : g)
-            {
+            for (int v : g) {
                 if (find(u) == find(v)) return 0;
                 p[find(v)] = find(g[0]);
             }
@@ -221,39 +304,6 @@ public:
     }
 };
 ```
-
-### **Go**
-
-Graph coloring:
-
-```go
-func isBipartite(graph [][]int) bool {
-	n := len(graph)
-	color := make([]int, n)
-	var dfs func(u, c int) bool
-	dfs = func(u, c int) bool {
-		color[u] = c
-		for _, v := range graph[u] {
-			if color[v] == 0 {
-				if !dfs(v, 3-c) {
-					return false
-				}
-			} else if color[v] == c {
-				return false
-			}
-		}
-		return true
-	}
-	for i := range graph {
-		if color[i] == 0 && !dfs(i, 1) {
-			return false
-		}
-	}
-	return true
-}
-```
-
-Union find:
 
 ```go
 func isBipartite(graph [][]int) bool {
@@ -281,40 +331,6 @@ func isBipartite(graph [][]int) bool {
 }
 ```
 
-### **TypeScript**
-
-Graph coloring:
-
-```ts
-function isBipartite(graph: number[][]): boolean {
-    const n = graph.length;
-    let valid = true;
-    let colors = new Array(n).fill(0);
-    function dfs(idx: number, color: number, graph: number[][]) {
-        colors[idx] = color;
-        const nextColor = 3 - color;
-        for (let j of graph[idx]) {
-            if (!colors[j]) {
-                dfs(j, nextColor, graph);
-                if (!valid) return;
-            } else if (colors[j] != nextColor) {
-                valid = false;
-                return;
-            }
-        }
-    }
-
-    for (let i = 0; i < n && valid; i++) {
-        if (!colors[i]) {
-            dfs(i, 1, graph);
-        }
-    }
-    return valid;
-}
-```
-
-Union find:
-
 ```ts
 function isBipartite(graph: number[][]): boolean {
     const n = graph.length;
@@ -340,10 +356,55 @@ function isBipartite(graph: number[][]): boolean {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
+        let n = graph.len();
+        let mut disjoint_set: Vec<usize> = vec![0; n];
+        // Initialize the disjoint set
+        for i in 0..n {
+            disjoint_set[i] = i;
+        }
 
-```
+        // Traverse the graph
+        for i in 0..n {
+            if graph[i].is_empty() {
+                continue;
+            }
+            let first = graph[i][0] as usize;
+            for v in &graph[i] {
+                let v = *v as usize;
+                let i_p = Self::find(i, &mut disjoint_set);
+                let v_p = Self::find(v, &mut disjoint_set);
+                if i_p == v_p {
+                    return false;
+                }
+                // Otherwise, union the node
+                Self::union(first, v, &mut disjoint_set);
+            }
+        }
 
+        true
+    }
+
+    #[allow(dead_code)]
+    fn find(x: usize, d_set: &mut Vec<usize>) -> usize {
+        if d_set[x] != x {
+            d_set[x] = Self::find(d_set[x], d_set);
+        }
+        d_set[x]
+    }
+
+    #[allow(dead_code)]
+    fn union(x: usize, y: usize, d_set: &mut Vec<usize>) {
+        let p_x = Self::find(x, d_set);
+        let p_y = Self::find(y, d_set);
+        d_set[p_x] = p_y;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -33,14 +33,26 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Backtracking
 
-### **Python3**
+We design a function $dfs(i)$, which represents starting the search from the $i$th row, and the results of the search are added to the answer.
+
+In the $i$th row, we enumerate each column of the $i$th row. If the current column does not conflict with the queens placed before, then we can place a queen, and then continue to search the next row, that is, call $dfs(i + 1)$.
+
+If a conflict occurs, then we skip the current column and continue to enumerate the next column.
+
+To determine whether a conflict occurs, we need to use three arrays to record whether a queen has been placed in each column, each positive diagonal, and each negative diagonal, respectively.
+
+Specifically, we use the $cols$ array to record whether a queen has been placed in each column, the $dg$ array to record whether a queen has been placed in each positive diagonal, and the $udg$ array to record whether a queen has been placed in each negative diagonal.
+
+The time complexity is $O(n!)$, and the space complexity is $O(n)$. Here, $n$ is the number of queens.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def totalNQueens(self, n: int) -> int:
-        def dfs(i):
+        def dfs(i: int):
             if i == n:
                 nonlocal ans
                 ans += 1
@@ -60,8 +72,6 @@ class Solution:
         dfs(0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -128,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func totalNQueens(n int) (ans int) {
 	cols := [10]bool{}
@@ -156,10 +162,32 @@ func totalNQueens(n int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function totalNQueens(n: number): number {
+    const cols: boolean[] = Array(10).fill(false);
+    const dg: boolean[] = Array(20).fill(false);
+    const udg: boolean[] = Array(20).fill(false);
+    let ans = 0;
+    const dfs = (i: number) => {
+        if (i === n) {
+            ++ans;
+            return;
+        }
+        for (let j = 0; j < n; ++j) {
+            let [a, b] = [i + j, i - j + n];
+            if (cols[j] || dg[a] || udg[b]) {
+                continue;
+            }
+            cols[j] = dg[a] = udg[b] = true;
+            dfs(i + 1);
+            cols[j] = dg[a] = udg[b] = false;
+        }
+    };
+    dfs(0);
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

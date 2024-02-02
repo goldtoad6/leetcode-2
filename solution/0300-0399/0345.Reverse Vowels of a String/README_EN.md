@@ -26,90 +26,147 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def reverseVowels(self, s: str) -> str:
-        vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
+        vowels = "aeiouAEIOU"
         i, j = 0, len(s) - 1
-        chars = list(s)
+        cs = list(s)
         while i < j:
-            if chars[i] not in vowels:
+            while i < j and cs[i] not in vowels:
                 i += 1
-                continue
-            if chars[j] not in vowels:
+            while i < j and cs[j] not in vowels:
                 j -= 1
-                continue
-            chars[i], chars[j] = chars[j], chars[i]
-            i += 1
-            j -= 1
-        return ''.join(chars)
+            if i < j:
+                cs[i], cs[j] = cs[j], cs[i]
+                i, j = i + 1, j - 1
+        return "".join(cs)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public String reverseVowels(String s) {
-        Set<Character> vowels
-            = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
-        int i = 0, j = s.length() - 1;
-        char[] chars = s.toCharArray();
-        while (i < j) {
-            if (!vowels.contains(chars[i])) {
-                ++i;
-                continue;
-            }
-            if (!vowels.contains(chars[j])) {
-                --j;
-                continue;
-            }
-            char t = chars[i];
-            chars[i] = chars[j];
-            chars[j] = t;
-            ++i;
-            --j;
+        boolean[] vowels = new boolean[128];
+        for (char c : "aeiouAEIOU".toCharArray()) {
+            vowels[c] = true;
         }
-        return new String(chars);
+        char[] cs = s.toCharArray();
+        int i = 0, j = cs.length - 1;
+        while (i < j) {
+            while (i < j && !vowels[cs[i]]) {
+                ++i;
+            }
+            while (i < j && !vowels[cs[j]]) {
+                --j;
+            }
+            if (i < j) {
+                char t = cs[i];
+                cs[i] = cs[j];
+                cs[j] = t;
+                ++i;
+                --j;
+            }
+        }
+        return String.valueOf(cs);
     }
 }
 ```
 
-### **Go**
+```cpp
+class Solution {
+public:
+    string reverseVowels(string s) {
+        bool vowels[128];
+        memset(vowels, false, sizeof(vowels));
+        for (char c : "aeiouAEIOU") {
+            vowels[c] = true;
+        }
+        int i = 0, j = s.size() - 1;
+        while (i < j) {
+            while (i < j && !vowels[s[i]]) {
+                ++i;
+            }
+            while (i < j && !vowels[s[j]]) {
+                --j;
+            }
+            if (i < j) {
+                swap(s[i++], s[j--]);
+            }
+        }
+        return s;
+    }
+};
+```
 
 ```go
 func reverseVowels(s string) string {
-	left, right := 0, len(s)-1
-	a := []byte(s)
-	for left < right {
-		for left < right && !isVowel(a[left]) {
-			left++
+	vowels := [128]bool{}
+	for _, c := range "aeiouAEIOU" {
+		vowels[c] = true
+	}
+	cs := []byte(s)
+	i, j := 0, len(cs)-1
+	for i < j {
+		for i < j && !vowels[cs[i]] {
+			i++
 		}
-		for left < right && !isVowel(a[right]) {
-			right--
+		for i < j && !vowels[cs[j]] {
+			j--
 		}
-		if left != right && isVowel(a[left]) && isVowel(a[right]) {
-			a[left], a[right] = a[right], a[left]
-			left++
-			right--
+		if i < j {
+			cs[i], cs[j] = cs[j], cs[i]
+			i, j = i+1, j-1
 		}
 	}
-	return string(a)
-}
-
-func isVowel(b byte) bool {
-	return b == 'a' || b == 'e' || b == 'i' || b == 'o' || b == 'u' ||
-		b == 'A' || b == 'E' || b == 'I' || b == 'O' || b == 'U'
+	return string(cs)
 }
 ```
 
-### **...**
-
+```ts
+function reverseVowels(s: string): string {
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    const cs = s.split('');
+    for (let i = 0, j = cs.length - 1; i < j; ++i, --j) {
+        while (i < j && !vowels.has(cs[i].toLowerCase())) {
+            ++i;
+        }
+        while (i < j && !vowels.has(cs[j].toLowerCase())) {
+            --j;
+        }
+        [cs[i], cs[j]] = [cs[j], cs[i]];
+    }
+    return cs.join('');
+}
 ```
 
+```rust
+impl Solution {
+    pub fn reverse_vowels(s: String) -> String {
+        let vowel = String::from("aeiouAEIOU");
+        let mut data: Vec<char> = s.chars().collect();
+        let (mut i, mut j) = (0, s.len() - 1);
+        while i < j {
+            while i < j && !vowel.contains(data[i]) {
+                i += 1;
+            }
+            while i < j && !vowel.contains(data[j]) {
+                j -= 1;
+            }
+            if i < j {
+                data.swap(i, j);
+                i += 1;
+                j -= 1;
+            }
+        }
+        data.iter().collect()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

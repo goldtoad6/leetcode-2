@@ -16,46 +16,50 @@
 <p>Note that a prime number is a natural number greater than <code>1</code> that is not a product of two smaller natural numbers. The prime factors of a number <code>n</code> is a list of prime numbers such that their product equals <code>n</code>.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> primeFactors = 5
-
 <strong>Output:</strong> 6
-
 <strong>Explanation:</strong> 200 is a valid value of n.
-
 It has 5 prime factors: [2,2,2,5,5], and it has 6 nice divisors: [10,20,40,50,100,200].
-
 There is not other value of n that has at most 5 prime factors and more nice divisors.
-
 </pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> primeFactors = 8
-
 <strong>Output:</strong> 18
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-    <li><code>1 &lt;= primeFactors &lt;= 10<sup>9</sup></code></li>
+	<li><code>1 &lt;= primeFactors &lt;= 10<sup>9</sup></code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Problem Transformation + Fast Power
 
-### **Python3**
+We can factorize $n$ into prime factors, i.e., $n = a_1^{k_1} \times a_2^{k_2} \times\cdots \times a_m^{k_m}$, where $a_i$ is a prime factor and $k_i$ is the exponent of the prime factor $a_i$. Since the number of prime factors of $n$ does not exceed `primeFactors`, we have $k_1 + k_2 + \cdots + k_m \leq primeFactors$.
+
+According to the problem description, we know that a good factor of $n$ must be divisible by all prime factors, which means that a good factor of $n$ needs to include $a_1 \times a_2 \times \cdots \times a_m$ as a factor. Then the number of good factors $k= k_1 \times k_2 \times \cdots \times k_m$, i.e., $k$ is the product of $k_1, k_2, \cdots, k_m$. To maximize the number of good factors, we need to split `primeFactors` into $k_1, k_2, \cdots, k_m$ to make $k_1 \times k_2 \times \cdots \times k_m$ the largest. Therefore, the problem is transformed into: split the integer `primeFactors` into the product of several integers to maximize the product.
+
+Next, we just need to discuss different cases.
+
+-   If $primeFactors \lt 4$, then directly return `primeFactors`.
+-   If $primeFactors$ is a multiple of $3$, then we split `primeFactors` into multiples of $3$, i.e., $3^{\frac{primeFactors}{3}}$.
+-   If $primeFactors$ modulo $3$ equals $1$, then we split `primeFactors` into $\frac{primeFactors}{3} - 1$ multiples of $3$, and then multiply by $4$, i.e., $3^{\frac{primeFactors}{3} - 1} \times 4$.
+-   If $primeFactors$ modulo $3$ equals $2$, then we split `primeFactors` into $\frac{primeFactors}{3}$ multiples of $3$, and then multiply by $2$, i.e., $3^{\frac{primeFactors}{3}} \times 2$.
+
+In the above process, we use fast power to calculate the modulus.
+
+The time complexity is $O(\log n)$, and the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -70,39 +74,35 @@ class Solution:
         return 2 * pow(3, primeFactors // 3, mod) % mod
 ```
 
-### **Java**
-
 ```java
 class Solution {
+    private final int mod = (int) 1e9 + 7;
+
     public int maxNiceDivisors(int primeFactors) {
         if (primeFactors < 4) {
             return primeFactors;
         }
-        final int mod = (int) 1e9 + 7;
         if (primeFactors % 3 == 0) {
-            return (int) qmi(3, primeFactors / 3, mod);
+            return qpow(3, primeFactors / 3);
         }
         if (primeFactors % 3 == 1) {
-            return (int) (4 * qmi(3, primeFactors / 3 - 1, mod) % mod);
+            return (int) (4L * qpow(3, primeFactors / 3 - 1) % mod);
         }
-        return (int) (2 * qmi(3, primeFactors / 3, mod) % mod);
+        return 2 * qpow(3, primeFactors / 3) % mod;
     }
 
-    private long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
+    private int qpow(long a, long n) {
+        long ans = 1;
+        for (; n > 0; n >>= 1) {
+            if ((n & 1) == 1) {
+                ans = ans * a % mod;
             }
-            k >>= 1;
-            a = a * a % p;
+            a = a * a % mod;
         }
-        return res;
+        return (int) ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -112,63 +112,84 @@ public:
             return primeFactors;
         }
         const int mod = 1e9 + 7;
+        auto qpow = [&](long long a, long long n) {
+            long long ans = 1;
+            for (; n; n >>= 1) {
+                if (n & 1) {
+                    ans = ans * a % mod;
+                }
+                a = a * a % mod;
+            }
+            return (int) ans;
+        };
         if (primeFactors % 3 == 0) {
-            return qmi(3, primeFactors / 3, mod);
+            return qpow(3, primeFactors / 3);
         }
         if (primeFactors % 3 == 1) {
-            return 4 * qmi(3, primeFactors / 3 - 1, mod) % mod;
+            return qpow(3, primeFactors / 3 - 1) * 4L % mod;
         }
-        return 2 * qmi(3, primeFactors / 3, mod) % mod;
-    }
-
-    long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
-            }
-            k >>= 1;
-            a = a * a % p;
-        }
-        return res;
+        return qpow(3, primeFactors / 3) * 2 % mod;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxNiceDivisors(primeFactors int) int {
 	if primeFactors < 4 {
 		return primeFactors
 	}
-	const mod int = 1e9 + 7
+	const mod = 1e9 + 7
+	qpow := func(a, n int) int {
+		ans := 1
+		for ; n > 0; n >>= 1 {
+			if n&1 == 1 {
+				ans = ans * a % mod
+			}
+			a = a * a % mod
+		}
+		return ans
+	}
 	if primeFactors%3 == 0 {
-		return qmi(3, primeFactors/3, mod)
+		return qpow(3, primeFactors/3)
 	}
 	if primeFactors%3 == 1 {
-		return 4 * qmi(3, primeFactors/3-1, mod) % mod
+		return qpow(3, primeFactors/3-1) * 4 % mod
 	}
-	return 2 * qmi(3, primeFactors/3, mod) % mod
-}
-
-func qmi(a, k, p int) int {
-	res := 1
-	for k != 0 {
-		if k&1 == 1 {
-			res = res * a % p
-		}
-		k >>= 1
-		a = a * a % p
-	}
-	return res
+	return qpow(3, primeFactors/3) * 2 % mod
 }
 ```
 
-### **...**
-
-```
-
+```js
+/**
+ * @param {number} primeFactors
+ * @return {number}
+ */
+var maxNiceDivisors = function (primeFactors) {
+    if (primeFactors < 4) {
+        return primeFactors;
+    }
+    const mod = 1e9 + 7;
+    const qpow = (a, n) => {
+        let ans = 1;
+        for (; n; n >>= 1) {
+            if (n & 1) {
+                ans = Number((BigInt(ans) * BigInt(a)) % BigInt(mod));
+            }
+            a = Number((BigInt(a) * BigInt(a)) % BigInt(mod));
+        }
+        return ans;
+    };
+    const k = Math.floor(primeFactors / 3);
+    if (primeFactors % 3 === 0) {
+        return qpow(3, k);
+    }
+    if (primeFactors % 3 === 1) {
+        return (4 * qpow(3, k - 1)) % mod;
+    }
+    return (2 * qpow(3, k)) % mod;
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

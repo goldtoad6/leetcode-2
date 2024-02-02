@@ -37,11 +37,9 @@
 
 ## Solutions
 
-DFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 # Definition for a binary tree node.
@@ -51,22 +49,25 @@ DFS.
 #         self.left = left
 #         self.right = right
 class Solution:
-    def longestConsecutive(self, root: TreeNode) -> int:
-        def dfs(root, p, t):
-            nonlocal ans
+    def longestConsecutive(self, root: Optional[TreeNode]) -> int:
+        def dfs(root: Optional[TreeNode]) -> int:
             if root is None:
-                return
-            t = t + 1 if p is not None and p.val + 1 == root.val else 1
+                return 0
+            l = dfs(root.left) + 1
+            r = dfs(root.right) + 1
+            if root.left and root.left.val - root.val != 1:
+                l = 1
+            if root.right and root.right.val - root.val != 1:
+                r = 1
+            t = max(l, r)
+            nonlocal ans
             ans = max(ans, t)
-            dfs(root.left, root, t)
-            dfs(root.right, root, t)
+            return t
 
-        ans = 1
-        dfs(root, None, 1)
+        ans = 0
+        dfs(root)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -88,24 +89,28 @@ class Solution {
     private int ans;
 
     public int longestConsecutive(TreeNode root) {
-        ans = 1;
-        dfs(root, null, 1);
+        dfs(root);
         return ans;
     }
 
-    private void dfs(TreeNode root, TreeNode p, int t) {
+    private int dfs(TreeNode root) {
         if (root == null) {
-            return;
+            return 0;
         }
-        t = p != null && p.val + 1 == root.val ? t + 1 : 1;
+        int l = dfs(root.left) + 1;
+        int r = dfs(root.right) + 1;
+        if (root.left != null && root.left.val - root.val != 1) {
+            l = 1;
+        }
+        if (root.right != null && root.right.val - root.val != 1) {
+            r = 1;
+        }
+        int t = Math.max(l, r);
         ans = Math.max(ans, t);
-        dfs(root.left, root, t);
-        dfs(root.right, root, t);
+        return t;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -121,25 +126,29 @@ class Solution {
  */
 class Solution {
 public:
-    int ans;
-
     int longestConsecutive(TreeNode* root) {
-        ans = 1;
-        dfs(root, nullptr, 1);
+        int ans = 0;
+        function<int(TreeNode*)> dfs = [&](TreeNode* root) {
+            if (!root) {
+                return 0;
+            }
+            int l = dfs(root->left) + 1;
+            int r = dfs(root->right) + 1;
+            if (root->left && root->left->val - root->val != 1) {
+                l = 1;
+            }
+            if (root->right && root->right->val - root->val != 1) {
+                r = 1;
+            }
+            int t = max(l, r);
+            ans = max(ans, t);
+            return t;
+        };
+        dfs(root);
         return ans;
-    }
-
-    void dfs(TreeNode* root, TreeNode* p, int t) {
-        if (!root) return;
-        t = p != nullptr && p->val + 1 == root->val ? t + 1 : 1;
-        ans = max(ans, t);
-        dfs(root->left, root, t);
-        dfs(root->right, root, t);
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -150,38 +159,67 @@ public:
  *     Right *TreeNode
  * }
  */
-func longestConsecutive(root *TreeNode) int {
-	ans := 1
-	var dfs func(root, p *TreeNode, t int)
-	dfs = func(root, p *TreeNode, t int) {
+func longestConsecutive(root *TreeNode) (ans int) {
+	var dfs func(*TreeNode) int
+	dfs = func(root *TreeNode) int {
 		if root == nil {
-			return
+			return 0
 		}
-		if p != nil && p.Val+1 == root.Val {
-			t++
-			ans = max(ans, t)
-		} else {
-			t = 1
+		l := dfs(root.Left) + 1
+		r := dfs(root.Right) + 1
+		if root.Left != nil && root.Left.Val-root.Val != 1 {
+			l = 1
 		}
-		dfs(root.Left, root, t)
-		dfs(root.Right, root, t)
+		if root.Right != nil && root.Right.Val-root.Val != 1 {
+			r = 1
+		}
+		t := max(l, r)
+		ans = max(ans, t)
+		return t
 	}
-	dfs(root, nil, 1)
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	dfs(root)
+	return
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
 
-```
-
+function longestConsecutive(root: TreeNode | null): number {
+    let ans = 0;
+    const dfs = (root: TreeNode | null): number => {
+        if (root === null) {
+            return 0;
+        }
+        let l = dfs(root.left) + 1;
+        let r = dfs(root.right) + 1;
+        if (root.left && root.left.val - root.val !== 1) {
+            l = 1;
+        }
+        if (root.right && root.right.val - root.val !== 1) {
+            r = 1;
+        }
+        const t = Math.max(l, r);
+        ans = Math.max(ans, t);
+        return t;
+    };
+    dfs(root);
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -57,9 +57,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS**
+### 方法一：BFS
 
 根据题意，我们需要从 `*` 出发，找到最近的 `#`，返回最短路径长度。
 
@@ -71,16 +69,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def getFood(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
-        i, j = next((i, j) for i in range(m)
-                    for j in range(n) if grid[i][j] == '*')
+        i, j = next((i, j) for i in range(m) for j in range(n) if grid[i][j] == '*')
         q = deque([(i, j)])
         dirs = (-1, 0, 1, 0, -1)
         ans = 0
@@ -98,10 +91,6 @@ class Solution:
                             q.append((x, y))
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -144,8 +133,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -186,8 +173,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getFood(grid [][]byte) (ans int) {
 	m, n := len(grid), len(grid[0])
@@ -225,8 +210,6 @@ func getFood(grid [][]byte) (ans int) {
 	return -1
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -271,10 +254,6 @@ var getFood = function (grid) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

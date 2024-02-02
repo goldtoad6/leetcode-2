@@ -50,13 +50,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Heap-optimized Dijkstra's Algorithm
 
-### **Python3**
+We enumerate the starting point, and for each starting point, we use Dijkstra's algorithm to find the shortest distance to all other points, and update the minimum value accordingly.
+
+The time complexity is $O(n \times m \times \log m)$, where $n$ and $m$ are the number of cities and roads, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def minCost(self, n: int, roads: List[List[int]], appleCost: List[int], k: int) -> List[int]:
+    def minCost(
+        self, n: int, roads: List[List[int]], appleCost: List[int], k: int
+    ) -> List[int]:
         def dijkstra(i):
             q = [(0, i)]
             dist = [inf] * n
@@ -78,8 +84,6 @@ class Solution:
             g[b].append((a, c))
         return [dijkstra(i) for i in range(n)]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -133,8 +137,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 using pii = pair<int, int>;
@@ -180,8 +182,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCost(n int, roads [][]int, appleCost []int, k int) []int64 {
 	g := make([]pairs, n)
@@ -222,13 +222,6 @@ func minCost(n int, roads [][]int, appleCost []int, k int) []int64 {
 	return ans
 }
 
-func min(a, b int64) int64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 type pair struct{ first, second int }
 
 var _ heap.Interface = (*pairs)(nil)
@@ -239,21 +232,11 @@ func (a pairs) Len() int { return len(a) }
 func (a pairs) Less(i int, j int) bool {
 	return a[i].first < a[j].first || a[i].first == a[j].first && a[i].second < a[j].second
 }
-func (a pairs) Swap(i int, j int)   { a[i], a[j] = a[j], a[i] }
-func (a *pairs) Push(x interface{}) { *a = append(*a, x.(pair)) }
-func (a *pairs) Pop() interface{}   { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
+func (a pairs) Swap(i int, j int) { a[i], a[j] = a[j], a[i] }
+func (a *pairs) Push(x any)       { *a = append(*a, x.(pair)) }
+func (a *pairs) Pop() any         { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

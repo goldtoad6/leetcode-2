@@ -60,9 +60,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：优先队列（小根堆）**
+### 方法一：优先队列（小根堆）
 
 定义两个优先级队列，分别表示空闲服务器、使用中的服务器。其中：空闲服务器 `idle` 依据**权重、下标**排序；而使用中的服务器 `busy` 依据**结束时间、权重、下标**排序。
 
@@ -72,13 +70,11 @@
 -   若当前有空闲服务器，那么在空闲队列 `idle` 中取出权重最小的服务器，将其加入使用中的队列 `busy` 中；
 -   若当前没有空闲服务器，那么在使用队列 `busy` 中找出最早结束时间且权重最小的服务器，重新加入使用中的队列 `busy` 中。
 
-相似题目：[2402. 会议室 III](/solution/2400-2499/2402.Meeting%20Rooms%20III/README.md)
+相似题目：
+
+-   [2402. 会议室 III](https://github.com/doocs/leetcode/blob/main/solution/2400-2499/2402.Meeting%20Rooms%20III/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -100,10 +96,6 @@ class Solution:
             res.append(i)
         return res
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -143,10 +135,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

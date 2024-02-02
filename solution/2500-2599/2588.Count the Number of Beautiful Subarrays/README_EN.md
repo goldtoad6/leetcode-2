@@ -52,9 +52,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Prefix XOR + Hash Table
 
-### **Python3**
+We observe that a subarray can become an array of all $0$s if and only if the number of $1$s on each binary bit of all elements in the subarray is even.
+
+If there exist indices $i$ and $j$ such that $i \lt j$ and the subarrays $nums[0,..,i]$ and $nums[0,..,j]$ have the same parity of the number of $1$s on each binary bit, then we can turn the subarray $nums[i + 1,..,j]$ into an array of all $0$s.
+
+Therefore, we can use the prefix XOR method and a hash table $cnt$ to count the occurrences of each prefix XOR value. We traverse the array, for each element $x$, we calculate its prefix XOR value $mask$, then add the number of occurrences of $mask$ to the answer. Then, we increase the number of occurrences of $mask$ by $1$.
+
+Finally, we return the answer.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +77,6 @@ class Solution:
             cnt[mask] += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -87,8 +95,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -106,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func beautifulSubarrays(nums []int) (ans int64) {
 	cnt := map[int]int{0: 1}
@@ -120,8 +124,6 @@ func beautifulSubarrays(nums []int) (ans int64) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function beautifulSubarrays(nums: number[]): number {
@@ -138,10 +140,6 @@ function beautifulSubarrays(nums: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

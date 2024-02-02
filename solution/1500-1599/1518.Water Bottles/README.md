@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 我们可以直接模拟整个过程。
 
@@ -65,70 +63,94 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def numWaterBottles(self, numBottles: int, numExchange: int) -> int:
         ans = numBottles
         while numBottles >= numExchange:
-            numBottles -= (numExchange - 1)
+            numBottles -= numExchange - 1
             ans += 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public int numWaterBottles(int numBottles, int numExchange) {
         int ans = numBottles;
-        while (numBottles >= numExchange) {
+        for (; numBottles >= numExchange; ++ans) {
             numBottles -= (numExchange - 1);
-            ++ans;
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int numWaterBottles(int numBottles, int numExchange) {
         int ans = numBottles;
-        while (numBottles >= numExchange) {
+        for (; numBottles >= numExchange; ++ans) {
             numBottles -= (numExchange - 1);
-            ++ans;
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func numWaterBottles(numBottles int, numExchange int) int {
 	ans := numBottles
-	for numBottles >= numExchange {
+	for ; numBottles >= numExchange; ans++ {
 		numBottles -= (numExchange - 1)
-		ans++
 	}
 	return ans
 }
 ```
 
-### **...**
-
+```ts
+function numWaterBottles(numBottles: number, numExchange: number): number {
+    let ans = numBottles;
+    for (; numBottles >= numExchange; ++ans) {
+        numBottles -= numExchange - 1;
+    }
+    return ans;
+}
 ```
 
+```js
+/**
+ * @param {number} numBottles
+ * @param {number} numExchange
+ * @return {number}
+ */
+var numWaterBottles = function (numBottles, numExchange) {
+    let ans = numBottles;
+    for (; numBottles >= numExchange; ++ans) {
+        numBottles -= numExchange - 1;
+    }
+    return ans;
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer $numBottles
+     * @param Integer $numExchange
+     * @return Integer
+     */
+    function numWaterBottles($numBottles, $numExchange) {
+        $ans = $numBottles;
+        while ($numBottles >= $numExchange) {
+            $numBottles = $numBottles - $numExchange + 1;
+            $ans++;
+        }
+        return $ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

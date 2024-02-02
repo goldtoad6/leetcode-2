@@ -27,23 +27,24 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def queryString(self, s: str, n: int) -> bool:
-        if n > 1023:
+        if n > 1000:
             return False
         return all(bin(i)[2:] in s for i in range(n, n // 2, -1))
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public boolean queryString(String s, int n) {
+        if (n > 1000) {
+            return false;
+        }
         for (int i = n; i > n / 2; i--) {
             if (!s.contains(Integer.toBinaryString(i))) {
                 return false;
@@ -54,12 +55,13 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool queryString(string s, int n) {
+        if (n > 1000) {
+            return false;
+        }
         for (int i = n; i > n / 2; --i) {
             string b = bitset<32>(i).to_string();
             b = b.substr(b.find_first_not_of('0'));
@@ -72,10 +74,11 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func queryString(s string, n int) bool {
+	if n > 1000 {
+		return false
+	}
 	for i := n; i > n/2; i-- {
 		if !strings.Contains(s, strconv.FormatInt(int64(i), 2)) {
 			return false
@@ -85,10 +88,11 @@ func queryString(s string, n int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function queryString(s: string, n: number): boolean {
+    if (n > 1000) {
+        return false;
+    }
     for (let i = n; i > n / 2; --i) {
         if (s.indexOf(i.toString(2)) === -1) {
             return false;
@@ -98,10 +102,6 @@ function queryString(s: string, n: number): boolean {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

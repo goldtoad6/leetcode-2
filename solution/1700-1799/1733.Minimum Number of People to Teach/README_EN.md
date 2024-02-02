@@ -50,13 +50,15 @@ Note that friendships are not transitive, meaning if <code>x</code> is a friend 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def minimumTeachings(self, n: int, languages: List[List[int]], friendships: List[List[int]]) -> int:
+    def minimumTeachings(
+        self, n: int, languages: List[List[int]], friendships: List[List[int]]
+    ) -> int:
         def check(u, v):
             for x in languages[u - 1]:
                 for y in languages[v - 1]:
@@ -75,8 +77,6 @@ class Solution:
                 cnt[l] += 1
         return len(s) - max(cnt.values(), default=0)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -118,8 +118,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -157,8 +155,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTeachings(n int, languages [][]int, friendships [][]int) int {
 	check := func(u, v int) bool {
@@ -187,25 +183,10 @@ func minimumTeachings(n int, languages [][]int, friendships [][]int) int {
 			cnt[l]++
 		}
 	}
-	mx := 0
-	for _, v := range cnt {
-		mx = max(mx, v)
-	}
-	return len(s) - mx
+	return len(s) - slices.Max(cnt)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -28,27 +28,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**线性查找：**
-
-遍历数组，当 `A[i] = i` 时直接返回即可。
-
-**优化：**
-
-在遍历的基础，进行可能的 "跳跃"，结束时执行 `i = max(A[i], i + 1)`，而不再单纯 `i++`。
-
-可行性证明：
-
-因为数组是**有序**的，若 `A[i] != i`，那么就可以将 `A[i]` 以下的可能全部排除，直接将 `i` 设定为 `A[i]`。
-
-若是考虑最糟的状况（所有元素都为负数），则该优化与遍历无差别。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -66,10 +48,6 @@ class Solution:
 
         return find(nums, 0, len(nums) - 1)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -95,29 +73,6 @@ class Solution {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var findMagicIndex = function (nums) {
-    return helper(nums, 0, nums.length - 1);
-};
-
-function helper(nums, left, right) {
-    if (left > right) return -1;
-    let mid = Math.floor((left + right) / 2);
-    let leftIndex = helper(nums, left, mid - 1);
-    if (leftIndex != -1) return leftIndex;
-    if (nums[mid] == mid) return mid;
-    return helper(nums, mid + 1, right);
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -142,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMagicIndex(nums []int) int {
 	return find(nums, 0, len(nums)-1)
@@ -164,8 +117,6 @@ func find(nums []int, left, right int) int {
 	return find(nums, mid+1, right)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function findMagicIndex(nums: number[]): number {
@@ -190,6 +141,56 @@ function findMagicIndex(nums: number[]): number {
 }
 ```
 
+```rust
+impl Solution {
+    fn find(nums: &Vec<i32>, l: usize, r: usize) -> i32 {
+        if l >= r || nums[r - 1] < 0 {
+            return -1;
+        }
+        let mid = l + (r - l) / 2;
+        if nums[mid] >= (l as i32) {
+            let res = Self::find(nums, l, mid);
+            if res != -1 {
+                return res;
+            }
+        }
+        if nums[mid] == (mid as i32) {
+            return mid as i32;
+        }
+        Self::find(nums, mid + 1, r)
+    }
+
+    pub fn find_magic_index(nums: Vec<i32>) -> i32 {
+        Self::find(&nums, 0, nums.len())
+    }
+}
+```
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMagicIndex = function (nums) {
+    return helper(nums, 0, nums.length - 1);
+};
+
+function helper(nums, left, right) {
+    if (left > right) return -1;
+    let mid = Math.floor((left + right) / 2);
+    let leftIndex = helper(nums, left, mid - 1);
+    if (leftIndex != -1) return leftIndex;
+    if (nums[mid] == mid) return mid;
+    return helper(nums, mid + 1, right);
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
 ```ts
 function findMagicIndex(nums: number[]): number {
     const n = nums.length;
@@ -201,33 +202,6 @@ function findMagicIndex(nums: number[]): number {
         i = Math.max(nums[i], i + 1);
     }
     return -1;
-}
-```
-
-## **Rust**
-
-```rust
-impl Solution {
-    fn find(nums: &Vec<i32>, l: usize, r: usize) -> i32 {
-        if l >= r || nums[r - 1] < 0 {
-            return -1;
-        }
-        let mid = l + (r - l) / 2;
-        if nums[mid] >= l as i32 {
-            let res = Self::find(nums, l, mid);
-            if res != -1 {
-                return res;
-            }
-        }
-        if nums[mid] == mid as i32 {
-            return mid as i32;
-        }
-        Self::find(nums, mid + 1, r)
-    }
-
-    pub fn find_magic_index(nums: Vec<i32>) -> i32 {
-        Self::find(&nums, 0, nums.len())
-    }
 }
 ```
 
@@ -248,10 +222,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -61,9 +61,9 @@ Thus, the minimum time needed to complete all the courses is 7 + 5 = 12 months.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -74,25 +74,23 @@ class Solution:
             g[a - 1].append(b - 1)
             indeg[b - 1] += 1
         q = deque()
-        dp = [0] * n
+        f = [0] * n
         ans = 0
         for i, (v, t) in enumerate(zip(indeg, time)):
             if v == 0:
                 q.append(i)
-                dp[i] = t
+                f[i] = t
                 ans = max(ans, t)
         while q:
             i = q.popleft()
             for j in g[i]:
-                dp[j] = max(dp[j], dp[i] + time[j])
-                ans = max(ans, dp[j])
+                f[j] = max(f[j], f[i] + time[j])
+                ans = max(ans, f[j])
                 indeg[j] -= 1
                 if indeg[j] == 0:
                     q.append(j)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -106,21 +104,21 @@ class Solution {
             ++indeg[b];
         }
         Deque<Integer> q = new ArrayDeque<>();
-        int[] dp = new int[n];
+        int[] f = new int[n];
         int ans = 0;
         for (int i = 0; i < n; ++i) {
             int v = indeg[i], t = time[i];
             if (v == 0) {
                 q.offer(i);
-                dp[i] = t;
+                f[i] = t;
                 ans = Math.max(ans, t);
             }
         }
         while (!q.isEmpty()) {
             int i = q.pollFirst();
             for (int j : g[i]) {
-                dp[j] = Math.max(dp[j], dp[i] + time[j]);
-                ans = Math.max(ans, dp[j]);
+                f[j] = Math.max(f[j], f[i] + time[j]);
+                ans = Math.max(ans, f[j]);
                 if (--indeg[j] == 0) {
                     q.offer(j);
                 }
@@ -130,8 +128,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -145,13 +141,13 @@ public:
             ++indeg[b];
         }
         queue<int> q;
-        vector<int> dp(n);
+        vector<int> f(n);
         int ans = 0;
         for (int i = 0; i < n; ++i) {
             int v = indeg[i], t = time[i];
             if (v == 0) {
                 q.push(i);
-                dp[i] = t;
+                f[i] = t;
                 ans = max(ans, t);
             }
         }
@@ -159,17 +155,17 @@ public:
             int i = q.front();
             q.pop();
             for (int j : g[i]) {
-                if (--indeg[j] == 0) q.push(j);
-                dp[j] = max(dp[j], dp[i] + time[j]);
-                ans = max(ans, dp[j]);
+                if (--indeg[j] == 0) {
+                    q.push(j);
+                }
+                f[j] = max(f[j], f[i] + time[j]);
+                ans = max(ans, f[j]);
             }
         }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minimumTime(n int, relations [][]int, time []int) int {
@@ -180,13 +176,13 @@ func minimumTime(n int, relations [][]int, time []int) int {
 		g[a] = append(g[a], b)
 		indeg[b]++
 	}
-	dp := make([]int, n)
+	f := make([]int, n)
 	q := []int{}
 	ans := 0
 	for i, v := range indeg {
 		if v == 0 {
 			q = append(q, i)
-			dp[i] = time[i]
+			f[i] = time[i]
 			ans = max(ans, time[i])
 		}
 	}
@@ -198,25 +194,48 @@ func minimumTime(n int, relations [][]int, time []int) int {
 			if indeg[j] == 0 {
 				q = append(q, j)
 			}
-			dp[j] = max(dp[j], dp[i]+time[j])
-			ans = max(ans, dp[j])
+			f[j] = max(f[j], f[i]+time[j])
+			ans = max(ans, f[j])
 		}
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function minimumTime(n: number, relations: number[][], time: number[]): number {
+    const g: number[][] = Array(n)
+        .fill(0)
+        .map(() => []);
+    const indeg: number[] = Array(n).fill(0);
+    for (const [a, b] of relations) {
+        g[a - 1].push(b - 1);
+        ++indeg[b - 1];
+    }
+    const q: number[] = [];
+    const f: number[] = Array(n).fill(0);
+    let ans: number = 0;
+    for (let i = 0; i < n; ++i) {
+        if (indeg[i] === 0) {
+            q.push(i);
+            f[i] = time[i];
+            ans = Math.max(ans, f[i]);
+        }
+    }
+    while (q.length > 0) {
+        const i = q.shift()!;
+        for (const j of g[i]) {
+            f[j] = Math.max(f[j], f[i] + time[j]);
+            ans = Math.max(ans, f[j]);
+            if (--indeg[j] === 0) {
+                q.push(j);
+            }
+        }
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

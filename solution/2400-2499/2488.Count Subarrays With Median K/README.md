@@ -14,11 +14,13 @@
 
 <ul>
 	<li>数组的中位数是按 <strong>递增</strong> 顺序排列后位于 <strong>中间</strong> 的那个元素，如果数组长度为偶数，则中位数是位于中间靠 <strong>左</strong> 的那个元素。
+
     <ul>
     	<li>例如，<code>[2,3,1,4]</code> 的中位数是 <code>2</code> ，<code>[8,4,3,5,1]</code> 的中位数是 <code>4</code> 。</li>
     </ul>
     </li>
     <li>子数组是数组中的一个连续部分。</li>
+
 </ul>
 
 <p>&nbsp;</p>
@@ -52,9 +54,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：遍历 + 计数**
+### 方法一：遍历 + 计数
 
 我们先找到中位数 $k$ 在数组中的位置 $i$，然后从 $i$ 开始向两边遍历，统计中位数为 $k$ 的子数组的数目。
 
@@ -72,10 +72,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def countSubarrays(self, nums: List[int], k: int) -> int:
@@ -83,7 +79,7 @@ class Solution:
         cnt = Counter()
         ans = 1
         x = 0
-        for v in nums[i + 1:]:
+        for v in nums[i + 1 :]:
             x += 1 if v > k else -1
             ans += 0 <= x <= 1
             cnt[x] += 1
@@ -94,10 +90,6 @@ class Solution:
             ans += cnt[-x] + cnt[-x + 1]
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -129,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -161,45 +151,41 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countSubarrays(nums []int, k int) int {
-    i, n := 0, len(nums)
-    for nums[i] != k {
-        i++
-    }
-    ans := 1
-    cnt := make([]int, n << 1 | 1)
-    x := 0
-    for j := i + 1; j < n; j++ {
-        if nums[j] > k {
-            x++
-        } else {
-            x--
-        }
-        if x >= 0 && x <= 1 {
-            ans++
-        }
-        cnt[x + n]++
-    }
-    x = 0
-    for j := i - 1; j >= 0; j-- {
-        if nums[j] > k {
-            x++
-        } else {
-            x--
-        }
-        if x >= 0 && x <= 1 {
-            ans++
-        }
-        ans += cnt[-x + n] + cnt[-x + 1 + n]
-    }
-    return ans
+	i, n := 0, len(nums)
+	for nums[i] != k {
+		i++
+	}
+	ans := 1
+	cnt := make([]int, n<<1|1)
+	x := 0
+	for j := i + 1; j < n; j++ {
+		if nums[j] > k {
+			x++
+		} else {
+			x--
+		}
+		if x >= 0 && x <= 1 {
+			ans++
+		}
+		cnt[x+n]++
+	}
+	x = 0
+	for j := i - 1; j >= 0; j-- {
+		if nums[j] > k {
+			x++
+		} else {
+			x--
+		}
+		if x >= 0 && x <= 1 {
+			ans++
+		}
+		ans += cnt[-x+n] + cnt[-x+1+n]
+	}
+	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countSubarrays(nums: number[], k: number): number {
@@ -223,10 +209,6 @@ function countSubarrays(nums: number[], k: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

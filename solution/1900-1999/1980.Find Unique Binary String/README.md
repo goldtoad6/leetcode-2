@@ -47,9 +47,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数 + 枚举**
+### 方法一：计数 + 枚举
 
 由于 `'1'` 在长度为 $n$ 的二进制字符串中出现的次数可以为 $0, 1, 2, \cdots, n$（共有 $n + 1$ 种可能），因此我们一定可以找出一个新的二进制字符串，满足 `'1'` 在字符串中出现次数与 `nums` 中每个字符串不同。
 
@@ -60,10 +58,6 @@
 时间复杂度 $O(L)$，空间复杂度 $O(1)$。其中 $L$ 为 `nums` 中字符串的总长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -76,10 +70,6 @@ class Solution:
             if mask >> i & 1 ^ 1:
                 return "1" * i + "0" * (n - i)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -103,8 +93,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -114,7 +102,7 @@ public:
             int cnt = count(x.begin(), x.end(), '1');
             mask |= 1 << cnt;
         }
-        for (int i = 0; ; ++i) {
+        for (int i = 0;; ++i) {
             if (mask >> i & 1 ^ 1) {
                 return string(i, '1') + string(nums.size() - i, '0');
             }
@@ -122,8 +110,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findDifferentBinaryString(nums []string) string {
@@ -139,10 +125,23 @@ func findDifferentBinaryString(nums []string) string {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public string FindDifferentBinaryString(string[] nums) {
+        int mask = 0;
+        foreach (var x in nums) {
+            int cnt = x.Count(c => c == '1');
+            mask |= 1 << cnt;
+        }
+        int i = 0;
+        while ((mask >> i & 1) == 1) {
+            i++;
+        }
+        return string.Format("{0}{1}", new string('1', i), new string('0', nums.Length - i));
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

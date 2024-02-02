@@ -4,13 +4,12 @@ class Solution {
      * @return Integer
      */
     function removeDuplicates(&$nums) {
-        $fast = $slow = 0;
-        while ($fast < count($nums)) {
-            if ($nums[$fast] != $nums[$slow]) {
-                $nums[++$slow] = $nums[$fast];
+        $k = 0;
+        foreach ($nums as $x) {
+            if ($k == 0 || $x != $nums[$k - 1]) {
+                $nums[$k++] = $x;
             }
-            $fast++;
         }
-        return $slow + 1;
+        return $k;
     }
 }

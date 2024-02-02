@@ -41,9 +41,9 @@ Note that there may be other ways to increment nums to have the maximum product.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -57,8 +57,6 @@ class Solution:
             ans = (ans * v) % mod
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -81,8 +79,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -101,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumProduct(nums []int, k int) int {
 	h := hp{nums}
@@ -119,11 +113,9 @@ func maximumProduct(nums []int, k int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (hp) Push(interface{})     {}
-func (hp) Pop() (_ interface{}) { return }
+func (hp) Push(any)     {}
+func (hp) Pop() (_ any) { return }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -149,10 +141,6 @@ var maximumProduct = function (nums, k) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

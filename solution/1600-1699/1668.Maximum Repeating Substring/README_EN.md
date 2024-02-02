@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
             if word * k in sequence:
                 return k
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,8 +69,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -81,6 +77,7 @@ public:
         string t = word;
         int x = sequence.size() / word.size();
         for (int k = 1; k <= x; ++k) {
+            // C++ 这里从小到大枚举重复值
             if (sequence.find(t) != string::npos) {
                 ans = k;
             }
@@ -90,8 +87,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxRepeating(sequence string, word string) int {
@@ -103,34 +98,6 @@ func maxRepeating(sequence string, word string) int {
 	return 0
 }
 ```
-
-### **C**
-
-```c
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-
-int findWord(int i, char *sequence, char *word) {
-    int n = strlen(word);
-    for (int j = 0; j < n; j++) {
-        if (sequence[j + i] != word[j]) {
-            return 0;
-        }
-    }
-    return 1 + findWord(i + n, sequence, word);
-}
-
-int maxRepeating(char *sequence, char *word) {
-    int n = strlen(sequence);
-    int m = strlen(word);
-    int ans = 0;
-    for (int i = 0; i <= n - m; i++) {
-        ans = max(ans, findWord(i, sequence, word));
-    }
-    return ans;
-}
-```
-
-### **TypeScript**
 
 ```ts
 function maxRepeating(sequence: string, word: string): number {
@@ -145,8 +112,6 @@ function maxRepeating(sequence: string, word: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn max_repeating(sequence: String, word: String) -> i32 {
@@ -159,11 +124,7 @@ impl Solution {
         for i in 0..=n - m {
             let s = &sequence[i..i + m];
             if s == word {
-                dp[i] = if (i as i32) - (m as i32) < 0 {
-                    0
-                } else {
-                    dp[i - m]
-                } + 1;
+                dp[i] = (if (i as i32) - (m as i32) < 0 { 0 } else { dp[i - m] }) + 1;
             }
         }
         *dp.iter().max().unwrap()
@@ -171,10 +132,30 @@ impl Solution {
 }
 ```
 
-### **...**
+```c
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 
-```
+int findWord(int i, char* sequence, char* word) {
+    int n = strlen(word);
+    for (int j = 0; j < n; j++) {
+        if (sequence[j + i] != word[j]) {
+            return 0;
+        }
+    }
+    return 1 + findWord(i + n, sequence, word);
+}
 
+int maxRepeating(char* sequence, char* word) {
+    int n = strlen(sequence);
+    int m = strlen(word);
+    int ans = 0;
+    for (int i = 0; i <= n - m; i++) {
+        ans = max(ans, findWord(i, sequence, word));
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

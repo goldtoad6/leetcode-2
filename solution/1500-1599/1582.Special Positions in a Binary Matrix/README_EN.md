@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
                     ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +84,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numSpecial(mat [][]int) int {
 	m, n := len(mat), len(mat[0])
@@ -136,40 +130,6 @@ func numSpecial(mat [][]int) int {
 	return ans
 }
 ```
-
-### **C**
-
-```c
-int numSpecial(int **mat, int matSize, int *matColSize) {
-    int m = matSize;
-    int n = *matColSize;
-    int *rows = (int *) malloc(sizeof(int) * m);
-    int *cols = (int *) malloc(sizeof(int) * n);
-    memset(rows, 0, sizeof(int) * m);
-    memset(cols, 0, sizeof(int) * n);
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (mat[i][j] == 1) {
-                rows[i]++;
-                cols[j]++;
-            }
-        }
-    }
-    int res = 0;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            if (mat[i][j] == 1 && rows[i] == 1 && cols[j] == 1) {
-                res++;
-            }
-        }
-    }
-    free(rows);
-    free(cols);
-    return res;
-}
-```
-
-### **TypeScript**
 
 ```ts
 function numSpecial(mat: number[][]): number {
@@ -199,8 +159,6 @@ function numSpecial(mat: number[][]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn num_special(mat: Vec<Vec<i32>>) -> i32 {
@@ -228,10 +186,36 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+int numSpecial(int** mat, int matSize, int* matColSize) {
+    int m = matSize;
+    int n = *matColSize;
+    int* rows = (int*) malloc(sizeof(int) * m);
+    int* cols = (int*) malloc(sizeof(int) * n);
+    memset(rows, 0, sizeof(int) * m);
+    memset(cols, 0, sizeof(int) * n);
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (mat[i][j] == 1) {
+                rows[i]++;
+                cols[j]++;
+            }
+        }
+    }
+    int res = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (mat[i][j] == 1 && rows[i] == 1 && cols[j] == 1) {
+                res++;
+            }
+        }
+    }
+    free(rows);
+    free(cols);
+    return res;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

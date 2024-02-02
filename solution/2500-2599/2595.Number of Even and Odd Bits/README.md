@@ -44,19 +44,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举**
+### 方法一：枚举
 
 我们根据题意，枚举 $n$ 的二进制表示中从低位到高位的每一位，如果该位为 $1$，则根据该位的下标是奇数还是偶数，将对应的计数器加 $1$ 即可。
 
 时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。其中 $n$ 为给定的整数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -70,10 +64,6 @@ class Solution:
         return ans
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int[] evenOddBit(int n) {
@@ -85,8 +75,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -101,8 +89,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func evenOddBit(n int) []int {
 	ans := make([]int, 2)
@@ -112,8 +98,6 @@ func evenOddBit(n int) []int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function evenOddBit(n: number): number[] {
@@ -125,10 +109,100 @@ function evenOddBit(n: number): number[] {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn even_odd_bit(mut n: i32) -> Vec<i32> {
+        let mut ans = vec![0; 2];
 
-```
+        let mut i = 0;
+        while n != 0 {
+            ans[i] += n & 1;
 
+            n >>= 1;
+            i ^= 1;
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def evenOddBit(self, n: int) -> List[int]:
+        mask = 0x5555
+        even = (n & mask).bit_count()
+        odd = (n & ~mask).bit_count()
+        return [even, odd]
+```
+
+```java
+class Solution {
+    public int[] evenOddBit(int n) {
+        int mask = 0x5555;
+        int even = Integer.bitCount(n & mask);
+        int odd = Integer.bitCount(n & ~mask);
+        return new int[] {even, odd};
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> evenOddBit(int n) {
+        int mask = 0x5555;
+        int even = __builtin_popcount(n & mask);
+        int odd = __builtin_popcount(n & ~mask);
+        return {even, odd};
+    }
+};
+```
+
+```go
+func evenOddBit(n int) []int {
+	mask := 0x5555
+	even := bits.OnesCount32(uint32(n & mask))
+	odd := bits.OnesCount32(uint32(n & ^mask))
+	return []int{even, odd}
+}
+```
+
+```ts
+function evenOddBit(n: number): number[] {
+    const mask = 0x5555;
+    const even = bitCount(n & mask);
+    const odd = bitCount(n & ~mask);
+    return [even, odd];
+}
+
+function bitCount(i: number): number {
+    i = i - ((i >>> 1) & 0x55555555);
+    i = (i & 0x33333333) + ((i >>> 2) & 0x33333333);
+    i = (i + (i >>> 4)) & 0x0f0f0f0f;
+    i = i + (i >>> 8);
+    i = i + (i >>> 16);
+    return i & 0x3f;
+}
+```
+
+```rust
+impl Solution {
+    pub fn even_odd_bit(n: i32) -> Vec<i32> {
+        let mask: i32 = 0x5555;
+        let even = (n & mask).count_ones() as i32;
+        let odd = (n & !mask).count_ones() as i32;
+        vec![even, odd]
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

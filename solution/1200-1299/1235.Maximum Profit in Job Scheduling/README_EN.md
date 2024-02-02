@@ -53,13 +53,31 @@ Profit obtained 150 = 20 + 70 + 60.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Memoization Search + Binary Search
 
-### **Python3**
+First, we sort the jobs by start time in ascending order, then design a function $dfs(i)$ to represent the maximum profit that can be obtained starting from the $i$-th job. The answer is $dfs(0)$.
+
+The calculation process of function $dfs(i)$ is as follows:
+
+For the $i$-th job, we can choose to do it or not. If we don't do it, the maximum profit is $dfs(i + 1)$; if we do it, we can use binary search to find the first job that starts after the end time of the $i$-th job, denoted as $j$, then the maximum profit is $profit[i] + dfs(j)$. We take the larger of the two. That is:
+
+$$
+dfs(i)=\max(dfs(i+1),profit[i]+dfs(j))
+$$
+
+Where $j$ is the smallest index that satisfies $startTime[j] \ge endTime[i]$.
+
+In this process, we can use memoization search to save the answer of each state to avoid repeated calculations.
+
+The time complexity is $O(n \times \log n)$, where $n$ is the number of jobs.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+    def jobScheduling(
+        self, startTime: List[int], endTime: List[int], profit: List[int]
+    ) -> int:
         @cache
         def dfs(i):
             if i >= n:
@@ -72,20 +90,6 @@ class Solution:
         n = len(profit)
         return dfs(0)
 ```
-
-```python
-class Solution:
-    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-        jobs = sorted(zip(endTime, startTime, profit))
-        n = len(profit)
-        dp = [0] * (n + 1)
-        for i, (_, s, p) in enumerate(jobs):
-            j = bisect_right(jobs, s, hi=i, key=lambda x: x[0])
-            dp[i + 1] = max(dp[i], dp[j] + p)
-        return dp[n]
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -133,6 +137,132 @@ class Solution {
 }
 ```
 
+```cpp
+class Solution {
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        int n = profit.size();
+        vector<tuple<int, int, int>> jobs(n);
+        for (int i = 0; i < n; ++i) jobs[i] = {startTime[i], endTime[i], profit[i]};
+        sort(jobs.begin(), jobs.end());
+        vector<int> f(n);
+        function<int(int)> dfs = [&](int i) -> int {
+            if (i >= n) return 0;
+            if (f[i]) return f[i];
+            auto [_, e, p] = jobs[i];
+            tuple<int, int, int> t{e, 0, 0};
+            int j = lower_bound(jobs.begin() + i + 1, jobs.end(), t, [&](auto& l, auto& r) -> bool { return get<0>(l) < get<0>(r); }) - jobs.begin();
+            int ans = max(dfs(i + 1), p + dfs(j));
+            f[i] = ans;
+            return ans;
+        };
+        return dfs(0);
+    }
+};
+```
+
+```go
+func jobScheduling(startTime []int, endTime []int, profit []int) int {
+	n := len(profit)
+	type tuple struct{ s, e, p int }
+	jobs := make([]tuple, n)
+	for i, p := range profit {
+		jobs[i] = tuple{startTime[i], endTime[i], p}
+	}
+	sort.Slice(jobs, func(i, j int) bool { return jobs[i].s < jobs[j].s })
+	f := make([]int, n)
+	var dfs func(int) int
+	dfs = func(i int) int {
+		if i >= n {
+			return 0
+		}
+		if f[i] != 0 {
+			return f[i]
+		}
+		j := sort.Search(n, func(j int) bool { return jobs[j].s >= jobs[i].e })
+		ans := max(dfs(i+1), jobs[i].p+dfs(j))
+		f[i] = ans
+		return ans
+	}
+	return dfs(0)
+}
+```
+
+```ts
+function jobScheduling(startTime: number[], endTime: number[], profit: number[]): number {
+    const n = startTime.length;
+    const f = new Array(n).fill(0);
+    const idx = new Array(n).fill(0).map((_, i) => i);
+    idx.sort((i, j) => startTime[i] - startTime[j]);
+    const search = (x: number) => {
+        let l = 0;
+        let r = n;
+        while (l < r) {
+            const mid = (l + r) >> 1;
+            if (startTime[idx[mid]] >= x) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    };
+    const dfs = (i: number): number => {
+        if (i >= n) {
+            return 0;
+        }
+        if (f[i] !== 0) {
+            return f[i];
+        }
+        const j = search(endTime[idx[i]]);
+        return (f[i] = Math.max(dfs(i + 1), dfs(j) + profit[idx[i]]));
+    };
+    return dfs(0);
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Dynamic Programming + Binary Search
+
+We can also change the memoization search in Solution 1 to dynamic programming.
+
+First, sort the jobs, this time we sort by end time in ascending order, then define $dp[i]$, which represents the maximum profit that can be obtained from the first $i$ jobs. The answer is $dp[n]$. Initialize $dp[0]=0$.
+
+For the $i$-th job, we can choose to do it or not. If we don't do it, the maximum profit is $dp[i]$; if we do it, we can use binary search to find the last job that ends before the start time of the $i$-th job, denoted as $j$, then the maximum profit is $profit[i] + dp[j]$. We take the larger of the two. That is:
+
+$$
+dp[i+1] = \max(dp[i], profit[i] + dp[j])
+$$
+
+Where $j$ is the largest index that satisfies $endTime[j] \leq startTime[i]$.
+
+The time complexity is $O(n \times \log n)$, where $n$ is the number of jobs.
+
+Similar problems:
+
+-   [2008. Maximum Earnings From Taxi](https://github.com/doocs/leetcode/blob/main/solution/2000-2099/2008.Maximum%20Earnings%20From%20Taxi/README.md)
+-   [1751. Maximum Number of Events That Can Be Attended II](https://github.com/doocs/leetcode/blob/main/solution/1700-1799/1751.Maximum%20Number%20of%20Events%20That%20Can%20Be%20Attended%20II/README.md)
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def jobScheduling(
+        self, startTime: List[int], endTime: List[int], profit: List[int]
+    ) -> int:
+        @cache
+        def dfs(i: int) -> int:
+            if i >= n:
+                return 0
+            j = bisect_left(idx, endTime[idx[i]], key=lambda i: startTime[i])
+            return max(dfs(i + 1), profit[idx[i]] + dfs(j))
+
+        n = len(startTime)
+        idx = sorted(range(n), key=lambda i: startTime[i])
+        return dfs(0)
+```
+
 ```java
 class Solution {
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
@@ -165,32 +295,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
-        int n = profit.size();
-        vector<tuple<int, int, int>> jobs(n);
-        for (int i = 0; i < n; ++i) jobs[i] = {startTime[i], endTime[i], profit[i]};
-        sort(jobs.begin(), jobs.end());
-        vector<int> f(n);
-        function<int(int)> dfs = [&](int i) -> int {
-            if (i >= n) return 0;
-            if (f[i]) return f[i];
-            auto [_, e, p] = jobs[i];
-            tuple<int, int, int> t{e, 0, 0};
-            int j = lower_bound(jobs.begin() + i + 1, jobs.end(), t, [&](auto& l, auto& r) -> bool { return get<0>(l) < get<0>(r); }) - jobs.begin();
-            int ans = max(dfs(i + 1), p + dfs(j));
-            f[i] = ans;
-            return ans;
-        };
-        return dfs(0);
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -210,42 +314,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func jobScheduling(startTime []int, endTime []int, profit []int) int {
-	n := len(profit)
-	type tuple struct{ s, e, p int }
-	jobs := make([]tuple, n)
-	for i, p := range profit {
-		jobs[i] = tuple{startTime[i], endTime[i], p}
-	}
-	sort.Slice(jobs, func(i, j int) bool { return jobs[i].s < jobs[j].s })
-	f := make([]int, n)
-	var dfs func(int) int
-	dfs = func(i int) int {
-		if i >= n {
-			return 0
-		}
-		if f[i] != 0 {
-			return f[i]
-		}
-		j := sort.Search(n, func(j int) bool { return jobs[j].s >= jobs[i].e })
-		ans := max(dfs(i+1), jobs[i].p+dfs(j))
-		f[i] = ans
-		return ans
-	}
-	return dfs(0)
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
 ```go
 func jobScheduling(startTime []int, endTime []int, profit []int) int {
 	n := len(profit)
@@ -262,19 +330,28 @@ func jobScheduling(startTime []int, endTime []int, profit []int) int {
 	}
 	return dp[n]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def jobScheduling(
+        self, startTime: List[int], endTime: List[int], profit: List[int]
+    ) -> int:
+        jobs = sorted(zip(endTime, startTime, profit))
+        n = len(profit)
+        dp = [0] * (n + 1)
+        for i, (_, s, p) in enumerate(jobs):
+            j = bisect_right(jobs, s, hi=i, key=lambda x: x[0])
+            dp[i + 1] = max(dp[i], dp[j] + p)
+        return dp[n]
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

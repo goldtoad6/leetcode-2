@@ -39,21 +39,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：动态规划
 
-**方法一：动态规划**
-
-类似[1143. 最长公共子序列](/solution/1100-1199/1143.Longest%20Common%20Subsequence/README.md)。
+类似[1143. 最长公共子序列](https://github.com/doocs/leetcode/blob/main/solution/1100-1199/1143.Longest%20Common%20Subsequence/README.md)。
 
 定义 `dp[i][j]` 表示使得 `word1[0:i-1]` 和 `word1[0:j-1]` 两个字符串相同所需执行的删除操作次数。
 
 时间复杂度：$O(mn)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,10 +66,6 @@ class Solution:
                     dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1])
         return dp[-1][-1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -102,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -124,8 +112,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minDistance(word1 string, word2 string) int {
@@ -149,16 +135,7 @@ func minDistance(word1 string, word2 string) int {
 	}
 	return dp[m][n]
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minDistance(word1: string, word2: string): number {
@@ -179,8 +156,6 @@ function minDistance(word1: string, word2: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_distance(word1: String, word2: String) -> i32 {
@@ -193,19 +168,15 @@ impl Solution {
                     dp[i - 1][j - 1] + 1
                 } else {
                     dp[i - 1][j].max(dp[i][j - 1])
-                }
+                };
             }
         }
         let max = dp[m][n];
-        ((m - max) + (n - max)) as i32
+        (m - max + (n - max)) as i32
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

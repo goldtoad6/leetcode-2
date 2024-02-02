@@ -48,15 +48,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：BFS + 状态压缩**
+### 方法一：BFS + 状态压缩
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -84,10 +78,6 @@ class Solution:
             ans += 1
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -130,13 +120,11 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int minStickers(vector<string>& stickers, string target) {
-        queue<int> q {{0}};
+        queue<int> q{{0}};
         int ans = 0;
         int n = target.size();
         vector<bool> vis(1 << n);
@@ -169,8 +157,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minStickers(stickers []string, target string) int {
@@ -211,10 +197,8 @@ func minStickers(stickers []string, target string) int {
 }
 ```
 
-### **Rust**
-
 ```rust
-use std::collections::{HashSet, VecDeque};
+use std::collections::{ HashSet, VecDeque };
 
 impl Solution {
     pub fn min_stickers(stickers: Vec<String>, target: String) -> i32 {
@@ -256,10 +240,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

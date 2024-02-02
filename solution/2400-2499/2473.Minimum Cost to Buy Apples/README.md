@@ -57,9 +57,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：堆优化版 Dijkstra 算法**
+### 方法一：堆优化版 Dijkstra 算法
 
 我们枚举起点，对于每个起点，使用 Dijkstra 算法求出到其他所有点的最短距离，更新最小值即可。
 
@@ -67,13 +65,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def minCost(self, n: int, roads: List[List[int]], appleCost: List[int], k: int) -> List[int]:
+    def minCost(
+        self, n: int, roads: List[List[int]], appleCost: List[int], k: int
+    ) -> List[int]:
         def dijkstra(i):
             q = [(0, i)]
             dist = [inf] * n
@@ -95,10 +91,6 @@ class Solution:
             g[b].append((a, c))
         return [dijkstra(i) for i in range(n)]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -152,8 +144,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 using pii = pair<int, int>;
@@ -199,8 +189,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCost(n int, roads [][]int, appleCost []int, k int) []int64 {
 	g := make([]pairs, n)
@@ -241,13 +229,6 @@ func minCost(n int, roads [][]int, appleCost []int, k int) []int64 {
 	return ans
 }
 
-func min(a, b int64) int64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 type pair struct{ first, second int }
 
 var _ heap.Interface = (*pairs)(nil)
@@ -258,21 +239,11 @@ func (a pairs) Len() int { return len(a) }
 func (a pairs) Less(i int, j int) bool {
 	return a[i].first < a[j].first || a[i].first == a[j].first && a[i].second < a[j].second
 }
-func (a pairs) Swap(i int, j int)   { a[i], a[j] = a[j], a[i] }
-func (a *pairs) Push(x interface{}) { *a = append(*a, x.(pair)) }
-func (a *pairs) Pop() interface{}   { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
+func (a pairs) Swap(i int, j int) { a[i], a[j] = a[j], a[i] }
+func (a *pairs) Push(x any)       { *a = append(*a, x.(pair)) }
+func (a *pairs) Pop() any         { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

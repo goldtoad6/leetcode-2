@@ -70,15 +70,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-双指针直接模拟即可。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -105,10 +99,6 @@ class Solution:
             j -= 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -142,8 +132,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -174,8 +162,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumRefill(plants []int, capacityA int, capacityB int) int {
 	i, j := 0, len(plants)-1
@@ -204,27 +190,8 @@ func minimumRefill(plants []int, capacityA int, capacityB int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

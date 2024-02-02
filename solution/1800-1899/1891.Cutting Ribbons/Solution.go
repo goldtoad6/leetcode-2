@@ -1,5 +1,5 @@
 func maxLength(ribbons []int, k int) int {
-	left, right := 0, 100000
+	left, right := 0, slices.Max(ribbons)
 	for left < right {
 		mid := (left + right + 1) >> 1
 		cnt := 0

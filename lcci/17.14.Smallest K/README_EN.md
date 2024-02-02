@@ -21,28 +21,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def smallestK(self, arr: List[int], k: int) -> List[int]:
         return sorted(arr)[:k]
 ```
-
-```python
-class Solution:
-    def smallestK(self, arr: List[int], k: int) -> List[int]:
-        h = []
-        for v in arr:
-            heappush(h, -v)
-            if len(h) > k:
-                heappop(h)
-        return [-v for v in h]
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -55,6 +42,48 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> smallestK(vector<int>& arr, int k) {
+        sort(arr.begin(), arr.end());
+        vector<int> ans(k);
+        for (int i = 0; i < k; ++i) {
+            ans[i] = arr[i];
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func smallestK(arr []int, k int) []int {
+	sort.Ints(arr)
+	ans := make([]int, k)
+	for i, v := range arr[:k] {
+		ans[i] = v
+	}
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def smallestK(self, arr: List[int], k: int) -> List[int]:
+        h = []
+        for v in arr:
+            heappush(h, -v)
+            if len(h) > k:
+                heappop(h)
+        return [-v for v in h]
 ```
 
 ```java
@@ -75,22 +104,6 @@ class Solution {
         return ans;
     }
 }
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> smallestK(vector<int>& arr, int k) {
-        sort(arr.begin(), arr.end());
-        vector<int> ans(k);
-        for (int i = 0; i < k; ++i) {
-            ans[i] = arr[i];
-        }
-        return ans;
-    }
-};
 ```
 
 ```cpp
@@ -114,19 +127,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func smallestK(arr []int, k int) []int {
-	sort.Ints(arr)
-	ans := make([]int, k)
-	for i, v := range arr[:k] {
-		ans[i] = v
-	}
-	return ans
-}
-```
-
 ```go
 func smallestK(arr []int, k int) []int {
 	q := hp{}
@@ -145,9 +145,9 @@ func smallestK(arr []int, k int) []int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -155,10 +155,6 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

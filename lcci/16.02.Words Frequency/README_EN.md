@@ -42,9 +42,15 @@ wordsFrequency.get(&quot;pen&quot;); //returns 1
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We use a hash table $cnt$ to count the number of occurrences of each word in $book$.
+
+When calling the `get` function, we only need to return the number of occurrences of the corresponding word in $cnt$.
+
+In terms of time complexity, the time complexity of initializing the hash table $cnt$ is $O(n)$, where $n$ is the length of $book$. The time complexity of the `get` function is $O(1)$. The space complexity is $O(n)$.
+
+<!-- tabs:start -->
 
 ```python
 class WordsFrequency:
@@ -59,8 +65,6 @@ class WordsFrequency:
 # obj = WordsFrequency(book)
 # param_1 = obj.get(word)
 ```
-
-### **Java**
 
 ```java
 class WordsFrequency {
@@ -83,8 +87,6 @@ class WordsFrequency {
  * int param_1 = obj.get(word);
  */
 ```
-
-### **C++**
 
 ```cpp
 class WordsFrequency {
@@ -110,8 +112,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type WordsFrequency struct {
 	cnt map[string]int
@@ -136,7 +136,58 @@ func (this *WordsFrequency) Get(word string) int {
  */
 ```
 
-### **JavaScript**
+```ts
+class WordsFrequency {
+    private cnt: Map<string, number>;
+
+    constructor(book: string[]) {
+        const cnt = new Map<string, number>();
+        for (const word of book) {
+            cnt.set(word, (cnt.get(word) ?? 0) + 1);
+        }
+        this.cnt = cnt;
+    }
+
+    get(word: string): number {
+        return this.cnt.get(word) ?? 0;
+    }
+}
+
+/**
+ * Your WordsFrequency object will be instantiated and called as such:
+ * var obj = new WordsFrequency(book)
+ * var param_1 = obj.get(word)
+ */
+```
+
+```rust
+use std::collections::HashMap;
+struct WordsFrequency {
+    cnt: HashMap<String, i32>,
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl WordsFrequency {
+    fn new(book: Vec<String>) -> Self {
+        let mut cnt = HashMap::new();
+        for word in book.into_iter() {
+            *cnt.entry(word).or_insert(0) += 1;
+        }
+        Self { cnt }
+    }
+
+    fn get(&self, word: String) -> i32 {
+        *self.cnt.get(&word).unwrap_or(&0)
+    }
+}/**
+ * Your WordsFrequency object will be instantiated and called as such:
+ * let obj = WordsFrequency::new(book);
+ * let ret_1: i32 = obj.get(word);
+ */
+```
 
 ```js
 /**
@@ -164,71 +215,6 @@ WordsFrequency.prototype.get = function (word) {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class WordsFrequency {
-    private cnt: Map<string, number>;
-
-    constructor(book: string[]) {
-        const cnt = new Map<string, number>();
-        for (const word of book) {
-            cnt.set(word, (cnt.get(word) ?? 0) + 1);
-        }
-        this.cnt = cnt;
-    }
-
-    get(word: string): number {
-        return this.cnt.get(word) ?? 0;
-    }
-}
-
-/**
- * Your WordsFrequency object will be instantiated and called as such:
- * var obj = new WordsFrequency(book)
- * var param_1 = obj.get(word)
- */
-```
-
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-struct WordsFrequency {
-    counter: HashMap<String, i32>
-}
-
-
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
-impl WordsFrequency {
-
-    fn new(book: Vec<String>) -> Self {
-        let mut counter = HashMap::new();
-        for word in book.into_iter() {
-            *counter.entry(word).or_insert(0) += 1;
-        }
-        Self { counter }
-    }
-
-    fn get(&self, word: String) -> i32 {
-        *self.counter.get(&word).unwrap_or(&0)
-    }
-}
-
-/**
- * Your WordsFrequency object will be instantiated and called as such:
- * let obj = WordsFrequency::new(book);
- * let ret_1: i32 = obj.get(word);
- */
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

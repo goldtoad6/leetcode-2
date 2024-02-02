@@ -20,7 +20,7 @@
 <p><strong class="example">Example 1:</strong></p>
 
 <pre>
-<strong>Input:</strong> values = [1,2,3,7]
+<strong>Input:</strong> stoneValue = [1,2,3,7]
 <strong>Output:</strong> &quot;Bob&quot;
 <strong>Explanation:</strong> Alice will always lose. Her best move will be to take three piles and the score become 6. Now the score of Bob is 7 and Bob wins.
 </pre>
@@ -28,7 +28,7 @@
 <p><strong class="example">Example 2:</strong></p>
 
 <pre>
-<strong>Input:</strong> values = [1,2,3,-9]
+<strong>Input:</strong> stoneValue = [1,2,3,-9]
 <strong>Output:</strong> &quot;Alice&quot;
 <strong>Explanation:</strong> Alice must choose all the three piles at the first move to win and leave Bob with negative score.
 If Alice chooses one pile her score will be 1 and the next move Bob&#39;s score becomes 5. In the next move, Alice will take the pile with value = -9 and lose.
@@ -39,7 +39,7 @@ Remember that both play optimally so here Alice will choose the scenario that ma
 <p><strong class="example">Example 3:</strong></p>
 
 <pre>
-<strong>Input:</strong> values = [1,2,3,6]
+<strong>Input:</strong> stoneValue = [1,2,3,6]
 <strong>Output:</strong> &quot;Tie&quot;
 <strong>Explanation:</strong> Alice cannot win this game. She can end the game in a draw if she decided to choose all the first three piles, otherwise she will lose.
 </pre>
@@ -54,46 +54,62 @@ Remember that both play optimally so here Alice will choose the scenario that ma
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Memoization Search
 
-### **Python3**
+We design a function $dfs(i)$, which represents the maximum score difference that the current player can obtain when playing the game in the range $[i, n)$. If $dfs(0) > 0$, it means that the first player Alice can win; if $dfs(0) < 0$, it means that the second player Bob can win; otherwise, it means that the two players tie.
+
+The execution logic of the function $dfs(i)$ is as follows:
+
+-   If $i \geq n$, it means that there are no stones to take now, so we can directly return $0$;
+-   Otherwise, we enumerate that the current player takes the first $j+1$ piles of stones, where $j \in \{0, 1, 2\}$. Then the score difference that the other player can get in the next round is $dfs(i + j + 1)$, so the score difference that the current player can get is $\sum_{k=i}^{i+j} stoneValue[k] - dfs(i + j + 1)$. We want to maximize the score difference of the current player, so we can use the $\max$ function to get the maximum score difference, that is:
+
+$$
+dfs(i) = \max_{j \in \{0, 1, 2\}} \left\{\sum_{k=i}^{i+j} stoneValue[k] - dfs(i + j + 1)\right\}
+$$
+
+To prevent repeated calculations, we can use memoization search.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Where $n$ is the number of piles of stones.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def stoneGameIII(self, stoneValue: List[int]) -> str:
         @cache
         def dfs(i: int) -> int:
-            if i >= len(stoneValue):
+            if i >= n:
                 return 0
-            t = min(dfs(i + j) for j in range(1, 4))
-            return s[-1] - s[i] - t
+            ans, s = -inf, 0
+            for j in range(3):
+                if i + j >= n:
+                    break
+                s += stoneValue[i + j]
+                ans = max(ans, s - dfs(i + j + 1))
+            return ans
 
-        s = list(accumulate(stoneValue, initial=0))
-        a = dfs(0)
-        b = s[-1] - a
-        if a == b:
+        n = len(stoneValue)
+        ans = dfs(0)
+        if ans == 0:
             return 'Tie'
-        return 'Alice' if a > b else 'Bob'
+        return 'Alice' if ans > 0 else 'Bob'
 ```
-
-### **Java**
 
 ```java
 class Solution {
-    private int n;
-    private int[] s;
+    private int[] stoneValue;
     private Integer[] f;
+    private int n;
 
     public String stoneGameIII(int[] stoneValue) {
         n = stoneValue.length;
-        s = new int[n + 1];
         f = new Integer[n];
-        for (int i = 1; i <= n; ++i) {
-            s[i] = s[i - 1] + stoneValue[i - 1];
+        this.stoneValue = stoneValue;
+        int ans = dfs(0);
+        if (ans == 0) {
+            return "Tie";
         }
-        int a = dfs(0);
-        int b = s[n] - a;
-        return a == b ? "Tie" : a > b ? "Alice" : "Bob";
+        return ans > 0 ? "Alice" : "Bob";
     }
 
     private int dfs(int i) {
@@ -103,28 +119,22 @@ class Solution {
         if (f[i] != null) {
             return f[i];
         }
-        int t = 1 << 30;
-        for (int j = 1; j < 4; ++j) {
-            t = Math.min(t, dfs(i + j));
+        int ans = -(1 << 30);
+        int s = 0;
+        for (int j = 0; j < 3 && i + j < n; ++j) {
+            s += stoneValue[i + j];
+            ans = Math.max(ans, s - dfs(i + j + 1));
         }
-        f[i] = s[n] - s[i] - t;
-        return f[i];
+        return f[i] = ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     string stoneGameIII(vector<int>& stoneValue) {
         int n = stoneValue.size();
-        int s[n + 1];
-        s[0] = 0;
-        for (int i = 1; i <= n; ++i) {
-            s[i] = s[i - 1] + stoneValue[i - 1];
-        }
         int f[n];
         memset(f, 0x3f, sizeof(f));
         function<int(int)> dfs = [&](int i) -> int {
@@ -134,30 +144,27 @@ public:
             if (f[i] != 0x3f3f3f3f) {
                 return f[i];
             }
-            int t = 1 << 30;
-            for (int j = 1; j < 4; ++j) {
-                t = min(t, dfs(i + j));
+            int ans = -(1 << 30), s = 0;
+            for (int j = 0; j < 3 && i + j < n; ++j) {
+                s += stoneValue[i + j];
+                ans = max(ans, s - dfs(i + j + 1));
             }
-            return f[i] = s[n] - s[i] - t;
+            return f[i] = ans;
         };
-        int a = dfs(0);
-        int b = s[n] - a;
-        return a == b ? "Tie" : (a > b ? "Alice" : "Bob");
+        int ans = dfs(0);
+        if (ans == 0) {
+            return "Tie";
+        }
+        return ans > 0 ? "Alice" : "Bob";
     }
 };
 ```
 
-### **Go**
-
 ```go
 func stoneGameIII(stoneValue []int) string {
 	n := len(stoneValue)
-	s := make([]int, n+1)
-	for i, x := range stoneValue {
-		s[i+1] = s[i] + x
-	}
-	const inf = 1 << 30
 	f := make([]int, n)
+	const inf = 1 << 30
 	for i := range f {
 		f[i] = inf
 	}
@@ -169,36 +176,53 @@ func stoneGameIII(stoneValue []int) string {
 		if f[i] != inf {
 			return f[i]
 		}
-		t := inf
-		for j := 1; j <= 3; j++ {
-			t = min(t, dfs(i+j))
+		ans, s := -(1 << 30), 0
+		for j := 0; j < 3 && i+j < n; j++ {
+			s += stoneValue[i+j]
+			ans = max(ans, s-dfs(i+j+1))
 		}
-		f[i] = s[n] - s[i] - t
-		return f[i]
+		f[i] = ans
+		return ans
 	}
-	a := dfs(0)
-	b := s[n] - a
-	if a == b {
+	ans := dfs(0)
+	if ans == 0 {
 		return "Tie"
 	}
-	if a > b {
+	if ans > 0 {
 		return "Alice"
 	}
 	return "Bob"
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function stoneGameIII(stoneValue: number[]): string {
+    const n = stoneValue.length;
+    const inf = 1 << 30;
+    const f: number[] = new Array(n).fill(inf);
+    const dfs = (i: number): number => {
+        if (i >= n) {
+            return 0;
+        }
+        if (f[i] !== inf) {
+            return f[i];
+        }
+        let ans = -inf;
+        let s = 0;
+        for (let j = 0; j < 3 && i + j < n; ++j) {
+            s += stoneValue[i + j];
+            ans = Math.max(ans, s - dfs(i + j + 1));
+        }
+        return (f[i] = ans);
+    };
+    const ans = dfs(0);
+    if (ans === 0) {
+        return 'Tie';
+    }
+    return ans > 0 ? 'Alice' : 'Bob';
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

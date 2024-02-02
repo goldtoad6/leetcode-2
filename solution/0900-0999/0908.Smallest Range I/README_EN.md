@@ -48,9 +48,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
         mx, mi = max(nums), min(nums)
         return max(0, mx - mi - k * 2)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -75,47 +73,22 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int smallestRangeI(vector<int>& nums, int k) {
-        int mx = *max_element(nums.begin(), nums.end());
-        int mi = *min_element(nums.begin(), nums.end());
-        return max(0, mx - mi - k * 2);
+        auto [mi, mx] = minmax_element(nums.begin(), nums.end());
+        return max(0, *mx - *mi - k * 2);
     }
 };
 ```
 
-### **Go**
-
 ```go
 func smallestRangeI(nums []int, k int) int {
-	mx, mi := 0, 10000
-	for _, v := range nums {
-		mx = max(mx, v)
-		mi = min(mi, v)
-	}
+	mi, mx := slices.Min(nums), slices.Max(nums)
 	return max(0, mx-mi-k*2)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function smallestRangeI(nums: number[], k: number): number {
@@ -125,22 +98,16 @@ function smallestRangeI(nums: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn smallest_range_i(nums: Vec<i32>, k: i32) -> i32 {
         let max = nums.iter().max().unwrap();
         let min = nums.iter().min().unwrap();
-        0.max(max - min - k * 2)
+        (0).max(max - min - k * 2)
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

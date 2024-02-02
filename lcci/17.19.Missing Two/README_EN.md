@@ -32,9 +32,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -57,8 +57,6 @@ class Solution:
         b = xor ^ a
         return [a, b]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +87,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -102,15 +98,15 @@ public:
 
         int diff = eor & -eor;
         int a = 0;
-        for (int v : nums) if (v & diff) a ^= v;
-        for (int i = 1; i <= n; ++i) if (i & diff) a ^= i;
+        for (int v : nums)
+            if (v & diff) a ^= v;
+        for (int i = 1; i <= n; ++i)
+            if (i & diff) a ^= i;
         int b = eor ^ a;
         return {a, b};
     }
 };
 ```
-
-### **Go**
 
 ```go
 func missingTwo(nums []int) []int {
@@ -139,10 +135,6 @@ func missingTwo(nums []int) []int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

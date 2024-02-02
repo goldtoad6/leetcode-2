@@ -21,29 +21,15 @@
 <p><strong>示例 2：</strong></p>
 
 <pre>
-<strong>输入：</strong>matrix = []
+<strong>输入：</strong>matrix = [["0"]]
 <strong>输出：</strong>0
 </pre>
 
 <p><strong>示例 3：</strong></p>
 
 <pre>
-<strong>输入：</strong>matrix = [["0"]]
-<strong>输出：</strong>0
-</pre>
-
-<p><strong>示例 4：</strong></p>
-
-<pre>
 <strong>输入：</strong>matrix = [["1"]]
 <strong>输出：</strong>1
-</pre>
-
-<p><strong>示例 5：</strong></p>
-
-<pre>
-<strong>输入：</strong>matrix = [["0","0"]]
-<strong>输出：</strong>0
 </pre>
 
 <p>&nbsp;</p>
@@ -59,19 +45,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：单调栈
 
-**方法一：单调栈**
-
-把每一行视为柱状图的底部，对每一行求柱状图的最大面积即可。
+我们把每一行视为柱状图的底部，对每一行求柱状图的最大面积即可。
 
 时间复杂度 $O(m \times n)$，其中 $m$ 表示 $matrix$ 的行数，$n$ 表示 $matrix$ 的列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -108,10 +88,6 @@ class Solution:
             stk.append(i)
         return max(h * (right[i] - left[i] - 1) for i, h in enumerate(heights))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -153,8 +129,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -193,8 +167,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maximalRectangle(matrix [][]byte) int {
@@ -238,19 +210,139 @@ func largestRectangleArea(heights []int) int {
 	}
 	return res
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn maximal_rectangle(matrix: Vec<Vec<char>>) -> i32 {
+        let n = matrix[0].len();
+        let mut heights = vec![0; n];
+        let mut ret = -1;
+
+        for row in &matrix {
+            Self::array_builder(row, &mut heights);
+            ret = std::cmp::max(ret, Self::largest_rectangle_area(heights.clone()));
+        }
+
+        ret
+    }
+
+    /// Helper function, build the heights array according to the input
+    #[allow(dead_code)]
+    fn array_builder(input: &Vec<char>, heights: &mut Vec<i32>) {
+        for (i, &c) in input.iter().enumerate() {
+            heights[i] += match c {
+                '1' => 1,
+                '0' => {
+                    heights[i] = 0;
+                    0
+                }
+                _ => panic!("This is impossible"),
+            };
+        }
+    }
+
+    /// Helper function, see: https://leetcode.com/problems/largest-rectangle-in-histogram/ for details
+    #[allow(dead_code)]
+    fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
+        let n = heights.len();
+        let mut left = vec![-1; n];
+        let mut right = vec![-1; n];
+        let mut stack: Vec<(usize, i32)> = Vec::new();
+        let mut ret = -1;
+
+        // Build left vector
+        for (i, h) in heights.iter().enumerate() {
+            while !stack.is_empty() && stack.last().unwrap().1 >= *h {
+                stack.pop();
+            }
+            if stack.is_empty() {
+                left[i] = -1;
+            } else {
+                left[i] = stack.last().unwrap().0 as i32;
+            }
+            stack.push((i, *h));
+        }
+
+        stack.clear();
+
+        // Build right vector
+        for (i, h) in heights.iter().enumerate().rev() {
+            while !stack.is_empty() && stack.last().unwrap().1 >= *h {
+                stack.pop();
+            }
+            if stack.is_empty() {
+                right[i] = n as i32;
+            } else {
+                right[i] = stack.last().unwrap().0 as i32;
+            }
+            stack.push((i, *h));
+        }
+
+        // Calculate the max area
+        for (i, h) in heights.iter().enumerate() {
+            ret = std::cmp::max(ret, (right[i] - left[i] - 1) * *h);
+        }
+
+        ret
+    }
 }
 ```
 
-### **...**
+```cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-```
+public class Solution {
+    private int MaximalRectangleHistagram(int[] height) {
+        var stack = new Stack<int>();
+        var result = 0;
+        var i = 0;
+        while (i < height.Length || stack.Any())
+        {
+            if (!stack.Any() || (i < height.Length && height[stack.Peek()] < height[i]))
+            {
+                stack.Push(i);
+                ++i;
+            }
+            else
+            {
+                var previousIndex = stack.Pop();
+                var area = height[previousIndex] * (stack.Any() ? (i - stack.Peek() - 1) : i);
+                result = Math.Max(result, area);
+            }
+        }
 
+        return result;
+    }
+
+    public int MaximalRectangle(char[][] matrix) {
+        var lenI = matrix.Length;
+        var lenJ = lenI == 0 ? 0 : matrix[0].Length;
+        var height = new int[lenJ];
+        var result = 0;
+        for (var i = 0; i < lenI; ++i)
+        {
+            for (var j = 0; j < lenJ; ++j)
+            {
+                if (matrix[i][j] == '1')
+                {
+                    ++height[j];
+                }
+                else
+                {
+                    height[j] = 0;
+                }
+            }
+            result = Math.Max(result, MaximalRectangleHistagram(height));
+        }
+        return result;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

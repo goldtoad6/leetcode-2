@@ -13,7 +13,7 @@
 | visit_id    | int     |
 | customer_id | int     |
 +-------------+---------+
-visit_id is the primary key for this table.
+visit_id is the column with unique values for this table.
 This table contains information about the customers who visited the mall.
 </pre>
 
@@ -29,17 +29,17 @@ This table contains information about the customers who visited the mall.
 | visit_id       | int     |
 | amount         | int     |
 +----------------+---------+
-transaction_id is the primary key for this table.
+transaction_id is column with unique values for this table.
 This table contains information about the transactions made during the visit_id.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write a&nbsp;SQL query to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.</p>
+<p>Write a&nbsp;solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.</p>
 
 <p>Return the result table sorted in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -87,21 +87,38 @@ As we can see, users with IDs 30 and 96 visited the mall one time without making
 
 ## Solutions
 
+### Solution 1: Subquery + Grouping
+
+We can use a subquery to first find all `visit_id`s that have not made any transactions, and then group by `customer_id` to count the number of times each customer has not made any transactions.
+
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-SELECT customer_id,
-    COUNT(*) AS count_no_trans
+# Write your MySQL query statement below
+SELECT customer_id, COUNT(1) AS count_no_trans
 FROM Visits
-WHERE visit_id NOT IN (
-        SELECT visit_id
-        FROM Transactions
-    )
-GROUP BY customer_id;
+WHERE visit_id NOT IN (SELECT visit_id FROM Transactions)
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2: Left Join + Grouping
+
+We can also use a left join to join the `Visits` table and the `Transactions` table on `visit_id`, and then filter out the records where `amount` is `NULL`. After that, we can group by `customer_id` to count the number of times each customer has not made any transactions.
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT customer_id, COUNT(1) AS count_no_trans
+FROM
+    Visits
+    LEFT JOIN Transactions USING (visit_id)
+WHERE amount IS NULL
+GROUP BY 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

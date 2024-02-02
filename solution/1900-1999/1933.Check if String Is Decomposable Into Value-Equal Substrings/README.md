@@ -53,21 +53,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 遍历字符串 $s$，用双指针 $i$ 和 $j$ 统计每个等值子字符串的长度。若长度模 $3$ 余 $1$，说明该子字符串长度不符合要求，返回 `false`；若长度模 $3$ 余 $2$，说明出现了长度为 $2$ 的子字符串，若此前已经出现过长度为 $2$ 的子字符串，返回 `false`，否则将 $j$ 的值赋给 $i$，继续遍历。
 
 遍历结束后，判断是否出现过长度为 $2$ 的子字符串，若没有，返回 `false`，否则返回 `true`。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为字符串 $s$ 的长度。
+时间复杂度 $O(n)$，其中 $n$ 为字符串 $s$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -86,10 +80,6 @@ class Solution:
             i = j
         return cnt2 == 1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -114,27 +104,29 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool isDecomposable(string s) {
-        int i = 0, n = s.size();
         int cnt2 = 0;
-        while (i < n) {
+        for (int i = 0, n = s.size(); i < n;) {
             int j = i;
-            while (j < n && s[j] == s[i]) ++j;
-            if ((j - i) % 3 == 1) return false;
-            if ((j - i) % 3 == 2 && ++cnt2 > 1) return false;
+            while (j < n && s[j] == s[i]) {
+                ++j;
+            }
+            if ((j - i) % 3 == 1) {
+                return false;
+            }
+            cnt2 += (j - i) % 3 == 2;
+            if (cnt2 > 1) {
+                return false;
+            }
             i = j;
         }
         return cnt2 == 1;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isDecomposable(s string) bool {
@@ -160,10 +152,47 @@ func isDecomposable(s string) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function isDecomposable(s: string): boolean {
+    const n = s.length;
+    let cnt2 = 0;
+    for (let i = 0; i < n; ) {
+        let j = i;
+        while (j < n && s[j] === s[i]) {
+            ++j;
+        }
+        if ((j - i) % 3 === 1) {
+            return false;
+        }
+        if ((j - i) % 3 === 2 && ++cnt2 > 1) {
+            return false;
+        }
+        i = j;
+    }
+    return cnt2 === 1;
+}
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isDecomposable(self, s: str) -> bool:
+        cnt2 = 0
+        for _, g in groupby(s):
+            m = len(list(g))
+            if m % 3 == 1:
+                return False
+            cnt2 += m % 3 == 2
+            if cnt2 > 1:
+                return False
+        return cnt2 == 1
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

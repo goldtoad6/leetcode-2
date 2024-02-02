@@ -54,9 +54,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归 + 0-1 前缀树**
+### 方法一：递归 + 0-1 前缀树
 
 我们先递归预处理出每个节点的子树和，记录在数组 $s$ 中。
 
@@ -67,10 +65,6 @@
 时间复杂度 $O(n \times log M)$，其中 $n$ 为节点个数，而 $M$ 为子树和的最大值。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Trie:
@@ -130,10 +124,6 @@ class Solution:
         dfs2(0, -1)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Trie {
@@ -216,8 +206,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 
@@ -226,7 +214,7 @@ public:
     vector<Trie*> children;
     string v;
     Trie()
-        : children(2) { }
+        : children(2) {}
 
     void insert(ll x) {
         Trie* node = this;
@@ -290,8 +278,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type Trie struct {
@@ -367,19 +353,8 @@ func maxXor(n int, edges [][]int, values []int) int64 {
 	dfs2(0, -1)
 	return int64(ans)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

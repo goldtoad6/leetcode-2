@@ -32,9 +32,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -57,8 +57,6 @@ class Solution:
             l2 = None if not l2 else l2.next
         return dummy.next
 ```
-
-### **Java**
 
 ```java
 /**
@@ -87,8 +85,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -116,39 +112,6 @@ public:
     }
 };
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} l1
- * @param {ListNode} l2
- * @return {ListNode}
- */
-var addTwoNumbers = function (l1, l2) {
-    let carry = 0;
-    const dummy = new ListNode(0);
-    let cur = dummy;
-    while (l1 || l2 || carry) {
-        carry += (l1?.val || 0) + (l2?.val || 0);
-        cur.next = new ListNode(carry % 10);
-        carry = Math.floor(carry / 10);
-        cur = cur.next;
-        l1 = l1?.next;
-        l2 = l2?.next;
-    }
-    return dummy.next;
-};
-```
-
-### **Go**
 
 ```go
 /**
@@ -179,8 +142,6 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 /**
  * Definition for singly-linked list.
@@ -194,10 +155,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
  * }
  */
 
-function addTwoNumbers(
-    l1: ListNode | null,
-    l2: ListNode | null,
-): ListNode | null {
+function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
     if (l1 == null || l2 == null) {
         return l1 && l2;
     }
@@ -228,13 +186,11 @@ function addTwoNumbers(
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn add_two_numbers(
         mut l1: Option<Box<ListNode>>,
-        mut l2: Option<Box<ListNode>>,
+        mut l2: Option<Box<ListNode>>
     ) -> Option<Box<ListNode>> {
         let mut dummy = Some(Box::new(ListNode::new(0)));
         let mut cur = dummy.as_mut();
@@ -268,10 +224,35 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function (l1, l2) {
+    let carry = 0;
+    const dummy = new ListNode(0);
+    let cur = dummy;
+    while (l1 || l2 || carry) {
+        carry += (l1?.val || 0) + (l2?.val || 0);
+        cur.next = new ListNode(carry % 10);
+        carry = Math.floor(carry / 10);
+        cur = cur.next;
+        l1 = l1?.next;
+        l2 = l2?.next;
+    }
+    return dummy.next;
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -85,16 +85,26 @@ OrdersDetails 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    t AS (
+        SELECT
+            order_id,
+            MAX(quantity) AS max_quantity,
+            SUM(quantity) / COUNT(1) AS avg_quantity
+        FROM OrdersDetails
+        GROUP BY order_id
+    )
+SELECT order_id
+FROM t
+WHERE max_quantity > (SELECT MAX(avg_quantity) FROM t);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

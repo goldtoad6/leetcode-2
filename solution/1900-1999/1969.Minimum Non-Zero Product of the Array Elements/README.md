@@ -63,30 +63,109 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：贪心 + 快速幂
+
+我们注意到，每一次操作，并不会改变元素的和，而在元素和不变的情况下，要想使得乘积最小，应该尽可能最大化元素的差值。
+
+由于最大的元素为 $2^p - 1$，无论与哪个元素交换，都不会使得差值变大，因此我们不需要考虑与最大元素交换的情况。
+
+对于其它的 $[1,..2^p-2]$ 的元素，我们依次将首尾元素两两配对，即 $x$ 与 $2^p-1-x$ 进行配置，那么经过若干次操作过后，每一对元素都变成了 $(1, 2^p-2)$，那么最终的乘积为 $(2^p-1) \times (2^p-2)^{2^{p-1}-1}$。
+
+时间复杂度 $O(p)$，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
-
+class Solution:
+    def minNonZeroProduct(self, p: int) -> int:
+        mod = 10**9 + 7
+        return (2**p - 1) * pow(2**p - 2, 2 ** (p - 1) - 1, mod) % mod
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
+class Solution {
+    public int minNonZeroProduct(int p) {
+        final int mod = (int) 1e9 + 7;
+        long a = ((1L << p) - 1) % mod;
+        long b = qpow(((1L << p) - 2) % mod, (1L << (p - 1)) - 1, mod);
+        return (int) (a * b % mod);
+    }
 
+    private long qpow(long a, long n, int mod) {
+        long ans = 1;
+        for (; n > 0; n >>= 1) {
+            if ((n & 1) == 1) {
+                ans = ans * a % mod;
+            }
+            a = a * a % mod;
+        }
+        return ans;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int minNonZeroProduct(int p) {
+        using ll = long long;
+        const int mod = 1e9 + 7;
+        auto qpow = [](ll a, ll n) {
+            ll ans = 1;
+            for (; n; n >>= 1) {
+                if (n & 1) {
+                    ans = ans * a % mod;
+                }
+                a = a * a % mod;
+            }
+            return ans;
+        };
+        ll a = ((1LL << p) - 1) % mod;
+        ll b = qpow(((1LL << p) - 2) % mod, (1L << (p - 1)) - 1);
+        return a * b % mod;
+    }
+};
 ```
 
+```go
+func minNonZeroProduct(p int) int {
+	const mod int = 1e9 + 7
+	qpow := func(a, n int) int {
+		ans := 1
+		for ; n > 0; n >>= 1 {
+			if n&1 == 1 {
+				ans = ans * a % mod
+			}
+			a = a * a % mod
+		}
+		return ans
+	}
+	a := ((1 << p) - 1) % mod
+	b := qpow(((1<<p)-2)%mod, (1<<(p-1))-1)
+	return a * b % mod
+}
+```
+
+```ts
+function minNonZeroProduct(p: number): number {
+    const mod = BigInt(1e9 + 7);
+
+    const qpow = (a: bigint, n: bigint): bigint => {
+        let ans = BigInt(1);
+        for (; n; n >>= BigInt(1)) {
+            if (n & BigInt(1)) {
+                ans = (ans * a) % mod;
+            }
+            a = (a * a) % mod;
+        }
+        return ans;
+    };
+    const a = (2n ** BigInt(p) - 1n) % mod;
+    const b = qpow((2n ** BigInt(p) - 2n) % mod, 2n ** (BigInt(p) - 1n) - 1n);
+    return Number((a * b) % mod);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

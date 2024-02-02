@@ -1,4 +1,4 @@
-func distinctAverages(nums []int) int {
+func distinctAverages(nums []int) (ans int) {
 	sort.Ints(nums)
 	n := len(nums)
 	s := map[int]struct{}{}

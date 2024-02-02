@@ -29,122 +29,66 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We use two pointers $i$ and $j$, where pointer $i$ points to the end of the sequence that has been processed, and pointer $j$ points to the head of the sequence to be processed. Initially, $i=-1$.
+
+Next, we traverse $j \in [0,n)$, if $nums[j] \neq 0$, then we swap the next number pointed by pointer $i$ with $nums[j]$, and move $i$ forward. Continue to traverse until $j$ reaches the end of the array, all non-zero elements of the array are moved to the front of the array in the original order, and all zero elements are moved to the end of the array.
+
+The time complexity is $O(n)$, where $n$ is the length of the array $nums$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def moveZeroes(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        left, n = 0, len(nums)
-        for right in range(n):
-            if nums[right] != 0:
-                nums[left], nums[right] = nums[right], nums[left]
-                left += 1
+        i = -1
+        for j, x in enumerate(nums):
+            if x:
+                i += 1
+                nums[i], nums[j] = nums[j], nums[i]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public void moveZeroes(int[] nums) {
-        int left = 0, n = nums.length;
-        for (int right = 0; right < n; ++right) {
-            if (nums[right] != 0) {
-                int t = nums[left];
-                nums[left] = nums[right];
-                nums[right] = t;
-                ++left;
+        int i = -1, n = nums.length;
+        for (int j = 0; j < n; ++j) {
+            if (nums[j] != 0) {
+                int t = nums[++i];
+                nums[i] = nums[j];
+                nums[j] = t;
             }
         }
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        int left = 0, n = nums.size();
-        for (int right = 0; right < n; ++right) {
-            if (nums[right] != 0) {
-                swap(nums[left], nums[right]);
-                ++left;
+        int i = -1, n = nums.size();
+        for (int j = 0; j < n; ++j) {
+            if (nums[j]) {
+                swap(nums[++i], nums[j]);
             }
         }
     }
 };
 ```
 
-### **Go**
-
 ```go
 func moveZeroes(nums []int) {
-	n := len(nums)
-	left := 0
-	for right := 0; right < n; right++ {
-		if nums[right] != 0 {
-			nums[left], nums[right] = nums[right], nums[left]
-			left++
+	i := -1
+	for j, x := range nums {
+		if x != 0 {
+			i++
+			nums[i], nums[j] = nums[j], nums[i]
 		}
 	}
 }
 ```
-
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums
- * @return {void} Do not return anything, modify nums in-place instead.
- */
-var moveZeroes = function (nums) {
-    let left = 0,
-        n = nums.length;
-    for (let right = 0; right < n; ++right) {
-        if (nums[right]) {
-            [nums[left], nums[right]] = [nums[right], nums[left]];
-            ++left;
-        }
-    }
-};
-```
-
-```js
-/**
- * @param {number[]} nums
- * @return {void} Do not return anything, modify nums in-place instead.
- */
-var moveZeroes = function (nums) {
-    let left = 0;
-    let right = left;
-    while (left < nums.length) {
-        if (nums[left] != 0) {
-            left++;
-        } else {
-            right = left + 1;
-            while (right < nums.length) {
-                if (nums[right] == 0) {
-                    right++;
-                } else {
-                    let tem = nums[left];
-                    nums[left] = nums[right];
-                    nums[right] = tem;
-                    break;
-                }
-            }
-            left++;
-        }
-    }
-};
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -164,8 +108,6 @@ function moveZeroes(nums: number[]): void {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn move_zeroes(nums: &mut Vec<i32>) {
@@ -183,10 +125,25 @@ impl Solution {
 }
 ```
 
-### **C**
+```js
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function (nums) {
+    let i = -1;
+    for (let j = 0; j < nums.length; ++j) {
+        if (nums[j]) {
+            const t = nums[++i];
+            nums[i] = nums[j];
+            nums[j] = t;
+        }
+    }
+};
+```
 
 ```c
-void moveZeroes(int *nums, int numsSize) {
+void moveZeroes(int* nums, int numsSize) {
     int i = 0;
     for (int j = 0; j < numsSize; j++) {
         if (nums[j] != 0) {
@@ -200,10 +157,6 @@ void moveZeroes(int *nums, int numsSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

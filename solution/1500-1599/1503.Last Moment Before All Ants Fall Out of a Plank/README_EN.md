@@ -57,9 +57,9 @@ The last moment when an ant was on the plank is t = 4 seconds. After that, it fa
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,8 +71,6 @@ class Solution:
             ans = max(ans, n - x)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +86,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -107,8 +103,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getLastMoment(n int, left []int, right []int) (ans int) {
 	for _, x := range left {
@@ -119,16 +113,7 @@ func getLastMoment(n int, left []int, right []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function getLastMoment(n: number, left: number[], right: number[]): number {
@@ -143,10 +128,6 @@ function getLastMoment(n: number, left: number[], right: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

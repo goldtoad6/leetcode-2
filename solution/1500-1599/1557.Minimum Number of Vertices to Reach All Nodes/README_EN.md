@@ -11,17 +11,13 @@
 <p>Notice that you can return the vertices in any order.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1557.Minimum%20Number%20of%20Vertices%20to%20Reach%20All%20Nodes/images/untitled22.png" style="width: 231px; height: 181px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> n = 6, edges = [[0,1],[0,2],[2,5],[3,4],[4,2]]
-
 <strong>Output:</strong> [0,3]
-
 <b>Explanation: </b>It&#39;s not possible to reach all the nodes from a single vertex. From 0 we can reach [0,1,2,5]. From 3 we can reach [3,4,2,5]. So we output [0,3].</pre>
 
 <p><strong class="example">Example 2:</strong></p>
@@ -29,58 +25,45 @@
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1500-1599/1557.Minimum%20Number%20of%20Vertices%20to%20Reach%20All%20Nodes/images/untitled.png" style="width: 201px; height: 201px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> n = 5, edges = [[0,1],[2,1],[3,1],[1,4],[2,4]]
-
 <strong>Output:</strong> [0,2,3]
-
 <strong>Explanation: </strong>Notice that vertices 0, 3 and 2 are not reachable from any other node, so we must include them. Also any of these vertices can reach nodes 1 and 4.
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-
-    <li><code>2 &lt;= n &lt;= 10^5</code></li>
-
-    <li><code>1 &lt;= edges.length &lt;= min(10^5, n * (n - 1) / 2)</code></li>
-
-    <li><code>edges[i].length == 2</code></li>
-
-    <li><code>0 &lt;= from<sub>i,</sub>&nbsp;to<sub>i</sub> &lt; n</code></li>
-
-    <li>All pairs <code>(from<sub>i</sub>, to<sub>i</sub>)</code> are distinct.</li>
-
+	<li><code>2 &lt;= n &lt;= 10^5</code></li>
+	<li><code>1 &lt;= edges.length &lt;= min(10^5, n * (n - 1) / 2)</code></li>
+	<li><code>edges[i].length == 2</code></li>
+	<li><code>0 &lt;= from<sub>i,</sub>&nbsp;to<sub>i</sub> &lt; n</code></li>
+	<li>All pairs <code>(from<sub>i</sub>, to<sub>i</sub>)</code> are distinct.</li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def findSmallestSetOfVertices(self, n: int, edges: List[List[int]]) -> List[int]:
-        s = {to for _, to in edges}
-        return [i for i in range(n) if i not in s]
+        cnt = Counter(t for _, t in edges)
+        return [i for i in range(n) if cnt[i] == 0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
-        Set<Integer> s = new HashSet<>();
-        for (List<Integer> e : edges) {
-            s.add(e.get(1));
+        var cnt = new int[n];
+        for (var e : edges) {
+            ++cnt[e.get(1)];
         }
         List<Integer> ans = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            if (!s.contains(i)) {
+            if (cnt[i] == 0) {
                 ans.add(i);
             }
         }
@@ -89,60 +72,55 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
-        unordered_set<int> s;
-        for (auto& e : edges) s.insert(e[1]);
+        vector<int> cnt(n);
+        for (auto& e : edges) {
+            ++cnt[e[1]];
+        }
         vector<int> ans;
         for (int i = 0; i < n; ++i) {
-            if (!s.count(i)) ans.push_back(i);
+            if (cnt[i] == 0) {
+                ans.push_back(i);
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func findSmallestSetOfVertices(n int, edges [][]int) []int {
-	s := make(map[int]bool)
+func findSmallestSetOfVertices(n int, edges [][]int) (ans []int) {
+	cnt := make([]int, n)
 	for _, e := range edges {
-		s[e[1]] = true
+		cnt[e[1]]++
 	}
-	var ans []int
-	for i := 0; i < n; i++ {
-		if !s[i] {
+	for i, c := range cnt {
+		if c == 0 {
 			ans = append(ans, i)
 		}
 	}
-	return ans
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function findSmallestSetOfVertices(n: number, edges: number[][]): number[] {
-    const arr = new Array(n).fill(true);
-    for (const [_, i] of edges) {
-        arr[i] = false;
+    const cnt: number[] = new Array(n).fill(0);
+    for (const [_, t] of edges) {
+        cnt[t]++;
     }
-    const res = [];
-    arr.forEach((v, i) => {
-        if (v) {
-            res.push(i);
+    const ans: number[] = [];
+    for (let i = 0; i < n; ++i) {
+        if (cnt[i] === 0) {
+            ans.push(i);
         }
-    });
-    return res;
+    }
+    return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -159,10 +137,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

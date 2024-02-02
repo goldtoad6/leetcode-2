@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举分段数量 + 模拟**
+### 方法一：枚举分段数量 + 模拟
 
 我们设字符串 `message` 的长度为 $n$，分段数量为 $k$。
 
@@ -67,10 +65,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def splitMessage(self, message: str, limit: int) -> List[str]:
@@ -85,16 +79,12 @@ class Solution:
                 i = 0
                 for j in range(1, k + 1):
                     tail = f'<{j}/{k}>'
-                    t = message[i: i + limit - len(tail)] + tail
+                    t = message[i : i + limit - len(tail)] + tail
                     ans.append(t)
                     i += limit - len(tail)
                 return ans
         return []
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -124,8 +114,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -154,8 +142,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func splitMessage(message string, limit int) (ans []string) {
 	n := len(message)
@@ -178,25 +164,8 @@ func splitMessage(message string, limit int) (ans []string) {
 	}
 	return
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

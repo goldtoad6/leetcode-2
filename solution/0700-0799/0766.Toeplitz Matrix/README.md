@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：一次遍历**
+### 方法一：一次遍历
 
 遍历矩阵，若出现元素与其左上角的元素不等的情况，返回 `false`。否则，遍历结束后返回 `true`。
 
@@ -63,20 +61,16 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
         m, n = len(matrix), len(matrix[0])
-        return all(matrix[i][j] == matrix[i - 1][j - 1] for i in range(1, m) for j in range(1, n))
+        return all(
+            matrix[i][j] == matrix[i - 1][j - 1]
+            for i in range(1, m)
+            for j in range(1, n)
+        )
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -93,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +105,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isToeplitzMatrix(matrix [][]int) bool {
 	m, n := len(matrix), len(matrix[0])
@@ -128,8 +118,6 @@ func isToeplitzMatrix(matrix [][]int) bool {
 	return true
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -150,10 +138,6 @@ var isToeplitzMatrix = function (matrix) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

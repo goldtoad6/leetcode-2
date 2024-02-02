@@ -40,19 +40,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：递归
 
-**方法一：递归**
-
-思路同 [105. 从前序与中序遍历序列构造二叉树](/solution/0100-0199/0105.Construct%20Binary%20Tree%20from%20Preorder%20and%20Inorder%20Traversal/README.md)。
+思路同 [105. 从前序与中序遍历序列构造二叉树](https://github.com/doocs/leetcode/blob/main/solution/0100-0199/0105.Construct%20Binary%20Tree%20from%20Preorder%20and%20Inorder%20Traversal/README.md)。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是二叉树的节点个数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -72,10 +66,6 @@ class Solution:
         root.right = self.buildTree(inorder[i + 1 :], postorder[i:-1])
         return root
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -117,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -152,8 +140,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -183,8 +169,6 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 	return dfs(0, 0, len(inorder))
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -216,8 +200,6 @@ function buildTree(inorder: number[], postorder: number[]): TreeNode | null {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -246,32 +228,39 @@ impl Solution {
         i_right: usize,
         postorder: &Vec<i32>,
         p_left: usize,
-        p_right: usize,
+        p_right: usize
     ) -> Option<Rc<RefCell<TreeNode>>> {
         if i_left == i_right {
             return None;
         }
         let val = postorder[p_right - 1];
-        let index = inorder.iter().position(|&v| v == val).unwrap();
-        Some(Rc::new(RefCell::new(TreeNode {
-            val,
-            left: Self::reset(
-                inorder,
-                i_left,
-                index,
-                postorder,
-                p_left,
-                p_left + index - i_left,
-            ),
-            right: Self::reset(
-                inorder,
-                index + 1,
-                i_right,
-                postorder,
-                p_left + index - i_left,
-                p_right - 1,
-            ),
-        })))
+        let index = inorder
+            .iter()
+            .position(|&v| v == val)
+            .unwrap();
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val,
+                    left: Self::reset(
+                        inorder,
+                        i_left,
+                        index,
+                        postorder,
+                        p_left,
+                        p_left + index - i_left
+                    ),
+                    right: Self::reset(
+                        inorder,
+                        index + 1,
+                        i_right,
+                        postorder,
+                        p_left + index - i_left,
+                        p_right - 1
+                    ),
+                })
+            )
+        )
     }
 
     pub fn build_tree(inorder: Vec<i32>, postorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
@@ -281,10 +270,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

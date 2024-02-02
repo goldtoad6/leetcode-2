@@ -10,9 +10,9 @@
 
 <p>请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。</p>
 
-<p><strong>提示: </strong>输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅 <a href="/faq/#binary-tree">LeetCode 序列化二叉树的格式</a>。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。</p>
+<p><strong>提示: </strong>输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅&nbsp;<a href="https://support.leetcode.cn/hc/kb/article/1567641/">LeetCode 序列化二叉树的格式</a>。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。</p>
 
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>示例 1：</strong></p>
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0200-0299/0297.Serialize%20and%20Deserialize%20Binary%20Tree/images/serdeser.jpg" style="width: 442px; height: 324px;" />
@@ -42,24 +42,20 @@
 <strong>输出：</strong>[1,2]
 </pre>
 
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
 <ul>
 	<li>树中结点数在范围 <code>[0, 10<sup>4</sup>]</code> 内</li>
-	<li><code>-1000 <= Node.val <= 1000</code></li>
+	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
 </ul>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -117,10 +113,6 @@ class Codec:
 # deser = Codec()
 # ans = deser.deserialize(ser.serialize(root))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -186,8 +178,6 @@ public class Codec {
 // TreeNode ans = deser.deserialize(ser.serialize(root));
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -241,7 +231,112 @@ public:
 // TreeNode* ans = deser.deserialize(ser.serialize(root));
 ```
 
-### **JavaScript**
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+/*
+ * Encodes a tree to a single string.
+ */
+function serialize(root: TreeNode | null): string {
+    return JSON.stringify(root);
+}
+
+/*
+ * Decodes your encoded data to tree.
+ */
+function deserialize(data: string): TreeNode | null {
+    return JSON.parse(data);
+}
+
+/**
+ * Your functions will be called as such:
+ * deserialize(serialize(root));
+ */
+```
+
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+struct Codec {}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl Codec {
+    fn new() -> Self {
+        Codec {}
+    }
+
+    fn serialize(&self, root: Option<Rc<RefCell<TreeNode>>>) -> String {
+        if root.is_none() {
+            return String::from("#");
+        }
+        let mut node = root.as_ref().unwrap().borrow_mut();
+        let left = node.left.take();
+        let right = node.right.take();
+        format!("{},{},{}", self.serialize(right), self.serialize(left), node.val)
+    }
+
+    fn deserialize(&self, data: String) -> Option<Rc<RefCell<TreeNode>>> {
+        if data.len() == 1 {
+            return None;
+        }
+        Self::renew(&mut data.split(",").collect())
+    }
+
+    fn renew(vals: &mut Vec<&str>) -> Option<Rc<RefCell<TreeNode>>> {
+        let val = vals.pop().unwrap_or("#");
+        if val == "#" {
+            return None;
+        }
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val: val.parse().unwrap(),
+                    left: Self::renew(vals),
+                    right: Self::renew(vals),
+                })
+            )
+        )
+    }
+}/**
+ * Your Codec object will be instantiated and called as such:
+ * let obj = Codec::new();
+ * let data: String = obj.serialize(strs);
+ * let ans: Option<Rc<RefCell<TreeNode>>> = obj.deserialize(data);
+ */
+```
 
 ```js
 /**
@@ -304,42 +399,11 @@ const rdeserialize = dataList => {
  */
 ```
 
-### **TypeScript**
+<!-- tabs:end -->
 
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
+### 方法二
 
-/*
- * Encodes a tree to a single string.
- */
-function serialize(root: TreeNode | null): string {
-    return JSON.stringify(root);
-}
-
-/*
- * Decodes your encoded data to tree.
- */
-function deserialize(data: string): TreeNode | null {
-    return JSON.parse(data);
-}
-
-/**
- * Your functions will be called as such:
- * deserialize(serialize(root));
- */
-```
+<!-- tabs:start -->
 
 ```ts
 /**
@@ -392,89 +456,6 @@ function deserialize(data: string): TreeNode | null {
  */
 ```
 
-### **Rust**
-
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-struct Codec {
-
-}
-
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
-impl Codec {
-    fn new() -> Self {
-        Codec {}
-    }
-
-    fn serialize(&self, root: Option<Rc<RefCell<TreeNode>>>) -> String {
-        if root.is_none() {
-            return String::from("#");
-        }
-        let mut node = root.as_ref().unwrap().borrow_mut();
-        let left = node.left.take();
-        let right = node.right.take();
-        format!(
-            "{},{},{}",
-            self.serialize(right),
-            self.serialize(left),
-            node.val
-        )
-    }
-
-    fn deserialize(&self, data: String) -> Option<Rc<RefCell<TreeNode>>> {
-        if data.len() == 1 {
-            return None;
-        }
-        Self::renew(&mut data.split(",").collect())
-    }
-
-    fn renew(vals: &mut Vec<&str>) -> Option<Rc<RefCell<TreeNode>>> {
-        let val = vals.pop().unwrap_or("#");
-        if val == "#" {
-            return None;
-        }
-        Some(Rc::new(RefCell::new(TreeNode {
-            val: val.parse().unwrap(),
-            left: Self::renew(vals),
-            right: Self::renew(vals),
-        })))
-    }
-}
-
-/**
- * Your Codec object will be instantiated and called as such:
- * let obj = Codec::new();
- * let data: String = obj.serialize(strs);
- * let ans: Option<Rc<RefCell<TreeNode>>> = obj.deserialize(data);
- */
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class BinaryIndexedTree:
@@ -84,8 +84,6 @@ class Solution:
             tree.update(x, t)
         return ans
 ```
-
-### **Java**
 
 ```java
 class BinaryIndexedTree {
@@ -156,19 +154,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class BinaryIndexedTree {
 public:
     int n;
     vector<int> c;
 
-    BinaryIndexedTree(int _n): n(_n), c(_n + 1){}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) {}
 
     void update(int x, int val) {
-        while (x <= n)
-        {
+        while (x <= n) {
             c[x] = max(c[x], val);
             x += lowbit(x);
         }
@@ -176,8 +173,7 @@ public:
 
     int query(int x) {
         int s = 0;
-        while (x > 0)
-        {
+        while (x > 0) {
             s = max(s, c[x]);
             x -= lowbit(x);
         }
@@ -220,8 +216,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type BinaryIndexedTree struct {
@@ -296,19 +290,8 @@ func lengthOfLIS(nums []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -13,7 +13,7 @@
 | user_id     | int     |
 | user_name   | varchar |
 +-------------+---------+
-user_id is the primary key for this table.
+user_id is the primary key (column with unique values) for this table.
 Each row of this table contains the name and the id of a user.
 </pre>
 
@@ -28,17 +28,17 @@ Each row of this table contains the name and the id of a user.
 | contest_id  | int     |
 | user_id     | int     |
 +-------------+---------+
-(contest_id, user_id) is the primary key for this table.
+(contest_id, user_id) is the primary key (combination of columns with unique values) for this table.
 Each row of this table contains the id of a user and the contest they registered into.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the percentage of the users registered in each contest rounded to <strong>two decimals</strong>.</p>
+<p>Write a solution to find the percentage of the users registered in each contest rounded to <strong>two decimals</strong>.</p>
 
 <p>Return the result table ordered by <code>percentage</code> in <strong>descending order</strong>. In case of a tie, order it by <code>contest_id</code> in <strong>ascending order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -88,12 +88,22 @@ Bob registered in contest 207 and the percentage is ((1/3) * 100) = 33.33%
 
 ## Solutions
 
+### Solution 1: Grouping and Subquery
+
+We can group the `Register` table by `contest_id` and count the number of registrations for each contest. The registration rate of each contest is the number of registrations divided by the total number of registrations.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    contest_id,
+    ROUND(COUNT(1) * 100 / (SELECT COUNT(1) FROM Users), 2) AS percentage
+FROM Register
+GROUP BY 1
+ORDER BY 2 DESC, 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

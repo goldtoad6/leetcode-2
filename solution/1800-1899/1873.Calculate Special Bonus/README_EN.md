@@ -14,17 +14,17 @@
 | name        | varchar |
 | salary      | int     |
 +-------------+---------+
-employee_id is the primary key for this table.
+employee_id is the primary key (column with unique values) for this table.
 Each row of this table indicates the employee ID, employee name, and salary.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to calculate the bonus of each employee. The bonus of an employee is <code>100%</code> of their salary if the ID of the employee is <strong>an odd number</strong> and <strong>the employee name does not start with the character </strong><code>&#39;M&#39;</code>. The bonus of an employee is <code>0</code> otherwise.</p>
+<p>Write a solution to calculate the bonus of each employee. The bonus of an employee is <code>100%</code> of their salary if the ID of the employee is <strong>an odd number</strong> and <strong>the employee&#39;s name does not start with the character </strong><code>&#39;M&#39;</code>. The bonus of an employee is <code>0</code> otherwise.</p>
 
 <p>Return the result table ordered by <code>employee_id</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -59,25 +59,14 @@ The rest of the employees get a 100% bonus.
 
 ## Solutions
 
+### Solution 1: IF Statement + ORDER BY Clause
+
+We can use the `IF` statement to determine the calculation method of the bonus, and then use `ORDER BY` to sort the results by `employee_id`.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-    employee_id,
-    CASE
-        WHEN employee_id % 2 = 0
-        OR LEFT(name, 1) = 'M' THEN 0
-        ELSE salary
-    END AS bonus
-FROM
-    employees;
-```
-
-MySQL
-
-```sql
+# Write your MySQL query statement below
 SELECT
     employee_id,
     IF(
@@ -87,7 +76,10 @@ SELECT
         salary
     ) AS bonus
 FROM
-    employees;
+    employees
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

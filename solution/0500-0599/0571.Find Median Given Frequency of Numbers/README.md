@@ -15,21 +15,22 @@
 | num         | int  |
 | frequency   | int  |
 +-------------+------+
-num 是这张表的主键。这张表的每一行表示某个数字在该数据库中的出现频率。</pre>
+num 是这张表的主键(具有唯一值的列)。
+这张表的每一行表示某个数字在该数据库中的出现频率。</pre>
 
 <p>&nbsp;</p>
 <a href="https://baike.baidu.com/item/%E4%B8%AD%E4%BD%8D%E6%95%B0/3087401" target="_blank"><strong>中位数</strong></a> 是将数据样本中半数较高值和半数较低值分隔开的值。
 
-<p>编写一个 SQL 查询，解压 <code>Numbers</code> 表，报告数据库中所有数字的 <strong>中位数</strong> 。结果四舍五入至 <strong>一位小数</strong> 。</p>
+<p>编写解决方案，解压 <code>Numbers</code> 表，报告数据库中所有数字的 <strong>中位数</strong> 。结果四舍五入至 <strong>一位小数</strong> 。</p>
 
-<p>查询结果如下例所示。</p>
+<p>返回结果如下例所示。</p>
 
 <p>&nbsp;</p>
 
 <div class="top-view__1vxA">
 <div class="original__bRMd">
 <div>
-<p><strong>示例：</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong> 
@@ -57,30 +58,27 @@ Numbers 表：
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：开窗函数
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-
-```
-
-### **...**
-
-```
-
+```sql
+# Write your MySQL query statement below
+WITH
+    t AS (
+        SELECT
+            *,
+            SUM(frequency) OVER (ORDER BY num ASC) AS rk1,
+            SUM(frequency) OVER (ORDER BY num DESC) AS rk2,
+            SUM(frequency) OVER () AS s
+        FROM Numbers
+    )
+SELECT
+    ROUND(AVG(num), 1) AS median
+FROM t
+WHERE rk1 >= s / 2 AND rk2 >= s / 2;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

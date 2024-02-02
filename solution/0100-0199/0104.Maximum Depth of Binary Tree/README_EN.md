@@ -33,9 +33,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Recursion
 
-### **Python3**
+Recursively traverse the left and right subtrees, calculate the maximum depth of the left and right subtrees, and then take the maximum value plus $1$.
+
+The time complexity is $O(n)$, where $n$ is the number of nodes in the binary tree. Each node is traversed only once in the recursion.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -51,8 +55,6 @@ class Solution:
         l, r = self.maxDepth(root.left), self.maxDepth(root.right)
         return 1 + max(l, r)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -82,8 +84,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -106,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -124,39 +122,7 @@ func maxDepth(root *TreeNode) int {
 	l, r := maxDepth(root.Left), maxDepth(root.Right)
 	return 1 + max(l, r)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number}
- */
-var maxDepth = function (root) {
-    if (!root) return 0;
-    const l = maxDepth(root.left);
-    const r = maxDepth(root.right);
-    return 1 + Math.max(l, r);
-};
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -174,14 +140,12 @@ var maxDepth = function (root) {
  */
 
 function maxDepth(root: TreeNode | null): number {
-    if (root == null) {
+    if (root === null) {
         return 0;
     }
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -219,7 +183,26 @@ impl Solution {
 }
 ```
 
-### **C**
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function (root) {
+    if (!root) return 0;
+    const l = maxDepth(root.left);
+    const r = maxDepth(root.right);
+    return 1 + Math.max(l, r);
+};
+```
 
 ```c
 /**
@@ -233,7 +216,7 @@ impl Solution {
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int maxDepth(struct TreeNode *root) {
+int maxDepth(struct TreeNode* root) {
     if (!root) {
         return 0;
     }
@@ -243,10 +226,6 @@ int maxDepth(struct TreeNode *root) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

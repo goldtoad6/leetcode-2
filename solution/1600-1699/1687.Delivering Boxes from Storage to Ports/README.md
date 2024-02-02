@@ -93,9 +93,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划 + 单调队列优化**
+### 方法一：动态规划 + 单调队列优化
 
 我们定义 $f[i]$ 表示把前 $i$ 个箱子从仓库运送到相应码头的最少行程数，那么答案就是 $f[n]$。
 
@@ -121,7 +119,9 @@ $$
 ```python
 # 33/39 个通过测试用例，超出时间限制
 class Solution:
-    def boxDelivering(self, boxes: List[List[int]], portsCount: int, maxBoxes: int, maxWeight: int) -> int:
+    def boxDelivering(
+        self, boxes: List[List[int]], portsCount: int, maxBoxes: int, maxWeight: int
+    ) -> int:
         n = len(boxes)
         ws = list(accumulate((box[1] for box in boxes), initial=0))
         c = [int(a != b) for a, b in pairwise(box[0] for box in boxes)]
@@ -221,26 +221,12 @@ func boxDelivering(boxes [][]int, portsCount int, maxBoxes int, maxWeight int) i
 	}
 	return f[n]
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
 
 本题数据规模达到 $10^5$，而以上代码的时间复杂度为 $O(n^2)$，会超出时间限制。我们仔细观察：
 
 $$
-f[i] = min(f[i], f[j] + cs[i - 1] - cs[j] + 2)
+f[i] = \min(f[i], f[j] + cs[i - 1] - cs[j] + 2)
 $$
 
 实际上我们是要在 $[i-maxBoxes,..i-1]$ 这个窗口内找到一个 $j$，使得 $f[j] - cs[j]$ 的值最小，求滑动窗口的最小值，一种常用的做法是使用单调队列，可以在 $O(1)$ 时间内获取到满足条件的最小值。
@@ -248,10 +234,6 @@ $$
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是题目中箱子的数量。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -275,10 +257,6 @@ class Solution:
                 q.append(i)
         return f[n]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -316,8 +294,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -345,8 +321,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func boxDelivering(boxes [][]int, portsCount int, maxBoxes int, maxWeight int) int {
@@ -384,10 +358,6 @@ func boxDelivering(boxes [][]int, portsCount int, maxBoxes int, maxWeight int) i
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

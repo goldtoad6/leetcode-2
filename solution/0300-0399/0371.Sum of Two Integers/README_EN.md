@@ -23,9 +23,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -37,8 +37,6 @@ class Solution:
         return a if a < 0x80000000 else ~(a ^ 0xFFFFFFFF)
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int getSum(int a, int b) {
@@ -47,14 +45,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int getSum(int a, int b) {
         while (b) {
-            unsigned int carry = (unsigned int)(a & b) << 1;
+            unsigned int carry = (unsigned int) (a & b) << 1;
             a = a ^ b;
             b = carry;
         }
@@ -62,8 +58,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func getSum(a int, b int) int {
@@ -76,10 +70,6 @@ func getSum(a int, b int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

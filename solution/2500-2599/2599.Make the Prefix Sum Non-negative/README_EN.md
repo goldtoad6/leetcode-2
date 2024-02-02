@@ -43,9 +43,15 @@ The array after the operation is [3,-2,6,-5]. The prefix sum array is [3, 1, 7, 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Priority Queue (Min Heap)
 
-### **Python3**
+We use a variable $s$ to record the prefix sum of the current array.
+
+Traverse the array $nums$, add the current element $x$ to the prefix sum $s$. If $x$ is a negative number, add $x$ to the min heap. If $s$ is negative at this time, greedily take out the smallest negative number and subtract it from $s$, and add one to the answer. Finally, return the answer.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$, where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +67,6 @@ class Solution:
                 ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +88,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -110,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func makePrefSumNonNegative(nums []int) (ans int) {
 	pq := hp{}
@@ -131,17 +131,15 @@ func makePrefSumNonNegative(nums []int) (ans int) {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
 	return v
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function makePrefSumNonNegative(nums: number[]): number {
@@ -162,10 +160,6 @@ function makePrefSumNonNegative(nums: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

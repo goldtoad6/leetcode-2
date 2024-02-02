@@ -52,25 +52,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：DFS + BFS**
+### 方法一：DFS + BFS
 
 先通过 $DFS$ 建图，得到 $g$。然后以 $start$ 作为起点，哈希表 $vis$ 标记访问过的节点，通过 $BFS$ 以及前面得到的图 $g$，逐层往外扩展，扩展的次数即为答案。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉树的节点个数。
 
-**方法二：两次 DFS**
-
-与方法一一样，我们先通过 $DFS$ 建图，得到 $g$。然后以 $start$ 作为起点，通过 $DFS$ 搜索整棵树，找到最远距离，即为答案。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉树的节点个数。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -108,43 +96,6 @@ class Solution:
                         q.append(j)
         return ans
 ```
-
-```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:
-        def dfs(root):
-            if root is None:
-                return
-            if root.left:
-                g[root.val].append(root.left.val)
-                g[root.left.val].append(root.val)
-            if root.right:
-                g[root.val].append(root.right.val)
-                g[root.right.val].append(root.val)
-            dfs(root.left)
-            dfs(root.right)
-
-        def dfs2(i, fa):
-            ans = 0
-            for j in g[i]:
-                if j != fa:
-                    ans = max(ans, 1 + dfs2(j, i))
-            return ans
-
-        g = defaultdict(list)
-        dfs(root)
-        return dfs2(start, -1)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -206,6 +157,194 @@ class Solution {
 }
 ```
 
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    unordered_map<int, vector<int>> g;
+
+    int amountOfTime(TreeNode* root, int start) {
+        dfs(root);
+        queue<int> q{{start}};
+        unordered_set<int> vis;
+        int ans = -1;
+        while (q.size()) {
+            ++ans;
+            for (int n = q.size(); n; --n) {
+                int i = q.front();
+                q.pop();
+                vis.insert(i);
+                for (int j : g[i]) {
+                    if (!vis.count(j)) {
+                        q.push(j);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    void dfs(TreeNode* root) {
+        if (!root) return;
+        if (root->left) {
+            g[root->val].push_back(root->left->val);
+            g[root->left->val].push_back(root->val);
+        }
+        if (root->right) {
+            g[root->val].push_back(root->right->val);
+            g[root->right->val].push_back(root->val);
+        }
+        dfs(root->left);
+        dfs(root->right);
+    }
+};
+```
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func amountOfTime(root *TreeNode, start int) int {
+	g := map[int][]int{}
+	var dfs func(*TreeNode)
+	dfs = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		if root.Left != nil {
+			g[root.Val] = append(g[root.Val], root.Left.Val)
+			g[root.Left.Val] = append(g[root.Left.Val], root.Val)
+		}
+		if root.Right != nil {
+			g[root.Val] = append(g[root.Val], root.Right.Val)
+			g[root.Right.Val] = append(g[root.Right.Val], root.Val)
+		}
+		dfs(root.Left)
+		dfs(root.Right)
+	}
+
+	dfs(root)
+	q := []int{start}
+	ans := -1
+	vis := map[int]bool{}
+	for len(q) > 0 {
+		ans++
+		for n := len(q); n > 0; n-- {
+			i := q[0]
+			q = q[1:]
+			vis[i] = true
+			for _, j := range g[i] {
+				if !vis[j] {
+					q = append(q, j)
+				}
+			}
+		}
+	}
+	return ans
+}
+```
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function amountOfTime(root: TreeNode | null, start: number): number {
+    const map = new Map<number, number[]>();
+    const create = ({ val, left, right }: TreeNode) => {
+        if (left != null) {
+            map.set(val, [...(map.get(val) ?? []), left.val]);
+            map.set(left.val, [...(map.get(left.val) ?? []), val]);
+            create(left);
+        }
+        if (right != null) {
+            map.set(val, [...(map.get(val) ?? []), right.val]);
+            map.set(right.val, [...(map.get(right.val) ?? []), val]);
+            create(right);
+        }
+    };
+    create(root);
+    const dfs = (st: number, fa: number) => {
+        let res = 0;
+        for (const v of map.get(st) ?? []) {
+            if (v !== fa) {
+                res = Math.max(res, dfs(v, st) + 1);
+            }
+        }
+        return res;
+    };
+    return dfs(start, -1);
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：两次 DFS
+
+与方法一一样，我们先通过 $DFS$ 建图，得到 $g$。然后以 $start$ 作为起点，通过 $DFS$ 搜索整棵树，找到最远距离，即为答案。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为二叉树的节点个数。
+
+<!-- tabs:start -->
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:
+        def dfs(root):
+            if root is None:
+                return
+            if root.left:
+                g[root.val].append(root.left.val)
+                g[root.left.val].append(root.val)
+            if root.right:
+                g[root.val].append(root.right.val)
+                g[root.right.val].append(root.val)
+            dfs(root.left)
+            dfs(root.right)
+
+        def dfs2(i, fa):
+            ans = 0
+            for j in g[i]:
+                if j != fa:
+                    ans = max(ans, 1 + dfs2(j, i))
+            return ans
+
+        g = defaultdict(list)
+        dfs(root)
+        return dfs2(start, -1)
+```
+
 ```java
 /**
  * Definition for a binary tree node.
@@ -258,61 +397,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    unordered_map<int, vector<int>> g;
-
-    int amountOfTime(TreeNode* root, int start) {
-        dfs(root);
-        queue<int> q {{start}};
-        unordered_set<int> vis;
-        int ans = -1;
-        while (q.size()) {
-            ++ans;
-            for (int n = q.size(); n; --n) {
-                int i = q.front();
-                q.pop();
-                vis.insert(i);
-                for (int j : g[i]) {
-                    if (!vis.count(j)) {
-                        q.push(j);
-                    }
-                }
-            }
-        }
-        return ans;
-    }
-
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        if (root->left) {
-            g[root->val].push_back(root->left->val);
-            g[root->left->val].push_back(root->val);
-        }
-        if (root->right) {
-            g[root->val].push_back(root->right->val);
-            g[root->right->val].push_back(root->val);
-        }
-        dfs(root->left);
-        dfs(root->right);
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -360,57 +444,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func amountOfTime(root *TreeNode, start int) int {
-	g := map[int][]int{}
-	var dfs func(*TreeNode)
-	dfs = func(root *TreeNode) {
-		if root == nil {
-			return
-		}
-		if root.Left != nil {
-			g[root.Val] = append(g[root.Val], root.Left.Val)
-			g[root.Left.Val] = append(g[root.Left.Val], root.Val)
-		}
-		if root.Right != nil {
-			g[root.Val] = append(g[root.Val], root.Right.Val)
-			g[root.Right.Val] = append(g[root.Right.Val], root.Val)
-		}
-		dfs(root.Left)
-		dfs(root.Right)
-	}
-
-	dfs(root)
-	q := []int{start}
-	ans := -1
-	vis := map[int]bool{}
-	for len(q) > 0 {
-		ans++
-		for n := len(q); n > 0; n-- {
-			i := q[0]
-			q = q[1:]
-			vis[i] = true
-			for _, j := range g[i] {
-				if !vis[j] {
-					q = append(q, j)
-				}
-			}
-		}
-	}
-	return ans
-}
-```
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -453,65 +486,8 @@ func amountOfTime(root *TreeNode, start int) int {
 	dfs(root)
 	return dfs2(start, -1)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function amountOfTime(root: TreeNode | null, start: number): number {
-    const map = new Map<number, number[]>();
-    const create = ({ val, left, right }: TreeNode) => {
-        if (left != null) {
-            map.set(val, [...(map.get(val) ?? []), left.val]);
-            map.set(left.val, [...(map.get(left.val) ?? []), val]);
-            create(left);
-        }
-        if (right != null) {
-            map.set(val, [...(map.get(val) ?? []), right.val]);
-            map.set(right.val, [...(map.get(right.val) ?? []), val]);
-            create(right);
-        }
-    };
-    create(root);
-    const dfs = (st: number, fa: number) => {
-        let res = 0;
-        for (const v of map.get(st) ?? []) {
-            if (v !== fa) {
-                res = Math.max(res, dfs(v, st) + 1);
-            }
-        }
-        return res;
-    };
-    return dfs(start, -1);
-}
-```
-
-### **...**
-
-```
-
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

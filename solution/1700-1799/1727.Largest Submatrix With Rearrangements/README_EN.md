@@ -47,9 +47,9 @@ The largest submatrix of 1s, in bold, has an area of 3.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,8 +65,6 @@ class Solution:
                 ans = max(ans, j * v)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -118,8 +114,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func largestSubmatrix(matrix [][]int) int {
 	m, n := len(matrix), len(matrix[0])
@@ -139,19 +133,47 @@ func largestSubmatrix(matrix [][]int) int {
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function largestSubmatrix(matrix: number[][]): number {
+    for (let column = 0; column < matrix[0].length; column++) {
+        for (let row = 0; row < matrix.length; row++) {
+            let tempRow = row;
+            let count = 0;
+
+            while (tempRow < matrix.length && matrix[tempRow][column] === 1) {
+                count++;
+                tempRow++;
+            }
+
+            while (count !== 0) {
+                matrix[row][column] = count;
+                count--;
+                row++;
+            }
+        }
+    }
+
+    for (let row = 0; row < matrix.length; row++) {
+        matrix[row].sort((a, b) => a - b);
+    }
+
+    let maxSubmatrixArea = 0;
+
+    for (let row = 0; row < matrix.length; row++) {
+        for (let col = matrix[row].length - 1; col >= 0; col--) {
+            maxSubmatrixArea = Math.max(
+                maxSubmatrixArea,
+                matrix[row][col] * (matrix[row].length - col),
+            );
+        }
+    }
+
+    return maxSubmatrixArea;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

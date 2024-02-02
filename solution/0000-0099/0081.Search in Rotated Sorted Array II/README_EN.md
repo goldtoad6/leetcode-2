@@ -35,94 +35,149 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Binary Search
 
-### **Python3**
+We define the left boundary $l=0$ and the right boundary $r=n-1$ for the binary search, where $n$ is the length of the array.
+
+During each binary search process, we get the current midpoint $mid=(l+r)/2$.
+
+-   If $nums[mid] \gt nums[r]$, it means that $[l,mid]$ is ordered. At this time, if $nums[l] \le target \le nums[mid]$, it means that $target$ is in $[l,mid]$, otherwise $target$ is in $[mid+1,r]$.
+-   If $nums[mid] \lt nums[r]$, it means that $[mid+1,r]$ is ordered. At this time, if $nums[mid] \lt target \le nums[r]$, it means that $target$ is in $[mid+1,r]$, otherwise $target$ is in $[l,mid]$.
+-   If $nums[mid] = nums[r]$, it means that the elements $nums[mid]$ and $nums[r]$ are equal. At this time, we cannot determine which interval $target$ is in, so we can only decrease $r$ by $1$.
+
+After the binary search ends, if $nums[l] = target$, it means that the target value $target$ exists in the array, otherwise it means it does not exist.
+
+The time complexity is approximately $O(\log n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def search(self, nums: List[int], target: int) -> bool:
-        l, r = 0, len(nums) - 1
-        while l <= r:
+        n = len(nums)
+        l, r = 0, n - 1
+        while l < r:
             mid = (l + r) >> 1
-            if nums[mid] == target:
-                return True
-            if nums[mid] < nums[r] or nums[mid] < nums[l]:
-                if target > nums[mid] and target <= nums[r]:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-            elif nums[mid] > nums[l] or nums[mid] > nums[r]:
-                if target < nums[mid] and target >= nums[l]:
-                    r = mid - 1
+            if nums[mid] > nums[r]:
+                if nums[l] <= target <= nums[mid]:
+                    r = mid
                 else:
                     l = mid + 1
+            elif nums[mid] < nums[r]:
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid
             else:
                 r -= 1
-        return False
+        return nums[l] == target
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean search(int[] nums, int target) {
         int l = 0, r = nums.length - 1;
-        while (l <= r) {
-            int mid = (l + r) >>> 1;
-            if (nums[mid] == target) return true;
-            if (nums[mid] < nums[r] || nums[mid] < nums[l]) {
-                if (target > nums[mid] && target <= nums[r])
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (nums[mid] > nums[r]) {
+                if (nums[l] <= target && target <= nums[mid]) {
+                    r = mid;
+                } else {
                     l = mid + 1;
-                else
-                    r = mid - 1;
-            } else if (nums[mid] > nums[l] || nums[mid] > nums[r]) {
-                if (target < nums[mid] && target >= nums[l])
-                    r = mid - 1;
-                else
+                }
+            } else if (nums[mid] < nums[r]) {
+                if (nums[mid] < target && target <= nums[r]) {
                     l = mid + 1;
-            } else
-                r--;
+                } else {
+                    r = mid;
+                }
+            } else {
+                --r;
+            }
         }
-        return false;
+        return nums[l] == target;
     }
 }
 ```
-
-### **C++**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```cpp
 class Solution {
 public:
     bool search(vector<int>& nums, int target) {
         int l = 0, r = nums.size() - 1;
-        while (l <= r) {
+        while (l < r) {
             int mid = (l + r) >> 1;
-            if (nums[mid] == target) return true;
-            if (nums[mid] < nums[r] || nums[mid] < nums[l]) {
-                if (target > nums[mid] && target <= nums[r])
+            if (nums[mid] > nums[r]) {
+                if (nums[l] <= target && target <= nums[mid]) {
+                    r = mid;
+                } else {
                     l = mid + 1;
-                else
-                    r = mid - 1;
-            } else if (nums[mid] > nums[l] || nums[mid] > nums[r]) {
-                if (target < nums[mid] && target >= nums[l])
-                    r = mid - 1;
-                else
+                }
+            } else if (nums[mid] < nums[r]) {
+                if (nums[mid] < target && target <= nums[r]) {
                     l = mid + 1;
-            } else
-                r--;
+                } else {
+                    r = mid;
+                }
+            } else {
+                --r;
+            }
         }
-        return false;
+        return nums[l] == target;
     }
 };
 ```
 
-### **...**
-
+```go
+func search(nums []int, target int) bool {
+	l, r := 0, len(nums)-1
+	for l < r {
+		mid := (l + r) >> 1
+		if nums[mid] > nums[r] {
+			if nums[l] <= target && target <= nums[mid] {
+				r = mid
+			} else {
+				l = mid + 1
+			}
+		} else if nums[mid] < nums[r] {
+			if nums[mid] < target && target <= nums[r] {
+				l = mid + 1
+			} else {
+				r = mid
+			}
+		} else {
+			r--
+		}
+	}
+	return nums[l] == target
+}
 ```
 
+```ts
+function search(nums: number[], target: number): boolean {
+    let [l, r] = [0, nums.length - 1];
+    while (l < r) {
+        const mid = (l + r) >> 1;
+        if (nums[mid] > nums[r]) {
+            if (nums[l] <= target && target <= nums[mid]) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        } else if (nums[mid] < nums[r]) {
+            if (nums[mid] < target && target <= nums[r]) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        } else {
+            --r;
+        }
+    }
+    return nums[l] === target;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

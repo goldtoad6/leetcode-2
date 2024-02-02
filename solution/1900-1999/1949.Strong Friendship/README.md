@@ -15,22 +15,22 @@
 | user1_id    | int  |
 | user2_id    | int  |
 +-------------+------+
-(user1_id, user2_id) 是这个表的主键。
+(user1_id, user2_id) 是这个表的主键（具有唯一值的列的组合）。
 这张表的每一行都表示用户 user1_id 和 user2_id 是朋友。
 请注意，user1_id &lt; user2_id。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>如果 <code>x</code>&nbsp; 和&nbsp;<code>y</code>&nbsp;为<strong>朋友</strong>且他们<strong>至少</strong>有三个共同的朋友 ，那么&nbsp;<code>x</code> 和&nbsp;<code>y</code> 之间的友谊就是<strong>坚定的</strong>。</p>
+<p>如果 <code>x</code>&nbsp; 和&nbsp;<code>y</code>&nbsp;为&nbsp;<strong>朋友&nbsp;</strong>且他们&nbsp;<strong>至少&nbsp;</strong>有三个共同的朋友 ，那么&nbsp;<code>x</code> 和&nbsp;<code>y</code> 之间的友谊就是&nbsp;<strong>坚定的</strong>。</p>
 
-<p>写一个 SQL 查询来找到所有的<strong>坚定的友谊</strong>。</p>
+<p>写一个解决方案来找到所有的&nbsp;<strong>坚定的友谊</strong>。</p>
 
-<p>注意，结果表不应该包含重复，并且 <code>user1_id &lt; user2_id</code>。</p>
+<p>注意，结果表不应该包含重复的行，并且 <code>user1_id &lt; user2_id</code>。</p>
 
-<p>以<strong>任何顺序</strong>返回结果表。</p>
+<p>以&nbsp;<strong>任何顺序&nbsp;</strong>返回结果表。</p>
 
-<p>查询结果的格式在下面的例子中。</p>
+<p>返回结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -38,7 +38,7 @@
 
 <pre>
 <strong>输入:</strong> 
-表 Friendship:
+Friendship table:
 +----------+----------+
 | user1_id | user2_id |
 +----------+----------+
@@ -65,21 +65,41 @@
 <strong>解释:</strong> 
 用户 1 和 2 有 4 个共同的朋友（3，4，5，和 6）。
 用户 1 和 3 有 3 个共同的朋友（2，6，和 7）。
-我们没有包括用户 2 和 3 的友谊，因为他们只有两个共同的朋友（1 和 6）。
+但这里不包括用户 2 和 3 的友谊，因为他们只有两个共同的朋友（1 和 6）。
 </pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    t AS (
+        SELECT
+            *
+        FROM Friendship
+        UNION ALL
+        SELECT
+            user2_id,
+            user1_id
+        FROM Friendship
+    )
+SELECT
+    t1.user1_id,
+    t1.user2_id,
+    COUNT(1) AS common_friend
+FROM
+    t AS t1
+    JOIN t AS t2 ON t1.user2_id = t2.user1_id
+    JOIN t AS t3 ON t1.user1_id = t3.user1_id
+WHERE t3.user2_id = t2.user2_id AND t1.user1_id < t1.user2_id
+GROUP BY t1.user1_id, t1.user2_id
+HAVING COUNT(1) >= 3;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

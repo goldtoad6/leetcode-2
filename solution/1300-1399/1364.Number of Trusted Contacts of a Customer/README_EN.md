@@ -14,7 +14,7 @@
 | customer_name | varchar |
 | email         | varchar |
 +---------------+---------+
-customer_id is the primary key for this table.
+customer_id is the column of unique values for this table.
 Each row of this table contains the name and the email of a customer of an online shop.
 </pre>
 
@@ -30,7 +30,7 @@ Each row of this table contains the name and the email of a customer of an onlin
 | contact_name  | varchar |
 | contact_email | varchar |
 +---------------+---------+
-(user_id, contact_email) is the primary key for this table.
+(user_id, contact_email) is the primary key (combination of columns with unique values) for this table.
 Each row of this table contains the name and email of one contact of customer with user_id.
 This table contains information about people each customer trust. The contact may or may not exist in the Customers table.
 </pre>
@@ -47,13 +47,13 @@ This table contains information about people each customer trust. The contact ma
 | price        | int     |
 | user_id      | int     |
 +--------------+---------+
-invoice_id is the primary key for this table.
+invoice_id is the column of unique values for this table.
 Each row of this table indicates that user_id has an invoice with invoice_id and a price.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the following for each <code>invoice_id</code>:</p>
+<p>Write a solution to find the following for each <code>invoice_id</code>:</p>
 
 <ul>
 	<li><code>customer_name</code>: The name of the customer the invoice is related to.</li>
@@ -64,7 +64,7 @@ Each row of this table indicates that user_id has an invoice with invoice_id and
 
 <p>Return the result table <strong>ordered</strong> by <code>invoice_id</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -122,12 +122,27 @@ John doesn&#39;t have any contacts.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    invoice_id,
+    t2.customer_name,
+    price,
+    COUNT(t3.user_id) AS contacts_cnt,
+    COUNT(t4.email) AS trusted_contacts_cnt
+FROM
+    Invoices AS t1
+    LEFT JOIN Customers AS t2 ON t1.user_id = t2.customer_id
+    LEFT JOIN Contacts AS t3 ON t1.user_id = t3.user_id
+    LEFT JOIN Customers AS t4 ON t3.contact_email = t4.email
+GROUP BY invoice_id
+ORDER BY invoice_id;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

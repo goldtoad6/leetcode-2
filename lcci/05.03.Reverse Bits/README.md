@@ -5,6 +5,7 @@
 ## 题目描述
 
 <!-- 这里写题目描述 -->
+
 <p>给定一个32位整数 <code>num</code>，你可以将一个数位从0变为1。请编写一个程序，找出你能够获得的最长的一串1的长度。</p>
 <p><strong>示例 1：</strong></p>
 <pre><strong>输入:</strong> <code>num</code> = 1775(11011101111<sub>2</sub>)
@@ -17,9 +18,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双指针**
+### 方法一：双指针
 
 我们可以使用双指针 $i$ 和 $j$ 维护一个滑动窗口，其中 $i$ 为右指针，$j$ 为左指针。每次右指针 $i$ 向右移动一位，如果此时窗口内的 $0$ 的个数超过 $1$ 个，则左指针 $j$ 向右移动一位，直到窗口内的 $0$ 的个数不超过 $1$ 个为止。然后计算此时窗口的长度，与当前最大长度进行比较，取较大值作为当前最大长度。
 
@@ -28,10 +27,6 @@
 时间复杂度 $O(\log M)$，空间复杂度 $O(1)$。其中 $M$ 为 $32$ 位整数的最大值。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -45,10 +40,6 @@ class Solution:
             ans = max(ans, i - j + 1)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -66,8 +57,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -87,8 +76,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func reverseBits(num int) (ans int) {
 	var cnt, j int
@@ -102,19 +89,8 @@ func reverseBits(num int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

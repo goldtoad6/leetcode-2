@@ -47,17 +47,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def distributeCandies(self, candyType: List[int]) -> int:
         return min(len(candyType) >> 1, len(set(candyType)))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,8 +69,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -84,8 +80,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func distributeCandies(candyType []int) int {
 	s := hashset.New()
@@ -94,19 +88,8 @@ func distributeCandies(candyType []int) int {
 	}
 	return min(len(candyType)>>1, s.Size())
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -37,64 +37,69 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：遍历
+
+我们同时遍历两个数组，如果对应位置的元素相等，那么答案加一。
+
+时间复杂度 $O(n)$，其中 $n$ 是数组的长度，本题中 $n=3$。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def game(self, guess: List[int], answer: List[int]) -> int:
-        return sum(1 for i in range(3) if guess[i] == answer[i])
+        return sum(a == b for a, b in zip(guess, answer))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public int game(int[] guess, int[] answer) {
         int ans = 0;
         for (int i = 0; i < 3; ++i) {
-            ans += guess[i] == answer[i] ? 1 : 0;
+            if (guess[i] == answer[i]) {
+                ++ans;
+            }
         }
         return ans;
     }
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int game(vector<int>& guess, vector<int>& answer) {
         int ans = 0;
-        for (int i = 0; i < 3; ++i) ans += guess[i] == answer[i];
+        for (int i = 0; i < 3; ++i) {
+            ans += guess[i] == answer[i];
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func game(guess []int, answer []int) int {
-	ans := 0
-	for i := 0; i < 3; i++ {
-		if guess[i] == answer[i] {
+func game(guess []int, answer []int) (ans int) {
+	for i, a := range guess {
+		if a == answer[i] {
 			ans++
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **JavaScript**
+```ts
+function game(guess: number[], answer: number[]): number {
+    let ans = 0;
+    for (let i = 0; i < 3; ++i) {
+        if (guess[i] === answer[i]) {
+            ++ans;
+        }
+    }
+    return ans;
+}
+```
 
 ```js
 /**
@@ -105,13 +110,13 @@ func game(guess []int, answer []int) int {
 var game = function (guess, answer) {
     let ans = 0;
     for (let i = 0; i < 3; ++i) {
-        ans += guess[i] === answer[i];
+        if (guess[i] === answer[i]) {
+            ++ans;
+        }
     }
     return ans;
 };
 ```
-
-### **C**
 
 ```c
 int game(int* guess, int guessSize, int* answer, int answerSize) {
@@ -125,10 +130,18 @@ int game(int* guess, int guessSize, int* answer, int answerSize) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```ts
+function game(guess: number[], answer: number[]): number {
+    return guess.reduce((acc, cur, index) => (cur === answer[index] ? acc + 1 : acc), 0);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

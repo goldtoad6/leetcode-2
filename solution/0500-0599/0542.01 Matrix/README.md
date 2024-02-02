@@ -45,19 +45,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：多源 BFS**
+### 方法一：多源 BFS
 
 初始化结果矩阵 ans，所有 0 的距离为 0，所以 1 的距离为 -1。初始化队列 q 存储 BFS 需要检查的位置，并将所有 0 的位置入队。
 
 循环弹出队列 q 的元素 `p(i, j)`，检查邻居四个点。对于邻居 `(x, y)`，如果 `ans[x][y] = -1`，则更新 `ans[x][y] = ans[i][j] + 1`。同时将 `(x, y)` 入队。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -66,14 +60,14 @@ class Solution:
         ans = [[-1] * n for _ in range(m)]
         q = deque()
         for i, row in enumerate(mat):
-            for j, v in enumerate(row):
-                if v == 0:
+            for j, x in enumerate(row):
+                if x == 0:
                     ans[i][j] = 0
                     q.append((i, j))
-        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        dirs = (-1, 0, 1, 0, -1)
         while q:
             i, j = q.popleft()
-            for a, b in dirs:
+            for a, b in pairwise(dirs):
                 x, y = i + a, j + b
                 if 0 <= x < m and 0 <= y < n and ans[x][y] == -1:
                     ans[x][y] = ans[i][j] + 1
@@ -81,36 +75,31 @@ class Solution:
         return ans
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
-
     public int[][] updateMatrix(int[][] mat) {
         int m = mat.length, n = mat[0].length;
         int[][] ans = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            Arrays.fill(ans[i], -1);
+        for (int[] row : ans) {
+            Arrays.fill(row, -1);
         }
-        Deque<int[]> q = new LinkedList<>();
+        Deque<int[]> q = new ArrayDeque<>();
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (mat[i][j] == 0) {
-                    ans[i][j] = 0;
                     q.offer(new int[] {i, j});
+                    ans[i][j] = 0;
                 }
             }
         }
-        int[] dirs = new int[] {-1, 0, 1, 0, -1};
+        int[] dirs = {-1, 0, 1, 0, -1};
         while (!q.isEmpty()) {
-            int[] t = q.poll();
-            for (int i = 0; i < 4; ++i) {
-                int x = t[0] + dirs[i];
-                int y = t[1] + dirs[i + 1];
+            int[] p = q.poll();
+            int i = p[0], j = p[1];
+            for (int k = 0; k < 4; ++k) {
+                int x = i + dirs[k], y = j + dirs[k + 1];
                 if (x >= 0 && x < m && y >= 0 && y < n && ans[x][y] == -1) {
-                    ans[x][y] = ans[t[0]][t[1]] + 1;
+                    ans[x][y] = ans[i][j] + 1;
                     q.offer(new int[] {x, y});
                 }
             }
@@ -119,8 +108,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -154,8 +141,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func updateMatrix(mat [][]int) [][]int {
@@ -193,10 +178,86 @@ func updateMatrix(mat [][]int) [][]int {
 }
 ```
 
-### **...**
-
+```ts
+function updateMatrix(mat: number[][]): number[][] {
+    const [m, n] = [mat.length, mat[0].length];
+    const ans: number[][] = Array.from({ length: m }, () => Array.from({ length: n }, () => -1));
+    const q: [number, number][] = [];
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (mat[i][j] === 0) {
+                q.push([i, j]);
+                ans[i][j] = 0;
+            }
+        }
+    }
+    const dirs: number[] = [-1, 0, 1, 0, -1];
+    while (q.length) {
+        const [i, j] = q.shift()!;
+        for (let k = 0; k < 4; ++k) {
+            const [x, y] = [i + dirs[k], j + dirs[k + 1]];
+            if (x >= 0 && x < m && y >= 0 && y < n && ans[x][y] === -1) {
+                ans[x][y] = ans[i][j] + 1;
+                q.push([x, y]);
+            }
+        }
+    }
+    return ans;
+}
 ```
 
+```rust
+use std::collections::VecDeque;
+
+impl Solution {
+    #[allow(dead_code)]
+    pub fn update_matrix(mat: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        let n: usize = mat.len();
+        let m: usize = mat[0].len();
+        let mut ret_vec: Vec<Vec<i32>> = vec![vec![-1; m]; n];
+        // The inner tuple is of <X, Y, Current Count>
+        let mut the_q: VecDeque<(usize, usize)> = VecDeque::new();
+        let traverse_vec: Vec<(i32, i32)> = vec![(-1, 0), (1, 0), (0, 1), (0, -1)];
+
+        // Initialize the queue
+        for i in 0..n {
+            for j in 0..m {
+                if mat[i][j] == 0 {
+                    // For the zero cell, enqueue at first
+                    the_q.push_back((i, j));
+                    // Set to 0 in return vector
+                    ret_vec[i][j] = 0;
+                }
+            }
+        }
+
+        while !the_q.is_empty() {
+            let (x, y) = the_q.front().unwrap().clone();
+            the_q.pop_front();
+            for pair in &traverse_vec {
+                let cur_x = pair.0 + (x as i32);
+                let cur_y = pair.1 + (y as i32);
+                if
+                    Solution::check_bounds(cur_x, cur_y, n as i32, m as i32) &&
+                    ret_vec[cur_x as usize][cur_y as usize] == -1
+                {
+                    // The current cell has not be updated yet, and is also in bound
+                    ret_vec[cur_x as usize][cur_y as usize] = ret_vec[x][y] + 1;
+                    the_q.push_back((cur_x as usize, cur_y as usize));
+                }
+            }
+        }
+
+        ret_vec
+    }
+
+    #[allow(dead_code)]
+    pub fn check_bounds(i: i32, j: i32, n: i32, m: i32) -> bool {
+        i >= 0 && i < n && j >= 0 && j < m
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

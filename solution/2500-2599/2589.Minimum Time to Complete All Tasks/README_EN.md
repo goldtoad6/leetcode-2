@@ -47,9 +47,19 @@ The computer will be on for a total of 4 seconds.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Sorting
 
-### **Python3**
+We observe that the problem is equivalent to selecting $duration$ integer time points in each interval $[start,..,end]$, so that the total number of selected integer time points is minimized.
+
+Therefore, we can first sort $tasks$ in ascending order of end time $end$. Then we greedily make selections. For each task, we start from the end time $end$ and choose the points as late as possible from back to front. This way, these points are more likely to be reused by later tasks.
+
+In our implementation, we can use an array $vis$ of length $2010$ to record whether each time point has been selected. Then for each task, we first count the number of points $cnt$ that have been selected in the interval $[start,..,end]$, and then select $duration - cnt$ points from back to front, while recording the number of selected points $ans$ and updating the $vis$ array.
+
+Finally, we return $ans$.
+
+The time complexity is $O(n \times \log n + n \times m)$, and the space complexity is $O(m)$. Here, $n$ and $m$ are the lengths of $tasks$ and $vis$ array, respectively. In this problem, $m = 2010$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,7 +68,7 @@ class Solution:
         vis = [0] * 2010
         ans = 0
         for start, end, duration in tasks:
-            duration -= sum(vis[start: end + 1])
+            duration -= sum(vis[start : end + 1])
             i = end
             while i >= start and duration > 0:
                 if not vis[i]:
@@ -68,8 +78,6 @@ class Solution:
                 i -= 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -93,8 +101,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -120,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMinimumTime(tasks [][]int) (ans int) {
 	sort.Slice(tasks, func(i, j int) bool { return tasks[i][1] < tasks[j][1] })
@@ -143,8 +147,6 @@ func findMinimumTime(tasks [][]int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findMinimumTime(tasks: number[][]): number {
     tasks.sort((a, b) => a[1] - b[1]);
@@ -165,10 +167,6 @@ function findMinimumTime(tasks: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

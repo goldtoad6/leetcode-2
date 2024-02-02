@@ -51,9 +51,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +61,6 @@ class Solution:
         tx, ty = target
         return all(abs(tx - x) + abs(ty - y) > abs(tx) + abs(ty) for x, y in ghosts)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -79,8 +77,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -96,8 +92,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func escapeGhosts(ghosts [][]int, target []int) bool {
@@ -119,16 +113,11 @@ func abs(x int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function escapeGhosts(ghosts: number[][], target: number[]): boolean {
     const [tx, ty] = target;
     for (const [x, y] of ghosts) {
-        if (
-            Math.abs(tx - x) + Math.abs(ty - y) <=
-            Math.abs(tx) + Math.abs(ty)
-        ) {
+        if (Math.abs(tx - x) + Math.abs(ty - y) <= Math.abs(tx) + Math.abs(ty)) {
             return false;
         }
     }
@@ -136,10 +125,6 @@ function escapeGhosts(ghosts: number[][], target: number[]): boolean {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

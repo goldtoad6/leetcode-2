@@ -38,9 +38,9 @@ Average salary excluding minimum and maximum salary is (2000) / 1 = 2000
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -48,8 +48,6 @@ class Solution:
         s = sum(salary) - min(salary) - max(salary)
         return s / (len(salary) - 2)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -66,8 +64,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -86,8 +82,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func average(salary []int) float64 {
 	s := 0
@@ -100,23 +94,7 @@ func average(salary []int) float64 {
 	s -= (mi + mx)
 	return float64(s) / float64(len(salary)-2)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function average(salary: number[]): number {
@@ -131,8 +109,6 @@ function average(salary: number[]): number {
     return (sum - max - min) / (salary.length - 2);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -151,17 +127,34 @@ impl Solution {
 }
 ```
 
-### **C**
+```php
+class Solution {
+    /**
+     * @param Integer[] $salary
+     * @return Float
+     */
+    function average($salary) {
+        $max = $sum = 0;
+        $min = 10 ** 6;
+        for ($i = 0; $i < count($salary); $i++) {
+            $min = min($min, $salary[$i]);
+            $max = max($max, $salary[$i]);
+            $sum += $salary[$i];
+        }
+        return ($sum - $max - $min) / (count($salary) - 2);
+    }
+}
+```
 
 ```c
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 
 double average(int* salary, int salarySize) {
     int ma = INT_MIN;
     int mi = INT_MAX;
     int sum = 0;
-    for (int i = 0 ; i < salarySize; i++) {
+    for (int i = 0; i < salarySize; i++) {
         sum += salary[i];
         ma = max(ma, salary[i]);
         mi = min(mi, salary[i]);
@@ -170,10 +163,6 @@ double average(int* salary, int salarySize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

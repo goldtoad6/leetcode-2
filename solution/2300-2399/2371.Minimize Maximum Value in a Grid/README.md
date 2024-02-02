@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 贪心**
+### 方法一：排序 + 贪心
 
 由于可以将每一个数字重新填入并且使最终矩阵的最大值最小化，可考虑贪心。
 
@@ -69,16 +67,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def minScore(self, grid: List[List[int]]) -> List[List[int]]:
         m, n = len(grid), len(grid[0])
-        nums = [(v, i, j) for i, row in enumerate(grid)
-                for j, v in enumerate(row)]
+        nums = [(v, i, j) for i, row in enumerate(grid) for j, v in enumerate(row)]
         nums.sort()
         row_max = [0] * m
         col_max = [0] * n
@@ -88,10 +81,6 @@ class Solution:
             row_max[i] = col_max[j] = ans[i][j]
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -118,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -143,8 +130,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minScore(grid [][]int) [][]int {
@@ -170,16 +155,7 @@ func minScore(grid [][]int) [][]int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minScore(grid: number[][]): number[][] {
@@ -203,10 +179,6 @@ function minScore(grid: number[][]): number[][] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -39,47 +39,70 @@
 
 ## Solutions
 
-**Approach 1: Pop and Push Digits & Check before Overflow**
+### Solution 1: Mathematics
 
-Time complexity $O(log|x|)$, Space complexity $O(1)$.
+Let's denote $mi$ and $mx$ as $-2^{31}$ and $2^{31} - 1$ respectively, then the reverse result of $x$, $ans$, needs to satisfy $mi \le ans \le mx$.
+
+We can continuously take the remainder of $x$ to get the last digit $y$ of $x$, and add $y$ to the end of $ans$. Before adding $y$, we need to check if $ans$ overflows. That is, check whether $ans \times 10 + y$ is within the range $[mi, mx]$.
+
+If $x \gt 0$, it needs to satisfy $ans \times 10 + y \leq mx$, that is, $ans \times 10 + y \leq \left \lfloor \frac{mx}{10} \right \rfloor \times 10 + 7$. Rearranging gives $(ans - \left \lfloor \frac{mx}{10} \right \rfloor) \times 10 \leq 7 - y$.
+
+Next, we discuss the conditions for the inequality to hold:
+
+-   When $ans \lt \left \lfloor \frac{mx}{10} \right \rfloor$, the inequality obviously holds;
+-   When $ans = \left \lfloor \frac{mx}{10} \right \rfloor$, the necessary and sufficient condition for the inequality to hold is $y \leq 7$. If $ans = \left \lfloor \frac{mx}{10} \right \rfloor$ and we can still add numbers, it means that the number is at the highest digit, that is, $y$ must not exceed $2$, therefore, the inequality must hold;
+-   When $ans \gt \left \lfloor \frac{mx}{10} \right \rfloor$, the inequality obviously does not hold.
+
+In summary, when $x \gt 0$, the necessary and sufficient condition for the inequality to hold is $ans \leq \left \lfloor \frac{mx}{10} \right \rfloor$.
+
+Similarly, when $x \lt 0$, the necessary and sufficient condition for the inequality to hold is $ans \geq \left \lfloor \frac{mi}{10} \right \rfloor$.
+
+Therefore, we can check whether $ans$ overflows by checking whether $ans$ is within the range $[\left \lfloor \frac{mi}{10} \right \rfloor, \left \lfloor \frac{mx}{10} \right \rfloor]$. If it overflows, return $0$. Otherwise, add $y$ to the end of $ans$, and then remove the last digit of $x$, that is, $x \gets \left \lfloor \frac{x}{10} \right \rfloor$.
+
+The time complexity is $O(\log |x|)$, where $|x|$ is the absolute value of $x$. The space complexity is $O(1)$.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def reverse(self, x: int) -> int:
-        y = int(str(abs(x))[::-1])
-        res = -y if x < 0 else y
-        return 0 if res < -(2**31) or res > 2**31 - 1 else res
+        ans = 0
+        mi, mx = -(2**31), 2**31 - 1
+        while x:
+            if ans < mi // 10 + 1 or ans > mx // 10:
+                return 0
+            y = x % 10
+            if x < 0 and y > 0:
+                y -= 10
+            ans = ans * 10 + y
+            x = (x - y) // 10
+        return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int reverse(int x) {
-        long res = 0;
-        while (x != 0) {
-            res = res * 10 + (x % 10);
-            x /= 10;
+        int ans = 0;
+        for (; x != 0; x /= 10) {
+            if (ans < Integer.MIN_VALUE / 10 || ans > Integer.MAX_VALUE / 10) {
+                return 0;
+            }
+            ans = ans * 10 + x % 10;
         }
-        return res < Integer.MIN_VALUE || res > Integer.MAX_VALUE ? 0 : (int) res;
+        return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int reverse(int x) {
         int ans = 0;
-        for (; x != 0; x /= 10) {
-            if (ans > INT32_MAX / 10 || ans < INT32_MIN / 10)
+        for (; x; x /= 10) {
+            if (ans < INT_MIN / 10 || ans > INT_MAX / 10) {
                 return 0;
+            }
             ans = ans * 10 + x % 10;
         }
         return ans;
@@ -87,7 +110,29 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+func reverse(x int) (ans int) {
+	for ; x != 0; x /= 10 {
+		if ans < math.MinInt32/10 || ans > math.MaxInt32/10 {
+			return 0
+		}
+		ans = ans*10 + x%10
+	}
+	return
+}
+```
+
+```rust
+impl Solution {
+    pub fn reverse(mut x: i32) -> i32 {
+        let is_minus = x < 0;
+        match x.abs().to_string().chars().rev().collect::<String>().parse::<i32>() {
+            Ok(x) => x * (if is_minus { -1 } else { 1 }),
+            Err(_) => 0,
+        }
+    }
+}
+```
 
 ```js
 /**
@@ -95,117 +140,77 @@ public:
  * @return {number}
  */
 var reverse = function (x) {
-    let res = 0;
-    while (x) {
-        res = res * 10 + (x % 10);
-        x = ~~(x / 10);
-    }
-    return res < Math.pow(-2, 31) || res > Math.pow(2, 31) - 1 ? 0 : res;
-};
-```
-
-### **C**
-
-```c
-int reverse(int x) {
-    int res = 0;
-    while (x != 0) {
-        if (res > INT_MAX / 10 || res < INT_MIN / 10) {
+    const mi = -(2 ** 31);
+    const mx = 2 ** 31 - 1;
+    let ans = 0;
+    for (; x != 0; x = ~~(x / 10)) {
+        if (ans < ~~(mi / 10) || ans > ~~(mx / 10)) {
             return 0;
         }
-        res = res * 10 + x % 10;
-        x /= 10;
+        ans = ans * 10 + (x % 10);
     }
-    return res;
-}
+    return ans;
+};
 ```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn reverse(mut x: i32) -> i32 {
-        let is_minus = x < 0;
-        match x
-            .abs()
-            .to_string()
-            .chars()
-            .rev()
-            .collect::<String>()
-            .parse::<i32>()
-        {
-            Ok(x) => x * if is_minus { -1 } else { 1 },
-            Err(_) => 0,
-        }
-    }
-}
-```
-
-### **Go**
-
-```go
-func reverse(x int) int {
-	ans, INT32_MAX, INT32_MIN := 0, math.MaxInt32, math.MinInt32
-	for ; x != 0; x /= 10 {
-		if ans > INT32_MAX/10 || ans < INT32_MIN/10 {
-			return 0
-		}
-		ans = ans*10 + x % 10
-	}
-	return ans
-}
-```
-
-### **C#**
 
 ```cs
 public class Solution {
     public int Reverse(int x) {
-        var negative = x < 0;
-        if (negative) x = -x;
-        long result = 0;
-        while (x > 0)
-        {
-            result = (result * 10) + x % 10;
-            x /= 10;
+        int ans = 0;
+        for (; x != 0; x /= 10) {
+            if (ans < int.MinValue / 10 || ans > int.MaxValue / 10) {
+                return 0;
+            }
+            ans = ans * 10 + x % 10;
         }
-        if (negative) result = -result;
-        if (result > int.MaxValue || result < int.MinValue) result = 0;
-        return (int) result;
+        return ans;
     }
 }
 ```
 
-### **Ruby**
-
-```rb
-# @param {Integer} x
-# @return {Integer}
-def reverse(x)
-  neg = x < 0
-
-  x = x.abs
-  s = ''
-
-  x /= 10 while x > 0 && (x % 10).zero?
-
-  while x > 0
-    s += (x % 10).to_s
-    x /= 10
-  end
-
-  s = neg ? '-' + s : s
-
-  # have to explicitly constraint the int boundary as per the dummy test case
-  res = s.to_i
-  res <= 214_748_364_7 && res >= -214_748_364_8 ? res : 0
-end
+```c
+int reverse(int x) {
+    int ans = 0;
+    for (; x != 0; x /= 10) {
+        if (ans > INT_MAX / 10 || ans < INT_MIN / 10) {
+            return 0;
+        }
+        ans = ans * 10 + x % 10;
+    }
+    return ans;
+}
 ```
 
-### **...**
+```php
+class Solution {
+    /**
+     * @param int $x
+     * @return int
+     */
 
-```
+    function reverse($x) {
+        $isNegative = $x < 0;
+        $x = abs($x);
 
+        $reversed = 0;
+
+        while ($x > 0) {
+            $reversed = $reversed * 10 + ($x % 10);
+            $x = (int) ($x / 10);
+        }
+
+        if ($isNegative) {
+            $reversed *= -1;
+        }
+        if ($reversed < -pow(2, 31) || $reversed > pow(2, 31) - 1) {
+            return 0;
+        }
+
+        return $reversed;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

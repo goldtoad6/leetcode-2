@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +56,6 @@ class Solution:
 
         return [word for word in words if match(word, pattern)]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +86,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -105,13 +101,12 @@ public:
             }
             return 1;
         };
-        for (auto& word : words) if (match(word, pattern)) ans.emplace_back(word);
+        for (auto& word : words)
+            if (match(word, pattern)) ans.emplace_back(word);
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findAndReplacePattern(words []string, pattern string) []string {
@@ -136,8 +131,6 @@ func findAndReplacePattern(words []string, pattern string) []string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findAndReplacePattern(words: string[], pattern: string): string[] {
     return words.filter(word => {
@@ -154,8 +147,6 @@ function findAndReplacePattern(words: string[], pattern: string): string[] {
     });
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashMap;
@@ -183,10 +174,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -57,35 +57,35 @@ The difference is 4, which is more than the allowed 3.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We can create an array $cnt$ of length $26$ to record the difference in the number of times each letter appears in the two strings. Then we traverse $cnt$, if any letter appears the difference in the number of times greater than $3$, then return `false`, otherwise return `true`.
+
+The time complexity is $O(n)$ and the space complexity is $O(C)$. Where $n$ is the length of the string, and $C$ is the size of the character set, and in this question $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def checkAlmostEquivalent(self, word1: str, word2: str) -> bool:
-        counter = defaultdict(int)
-        for c in word1:
-            counter[c] += 1
+        cnt = Counter(word1)
         for c in word2:
-            counter[c] -= 1
-        return all(abs(x) <= 3 for x in counter.values())
+            cnt[c] -= 1
+        return all(abs(x) <= 3 for x in cnt.values())
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean checkAlmostEquivalent(String word1, String word2) {
-        int[] counter = new int[26];
-        for (char c : word1.toCharArray()) {
-            ++counter[c - 'a'];
+        int[] cnt = new int[26];
+        for (int i = 0; i < word1.length(); ++i) {
+            ++cnt[word1.charAt(i) - 'a'];
         }
-        for (char c : word2.toCharArray()) {
-            --counter[c - 'a'];
+        for (int i = 0; i < word2.length(); ++i) {
+            --cnt[word2.charAt(i) - 'a'];
         }
-        for (int i = 0; i < 26; ++i) {
-            if (Math.abs(counter[i]) > 3) {
+        for (int x : cnt) {
+            if (Math.abs(x) > 3) {
                 return false;
             }
         }
@@ -94,36 +94,38 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool checkAlmostEquivalent(string word1, string word2) {
-        vector<int> counter(26);
-        for (char& c : word1) ++counter[c - 'a'];
-        for (char& c : word2) --counter[c - 'a'];
-        for (int i = 0; i < 26; ++i)
-            if (abs(counter[i]) > 3)
-                return 0;
-        return 1;
+        int cnt[26]{};
+        for (char& c : word1) {
+            ++cnt[c - 'a'];
+        }
+        for (char& c : word2) {
+            --cnt[c - 'a'];
+        }
+        for (int i = 0; i < 26; ++i) {
+            if (abs(cnt[i]) > 3) {
+                return false;
+            }
+        }
+        return true;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func checkAlmostEquivalent(word1 string, word2 string) bool {
-	counter := make([]int, 26)
-	for i := range word1 {
-		counter[word1[i]-'a']++
+	cnt := [26]int{}
+	for _, c := range word1 {
+		cnt[c-'a']++
 	}
-	for i := range word2 {
-		counter[word2[i]-'a']--
+	for _, c := range word2 {
+		cnt[c-'a']--
 	}
-	for _, v := range counter {
-		if v > 3 || -v > 3 {
+	for _, x := range cnt {
+		if x > 3 || x < -3 {
 			return false
 		}
 	}
@@ -131,10 +133,78 @@ func checkAlmostEquivalent(word1 string, word2 string) bool {
 }
 ```
 
-### **...**
-
+```ts
+function checkAlmostEquivalent(word1: string, word2: string): boolean {
+    const cnt: number[] = new Array(26).fill(0);
+    for (const c of word1) {
+        ++cnt[c.charCodeAt(0) - 97];
+    }
+    for (const c of word2) {
+        --cnt[c.charCodeAt(0) - 97];
+    }
+    return cnt.every(x => Math.abs(x) <= 3);
+}
 ```
 
+```js
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {boolean}
+ */
+var checkAlmostEquivalent = function (word1, word2) {
+    const m = new Map();
+    for (let i = 0; i < word1.length; i++) {
+        m.set(word1[i], (m.get(word1[i]) || 0) + 1);
+        m.set(word2[i], (m.get(word2[i]) || 0) - 1);
+    }
+    for (const v of m.values()) {
+        if (Math.abs(v) > 3) {
+            return false;
+        }
+    }
+    return true;
+};
+```
+
+```cs
+public class Solution {
+    public bool CheckAlmostEquivalent(string word1, string word2) {
+        int[] cnt = new int[26];
+        foreach (var c in word1) {
+            cnt[c - 'a']++;
+        }
+        foreach (var c in word2) {
+            cnt[c - 'a']--;
+        }
+        return cnt.All(x => Math.Abs(x) <= 3);
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String $word1
+     * @param String $word2
+     * @return Boolean
+     */
+    function checkAlmostEquivalent($word1, $word2) {
+        for ($i = 0; $i < strlen($word1); $i++) {
+            $hashtable[$word1[$i]] += 1;
+            $hashtable[$word2[$i]] -= 1;
+        }
+        $keys = array_keys($hashtable);
+        for ($j = 0; $j < count($keys); $j++) {
+            if (abs($hashtable[$keys[$j]]) > 3) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

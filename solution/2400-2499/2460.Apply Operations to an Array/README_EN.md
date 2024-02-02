@@ -55,9 +55,19 @@ After that, we shift the 0&#39;s to the end, which gives the array [1,4,2,0,0,0]
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We can directly simulate according to the problem description.
+
+First, we traverse the array $nums$. For any two adjacent elements $nums[i]$ and $nums[i+1]$, if $nums[i] = nums[i+1]$, then we double the value of $nums[i]$ and change the value of $nums[i+1]$ to $0$.
+
+Then, we create an answer array $ans$ of length $n$, and put all non-zero elements of $nums$ into $ans$ in order.
+
+Finally, we return the answer array $ans$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array $nums$. Ignoring the space consumption of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,12 +77,14 @@ class Solution:
             if nums[i] == nums[i + 1]:
                 nums[i] <<= 1
                 nums[i + 1] = 0
-        ans = [v for v in nums if v]
-        ans += [0] * (n - len(ans))
+        ans = [0] * n
+        i = 0
+        for x in nums:
+            if x:
+                ans[i] = x
+                i += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,23 +97,16 @@ class Solution {
             }
         }
         int[] ans = new int[n];
-        int j = 0;
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] != 0) {
-                ans[j++] = nums[i];
-            }
-        }
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] == 0) {
-                ans[j++] = nums[i];
+        int i = 0;
+        for (int x : nums) {
+            if (x > 0) {
+                ans[i++] = x;
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -115,49 +120,83 @@ public:
             }
         }
         vector<int> ans(n);
-        int j = 0;
-        for (int i = 0; i < n; ++i) if (nums[i]) ans[j++] = nums[i];
-        for (int i = 0; i < n; ++i) if (!nums[i]) ans[j++] = nums[i];
+        int i = 0;
+        for (int& x : nums) {
+            if (x) {
+                ans[i++] = x;
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func applyOperations(nums []int) (ans []int) {
-    n := len(nums)
-    for i := 0; i < n - 1; i++ {
-        if nums[i] == nums[i + 1] {
-            nums[i] <<= 1
-            nums[i + 1] = 0
-        }
-    }
-    for _, v := range nums {
-        if v != 0 {
-            ans = append(ans, v)
-        }
-    }
-    for _, v := range nums {
-        if v == 0 {
-            ans = append(ans, v)
-        }
-    }
-    return
+func applyOperations(nums []int) []int {
+	n := len(nums)
+	for i := 0; i < n-1; i++ {
+		if nums[i] == nums[i+1] {
+			nums[i] <<= 1
+			nums[i+1] = 0
+		}
+	}
+	ans := make([]int, n)
+	i := 0
+	for _, x := range nums {
+		if x > 0 {
+			ans[i] = x
+			i++
+		}
+	}
+	return ans
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
+function applyOperations(nums: number[]): number[] {
+    const n = nums.length;
+    for (let i = 0; i < n - 1; ++i) {
+        if (nums[i] === nums[i + 1]) {
+            nums[i] <<= 1;
+            nums[i + 1] = 0;
+        }
+    }
+    const ans: number[] = Array(n).fill(0);
+    let i = 0;
+    for (const x of nums) {
+        if (x !== 0) {
+            ans[i++] = x;
+        }
+    }
+    return ans;
+}
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn apply_operations(nums: Vec<i32>) -> Vec<i32> {
+        let mut nums = nums;
 
-```
+        for i in 0..nums.len() - 1 {
+            if nums[i] == nums[i + 1] {
+                nums[i] <<= 1;
+                nums[i + 1] = 0;
+            }
+        }
 
+        let mut cur = 0;
+        for i in 0..nums.len() {
+            if nums[i] != 0 {
+                nums.swap(i, cur);
+                cur += 1;
+            }
+        }
+
+        nums
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

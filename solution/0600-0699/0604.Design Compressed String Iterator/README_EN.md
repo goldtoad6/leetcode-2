@@ -48,13 +48,12 @@ stringIterator.hasNext(); // return True
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class StringIterator:
-
     def __init__(self, compressedString: str):
         self.d = []
         self.p = 0
@@ -87,8 +86,6 @@ class StringIterator:
 # param_1 = obj.next()
 # param_2 = obj.hasNext()
 ```
-
-### **Java**
 
 ```java
 class StringIterator {
@@ -142,8 +139,6 @@ class Node {
  */
 ```
 
-### **C++**
-
 ```cpp
 class StringIterator {
 public:
@@ -172,6 +167,7 @@ public:
     bool hasNext() {
         return p < d.size() && d[p].second > 0;
     }
+
 private:
     vector<pair<char, int>> d;
     int p = 0;
@@ -184,8 +180,6 @@ private:
  * bool param_2 = obj->hasNext();
  */
 ```
-
-### **Go**
 
 ```go
 type pair struct {
@@ -239,10 +233,6 @@ func (this *StringIterator) HasNext() bool {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

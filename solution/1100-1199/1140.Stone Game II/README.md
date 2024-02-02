@@ -44,9 +44,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀和 + 记忆化搜索**
+### 方法一：前缀和 + 记忆化搜索
 
 由于玩家每次可以拿走前 $X$ 堆的所有石子，也就是说能拿走一个区间的石子，因此，我们可以先预处理出一个长度为 $n+1$ 的前缀和数组 $s$，其中 $s[i]$ 表示数组 `piles` 的前 $i$ 个元素的和。
 
@@ -65,10 +63,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def stoneGameII(self, piles: List[int]) -> int:
@@ -84,10 +78,6 @@ class Solution:
         s = list(accumulate(piles, initial=0))
         return dfs(0, 1)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -121,8 +111,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -153,8 +141,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func stoneGameII(piles []int) int {
 	n := len(piles)
@@ -180,16 +166,7 @@ func stoneGameII(piles []int) int {
 	}
 	return dfs(0, 1)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function stoneGameII(piles: number[]): number {
@@ -216,10 +193,28 @@ function stoneGameII(piles: number[]): number {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        @cache
+        def dfs(i: int, m: int = 1) -> int:
+            if i >= len(piles):
+                return 0
+            t = inf
+            for x in range(1, m << 1 | 1):
+                t = min(t, dfs(i + x, max(m, x)))
+            return s[-1] - s[i] - t
+
+        s = list(accumulate(piles, initial=0))
+        return dfs(0)
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

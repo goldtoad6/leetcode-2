@@ -17,9 +17,9 @@
 | store2      | int     |
 | store3      | int     |
 +-------------+---------+
-这张表的主键是product_id（产品Id）。
-每行存储了这一产品在不同商店store1, store2, store3的价格。
-如果这一产品在商店里没有出售，则值将为null。
+在 SQL 中，这张表的主键是 product_id（产品Id）。
+每行存储了这一产品在不同商店 store1, store2, store3 的价格。
+如果这一产品在商店里没有出售，则值将为 null。
 </pre>
 
 <p>&nbsp;</p>
@@ -54,37 +54,26 @@ Products table:
 | 1          | store3 | 80    |
 +------------+--------+-------+
 <strong>解释：</strong>
-产品0在store1，store2,store3的价格分别为95,100,105。
-产品1在store1，store3的价格分别为70,80。在store2无法买到。</pre>
+产品 0 在 store1、store2、store3 的价格分别为 95、100、105。
+产品 1 在 store1、store3 的价格分别为 70、80。在 store2 无法买到。</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：合并
+
+我们可以筛选出每个商店的产品和价格，然后使用 `UNION` 合并即可。
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-SELECT product_id,
-    'store1' AS store,
-    store1 AS price
-FROM products
-WHERE store1 IS NOT NULL
+# Write your MySQL query statement below
+SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
 UNION
-SELECT product_id,
-    'store2' AS store,
-    store2 AS price
-FROM products
-WHERE store2 IS NOT NULL
+SELECT product_id, 'store2' AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL
 UNION
-SELECT product_id,
-    'store3' AS store,
-    store3 AS price
-FROM products
-WHERE store3 IS NOT NULL;
+SELECT product_id, 'store3' AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

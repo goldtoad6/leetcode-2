@@ -12,16 +12,16 @@
 +-------------+------+
 | day         | date |
 +-------------+------+
-day is the primary key for this table.
+day is the column with unique values for this table.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to convert each date in <code>Days</code> into a string formatted as <code>&quot;day_name, month_name day, year&quot;</code>.</p>
+<p>Write a solution&nbsp;to convert each date in <code>Days</code> into a string formatted as <code>&quot;day_name, month_name day, year&quot;</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -49,12 +49,15 @@ Days table:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT DATE_FORMAT(day, '%W, %M %e, %Y') AS day FROM Days;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

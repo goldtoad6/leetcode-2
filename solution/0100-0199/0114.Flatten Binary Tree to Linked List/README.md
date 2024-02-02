@@ -51,21 +51,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：寻找前驱节点**
+### 方法一：寻找前驱节点
 
 先序遍历的访问顺序是“根、左子树、右子树”，左子树最后一个节点访问完后，接着会访问根节点的右子树节点。
 
 因此，对于当前节点，如果其左子节点不为空，我们找到左子树的最右节点，作为前驱节点，然后将当前节点的右子节点赋给前驱节点的右子节点。然后将当前节点的左子节点赋给当前节点的右子节点，并将当前节点的左子节点置为空。然后将当前节点的右子节点作为下一个节点，继续处理，直至所有节点处理完毕。
 
-时间复杂度 $O(n)$，空间复杂度 O(1)$。其中 $n$ 是树中节点的个数。
+时间复杂度 $O(n)$，其中 $n$ 是树中节点的个数。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -89,10 +83,6 @@ class Solution:
                 root.left = None
             root = root.right
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -133,8 +123,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -166,8 +154,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -193,33 +179,6 @@ func flatten(root *TreeNode) {
 }
 ```
 
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func flatten(root *TreeNode) {
-	for root != nil {
-		left, right := root.Left, root.Right
-		root.Left = nil
-		if left != nil {
-			root.Right = left
-			for left.Right != nil {
-				left = left.Right
-			}
-			left.Right = right
-		}
-		root = root.Right
-	}
-}
-```
-
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -239,10 +198,10 @@ func flatten(root *TreeNode) {
  Do not return anything, modify root in-place instead.
  */
 function flatten(root: TreeNode | null): void {
-    while (root != null) {
-        if (root.left != null) {
+    while (root !== null) {
+        if (root.left !== null) {
             let pre = root.left;
-            while (pre.right != null) {
+            while (pre.right !== null) {
                 pre = pre.right;
             }
             pre.right = root.right;
@@ -254,7 +213,60 @@ function flatten(root: TreeNode | null): void {
 }
 ```
 
-### **JavaScript**
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    #[allow(dead_code)]
+    pub fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
+        if root.is_none() {
+            return;
+        }
+        let mut v: Vec<Option<Rc<RefCell<TreeNode>>>> = Vec::new();
+        // Initialize the vector
+        Self::pre_order_traverse(&mut v, root);
+        // Traverse the vector
+        let n = v.len();
+        for i in 0..n - 1 {
+            v[i].as_ref().unwrap().borrow_mut().left = None;
+            v[i].as_ref().unwrap().borrow_mut().right = v[i + 1].clone();
+        }
+    }
+
+    #[allow(dead_code)]
+    fn pre_order_traverse(
+        v: &mut Vec<Option<Rc<RefCell<TreeNode>>>>,
+        root: &Option<Rc<RefCell<TreeNode>>>
+    ) {
+        if root.is_none() {
+            return;
+        }
+        v.push(root.clone());
+        let left = root.as_ref().unwrap().borrow().left.clone();
+        let right = root.as_ref().unwrap().borrow().right.clone();
+        Self::pre_order_traverse(v, &left);
+        Self::pre_order_traverse(v, &right);
+    }
+}
+```
 
 ```js
 /**
@@ -285,10 +297,37 @@ var flatten = function (root) {
 };
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func flatten(root *TreeNode) {
+	for root != nil {
+		left, right := root.Left, root.Right
+		root.Left = nil
+		if left != nil {
+			root.Right = left
+			for left.Right != nil {
+				left = left.Right
+			}
+			left.Right = right
+		}
+		root = root.Right
+	}
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

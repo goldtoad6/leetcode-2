@@ -44,36 +44,26 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
+我们将日期转换为天数，然后计算两个人在罗马的天数。
 
-将日期转换为天数，然后计算两个人在罗马的天数。
-
-时间复杂度 $O(1)$。
+时间复杂度 $O(C)$，空间复杂度 $O(C)$。其中 $C$ 为常数。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def countDaysTogether(self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str) -> int:
-        if leaveAlice < arriveBob or leaveBob < arriveAlice:
-            return 0
+    def countDaysTogether(
+        self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str
+    ) -> int:
         a = max(arriveAlice, arriveBob)
         b = min(leaveAlice, leaveBob)
-        days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        x = sum(days[:int(a[:2]) - 1]) + int(a[3:])
-        y = sum(days[:int(b[:2]) - 1]) + int(b[3:])
-        return y - x + 1
+        days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        x = sum(days[: int(a[:2]) - 1]) + int(a[3:])
+        y = sum(days[: int(b[:2]) - 1]) + int(b[3:])
+        return max(y - x + 1, 0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -99,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -125,8 +113,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countDaysTogether(arriveAlice string, leaveAlice string, arriveBob string, leaveBob string) int {
@@ -157,17 +143,6 @@ func countDaysTogether(arriveAlice string, leaveAlice string, arriveBob string, 
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

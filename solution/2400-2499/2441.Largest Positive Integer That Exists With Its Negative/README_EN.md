@@ -44,42 +44,42 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We can use a hash table $s$ to record all elements that appear in the array, and a variable $ans$ to record the maximum positive integer that satisfies the problem requirements, initially $ans = -1$.
+
+Next, we traverse each element $x$ in the hash table $s$. If $-x$ exists in $s$, then we update $ans = \max(ans, x)$.
+
+After the traversal ends, return $ans$.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def findMaxK(self, nums: List[int]) -> int:
-        ans = -1
         s = set(nums)
-        for v in s:
-            if -v in s:
-                ans = max(ans, v)
-        return ans
+        return max((x for x in s if -x in s), default=-1)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int findMaxK(int[] nums) {
         int ans = -1;
         Set<Integer> s = new HashSet<>();
-        for (int v : nums) {
-            s.add(v);
+        for (int x : nums) {
+            s.add(x);
         }
-        for (int v : s) {
-            if (s.contains(-v)) {
-                ans = Math.max(ans, v);
+        for (int x : s) {
+            if (s.contains(-x)) {
+                ans = Math.max(ans, x);
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -87,9 +87,9 @@ public:
     int findMaxK(vector<int>& nums) {
         unordered_set<int> s(nums.begin(), nums.end());
         int ans = -1;
-        for (int& v : nums) {
-            if (s.count(-v)) {
-                ans = max(ans, v);
+        for (int x : s) {
+            if (s.count(-x)) {
+                ans = max(ans, x);
             }
         }
         return ans;
@@ -97,61 +97,80 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMaxK(nums []int) int {
-	s := map[int]bool{}
-	for _, v := range nums {
-		s[v] = true
-	}
 	ans := -1
-	for v := range s {
-		if s[-v] && ans < v {
-			ans = v
+	s := map[int]bool{}
+	for _, x := range nums {
+		s[x] = true
+	}
+	for x := range s {
+		if s[-x] && ans < x {
+			ans = x
 		}
 	}
 	return ans
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findMaxK(nums: number[]): number {
-    const set = new Set(nums);
-    let res = -1;
-    for (const num of set) {
-        if (set.has(-num)) {
-            res = Math.max(num, res);
+    let ans = -1;
+    const s = new Set(nums);
+    for (const x of s) {
+        if (s.has(-x)) {
+            ans = Math.max(ans, x);
         }
     }
-    return res;
+    return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashSet;
 impl Solution {
     pub fn find_max_k(nums: Vec<i32>) -> i32 {
-        let set = nums.into_iter().collect::<HashSet<i32>>();
-        let mut res = -1;
-        for &num in set.iter() {
-            if set.contains(&(-num)) {
-                res = res.max(num);
+        let s = nums.into_iter().collect::<HashSet<i32>>();
+        let mut ans = -1;
+        for &x in s.iter() {
+            if s.contains(&-x) {
+                ans = ans.max(x);
             }
         }
-        res
+        ans
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+use std::collections::HashSet;
+
+impl Solution {
+    pub fn find_max_k(nums: Vec<i32>) -> i32 {
+        let mut ans = -1;
+        let mut h = HashSet::new();
+
+        for &n in &nums {
+            h.insert(n);
+        }
+
+        for &n in &nums {
+            if h.contains(&-n) && n > ans {
+                ans = n;
+            }
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举**
+### 方法一：枚举
 
 我们知道，集合 $[1,2,..n]$ 一共有 $n!$ 种排列，如果我们确定首位，那剩余位能组成的排列数量为 $(n-1)!$。
 
@@ -68,10 +66,6 @@
 时间复杂度 $O(n^2)$，空间复杂度 $O(n)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -92,10 +86,6 @@ class Solution:
                         break
         return ''.join(ans)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -124,8 +114,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -137,7 +125,8 @@ public:
             for (int j = 1; j < n - i; ++j) fact *= j;
             for (int j = 1; j <= n; ++j) {
                 if (vis[j]) continue;
-                if (k > fact) k -= fact;
+                if (k > fact)
+                    k -= fact;
                 else {
                     ans += to_string(j);
                     vis[j] = 1;
@@ -149,8 +138,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func getPermutation(n int, k int) string {
@@ -177,7 +164,37 @@ func getPermutation(n int, k int) string {
 }
 ```
 
-### **C#**
+```rust
+impl Solution {
+    pub fn get_permutation(n: i32, k: i32) -> String {
+        let mut k = k;
+        let mut ans = String::new();
+        let mut fact = vec![1; n as usize];
+        for i in 1..n as usize {
+            fact[i] = fact[i - 1] * (i as i32);
+        }
+        let mut vis = vec![false; n as usize + 1];
+
+        for i in 0..n as usize {
+            let cnt = fact[(n as usize) - i - 1];
+            for j in 1..=n {
+                if vis[j as usize] {
+                    continue;
+                }
+                if k > cnt {
+                    k -= cnt;
+                } else {
+                    ans.push_str(&j.to_string());
+                    vis[j as usize] = true;
+                    break;
+                }
+            }
+        }
+
+        ans
+    }
+}
+```
 
 ```cs
 public class Solution {
@@ -206,10 +223,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

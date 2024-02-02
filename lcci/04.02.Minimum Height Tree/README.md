@@ -9,19 +9,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：递归**
+### 方法一：递归
 
 先找到数组的中间点，作为二叉搜索树的根节点，然后递归左右子树即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -30,6 +24,7 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
+
 
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
@@ -41,10 +36,6 @@ class Solution:
 
         return dfs(0, len(nums) - 1)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -74,8 +65,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -99,8 +88,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -123,8 +110,6 @@ func sortedArrayToBST(nums []int) *TreeNode {
 	return dfs(0, len(nums)-1)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -153,8 +138,6 @@ function sortedArrayToBST(nums: number[]): TreeNode | null {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -182,11 +165,15 @@ impl Solution {
             return None;
         }
         let mid = start + (end - start) / 2;
-        Some(Rc::new(RefCell::new(TreeNode {
-            val: nums[mid],
-            left: Self::dfs(nums, start, mid),
-            right: Self::dfs(nums, mid + 1, end),
-        })))
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val: nums[mid],
+                    left: Self::dfs(nums, start, mid),
+                    right: Self::dfs(nums, mid + 1, end),
+                })
+            )
+        )
     }
     pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
         let end = nums.len();
@@ -194,8 +181,6 @@ impl Solution {
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -222,10 +207,6 @@ var sortedArrayToBST = function (nums) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

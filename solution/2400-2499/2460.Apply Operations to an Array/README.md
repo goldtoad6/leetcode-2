@@ -59,19 +59,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
+我们直接根据题意模拟即可。
 
-直接根据题意模拟即可。
+首先，我们遍历数组 $nums$，对于任意相邻的两个元素 $nums[i]$ 和 $nums[i+1]$，如果 $nums[i]=nums[i+1]$，那么我们将 $nums[i]$ 的值变为原来的 $2$ 倍，同时将 $nums[i+1]$ 的值变为 $0$。
 
-时间复杂度 $O(n)$，忽略答案的空间消耗，空间复杂度 $O(1)$。其中 $n$ 是数组 `nums` 的长度。
+然后，我们创建一个长度为 $n$ 的答案数组 $ans$，并将 $nums$ 中所有非零元素按顺序放入 $ans$ 中。
+
+最后，返回答案数组 $ans$ 即可。
+
+时间复杂度 $O(n)$，其中 $n$ 是数组 $nums$ 的长度。忽略答案的空间消耗，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,14 +81,14 @@ class Solution:
             if nums[i] == nums[i + 1]:
                 nums[i] <<= 1
                 nums[i + 1] = 0
-        ans = [v for v in nums if v]
-        ans += [0] * (n - len(ans))
+        ans = [0] * n
+        i = 0
+        for x in nums:
+            if x:
+                ans[i] = x
+                i += 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,23 +101,16 @@ class Solution {
             }
         }
         int[] ans = new int[n];
-        int j = 0;
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] != 0) {
-                ans[j++] = nums[i];
-            }
-        }
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] == 0) {
-                ans[j++] = nums[i];
+        int i = 0;
+        for (int x : nums) {
+            if (x > 0) {
+                ans[i++] = x;
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -131,49 +124,83 @@ public:
             }
         }
         vector<int> ans(n);
-        int j = 0;
-        for (int i = 0; i < n; ++i) if (nums[i]) ans[j++] = nums[i];
-        for (int i = 0; i < n; ++i) if (!nums[i]) ans[j++] = nums[i];
+        int i = 0;
+        for (int& x : nums) {
+            if (x) {
+                ans[i++] = x;
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func applyOperations(nums []int) (ans []int) {
-    n := len(nums)
-    for i := 0; i < n - 1; i++ {
-        if nums[i] == nums[i + 1] {
-            nums[i] <<= 1
-            nums[i + 1] = 0
-        }
-    }
-    for _, v := range nums {
-        if v != 0 {
-            ans = append(ans, v)
-        }
-    }
-    for _, v := range nums {
-        if v == 0 {
-            ans = append(ans, v)
-        }
-    }
-    return
+func applyOperations(nums []int) []int {
+	n := len(nums)
+	for i := 0; i < n-1; i++ {
+		if nums[i] == nums[i+1] {
+			nums[i] <<= 1
+			nums[i+1] = 0
+		}
+	}
+	ans := make([]int, n)
+	i := 0
+	for _, x := range nums {
+		if x > 0 {
+			ans[i] = x
+			i++
+		}
+	}
+	return ans
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
+function applyOperations(nums: number[]): number[] {
+    const n = nums.length;
+    for (let i = 0; i < n - 1; ++i) {
+        if (nums[i] === nums[i + 1]) {
+            nums[i] <<= 1;
+            nums[i + 1] = 0;
+        }
+    }
+    const ans: number[] = Array(n).fill(0);
+    let i = 0;
+    for (const x of nums) {
+        if (x !== 0) {
+            ans[i++] = x;
+        }
+    }
+    return ans;
+}
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn apply_operations(nums: Vec<i32>) -> Vec<i32> {
+        let mut nums = nums;
 
-```
+        for i in 0..nums.len() - 1 {
+            if nums[i] == nums[i + 1] {
+                nums[i] <<= 1;
+                nums[i + 1] = 0;
+            }
+        }
 
+        let mut cur = 0;
+        for i in 0..nums.len() {
+            if nums[i] != 0 {
+                nums.swap(i, cur);
+                cur += 1;
+            }
+        }
+
+        nums
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

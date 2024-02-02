@@ -55,9 +55,9 @@ It can be proven that no smaller answer exists.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -80,20 +80,6 @@ class Solution:
             initialExperience += b
         return ans
 ```
-
-```python
-class Solution:
-    def minNumberOfHours(self, initialEnergy: int, initialExperience: int, energy: List[int], experience: List[int]) -> int:
-        ans = max(0, sum(energy) - initialEnergy + 1)
-        for x in experience:
-            if initialExperience <= x:
-                ans += x - initialExperience + 1
-                initialExperience = x + 1
-            initialExperience += x
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -118,29 +104,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int minNumberOfHours(
-        int initialEnergy, int initialExperience, int[] energy, int[] experience) {
-        int s = 0;
-        for (int x : energy) {
-            s += x;
-        }
-        int ans = Math.max(0, s - initialEnergy + 1);
-        for (int x : experience) {
-            if (initialExperience <= x) {
-                ans += x - initialExperience + 1;
-                initialExperience = x + 1;
-            }
-            initialExperience += x;
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -164,26 +127,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int minNumberOfHours(int initialEnergy, int initialExperience, vector<int>& energy, vector<int>& experience) {
-        int s = accumulate(energy.begin(), energy.end(), 0);
-        int ans = max(0, s - initialEnergy + 1);
-        for (int x : experience) {
-            if (initialExperience <= x) {
-                ans += x - initialExperience + 1;
-                initialExperience = x + 1;
-            }
-            initialExperience += x;
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
-
 ```go
 func minNumberOfHours(initialEnergy int, initialExperience int, energy []int, experience []int) int {
 	ans := 0
@@ -203,28 +146,6 @@ func minNumberOfHours(initialEnergy int, initialExperience int, energy []int, ex
 	return ans
 }
 ```
-
-```go
-func minNumberOfHours(initialEnergy int, initialExperience int, energy []int, experience []int) (ans int) {
-	s := 0
-	for _, x := range energy {
-		s += x
-	}
-	if y := s - initialEnergy + 1; y > 0 {
-		ans = y
-	}
-	for _, x := range experience {
-		if initialExperience <= x {
-			ans += x - initialExperience + 1
-			initialExperience = x + 1
-		}
-		initialExperience += x
-	}
-	return
-}
-```
-
-### **TypeScript**
 
 ```ts
 function minNumberOfHours(
@@ -255,6 +176,135 @@ function minNumberOfHours(
 }
 ```
 
+```rust
+impl Solution {
+    pub fn min_number_of_hours(
+        mut initial_energy: i32,
+        mut initial_experience: i32,
+        energy: Vec<i32>,
+        experience: Vec<i32>
+    ) -> i32 {
+        let n = energy.len();
+        let mut res = 0;
+        for i in 0..n {
+            if initial_energy <= energy[i] {
+                res += energy[i] - initial_energy + 1;
+                initial_energy = energy[i] + 1;
+            }
+            if initial_experience <= experience[i] {
+                res += experience[i] - initial_experience + 1;
+                initial_experience = experience[i] + 1;
+            }
+            initial_energy -= energy[i];
+            initial_experience += experience[i];
+        }
+        res
+    }
+}
+```
+
+```c
+int minNumberOfHours(int initialEnergy, int initialExperience, int* energy, int energySize, int* experience, int experienceSize) {
+    int res = 0;
+    for (int i = 0; i < energySize; i++) {
+        if (initialEnergy <= energy[i]) {
+            res += energy[i] - initialEnergy + 1;
+            initialEnergy = energy[i] + 1;
+        }
+        if (initialExperience <= experience[i]) {
+            res += experience[i] - initialExperience + 1;
+            initialExperience = experience[i] + 1;
+        }
+        initialEnergy -= energy[i];
+        initialExperience += experience[i];
+    }
+    return res;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minNumberOfHours(
+        self,
+        initialEnergy: int,
+        initialExperience: int,
+        energy: List[int],
+        experience: List[int],
+    ) -> int:
+        ans = max(0, sum(energy) - initialEnergy + 1)
+        for x in experience:
+            if initialExperience <= x:
+                ans += x - initialExperience + 1
+                initialExperience = x + 1
+            initialExperience += x
+        return ans
+```
+
+```java
+class Solution {
+    public int minNumberOfHours(
+        int initialEnergy, int initialExperience, int[] energy, int[] experience) {
+        int s = 0;
+        for (int x : energy) {
+            s += x;
+        }
+        int ans = Math.max(0, s - initialEnergy + 1);
+        for (int x : experience) {
+            if (initialExperience <= x) {
+                ans += x - initialExperience + 1;
+                initialExperience = x + 1;
+            }
+            initialExperience += x;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int minNumberOfHours(int initialEnergy, int initialExperience, vector<int>& energy, vector<int>& experience) {
+        int s = accumulate(energy.begin(), energy.end(), 0);
+        int ans = max(0, s - initialEnergy + 1);
+        for (int x : experience) {
+            if (initialExperience <= x) {
+                ans += x - initialExperience + 1;
+                initialExperience = x + 1;
+            }
+            initialExperience += x;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func minNumberOfHours(initialEnergy int, initialExperience int, energy []int, experience []int) (ans int) {
+	s := 0
+	for _, x := range energy {
+		s += x
+	}
+	if y := s - initialEnergy + 1; y > 0 {
+		ans = y
+	}
+	for _, x := range experience {
+		if initialExperience <= x {
+			ans += x - initialExperience + 1
+			initialExperience = x + 1
+		}
+		initialExperience += x
+	}
+	return
+}
+```
+
 ```ts
 function minNumberOfHours(
     initialEnergy: number,
@@ -281,6 +331,12 @@ function minNumberOfHours(
 }
 ```
 
+<!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
 ```ts
 function minNumberOfHours(
     initialEnergy: number,
@@ -301,61 +357,6 @@ function minNumberOfHours(
 }
 ```
 
-### **C**
-
-```c
-int minNumberOfHours(int initialEnergy, int initialExperience, int* energy, int energySize, int* experience, int experienceSize) {
-    int res = 0;
-    for (int i = 0; i < energySize; i++) {
-        if (initialEnergy <= energy[i]) {
-            res += energy[i] - initialEnergy + 1;
-            initialEnergy = energy[i] + 1;
-        }
-        if (initialExperience <= experience[i]) {
-            res += experience[i] - initialExperience + 1;
-            initialExperience = experience[i] + 1;
-        }
-        initialEnergy -= energy[i];
-        initialExperience += experience[i];
-    }
-    return res;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn min_number_of_hours(
-        mut initial_energy: i32,
-        mut initial_experience: i32,
-        energy: Vec<i32>,
-        experience: Vec<i32>,
-    ) -> i32 {
-        let n = energy.len();
-        let mut res = 0;
-        for i in 0..n {
-            if initial_energy <= energy[i] {
-                res += energy[i] - initial_energy + 1;
-                initial_energy = energy[i] + 1;
-            }
-            if initial_experience <= experience[i] {
-                res += experience[i] - initial_experience + 1;
-                initial_experience = experience[i] + 1;
-            }
-            initial_energy -= energy[i];
-            initial_experience += experience[i];
-        }
-        res
-    }
-}
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

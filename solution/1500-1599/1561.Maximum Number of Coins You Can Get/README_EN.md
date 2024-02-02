@@ -55,11 +55,9 @@ On the other hand if we choose this arrangement (1, <strong>2</strong>, 8), (2, 
 
 ## Solutions
 
-Greedy.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -68,10 +66,9 @@ class Solution:
         return sum(piles[-2 : len(piles) // 3 - 1 : -2])
 ```
 
-### **Java**
-
 ```java
 class Solution {
+
     public int maxCoins(int[] piles) {
         Arrays.sort(piles);
         int ans = 0;
@@ -83,21 +80,17 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int maxCoins(vector<int>& piles) {
         sort(piles.begin(), piles.end());
         int ans = 0;
-        for (int i = piles.size() - 2; i >= (int)piles.size() / 3; i -= 2) ans += piles[i];
+        for (int i = piles.size() - 2; i >= (int) piles.size() / 3; i -= 2) ans += piles[i];
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxCoins(piles []int) int {
@@ -110,8 +103,6 @@ func maxCoins(piles []int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maxCoins(piles: number[]): number {
     piles.sort((a, b) => a - b);
@@ -123,8 +114,6 @@ function maxCoins(piles: number[]): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -140,14 +129,12 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-int cmp(const void *a, const void *b) {
-    return *(int *) a - *(int *) b;
+int cmp(const void* a, const void* b) {
+    return *(int*) a - *(int*) b;
 }
 
-int maxCoins(int *piles, int pilesSize) {
+int maxCoins(int* piles, int pilesSize) {
     qsort(piles, pilesSize, sizeof(int), cmp);
     int ans = 0;
     for (int i = 1; i <= pilesSize / 3; i++) {
@@ -157,10 +144,6 @@ int maxCoins(int *piles, int pilesSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

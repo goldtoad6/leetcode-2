@@ -48,21 +48,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：统计等效位置
 
-**方法一：统计等效位置**
+为了方便说明，我们不妨令 $x = sideLength$。
 
-为了方便说明，我们不妨令 `x = sideLength`。
+考虑一个 $x\times x$ 的正方形，我们需要在正方形里面取最多 $maxOnes$ 个点，将其置为 1。注意到当坐标 $(i, j)$ 处的点被选取后，所有坐标为 $(i\pm k_1 \times x, j\pm k_2 \times x)$ 的点都可以等效地置为 1。因此，我们算出坐标 $(i, j)$ 在矩阵中的等效位置的数量，取数量最多的前 $maxOnes$ 个即可。
 
-考虑一个 $x\times x$ 的正方形，我们需要在正方形里面取最多 `maxOnes` 个点，将其置为 1。注意到当坐标 $(i, j)$ 处的点被选取后，所有坐标为 $(i\pm k_1 \times x, j\pm k_2 \times x)$ 的点都可以等效地置为 1。因此，我们算出坐标 $(i, j)$ 在矩阵中的等效位置的数量，取数量最多的前 `maxOnes` 个即可。
-
-时间复杂度 $O(m\times n)$。其中 $m$, $n$ 分别是矩阵的行数和列数。
+时间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别是矩阵的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +72,6 @@ class Solution:
         cnt.sort(reverse=True)
         return sum(cnt[:maxOnes])
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -103,8 +93,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -128,8 +116,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumNumberOfOnes(width int, height int, sideLength int, maxOnes int) int {
 	x := sideLength
@@ -149,8 +135,6 @@ func maximumNumberOfOnes(width int, height int, sideLength int, maxOnes int) int
 }
 ```
 
-### **JavaScript**
-
 ```js
 /**
  * @param {number} width
@@ -169,18 +153,10 @@ var maximumNumberOfOnes = function (width, height, sideLength, maxOnes) {
         }
     }
     cnt.sort((a, b) => b - a);
-    let ans = 0;
-    for (let i = 0; i < maxOnes; ++i) {
-        ans += cnt[i];
-    }
-    return ans;
+    return cnt.slice(0, maxOnes).reduce((a, b) => a + b, 0);
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

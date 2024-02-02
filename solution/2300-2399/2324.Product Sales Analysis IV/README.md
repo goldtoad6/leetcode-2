@@ -17,7 +17,7 @@
 | user_id     | int   |
 | quantity    | int   |
 +-------------+-------+
-sale_id 是该表的主键。
+sale_id 包含唯一值。
 product_id 是 product 表的外键。
 该表的每一行都显示了产品的 ID 和用户购买的数量。
 </pre>
@@ -33,13 +33,13 @@ product_id 是 product 表的外键。
 | product_id  | int  |
 | price       | int  |
 +-------------+------+
-product_id 是该表的主键
+product_id 包含唯一值。
 该表的每一行都表示每种产品的价格。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询，为每个用户获取其消费最多的产品 id。如果同一用户在两个或多个产品上花费了最多的钱，请获取所有花费了最多的钱的产品。</p>
+<p>编写解决方案，为每个用户获取其消费最多的产品 id。如果同一用户在两个或多个产品上花费了最多的钱，请获取所有花费了最多的钱的产品。</p>
 
 <p data-group="1-1">以 <strong>任意顺序</strong> 返回结果表。</p>
 
@@ -93,16 +93,31 @@ Product 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            user_id,
+            product_id,
+            RANK() OVER (
+                PARTITION BY user_id
+                ORDER BY SUM(quantity * price) DESC
+            ) AS rk
+        FROM
+            Sales
+            JOIN Product USING (product_id)
+        GROUP BY 1, 2
+    )
+SELECT user_id, product_id
+FROM T
+WHERE rk = 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

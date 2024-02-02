@@ -17,7 +17,7 @@
 | customer_id   | int     |
 | invoice       | int     |
 +---------------+---------+
-order_id 是 <strong>Orders </strong>表的主键<sub>。</sub>
+order_id 是该表具有唯一值的列<sub>。</sub>
 这张表包含顾客(customer_id)所下订单的信息<sub>。</sub>
 </pre>
 
@@ -68,30 +68,21 @@ Orders</code>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-
-```
-
-### **...**
-
-```
-
+```sql
+# Write your MySQL query statement below
+SELECT
+    DATE_FORMAT(order_date, '%Y-%m') AS month,
+    COUNT(order_id) AS order_count,
+    COUNT(DISTINCT customer_id) AS customer_count
+FROM Orders
+WHERE invoice > 20
+GROUP BY month;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

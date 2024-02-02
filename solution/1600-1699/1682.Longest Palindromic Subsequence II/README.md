@@ -48,9 +48,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：记忆化搜索**
+### 方法一：记忆化搜索
 
 我们设计一个函数 $dfs(i, j, x)$ 表示字符串 $s$ 中下标范围 $[i, j]$ 内，且以字符 $x$ 结尾的最长“好的回文子序列”的长度。答案为 $dfs(0, n - 1, 26)$。
 
@@ -65,10 +63,6 @@
 时间复杂度 $O(n^2 \times C)$。其中 $n$ 为字符串 $s$ 的长度，而 $C$ 为字符集大小。本题中 $C = 26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,10 +79,6 @@ class Solution:
         dfs.cache_clear()
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -126,8 +116,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -140,8 +128,10 @@ public:
             if (i >= j) return 0;
             if (f[i][j][x] != -1) return f[i][j][x];
             int ans = 0;
-            if (s[i] == s[j] && s[i] - 'a' != x) ans = dfs(i + 1, j - 1, s[i] - 'a') + 2;
-            else ans = max(dfs(i + 1, j, x), dfs(i, j - 1, x));
+            if (s[i] == s[j] && s[i] - 'a' != x)
+                ans = dfs(i + 1, j - 1, s[i] - 'a') + 2;
+            else
+                ans = max(dfs(i + 1, j, x), dfs(i, j - 1, x));
             f[i][j][x] = ans;
             return ans;
         };
@@ -149,8 +139,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func longestPalindromeSubseq(s string) int {
@@ -184,19 +172,8 @@ func longestPalindromeSubseq(s string) int {
 	}
 	return dfs(0, n-1, 26)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

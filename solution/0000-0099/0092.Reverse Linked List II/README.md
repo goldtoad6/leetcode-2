@@ -41,19 +41,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 定义一个虚拟头结点 `dummy`，指向链表的头结点 `head`，然后定义一个指针 `pre` 指向 `dummy`，从虚拟头结点开始遍历链表，遍历到第 `left` 个结点时，将 `pre` 指向该结点，然后从该结点开始遍历 `right - left + 1` 次，将遍历到的结点依次插入到 `pre` 的后面，最后返回 `dummy.next` 即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为链表的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for singly-linked list.
@@ -62,7 +56,9 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+    def reverseBetween(
+        self, head: Optional[ListNode], left: int, right: int
+    ) -> Optional[ListNode]:
         if head.next is None or left == right:
             return head
         dummy = ListNode(0, head)
@@ -79,10 +75,6 @@ class Solution:
         q.next = cur
         return dummy.next
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -121,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -160,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for singly-linked list.
@@ -193,7 +181,89 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 }
 ```
 
-### **JavaScript**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function reverseBetween(head: ListNode | null, left: number, right: number): ListNode | null {
+    const n = right - left;
+    if (n === 0) {
+        return head;
+    }
+
+    const dummy = new ListNode(0, head);
+    let pre = null;
+    let cur = dummy;
+    for (let i = 0; i < left; i++) {
+        pre = cur;
+        cur = cur.next;
+    }
+    const h = pre;
+    pre = null;
+    for (let i = 0; i <= n; i++) {
+        const next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+    h.next.next = cur;
+    h.next = pre;
+    return dummy.next;
+}
+```
+
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn reverse_between(
+        head: Option<Box<ListNode>>,
+        left: i32,
+        right: i32
+    ) -> Option<Box<ListNode>> {
+        let mut dummy = Some(Box::new(ListNode { val: 0, next: head }));
+        let mut pre = &mut dummy;
+        for _ in 1..left {
+            pre = &mut pre.as_mut().unwrap().next;
+        }
+        let mut cur = pre.as_mut().unwrap().next.take();
+        for _ in 0..right - left + 1 {
+            let mut next = cur.as_mut().unwrap().next.take();
+            cur.as_mut().unwrap().next = pre.as_mut().unwrap().next.take();
+            pre.as_mut().unwrap().next = cur.take();
+            cur = next;
+        }
+        for _ in 0..right - left + 1 {
+            pre = &mut pre.as_mut().unwrap().next;
+        }
+        pre.as_mut().unwrap().next = cur;
+        dummy.unwrap().next
+    }
+}
+```
 
 ```js
 /**
@@ -233,8 +303,6 @@ var reverseBetween = function (head, left, right) {
 };
 ```
 
-### **C#**
-
 ```cs
 /**
  * Definition for singly-linked list.
@@ -273,56 +341,6 @@ public class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function reverseBetween(
-    head: ListNode | null,
-    left: number,
-    right: number,
-): ListNode | null {
-    const n = right - left;
-    if (n === 0) {
-        return head;
-    }
-
-    const dummy = new ListNode(0, head);
-    let pre = null;
-    let cur = dummy;
-    for (let i = 0; i < left; i++) {
-        pre = cur;
-        cur = cur.next;
-    }
-    const h = pre;
-    pre = null;
-    for (let i = 0; i <= n; i++) {
-        const next = cur.next;
-        cur.next = pre;
-        pre = cur;
-        cur = next;
-    }
-    h.next.next = cur;
-    h.next = pre;
-    return dummy.next;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

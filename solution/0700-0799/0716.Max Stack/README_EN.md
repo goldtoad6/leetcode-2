@@ -53,9 +53,9 @@ stk.top();     // return 5, [<strong><u>5</u></strong>] the stack did not change
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 from sortedcontainers import SortedList
@@ -97,7 +97,6 @@ class DoubleLinkedList:
 
 
 class MaxStack:
-
     def __init__(self):
         self.stk = DoubleLinkedList()
         self.sl = SortedList(key=lambda x: x.val)
@@ -122,6 +121,7 @@ class MaxStack:
         DoubleLinkedList.remove(node)
         return node.val
 
+
 # Your MaxStack object will be instantiated and called as such:
 # obj = MaxStack()
 # obj.push(x)
@@ -130,8 +130,6 @@ class MaxStack:
 # param_4 = obj.peekMax()
 # param_5 = obj.popMax()
 ```
-
-### **Java**
 
 ```java
 class Node {
@@ -232,8 +230,6 @@ class MaxStack {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MaxStack {
 public:
@@ -287,10 +283,6 @@ private:
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

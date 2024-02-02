@@ -84,53 +84,29 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：贪心
+
+我们用一个变量 $x$ 维护当前括号的平衡度，也就是左括号的数量减去右括号的数量。
+
+遍历字符串 $seq$，更新 $x$ 的值。如果 $x$ 为奇数，我们将当前的左括号分给 $A$，否则分给 $B$。
+
+时间复杂度 $O(n)$，其中 $n$ 是字符串 $seq$ 的长度。忽略答案数组的空间消耗，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def maxDepthAfterSplit(self, seq: str) -> List[int]:
         ans = [0] * len(seq)
-        a = b = 0
+        x = 0
         for i, c in enumerate(seq):
             if c == "(":
-                if a < b:
-                    a += 1
-                else:
-                    b += 1
-                    ans[i] = 1
+                ans[i] = x & 1
+                x += 1
             else:
-                if a > b:
-                    a -= 1
-                else:
-                    b -= 1
-                    ans[i] = 1
+                x -= 1
+                ans[i] = x & 1
         return ans
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public int[] maxDepthAfterSplit(String seq) {
-        int[] res = new int[seq.length()];
-        for (int i = 0, cnt = 0; i < res.length; ++i) {
-            if (seq.charAt(i) == '(') {
-                res[i] = cnt++ & 1;
-            } else {
-                res[i] = --cnt & 1;
-            }
-        }
-        return res;
-    }
-}
 ```
 
 ```java
@@ -138,31 +114,17 @@ class Solution {
     public int[] maxDepthAfterSplit(String seq) {
         int n = seq.length();
         int[] ans = new int[n];
-        int a = 0, b = 0;
-        for (int i = 0; i < n; ++i) {
-            char c = seq.charAt(i);
-            if (c == '(') {
-                if (a < b) {
-                    ++a;
-                } else {
-                    ++b;
-                    ans[i] = 1;
-                }
+        for (int i = 0, x = 0; i < n; ++i) {
+            if (seq.charAt(i) == '(') {
+                ans[i] = x++ & 1;
             } else {
-                if (a > b) {
-                    --a;
-                } else {
-                    --b;
-                    ans[i] = 1;
-                }
+                ans[i] = --x & 1;
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -170,19 +132,11 @@ public:
     vector<int> maxDepthAfterSplit(string seq) {
         int n = seq.size();
         vector<int> ans(n);
-        int a = 0, b = 0;
-        for (int i = 0; i < n; ++i) {
-            char c = seq[i];
-            if (c == '(') {
-                if (a < b)
-                    ++a;
-                else
-                    ++b, ans[i] = 1;
+        for (int i = 0, x = 0; i < n; ++i) {
+            if (seq[i] == '(') {
+                ans[i] = x++ & 1;
             } else {
-                if (a > b)
-                    --a;
-                else
-                    --b, ans[i] = 1;
+                ans[i] = --x & 1;
             }
         }
         return ans;
@@ -190,37 +144,38 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxDepthAfterSplit(seq string) []int {
-	ans := make([]int, len(seq))
-	a, b := 0, 0
-	for i, c := range seq {
-		if c == '(' {
-			if a < b {
-				a++
-			} else {
-				b++
-				ans[i] = 1
-			}
+	n := len(seq)
+	ans := make([]int, n)
+	for i, x := 0, 0; i < n; i++ {
+		if seq[i] == '(' {
+			ans[i] = x & 1
+			x++
 		} else {
-			if a > b {
-				a--
-			} else {
-				b--
-				ans[i] = 1
-			}
+			x--
+			ans[i] = x & 1
 		}
 	}
 	return ans
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function maxDepthAfterSplit(seq: string): number[] {
+    const n = seq.length;
+    const ans: number[] = new Array(n);
+    for (let i = 0, x = 0; i < n; ++i) {
+        if (seq[i] === '(') {
+            ans[i] = x++ & 1;
+        } else {
+            ans[i] = --x & 1;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -41,25 +41,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：前缀和
 
-**方法一：前缀和**
+我们直接遍历数组，对于当前元素 $nums[i]$，我们将其与前缀和 $nums[i-1]$ 相加，即可得到当前元素的前缀和 $nums[i]$。
+
+时间复杂度 $O(n)$，其中 $n$ 为数组长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def runningSum(self, nums: List[int]) -> List[int]:
         return list(accumulate(nums))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -72,8 +66,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -84,8 +76,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func runningSum(nums []int) []int {
 	for i := 1; i < len(nums); i++ {
@@ -95,10 +85,41 @@ func runningSum(nums []int) []int {
 }
 ```
 
-### **...**
-
+```ts
+function runningSum(nums: number[]): number[] {
+    for (let i = 1; i < nums.length; ++i) {
+        nums[i] += nums[i - 1];
+    }
+    return nums;
+}
 ```
 
+```cs
+public class Solution {
+    public int[] RunningSum(int[] nums) {
+        for (int i = 1; i < nums.Length; ++i) {
+            nums[i] += nums[i - 1];
+        }
+        return nums;
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer[]
+     */
+    function runningSum($nums) {
+        for ($i = 1; $i < count($nums); $i++) {
+            $nums[$i] += $nums[$i - 1];
+        }
+        return $nums;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -52,9 +52,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We traverse the string $s$, using two pointers $i$ and $j$ to count the length of each equal substring. If the length modulo $3$ is $1$, it means that the length of this substring does not meet the requirements, so we return `false`. If the length modulo $3$ is $2$, it means that a substring of length $2$ has appeared. If a substring of length $2$ has appeared before, return `false`, otherwise assign the value of $j$ to $i$ and continue to traverse.
+
+After the traversal, check whether a substring of length $2$ has appeared. If not, return `false`, otherwise return `true`.
+
+The time complexity is $O(n)$, where $n$ is the length of the string $s$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -73,8 +79,6 @@ class Solution:
             i = j
         return cnt2 == 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,27 +103,29 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool isDecomposable(string s) {
-        int i = 0, n = s.size();
         int cnt2 = 0;
-        while (i < n) {
+        for (int i = 0, n = s.size(); i < n;) {
             int j = i;
-            while (j < n && s[j] == s[i]) ++j;
-            if ((j - i) % 3 == 1) return false;
-            if ((j - i) % 3 == 2 && ++cnt2 > 1) return false;
+            while (j < n && s[j] == s[i]) {
+                ++j;
+            }
+            if ((j - i) % 3 == 1) {
+                return false;
+            }
+            cnt2 += (j - i) % 3 == 2;
+            if (cnt2 > 1) {
+                return false;
+            }
             i = j;
         }
         return cnt2 == 1;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isDecomposable(s string) bool {
@@ -145,10 +151,47 @@ func isDecomposable(s string) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function isDecomposable(s: string): boolean {
+    const n = s.length;
+    let cnt2 = 0;
+    for (let i = 0; i < n; ) {
+        let j = i;
+        while (j < n && s[j] === s[i]) {
+            ++j;
+        }
+        if ((j - i) % 3 === 1) {
+            return false;
+        }
+        if ((j - i) % 3 === 2 && ++cnt2 > 1) {
+            return false;
+        }
+        i = j;
+    }
+    return cnt2 === 1;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isDecomposable(self, s: str) -> bool:
+        cnt2 = 0
+        for _, g in groupby(s):
+            m = len(list(g))
+            if m % 3 == 1:
+                return False
+            cnt2 += m % 3 == 2
+            if cnt2 > 1:
+                return False
+        return cnt2 == 1
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

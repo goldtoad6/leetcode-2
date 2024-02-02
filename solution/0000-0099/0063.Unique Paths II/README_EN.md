@@ -43,11 +43,20 @@ There are two ways to reach the bottom-right corner:
 
 ## Solutions
 
-Dynamic programming.
+### Solution 1: Dynamic Programming
+
+We define $dp[i][j]$ to represent the number of paths to reach the grid $(i,j)$.
+
+First, initialize all values in the first column and first row of $dp$, then traverse other rows and columns, there are two cases:
+
+-   If $obstacleGrid[i][j] = 1$, it means the number of paths is $0$, so $dp[i][j] = 0$;
+-   If $obstacleGrid[i][j] = 0$, then $dp[i][j] = dp[i - 1][j] + dp[i][j - 1]$.
+
+Finally, return $dp[m - 1][n - 1]$.
+
+The time complexity is $O(m \times n)$, and the space complexity is $O(m \times n)$. Here, $m$ and $n$ are the number of rows and columns of the grid, respectively.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -68,8 +77,6 @@ class Solution:
                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
         return dp[-1][-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -93,8 +100,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -120,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	m, n := len(obstacleGrid), len(obstacleGrid[0])
@@ -145,8 +148,6 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	return dp[m-1][n-1]
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
@@ -176,8 +177,6 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     return dp[m - 1][n - 1];
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -213,10 +212,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -51,24 +51,60 @@ Now s has no occurrences of &quot;xy&quot;.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def removeOccurrences(self, s: str, part: str) -> str:
+        while part in s:
+            s = s.replace(part, '', 1)
+        return s
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public String removeOccurrences(String s, String part) {
+        while (s.contains(part)) {
+            s = s.replaceFirst(part, "");
+        }
+        return s;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    string removeOccurrences(string s, string part) {
+        int m = part.size();
+        while (s.find(part) != -1) {
+            s = s.erase(s.find(part), m);
+        }
+        return s;
+    }
+};
 ```
 
+```go
+func removeOccurrences(s string, part string) string {
+	for strings.Contains(s, part) {
+		s = strings.Replace(s, part, "", 1)
+	}
+	return s
+}
+```
+
+```ts
+function removeOccurrences(s: string, part: string): string {
+    while (s.includes(part)) {
+        s = s.replace(part, '');
+    }
+    return s;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

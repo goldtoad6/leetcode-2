@@ -34,9 +34,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -52,8 +52,6 @@ class Solution:
                 ans = min(ans, abs(i - j))
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -74,8 +72,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -98,8 +94,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func shortestDistance(wordsDict []string, word1 string, word2 string) int {
 	ans := 0x3f3f3f3f
@@ -118,13 +112,6 @@ func shortestDistance(wordsDict []string, word1 string, word2 string) int {
 	return ans
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -133,10 +120,6 @@ func abs(x int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

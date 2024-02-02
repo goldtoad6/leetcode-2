@@ -32,9 +32,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -48,8 +48,6 @@ class Solution:
                 cnt = 0
         return max(ans, cnt)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -67,8 +65,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -88,8 +84,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMaxConsecutiveOnes(nums []int) int {
 	ans, cnt := 0, 0
@@ -103,16 +97,41 @@ func findMaxConsecutiveOnes(nums []int) int {
 	}
 	return max(ans, cnt)
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function findMaxConsecutiveOnes(nums: number[]): number {
+    let res = 0;
+    let count = 0;
+    for (const num of nums) {
+        if (num === 0) {
+            res = Math.max(res, count);
+            count = 0;
+        } else {
+            count++;
+        }
+    }
+    return Math.max(res, count);
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    pub fn find_max_consecutive_ones(nums: Vec<i32>) -> i32 {
+        let mut res = 0;
+        let mut count = 0;
+        for num in nums {
+            if num == 0 {
+                res = res.max(count);
+                count = 0;
+            } else {
+                count += 1;
+            }
+        }
+        res.max(count)
+    }
+}
+```
 
 ```js
 /**
@@ -134,46 +153,6 @@ var findMaxConsecutiveOnes = function (nums) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function findMaxConsecutiveOnes(nums: number[]): number {
-    let res = 0;
-    let count = 0;
-    for (const num of nums) {
-        if (num === 0) {
-            res = Math.max(res, count);
-            count = 0;
-        } else {
-            count++;
-        }
-    }
-    return Math.max(res, count);
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn find_max_consecutive_ones(nums: Vec<i32>) -> i32 {
-        let mut res = 0;
-        let mut count = 0;
-        for num in nums {
-            if num == 0 {
-                res = res.max(count);
-                count = 0;
-            } else {
-                count += 1;
-            }
-        }
-        res.max(count)
-    }
-}
-```
-
-### **PHP**
-
 ```php
 class Solution {
     /**
@@ -183,8 +162,9 @@ class Solution {
     function findMaxConsecutiveOnes($nums) {
         $tmp = $max = 0;
         for ($i = 0; $i < count($nums); $i++) {
-            if ($nums[$i] == 1) $tmp++;
-            else {
+            if ($nums[$i] == 1) {
+                $tmp++;
+            } else {
                 $max = max($tmp, $max);
                 $tmp = 0;
             }
@@ -194,10 +174,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

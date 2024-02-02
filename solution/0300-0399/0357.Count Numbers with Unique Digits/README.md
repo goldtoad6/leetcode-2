@@ -39,9 +39,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排列组合**
+### 方法一：排列组合
 
 当 $n=0$ 时，有 $0\le x \lt 1$，只有 $1$ 个数字，即 $0$。
 
@@ -53,7 +51,77 @@
 
 时间复杂度 $O(n)$。
 
-**方法二：状态压缩 + 数位 DP**
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countNumbersWithUniqueDigits(self, n: int) -> int:
+        if n == 0:
+            return 1
+        if n == 1:
+            return 10
+        ans, cur = 10, 9
+        for i in range(n - 1):
+            cur *= 9 - i
+            ans += cur
+        return ans
+```
+
+```java
+class Solution {
+    public int countNumbersWithUniqueDigits(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n == 1) {
+            return 10;
+        }
+        int ans = 10;
+        for (int i = 0, cur = 9; i < n - 1; ++i) {
+            cur *= (9 - i);
+            ans += cur;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int countNumbersWithUniqueDigits(int n) {
+        if (n == 0) return 1;
+        if (n == 1) return 10;
+        int ans = 10;
+        for (int i = 0, cur = 9; i < n - 1; ++i) {
+            cur *= (9 - i);
+            ans += cur;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func countNumbersWithUniqueDigits(n int) int {
+	if n == 0 {
+		return 1
+	}
+	if n == 1 {
+		return 10
+	}
+	ans := 10
+	for i, cur := 0, 9; i < n-1; i++ {
+		cur *= (9 - i)
+		ans += cur
+	}
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：状态压缩 + 数位 DP
 
 这道题实际上是求在给定区间 $[l,..r]$ 中，满足条件的数的个数。条件与数的大小无关，而只与数的组成有关，因此可以使用数位 DP 的思想求解。数位 DP 中，数的大小对复杂度的影响很小。
 
@@ -81,32 +149,14 @@ $$
 
 相似题目：
 
--   [233. 数字 1 的个数](/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
--   [600. 不含连续 1 的非负整数](/solution/0600-0699/0600.Non-negative%20Integers%20without%20Consecutive%20Ones/README.md)
--   [788. 旋转数字](/solution/0700-0799/0788.Rotated%20Digits/README.md)
--   [902. 最大为 N 的数字组合](/solution/0900-0999/0902.Numbers%20At%20Most%20N%20Given%20Digit%20Set/README.md)
--   [1012. 至少有 1 位重复的数字](/solution/1000-1099/1012.Numbers%20With%20Repeated%20Digits/README.md)
--   [2376. 统计特殊整数](/solution/2300-2399/2376.Count%20Special%20Integers/README.md)
+-   [233. 数字 1 的个数](https://github.com/doocs/leetcode/blob/main/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
+-   [600. 不含连续 1 的非负整数](https://github.com/doocs/leetcode/blob/main/solution/0600-0699/0600.Non-negative%20Integers%20without%20Consecutive%20Ones/README.md)
+-   [788. 旋转数字](https://github.com/doocs/leetcode/blob/main/solution/0700-0799/0788.Rotated%20Digits/README.md)
+-   [902. 最大为 N 的数字组合](https://github.com/doocs/leetcode/blob/main/solution/0900-0999/0902.Numbers%20At%20Most%20N%20Given%20Digit%20Set/README.md)
+-   [1012. 至少有 1 位重复的数字](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1012.Numbers%20With%20Repeated%20Digits/README.md)
+-   [2376. 统计特殊整数](https://github.com/doocs/leetcode/blob/main/solution/2300-2399/2376.Count%20Special%20Integers/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-class Solution:
-    def countNumbersWithUniqueDigits(self, n: int) -> int:
-        if n == 0:
-            return 1
-        if n == 1:
-            return 10
-        ans, cur = 10, 9
-        for i in range(n - 1):
-            cur *= 9 - i
-            ans += cur
-        return ans
-```
 
 ```python
 class Solution:
@@ -126,29 +176,6 @@ class Solution:
             return ans
 
         return dfs(n, 0, True)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public int countNumbersWithUniqueDigits(int n) {
-        if (n == 0) {
-            return 1;
-        }
-        if (n == 1) {
-            return 10;
-        }
-        int ans = 10;
-        for (int i = 0, cur = 9; i < n - 1; ++i) {
-            cur *= (9 - i);
-            ans += cur;
-        }
-        return ans;
-    }
-}
 ```
 
 ```java
@@ -188,24 +215,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int countNumbersWithUniqueDigits(int n) {
-        if (n == 0) return 1;
-        if (n == 1) return 10;
-        int ans = 10;
-        for (int i = 0, cur = 9; i < n - 1; ++i) {
-            cur *= (9 - i);
-            ans += cur;
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -238,25 +247,6 @@ public:
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func countNumbersWithUniqueDigits(n int) int {
-	if n == 0 {
-		return 1
-	}
-	if n == 1 {
-		return 10
-	}
-	ans := 10
-	for i, cur := 0, 9; i < n-1; i++ {
-		cur *= (9 - i)
-		ans += cur
-	}
-	return ans
-}
 ```
 
 ```go
@@ -297,10 +287,6 @@ func countNumbersWithUniqueDigits(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

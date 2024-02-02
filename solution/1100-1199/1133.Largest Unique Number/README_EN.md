@@ -32,9 +32,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting + Reverse Traversal
 
-### **Python3**
+Given the data range in the problem, we can use an array of length $1001$ to count the occurrence of each number. Then, we traverse the array in reverse order to find the first number that appears only once. If no such number is found, we return $-1$.
+
+The time complexity is $O(n + M)$, and the space complexity is $O(M)$. Here, $n$ is the length of the array, and $M$ is the maximum number that appears in the array. In this problem, $M \leq 1000$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -42,15 +46,6 @@ class Solution:
         cnt = Counter(nums)
         return next((x for x in range(1000, -1, -1) if cnt[x] == 1), -1)
 ```
-
-```python
-class Solution:
-    def largestUniqueNumber(self, nums: List[int]) -> int:
-        cnt = Counter(nums)
-        return max((x for x, v in cnt.items() if v == 1), default=-1)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -68,8 +63,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -89,8 +82,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func largestUniqueNumber(nums []int) int {
 	cnt := [1001]int{}
@@ -106,7 +97,20 @@ func largestUniqueNumber(nums []int) int {
 }
 ```
 
-### **JavaScript**
+```ts
+function largestUniqueNumber(nums: number[]): number {
+    const cnt = new Array(1001).fill(0);
+    for (const x of nums) {
+        ++cnt[x];
+    }
+    for (let x = 1000; x >= 0; --x) {
+        if (cnt[x] == 1) {
+            return x;
+        }
+    }
+    return -1;
+}
+```
 
 ```js
 /**
@@ -127,27 +131,19 @@ var largestUniqueNumber = function (nums) {
 };
 ```
 
-### **TypeScript**
+<!-- tabs:end -->
 
-```ts
-function largestUniqueNumber(nums: number[]): number {
-    const cnt = new Array(1001).fill(0);
-    for (const x of nums) {
-        ++cnt[x];
-    }
-    for (let x = 1000; x >= 0; --x) {
-        if (cnt[x] == 1) {
-            return x;
-        }
-    }
-    return -1;
-}
-```
+### Solution 2
 
-### **...**
+<!-- tabs:start -->
 
-```
-
+```python
+class Solution:
+    def largestUniqueNumber(self, nums: List[int]) -> int:
+        cnt = Counter(nums)
+        return max((x for x, v in cnt.items() if v == 1), default=-1)
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

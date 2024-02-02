@@ -38,45 +38,52 @@ There are 4 groups with largest size.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table or Array
 
-### **Python3**
+We note that the number does not exceed $10^4$, so the sum of the digits also does not exceed $9 \times 4 = 36$. Therefore, we can use a hash table or an array of length $40$, denoted as $cnt$, to count the number of each sum of digits, and use a variable $mx$ to represent the maximum count of the sum of digits.
+
+We enumerate each number in $[1,..n]$, calculate its sum of digits $s$, then increment $cnt[s]$ by $1$. If $mx < cnt[s]$, we update $mx = cnt[s]$ and set $ans$ to $1$. If $mx = cnt[s]$, we increment $ans$ by $1$.
+
+Finally, we return $ans$.
+
+The time complexity is $O(n \times \log M)$, and the space complexity is $O(\log M)$. Where $n$ is the given number, and $M$ is the range of $n$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def countLargestGroup(self, n: int) -> int:
         cnt = Counter()
-        ans, mx = 0, 0
+        ans = mx = 0
         for i in range(1, n + 1):
-            t = sum(int(v) for v in str(i))
-            cnt[t] += 1
-            if mx < cnt[t]:
-                mx = cnt[t]
+            s = 0
+            while i:
+                s += i % 10
+                i //= 10
+            cnt[s] += 1
+            if mx < cnt[s]:
+                mx = cnt[s]
                 ans = 1
-            elif mx == cnt[t]:
+            elif mx == cnt[s]:
                 ans += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int countLargestGroup(int n) {
         int[] cnt = new int[40];
-        int mx = 0, ans = 0;
+        int ans = 0, mx = 0;
         for (int i = 1; i <= n; ++i) {
-            int t = 0;
-            int j = i;
-            while (j != 0) {
-                t += j % 10;
-                j /= 10;
+            int s = 0;
+            for (int x = i; x > 0; x /= 10) {
+                s += x % 10;
             }
-            ++cnt[t];
-            if (mx < cnt[t]) {
-                mx = cnt[t];
+            ++cnt[s];
+            if (mx < cnt[s]) {
+                mx = cnt[s];
                 ans = 1;
-            } else if (mx == cnt[t]) {
+            } else if (mx == cnt[s]) {
                 ++ans;
             }
         }
@@ -85,62 +92,73 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int countLargestGroup(int n) {
-        vector<int> cnt(40);
-        int mx = 0, ans = 0;
+        int cnt[40]{};
+        int ans = 0, mx = 0;
         for (int i = 1; i <= n; ++i) {
-            int t = 0;
-            int j = i;
-            while (j) {
-                t += j % 10;
-                j /= 10;
+            int s = 0;
+            for (int x = i; x; x /= 10) {
+                s += x % 10;
             }
-            ++cnt[t];
-            if (mx < cnt[t]) {
-                mx = cnt[t];
+            ++cnt[s];
+            if (mx < cnt[s]) {
+                mx = cnt[s];
                 ans = 1;
-            } else if (mx == cnt[t])
+            } else if (mx == cnt[s]) {
                 ++ans;
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func countLargestGroup(n int) int {
-	cnt := make([]int, 40)
-	mx, ans := 0, 0
+func countLargestGroup(n int) (ans int) {
+	cnt := [40]int{}
+	mx := 0
 	for i := 1; i <= n; i++ {
-		t := 0
-		j := i
-		for j != 0 {
-			t += j % 10
-			j /= 10
+		s := 0
+		for x := i; x > 0; x /= 10 {
+			s += x % 10
 		}
-		cnt[t]++
-		if mx < cnt[t] {
-			mx = cnt[t]
+		cnt[s]++
+		if mx < cnt[s] {
+			mx = cnt[s]
 			ans = 1
-		} else if mx == cnt[t] {
+		} else if mx == cnt[s] {
 			ans++
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function countLargestGroup(n: number): number {
+    const cnt: number[] = new Array(40).fill(0);
+    let mx = 0;
+    let ans = 0;
+    for (let i = 1; i <= n; ++i) {
+        let s = 0;
+        for (let x = i; x; x = Math.floor(x / 10)) {
+            s += x % 10;
+        }
+        ++cnt[s];
+        if (mx < cnt[s]) {
+            mx = cnt[s];
+            ans = 1;
+        } else if (mx === cnt[s]) {
+            ++ans;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

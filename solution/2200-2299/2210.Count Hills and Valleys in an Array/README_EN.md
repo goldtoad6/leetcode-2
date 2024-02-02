@@ -51,11 +51,9 @@ There are 0 hills and valleys so we return 0.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
-
-### **Python3**
-
-First make the consecutive duplicate value to be unique with the side values.
 
 ```python
 class Solution:
@@ -69,25 +67,6 @@ class Solution:
             for i in range(1, len(arr) - 1)
         )
 ```
-
-```python
-class Solution:
-    def countHillValley(self, nums: List[int]) -> int:
-        ans = j = 0
-        for i in range(1, len(nums) - 1):
-            if nums[i] == nums[i + 1]:
-                continue
-            if nums[i] > nums[j] and nums[i] > nums[i + 1]:
-                ans += 1
-            if nums[i] < nums[j] and nums[i] < nums[i + 1]:
-                ans += 1
-            j = i
-        return ans
-```
-
-### **Java**
-
-Use two pointers to solve the problem
 
 ```java
 class Solution {
@@ -110,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -127,8 +104,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countHillValley(nums []int) int {
@@ -148,8 +123,6 @@ func countHillValley(nums []int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countHillValley(nums: number[]): number {
@@ -171,8 +144,6 @@ function countHillValley(nums: number[]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn count_hill_valley(nums: Vec<i32>) -> i32 {
@@ -185,7 +156,7 @@ impl Solution {
             if num == next {
                 continue;
             }
-            if num > prev && num > next || num < prev && num < next {
+            if (num > prev && num > next) || (num < prev && num < next) {
                 res += 1;
             }
             prev = num;
@@ -195,10 +166,27 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countHillValley(self, nums: List[int]) -> int:
+        ans = j = 0
+        for i in range(1, len(nums) - 1):
+            if nums[i] == nums[i + 1]:
+                continue
+            if nums[i] > nums[j] and nums[i] > nums[i + 1]:
+                ans += 1
+            if nums[i] < nums[j] and nums[i] < nums[i + 1]:
+                ans += 1
+            j = i
+        return ans
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

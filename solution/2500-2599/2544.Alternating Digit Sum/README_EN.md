@@ -56,22 +56,21 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We can directly simulate the process as described in the problem.
+
+We define an initial symbol $sign=1$. Starting from the most significant digit, we take out one digit $x$ each time, multiply it by $sign$, add the result to the answer, then negate $sign$, and continue to process the next digit until all digits are processed.
+
+The time complexity is $O(\log n)$, and the space complexity is $O(\log n)$. Here, $n$ is the given number.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def alternateDigitSum(self, n: int) -> int:
-        ans, sign = 0, 1
-        for c in str(n):
-            x = int(c)
-            ans += sign * x
-            sign *= -1
-        return ans
+        return sum((-1) ** i * int(x) for i, x in enumerate(str(n)))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +85,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -104,21 +101,17 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func alternateDigitSum(n int) int {
-	ans, sign := 0, 1
+func alternateDigitSum(n int) (ans int) {
+	sign := 1
 	for _, c := range strconv.Itoa(n) {
 		x := int(c - '0')
 		ans += sign * x
 		sign *= -1
 	}
-	return ans
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function alternateDigitSum(n: number): number {
@@ -132,8 +125,6 @@ function alternateDigitSum(n: number): number {
     return ans * -sign;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -150,8 +141,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 int alternateDigitSum(int n) {
     int ans = 0;
@@ -165,10 +154,40 @@ int alternateDigitSum(int n) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def alternateDigitSum(self, n: int) -> int:
+        ans, sign = 0, 1
+        for c in str(n):
+            x = int(c)
+            ans += sign * x
+            sign *= -1
+        return ans
 ```
 
+```rust
+impl Solution {
+    pub fn alternate_digit_sum(n: i32) -> i32 {
+        let mut ans = 0;
+        let mut sign = 1;
+
+        for c in format!("{}", n).chars() {
+            let x = c.to_digit(10).unwrap() as i32;
+            ans += x * sign;
+            sign *= -1;
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

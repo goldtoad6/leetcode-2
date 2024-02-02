@@ -63,9 +63,7 @@ stk.top();     // 返回 5，[<strong>5</strong>] - 栈没有改变
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双向链表 + 有序集合**
+### 方法一：双向链表 + 有序集合
 
 使用双向链表存储栈中的元素，使用有序集合存储栈中的元素，有序集合中的元素按照从小到大的顺序存储，每个元素都对应着双向链表中的一个节点。
 
@@ -78,10 +76,6 @@ stk.top();     // 返回 5，[<strong>5</strong>] - 栈没有改变
 空间复杂度 $O(n)$。其中 $n$ 为栈中的元素个数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 from sortedcontainers import SortedList
@@ -123,7 +117,6 @@ class DoubleLinkedList:
 
 
 class MaxStack:
-
     def __init__(self):
         self.stk = DoubleLinkedList()
         self.sl = SortedList(key=lambda x: x.val)
@@ -148,6 +141,7 @@ class MaxStack:
         DoubleLinkedList.remove(node)
         return node.val
 
+
 # Your MaxStack object will be instantiated and called as such:
 # obj = MaxStack()
 # obj.push(x)
@@ -156,10 +150,6 @@ class MaxStack:
 # param_4 = obj.peekMax()
 # param_5 = obj.popMax()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Node {
@@ -260,8 +250,6 @@ class MaxStack {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MaxStack {
 public:
@@ -315,10 +303,6 @@ private:
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

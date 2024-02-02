@@ -67,9 +67,9 @@ Thus, we return 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -81,8 +81,6 @@ class Solution:
             mx = max(mx, num)
         return max(0, upper - lower - (mx - mi) + 1)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -98,8 +96,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,12 +106,10 @@ public:
             mi = min(mi, num);
             mx = max(mx, num);
         }
-        return max(0, (int)(upper - lower - (mx - mi) + 1));
+        return max(0, (int) (upper - lower - (mx - mi) + 1));
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numberOfArrays(differences []int, lower int, upper int) int {
@@ -127,32 +121,8 @@ func numberOfArrays(differences []int, lower int, upper int) int {
 	}
 	return max(0, upper-lower-(mx-mi)+1)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

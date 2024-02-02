@@ -54,9 +54,9 @@ Total score = 5 + 4 + 5 + 5 = 19.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -86,8 +86,6 @@ class Solution:
                     stk2.append(c)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -127,8 +125,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -170,8 +166,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumGain(s string, x int, y int) int {
 	if x < y {
@@ -212,10 +206,6 @@ func maximumGain(s string, x int, y int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

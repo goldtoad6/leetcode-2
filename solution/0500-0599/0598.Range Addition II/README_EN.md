@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +56,6 @@ class Solution:
             n = min(n, b)
         return m * n
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +68,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -86,8 +82,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxCount(m int, n int, ops [][]int) int {
 	for _, op := range ops {
@@ -96,19 +90,8 @@ func maxCount(m int, n int, ops [][]int) int {
 	}
 	return m * n
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

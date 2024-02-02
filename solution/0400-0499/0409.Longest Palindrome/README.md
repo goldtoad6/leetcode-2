@@ -45,9 +45,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 一个合法的回文字符串，最多存在一个出现奇数次数的字符，其余字符出现次数均为偶数。
 
@@ -61,10 +59,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def longestPalindrome(self, s: str) -> int:
@@ -75,10 +69,6 @@ class Solution:
             ans += (ans & 1 ^ 1) and (v & 1)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -98,8 +88,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -121,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestPalindrome(s string) (ans int) {
 	cnt := [128]int{}
@@ -139,8 +125,6 @@ func longestPalindrome(s string) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function longestPalindrome(s: string): number {
     let n = s.length;
@@ -156,6 +140,35 @@ function longestPalindrome(s: string): number {
     return ans < s.length ? ans + 1 : ans;
 }
 ```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn longest_palindrome(s: String) -> i32 {
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for c in s.chars() {
+            map.insert(c, map.get(&c).unwrap_or(&0) + 1);
+        }
+        let mut has_odd = false;
+        let mut res = 0;
+        for v in map.values() {
+            res += v;
+            if v % 2 == 1 {
+                has_odd = true;
+                res -= 1;
+            }
+        }
+        res + (if has_odd { 1 } else { 0 })
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
 
 ```ts
 function longestPalindrome(s: string): number {
@@ -176,35 +189,6 @@ function longestPalindrome(s: string): number {
 }
 ```
 
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-
-impl Solution {
-    pub fn longest_palindrome(s: String) -> i32 {
-        let mut map: HashMap<char, i32> = HashMap::new();
-        for c in s.chars() {
-            map.insert(c, map.get(&c).unwrap_or(&0) + 1);
-        }
-        let mut has_odd = false;
-        let mut res = 0;
-        for v in map.values() {
-            res += v;
-            if v % 2 == 1 {
-                has_odd = true;
-                res -= 1;
-            }
-        }
-        res + if has_odd { 1 } else { 0 }
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

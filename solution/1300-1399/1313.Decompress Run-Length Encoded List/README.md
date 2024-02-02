@@ -42,13 +42,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -58,10 +54,6 @@ class Solution:
             res.extend([nums[i]] * nums[i - 1])
         return res
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -81,8 +73,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -98,8 +88,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func decompressRLElist(nums []int) []int {
 	var res []int
@@ -111,8 +99,6 @@ func decompressRLElist(nums []int) []int {
 	return res
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function decompressRLElist(nums: number[]): number[] {
@@ -126,8 +112,6 @@ function decompressRLElist(nums: number[]): number[] {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -144,18 +128,16 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int *decompressRLElist(int *nums, int numsSize, int *returnSize) {
+int* decompressRLElist(int* nums, int numsSize, int* returnSize) {
     int size = 0;
     for (int i = 0; i < numsSize; i += 2) {
         size += nums[i];
     }
-    int *ans = malloc(size * sizeof(int));
+    int* ans = malloc(size * sizeof(int));
     for (int i = 0, j = 0; j < numsSize; j += 2) {
         for (int k = 0; k < nums[j]; k++) {
             ans[i++] = nums[j + 1];
@@ -166,10 +148,6 @@ int *decompressRLElist(int *nums, int numsSize, int *returnSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

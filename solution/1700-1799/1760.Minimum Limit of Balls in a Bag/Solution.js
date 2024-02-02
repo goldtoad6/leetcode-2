@@ -5,14 +5,14 @@
  */
 var minimumSize = function (nums, maxOperations) {
     let left = 1;
-    let right = 1e9;
+    let right = Math.max(...nums);
     while (left < right) {
         const mid = (left + right) >> 1;
-        let s = 0;
-        for (const v of nums) {
-            s += Math.floor((v - 1) / mid);
+        let cnt = 0;
+        for (const x of nums) {
+            cnt += ~~((x - 1) / mid);
         }
-        if (s <= maxOperations) {
+        if (cnt <= maxOperations) {
             right = mid;
         } else {
             left = mid + 1;

@@ -41,19 +41,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：哈希表
 
-**方法一：哈希表**
+我们用哈希表 $cnt$ 统计数组 $arr$ 中每个数的出现次数，然后用哈希表 $vis$ 统计出现次数的种类，最后判断 $cnt$ 和 $vis$ 的大小是否相等即可。
 
-我们用哈希表 `cnt` 统计数组 `arr` 中每个数的出现次数，然后用哈希表 `vis` 统计出现次数的种类，最后判断 `cnt` 和 `vis` 的大小是否相等即可。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `arr` 的长度。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 $arr$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -61,10 +55,6 @@ class Solution:
         cnt = Counter(arr)
         return len(set(cnt.values())) == len(cnt)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -77,8 +67,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -100,8 +88,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func uniqueOccurrences(arr []int) bool {
 	cnt := map[int]int{}
@@ -119,10 +105,16 @@ func uniqueOccurrences(arr []int) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function uniqueOccurrences(arr: number[]): boolean {
+    const cnt: Map<number, number> = new Map();
+    for (const x of arr) {
+        cnt.set(x, (cnt.get(x) || 0) + 1);
+    }
+    return cnt.size === new Set(cnt.values()).size;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

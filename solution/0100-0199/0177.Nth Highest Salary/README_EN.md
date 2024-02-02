@@ -13,15 +13,15 @@
 | id          | int  |
 | salary      | int  |
 +-------------+------+
-id is the primary key column for this table.
+id is the primary key (column with unique values) for this table.
 Each row of this table contains information about the salary of an employee.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the <code>n<sup>th</sup></code> highest salary from the <code>Employee</code> table. If there is no <code>n<sup>th</sup></code> highest salary, the query should report <code>null</code>.</p>
+<p>Write a solution to find the <code>n<sup>th</sup></code> highest salary from the <code>Employee</code> table. If there is no <code>n<sup>th</sup></code> highest salary, return&nbsp;<code>null</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -66,9 +66,22 @@ n = 2
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
+
+
+def nth_highest_salary(employee: pd.DataFrame, N: int) -> pd.DataFrame:
+    unique_salaries = employee.salary.unique()
+    if len(unique_salaries) < N:
+        return pd.DataFrame([np.NaN], columns=[f"getNthHighestSalary({N})"])
+    else:
+        salary = sorted(unique_salaries, reverse=True)[N - 1]
+        return pd.DataFrame([salary], columns=[f"getNthHighestSalary({N})"])
+```
 
 ```sql
 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
@@ -77,9 +90,9 @@ BEGIN
   RETURN (
       # Write your MySQL query statement below.
       SELECT (
-          SELECT DISTINCT Salary
+          SELECT DISTINCT salary
           FROM Employee
-          ORDER BY Salary DESC
+          ORDER BY salary DESC
           LIMIT 1 OFFSET N
       )
   );
@@ -87,3 +100,5 @@ END
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

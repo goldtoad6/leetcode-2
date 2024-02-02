@@ -43,9 +43,9 @@ wordDistance.shortest(&quot;makes&quot;, &quot;coding&quot;);    // return 1
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class WordDistance:
@@ -71,8 +71,6 @@ class WordDistance:
 # obj = WordDistance(wordsDict)
 # param_1 = obj.shortest(word1,word2)
 ```
-
-### **Java**
 
 ```java
 class WordDistance {
@@ -107,8 +105,6 @@ class WordDistance {
  */
 ```
 
-### **C++**
-
 ```cpp
 class WordDistance {
 public:
@@ -132,6 +128,7 @@ public:
         }
         return ans;
     }
+
 private:
     unordered_map<string, vector<int>> d;
 };
@@ -142,8 +139,6 @@ private:
  * int param_1 = obj->shortest(word1,word2);
  */
 ```
-
-### **Go**
 
 ```go
 type WordDistance struct {
@@ -173,13 +168,6 @@ func (this *WordDistance) Shortest(word1 string, word2 string) int {
 	return ans
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -194,10 +182,6 @@ func abs(x int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

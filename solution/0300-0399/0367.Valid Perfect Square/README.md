@@ -40,25 +40,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：二分查找**
+### 方法一：二分查找
 
 不断循环二分枚举数字，判断该数的平方与 `num` 的大小关系，进而缩短空间，继续循环直至 $left \lt right$ 不成立。循环结束判断 $left^2$ 与 `num` 是否相等。
 
 时间复杂度：$O(logN)$。
 
-**方法二：转换为数学问题**
-
-由于 `n² = 1 + 3 + 5 + ... + (2n-1)`，对数字 `num` 不断减去 $i$ (`i = 1, 3, 5, ...`) 直至 `num` 不大于 0，如果最终 `num` 等于 0，说明是一个有效的完全平方数。
-
-时间复杂度：$O(sqrt(N))$。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,20 +60,6 @@ class Solution:
                 left = mid + 1
         return left * left == num
 ```
-
-```python
-class Solution:
-    def isPerfectSquare(self, num: int) -> bool:
-        i = 1
-        while num > 0:
-            num -= i
-            i += 2
-        return num == 0
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,19 +78,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public boolean isPerfectSquare(int num) {
-        for (int i = 1; num > 0; i += 2) {
-            num -= i;
-        }
-        return num == 0;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -134,18 +95,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    bool isPerfectSquare(int num) {
-        for (int i = 1; num > 0; i += 2) num -= i;
-        return num == 0;
-    }
-};
-```
-
-### **Go**
-
 ```go
 func isPerfectSquare(num int) bool {
 	left, right := 1, num
@@ -160,17 +109,6 @@ func isPerfectSquare(num int) bool {
 	return left*left == num
 }
 ```
-
-```go
-func isPerfectSquare(num int) bool {
-	for i := 1; num > 0; i += 2 {
-		num -= i
-	}
-	return num == 0
-}
-```
-
-### **TypeScript**
 
 ```ts
 function isPerfectSquare(num: number): boolean {
@@ -188,19 +126,6 @@ function isPerfectSquare(num: number): boolean {
 }
 ```
 
-```ts
-function isPerfectSquare(num: number): boolean {
-    let i = 1;
-    while (num > 0) {
-        num -= i;
-        i += 2;
-    }
-    return num === 0;
-}
-```
-
-### **Rust**
-
 ```rust
 use std::cmp::Ordering;
 impl Solution {
@@ -211,13 +136,80 @@ impl Solution {
         while left < right {
             let mid = left + (right - left) / 2;
             match (mid * mid).cmp(&num) {
-                Ordering::Less => left = mid + 1,
-                Ordering::Greater => right = mid - 1,
-                Ordering::Equal => return true,
+                Ordering::Less => {
+                    left = mid + 1;
+                }
+                Ordering::Greater => {
+                    right = mid - 1;
+                }
+                Ordering::Equal => {
+                    return true;
+                }
             }
         }
         left * left == num
     }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：转换为数学问题
+
+由于 `n² = 1 + 3 + 5 + ... + (2n-1)`，对数字 `num` 不断减去 $i$ (`i = 1, 3, 5, ...`) 直至 `num` 不大于 0，如果最终 `num` 等于 0，说明是一个有效的完全平方数。
+
+时间复杂度：$O(sqrt(N))$。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        i = 1
+        while num > 0:
+            num -= i
+            i += 2
+        return num == 0
+```
+
+```java
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        for (int i = 1; num > 0; i += 2) {
+            num -= i;
+        }
+        return num == 0;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        for (int i = 1; num > 0; i += 2) num -= i;
+        return num == 0;
+    }
+};
+```
+
+```go
+func isPerfectSquare(num int) bool {
+	for i := 1; num > 0; i += 2 {
+		num -= i
+	}
+	return num == 0
+}
+```
+
+```ts
+function isPerfectSquare(num: number): boolean {
+    let i = 1;
+    while (num > 0) {
+        num -= i;
+        i += 2;
+    }
+    return num === 0;
 }
 ```
 
@@ -234,10 +226,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

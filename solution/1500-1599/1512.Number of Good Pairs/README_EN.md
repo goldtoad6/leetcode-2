@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -57,15 +57,6 @@ class Solution:
         return ans
 ```
 
-```python
-class Solution:
-    def numIdenticalPairs(self, nums: List[int]) -> int:
-        cnt = Counter(nums)
-        return sum(v * (v - 1) for v in cnt.values()) >> 1
-```
-
-### **Java**
-
 ```java
 class Solution {
     public int numIdenticalPairs(int[] nums) {
@@ -78,24 +69,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public int numIdenticalPairs(int[] nums) {
-        int[] cnt = new int[101];
-        for (int x : nums) {
-            ++cnt[x];
-        }
-        int ans = 0;
-        for (int v : cnt) {
-            ans += v * (v - 1) / 2;
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -110,25 +83,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    int numIdenticalPairs(vector<int>& nums) {
-        int cnt[101]{};
-        for (int& x : nums) {
-            ++cnt[x];
-        }
-        int ans = 0;
-        for (int v : cnt) {
-            ans += v * (v - 1) / 2;
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
 
 ```go
 func numIdenticalPairs(nums []int) (ans int) {
@@ -141,6 +95,108 @@ func numIdenticalPairs(nums []int) (ans int) {
 }
 ```
 
+```ts
+function numIdenticalPairs(nums: number[]): number {
+    const cnt = new Array(101).fill(0);
+    let ans = 0;
+    for (const x of nums) {
+        ans += cnt[x]++;
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    pub fn num_identical_pairs(nums: Vec<i32>) -> i32 {
+        let mut cnt = [0; 101];
+        let mut ans = 0;
+        for &num in nums.iter() {
+            ans += cnt[num as usize];
+            cnt[num as usize] += 1;
+        }
+        ans
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function numIdenticalPairs($nums) {
+        $arr = array_values(array_unique($nums));
+        for ($i = 0; $i < count($nums); $i++) {
+            $v[$nums[$i]] += 1;
+        }
+        $rs = 0;
+        for ($j = 0; $j < count($arr); $j++) {
+            $rs += ($v[$arr[$j]] * ($v[$arr[$j]] - 1)) / 2;
+        }
+        return $rs;
+    }
+}
+```
+
+```c
+int numIdenticalPairs(int* nums, int numsSize) {
+    int cnt[101] = {0};
+    int ans = 0;
+    for (int i = 0; i < numsSize; i++) {
+        ans += cnt[nums[i]]++;
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        cnt = Counter(nums)
+        return sum(v * (v - 1) for v in cnt.values()) >> 1
+```
+
+```java
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+        int[] cnt = new int[101];
+        for (int x : nums) {
+            ++cnt[x];
+        }
+        int ans = 0;
+        for (int v : cnt) {
+            ans += v * (v - 1) / 2;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int numIdenticalPairs(vector<int>& nums) {
+        int cnt[101]{};
+        for (int& x : nums) {
+            ++cnt[x];
+        }
+        int ans = 0;
+        for (int v : cnt) {
+            ans += v * (v - 1) / 2;
+        }
+        return ans;
+    }
+};
+```
+
 ```go
 func numIdenticalPairs(nums []int) (ans int) {
 	cnt := [101]int{}
@@ -151,19 +207,6 @@ func numIdenticalPairs(nums []int) (ans int) {
 		ans += v * (v - 1) / 2
 	}
 	return
-}
-```
-
-### **TypeScript**
-
-```ts
-function numIdenticalPairs(nums: number[]): number {
-    const cnt = new Array(101).fill(0);
-    let ans = 0;
-    for (const x of nums) {
-        ans += cnt[x]++;
-    }
-    return ans;
 }
 ```
 
@@ -181,22 +224,6 @@ function numIdenticalPairs(nums: number[]): number {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn num_identical_pairs(nums: Vec<i32>) -> i32 {
-        let mut cnt = [0; 101];
-        let mut ans = 0;
-        for &num in nums.iter() {
-            ans += cnt[num as usize];
-            cnt[num as usize] += 1;
-        }
-        ans
-    }
-}
-```
-
 ```rust
 impl Solution {
     pub fn num_identical_pairs(nums: Vec<i32>) -> i32 {
@@ -206,28 +233,15 @@ impl Solution {
         }
         let mut ans = 0;
         for &v in cnt.iter() {
-            ans += v * (v - 1) / 2
+            ans += (v * (v - 1)) / 2;
         }
         ans
     }
 }
 ```
 
-### **C**
-
 ```c
-int numIdenticalPairs(int *nums, int numsSize) {
-    int cnt[101] = {0};
-    int ans = 0;
-    for (int i = 0; i < numsSize; i++) {
-        ans += cnt[nums[i]]++;
-    }
-    return ans;
-}
-```
-
-```c
-int numIdenticalPairs(int *nums, int numsSize) {
+int numIdenticalPairs(int* nums, int numsSize) {
     int cnt[101] = {0};
     for (int i = 0; i < numsSize; i++) {
         cnt[nums[i]]++;
@@ -240,10 +254,6 @@ int numIdenticalPairs(int *nums, int numsSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

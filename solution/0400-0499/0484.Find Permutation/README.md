@@ -9,7 +9,7 @@
 <p>由范围 <code>[1,n]</code> 内所有整数组成的 <code>n</code> 个整数的排列&nbsp;<code>perm</code>&nbsp;可以表示为长度为 <code>n - 1</code> 的字符串 <code>s</code> ，其中:</p>
 
 <ul>
-	<li>如果 <code>perm[i] &lt; perm[i + 1]</code> ，那么 <code>s[i] == ' i '</code></li>
+	<li>如果 <code>perm[i] &lt; perm[i + 1]</code> ，那么 <code>s[i] == 'I'</code></li>
 	<li>如果&nbsp;<code>perm[i] &gt; perm[i + 1]</code>&nbsp;，那么 <code>s[i] == 'D'</code>&nbsp;。</li>
 </ul>
 
@@ -44,9 +44,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心**
+### 方法一：贪心
 
 先初始化结果数组 `ans` 为 `[1, 2, 3, ..., n+1]`。
 
@@ -58,10 +56,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def findPermutation(self, s: str) -> List[int]:
@@ -72,14 +66,10 @@ class Solution:
             j = i
             while j < n and s[j] == 'D':
                 j += 1
-            ans[i: j + 1] = ans[i: j + 1][::-1]
+            ans[i : j + 1] = ans[i : j + 1][::-1]
             i = max(i + 1, j)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -111,8 +101,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -133,8 +121,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findPermutation(s string) []int {
@@ -159,19 +145,8 @@ func reverse(arr []int, i, j int) {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

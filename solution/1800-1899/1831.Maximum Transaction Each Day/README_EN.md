@@ -14,17 +14,17 @@
 | day            | datetime |
 | amount         | int      |
 +----------------+----------+
-transaction_id is the primary key for this table.
+transaction_id is the column with unique values for this table.
 Each row contains information about one transaction.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the IDs of the transactions with the <strong>maximum</strong> <code>amount</code> on their respective day. If in one day there are multiple such transactions, return all of them.</p>
+<p>Write a solution&nbsp;to report the IDs of the transactions with the <strong>maximum</strong> <code>amount</code> on their respective day. If in one day there are multiple such transactions, return all of them.</p>
 
 <p>Return the result table <strong>ordered by</strong> <code>transaction_id</code> <strong> in ascending order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -62,12 +62,30 @@ We order the result table by transaction_id after collecting these IDs.
 
 ## Solutions
 
+### Solution 1: Window Function
+
+We can use the window function `RANK()`, which assigns a rank to each transaction based on its amount in descending order, and then select the transactions with a rank of $1$.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            transaction_id,
+            RANK() OVER (
+                PARTITION BY DAY(day)
+                ORDER BY amount DESC
+            ) AS rk
+        FROM Transactions
+    )
+SELECT transaction_id
+FROM T
+WHERE rk = 1
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

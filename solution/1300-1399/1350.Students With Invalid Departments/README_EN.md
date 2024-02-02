@@ -13,7 +13,7 @@
 | id            | int     |
 | name          | varchar |
 +---------------+---------+
-id is the primary key of this table.
+In SQL, id is the primary key of this table.
 The table has information about the id of each department of a university.
 </pre>
 
@@ -29,17 +29,17 @@ The table has information about the id of each department of a university.
 | name          | varchar |
 | department_id | int     |
 +---------------+---------+
-id is the primary key of this table.
+In SQL, id is the primary key of this table.
 The table has information about the id of each student at a university and the id of the department he/she studies at.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the id and the name of all students who are enrolled in departments that no longer exist.</p>
+<p>Find the id and the name of all students who are enrolled in departments that no longer exist.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -84,22 +84,36 @@ John, Daiana, Steve, and Jasmine are enrolled in departments 14, 33, 74, and 77 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Subquery
 
-### **SQL**
+We can directly use a subquery to find all students who are not in the `Departments` table.
+
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
-SELECT
-    s.id, s.name
-FROM
-    Students s
-LEFT JOIN
-    Departments d
-ON
-    s.department_id = d.id
-WHERE
-    d.id IS NULL;
+SELECT id, name
+FROM Students
+WHERE department_id NOT IN (SELECT id FROM Departments);
 ```
 
 <!-- tabs:end -->
+
+### Solution 2: Left Join
+
+We can also use a left join to join the `Students` table with the `Departments` table on the condition of `Students.department_id = Departments.id`, and then filter out the students whose `Departments.id` is `NULL`.
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT s.id, s.name
+FROM
+    Students AS s
+    LEFT JOIN Departments AS d ON s.department_id = d.id
+WHERE d.id IS NULL;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

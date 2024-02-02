@@ -39,9 +39,9 @@ The maximum working time is 11.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +66,6 @@ class Solution:
         dfs(0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -115,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -146,8 +142,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTimeRequired(jobs []int, k int) int {
 	cnt := make([]int, k)
@@ -158,10 +152,7 @@ func minimumTimeRequired(jobs []int, k int) int {
 	var dfs func(int)
 	dfs = func(i int) {
 		if i == len(jobs) {
-			mx := 0
-			for _, v := range cnt {
-				mx = max(mx, v)
-			}
+			mx := slices.Max(cnt)
 			ans = min(ans, mx)
 			return
 		}
@@ -180,26 +171,8 @@ func minimumTimeRequired(jobs []int, k int) int {
 	dfs(0)
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

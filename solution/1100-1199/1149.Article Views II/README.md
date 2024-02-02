@@ -17,18 +17,18 @@
 | viewer_id     | int     |
 | view_date     | date    |
 +---------------+---------+
-此表无主键，因此可能会存在重复行。
+此表可能会存在重复行。
 此表的每一行都表示某人在某天浏览了某位作者的某篇文章。 
 请注意，同一人的 author_id 和 viewer_id 是相同的。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一条 SQL 查询来找出在同一天阅读至少两篇文章的人。</p>
+<p>编写解决方案来找出在同一天阅读至少两篇文章的人。</p>
 
 <p>结果按照 <code>id</code> 升序排序。</p>
 
-<p>查询结果的格式如下。</p>
+<p>结果的格式如下。</p>
 
 <p>&nbsp;</p>
 
@@ -59,26 +59,21 @@ Views 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：DISTINCT + GROUP BY + HAVING
 
-“`DISTINCT` + `GROUP BY`” 实现。
+我们将数据按照 `viewer_id` 和 `view_date` 分组，然后利用 `HAVING` 子句来筛选出浏览文章数大于 $1$ 的记录，最后按照 `id` 去重排序即可。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
 # Write your MySQL query statement below
-SELECT
-    DISTINCT(viewer_id) as id
-FROM
-    Views
-GROUP BY
-    view_date, viewer_id
-HAVING
-    COUNT(DISTINCT(article_id)) > 1
-ORDER BY
-    id;
+SELECT DISTINCT viewer_id AS id
+FROM Views
+GROUP BY viewer_id, view_date
+HAVING COUNT(DISTINCT article_id) > 1
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -44,20 +44,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：双指针
 
-双指针，当 `s[i]` 不等于 `s[j]` 时，分别尝试跳过 `i` 或跳过 `j`。
+我们用两个指针 $i$ 和 $j$ 分别指向字符串 $s$ 的第一个字符和最后一个字符，然后向中间移动指针，每次判断 $s[i]$ 和 $s[j]$ 是否相等：
+
+-   如果 $s[i] = s[j]$，则指针 $i$ 向后移动一位，指针 $j$ 向前移动一位；
+-   否则，存在两种情况，即删除字符 $s[i]$ 或者删除字符 $s[j]$，然后判断删除之后的字符串是否是回文字符串。即判断子串 $s[i+1..j]$ 或者子串 $s[i..j-1]$ 是否是回文字符串。
+
+时间复杂度 $O(n)$，其中 $n$ 是字符串 $s$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        def check(i, j):
+        def check(i: int, j: int) -> bool:
             while i < j:
                 if s[i] != s[j]:
                     return False
@@ -67,27 +68,26 @@ class Solution:
         i, j = 0, len(s) - 1
         while i < j:
             if s[i] != s[j]:
-                return check(i, j - 1) or check(i + 1, j)
+                return check(i + 1, j) or check(i, j - 1)
             i, j = i + 1, j - 1
         return True
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
+    private String s;
+
     public boolean validPalindrome(String s) {
+        this.s = s;
         for (int i = 0, j = s.length() - 1; i < j; ++i, --j) {
             if (s.charAt(i) != s.charAt(j)) {
-                return check(s, i + 1, j) || check(s, i, j - 1);
+                return check(i + 1, j) || check(i, j - 1);
             }
         }
         return true;
     }
 
-    private boolean check(String s, int i, int j) {
+    private boolean check(int i, int j) {
         for (; i < j; ++i, --j) {
             if (s.charAt(i) != s.charAt(j)) {
                 return false;
@@ -98,53 +98,27 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function validPalindrome(s: string): boolean {
-    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
-        if (s.charAt(i) != s.charAt(j)) {
-            return (
-                isPalinddrome(s.slice(i, j)) ||
-                isPalinddrome(s.slice(i + 1, j + 1))
-            );
-        }
-    }
-    return true;
-}
-
-function isPalinddrome(s: string): boolean {
-    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
-        if (s.charAt(i) != s.charAt(j)) {
-            return false;
-        }
-    }
-    return true;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool validPalindrome(string s) {
-        for (int i = 0, j = s.size() - 1; i < j; ++i, --j)
-            if (s[i] != s[j])
-                return check(s, i + 1, j) || check(s, i, j - 1);
-        return 1;
-    }
-
-    bool check(string s, int i, int j) {
-        for (; i < j; ++i, --j)
-            if (s[i] != s[j])
-                return 0;
-        return 1;
+        auto check = [&](int i, int j) {
+            for (; i < j; ++i, --j) {
+                if (s[i] != s[j]) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        for (int i = 0, j = s.size() - 1; i < j; ++i, --j) {
+            if (s[i] != s[j]) {
+                return check(i + 1, j) || check(i, j - 1);
+            }
+        }
+        return true;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func validPalindrome(s string) bool {
@@ -165,7 +139,24 @@ func validPalindrome(s string) bool {
 }
 ```
 
-### **JavaScript**
+```ts
+function validPalindrome(s: string): boolean {
+    const check = (i: number, j: number): boolean => {
+        for (; i < j; ++i, --j) {
+            if (s[i] !== s[j]) {
+                return false;
+            }
+        }
+        return true;
+    };
+    for (let i = 0, j = s.length - 1; i < j; ++i, --j) {
+        if (s[i] !== s[j]) {
+            return check(i + 1, j) || check(i, j - 1);
+        }
+    }
+    return true;
+}
+```
 
 ```js
 /**
@@ -173,16 +164,16 @@ func validPalindrome(s string) bool {
  * @return {boolean}
  */
 var validPalindrome = function (s) {
-    let check = function (i, j) {
+    const check = (i, j) => {
         for (; i < j; ++i, --j) {
-            if (s.charAt(i) != s.charAt(j)) {
+            if (s[i] !== s[j]) {
                 return false;
             }
         }
         return true;
     };
     for (let i = 0, j = s.length - 1; i < j; ++i, --j) {
-        if (s.charAt(i) != s.charAt(j)) {
+        if (s[i] !== s[j]) {
             return check(i + 1, j) || check(i, j - 1);
         }
     }
@@ -190,10 +181,6 @@ var validPalindrome = function (s) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

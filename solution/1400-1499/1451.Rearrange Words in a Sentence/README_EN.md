@@ -55,9 +55,9 @@ Output is ordered by length and the new first word starts with capital letter.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +68,6 @@ class Solution:
         words[0] = words[0].title()
         return " ".join(words)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -110,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func arrangeWords(text string) string {
 	words := strings.Split(text, " ")
@@ -122,10 +116,53 @@ func arrangeWords(text string) string {
 }
 ```
 
-### **...**
-
+```ts
+function arrangeWords(text: string): string {
+    let words: string[] = text.split(' ');
+    words[0] = words[0].toLowerCase();
+    words.sort((a, b) => a.length - b.length);
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    return words.join(' ');
+}
 ```
 
+```js
+/**
+ * @param {string} text
+ * @return {string}
+ */
+var arrangeWords = function (text) {
+    let arr = text.split(' ');
+    arr[0] = arr[0].toLocaleLowerCase();
+    arr.sort((a, b) => a.length - b.length);
+    arr[0] = arr[0][0].toLocaleUpperCase() + arr[0].substr(1);
+    return arr.join(' ');
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param String $text
+     * @return String
+     */
+    function arrangeWords($text) {
+        $text = lcfirst($text);
+        $arr = explode(' ', $text);
+        for ($i = 0; $i < count($arr); $i++) {
+            $hashtable[$i] = strlen($arr[$i]);
+        }
+        asort($hashtable);
+        $key = array_keys($hashtable);
+        $rs = [];
+        for ($j = 0; $j < count($key); $j++) {
+            array_push($rs, $arr[$key[$j]]);
+        }
+        return ucfirst(implode(' ', $rs));
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

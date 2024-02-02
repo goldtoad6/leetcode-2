@@ -6,7 +6,7 @@
 
 <p>You are given an array of strings <code>words</code> and a string <code>chars</code>.</p>
 
-<p>A string is <strong>good</strong> if it can be formed by characters from chars (each character can only be used once).</p>
+<p>A string is <strong>good</strong> if it can be formed by characters from <code>chars</code> (each character can only be used once).</p>
 
 <p>Return <em>the sum of lengths of all good strings in words</em>.</p>
 
@@ -38,9 +38,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We can use an array $cnt$ of length $26$ to count the occurrence of each letter in the string $chars$.
+
+Then we traverse the string array $words$. For each string $w$, we use an array $wc$ of length $26$ to count the occurrence of each letter in the string $w$. If for each letter $c$, $wc[c] \leq cnt[c]$, then we can spell the string $w$ with the letters in $chars$, otherwise we cannot spell the string $w$. If we can spell the string $w$, then we add the length of the string $w$ to the answer.
+
+After the traversal, we can get the answer.
+
+The time complexity is $O(L)$, and the space complexity is $O(C)$. Here, $L$ is the sum of the lengths of all strings in the problem, and $C$ is the size of the character set. In this problem, $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,8 +61,6 @@ class Solution:
                 ans += len(w)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +88,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +117,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countCharacters(words []string, chars string) (ans int) {
 	cnt := [26]int{}
@@ -139,8 +141,6 @@ func countCharacters(words []string, chars string) (ans int) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countCharacters(words: string[], chars: string): number {
@@ -167,10 +167,34 @@ function countCharacters(words: string[], chars: string): number {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String[] $words
+     * @param String $chars
+     * @return Integer
+     */
+    function countCharacters($words, $chars) {
+        $sum = 0;
+        for ($i = 0; $i < strlen($chars); $i++) {
+            $hashtable[$chars[$i]] += 1;
+        }
+        for ($j = 0; $j < count($words); $j++) {
+            $tmp = $hashtable;
+            $sum += strlen($words[$j]);
+            for ($k = 0; $k < strlen($words[$j]); $k++) {
+                if (!isset($tmp[$words[$j][$k]]) || $tmp[$words[$j][$k]] === 0) {
+                    $sum -= strlen($words[$j]);
+                    break;
+                }
+                $tmp[$words[$j][$k]] -= 1;
+            }
+        }
+        return $sum;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

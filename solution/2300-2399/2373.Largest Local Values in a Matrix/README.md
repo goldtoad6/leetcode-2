@@ -52,19 +52,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举**
+### 方法一：枚举
 
 我们可以枚举每个 $3 \times 3$ 的矩阵，求出每个 $3 \times 3$ 的矩阵中的最大值，然后将这些最大值放入答案矩阵中。
 
 时间复杂度 $O(n^2)$，其中 $n$ 是矩阵的边长。忽略答案矩阵的空间消耗，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -73,14 +67,11 @@ class Solution:
         ans = [[0] * (n - 2) for _ in range(n - 2)]
         for i in range(n - 2):
             for j in range(n - 2):
-                ans[i][j] = max(grid[x][y] for x in range(i, i + 3)
-                                for y in range(j, j + 3))
+                ans[i][j] = max(
+                    grid[x][y] for x in range(i, i + 3) for y in range(j, j + 3)
+                )
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,8 +91,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -123,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func largestLocal(grid [][]int) [][]int {
 	n := len(grid)
@@ -141,16 +128,7 @@ func largestLocal(grid [][]int) [][]int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function largestLocal(grid: number[][]): number[][] {
@@ -171,11 +149,6 @@ function largestLocal(grid: number[][]): number[][] {
 }
 ```
 
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

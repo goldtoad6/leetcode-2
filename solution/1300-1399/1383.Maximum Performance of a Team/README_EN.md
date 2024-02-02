@@ -8,7 +8,7 @@
 
 <p>Choose <strong>at most</strong> <code>k</code> different engineers out of the <code>n</code> engineers to form a team with the maximum <strong>performance</strong>.</p>
 
-<p>The performance of a team is the sum of their engineers&#39; speeds multiplied by the minimum efficiency among their engineers.</p>
+<p>The performance of a team is the sum of its engineers&#39; speeds multiplied by the minimum efficiency among its engineers.</p>
 
 <p>Return <em>the maximum performance of this team</em>. Since the answer can be a huge number, return it <strong>modulo</strong> <code>10<sup>9</sup> + 7</code>.</p>
 
@@ -51,9 +51,9 @@ We have the maximum performance of the team by selecting engineer 2 (with speed=
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -72,8 +72,6 @@ class Solution:
                 tot -= heappop(h)
         return ans % mod
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -102,8 +100,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -129,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxPerformance(n int, speed []int, efficiency []int, k int) int {
 	t := make([][]int, n)
@@ -153,17 +147,10 @@ func maxPerformance(n int, speed []int, efficiency []int, k int) int {
 	return ans % mod
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 type hp struct{ sort.IntSlice }
 
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h *hp) Push(v any) { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -172,10 +159,6 @@ func (h *hp) Pop() interface{} {
 func (h *hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

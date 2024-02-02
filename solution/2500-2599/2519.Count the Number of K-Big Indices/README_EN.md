@@ -44,9 +44,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Binary Indexed Tree
 
-### **Python3**
+We maintain two binary indexed trees, one records the number of elements smaller than the current position on the left, and the other records the number of elements smaller than the current position on the right.
+
+We traverse the array, and for the current position, if the number of elements smaller than the current position on the left is greater than or equal to $k$, and the number of elements smaller than the current position on the right is greater than or equal to $k$, then the current position is a `k-big`, and we increment the answer by one.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$, where $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class BinaryIndexedTree:
@@ -81,8 +87,6 @@ class Solution:
             tree1.update(v, 1)
         return ans
 ```
-
-### **Java**
 
 ```java
 class BinaryIndexedTree {
@@ -132,12 +136,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class BinaryIndexedTree {
 public:
-    BinaryIndexedTree(int _n) : n(_n), c(_n + 1) {}
+    BinaryIndexedTree(int _n)
+        : n(_n)
+        , c(_n + 1) {}
 
     void update(int x, int delta) {
         while (x <= n) {
@@ -179,8 +183,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type BinaryIndexedTree struct {
@@ -227,10 +229,6 @@ func kBigIndices(nums []int, k int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

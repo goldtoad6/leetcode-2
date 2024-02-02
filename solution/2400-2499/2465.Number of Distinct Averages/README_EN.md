@@ -57,27 +57,28 @@ There is only one average to be calculated after removing 1 and 100, so we retur
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting
 
-### **Python3**
+The problem requires us to find the minimum and maximum values in the array $nums$ each time, delete them, and then calculate the average of the two deleted numbers. Therefore, we can first sort the array $nums$, then take the first and last elements of the array each time, calculate their sum, use a hash table or array $cnt$ to record the number of times each sum appears, and finally count the number of different sums.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def distinctAverages(self, nums: List[int]) -> int:
-        n = len(nums)
         nums.sort()
-        return len(set(nums[i] + nums[n - i - 1] for i in range(n >> 1)))
+        return len(set(nums[i] + nums[-i - 1] for i in range(len(nums) >> 1)))
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int distinctAverages(int[] nums) {
         Arrays.sort(nums);
-        int n = nums.length;
         Set<Integer> s = new HashSet<>();
-        for (int i = 0; i<n> > 1; ++i) {
+        int n = nums.length;
+        for (int i = 0; i < n >> 1; ++i) {
             s.add(nums[i] + nums[n - i - 1]);
         }
         return s.size();
@@ -85,25 +86,23 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int distinctAverages(vector<int>& nums) {
         sort(nums.begin(), nums.end());
-        int n = nums.size();
         unordered_set<int> s;
-        for (int i = 0; i < n >> 1; ++i) s.insert(nums[i] + nums[n - i - 1]);
+        int n = nums.size();
+        for (int i = 0; i < n >> 1; ++i) {
+            s.insert(nums[i] + nums[n - i - 1]);
+        }
         return s.size();
     }
 };
 ```
 
-### **Go**
-
 ```go
-func distinctAverages(nums []int) int {
+func distinctAverages(nums []int) (ans int) {
 	sort.Ints(nums)
 	n := len(nums)
 	s := map[int]struct{}{}
@@ -114,16 +113,185 @@ func distinctAverages(nums []int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
+function distinctAverages(nums: number[]): number {
+    nums.sort((a, b) => a - b);
+    const s: Set<number> = new Set();
+    const n = nums.length;
+    for (let i = 0; i < n >> 1; ++i) {
+        s.add(nums[i] + nums[n - i - 1]);
+    }
+    return s.size;
+}
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn distinct_averages(nums: Vec<i32>) -> i32 {
+        let mut nums = nums;
+        nums.sort();
+        let n = nums.len();
+        let mut cnt = vec![0; 201];
+        let mut ans = 0;
 
-```
+        for i in 0..n >> 1 {
+            let x = (nums[i] + nums[n - i - 1]) as usize;
+            cnt[x] += 1;
 
+            if cnt[x] == 1 {
+                ans += 1;
+            }
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def distinctAverages(self, nums: List[int]) -> int:
+        nums.sort()
+        ans = 0
+        cnt = Counter()
+        for i in range(len(nums) >> 1):
+            x = nums[i] + nums[-i - 1]
+            cnt[x] += 1
+            if cnt[x] == 1:
+                ans += 1
+        return ans
+```
+
+```java
+class Solution {
+    public int distinctAverages(int[] nums) {
+        Arrays.sort(nums);
+        int[] cnt = new int[201];
+        int n = nums.length;
+        int ans = 0;
+        for (int i = 0; i < n >> 1; ++i) {
+            if (++cnt[nums[i] + nums[n - i - 1]] == 1) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int distinctAverages(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int cnt[201]{};
+        int n = nums.size();
+        int ans = 0;
+        for (int i = 0; i < n >> 1; ++i) {
+            if (++cnt[nums[i] + nums[n - i - 1]] == 1) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func distinctAverages(nums []int) (ans int) {
+	sort.Ints(nums)
+	n := len(nums)
+	cnt := [201]int{}
+	for i := 0; i < n>>1; i++ {
+		x := nums[i] + nums[n-i-1]
+		cnt[x]++
+		if cnt[x] == 1 {
+			ans++
+		}
+	}
+	return
+}
+```
+
+```ts
+function distinctAverages(nums: number[]): number {
+    nums.sort((a, b) => a - b);
+    const cnt: number[] = Array(201).fill(0);
+    let ans = 0;
+    const n = nums.length;
+    for (let i = 0; i < n >> 1; ++i) {
+        if (++cnt[nums[i] + nums[n - i - 1]] === 1) {
+            ++ans;
+        }
+    }
+    return ans;
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn distinct_averages(nums: Vec<i32>) -> i32 {
+        let mut h = HashMap::new();
+        let mut nums = nums;
+        let mut ans = 0;
+        let n = nums.len();
+        nums.sort();
+
+        for i in 0..n >> 1 {
+            let x = nums[i] + nums[n - i - 1];
+            *h.entry(x).or_insert(0) += 1;
+
+            if *h.get(&x).unwrap() == 1 {
+                ans += 1;
+            }
+        }
+
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```rust
+use std::collections::HashSet;
+
+impl Solution {
+    pub fn distinct_averages(nums: Vec<i32>) -> i32 {
+        let mut set = HashSet::new();
+        let mut ans = 0;
+        let n = nums.len();
+        let mut nums = nums;
+        nums.sort();
+
+        for i in 0..n >> 1 {
+            let x = nums[i] + nums[n - i - 1];
+
+            if set.contains(&x) {
+                continue;
+            }
+
+            set.insert(x);
+            ans += 1;
+        }
+
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

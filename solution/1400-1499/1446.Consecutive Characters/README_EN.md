@@ -35,89 +35,86 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxPower(self, s: str) -> int:
-        ans = t = 0
-        for i, c in enumerate(s):
-            if i == 0 or c == s[i - 1]:
+        ans = t = 1
+        for a, b in pairwise(s):
+            if a == b:
                 t += 1
+                ans = max(ans, t)
             else:
                 t = 1
-            ans = max(ans, t)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int maxPower(String s) {
-        int ans = 0, t = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (i == 0 || s.charAt(i) == s.charAt(i - 1)) {
-                ++t;
+        int ans = 1, t = 1;
+        for (int i = 1; i < s.length(); ++i) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                ans = Math.max(ans, ++t);
             } else {
                 t = 1;
             }
-            ans = Math.max(ans, t);
         }
         return ans;
     }
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int maxPower(string s) {
-        int ans = 0, t = 0;
-        for (int i = 0; i < s.size(); ++i) {
-            if (i == 0 || s[i] == s[i - 1])
-                ++t;
-            else
+        int ans = 1, t = 1;
+        for (int i = 1; i < s.size(); ++i) {
+            if (s[i] == s[i - 1]) {
+                ans = max(ans, ++t);
+            } else {
                 t = 1;
-            ans = max(ans, t);
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func maxPower(s string) int {
-	ans, t := 0, 0
-	for i := range s {
-		if i == 0 || s[i] == s[i-1] {
+	ans, t := 1, 1
+	for i := 1; i < len(s); i++ {
+		if s[i] == s[i-1] {
 			t++
+			ans = max(ans, t)
 		} else {
 			t = 1
 		}
-		ans = max(ans, t)
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maxPower(s: string): number {
+    let ans = 1;
+    let t = 1;
+    for (let i = 1; i < s.length; ++i) {
+        if (s[i] === s[i - 1]) {
+            ans = Math.max(ans, ++t);
+        } else {
+            t = 1;
+        }
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

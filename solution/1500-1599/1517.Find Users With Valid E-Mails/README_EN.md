@@ -14,13 +14,13 @@
 | name          | varchar |
 | mail          | varchar |
 +---------------+---------+
-user_id is the primary key for this table.
+user_id is the primary key (column with unique values) for this table.
 This table contains information of the users signed up in a website. Some e-mails are invalid.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the users who have <strong>valid emails</strong>.</p>
+<p>Write a solution to find the users who have <strong>valid emails</strong>.</p>
 
 <p>A valid e-mail has a prefix name and a domain where:</p>
 
@@ -31,7 +31,7 @@ This table contains information of the users signed up in a website. Some e-mail
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -67,12 +67,17 @@ The mail of user 7 starts with a period.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT *
+FROM Users
+WHERE mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$';
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

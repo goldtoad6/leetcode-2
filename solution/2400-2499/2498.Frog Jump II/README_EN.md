@@ -52,9 +52,9 @@ It can be shown that this is the minimum achievable cost.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
             ans = max(ans, stones[i] - stones[i - 2])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -79,8 +77,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -92,8 +88,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxJump(stones []int) int {
 	ans := stones[1] - stones[0]
@@ -102,19 +96,8 @@ func maxJump(stones []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

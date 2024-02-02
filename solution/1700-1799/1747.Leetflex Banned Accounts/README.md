@@ -17,14 +17,14 @@
 | login       | datetime |
 | logout      | datetime |
 +-------------+----------+
-该表是没有主键的，它可能包含重复项。
+该表可能包含重复项。
 该表包含有关Leetflex帐户的登录和注销日期的信息。 它还包含了该账户用于登录和注销的网络地址的信息。
 题目确保每一个注销时间都在登录时间之后。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个SQL查询语句，查找那些应该被禁止的Leetflex帐户编号 <code>account_id</code> 。 如果某个帐户在某一时刻从两个不同的网络地址登录了，则这个帐户应该被禁止。</p>
+<p>编写解决方案，查找那些应该被禁止的Leetflex帐户编号 <code>account_id</code> 。 如果某个帐户在某一时刻从两个不同的网络地址登录了，则这个帐户应该被禁止。</p>
 
 <p>可以以 <strong>任何顺序 </strong>返回结果。</p>
 
@@ -64,14 +64,28 @@ Account ID 4 --&gt; 该账户从 "2021-02-01 17:00:00" 到 "2021-02-01 17:00:00"
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：自连接
+
+我们可以通过自连接的方式，找出每个账户在同一天内，从不同的网络地址登录的情况。连接的条件是：
+
+-   账户编号相同
+-   网络地址不同
+-   一次登录的时间在另一次“登录-退出”的时间范围内
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT DISTINCT
+    a.account_id
+FROM
+    LogInfo AS a
+    JOIN LogInfo AS b
+        ON a.account_id = b.account_id
+        AND a.ip_address != b.ip_address
+        AND a.login BETWEEN b.login AND b.logout;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

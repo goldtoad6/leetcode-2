@@ -45,9 +45,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：滑动窗口 + 有序集合**
+### 方法一：滑动窗口 + 有序集合
 
 维护一个大小为 $k$ 的滑动窗口，窗口中的元素保持有序。
 
@@ -56,10 +54,6 @@
 时间复杂度 $O(n\times \log k)$，其中 $n$ 是数组 `nums` 的长度。对于每个元素，我们需要 $O(\log k)$ 的时间来查找有序集合中的元素，一共有 $n$ 个元素，因此总时间复杂度是 $O(n\times \log k)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 from sortedcontainers import SortedSet
@@ -77,10 +71,6 @@ class Solution:
                 s.remove(nums[i - k])
         return False
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,25 +91,21 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
         set<long> s;
         for (int i = 0; i < nums.size(); ++i) {
-            auto it = s.lower_bound((long)nums[i] - t);
-            if (it != s.end() && *it <= (long)nums[i] + t) return true;
-            s.insert((long)nums[i]);
-            if (i >= k) s.erase((long)nums[i - k]);
+            auto it = s.lower_bound((long) nums[i] - t);
+            if (it != s.end() && *it <= (long) nums[i] + t) return true;
+            s.insert((long) nums[i]);
+            if (i >= k) s.erase((long) nums[i - k]);
         }
         return false;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func containsNearbyAlmostDuplicate(nums []int, k int, t int) bool {
@@ -145,14 +131,8 @@ func containsNearbyAlmostDuplicate(nums []int, k int, t int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function containsNearbyAlmostDuplicate(
-    nums: number[],
-    k: number,
-    t: number,
-): boolean {
+function containsNearbyAlmostDuplicate(nums: number[], k: number, t: number): boolean {
     const ts = new TreeSet<number>();
     for (let i = 0; i < nums.length; ++i) {
         const x = ts.ceil(nums[i] - t);
@@ -203,9 +183,7 @@ class RBTreeNode<T = number> {
 class RBTree<T> {
     root: RBTreeNode<T> | null;
     lt: (l: T, r: T) => boolean;
-    constructor(
-        compare: Compare<T> = (l: T, r: T) => (l < r ? -1 : l > r ? 1 : 0),
-    ) {
+    constructor(compare: Compare<T> = (l: T, r: T) => (l < r ? -1 : l > r ? 1 : 0)) {
         this.root = null;
         this.lt = (l: T, r: T) => compare(l, r) < 0;
     }
@@ -513,9 +491,7 @@ class RBTree<T> {
         for (const v of this.inOrder(root.right!)) yield v;
     }
 
-    *reverseInOrder(
-        root: RBTreeNode<T> = this.root!,
-    ): Generator<T, undefined, void> {
+    *reverseInOrder(root: RBTreeNode<T> = this.root!): Generator<T, undefined, void> {
         if (!root) return;
         for (const v of this.reverseInOrder(root.right!)) yield v;
         yield root.data;
@@ -812,10 +788,6 @@ class TreeMultiSet<T = number> {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

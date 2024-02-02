@@ -43,24 +43,161 @@
 
 ## Solutions
 
+### Solution 1: Block Decomposition
+
+This problem is a typical block decomposition problem. For queries with a large step size, we can directly brute force the solution; for queries with a small step size, we can preprocess the suffix sum of each position and then directly query.
+
+In this problem, we limit the step size of the large step size query to $\sqrt{n}$, which can ensure that the time complexity of each query is $O(\sqrt{n})$.
+
+We define a two-dimensional array $suf$, where $suf[i][j]$ represents the suffix sum starting from position $j$ with a step size of $i$. Then for each query $[x, y]$, we can divide it into two cases:
+
+-   If $y \le \sqrt{n}$, then we can directly query $suf[y][x]$;
+-   If $y > \sqrt{n}$, then we can directly brute force the solution.
+
+The time complexity is $O((n +  m) \times \sqrt{n})$, and the space complexity is $O(n \times \sqrt{n})$. Here, $n$ is the length of the array, and $m$ is the number of queries.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def solve(self, nums: List[int], queries: List[List[int]]) -> List[int]:
+        mod = 10**9 + 7
+        n = len(nums)
+        m = int(sqrt(n))
+        suf = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in range(1, m + 1):
+            for j in range(n - 1, -1, -1):
+                suf[i][j] = suf[i][min(n, j + i)] + nums[j]
+        ans = []
+        for x, y in queries:
+            if y <= m:
+                ans.append(suf[y][x] % mod)
+            else:
+                ans.append(sum(nums[x::y]) % mod)
+        return ans
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public int[] solve(int[] nums, int[][] queries) {
+        int n = nums.length;
+        int m = (int) Math.sqrt(n);
+        final int mod = (int) 1e9 + 7;
+        int[][] suf = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; ++i) {
+            for (int j = n - 1; j >= 0; --j) {
+                suf[i][j] = (suf[i][Math.min(n, j + i)] + nums[j]) % mod;
+            }
+        }
+        int k = queries.length;
+        int[] ans = new int[k];
+        for (int i = 0; i < k; ++i) {
+            int x = queries[i][0];
+            int y = queries[i][1];
+            if (y <= m) {
+                ans[i] = suf[y][x];
+            } else {
+                int s = 0;
+                for (int j = x; j < n; j += y) {
+                    s = (s + nums[j]) % mod;
+                }
+                ans[i] = s;
+            }
+        }
+        return ans;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    vector<int> solve(vector<int>& nums, vector<vector<int>>& queries) {
+        int n = nums.size();
+        int m = (int) sqrt(n);
+        const int mod = 1e9 + 7;
+        int suf[m + 1][n + 1];
+        memset(suf, 0, sizeof(suf));
+        for (int i = 1; i <= m; ++i) {
+            for (int j = n - 1; ~j; --j) {
+                suf[i][j] = (suf[i][min(n, j + i)] + nums[j]) % mod;
+            }
+        }
+        vector<int> ans;
+        for (auto& q : queries) {
+            int x = q[0], y = q[1];
+            if (y <= m) {
+                ans.push_back(suf[y][x]);
+            } else {
+                int s = 0;
+                for (int i = x; i < n; i += y) {
+                    s = (s + nums[i]) % mod;
+                }
+                ans.push_back(s);
+            }
+        }
+        return ans;
+    }
+};
 ```
 
+```go
+func solve(nums []int, queries [][]int) (ans []int) {
+	n := len(nums)
+	m := int(math.Sqrt(float64(n)))
+	const mod int = 1e9 + 7
+	suf := make([][]int, m+1)
+	for i := range suf {
+		suf[i] = make([]int, n+1)
+		for j := n - 1; j >= 0; j-- {
+			suf[i][j] = (suf[i][min(n, j+i)] + nums[j]) % mod
+		}
+	}
+	for _, q := range queries {
+		x, y := q[0], q[1]
+		if y <= m {
+			ans = append(ans, suf[y][x])
+		} else {
+			s := 0
+			for i := x; i < n; i += y {
+				s = (s + nums[i]) % mod
+			}
+			ans = append(ans, s)
+		}
+	}
+	return
+}
+```
+
+```ts
+function solve(nums: number[], queries: number[][]): number[] {
+    const n = nums.length;
+    const m = Math.floor(Math.sqrt(n));
+    const mod = 10 ** 9 + 7;
+    const suf: number[][] = Array(m + 1)
+        .fill(0)
+        .map(() => Array(n + 1).fill(0));
+    for (let i = 1; i <= m; ++i) {
+        for (let j = n - 1; j >= 0; --j) {
+            suf[i][j] = (suf[i][Math.min(n, j + i)] + nums[j]) % mod;
+        }
+    }
+    const ans: number[] = [];
+    for (const [x, y] of queries) {
+        if (y <= m) {
+            ans.push(suf[y][x]);
+        } else {
+            let s = 0;
+            for (let i = x; i < n; i += y) {
+                s = (s + nums[i]) % mod;
+            }
+            ans.push(s);
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

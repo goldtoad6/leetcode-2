@@ -45,9 +45,9 @@ The 5-Sum of the array is 2.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +68,6 @@ class Solution:
                     heappush(h, (s + nums[i] - nums[i - 1], i + 1))
         return mx - h[0][0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -102,8 +100,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 using pli = pair<long long, int>;
@@ -140,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func kSum(nums []int, k int) int64 {
 	mx := 0
@@ -170,24 +164,13 @@ func kSum(nums []int, k int) int64 {
 type pair struct{ sum, i int }
 type hp []pair
 
-func (h hp) Len() int            { return len(h) }
-func (h hp) Less(i, j int) bool  { return h[i].sum < h[j].sum }
-func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
+func (h hp) Len() int           { return len(h) }
+func (h hp) Less(i, j int) bool { return h[i].sum < h[j].sum }
+func (h hp) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

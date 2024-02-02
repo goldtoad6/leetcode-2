@@ -46,15 +46,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-根据二叉搜索树的性质，DFS 构建即可。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -82,10 +76,6 @@ class Solution:
 
         return dfs(preorder)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -130,8 +120,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -168,8 +156,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -203,8 +189,6 @@ func bstFromPreorder(preorder []int) *TreeNode {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -225,10 +209,7 @@ function bstFromPreorder(preorder: number[]): TreeNode | null {
     const next = new Array(n);
     const stack = [];
     for (let i = n - 1; i >= 0; i--) {
-        while (
-            stack.length !== 0 &&
-            preorder[stack[stack.length - 1]] < preorder[i]
-        ) {
+        while (stack.length !== 0 && preorder[stack[stack.length - 1]] < preorder[i]) {
             stack.pop();
         }
         next[i] = stack[stack.length - 1] ?? n;
@@ -239,17 +220,11 @@ function bstFromPreorder(preorder: number[]): TreeNode | null {
         if (left >= right) {
             return null;
         }
-        return new TreeNode(
-            preorder[left],
-            dfs(left + 1, next[left]),
-            dfs(next[left], right),
-        );
+        return new TreeNode(preorder[left], dfs(left + 1, next[left]), dfs(next[left], right));
     };
     return dfs(0, n);
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -277,16 +252,20 @@ impl Solution {
         preorder: &Vec<i32>,
         next: &Vec<usize>,
         left: usize,
-        right: usize,
+        right: usize
     ) -> Option<Rc<RefCell<TreeNode>>> {
         if left >= right {
             return None;
         }
-        Some(Rc::new(RefCell::new(TreeNode {
-            val: preorder[left],
-            left: Self::dfs(preorder, next, left + 1, next[left]),
-            right: Self::dfs(preorder, next, next[left], right),
-        })))
+        Some(
+            Rc::new(
+                RefCell::new(TreeNode {
+                    val: preorder[left],
+                    left: Self::dfs(preorder, next, left + 1, next[left]),
+                    right: Self::dfs(preorder, next, next[left], right),
+                })
+            )
+        )
     }
 
     pub fn bst_from_preorder(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
@@ -307,10 +286,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

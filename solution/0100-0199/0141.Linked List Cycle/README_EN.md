@@ -49,9 +49,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -70,8 +70,6 @@ class Solution:
                 return True
         return False
 ```
-
-### **Java**
 
 ```java
 /**
@@ -101,8 +99,6 @@ public class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -129,7 +125,52 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func hasCycle(head *ListNode) bool {
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		slow, fast = slow.Next, fast.Next.Next
+		if slow == fast {
+			return true
+		}
+	}
+	return false
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+    const set = new Set<ListNode>();
+    let node = head;
+    while (node !== null) {
+        if (set.has(node)) {
+            return true;
+        }
+        set.add(node);
+        node = node.next;
+    }
+    return false;
+}
+```
 
 ```js
 /**
@@ -150,7 +191,7 @@ var hasCycle = function (head) {
     while (fast && fast.next) {
         slow = slow.next;
         fast = fast.next.next;
-        if (slow == fast) {
+        if (slow === fast) {
             return true;
         }
     }
@@ -158,91 +199,67 @@ var hasCycle = function (head) {
 };
 ```
 
-### **Go**
-
-```go
+```cs
 /**
  * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func hasCycle(head *ListNode) bool {
-    slow, fast := head, head
-    for fast != nil && fast.Next != nil {
-        slow, fast = slow.Next, fast.Next.Next
-        if slow == fast {
-            return true
-        }
-    }
-    return false
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) {
+ *         val = x;
+ *         next = null;
  *     }
  * }
  */
-
-function hasCycle(head: ListNode | null): boolean {
-    const set = new Set<ListNode>();
-    let node = head;
-    while (node != null) {
-        if (set.has(node)) {
-            return true;
+public class Solution {
+    public bool HasCycle(ListNode head) {
+        var fast = head;
+        var slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
         }
-        set.add(node);
-        node = node.next;
-    }
-    return false;
-}
-```
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function hasCycle(head: ListNode | null): boolean {
-    if (head == null) {
         return false;
     }
-    let slow = head;
-    let fast = head.next;
-    while (fast != null && fast.next != null) {
-        if (slow == fast) {
-            return true;
-        }
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    return false;
 }
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+    let slow = head;
+    let fast = head;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow === fast) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

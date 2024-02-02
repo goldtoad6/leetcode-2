@@ -67,15 +67,17 @@ arr 中最大元素为 3 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：排序 + 贪心
 
-**方法一：排序 + 贪心**
+我们先对数组进行排序，然后将数组的第一个元素设置为 $1$。
+
+接下来，我们从第二个元素开始遍历数组，如果当前元素与前一个元素的差值大于 $1$，我们就贪心地将当前元素减小为前一个元素加 $1$。
+
+最后，我们返回数组中的最大元素。
+
+时间复杂度 $O(n \times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -87,10 +89,6 @@ class Solution:
             arr[i] -= d
         return max(arr)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -107,8 +105,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -127,8 +123,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 	sort.Ints(arr)
@@ -141,19 +135,36 @@ func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maximumElementAfterDecrementingAndRearranging(arr: number[]): number {
+    arr.sort((a, b) => a - b);
+    arr[0] = 1;
+    let ans = 1;
+    for (let i = 1; i < arr.length; ++i) {
+        const d = Math.max(0, arr[i] - arr[i - 1] - 1);
+        arr[i] -= d;
+        ans = Math.max(ans, arr[i]);
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int MaximumElementAfterDecrementingAndRearranging(int[] arr) {
+        Array.Sort(arr);
+        int n = arr.Length;
+        arr[0] = 1;
+        for (int i = 1; i < n; ++i) {
+            arr[i] = Math.Min(arr[i], arr[i - 1] + 1);
+        }
+        return arr[n - 1];
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

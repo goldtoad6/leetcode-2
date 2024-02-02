@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>Given an integer array <code>nums</code> and two integers <code>k</code> and <code>p</code>, return <em>the number of <strong>distinct subarrays</strong> which have <strong>at most</strong></em> <code>k</code> <em>elements divisible by</em> <code>p</code>.</p>
+<p>Given an integer array <code>nums</code> and two integers <code>k</code> and <code>p</code>, return <em>the number of <strong>distinct subarrays,</strong> which have <strong>at most</strong></em> <code>k</code> <em>elements </em>that are <em>divisible by</em> <code>p</code>.</p>
 
 <p>Two arrays <code>nums1</code> and <code>nums2</code> are said to be <strong>distinct</strong> if:</p>
 
@@ -56,9 +56,9 @@ Since all subarrays are distinct, the total number of subarrays satisfying all t
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,28 +71,9 @@ class Solution:
                 cnt += nums[j] % p == 0
                 if cnt > k:
                     break
-                s.add(tuple(nums[i: j + 1]))
+                s.add(tuple(nums[i : j + 1]))
         return len(s)
 ```
-
-```python
-class Solution:
-    def countDistinct(self, nums: List[int], k: int, p: int) -> int:
-        n = len(nums)
-        s = set()
-        for i in range(n):
-            cnt = 0
-            t = ""
-            for x in nums[i:]:
-                cnt += x % p == 0
-                if cnt > k:
-                    break
-                t += str(x) + ","
-                s.add(t)
-        return len(s)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -114,8 +95,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -139,8 +118,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countDistinct(nums []int, k int, p int) int {
 	s := map[string]struct{}{}
@@ -161,8 +138,6 @@ func countDistinct(nums []int, k int, p int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function countDistinct(nums: number[], k: number, p: number): number {
     const n = nums.length;
@@ -182,10 +157,29 @@ function countDistinct(nums: number[], k: number, p: number): number {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countDistinct(self, nums: List[int], k: int, p: int) -> int:
+        n = len(nums)
+        s = set()
+        for i in range(n):
+            cnt = 0
+            t = ""
+            for x in nums[i:]:
+                cnt += x % p == 0
+                if cnt > k:
+                    break
+                t += str(x) + ","
+                s.add(t)
+        return len(s)
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

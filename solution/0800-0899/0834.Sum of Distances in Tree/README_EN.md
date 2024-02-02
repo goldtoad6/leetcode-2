@@ -50,9 +50,9 @@ Hence, answer[0] = 8, and so on.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +82,6 @@ class Solution:
         dfs2(0, -1, ans[0])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -130,8 +128,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -172,8 +168,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func sumOfDistancesInTree(n int, edges [][]int) []int {
 	g := make([][]int, n)
@@ -210,8 +204,6 @@ func sumOfDistancesInTree(n int, edges [][]int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function sumOfDistancesInTree(n: number, edges: number[][]): number[] {
     const g: number[][] = Array.from({ length: n }, () => []);
@@ -234,7 +226,7 @@ function sumOfDistancesInTree(n: number, edges: number[][]): number[] {
     const dfs2 = (i: number, fa: number, t: number) => {
         ans[i] = t;
         for (const j of g[i]) {
-            if (j != fa) {
+            if (j !== fa) {
                 dfs2(j, i, t - size[j] + n - size[j]);
             }
         }
@@ -245,10 +237,6 @@ function sumOfDistancesInTree(n: number, edges: number[][]): number[] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

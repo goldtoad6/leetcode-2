@@ -46,9 +46,9 @@ The answer string came from the fourth looped one, where you could cut from the 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,7 +56,7 @@ class Solution:
         strs = [s[::-1] if s[::-1] > s else s for s in strs]
         ans = ''.join(strs)
         for i, s in enumerate(strs):
-            t = ''.join(strs[i + 1:]) + ''.join(strs[: i])
+            t = ''.join(strs[i + 1 :]) + ''.join(strs[:i])
             for j in range(len(s)):
                 a = s[j:]
                 b = s[:j]
@@ -64,8 +64,6 @@ class Solution:
                 ans = max(ans, b[::-1] + t + a[::-1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -111,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -151,8 +147,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func splitLoopedString(strs []string) (ans string) {
@@ -195,10 +189,6 @@ func reverse(s string) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

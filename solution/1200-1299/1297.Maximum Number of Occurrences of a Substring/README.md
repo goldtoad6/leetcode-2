@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表 + 枚举**
+### 方法一：哈希表 + 枚举
 
 根据题目描述，如果一个长串满足条件，那么这个长串的子串（长度至少为 `minSize`）也一定满足条件。因此，我们只需要枚举 $s$ 中所有长度为 `minSize` 的子串，然后利用哈希表记录所有子串的出现次数，找出最大的次数作为答案即可。
 
@@ -65,27 +63,19 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def maxFreq(self, s: str, maxLetters: int, minSize: int, maxSize: int) -> int:
         ans = 0
         cnt = Counter()
         for i in range(len(s) - minSize + 1):
-            t = s[i: i + minSize]
+            t = s[i : i + minSize]
             ss = set(t)
             if len(ss) <= maxLetters:
                 cnt[t] += 1
                 ans = max(ans, cnt[t])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -108,8 +98,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -127,8 +115,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxFreq(s string, maxLetters int, minSize int, maxSize int) (ans int) {
@@ -150,10 +136,6 @@ func maxFreq(s string, maxLetters int, minSize int, maxSize int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

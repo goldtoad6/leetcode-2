@@ -18,7 +18,7 @@
 | commission_rate | int     |
 | hire_date       | date    |
 +-----------------+---------+
-sales_id 是该表的主键列。
+sales_id 是该表的主键列(具有唯一值的列)。
 该表的每一行都显示了销售人员的姓名和 ID ，以及他们的工资、佣金率和雇佣日期。
 </pre>
 
@@ -34,7 +34,7 @@ sales_id 是该表的主键列。
 | name        | varchar |
 | city        | varchar |
 +-------------+---------+
-com_id 是该表的主键列。
+com_id 是该表的主键列(具有唯一值的列)。
 该表的每一行都表示公司的名称和 ID ，以及公司所在的城市。
 </pre>
 
@@ -52,23 +52,23 @@ com_id 是该表的主键列。
 | sales_id    | int  |
 | amount      | int  |
 +-------------+------+
-order_id 是该表的主键列。
-com_id 是 Company 表中 com_id 的外键。
-sales_id 是来自销售员表 sales_id 的外键。
+order_id 是该表的主键列(具有唯一值的列)。
+com_id 是 Company 表中 com_id 的外键（reference 列）。
+sales_id 是来自销售员表 sales_id 的外键（reference 列）。
 该表的每一行包含一个订单的信息。这包括公司的 ID 、销售人员的 ID 、订单日期和支付的金额。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个SQL查询，报告没有任何与名为 <strong>“RED”</strong> 的公司相关的订单的所有销售人员的姓名。</p>
+<p>编写解决方案，找出没有任何与名为 <strong>“RED”</strong> 的公司相关的订单的所有销售人员的姓名。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>返回结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例：</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -114,39 +114,23 @@ Orders 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：左连接 + 分组统计
+
+我们可以使用左连接将 `SalesPerson` 表与 `Orders` 表连接起来，再与 `Company` 表连接起来，然后按照 `sales_id` 分组，每组统计有多少个公司的名字为 `RED` 的订单，最后筛选出没有这样的订单的销售人员的姓名。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT name
-FROM salesperson
-WHERE sales_id
-NOT IN (
-    SELECT s.sales_id FROM orders o
-    INNER JOIN salesperson s ON o.sales_id = s.sales_id
-    INNER JOIN company c ON o.com_id = c.com_id
-    WHERE c.name = 'RED'
-);
-```
-
-```sql
-SELECT
-    name
+# Write your MySQL query statement below
+SELECT s.name
 FROM
     SalesPerson AS s
-WHERE
-    0 = (
-        SELECT
-            COUNT(*)
-        FROM
-            Orders AS o
-            JOIN Company AS c ON o.com_id = c.com_id
-        WHERE
-            o.sales_id = s.sales_id AND c.name = 'RED'
-    );
+    LEFT JOIN Orders USING (sales_id)
+    LEFT JOIN Company AS c USING (com_id)
+GROUP BY sales_id
+HAVING IFNULL(SUM(c.name = 'RED'), 0) = 0;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

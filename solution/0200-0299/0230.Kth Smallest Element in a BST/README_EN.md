@@ -35,9 +35,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -60,49 +60,6 @@ class Solution:
                     return root.val
                 root = root.right
 ```
-
-```python
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-
-
-class BST:
-    def __init__(self, root):
-        self.cnt = Counter()
-        self.root = root
-        self.count(root)
-
-    def kthSmallest(self, k):
-        node = self.root
-        while node:
-            if self.cnt[node.left] == k - 1:
-                return node.val
-            if self.cnt[node.left] < k - 1:
-                k -= (self.cnt[node.left] + 1)
-                node = node.right
-            else:
-                node = node.left
-        return 0
-
-    def count(self, root):
-        if root is None:
-            return 0
-        n = 1 + self.count(root.left) + self.count(root.right)
-        self.cnt[root] = n
-        return n
-
-
-class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        bst = BST(root)
-        return bst.kthSmallest(k)
-```
-
-### **Java**
 
 ```java
 /**
@@ -138,6 +95,191 @@ class Solution {
         return 0;
     }
 }
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*> stk;
+        while (root || !stk.empty()) {
+            if (root) {
+                stk.push(root);
+                root = root->left;
+            } else {
+                root = stk.top();
+                stk.pop();
+                if (--k == 0) return root->val;
+                root = root->right;
+            }
+        }
+        return 0;
+    }
+};
+```
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func kthSmallest(root *TreeNode, k int) int {
+	stk := []*TreeNode{}
+	for root != nil || len(stk) > 0 {
+		if root != nil {
+			stk = append(stk, root)
+			root = root.Left
+		} else {
+			root = stk[len(stk)-1]
+			stk = stk[:len(stk)-1]
+			k--
+			if k == 0 {
+				return root.Val
+			}
+			root = root.Right
+		}
+	}
+	return 0
+}
+```
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function kthSmallest(root: TreeNode | null, k: number): number {
+    const dfs = (root: TreeNode | null) => {
+        if (root == null) {
+            return -1;
+        }
+        const { val, left, right } = root;
+        const l = dfs(left);
+        if (l !== -1) {
+            return l;
+        }
+        k--;
+        if (k === 0) {
+            return val;
+        }
+        return dfs(right);
+    };
+    return dfs(root);
+}
+```
+
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    fn dfs(root: Option<Rc<RefCell<TreeNode>>>, res: &mut Vec<i32>, k: usize) {
+        if let Some(node) = root {
+            let mut node = node.borrow_mut();
+            Self::dfs(node.left.take(), res, k);
+            res.push(node.val);
+            if res.len() >= k {
+                return;
+            }
+            Self::dfs(node.right.take(), res, k);
+        }
+    }
+    pub fn kth_smallest(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> i32 {
+        let k = k as usize;
+        let mut res: Vec<i32> = Vec::with_capacity(k);
+        Self::dfs(root, &mut res, k);
+        res[k - 1]
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+class BST:
+    def __init__(self, root):
+        self.cnt = Counter()
+        self.root = root
+        self.count(root)
+
+    def kthSmallest(self, k):
+        node = self.root
+        while node:
+            if self.cnt[node.left] == k - 1:
+                return node.val
+            if self.cnt[node.left] < k - 1:
+                k -= self.cnt[node.left] + 1
+                node = node.right
+            else:
+                node = node.left
+        return 0
+
+    def count(self, root):
+        if root is None:
+            return 0
+        n = 1 + self.count(root.left) + self.count(root.right)
+        self.cnt[root] = n
+        return n
+
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        bst = BST(root)
+        return bst.kthSmallest(k)
 ```
 
 ```java
@@ -200,40 +342,6 @@ class BST {
 }
 ```
 
-### **C++**
-
-```cpp
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-public:
-    int kthSmallest(TreeNode* root, int k) {
-        stack<TreeNode*> stk;
-        while (root || !stk.empty()) {
-            if (root) {
-                stk.push(root);
-                root = root->left;
-            } else {
-                root = stk.top();
-                stk.pop();
-                if (--k == 0) return root->val;
-                root = root->right;
-            }
-        }
-        return 0;
-    }
-};
-```
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -248,22 +356,21 @@ public:
  */
 class BST {
 public:
-    BST(TreeNode* root) : root(root) {
+    BST(TreeNode* root)
+        : root(root) {
         count(root);
     }
 
     int kthSmallest(int k) {
         TreeNode* node = root;
-        while (node)
-        {
+        while (node) {
             int v = !node->left ? 0 : cnt[node->left];
             if (v == k - 1) return node->val;
-            if (v < k - 1)
-            {
+            if (v < k - 1) {
                 node = node->right;
                 k -= (v + 1);
-            }
-            else node = node->left;
+            } else
+                node = node->left;
         }
         return 0;
     }
@@ -287,37 +394,6 @@ public:
         return bst.kthSmallest(k);
     }
 };
-```
-
-### **Go**
-
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func kthSmallest(root *TreeNode, k int) int {
-	stk := []*TreeNode{}
-	for root != nil || len(stk) > 0 {
-		if root != nil {
-			stk = append(stk, root)
-			root = root.Left
-		} else {
-			root = stk[len(stk)-1]
-			stk = stk[:len(stk)-1]
-			k--
-			if k == 0 {
-				return root.Val
-			}
-			root = root.Right
-		}
-	}
-	return 0
-}
 ```
 
 ```go
@@ -375,91 +451,6 @@ func kthSmallest(root *TreeNode, k int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for a binary tree node.
- * class TreeNode {
- *     val: number
- *     left: TreeNode | null
- *     right: TreeNode | null
- *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.left = (left===undefined ? null : left)
- *         this.right = (right===undefined ? null : right)
- *     }
- * }
- */
-
-function kthSmallest(root: TreeNode | null, k: number): number {
-    const dfs = (root: TreeNode | null) => {
-        if (root == null) {
-            return -1;
-        }
-        const { val, left, right } = root;
-        const l = dfs(left);
-        if (l !== -1) {
-            return l;
-        }
-        k--;
-        if (k === 0) {
-            return val;
-        }
-        return dfs(right);
-    };
-    return dfs(root);
-}
-```
-
-### **Rust**
-
-```rust
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-use std::cell::RefCell;
-impl Solution {
-    fn dfs(root: Option<Rc<RefCell<TreeNode>>>, res: &mut Vec<i32>, k: usize) {
-        if let Some(node) = root {
-            let mut node = node.borrow_mut();
-            Self::dfs(node.left.take(), res, k);
-            res.push(node.val);
-            if res.len() >= k {
-                return;
-            }
-            Self::dfs(node.right.take(), res, k);
-        }
-    }
-    pub fn kth_smallest(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> i32 {
-        let k = k as usize;
-        let mut res: Vec<i32> = Vec::with_capacity(k);
-        Self::dfs(root, &mut res, k);
-        res[k - 1]
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

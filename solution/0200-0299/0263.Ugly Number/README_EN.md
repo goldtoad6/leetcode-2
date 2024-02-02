@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +56,6 @@ class Solution:
                 n //= x
         return n == 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,8 +74,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -98,7 +94,19 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+func isUgly(n int) bool {
+	if n < 1 {
+		return false
+	}
+	for _, x := range []int{2, 3, 5} {
+		for n%x == 0 {
+			n /= x
+		}
+	}
+	return n == 1
+}
+```
 
 ```js
 /**
@@ -120,24 +128,6 @@ var isUgly = function (n) {
 };
 ```
 
-### **Go**
-
-```go
-func isUgly(n int) bool {
-	if n < 1 {
-		return false
-	}
-	for _, x := range []int{2, 3, 5} {
-		for n%x == 0 {
-			n /= x
-		}
-	}
-	return n == 1
-}
-```
-
-### **PHP**
-
 ```php
 class Solution {
     /**
@@ -146,20 +136,21 @@ class Solution {
      */
     function isUgly($n) {
         while ($n) {
-            if ($n % 2 == 0) $n = $n / 2;
-            else if ($n % 3 == 0) $n = $n / 3;
-            else if ($n % 5 == 0) $n = $n / 5;
-            else break;
+            if ($n % 2 == 0) {
+                $n = $n / 2;
+            } elseif ($n % 3 == 0) {
+                $n = $n / 3;
+            } elseif ($n % 5 == 0) {
+                $n = $n / 5;
+            } else {
+                break;
+            }
         }
         return $n == 1;
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

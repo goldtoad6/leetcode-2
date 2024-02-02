@@ -45,9 +45,13 @@ The minimum is 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sliding Window
 
-### **Python3**
+First, we count the number of $1$s in the array, denoted as $k$. Then we use a sliding window of size $k$, moving the right boundary of the window from left to right, and count the number of $1$s in the window, denoted as $t$. Each time we move the window, we update the value of $t$. Finally, when the right boundary of the window moves to the end of the array, the number of $1$s in the window is the maximum, denoted as $mx$. The final answer is $k - mx$.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +65,6 @@ class Solution:
             mx = max(mx, t)
         return k - mx
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -111,8 +111,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minSwaps(data []int) int {
 	k := 0
@@ -131,19 +129,21 @@ func minSwaps(data []int) int {
 	}
 	return k - mx
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function minSwaps(data: number[]): number {
+    const k = data.reduce((acc, cur) => acc + cur, 0);
+    let t = data.slice(0, k).reduce((acc, cur) => acc + cur, 0);
+    let mx = t;
+    for (let i = k; i < data.length; ++i) {
+        t += data[i] - data[i - k];
+        mx = Math.max(mx, t);
+    }
+    return k - mx;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

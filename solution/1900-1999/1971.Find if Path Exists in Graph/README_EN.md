@@ -45,13 +45,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    def validPath(
+        self, n: int, edges: List[List[int]], source: int, destination: int
+    ) -> bool:
         def dfs(i):
             if i == destination:
                 return True
@@ -68,22 +70,6 @@ class Solution:
         vis = set()
         return dfs(source)
 ```
-
-```python
-class Solution:
-    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
-        def find(x):
-            if p[x] != x:
-                p[x] = find(p[x])
-            return p[x]
-
-        p = list(range(n))
-        for u, v in edges:
-            p[find(u)] = find(v)
-        return find(source) == find(destination)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -117,32 +103,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    private int[] p;
-
-    public boolean validPath(int n, int[][] edges, int source, int destination) {
-        p = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-        }
-        for (int[] e : edges) {
-            p[find(e[0])] = find(e[1]);
-        }
-        return find(source) == find(destination);
-    }
-
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -168,24 +128,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
-        vector<int> p(n);
-        iota(p.begin(), p.end(), 0);
-        function<int(int)> find = [&](int x) -> int {
-            if (p[x] != x) p[x] = find(p[x]);
-            return p[x];
-        };
-        for (auto& e : edges) p[find(e[0])] = find(e[1]);
-        return find(source) == find(destination);
-    }
-};
-```
-
-### **Go**
 
 ```go
 func validPath(n int, edges [][]int, source int, destination int) bool {
@@ -213,6 +155,99 @@ func validPath(n int, edges [][]int, source int, destination int) bool {
 }
 ```
 
+```rust
+impl Solution {
+    pub fn valid_path(n: i32, edges: Vec<Vec<i32>>, source: i32, destination: i32) -> bool {
+        let mut disjoint_set: Vec<i32> = vec![0; n as usize];
+        // Initialize the set
+        for i in 0..n {
+            disjoint_set[i as usize] = i;
+        }
+
+        // Traverse the edges
+        for p_vec in &edges {
+            let parent_one = Solution::find(p_vec[0], &mut disjoint_set);
+            let parent_two = Solution::find(p_vec[1], &mut disjoint_set);
+            disjoint_set[parent_one as usize] = parent_two;
+        }
+
+        let p_s = Solution::find(source, &mut disjoint_set);
+        let p_d = Solution::find(destination, &mut disjoint_set);
+
+        p_s == p_d
+    }
+
+    pub fn find(x: i32, d_set: &mut Vec<i32>) -> i32 {
+        if d_set[x as usize] != x {
+            d_set[x as usize] = Solution::find(d_set[x as usize], d_set);
+        }
+        d_set[x as usize]
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def validPath(
+        self, n: int, edges: List[List[int]], source: int, destination: int
+    ) -> bool:
+        def find(x):
+            if p[x] != x:
+                p[x] = find(p[x])
+            return p[x]
+
+        p = list(range(n))
+        for u, v in edges:
+            p[find(u)] = find(v)
+        return find(source) == find(destination)
+```
+
+```java
+class Solution {
+    private int[] p;
+
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        p = new int[n];
+        for (int i = 0; i < n; ++i) {
+            p[i] = i;
+        }
+        for (int[] e : edges) {
+            p[find(e[0])] = find(e[1]);
+        }
+        return find(source) == find(destination);
+    }
+
+    private int find(int x) {
+        if (p[x] != x) {
+            p[x] = find(p[x]);
+        }
+        return p[x];
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        vector<int> p(n);
+        iota(p.begin(), p.end(), 0);
+        function<int(int)> find = [&](int x) -> int {
+            if (p[x] != x) p[x] = find(p[x]);
+            return p[x];
+        };
+        for (auto& e : edges) p[find(e[0])] = find(e[1]);
+        return find(source) == find(destination);
+    }
+};
+```
+
 ```go
 func validPath(n int, edges [][]int, source int, destination int) bool {
 	p := make([]int, n)
@@ -233,10 +268,6 @@ func validPath(n int, edges [][]int, source int, destination int) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

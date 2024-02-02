@@ -51,9 +51,17 @@ After the second operation, nums is sorted in strictly increasing order, so the 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Preprocessing prime numbers + binary search
 
-### **Python3**
+We first preprocess all the primes within $1000$ and record them in the array $p$.
+
+For each element $nums[i]$ in the array $nums$, we need to find a prime $p[j]$ such that $p[j] \gt nums[i] - nums[i + 1]$ and $p[j]$ is as small as possible. If there is no such prime, it means that it cannot be strictly increased by subtraction operations, return `false`. If there is such a prime, we will subtract $p[j]$ from $nums[i]$ and continue to process the next element.
+
+If all the elements in $nums$ are processed, it means that it can be strictly increased by subtraction operations, return `true`.
+
+The time complexity is $O(n \log n)$ and the space complexity is $O(n)$. where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -76,8 +84,6 @@ class Solution:
             nums[i] -= p[j]
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -124,8 +130,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -159,8 +163,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func primeSubOperation(nums []int) bool {
 	p := []int{}
@@ -189,8 +191,6 @@ func primeSubOperation(nums []int) bool {
 	return true
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function primeSubOperation(nums: number[]): boolean {
@@ -235,10 +235,6 @@ function primeSubOperation(nums: number[]): boolean {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -70,9 +70,9 @@ At minute 3, nums[0] does not exist.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -80,15 +80,13 @@ class Solution:
         n, m = len(nums), len(queries)
         ans = [-1] * m
         for j, (t, i) in enumerate(queries):
-            t %= (2 * n)
+            t %= 2 * n
             if t < n and i < n - t:
                 ans[j] = nums[i + t]
             elif t > n and i < t - n:
                 ans[j] = nums[i]
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -110,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -132,8 +128,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func elementInNums(nums []int, queries [][]int) []int {
 	n, m := len(nums), len(queries)
@@ -152,16 +146,6 @@ func elementInNums(nums []int, queries [][]int) []int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

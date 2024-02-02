@@ -35,13 +35,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -55,10 +51,6 @@ class Solution:
                 left = mid + 1
         return left if nums[left] == target else -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -77,8 +69,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -95,8 +85,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func search(nums []int, target int) int {
@@ -116,7 +104,31 @@ func search(nums []int, target int) int {
 }
 ```
 
-### **JavaScript**
+```rust
+use std::cmp::Ordering;
+
+impl Solution {
+    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+        let mut l = 0;
+        let mut r = nums.len();
+        while l < r {
+            let mid = (l + r) >> 1;
+            match nums[mid].cmp(&target) {
+                Ordering::Less => {
+                    l = mid + 1;
+                }
+                Ordering::Greater => {
+                    r = mid;
+                }
+                Ordering::Equal => {
+                    return mid as i32;
+                }
+            }
+        }
+        -1
+    }
+}
+```
 
 ```js
 /**
@@ -139,31 +151,11 @@ var search = function (nums, target) {
 };
 ```
 
-### **Rust**
+<!-- tabs:end -->
 
-循环：
+### 方法二
 
-```rust
-use std::cmp::Ordering;
-
-impl Solution {
-    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
-        let mut l = 0;
-        let mut r = nums.len();
-        while l < r {
-            let mid = l + r >> 1;
-            match nums[mid].cmp(&target) {
-                Ordering::Less => l = mid + 1,
-                Ordering::Greater => r = mid,
-                Ordering::Equal => return mid as i32,
-            }
-        }
-        -1
-    }
-}
-```
-
-递归：
+<!-- tabs:start -->
 
 ```rust
 use std::cmp::Ordering;
@@ -173,7 +165,7 @@ impl Solution {
         if l == r {
             return if nums[l] == target { l as i32 } else { -1 };
         }
-        let mid = l + r >> 1;
+        let mid = (l + r) >> 1;
         match nums[mid].cmp(&target) {
             Ordering::Less => Self::binary_search(nums, target, mid + 1, r),
             Ordering::Greater => Self::binary_search(nums, target, l, mid),
@@ -188,10 +180,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

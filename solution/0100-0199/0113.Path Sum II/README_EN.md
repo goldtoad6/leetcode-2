@@ -44,9 +44,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: DFS
 
-### **Python3**
+We start from the root node, recursively traverse all paths from the root node to the leaf nodes, and record the path sum. When we traverse to a leaf node, if the current path sum equals `targetSum`, then we add this path to the answer.
+
+The time complexity is $O(n^2)$, where $n$ is the number of nodes in the binary tree. The space complexity is $O(n)$.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -73,8 +77,6 @@ class Solution:
         dfs(root, 0)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -117,8 +119,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -151,8 +151,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -172,9 +170,7 @@ func pathSum(root *TreeNode, targetSum int) (ans [][]int) {
 		s -= root.Val
 		t = append(t, root.Val)
 		if root.Left == nil && root.Right == nil && s == 0 {
-			cp := make([]int, len(t))
-			copy(cp, t)
-			ans = append(ans, cp)
+			ans = append(ans, slices.Clone(t))
 		}
 		dfs(root.Left, s)
 		dfs(root.Right, s)
@@ -184,8 +180,6 @@ func pathSum(root *TreeNode, targetSum int) (ans [][]int) {
 	return
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -211,9 +205,9 @@ use std::cell::RefCell;
 impl Solution {
     fn dfs(
         root: Option<Rc<RefCell<TreeNode>>>,
-        paths: &mut  Vec<i32>,
+        paths: &mut Vec<i32>,
         mut target_sum: i32,
-        res: &mut Vec<Vec<i32>>,
+        res: &mut Vec<Vec<i32>>
     ) {
         if let Some(node) = root {
             let mut node = node.borrow_mut();
@@ -238,13 +232,11 @@ impl Solution {
     pub fn path_sum(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
         let mut res = vec![];
         let mut paths = vec![];
-        Self::dfs(root, &mut paths,  target_sum, &mut res);
+        Self::dfs(root, &mut paths, target_sum, &mut res);
         res
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -277,10 +269,6 @@ var pathSum = function (root, targetSum) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

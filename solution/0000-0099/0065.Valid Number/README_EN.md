@@ -67,9 +67,25 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Case Discussion
 
-### **Python3**
+First, we check if the string starts with a positive or negative sign. If it does, we move the pointer $i$ one step forward. If the pointer $i$ has reached the end of the string at this point, it means the string only contains a positive or negative sign, so we return `false`.
+
+If the character pointed to by the current pointer $i$ is a decimal point, and there is no number after the decimal point, or if there is an `e` or `E` after the decimal point, we return `false`.
+
+Next, we use two variables $dot$ and $e$ to record the number of decimal points and `e` or `E` respectively.
+
+We use pointer $j$ to point to the current character:
+
+-   If the current character is a decimal point, and a decimal point or `e` or `E` has appeared before, return `false`. Otherwise, we increment $dot$ by one;
+-   If the current character is `e` or `E`, and `e` or `E` has appeared before, or if the current character is at the beginning or end of the string, return `false`. Otherwise, we increment $e$ by one; then check if the next character is a positive or negative sign, if it is, move the pointer $j$ one step forward. If the pointer $j$ has reached the end of the string at this point, return `false`;
+-   If the current character is not a number, return `false`.
+
+After traversing the string, return `true`.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the string.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -102,8 +118,6 @@ class Solution:
             j += 1
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -146,8 +160,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -168,14 +180,13 @@ public:
                 if (s[j + 1] == '+' || s[j + 1] == '-') {
                     if (++j == n - 1) return false;
                 }
-            } else if (s[j] < '0' || s[j] > '9') return false;
+            } else if (s[j] < '0' || s[j] > '9')
+                return false;
         }
         return true;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isNumber(s string) bool {
@@ -215,7 +226,65 @@ func isNumber(s string) bool {
 }
 ```
 
-### **C#**
+```rust
+impl Solution {
+    pub fn is_number(s: String) -> bool {
+        let mut i = 0;
+        let n = s.len();
+
+        if let Some(c) = s.chars().nth(i) {
+            if c == '+' || c == '-' {
+                i += 1;
+                if i == n {
+                    return false;
+                }
+            }
+        }
+        if let Some(x) = s.chars().nth(i) {
+            if
+                x == '.' &&
+                (i + 1 == n ||
+                    (if let Some(m) = s.chars().nth(i + 1) { m == 'e' || m == 'E' } else { false }))
+            {
+                return false;
+            }
+        }
+
+        let mut dot = 0;
+        let mut e = 0;
+        let mut j = i;
+
+        while j < n {
+            if let Some(c) = s.chars().nth(j) {
+                if c == '.' {
+                    if e > 0 || dot > 0 {
+                        return false;
+                    }
+                    dot += 1;
+                } else if c == 'e' || c == 'E' {
+                    if e > 0 || j == i || j == n - 1 {
+                        return false;
+                    }
+                    e += 1;
+                    if let Some(x) = s.chars().nth(j + 1) {
+                        if x == '+' || x == '-' {
+                            j += 1;
+                            if j == n - 1 {
+                                return false;
+                            }
+                        }
+                    }
+                } else if !c.is_ascii_digit() {
+                    return false;
+                }
+            }
+            j += 1;
+        }
+
+        true
+    }
+}
+```
 
 ```cs
 using System.Text.RegularExpressions;
@@ -229,10 +298,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

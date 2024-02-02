@@ -63,9 +63,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：记忆化搜索**
+### 方法一：记忆化搜索
 
 建图，然后从 `source` 出发，进行深度优先搜索：
 
@@ -85,13 +83,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def leadsToDestination(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    def leadsToDestination(
+        self, n: int, edges: List[List[int]], source: int, destination: int
+    ) -> bool:
         @cache
         def dfs(i):
             if i == destination:
@@ -110,10 +106,6 @@ class Solution:
         vis = set()
         return dfs(source)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -157,8 +149,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -194,8 +184,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func leadsToDestination(n int, edges [][]int, source int, destination int) bool {
 	vis := make([]bool, n)
@@ -229,10 +217,6 @@ func leadsToDestination(n int, edges [][]int, source int, destination int) bool 
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

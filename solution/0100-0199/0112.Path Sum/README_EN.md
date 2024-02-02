@@ -47,9 +47,13 @@ There is no root-to-leaf path with sum = 5.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Recursion
 
-### **Python3**
+Starting from the root node, recursively traverse the tree and update the value of the node to the path sum from the root node to that node. When you traverse to a leaf node, determine whether this path sum is equal to the target value. If it is equal, return `true`, otherwise return `false`.
+
+The time complexity is $O(n)$, where $n$ is the number of nodes in the binary tree. Each node is visited once.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -70,8 +74,6 @@ class Solution:
 
         return dfs(root, 0)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -107,8 +109,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -135,8 +135,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -162,8 +160,6 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -180,20 +176,16 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
  */
 
 function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
-    if (root == null) {
+    if (root === null) {
         return false;
     }
     const { val, left, right } = root;
-    if (left == null && right == null) {
+    if (left === null && right === null) {
         return targetSum - val === 0;
     }
-    return (
-        hasPathSum(left, targetSum - val) || hasPathSum(right, targetSum - val)
-    );
+    return hasPathSum(left, targetSum - val) || hasPathSum(right, targetSum - val);
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -227,15 +219,13 @@ impl Solution {
                     return target_sum - node.val == 0;
                 }
                 let val = node.val;
-                Self::has_path_sum(node.left.take(), target_sum - val)
-                    || Self::has_path_sum(node.right.take(), target_sum - val)
+                Self::has_path_sum(node.left.take(), target_sum - val) ||
+                    Self::has_path_sum(node.right.take(), target_sum - val)
             }
         }
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -262,10 +252,6 @@ var hasPathSum = function (root, targetSum) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

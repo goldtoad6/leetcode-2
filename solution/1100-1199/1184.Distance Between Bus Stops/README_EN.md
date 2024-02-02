@@ -11,17 +11,13 @@
 <p>Return the shortest distance between the given&nbsp;<code>start</code>&nbsp;and <code>destination</code>&nbsp;stops.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1184.Distance%20Between%20Bus%20Stops/images/untitled-diagram-1.jpg" style="width: 388px; height: 240px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> distance = [1,2,3,4], start = 0, destination = 1
-
 <strong>Output:</strong> 1
-
 <strong>Explanation:</strong> Distance between 0 and 1 is 1 or 9, minimum is 1.</pre>
 
 <p>&nbsp;</p>
@@ -31,13 +27,9 @@
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1184.Distance%20Between%20Bus%20Stops/images/untitled-diagram-1-1.jpg" style="width: 388px; height: 240px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> distance = [1,2,3,4], start = 0, destination = 2
-
 <strong>Output:</strong> 3
-
 <strong>Explanation:</strong> Distance between 0 and 2 is 3 or 7, minimum is 3.
-
 </pre>
 
 <p>&nbsp;</p>
@@ -47,112 +39,100 @@
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1100-1199/1184.Distance%20Between%20Bus%20Stops/images/untitled-diagram-1-2.jpg" style="width: 388px; height: 240px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> distance = [1,2,3,4], start = 0, destination = 3
-
 <strong>Output:</strong> 4
-
 <strong>Explanation:</strong> Distance between 0 and 3 is 6 or 4, minimum is 4.
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-
-    <li><code>1 &lt;= n&nbsp;&lt;= 10^4</code></li>
-
-    <li><code>distance.length == n</code></li>
-
-    <li><code>0 &lt;= start, destination &lt; n</code></li>
-
-    <li><code>0 &lt;= distance[i] &lt;= 10^4</code></li>
-
+	<li><code>1 &lt;= n&nbsp;&lt;= 10^4</code></li>
+	<li><code>distance.length == n</code></li>
+	<li><code>0 &lt;= start, destination &lt; n</code></li>
+	<li><code>0 &lt;= distance[i] &lt;= 10^4</code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+First, we can calculate the total distance $s$ that the bus travels. Then, we simulate the bus's journey, starting from the departure point, moving one stop to the right each time, until we reach the destination. During the simulation, we can record the distance $a$ from the departure point to the destination. Therefore, the shortest distance from the destination to the departure point is $\min(a, s - a)$.
+
+The time complexity is $O(n)$, where $n$ is the number of bus stops. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def distanceBetweenBusStops(
         self, distance: List[int], start: int, destination: int
     ) -> int:
-        if start > destination:
-            start, destination = destination, start
-        a = sum(distance[start:destination])
-        b = sum(distance[:start]) + sum(distance[destination:])
-        return min(a, b)
+        a, n = 0, len(distance)
+        while start != destination:
+            a += distance[start]
+            start = (start + 1) % n
+        return min(a, sum(distance) - a)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int distanceBetweenBusStops(int[] distance, int start, int destination) {
-        if (start > destination) {
-            return distanceBetweenBusStops(distance, destination, start);
+        int s = Arrays.stream(distance).sum();
+        int n = distance.length;
+        int a = 0;
+        while (start != destination) {
+            a += distance[start];
+            start = (start + 1) % n;
         }
-        int a = 0, b = 0;
-        for (int i = 0; i < distance.length; ++i) {
-            if (i >= start && i < destination) {
-                a += distance[i];
-            } else {
-                b += distance[i];
-            }
-        }
-        return Math.min(a, b);
+        return Math.min(a, s - a);
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
-        if (start > destination) return distanceBetweenBusStops(distance, destination, start);
-        int a = 0, b = 0;
-        for (int i = 0; i < distance.size(); ++i) {
-            if (i >= start && i < destination)
-                a += distance[i];
-            else
-                b += distance[i];
+        int s = accumulate(distance.begin(), distance.end(), 0);
+        int a = 0, n = distance.size();
+        while (start != destination) {
+            a += distance[start];
+            start = (start + 1) % n;
         }
-        return min(a, b);
+        return min(a, s - a);
     }
 };
 ```
 
-### **Go**
-
 ```go
 func distanceBetweenBusStops(distance []int, start int, destination int) int {
-	if start > destination {
-		return distanceBetweenBusStops(distance, destination, start)
+	s := 0
+	for _, x := range distance {
+		s += x
 	}
-	a, b := 0, 0
-	for i, v := range distance {
-		if i >= start && i < destination {
-			a += v
-		} else {
-			b += v
-		}
+	a, n := 0, len(distance)
+	for start != destination {
+		a += distance[start]
+		start = (start + 1) % n
 	}
-	if a < b {
-		return a
-	}
-	return b
+	return min(a, s-a)
 }
 ```
 
-### **JavaScript**
+```ts
+function distanceBetweenBusStops(distance: number[], start: number, destination: number): number {
+    const s = distance.reduce((a, b) => a + b, 0);
+    let a = 0;
+    const n = distance.length;
+    while (start != destination) {
+        a += distance[start];
+        start = (start + 1) % n;
+    }
+    return Math.min(a, s - a);
+}
+```
 
 ```js
 /**
@@ -162,26 +142,17 @@ func distanceBetweenBusStops(distance []int, start int, destination int) int {
  * @return {number}
  */
 var distanceBetweenBusStops = function (distance, start, destination) {
-    if (start > destination) {
-        return distanceBetweenBusStops(distance, destination, start);
-    }
+    const s = distance.reduce((a, b) => a + b, 0);
     let a = 0;
-    let b = 0;
-    for (let i = 0; i < distance.length; ++i) {
-        if (i >= start && i < destination) {
-            a += distance[i];
-        } else {
-            b += distance[i];
-        }
+    const n = distance.length;
+    while (start != destination) {
+        a += distance[start];
+        start = (start + 1) % n;
     }
-    return Math.min(a, b);
+    return Math.min(a, s - a);
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

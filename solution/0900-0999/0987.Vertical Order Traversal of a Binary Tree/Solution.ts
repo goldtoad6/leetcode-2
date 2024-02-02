@@ -15,6 +15,7 @@
 function verticalTraversal(root: TreeNode | null): number[][] {
     let solution = [];
     dfs(root, 0, 0, solution);
+    // 优先依据i=2排序， 然后依据i=1排序
     solution.sort(compare);
     let ans = [];
     let pre = Number.MIN_SAFE_INTEGER;
@@ -41,12 +42,7 @@ function compare(a: Array<number>, b: Array<number>) {
     return a2 - b2;
 }
 
-function dfs(
-    root: TreeNode | null,
-    depth: number,
-    idx: number,
-    solution: Array<Array<number>>,
-) {
+function dfs(root: TreeNode | null, depth: number, idx: number, solution: Array<Array<number>>) {
     if (!root) return;
     solution.push([root.val, depth, idx]);
     dfs(root.left, depth + 1, idx - 1, solution);

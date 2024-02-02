@@ -5,17 +5,12 @@
  * @return {number}
  */
 var distanceBetweenBusStops = function (distance, start, destination) {
-    if (start > destination) {
-        return distanceBetweenBusStops(distance, destination, start);
-    }
+    const s = distance.reduce((a, b) => a + b, 0);
     let a = 0;
-    let b = 0;
-    for (let i = 0; i < distance.length; ++i) {
-        if (i >= start && i < destination) {
-            a += distance[i];
-        } else {
-            b += distance[i];
-        }
+    const n = distance.length;
+    while (start != destination) {
+        a += distance[start];
+        start = (start + 1) % n;
     }
-    return Math.min(a, b);
+    return Math.min(a, s - a);
 };

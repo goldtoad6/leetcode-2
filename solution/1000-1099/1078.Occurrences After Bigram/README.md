@@ -40,31 +40,27 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：字符串分割
 
-将 text 按空格切分为 words 列表，然后遍历 words，判断是否满足 `words[i] == first && words[i + 1] == second`，若是，则将 `words[i + 2]` 添加至结果列表 ans 中。
+我们可以将字符串 $text$ 按照空格分割成字符串数组 $words$，然后遍历 $words$，如果 $words[i]$ 和 $words[i+1]$ 分别等于 $first$ 和 $second$，那么就将 $words[i+2]$ 添加到答案中。
 
-最后返回 ans 即可。
+遍历结束后，返回答案列表。
+
+时间复杂度 $O(L)$，空间复杂度 $O(L)$，其中 $L$ 是 $text$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def findOcurrences(self, text: str, first: str, second: str) -> List[str]:
-        ws = text.split()
-        n = len(ws)
-        return [
-            ws[i + 2] for i in range(n - 2) if ws[i] == first and ws[i + 1] == second
-        ]
+        words = text.split()
+        ans = []
+        for i in range(len(words) - 2):
+            a, b, c = words[i : i + 3]
+            if a == first and b == second:
+                ans.append(c)
+        return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -82,8 +78,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -91,35 +85,48 @@ public:
         istringstream is(text);
         vector<string> words;
         string word;
-        while (is >> word) words.push_back(word);
+        while (is >> word) {
+            words.emplace_back(word);
+        }
         vector<string> ans;
-        for (int i = 0; i < words.size() - 2; ++i)
-            if (words[i] == first && words[i + 1] == second)
-                ans.push_back(words[i + 2]);
+        int n = words.size();
+        for (int i = 0; i < n - 2; ++i) {
+            if (words[i] == first && words[i + 1] == second) {
+                ans.emplace_back(words[i + 2]);
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func findOcurrences(text string, first string, second string) []string {
+func findOcurrences(text string, first string, second string) (ans []string) {
 	words := strings.Split(text, " ")
-	var ans []string
-	for i := 0; i < len(words)-2; i++ {
+	n := len(words)
+	for i := 0; i < n-2; i++ {
 		if words[i] == first && words[i+1] == second {
 			ans = append(ans, words[i+2])
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function findOcurrences(text: string, first: string, second: string): string[] {
+    const words = text.split(' ');
+    const n = words.length;
+    const ans: string[] = [];
+    for (let i = 0; i < n - 2; i++) {
+        if (words[i] === first && words[i + 1] === second) {
+            ans.push(words[i + 2]);
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

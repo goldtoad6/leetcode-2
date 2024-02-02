@@ -53,15 +53,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-记忆化搜索。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +72,6 @@ class Solution:
         m, n = len(matrix), len(matrix[0])
         return max(dfs(i, j) for i in range(m) for j in range(n))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -125,8 +115,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -162,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestIncreasingPath(matrix [][]int) int {
 	m, n := len(matrix), len(matrix[0])
@@ -182,8 +168,8 @@ func longestIncreasingPath(matrix [][]int) int {
 		}
 		ans := 1
 		dirs := []int{-1, 0, 1, 0, -1}
-        for k := 0; k < 4; k++ {
-            x, y := i+dirs[k], j+dirs[k+1]
+		for k := 0; k < 4; k++ {
+			x, y := i+dirs[k], j+dirs[k+1]
 			if x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j] {
 				ans = max(ans, dfs(x, y)+1)
 			}
@@ -198,19 +184,8 @@ func longestIncreasingPath(matrix [][]int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

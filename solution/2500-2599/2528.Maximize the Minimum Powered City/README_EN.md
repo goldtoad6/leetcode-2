@@ -60,9 +60,9 @@ It can be proved that we cannot make the minimum power of a city greater than 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -100,8 +100,6 @@ class Solution:
                 right = mid - 1
         return left
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -157,8 +155,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -210,8 +206,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxPower(stations []int, r int, k int) int64 {
 	n := len(stations)
@@ -257,26 +251,8 @@ func maxPower(stations []int, r int, k int) int64 {
 	}
 	return int64(left)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

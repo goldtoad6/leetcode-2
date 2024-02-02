@@ -65,15 +65,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：栈
 
-栈实现。
+我们先将路径按照 `'/'` 分割成若干个子串，然后遍历每个子串，根据子串的内容进行如下操作：
+
+-   若子串为空，或者为 `'.'`，则不做任何操作，因为 `'.'` 表示当前目录；
+-   若子串为 `'..'`，则需要将栈顶元素弹出，因为 `'..'` 表示上一级目录；
+-   若子串为其他字符串，则将该子串入栈，因为该子串表示当前目录的子目录。
+
+最后，我们将栈中的所有元素按照从栈底到栈顶的顺序拼接成字符串，即为简化后的规范路径。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为路径的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -89,10 +93,6 @@ class Solution:
                 stk.append(s)
         return '/' + '/'.join(stk)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -113,7 +113,36 @@ class Solution {
 }
 ```
 
-### **Go**
+```cpp
+class Solution {
+public:
+    string simplifyPath(string path) {
+        deque<string> stk;
+        stringstream ss(path);
+        string t;
+        while (getline(ss, t, '/')) {
+            if (t == "" || t == ".") {
+                continue;
+            }
+            if (t == "..") {
+                if (!stk.empty()) {
+                    stk.pop_back();
+                }
+            } else {
+                stk.push_back(t);
+            }
+        }
+        if (stk.empty()) {
+            return "/";
+        }
+        string ans;
+        for (auto& s : stk) {
+            ans += "/" + s;
+        }
+        return ans;
+    }
+};
+```
 
 ```go
 func simplifyPath(path string) string {
@@ -134,120 +163,92 @@ func simplifyPath(path string) string {
 }
 ```
 
-```go
-func simplifyPath(path string) string {
-    return filepath.Clean(path)
-}
-```
-
-### **C#**
-
-```cs
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public class Solution {
-    public string SimplifyPath(string path) {
-        var stack = new Stack<string>();
-        var sb = new StringBuilder();
-        foreach (var ch in ((IEnumerable<char>)path).Concat(Enumerable.Repeat('/', 1)))
-        {
-            if (ch == '/')
-            {
-                if (sb.Length > 0)
-                {
-                    var folder = sb.ToString();
-                    sb.Clear();
-                    switch (folder)
-                    {
-                        case ".":
-                            break;
-                        case "..":
-                            if (stack.Any())
-                            {
-                                stack.Pop();
-                            }
-                            break;
-                        default:
-                            stack.Push(folder);
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                sb.Append(ch);
-            }
-        }
-
-        if (stack.Count == 0)
-        {
-            sb.Append('/');
-        }
-        foreach (var folder in ((IEnumerable<string>)stack.ToList()).Reverse())
-        {
-            sb.Append('/');
-            sb.Append(folder);
-        }
-        return sb.ToString();
-    }
-}
-```
-
-### **TypeScript**
-
 ```ts
 function simplifyPath(path: string): string {
-    // 添加辅助斜线
-    path += '/';
-
-    const stack = [];
-    let str = '';
-    for (let i = 1; i < path.length; i++) {
-        const c = path[i];
-        if (c === '/') {
-            if (str !== '' && str !== '.') {
-                if (str === '..') {
-                    if (stack.length !== 0) {
-                        stack.pop();
-                    }
-                } else {
-                    stack.push(str);
-                }
+    const stk: string[] = [];
+    for (const s of path.split('/')) {
+        if (s === '' || s === '.') {
+            continue;
+        }
+        if (s === '..') {
+            if (stk.length) {
+                stk.pop();
             }
-            str = '';
         } else {
-            str += c;
+            stk.push(s);
         }
     }
-
-    return '/' + stack.join('/');
+    return '/' + stk.join('/');
 }
 ```
 
-### **C++**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn simplify_path(path: String) -> String {
+        let mut s: Vec<&str> = Vec::new();
 
-```cpp
-class Solution {
-public:
-    string simplifyPath(string path) {
-        deque<string> stk;
-        string res, tmp;
-        stringstream ss(path);
-        while (getline(ss, tmp, '/')) {
-            if (tmp == "" || tmp == ".") continue;
-            if (tmp == "..") {
-                if (!stk.empty())
-                    stk.pop_back();
-            } else
-                stk.push_back(tmp);
+        // Split the path
+        let p_vec = path.split("/").collect::<Vec<&str>>();
+
+        // Traverse the path vector
+        for p in p_vec {
+            match p {
+                // Do nothing for "" or "."
+                "" | "." => {
+                    continue;
+                }
+                ".." => {
+                    if !s.is_empty() {
+                        s.pop();
+                    }
+                }
+                _ => s.push(p),
+            }
         }
-        for (auto str : stk)
-            res += "/" + str;
-        return res.empty() ? "/" : res;
+
+        "/".to_string() + &s.join("/")
     }
-};
+}
+```
+
+```cs
+public class Solution {
+    public string SimplifyPath(string path) {
+        var stk = new Stack<string>();
+        foreach (var s in path.Split('/')) {
+            if (s == "" || s == ".") {
+                continue;
+            }
+            if (s == "..") {
+                if (stk.Count > 0) {
+                    stk.Pop();
+                }
+            } else {
+                stk.Push(s);
+            }
+        }
+        var sb = new StringBuilder();
+        while (stk.Count > 0) {
+            sb.Insert(0, "/" + stk.Pop());
+        }
+        return sb.Length == 0 ? "/" : sb.ToString();
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```go
+func simplifyPath(path string) string {
+	return filepath.Clean(path)
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

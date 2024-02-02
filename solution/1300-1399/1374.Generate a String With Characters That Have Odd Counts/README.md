@@ -42,23 +42,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：构造
+
+如果 $n$ 为奇数，那么直接构造 $n$ 个 `'a'` 即可。
+
+如果 $n$ 为偶数，那么构造 $n-1$ 个 `'a'` 和 $1$ 个 `'b'` 即可。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def generateTheString(self, n: int) -> str:
         return 'a' * n if n & 1 else 'a' * (n - 1) + 'b'
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -68,20 +66,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     string generateTheString(int n) {
         string ans(n, 'a');
-        if (n % 2 == 0) ans[0] = 'b';
+        if (n % 2 == 0) {
+            ans[0] = 'b';
+        }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func generateTheString(n int) string {
@@ -95,22 +91,16 @@ func generateTheString(n int) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function generateTheString(n: number): string {
-    const res = new Array(n).fill('a');
+    const ans = Array(n).fill('a');
     if (n % 2 === 0) {
-        res[n - 1] = 'b';
+        ans[0] = 'b';
     }
-    return res.join('');
+    return ans.join('');
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

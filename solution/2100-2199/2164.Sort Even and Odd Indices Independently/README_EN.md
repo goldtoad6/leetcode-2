@@ -57,9 +57,9 @@ The resultant array formed is [2,1], which is the same as the initial array.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,15 +71,13 @@ class Solution:
         return nums
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int[] sortEvenOdd(int[] nums) {
         int n = nums.length;
         int[] a = new int[(n + 1) >> 1];
         int[] b = new int[n >> 1];
-        for (int i = 0, j = 0; j<n> > 1; i += 2, ++j) {
+        for (int i = 0, j = 0; j < n >> 1; i += 2, ++j) {
             a[j] = nums[i];
             b[j] = nums[i + 1];
         }
@@ -99,8 +97,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -124,8 +120,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func sortEvenOdd(nums []int) []int {
@@ -154,16 +148,6 @@ func sortEvenOdd(nums []int) []int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

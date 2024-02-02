@@ -36,33 +36,36 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We use an array $cnt$ of length $10001$ to count the frequency of each number. We sequentially traverse each number in the matrix and increment its frequency. When the frequency of a number equals the number of rows in the matrix, it means that this number appears in each row, and thus it is the smallest common element. We return this number.
+
+If we do not find the smallest common element after the traversal, we return $-1$.
+
+The time complexity is $O(m \times n)$, and the space complexity is $O(10^4)$. Here, $m$ and $n$ are the number of rows and columns in the matrix, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def smallestCommonElement(self, mat: List[List[int]]) -> int:
-        counter = Counter()
+        cnt = Counter()
         for row in mat:
-            for num in row:
-                counter[num] += 1
-                if counter[num] == len(mat):
-                    return num
+            for x in row:
+                cnt[x] += 1
+                if cnt[x] == len(mat):
+                    return x
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int smallestCommonElement(int[][] mat) {
-        int[] counter = new int[10001];
-        for (int[] row : mat) {
-            for (int num : row) {
-                ++counter[num];
-                if (counter[num] == mat.length) {
-                    return num;
+        int[] cnt = new int[10001];
+        for (var row : mat) {
+            for (int x : row) {
+                if (++cnt[x] == mat.length) {
+                    return x;
                 }
             }
         }
@@ -71,10 +74,52 @@ class Solution {
 }
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int smallestCommonElement(vector<vector<int>>& mat) {
+        int cnt[10001]{};
+        for (auto& row : mat) {
+            for (int x : row) {
+                if (++cnt[x] == mat.size()) {
+                    return x;
+                }
+            }
+        }
+        return -1;
+    }
+};
 ```
 
+```go
+func smallestCommonElement(mat [][]int) int {
+	cnt := [10001]int{}
+	for _, row := range mat {
+		for _, x := range row {
+			cnt[x]++
+			if cnt[x] == len(mat) {
+				return x
+			}
+		}
+	}
+	return -1
+}
+```
+
+```ts
+function smallestCommonElement(mat: number[][]): number {
+    const cnt: number[] = new Array(10001).fill(0);
+    for (const row of mat) {
+        for (const x of row) {
+            if (++cnt[x] == mat.length) {
+                return x;
+            }
+        }
+    }
+    return -1;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

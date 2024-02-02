@@ -12,6 +12,8 @@
 
 <p><strong>Note:</strong> The input is always valid. You may assume that evaluating the queries will not result in division by zero and that there is no contradiction.</p>
 
+<p><strong>Note:&nbsp;</strong>The variables that do not occur in the list of equations are undefined, so the answer cannot be determined for them.</p>
+
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
 
@@ -20,9 +22,9 @@
 <strong>Output:</strong> [6.00000,0.50000,-1.00000,1.00000,-1.00000]
 <strong>Explanation:</strong> 
 Given: <em>a / b = 2.0</em>, <em>b / c = 3.0</em>
-queries are: <em>a / c = ?</em>, <em>b / a = ?</em>, <em>a / e = ?</em>, <em>a / a = ?</em>, <em>x / x = ?</em>
+queries are: <em>a / c = ?</em>, <em>b / a = ?</em>, <em>a / e = ?</em>, <em>a / a = ?</em>, <em>x / x = ? </em>
 return: [6.0, 0.5, -1.0, 1.0, -1.0 ]
-</pre>
+note: x is undefined =&gt; -1.0</pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
@@ -55,11 +57,9 @@ return: [6.0, 0.5, -1.0, 1.0, -1.0 ]
 
 ## Solutions
 
-Union find.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -89,8 +89,6 @@ class Solution:
             for c, d in queries
         ]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -140,8 +138,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -183,8 +179,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func calcEquation(equations [][]string, values []float64, queries [][]string) []float64 {
@@ -228,10 +222,93 @@ func calcEquation(equations [][]string, values []float64, queries [][]string) []
 }
 ```
 
-### **...**
+```rust
+use std::collections::HashMap;
 
-```
+#[derive(Debug)]
+pub struct DSUNode {
+    parent: String,
+    weight: f64,
+}
 
+pub struct DisjointSetUnion {
+    nodes: HashMap<String, DSUNode>,
+}
+
+impl DisjointSetUnion {
+    pub fn new(equations: &Vec<Vec<String>>) -> DisjointSetUnion {
+        let mut nodes = HashMap::new();
+        for equation in equations.iter() {
+            for iter in equation.iter() {
+                nodes.insert(iter.clone(), DSUNode {
+                    parent: iter.clone(),
+                    weight: 1.0,
+                });
+            }
+        }
+        DisjointSetUnion { nodes }
+    }
+
+    pub fn find(&mut self, v: &String) -> String {
+        let origin = self.nodes[v].parent.clone();
+        if origin == *v {
+            return origin;
+        }
+
+        let root = self.find(&origin);
+        self.nodes.get_mut(v).unwrap().parent = root.clone();
+        self.nodes.get_mut(v).unwrap().weight *= self.nodes[&origin].weight;
+        root
+    }
+
+    pub fn union(&mut self, a: &String, b: &String, v: f64) {
+        let pa = self.find(a);
+        let pb = self.find(b);
+        if pa == pb {
+            return;
+        }
+        let (wa, wb) = (self.nodes[a].weight, self.nodes[b].weight);
+        self.nodes.get_mut(&pa).unwrap().parent = pb;
+        self.nodes.get_mut(&pa).unwrap().weight = (wb * v) / wa;
+    }
+
+    pub fn exist(&mut self, k: &String) -> bool {
+        self.nodes.contains_key(k)
+    }
+
+    pub fn calc_value(&mut self, a: &String, b: &String) -> f64 {
+        if !self.exist(a) || !self.exist(b) || self.find(a) != self.find(b) {
+            -1.0
+        } else {
+            let wa = self.nodes[a].weight;
+            let wb = self.nodes[b].weight;
+            wa / wb
+        }
+    }
+}
+
+impl Solution {
+    pub fn calc_equation(
+        equations: Vec<Vec<String>>,
+        values: Vec<f64>,
+        queries: Vec<Vec<String>>
+    ) -> Vec<f64> {
+        let mut dsu = DisjointSetUnion::new(&equations);
+        for (i, &v) in values.iter().enumerate() {
+            let (a, b) = (&equations[i][0], &equations[i][1]);
+            dsu.union(a, b, v);
+        }
+
+        let mut ans = vec![];
+        for querie in queries {
+            let (c, d) = (&querie[0], &querie[1]);
+            ans.push(dsu.calc_value(c, d));
+        }
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

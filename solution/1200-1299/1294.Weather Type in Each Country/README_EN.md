@@ -13,7 +13,7 @@
 | country_id    | int     |
 | country_name  | varchar |
 +---------------+---------+
-country_id is the primary key for this table.
+country_id is the primary key (column with unique values) for this table.
 Each row of this table contains the ID and the name of one country.
 </pre>
 
@@ -29,13 +29,13 @@ Each row of this table contains the ID and the name of one country.
 | weather_state | int  |
 | day           | date |
 +---------------+------+
-(country_id, day) is the primary key for this table.
+(country_id, day) is the primary key (combination of columns with unique values) for this table.
 Each row of this table indicates the weather state in a country for one day.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the type of weather in each country for <strong>November 2019</strong>.</p>
+<p>Write a solution to find the type of weather in each country for <strong>November 2019</strong>.</p>
 
 <p>The type of weather is:</p>
 
@@ -45,9 +45,9 @@ Each row of this table indicates the weather state in a country for one day.
 	<li><strong>Warm</strong> otherwise.</li>
 </ul>
 
-<p>Return result table in <strong>any order</strong>.</p>
+<p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -108,12 +108,26 @@ We know nothing about the average weather_state in Spain in November so we do no
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    country_name,
+    CASE
+        WHEN AVG(weather_state) <= 15 THEN 'Cold'
+        WHEN AVG(weather_state) >= 25 THEN 'Hot'
+        ELSE 'Warm'
+    END AS weather_type
+FROM
+    Weather AS w
+    JOIN Countries USING (country_id)
+WHERE DATE_FORMAT(day, '%Y-%m') = '2019-11'
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

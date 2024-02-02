@@ -42,16 +42,57 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def hasAllCodes(self, s: str, k: int) -> bool:
-        ss = {s[i: i + k] for i in range(len(s) - k + 1)}
+        ss = {s[i : i + k] for i in range(len(s) - k + 1)}
         return len(ss) == 1 << k
 ```
+
+```java
+class Solution {
+    public boolean hasAllCodes(String s, int k) {
+        Set<String> ss = new HashSet<>();
+        for (int i = 0; i < s.length() - k + 1; ++i) {
+            ss.add(s.substring(i, i + k));
+        }
+        return ss.size() == 1 << k;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    bool hasAllCodes(string s, int k) {
+        unordered_set<string> ss;
+        for (int i = 0; i + k <= s.size(); ++i) {
+            ss.insert(move(s.substr(i, k)));
+        }
+        return ss.size() == 1 << k;
+    }
+};
+```
+
+```go
+func hasAllCodes(s string, k int) bool {
+	ss := map[string]bool{}
+	for i := 0; i+k <= len(s); i++ {
+		ss[s[i:i+k]] = true
+	}
+	return len(ss) == 1<<k
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,20 +108,6 @@ class Solution:
             num = ((num - a) << 1) + b
             vis[num] = True
         return all(v for v in vis)
-```
-
-### **Java**
-
-```java
-class Solution {
-    public boolean hasAllCodes(String s, int k) {
-        Set<String> ss = new HashSet<>();
-        for (int i = 0; i < s.length() - k + 1; ++i) {
-            ss.add(s.substring(i, i + k));
-        }
-        return ss.size() == 1 << k;
-    }
-}
 ```
 
 ```java
@@ -109,21 +136,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    bool hasAllCodes(string s, int k) {
-        unordered_set<string> ss;
-        for (int i = 0; i + k <= s.size(); ++i) {
-            ss.insert(move(s.substr(i, k)));
-        }
-        return ss.size() == 1 << k;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -139,22 +151,11 @@ public:
             num = (num - a) << 1 | b;
             vis[num] = true;
         }
-        for (bool v : vis) if (!v) return false;
+        for (bool v : vis)
+            if (!v) return false;
         return true;
     }
 };
-```
-
-### **Go**
-
-```go
-func hasAllCodes(s string, k int) bool {
-	ss := map[string]bool{}
-	for i := 0; i+k <= len(s); i++ {
-		ss[s[i:i+k]] = true
-	}
-	return len(ss) == 1<<k
-}
 ```
 
 ```go
@@ -183,10 +184,6 @@ func hasAllCodes(s string, k int) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

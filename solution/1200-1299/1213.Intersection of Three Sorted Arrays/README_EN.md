@@ -32,11 +32,13 @@
 
 ## Solutions
 
-Binary search.
+### Solution 1: Counting
+
+Traverse the three arrays, count the occurrence of each number, then traverse any one of the arrays. If the count of a number is $3$, add it to the result array.
+
+The time complexity is $O(n)$, and the space complexity is $O(m)$. Here, $n$ and $m$ are the length of the array and the range of numbers in the array, respectively.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -46,20 +48,6 @@ class Solution:
         cnt = Counter(arr1 + arr2 + arr3)
         return [x for x in arr1 if cnt[x] == 3]
 ```
-
-```python
-class Solution:
-    def arraysIntersection(self, arr1: List[int], arr2: List[int], arr3: List[int]) -> List[int]:
-        ans = []
-        for x in arr1:
-            i = bisect_left(arr2, x)
-            j = bisect_left(arr3, x)
-            if i < len(arr2) and j < len(arr3) and arr2[i] == x and arr3[j] == x:
-                ans.append(x)
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -81,24 +69,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) {
-        List<Integer> ans = new ArrayList<>();
-        for (int x : arr1) {
-            int i = Arrays.binarySearch(arr2, x);
-            int j = Arrays.binarySearch(arr3, x);
-            if (i >= 0 && j >= 0) {
-                ans.add(x);
-            }
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -122,25 +92,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    vector<int> arraysIntersection(vector<int>& arr1, vector<int>& arr2, vector<int>& arr3) {
-        vector<int> ans;
-        for (int x : arr1) {
-            auto i = lower_bound(arr2.begin(), arr2.end(), x);
-            auto j = lower_bound(arr3.begin(), arr3.end(), x);
-            if (*i == x && *j == x) {
-                ans.push_back(x);
-            }
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
-
 ```go
 func arraysIntersection(arr1 []int, arr2 []int, arr3 []int) (ans []int) {
 	cnt := [2001]int{}
@@ -160,6 +111,85 @@ func arraysIntersection(arr1 []int, arr2 []int, arr3 []int) (ans []int) {
 }
 ```
 
+```php
+class Solution {
+    /**
+     * @param Integer[] $arr1
+     * @param Integer[] $arr2
+     * @param Integer[] $arr3
+     * @return Integer[]
+     */
+    function arraysIntersection($arr1, $arr2, $arr3) {
+        $rs = [];
+        $arr = array_merge($arr1, $arr2, $arr3);
+        for ($i = 0; $i < count($arr); $i++) {
+            $hashtable[$arr[$i]] += 1;
+            if ($hashtable[$arr[$i]] === 3) {
+                array_push($rs, $arr[$i]);
+            }
+        }
+        return $rs;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Binary Search
+
+Traverse the first array. For each number, use binary search to find this number in the second and third arrays. If found in both, add this number to the result array.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array.
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def arraysIntersection(
+        self, arr1: List[int], arr2: List[int], arr3: List[int]
+    ) -> List[int]:
+        ans = []
+        for x in arr1:
+            i = bisect_left(arr2, x)
+            j = bisect_left(arr3, x)
+            if i < len(arr2) and j < len(arr3) and arr2[i] == x and arr3[j] == x:
+                ans.append(x)
+        return ans
+```
+
+```java
+class Solution {
+    public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) {
+        List<Integer> ans = new ArrayList<>();
+        for (int x : arr1) {
+            int i = Arrays.binarySearch(arr2, x);
+            int j = Arrays.binarySearch(arr3, x);
+            if (i >= 0 && j >= 0) {
+                ans.add(x);
+            }
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    vector<int> arraysIntersection(vector<int>& arr1, vector<int>& arr2, vector<int>& arr3) {
+        vector<int> ans;
+        for (int x : arr1) {
+            auto i = lower_bound(arr2.begin(), arr2.end(), x);
+            auto j = lower_bound(arr3.begin(), arr3.end(), x);
+            if (*i == x && *j == x) {
+                ans.push_back(x);
+            }
+        }
+        return ans;
+    }
+};
+```
+
 ```go
 func arraysIntersection(arr1 []int, arr2 []int, arr3 []int) (ans []int) {
 	for _, x := range arr1 {
@@ -173,10 +203,6 @@ func arraysIntersection(arr1 []int, arr2 []int, arr3 []int) (ans []int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

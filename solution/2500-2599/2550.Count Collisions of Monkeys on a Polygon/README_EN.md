@@ -49,9 +49,15 @@ It can be shown 6 total movements result in a collision.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Mathematics (Fast Power)
 
-### **Python3**
+According to the problem description, each monkey has two ways of moving, either clockwise or counterclockwise. Therefore, there are a total of $2^n$ ways to move. The non-collision ways of moving are only two, that is, all monkeys move clockwise or all monkeys move counterclockwise. Therefore, the number of collision ways of moving is $2^n - 2$.
+
+We can use fast power to calculate the value of $2^n$, then use $2^n - 2$ to calculate the number of collision ways of moving, and finally take the remainder of $10^9 + 7$.
+
+The time complexity is $O(\log n)$, where $n$ is the number of monkeys. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,99 +66,81 @@ class Solution:
         return (pow(2, n, mod) - 2) % mod
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int monkeyMove(int n) {
         final int mod = (int) 1e9 + 7;
-        return (int) (qmi(2, n, mod) - 2 + mod) % mod;
+        return (qpow(2, n, mod) - 2 + mod) % mod;
     }
 
-    public long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
+    private int qpow(long a, int n, int mod) {
+        long ans = 1;
+        for (; n > 0; n >>= 1) {
+            if ((n & 1) == 1) {
+                ans = ans * a % mod;
             }
-            k >>= 1;
-            a = a * a % p;
+            a = a * a % mod;
         }
-        return res;
+        return (int) ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int monkeyMove(int n) {
         const int mod = 1e9 + 7;
-        return (qmi(2, n, mod) - 2 + mod) % mod;
-    }
-
-    long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
+        using ll = long long;
+        auto qpow = [&](ll a, int n) {
+            ll ans = 1;
+            for (; n; n >>= 1) {
+                if (n & 1) {
+                    ans = ans * a % mod;
+                }
+                a = a * a % mod;
             }
-            k >>= 1;
-            a = a * a % p;
-        }
-        return res;
+            return ans;
+        };
+        return (qpow(2, n) - 2 + mod) % mod;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func monkeyMove(n int) int {
 	const mod = 1e9 + 7
-	return (qmi(2, n, mod) - 2 + mod) % mod
-}
-
-func qmi(a, k, p int) int {
-	res := 1
-	for k != 0 {
-		if k&1 == 1 {
-			res = res * a % p
+	qpow := func(a, n int) int {
+		ans := 1
+		for ; n > 0; n >>= 1 {
+			if n&1 == 1 {
+				ans = ans * a % mod
+			}
+			a = a * a % mod
 		}
-		k >>= 1
-		a = a * a % p
+		return ans
 	}
-	return res
+	return (qpow(2, n) - 2 + mod) % mod
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function monkeyMove(n: number): number {
-    const mod = BigInt(10 ** 9 + 7);
-    return Number((qmi(2n, n, mod) - 2n + mod) % mod);
-}
-
-function qmi(a: bigint, k: number, p: bigint): bigint {
-    let res = 1n;
-    while (k) {
-        if ((k & 1) === 1) {
-            res = (res * a) % p;
+    const mod = 10 ** 9 + 7;
+    const qpow = (a: number, n: number): number => {
+        let ans = 1n;
+        for (; n; n >>>= 1) {
+            if (n & 1) {
+                ans = (ans * BigInt(a)) % BigInt(mod);
+            }
+            a = Number((BigInt(a) * BigInt(a)) % BigInt(mod));
         }
-        k >>= 1;
-        a = (a * a) % p;
-    }
-    return res;
+        return Number(ans);
+    };
+    return (qpow(2, n) - 2 + mod) % mod;
 }
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -48,36 +48,23 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def checkRecord(self, s: str) -> bool:
-        return s.count('A') <= 1 and 'LLL' not in s
+        return s.count('A') < 2 and 'LLL' not in s
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean checkRecord(String s) {
-        int i = s.indexOf("A");
-        return (i == -1 || s.lastIndexOf("A") == i) && !s.contains("LLL");
+        return s.indexOf("A") == s.lastIndexOf("A") && !s.contains("LLL");
     }
 }
 ```
-
-### **Go**
-
-```go
-func checkRecord(s string) bool {
-	return strings.Count(s, "A") < 2 && !strings.Contains(s, "LLL")
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -88,10 +75,18 @@ public:
 };
 ```
 
-### **...**
-
+```go
+func checkRecord(s string) bool {
+	return strings.Count(s, "A") < 2 && !strings.Contains(s, "LLL")
+}
 ```
 
+```ts
+function checkRecord(s: string): boolean {
+    return s.indexOf('A') === s.lastIndexOf('A') && s.indexOf('LLL') === -1;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

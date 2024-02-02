@@ -33,7 +33,7 @@
 <p><strong>提示：</strong></p>
 
 <ul>
-	<li>数中节点数在&nbsp;<code>[1, 5000]</code>&nbsp;范围内</li>
+	<li>树中节点数在&nbsp;<code>[1, 5000]</code>&nbsp;范围内</li>
 	<li><code>1 &lt;= Node.val &lt;= 10<sup>7</sup></code></li>
 	<li><code>root</code>&nbsp;是二叉搜索树</li>
 	<li><code>1 &lt;= val &lt;= 10<sup>7</sup></code></li>
@@ -41,13 +41,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -66,10 +62,6 @@ class Solution:
             else self.searchBST(root.left, val)
         )
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -97,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -120,8 +110,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -142,10 +130,6 @@ func searchBST(root *TreeNode, val int) *TreeNode {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

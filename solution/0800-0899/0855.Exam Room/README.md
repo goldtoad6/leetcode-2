@@ -40,9 +40,7 @@ seat() -&gt; 5，学生最后坐在 5 号座位上。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：有序集合 + 哈希表**
+### 方法一：有序集合 + 哈希表
 
 考虑到每次 $seat()$ 时都需要找到最大距离的座位，我们可以使用有序集合来保存座位区间。有序集合的每个元素为一个二元组 $(l, r)$，表示 $l$ 和 $r$ 之间（不包括 $l$ 和 $r$）的座位可以坐学生。初始时有序集合中只有一个元素 $(-1, n)$，表示 $(-1, n)$ 之间的座位可以坐学生。
 
@@ -52,16 +50,11 @@ seat() -&gt; 5，学生最后坐在 5 号座位上。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 from sortedcontainers import SortedList
 
 
 class ExamRoom:
-
     def __init__(self, n: int):
         def dist(x):
             l, r = x
@@ -107,10 +100,6 @@ class ExamRoom:
 # param_1 = obj.seat()
 # obj.leave(p)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class ExamRoom {
@@ -173,8 +162,6 @@ class ExamRoom {
  * obj.leave(p);
  */
 ```
-
-### **C++**
 
 ```cpp
 int N;
@@ -248,8 +235,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type ExamRoom struct {
 	rbt   *redblacktree.Tree
@@ -265,7 +250,7 @@ func Constructor(n int) ExamRoom {
 		}
 		return (s[1] - s[0]) >> 1
 	}
-	cmp := func(a, b interface{}) int {
+	cmp := func(a, b any) int {
 		x, y := a.([]int), b.([]int)
 		d1, d2 := dist(x), dist(y)
 		if d1 == d2 {
@@ -320,10 +305,6 @@ func (this *ExamRoom) del(s []int) {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

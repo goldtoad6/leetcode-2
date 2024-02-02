@@ -73,9 +73,9 @@ The answers that read integer 3 from the stream are not accepted.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -89,8 +89,6 @@ class Solution:
             ans.append('Push')
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -108,8 +106,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -129,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func buildArray(target []int, n int) []string {
 	cur := 0
@@ -145,33 +139,6 @@ func buildArray(target []int, n int) []string {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-char **buildArray(int *target, int targetSize, int n, int *returnSize) {
-    char **res = (char **) malloc(sizeof(char *) * n * 2);
-    int cur = 1;
-    int i = 0;
-    for (int j = 0; j < targetSize; j++) {
-        while (++cur < target[j]) {
-            res[i] = (char *) malloc(sizeof(char) * 8);
-            strcpy(res[i++], "Push");
-            res[i] = (char *) malloc(sizeof(char) * 8);
-            strcpy(res[i++], "Pop");
-        }
-        res[i] = (char *) malloc(sizeof(char) * 8);
-        strcpy(res[i++], "Push");
-    }
-    *returnSize = i;
-    return res;
-}
-```
-
-### **TypeScript**
-
 ```ts
 function buildArray(target: number[], n: number): string[] {
     const res = [];
@@ -185,8 +152,6 @@ function buildArray(target: number[], n: number): string[] {
     return res;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -207,10 +172,29 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** buildArray(int* target, int targetSize, int n, int* returnSize) {
+    char** res = (char**) malloc(sizeof(char*) * n * 2);
+    int cur = 1;
+    int i = 0;
+    for (int j = 0; j < targetSize; j++) {
+        while (++cur < target[j]) {
+            res[i] = (char*) malloc(sizeof(char) * 8);
+            strcpy(res[i++], "Push");
+            res[i] = (char*) malloc(sizeof(char) * 8);
+            strcpy(res[i++], "Pop");
+        }
+        res[i] = (char*) malloc(sizeof(char) * 8);
+        strcpy(res[i++], "Push");
+    }
+    *returnSize = i;
+    return res;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

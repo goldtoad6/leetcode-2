@@ -44,106 +44,173 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Binary Search + Inclusion-Exclusion Principle
 
-### **Python3**
+We can transform the problem into: find the smallest positive integer $x$ such that the number of ugly numbers less than or equal to $x$ is exactly $n$.
+
+For a positive integer $x$, there are $\left\lfloor \frac{x}{a} \right\rfloor$ numbers divisible by $a$, $\left\lfloor \frac{x}{b} \right\rfloor$ numbers divisible by $b$, $\left\lfloor \frac{x}{c} \right\rfloor$ numbers divisible by $c$, $\left\lfloor \frac{x}{lcm(a, b)} \right\rfloor$ numbers divisible by both $a$ and $b$, $\left\lfloor \frac{x}{lcm(a, c)} \right\rfloor$ numbers divisible by both $a$ and $c$, $\left\lfloor \frac{x}{lcm(b, c)} \right\rfloor$ numbers divisible by both $b$ and $c$, and $\left\lfloor \frac{x}{lcm(a, b, c)} \right\rfloor$ numbers divisible by $a$, $b$, and $c$ at the same time. According to the inclusion-exclusion principle, the number of ugly numbers less than or equal to $x$ is:
+
+$$
+\left\lfloor \frac{x}{a} \right\rfloor + \left\lfloor \frac{x}{b} \right\rfloor + \left\lfloor \frac{x}{c} \right\rfloor - \left\lfloor \frac{x}{lcm(a, b)} \right\rfloor - \left\lfloor \frac{x}{lcm(a, c)} \right\rfloor - \left\lfloor \frac{x}{lcm(b, c)} \right\rfloor + \left\lfloor \frac{x}{lcm(a, b, c)} \right\rfloor
+$$
+
+We can use binary search to find the smallest positive integer $x$ such that the number of ugly numbers less than or equal to $x$ is exactly $n$.
+
+Define the left boundary of binary search as $l=1$ and the right boundary as $r=2 \times 10^9$, where $2 \times 10^9$ is the maximum value given by the problem. In each step of binary search, we find the middle number $mid$. If the number of ugly numbers less than or equal to $mid$ is greater than or equal to $n$, it means that the smallest positive integer $x$ falls in the interval $[l,mid]$, otherwise it falls in the interval $[mid+1,r]$. During the binary search process, we need to continuously update the number of ugly numbers less than or equal to $mid$ until we find the smallest positive integer $x$.
+
+The time complexity is $O(\log m)$, where $m = 2 \times 10^9$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def f(self, num: int, a: int, b: int, c: int) -> int:
-        return num // a + num // b + num // c - num // math.lcm(a, b) - num // math.lcm(a, c) - num // math.lcm(b, c) \
-            + num // math.lcm(a, b, c)
-
     def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
-        left, right = 1, int(2e9)
-        while left <= right:
-            mid = left + (right - left) // 2
-            if self.f(mid, a, b, c) < n:
-                left = mid + 1
+        ab = lcm(a, b)
+        bc = lcm(b, c)
+        ac = lcm(a, c)
+        abc = lcm(a, b, c)
+        l, r = 1, 2 * 10**9
+        while l < r:
+            mid = (l + r) >> 1
+            if (
+                mid // a
+                + mid // b
+                + mid // c
+                - mid // ab
+                - mid // bc
+                - mid // ac
+                + mid // abc
+                >= n
+            ):
+                r = mid
             else:
-                right = mid - 1
-        return left
+                l = mid + 1
+        return l
 ```
 
-### **Go**
+```java
+class Solution {
+    public int nthUglyNumber(int n, int a, int b, int c) {
+        long ab = lcm(a, b);
+        long bc = lcm(b, c);
+        long ac = lcm(a, c);
+        long abc = lcm(ab, c);
+        long l = 1, r = 2000000000;
+        while (l < r) {
+            long mid = (l + r) >> 1;
+            if (mid / a + mid / b + mid / c - mid / ab - mid / bc - mid / ac + mid / abc >= n) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return (int) l;
+    }
 
-```go
-func nthUglyNumber(n int, a int, b int, c int) int {
-	left, right := 1, int(2e9)
-	for left <= right {
-		mid := left + (right-left)/2
-		if f(mid, a, b, c) < n {
-			left = mid + 1
-		} else {
-			right = mid - 1
-		}
-	}
-	return left
-}
+    private long gcd(long a, long b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
 
-func f(num int, a int, b int, c int) int {
-	return num/a + num/b + num/c - num/lcm(a, b) - num/lcm(a, c) - num/lcm(b, c) + num/lcm(lcm(a, b), c)
-}
-
-// Least common multiple
-func lcm(a, b int) int {
-	// Greatest common divisor
-	gcd := func(x, y int) int {
-		for y != 0 {
-			if x < y {
-				x, y = y, x
-			}
-			x, y = y, x%y
-		}
-		return x
-	}
-	return a * b / gcd(a, b)
+    private long lcm(long a, long b) {
+        return a * b / gcd(a, b);
+    }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
-    long gcd(long x, long y) {
-        while (y != 0) {
-            if (x < y)
-                swap(x, y);
-            long tmp = x % y;
-            x = y;
-            y = tmp;
-        }
-        return x;
-    }
-
-    long lcm(long x, long y) { return x * y / gcd(x, y); }
-
-    long f(int num, int a, int b, int c) {
-        long sumabc = long(num / a) + num / b + num / c;
-        long intersections = long(num / lcm(a, b)) + num / lcm(a, c) + num / lcm(b, c) - num / lcm(lcm(a, b), c);
-        return sumabc - intersections;
-    }
-
     int nthUglyNumber(int n, int a, int b, int c) {
-        int left = 1, right = int(2e9);
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (f(mid, a, b, c) < n) {
-                left = mid + 1;
+        long long ab = lcm(a, b);
+        long long bc = lcm(b, c);
+        long long ac = lcm(a, c);
+        long long abc = lcm(ab, c);
+        long long l = 1, r = 2000000000;
+        while (l < r) {
+            long long mid = (l + r) >> 1;
+            if (mid / a + mid / b + mid / c - mid / ab - mid / bc - mid / ac + mid / abc >= n) {
+                r = mid;
             } else {
-                right = mid - 1;
+                l = mid + 1;
             }
         }
-        return left;
+        return l;
+    }
+
+    long long lcm(long long a, long long b) {
+        return a * b / gcd(a, b);
+    }
+
+    long long gcd(long long a, long long b) {
+        return b == 0 ? a : gcd(b, a % b);
     }
 };
 ```
 
-### **...**
+```go
+func nthUglyNumber(n int, a int, b int, c int) int {
+	ab, bc, ac := lcm(a, b), lcm(b, c), lcm(a, c)
+	abc := lcm(ab, c)
+	var l, r int = 1, 2e9
+	for l < r {
+		mid := (l + r) >> 1
+		if mid/a+mid/b+mid/c-mid/ab-mid/bc-mid/ac+mid/abc >= n {
+			r = mid
+		} else {
+			l = mid + 1
+		}
+	}
+	return l
+}
 
+func gcd(a, b int) int {
+	if b == 0 {
+		return a
+	}
+	return gcd(b, a%b)
+}
+
+func lcm(a, b int) int {
+	return a * b / gcd(a, b)
+}
 ```
 
+```ts
+function nthUglyNumber(n: number, a: number, b: number, c: number): number {
+    const ab = lcm(BigInt(a), BigInt(b));
+    const bc = lcm(BigInt(b), BigInt(c));
+    const ac = lcm(BigInt(a), BigInt(c));
+    const abc = lcm(BigInt(a), bc);
+    let l = 1n;
+    let r = BigInt(2e9);
+    while (l < r) {
+        const mid = (l + r) >> 1n;
+        const count =
+            mid / BigInt(a) +
+            mid / BigInt(b) +
+            mid / BigInt(c) -
+            mid / ab -
+            mid / bc -
+            mid / ac +
+            mid / abc;
+        if (count >= BigInt(n)) {
+            r = mid;
+        } else {
+            l = mid + 1n;
+        }
+    }
+    return Number(l);
+}
+
+function gcd(a: bigint, b: bigint): bigint {
+    return b === 0n ? a : gcd(b, a % b);
+}
+
+function lcm(a: bigint, b: bigint): bigint {
+    return (a * b) / gcd(a, b);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

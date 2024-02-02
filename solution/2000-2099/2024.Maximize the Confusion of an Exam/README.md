@@ -60,9 +60,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：滑动窗口
 
-思路同 [1004. 最大连续 1 的个数 III](/solution/1000-1099/1004.Max%20Consecutive%20Ones%20III/README.md)
+思路同 [1004. 最大连续 1 的个数 III](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1004.Max%20Consecutive%20Ones%20III/README.md)
 
 维护一个单调变长的窗口。这种窗口经常出现在寻求“最大窗口”的问题中：因为要求的是“最大”，所以我们没有必要缩短窗口，于是代码就少了缩短窗口的部分；从另一个角度讲，本题里的 K 是资源数，一旦透支，窗口就不能再增长了。
 
@@ -73,10 +73,6 @@
 -   移动左端点时，如果可以释放一个资源，k 加 1
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -95,10 +91,6 @@ class Solution:
 
         return max(get('T', k), get('F', k))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -121,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -140,8 +130,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxConsecutiveAnswers(answerKey string, k int) int {
@@ -163,16 +151,7 @@ func maxConsecutiveAnswers(answerKey string, k int) int {
 	}
 	return max(get('T', k), get('F', k))
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxConsecutiveAnswers(answerKey: string, k: number): number {
@@ -193,8 +172,6 @@ function maxConsecutiveAnswers(answerKey: string, k: number): number {
     return Math.max(getMaxCount('T'), getMaxCount('F'));
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -222,10 +199,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

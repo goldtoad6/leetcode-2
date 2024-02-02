@@ -47,13 +47,9 @@ nums2 中的每个整数都在 nums1 中出现，因此，answer[1] = [] 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -61,10 +57,6 @@ class Solution:
         s1, s2 = set(nums1), set(nums2)
         return [list(s1 - s2), list(s2 - s1)]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,40 +92,6 @@ class Solution {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums1
- * @param {number[]} nums2
- * @return {number[][]}
- */
-var findDifference = function (nums1, nums2) {
-    let ans1 = new Set(nums1),
-        ans2 = new Set(nums2);
-    for (let num of nums1) {
-        ans2.delete(num);
-    }
-    for (let num of nums2) {
-        ans1.delete(num);
-    }
-    return [Array.from(ans1), Array.from(ans2)];
-};
-```
-
-### **TypeScript**
-
-```ts
-function findDifference(nums1: number[], nums2: number[]): number[][] {
-    return [
-        [...new Set<number>(nums1.filter(v => !nums2.includes(v)))],
-        [...new Set<number>(nums2.filter(v => !nums1.includes(v)))],
-    ];
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -151,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findDifference(nums1 []int, nums2 []int) [][]int {
@@ -178,7 +134,14 @@ func findDifference(nums1 []int, nums2 []int) [][]int {
 }
 ```
 
-### **Rust**
+```ts
+function findDifference(nums1: number[], nums2: number[]): number[][] {
+    return [
+        [...new Set<number>(nums1.filter(v => !nums2.includes(v)))],
+        [...new Set<number>(nums2.filter(v => !nums1.includes(v)))],
+    ];
+}
+```
 
 ```rust
 use std::collections::HashSet;
@@ -196,17 +159,70 @@ impl Solution {
                 .filter_map(|&v| if nums1.contains(&v) { None } else { Some(v) })
                 .collect::<HashSet<i32>>()
                 .into_iter()
-                .collect(),
+                .collect()
         ]
     }
 }
 ```
 
+```js
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[][]}
+ */
+var findDifference = function (nums1, nums2) {
+    let ans1 = new Set(nums1),
+        ans2 = new Set(nums2);
+    for (let num of nums1) {
+        ans2.delete(num);
+    }
+    for (let num of nums2) {
+        ans1.delete(num);
+    }
+    return [Array.from(ans1), Array.from(ans2)];
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums1
+     * @param Integer[] $nums2
+     * @return Integer[][]
+     */
+    function findDifference($nums1, $nums2) {
+        $rs = [[], []];
+        $hashtable1 = array_flip(array_unique($nums1));
+        $hashtable2 = array_flip(array_unique($nums2));
+        for ($m = 0; $m < count($nums1); $m++) {
+            if (!isset($hashtable2[$nums1[$m]])) {
+                $rs[0][$m] = $nums1[$m];
+                $hashtable2[$nums1[$m]] = 1;
+            }
+        }
+        for ($n = 0; $n < count($nums2); $n++) {
+            if (!isset($hashtable1[$nums2[$n]])) {
+                $rs[1][$n] = $nums2[$n];
+                $hashtable1[$nums2[$n]] = 1;
+            }
+        }
+        return $rs;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
 ```rust
 impl Solution {
     pub fn find_difference(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
         const N: usize = 2001;
-        let to_index = |i| i as usize + 1000;
+        let to_index = |i| (i as usize) + 1000;
 
         let mut is_in_nums1 = [false; N];
         let mut is_in_nums2 = [false; N];
@@ -233,10 +249,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

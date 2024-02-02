@@ -47,9 +47,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：遍历**
+### 方法一：遍历
 
 遍历 `letters`，返回第一个满足 `letters[i] > target` 条件的元素。若是遍历结束还未找到，则返回 `letters[0]`。
 
@@ -57,7 +55,129 @@
 
 时间复杂度：$O(N)$。
 
-**方法二：二分**
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
+        left, right = 0, len(letters)
+        while left < right:
+            mid = (left + right) >> 1
+            if ord(letters[mid]) > ord(target):
+                right = mid
+            else:
+                left = mid + 1
+        return letters[left % len(letters)]
+```
+
+```java
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        int left = 0, right = letters.length;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            if (letters[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return letters[left % letters.length];
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        int left = 0, right = letters.size();
+        while (left < right) {
+            int mid = left + right >> 1;
+            if (letters[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return letters[left % letters.size()];
+    }
+};
+```
+
+```go
+func nextGreatestLetter(letters []byte, target byte) byte {
+	left, right := 0, len(letters)
+	for left < right {
+		mid := (left + right) >> 1
+		if letters[mid] > target {
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
+	return letters[left%len(letters)]
+}
+```
+
+```ts
+function nextGreatestLetter(letters: string[], target: string): string {
+    const n = letters.length;
+    let left = 0;
+    let right = letters.length;
+    while (left < right) {
+        let mid = (left + right) >>> 1;
+        if (letters[mid] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return letters[left % n];
+}
+```
+
+```rust
+impl Solution {
+    pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
+        *letters
+            .iter()
+            .find(|&&c| c > target)
+            .unwrap_or(&letters[0])
+    }
+}
+```
+
+```php
+class Solution {
+    /**
+     * @param String[] $letters
+     * @param String $target
+     * @return String
+     */
+    function nextGreatestLetter($letters, $target) {
+        $left = 0;
+        $right = count($letters);
+        while ($left <= $right) {
+            $mid = floor($left + ($right - $left) / 2);
+            if ($letters[$mid] > $target) {
+                $right = $mid - 1;
+            } else {
+                $left = $mid + 1;
+            }
+        }
+        if ($left >= count($letters)) {
+            return $letters[0];
+        } else {
+            return $letters[$left];
+        }
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：二分
 
 利用 `letters` 有序的特点，可以使用二分来快速查找。
 
@@ -78,110 +198,6 @@ return letters[l - n];
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-class Solution:
-    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
-        left, right = 0, len(letters)
-        while left < right:
-            mid = (left + right) >> 1
-            if ord(letters[mid]) > ord(target):
-                right = mid
-            else:
-                left = mid + 1
-        return letters[left % len(letters)]
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public char nextGreatestLetter(char[] letters, char target) {
-        int left = 0, right = letters.length;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (letters[mid] > target) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return letters[left % letters.length];
-    }
-}
-```
-
-### **TypeScript**
-
-```ts
-function nextGreatestLetter(letters: string[], target: string): string {
-    const n = letters.length;
-    let left = 0;
-    let right = letters.length;
-    while (left < right) {
-        let mid = (left + right) >>> 1;
-        if (letters[mid] > target) {
-            right = mid;
-        } else {
-            left = mid + 1;
-        }
-    }
-    return letters[left % n];
-}
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    char nextGreatestLetter(vector<char>& letters, char target) {
-        int left = 0, right = letters.size();
-        while (left < right) {
-            int mid = left + right >> 1;
-            if (letters[mid] > target) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return letters[left % letters.size()];
-    }
-};
-```
-
-### **Go**
-
-```go
-func nextGreatestLetter(letters []byte, target byte) byte {
-	left, right := 0, len(letters)
-	for left < right {
-		mid := (left + right) >> 1
-		if letters[mid] > target {
-			right = mid
-		} else {
-			left = mid + 1
-		}
-	}
-	return letters[left%len(letters)]
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
-        *letters.iter().find(|&&c| c > target).unwrap_or(&letters[0])
-    }
-}
-```
-
 ```rust
 impl Solution {
     pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
@@ -201,33 +217,6 @@ impl Solution {
 }
 ```
 
-### **PHP**
-
-```php
-class Solution {
-    /**
-     * @param String[] $letters
-     * @param String $target
-     * @return String
-     */
-    function nextGreatestLetter($letters, $target) {
-        $left = 0;
-        $right = count($letters);
-        while ($left <= $right) {
-            $mid = floor($left + ($right - $left) / 2);
-            if ($letters[$mid] > $target) $right = $mid - 1;
-            else $left = $mid + 1;
-        }
-        if ($left >= count($letters)) return $letters[0];
-        else return $letters[$left];
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

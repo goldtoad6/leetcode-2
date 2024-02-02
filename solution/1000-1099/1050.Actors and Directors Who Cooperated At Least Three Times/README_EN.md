@@ -14,16 +14,16 @@
 | director_id | int     |
 | timestamp   | int     |
 +-------------+---------+
-timestamp is the primary key column for this table.
+timestamp is the primary key (column with unique values) for this table.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write a SQL query for a report that provides the pairs <code>(actor_id, director_id)</code> where the actor has cooperated with the director at least three times.</p>
+<p>Write a solution to find all the pairs <code>(actor_id, director_id)</code> where the actor has cooperated with the director at least three times.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -53,19 +53,20 @@ ActorDirector table:
 
 ## Solutions
 
-Use `GROUP BY` & `HAVING`.
+### Solution 1: Group By + Having
+
+We can use the `GROUP BY` statement to group the data by the `actor_id` and `director_id` fields, and then use the `HAVING` statement to filter out the `actor_id` and `director_id` that appear at least three times.
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-    actor_id, director_id
-FROM
-    ActorDirector
-GROUP BY actor_id, director_id
-HAVING count(1) >= 3;
+# Write your MySQL query statement below
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY 1, 2
+HAVING COUNT(1) >= 3;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

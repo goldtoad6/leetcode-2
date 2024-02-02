@@ -42,19 +42,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：枚举 + 维护前缀最小值
 
-**方法一：枚举 + 维护前缀最小值**
+我们可以枚举数组 $nums$ 每个元素作为卖出价格，那么我们需要在前面找到一个最小值作为买入价格，这样才能使得利润最大化。
 
-遍历数组 `nums`，对于每个元素 $v$，计算其与前面元素的最小值 $mi$ 的差值，取最大值即可。
+因此，我们用一个变量 $mi$ 维护数组 $nums$ 的前缀最小值。接下来遍历数组 $nums$，对于每个元素 $v$，计算其与前面元素的最小值 $mi$ 的差值，更新答案为差值的最大值。然后更新 $mi = min(mi, v)$。继续遍历数组 $nums$，直到遍历结束。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `nums` 的长度。
+最后返回答案即可。
+
+时间复杂度 $O(n)$，其中 $n$ 是数组 $nums$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -65,10 +63,6 @@ class Solution:
             mi = min(mi, v)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -82,8 +76,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -99,8 +91,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxProfit(prices []int) (ans int) {
 	mi := prices[0]
@@ -110,23 +100,33 @@ func maxProfit(prices []int) (ans int) {
 	}
 	return
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function maxProfit(prices: number[]): number {
+    let ans = 0;
+    let mi = prices[0];
+    for (const v of prices) {
+        ans = Math.max(ans, v - mi);
+        mi = Math.min(mi, v);
+    }
+    return ans;
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    pub fn max_profit(prices: Vec<i32>) -> i32 {
+        let mut res = 0;
+        let mut min = i32::MAX;
+        for price in prices {
+            res = res.max(price - min);
+            min = min.min(price);
+        }
+        res
+    }
+}
+```
 
 ```js
 /**
@@ -144,8 +144,6 @@ var maxProfit = function (prices) {
 };
 ```
 
-### **C#**
-
 ```cs
 public class Solution {
     public int MaxProfit(int[] prices) {
@@ -158,38 +156,6 @@ public class Solution {
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function maxProfit(prices: number[]): number {
-    let ans = 0;
-    let mi = prices[0];
-    for (const v of prices) {
-        ans = Math.max(ans, v - mi);
-        mi = Math.min(mi, v);
-    }
-    return ans;
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn max_profit(prices: Vec<i32>) -> i32 {
-        let mut res = 0;
-        let mut min = i32::MAX;
-        for price in prices {
-            res = res.max(price - min);
-            min = min.min(price);
-        }
-        res
-    }
-}
-```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -210,10 +176,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

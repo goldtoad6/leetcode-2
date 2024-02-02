@@ -49,13 +49,15 @@ Therefore, output the final maximized capital, which is 0 + 1 + 3 = 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+    def findMaximizedCapital(
+        self, k: int, w: int, profits: List[int], capital: List[int]
+    ) -> int:
         h1 = [(c, p) for c, p in zip(capital, profits)]
         heapify(h1)
         h2 = []
@@ -68,8 +70,6 @@ class Solution:
             k -= 1
         return w
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -93,8 +93,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 using pii = pair<int, int>;
@@ -124,8 +122,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 	q1 := hp2{}
@@ -148,9 +144,9 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -160,17 +156,13 @@ func (h *hp) Pop() interface{} {
 type pair struct{ c, p int }
 type hp2 []pair
 
-func (h hp2) Len() int            { return len(h) }
-func (h hp2) Less(i, j int) bool  { return h[i].c < h[j].c }
-func (h hp2) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp2) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp2) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-```
-
-### **...**
-
-```
-
+func (h hp2) Len() int           { return len(h) }
+func (h hp2) Less(i, j int) bool { return h[i].c < h[j].c }
+func (h hp2) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp2) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp2) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

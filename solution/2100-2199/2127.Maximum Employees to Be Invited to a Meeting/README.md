@@ -16,9 +16,10 @@
 
 <p><strong>示例 1：</strong></p>
 
-<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2127.Maximum%20Employees%20to%20Be%20Invited%20to%20a%20Meeting/images/ex1.png" style="width: 236px; height: 195px;"></p>
+<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2127.Maximum%20Employees%20to%20Be%20Invited%20to%20a%20Meeting/images/ex1.png" style="width: 236px; height: 195px;" /></p>
 
-<pre><b>输入：</b>favorite = [2,2,1,2]
+<pre>
+<b>输入：</b>favorite = [2,2,1,2]
 <b>输出：</b>3
 <strong>解释：</strong>
 上图展示了公司邀请员工 0，1 和 2 参加会议以及他们在圆桌上的座位。
@@ -29,7 +30,8 @@
 
 <p><strong>示例 2：</strong></p>
 
-<pre><b>输入：</b>favorite = [1,2,0]
+<pre>
+<b>输入：</b>favorite = [1,2,0]
 <b>输出：</b>3
 <b>解释：</b>
 每个员工都至少是另一个员工喜欢的员工。所以公司邀请他们所有人参加会议的前提是所有人都参加了会议。
@@ -42,13 +44,14 @@
 
 <p><strong>示例 3：</strong></p>
 
-<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2127.Maximum%20Employees%20to%20Be%20Invited%20to%20a%20Meeting/images/ex2.png" style="width: 219px; height: 220px;"></p>
+<p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2127.Maximum%20Employees%20to%20Be%20Invited%20to%20a%20Meeting/images/ex2.png" style="width: 219px; height: 220px;" /></p>
 
-<pre><b>输入：</b>favorite = [3,0,1,4,1]
+<pre>
+<b>输入：</b>favorite = [3,0,1,4,1]
 <b>输出：</b>4
 <b>解释：</b>
 上图展示了公司可以邀请员工 0，1，3 和 4 参加会议以及他们在圆桌上的座位。
-员工 2 无法参加，因为他喜欢的员工 0 旁边的座位已经被占领了。
+员工 2 无法参加，因为他喜欢的员工 1 旁边的座位已经被占领了。
 所以公司只能不邀请员工 2 。
 参加会议的最多员工数目为 4 。
 </pre>
@@ -66,28 +69,32 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：图的最大环 + 最长链
 
-**方法一：图的最大环 + 最长链**
+我们观察发现，题目中员工的喜好关系可以看作一个有向图，这个有向图可以分成多个“基环内向树”的结构。在每个结构中，包含一个环，而环上的每个节点都连接着一棵树。
 
-问题等价于求有向图的最大环，以及所有长度为 $2$ 的环加上其最长链。求这两者的较大值。
+什么是“基环内向树”？首先，基环树是一个具有 $n$ 个节点 $n$ 条边的有向图，而内向树是指这个有向图中，每个节点都有且仅有一条出边。本题中，每个员工都有且仅有一个喜欢的员工，因此，构成的有向图可以由多个“基环内向树”构成。
 
-求最长链到长度为 $2$ 的环，可以用拓扑排序。
+<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/2100-2199/2127.Maximum%20Employees%20to%20Be%20Invited%20to%20a%20Meeting/images/05Dxh9.png"></p>
 
-时间复杂度 $O(n)$。
+对于本题，我们可以求出图的最大环的长度，这里我们只需要求出最大的一个环的长度，这是因为，如果有多个环，那么不同环之间是不连通的，不符合题意。
 
-相似题目：[2360. 图中的最长环](/solution/2300-2399/2360.Longest%20Cycle%20in%20a%20Graph/README.md)
+另外，对于环的大小等于 $2$ 的长度，即存在两个员工互相喜欢，那么我们可以把这两个员工安排在一起，如果这两个员工各自被别的员工喜欢，那么我们只需要把喜欢他们的员工安排在他们的旁边即可。如果有多个这样的情况，我们可以把他们都安排上。
+
+因此，问题实际上等价于求出图的最大环的长度，以及所有长度为 $2$ 的环加上其最长链。求这两者的最大值即可。求最长链到长度为 $2$ 的环，我们可以使用拓扑排序。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `favorite` 的长度。
+
+相似题目：
+
+-   [2360. 图中的最长环](https://github.com/doocs/leetcode/blob/main/solution/2300-2399/2360.Longest%20Cycle%20in%20a%20Graph/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def maximumInvitations(self, favorite: List[int]) -> int:
-        def max_cycle(fa):
+        def max_cycle(fa: List[int]) -> int:
             n = len(fa)
             vis = [False] * n
             ans = 0
@@ -106,13 +113,13 @@ class Solution:
                         break
             return ans
 
-        def topological_sort(fa):
+        def topological_sort(fa: List[int]) -> int:
             n = len(fa)
             indeg = [0] * n
             dist = [1] * n
             for v in fa:
                 indeg[v] += 1
-            q = deque([i for i, v in enumerate(indeg) if v == 0])
+            q = deque(i for i, v in enumerate(indeg) if v == 0)
             while q:
                 i = q.popleft()
                 dist[fa[i]] = max(dist[fa[i]], dist[i] + 1)
@@ -123,10 +130,6 @@ class Solution:
 
         return max(max_cycle(favorite), topological_sort(favorite))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -190,8 +193,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -214,7 +215,7 @@ public:
             }
             for (int k = 0; k < cycle.size(); ++k) {
                 if (cycle[k] == j) {
-                    ans = max(ans, (int)cycle.size() - k);
+                    ans = max(ans, (int) cycle.size() - k);
                     break;
                 }
             }
@@ -243,8 +244,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maximumInvitations(favorite []int) int {
@@ -310,27 +309,66 @@ func topologicalSort(fa []int) int {
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maximumInvitations(favorite: number[]): number {
+    return Math.max(maxCycle(favorite), topologicalSort(favorite));
+}
+
+function maxCycle(fa: number[]): number {
+    const n = fa.length;
+    const vis: boolean[] = Array(n).fill(false);
+    let ans = 0;
+    for (let i = 0; i < n; ++i) {
+        if (vis[i]) {
+            continue;
+        }
+        const cycle: number[] = [];
+        let j = i;
+        for (; !vis[j]; j = fa[j]) {
+            cycle.push(j);
+            vis[j] = true;
+        }
+        for (let k = 0; k < cycle.length; ++k) {
+            if (cycle[k] === j) {
+                ans = Math.max(ans, cycle.length - k);
+            }
+        }
+    }
+    return ans;
+}
+
+function topologicalSort(fa: number[]): number {
+    const n = fa.length;
+    const indeg: number[] = Array(n).fill(0);
+    const dist: number[] = Array(n).fill(1);
+    for (const v of fa) {
+        ++indeg[v];
+    }
+    const q: number[] = [];
+    for (let i = 0; i < n; ++i) {
+        if (indeg[i] === 0) {
+            q.push(i);
+        }
+    }
+    let ans = 0;
+    while (q.length) {
+        const i = q.pop()!;
+        dist[fa[i]] = Math.max(dist[fa[i]], dist[i] + 1);
+        if (--indeg[fa[i]] === 0) {
+            q.push(fa[i]);
+        }
+    }
+    for (let i = 0; i < n; ++i) {
+        if (i === fa[fa[i]]) {
+            ans += dist[i];
+        }
+    }
+    return ans;
 }
 ```
 
-### **TypeScript**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

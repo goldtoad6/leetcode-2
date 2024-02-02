@@ -15,17 +15,17 @@
 | quantity      | int  |
 | purchase_date | date |
 +---------------+------+
-order_id is the primary key for this table.
+order_id contains unique values.
 Each row in this table contains the ID of an order, the id of the product purchased, the quantity, and the purchase date.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the IDs of all the products that were ordered three or more times in two consecutive years.</p>
+<p>Write a solution to report the IDs of all the products that were ordered three or more times in two consecutive years.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is shown in the following example.</p>
+<p>The&nbsp;result format is shown in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -57,12 +57,46 @@ Product 2 was ordered one time in 2022. We do not include it in the answer.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    P AS (
+        SELECT product_id, YEAR(purchase_date) AS y, COUNT(1) >= 3 AS mark
+        FROM Orders
+        GROUP BY 1, 2
+    )
+SELECT DISTINCT p1.product_id
+FROM
+    P AS p1
+    JOIN P AS p2 ON p1.y = p2.y - 1 AND p1.product_id = p2.product_id
+WHERE p1.mark AND p2.mark;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+WITH
+    P AS (
+        SELECT product_id, YEAR(purchase_date) AS y
+        FROM Orders
+        GROUP BY 1, 2
+        HAVING COUNT(1) >= 3
+    )
+SELECT DISTINCT p1.product_id
+FROM
+    P AS p1
+    JOIN P AS p2 ON p1.y = p2.y - 1 AND p1.product_id = p2.product_id;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

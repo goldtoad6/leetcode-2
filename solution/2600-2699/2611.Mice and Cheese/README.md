@@ -53,47 +53,29 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：贪心 + 排序
 
-**方法一：贪心 + 排序**
+我们可以先将所有奶酪分给第二只老鼠，因此初始得分为 $\sum_{i=0}^{n-1} reward2[i]$。
 
-我们可以先将所有奶酪分给第二只老鼠，接下来，考虑将其中 $k$ 块奶酪分给第一只老鼠，那么我们应该如何选择这 $k$ 块奶酪呢？显然，将第 $i$ 块奶酪从第二只老鼠分给第一只老鼠，得分的变化量为 $reward1[i] - reward2[i]$，我们希望这个变化量尽可能大，这样才能使得总得分最大。
+接下来，考虑将其中 $k$ 块奶酪分给第一只老鼠，那么我们应该如何选择这 $k$ 块奶酪呢？显然，将第 $i$ 块奶酪从第二只老鼠分给第一只老鼠，得分的变化量为 $reward1[i] - reward2[i]$，我们希望这个变化量尽可能大，这样才能使得总得分最大。
 
-因此，我们将奶酪按照 `reward1[i] - reward2[i]` 从大到小排序，前 $k$ 块奶酪由第一只老鼠吃掉，剩下的奶酪由第二只老鼠吃掉，即可得到最大得分。
+因此，我们将奶酪按照 $reward1[i] - reward2[i]$ 从大到小排序，前 $k$ 块奶酪由第一只老鼠吃掉，剩下的奶酪由第二只老鼠吃掉，即可得到最大得分。也即是说，我们将初始得分加上 $\sum_{i=0}^{k-1} (reward1[i] - reward2[i])$ 即可。
 
-时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 为奶酪的数量。
+时间复杂度 $O(n \times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为奶酪的数量。
 
 相似题目：
 
--   [1029. 两地调度](/solution/1000-1099/1029.Two%20City%20Scheduling/README.md)
+-   [1029. 两地调度](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1029.Two%20City%20Scheduling/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def miceAndCheese(self, reward1: List[int], reward2: List[int], k: int) -> int:
         n = len(reward1)
-        idx = sorted(
-            range(n), key=lambda i: reward1[i] - reward2[i], reverse=True)
+        idx = sorted(range(n), key=lambda i: reward1[i] - reward2[i], reverse=True)
         return sum(reward1[i] for i in idx[:k]) + sum(reward2[i] for i in idx[k:])
 ```
-
-```python
-class Solution:
-    def miceAndCheese(self, reward1: List[int], reward2: List[int], k: int) -> int:
-        for i, x in enumerate(reward2):
-            reward1[i] -= x
-        reward1.sort(reverse=True)
-        return sum(reward2) + sum(reward1[:k])
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -116,26 +98,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int miceAndCheese(int[] reward1, int[] reward2, int k) {
-        int ans = 0;
-        int n = reward1.length;
-        for (int i = 0; i < n; ++i) {
-            ans += reward2[i];
-            reward1[i] -= reward2[i];
-        }
-        Arrays.sort(reward1);
-        for (int i = 0; i < k; ++i) {
-            ans += reward1[n - i - 1];
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -155,25 +117,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k) {
-        int n = reward1.size();
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans += reward2[i];
-            reward1[i] -= reward2[i];
-        }
-        sort(reward1.rbegin(), reward1.rend());
-        ans += accumulate(reward1.begin(), reward1.begin() + k, 0);
-        return ans;
-    }
-};
-```
-
-### **Go**
 
 ```go
 func miceAndCheese(reward1 []int, reward2 []int, k int) (ans int) {
@@ -196,6 +139,72 @@ func miceAndCheese(reward1 []int, reward2 []int, k int) (ans int) {
 }
 ```
 
+```ts
+function miceAndCheese(reward1: number[], reward2: number[], k: number): number {
+    const n = reward1.length;
+    const idx = Array.from({ length: n }, (_, i) => i);
+    idx.sort((i, j) => reward1[j] - reward2[j] - (reward1[i] - reward2[i]));
+    let ans = 0;
+    for (let i = 0; i < k; ++i) {
+        ans += reward1[idx[i]];
+    }
+    for (let i = k; i < n; ++i) {
+        ans += reward2[idx[i]];
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def miceAndCheese(self, reward1: List[int], reward2: List[int], k: int) -> int:
+        for i, x in enumerate(reward2):
+            reward1[i] -= x
+        reward1.sort(reverse=True)
+        return sum(reward2) + sum(reward1[:k])
+```
+
+```java
+class Solution {
+    public int miceAndCheese(int[] reward1, int[] reward2, int k) {
+        int ans = 0;
+        int n = reward1.length;
+        for (int i = 0; i < n; ++i) {
+            ans += reward2[i];
+            reward1[i] -= reward2[i];
+        }
+        Arrays.sort(reward1);
+        for (int i = 0; i < k; ++i) {
+            ans += reward1[n - i - 1];
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k) {
+        int n = reward1.size();
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans += reward2[i];
+            reward1[i] -= reward2[i];
+        }
+        sort(reward1.rbegin(), reward1.rend());
+        ans += accumulate(reward1.begin(), reward1.begin() + k, 0);
+        return ans;
+    }
+};
+```
+
 ```go
 func miceAndCheese(reward1 []int, reward2 []int, k int) (ans int) {
 	for i, x := range reward2 {
@@ -211,34 +220,8 @@ func miceAndCheese(reward1 []int, reward2 []int, k int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function miceAndCheese(
-    reward1: number[],
-    reward2: number[],
-    k: number,
-): number {
-    const n = reward1.length;
-    const idx = Array.from({ length: n }, (_, i) => i);
-    idx.sort((i, j) => reward1[j] - reward2[j] - (reward1[i] - reward2[i]));
-    let ans = 0;
-    for (let i = 0; i < k; ++i) {
-        ans += reward1[idx[i]];
-    }
-    for (let i = k; i < n; ++i) {
-        ans += reward2[idx[i]];
-    }
-    return ans;
-}
-```
-
-```ts
-function miceAndCheese(
-    reward1: number[],
-    reward2: number[],
-    k: number,
-): number {
+function miceAndCheese(reward1: number[], reward2: number[], k: number): number {
     const n = reward1.length;
     let ans = 0;
     for (let i = 0; i < n; ++i) {
@@ -253,10 +236,6 @@ function miceAndCheese(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

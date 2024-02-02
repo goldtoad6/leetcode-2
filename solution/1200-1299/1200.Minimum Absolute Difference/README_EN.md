@@ -46,44 +46,37 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting
 
-### **Python3**
+According to the problem description, we need to find the minimum absolute difference between any two elements in the array $arr$. Therefore, we can first sort the array $arr$, then traverse the adjacent elements to get the minimum absolute difference $mi$.
+
+Finally, we traverse the adjacent elements again to find all pairs of elements where the minimum absolute difference equals $mi$.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def minimumAbsDifference(self, arr: List[int]) -> List[List[int]]:
         arr.sort()
-        ans = []
-        mi = inf
-        for a, b in pairwise(arr):
-            d = b - a
-            if d < mi:
-                ans = [(a, b)]
-                mi = d
-            elif d == mi:
-                ans.append((a, b))
-        return ans
+        mi = min(b - a for a, b in pairwise(arr))
+        return [[a, b] for a, b in pairwise(arr) if b - a == mi]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public List<List<Integer>> minimumAbsDifference(int[] arr) {
         Arrays.sort(arr);
-        List<List<Integer>> ans = new ArrayList<>();
         int n = arr.length;
-        int mi = Integer.MAX_VALUE;
+        int mi = 1 << 30;
         for (int i = 0; i < n - 1; ++i) {
-            int a = arr[i], b = arr[i + 1];
-            int d = b - a;
-            if (d < mi) {
-                ans.clear();
-                ans.add(Arrays.asList(a, b));
-                mi = d;
-            } else if (d == mi) {
-                ans.add(Arrays.asList(a, b));
+            mi = Math.min(mi, arr[i + 1] - arr[i]);
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < n - 1; ++i) {
+            if (arr[i + 1] - arr[i] == mi) {
+                ans.add(List.of(arr[i], arr[i + 1]));
             }
         }
         return ans;
@@ -91,56 +84,64 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<vector<int>> minimumAbsDifference(vector<int>& arr) {
         sort(arr.begin(), arr.end());
-        int mi = INT_MAX;
+        int mi = 1 << 30;
         int n = arr.size();
+        for (int i = 0; i < n - 1; ++i) {
+            mi = min(mi, arr[i + 1] - arr[i]);
+        }
         vector<vector<int>> ans;
         for (int i = 0; i < n - 1; ++i) {
-            int a = arr[i], b = arr[i + 1];
-            int d = b - a;
-            if (d < mi) {
-                mi = d;
-                ans.clear();
-                ans.push_back({a, b});
-            } else if (d == mi)
-                ans.push_back({a, b});
+            if (arr[i + 1] - arr[i] == mi) {
+                ans.push_back({arr[i], arr[i + 1]});
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func minimumAbsDifference(arr []int) [][]int {
+func minimumAbsDifference(arr []int) (ans [][]int) {
 	sort.Ints(arr)
-	mi := math.MaxInt32
-	var ans [][]int
-	for i, a := range arr[:len(arr)-1] {
-		b := arr[i+1]
-		d := b - a
-		if d < mi {
-			mi = d
-			ans = [][]int{[]int{a, b}}
-		} else if d == mi {
-			ans = append(ans, []int{a, b})
+	mi := 1 << 30
+	n := len(arr)
+	for i := 0; i < n-1; i++ {
+		if t := arr[i+1] - arr[i]; t < mi {
+			mi = t
 		}
 	}
-	return ans
+	for i := 0; i < n-1; i++ {
+		if arr[i+1]-arr[i] == mi {
+			ans = append(ans, []int{arr[i], arr[i+1]})
+		}
+	}
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function minimumAbsDifference(arr: number[]): number[][] {
+    arr.sort((a, b) => a - b);
+    let mi = 1 << 30;
+    const n = arr.length;
+    for (let i = 0; i < n - 1; ++i) {
+        mi = Math.min(mi, arr[i + 1] - arr[i]);
+    }
+    const ans: number[][] = [];
+    for (let i = 0; i < n - 1; ++i) {
+        if (arr[i + 1] - arr[i] === mi) {
+            ans.push([arr[i], arr[i + 1]]);
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

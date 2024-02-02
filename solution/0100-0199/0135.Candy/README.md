@@ -47,25 +47,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：两次遍历
 
-**方法一：两次遍历**
+我们初始化两个数组 $left$ 和 $right$，其中 $left[i]$ 表示当前孩子比左边孩子评分高时，当前孩子至少应该获得的糖果数，而 $right[i]$ 表示当前孩子比右边孩子评分高时，当前孩子至少应该获得的糖果数。初始时 $left[i]=1$, $right[i]=1$。
 
-两次遍历数组。
+我们从左到右遍历一遍，如果当前孩子比左边孩子评分高，则 $left[i]=left[i-1]+1$；同理，我们从右到左遍历一遍，如果当前孩子比右边孩子评分高，则 $right[i]=right[i+1]+1$。
 
-第一次从左到右遍历，如果当前孩子的评分比左边孩子高，则当前孩子的糖果数比左边孩子的糖果数多 1，即 $left[i]=left[i-1]+1$，否则 $left[i]=1$；
+最后，我们遍历一遍评分数组，每个孩子至少应该获得的糖果数为 $left[i]$ 和 $right[i]$ 中的最大值，将它们累加起来即为答案。
 
-第二次从右到左遍历，如果当前孩子的评分比右边孩子高，则当前孩子的糖果数比右边孩子的糖果数多 1，即 $right[i]=right[i+1]+1$，否则 $right[i]=1$。
-
-最后，每个孩子的糖果数为 $left[i]$ 和 $right[i]$ 的最大值，即 $max(left[i],right[i])$。累加每个孩子的糖果数，即为最少糖果数。
-
-时间复杂度为 $O(n)$，空间复杂度为 $O(n)$。其中 $n$ 为数组 `ratings` 的长度。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是评分数组的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +73,6 @@ class Solution:
                 right[i] = right[i + 1] + 1
         return sum(max(a, b) for a, b in zip(left, right))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -113,8 +101,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -140,8 +126,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func candy(ratings []int) int {
@@ -169,16 +153,7 @@ func candy(ratings []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function candy(ratings: number[]): number {
@@ -203,33 +178,69 @@ function candy(ratings: number[]): number {
 }
 ```
 
-### **C#**
-
 ```cs
 public class Solution {
     public int Candy(int[] ratings) {
         int n = ratings.Length;
-        int[] candies = new int[n];
-        Array.Fill(candies, 1);
+        int[] left = new int[n];
+        int[] right = new int[n];
+        Array.Fill(left, 1);
+        Array.Fill(right, 1);
         for (int i = 1; i < n; ++i) {
             if (ratings[i] > ratings[i - 1]) {
-                candies[i] = candies[i - 1] + 1;
+                left[i] = left[i - 1] + 1;
             }
         }
         for (int i = n - 2; i >= 0; --i) {
             if (ratings[i] > ratings[i + 1]) {
-                candies[i] = Math.Max(candies[i], candies[i + 1] + 1);
+                right[i] = right[i + 1] + 1;
             }
         }
-        return candies.Sum();
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans += Math.Max(left[i], right[i]);
+        }
+        return ans;
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```java
+class Solution {
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        int up = 0;
+        int down = 0;
+        int peak = 0;
+        int candies = 1;
+        for (int i = 1; i < n; i++) {
+            if (ratings[i - 1] < ratings[i]) {
+                up++;
+                peak = up + 1;
+                down = 0;
+                candies += peak;
+            } else if (ratings[i] == ratings[i - 1]) {
+                peak = 0;
+                up = 0;
+                down = 0;
+                candies++;
+            } else {
+                down++;
+                up = 0;
+                candies += down + (peak > down ? 0 : 1);
+            }
+        }
+        return candies;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

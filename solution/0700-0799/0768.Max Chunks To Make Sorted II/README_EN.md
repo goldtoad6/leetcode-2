@@ -41,9 +41,9 @@ However, splitting into [2, 1], [3], [4], [4] is the highest number of chunks po
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -59,8 +59,6 @@ class Solution:
                 stk.append(mx)
         return len(stk)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -104,8 +100,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxChunksToSorted(arr []int) int {
 	var stk []int
@@ -125,8 +119,6 @@ func maxChunksToSorted(arr []int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maxChunksToSorted(arr: number[]): number {
     const stack = [];
@@ -145,8 +137,6 @@ function maxChunksToSorted(arr: number[]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
@@ -157,7 +147,7 @@ impl Solution {
                 while !stack.is_empty() && num < stack.last().unwrap() {
                     stack.pop();
                 }
-                stack.push(max)
+                stack.push(max);
             } else {
                 stack.push(*num);
             }
@@ -167,10 +157,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

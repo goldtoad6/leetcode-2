@@ -38,17 +38,17 @@
 
 ## Solutions
 
-**Approach 1: Iteration**
+### Solution 1: Recursion
 
-Time complexity $O(n)$, Space complexity $O(1)$.
+We can implement swapping two nodes in the linked list through recursion.
 
-**Approach 2: Recursion**
+The termination condition of recursion is that there are no nodes in the linked list, or there is only one node in the linked list. At this time, swapping cannot be performed, so we directly return this node.
 
-Time complexity $O(n)$, Space complexity $O(n)$.
+Otherwise, we recursively swap the linked list $head.next.next$, and let the swapped head node be $t$. Then we let $p$ be the next node of $head$, and let $p$ point to $head$, and $head$ point to $t$, finally return $p$.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the linked list.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 # Definition for singly-linked list.
@@ -57,19 +57,15 @@ Time complexity $O(n)$, Space complexity $O(n)$.
 #         self.val = val
 #         self.next = next
 class Solution:
-    def swapPairs(self, head: ListNode) -> ListNode:
-        dummy = ListNode(next=head)
-        pre, cur = dummy, head
-        while cur and cur.next:
-            t = cur.next
-            cur.next = t.next
-            t.next = cur
-            pre.next = t
-            pre, cur = cur, cur.next
-        return dummy.next
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None or head.next is None:
+            return head
+        t = self.swapPairs(head.next.next)
+        p = head.next
+        p.next = head
+        head.next = t
+        return p
 ```
-
-### **Java**
 
 ```java
 /**
@@ -84,52 +80,17 @@ class Solution:
  */
 class Solution {
     public ListNode swapPairs(ListNode head) {
-        ListNode dummy = new ListNode(0, head);
-        ListNode pre = dummy, cur = head;
-        while (cur != null && cur.next != null) {
-            ListNode t = cur.next;
-            cur.next = t.next;
-            t.next = cur;
-            pre.next = t;
-            pre = cur;
-            cur = cur.next;
+        if (head == null || head.next == null) {
+            return head;
         }
-        return dummy.next;
+        ListNode t = swapPairs(head.next.next);
+        ListNode p = head.next;
+        p.next = head;
+        head.next = t;
+        return p;
     }
 }
 ```
-
-### **JavaScript**
-
-```js
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
-var swapPairs = function (head) {
-    const dummy = new ListNode(0, head);
-    let pre = dummy;
-    let cur = head;
-    while (cur && cur.next) {
-        const t = cur.next;
-        cur.next = t.next;
-        t.next = cur;
-        pre.next = t;
-        pre = cur;
-        cur = cur.next;
-    }
-    return dummy.next;
-};
-```
-
-### **C++**
 
 ```cpp
 /**
@@ -145,49 +106,17 @@ var swapPairs = function (head) {
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        ListNode* dummy = new ListNode(0, head);
-        ListNode *pre = dummy, *cur = head;
-        while (cur != nullptr && cur->next != nullptr) {
-            ListNode* t = cur->next;
-            cur->next = t->next;
-            t->next = cur;
-            pre->next = t;
-            pre = cur;
-            cur = cur->next;
+        if (!head || !head->next) {
+            return head;
         }
-        return dummy->next;
+        ListNode* t = swapPairs(head->next->next);
+        ListNode* p = head->next;
+        p->next = head;
+        head->next = t;
+        return p;
     }
 };
 ```
-
-### **Go**
-
-Iteration:
-
-```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func swapPairs(head *ListNode) *ListNode {
-    dummy := &ListNode{0, head}
-    pre, cur := dummy, head
-    for cur != nil && cur.Next != nil {
-        t := cur.Next
-        cur.Next = t.Next
-        t.Next = cur
-        pre.Next = t
-        pre = cur
-        cur = cur.Next
-    }
-    return dummy.Next
-}
-```
-
-Recursion:
 
 ```go
 /**
@@ -201,43 +130,13 @@ func swapPairs(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	res := swapPairs(head.Next.Next)
+	t := swapPairs(head.Next.Next)
 	p := head.Next
-	p.Next, head.Next = head, res
+	p.Next = head
+	head.Next = t
 	return p
 }
 ```
-
-### **Ruby**
-
-```rb
-# Definition for singly-linked list.
-# class ListNode
-#     attr_accessor :val, :next
-#     def initialize(val = 0, _next = nil)
-#         @val = val
-#         @next = _next
-#     end
-# end
-# @param {ListNode} head
-# @return {ListNode}
-def swap_pairs(head)
-    dummy = ListNode.new(0, head)
-    pre = dummy
-    cur = head
-    while !cur.nil? && !cur.next.nil?
-        t = cur.next
-        cur.next = t.next
-        t.next = cur
-        pre.next = t
-        pre = cur
-        cur = cur.next
-    end
-    dummy.next
-end
-```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -253,19 +152,16 @@ end
  */
 
 function swapPairs(head: ListNode | null): ListNode | null {
-    const dummy = new ListNode(0, head);
-    let cur = dummy;
-    while (cur.next != null && cur.next.next != null) {
-        const a = cur.next;
-        const b = cur.next.next;
-        [a.next, b.next, cur.next] = [b.next, a, b];
-        cur = cur.next.next;
+    if (!head || !head.next) {
+        return head;
     }
-    return dummy.next;
+    const t = swapPairs(head.next.next);
+    const p = head.next;
+    p.next = head;
+    head.next = t;
+    return p;
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for singly-linked list.
@@ -303,10 +199,222 @@ impl Solution {
 }
 ```
 
-### **...**
-
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function (head) {
+    if (!head || !head.next) {
+        return head;
+    }
+    const t = swapPairs(head.next.next);
+    const p = head.next;
+    p.next = head;
+    head.next = t;
+    return p;
+};
 ```
 
+```rb
+# Definition for singly-linked list.
+# class ListNode
+#     attr_accessor :val, :next
+#     def initialize(val = 0, _next = nil)
+#         @val = val
+#         @next = _next
+#     end
+# end
+# @param {ListNode} head
+# @return {ListNode}
+def swap_pairs(head)
+    dummy = ListNode.new(0, head)
+    pre = dummy
+    cur = head
+    while !cur.nil? && !cur.next.nil?
+        t = cur.next
+        cur.next = t.next
+        t.next = cur
+        pre.next = t
+        pre = cur
+        cur = cur.next
+    end
+    dummy.next
+end
 ```
 
 <!-- tabs:end -->
+
+### Solution 2: Iteration
+
+We set a dummy head node $dummy$, initially pointing to $head$, and then set two pointers $pre$ and $cur$, initially $pre$ points to $dummy$, and $cur$ points to $head$.
+
+Next, we traverse the linked list. Each time we need to swap the two nodes after $pre$, so we first judge whether $cur$ and $cur.next$ are empty. If they are not empty, we perform the swap, otherwise we terminate the loop.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the linked list.
+
+<!-- tabs:start -->
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(next=head)
+        pre, cur = dummy, head
+        while cur and cur.next:
+            t = cur.next
+            cur.next = t.next
+            t.next = cur
+            pre.next = t
+            pre, cur = cur, cur.next
+        return dummy.next
+```
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            ListNode t = cur.next;
+            cur.next = t.next;
+            t.next = cur;
+            pre.next = t;
+            pre = cur;
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+}
+```
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* pre = dummy;
+        ListNode* cur = head;
+        while (cur && cur->next) {
+            ListNode* t = cur->next;
+            cur->next = t->next;
+            t->next = cur;
+            pre->next = t;
+            pre = cur;
+            cur = cur->next;
+        }
+        return dummy->next;
+    }
+};
+```
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func swapPairs(head *ListNode) *ListNode {
+	dummy := &ListNode{Next: head}
+	pre, cur := dummy, head
+	for cur != nil && cur.Next != nil {
+		t := cur.Next
+		cur.Next = t.Next
+		t.Next = cur
+		pre.Next = t
+		pre, cur = cur, cur.Next
+	}
+	return dummy.Next
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function swapPairs(head: ListNode | null): ListNode | null {
+    const dummy = new ListNode(0, head);
+    let [pre, cur] = [dummy, head];
+    while (cur && cur.next) {
+        const t = cur.next;
+        cur.next = t.next;
+        t.next = cur;
+        pre.next = t;
+        [pre, cur] = [cur, cur.next];
+    }
+    return dummy.next;
+}
+```
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function (head) {
+    const dummy = new ListNode(0, head);
+    let [pre, cur] = [dummy, head];
+    while (cur && cur.next) {
+        const t = cur.next;
+        cur.next = t.next;
+        t.next = cur;
+        pre.next = t;
+        [pre, cur] = [cur, cur.next];
+    }
+    return dummy.next;
+};
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -43,13 +43,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def mincostToHireWorkers(self, quality: List[int], wage: List[int], k: int) -> float:
+    def mincostToHireWorkers(
+        self, quality: List[int], wage: List[int], k: int
+    ) -> float:
         t = sorted(zip(quality, wage), key=lambda x: x[1] / x[0])
         ans, tot = inf, 0
         h = []
@@ -61,8 +63,6 @@ class Solution:
                 tot += heappop(h)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,8 +99,6 @@ class Pair {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -128,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func mincostToHireWorkers(quality []int, wage []int, k int) float64 {
 	t := []pair{}
@@ -151,13 +147,6 @@ func mincostToHireWorkers(quality []int, wage []int, k int) float64 {
 	return ans
 }
 
-func min(a, b float64) float64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 type pair struct {
 	x float64
 	q int
@@ -165,8 +154,8 @@ type pair struct {
 
 type hp struct{ sort.IntSlice }
 
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h *hp) Push(v any) { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -175,10 +164,6 @@ func (h *hp) Pop() interface{} {
 func (h *hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

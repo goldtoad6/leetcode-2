@@ -45,15 +45,96 @@ The final concatenated result is &quot;Goal&quot;.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: String Replacement
 
-### **Python3**
+According to the problem, we only need to replace `"()"` with `'o'` and `"(al)"` with `"al"` in the string `command`.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def interpret(self, command: str) -> str:
         return command.replace('()', 'o').replace('(al)', 'al')
 ```
+
+```java
+class Solution {
+    public String interpret(String command) {
+        return command.replace("()", "o").replace("(al)", "al");
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    string interpret(string command) {
+        while (command.find("()") != -1) command.replace(command.find("()"), 2, "o");
+        while (command.find("(al)") != -1) command.replace(command.find("(al)"), 4, "al");
+        return command;
+    }
+};
+```
+
+```go
+func interpret(command string) string {
+	command = strings.ReplaceAll(command, "()", "o")
+	command = strings.ReplaceAll(command, "(al)", "al")
+	return command
+}
+```
+
+```ts
+function interpret(command: string): string {
+    return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
+}
+```
+
+```rust
+impl Solution {
+    pub fn interpret(command: String) -> String {
+        command.replace("()", "o").replace("(al)", "al")
+    }
+}
+```
+
+```c
+char* interpret(char* command) {
+    int n = strlen(command);
+    char* ans = malloc(sizeof(char) * n + 1);
+    int i = 0;
+    for (int j = 0; j < n; j++) {
+        char c = command[j];
+        if (c == 'G') {
+            ans[i++] = 'G';
+        } else if (c == '(') {
+            if (command[j + 1] == ')') {
+                ans[i++] = 'o';
+            } else {
+                ans[i++] = 'a';
+                ans[i++] = 'l';
+            }
+        }
+    }
+    ans[i] = '\0';
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: String Iteration
+
+We can also iterate over the string `command`. For each character $c$:
+
+-   If it is `'G'`, directly add $c$ to the result string;
+-   If it is `'('`, check if the next character is `')'`. If it is, add `'o'` to the result string. Otherwise, add `"al"` to the result string.
+
+After the iteration, return the result string.
+
+The time complexity is $O(n)$, and the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,16 +146,6 @@ class Solution:
             elif c == '(':
                 ans.append('o' if command[i + 1] == ')' else 'al')
         return ''.join(ans)
-```
-
-### **Java**
-
-```java
-class Solution {
-    public String interpret(String command) {
-        return command.replace("()", "o").replace("(al)", "al");
-    }
-}
 ```
 
 ```java
@@ -94,19 +165,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    string interpret(string command) {
-        while (command.find("()") != -1) command.replace(command.find("()"), 2, "o");
-        while (command.find("(al)") != -1) command.replace(command.find("(al)"), 4, "al");
-        return command;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -114,22 +172,14 @@ public:
         string ans;
         for (int i = 0; i < command.size(); ++i) {
             char c = command[i];
-            if (c == 'G') ans += c;
-            else if (c == '(') ans += command[i + 1] == ')' ? "o" : "al";
+            if (c == 'G')
+                ans += c;
+            else if (c == '(')
+                ans += command[i + 1] == ')' ? "o" : "al";
         }
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func interpret(command string) string {
-    command = strings.ReplaceAll(command, "()", "o")
-    command = strings.ReplaceAll(command, "(al)", "al")
-    return command
-}
 ```
 
 ```go
@@ -150,14 +200,6 @@ func interpret(command string) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function interpret(command: string): string {
-    return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
-}
-```
-
 ```ts
 function interpret(command: string): string {
     const n = command.length;
@@ -174,16 +216,6 @@ function interpret(command: string): string {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn interpret(command: String) -> String {
-        command.replace("()", "o").replace("(al)", "al")
-    }
-}
-```
-
 ```rust
 impl Solution {
     pub fn interpret(command: String) -> String {
@@ -195,12 +227,8 @@ impl Solution {
             }
             if bs[i] == b'(' {
                 ans.push_str({
-                    if bs[i + 1] == b')' {
-                        "o"
-                    } else {
-                        "al"
-                    }
-                })
+                    if bs[i + 1] == b')' { "o" } else { "al" }
+                });
             }
         }
         ans
@@ -208,35 +236,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
-char *interpret(char *command) {
-    int n = strlen(command);
-    char *ans = malloc(sizeof(char) * n + 1);
-    int i = 0;
-    for (int j = 0; j < n; j++) {
-        char c = command[j];
-        if (c == 'G') {
-            ans[i++] = 'G';
-        } else if (c == '(') {
-            if (command[j + 1] == ')') {
-                ans[i++] = 'o';
-            } else {
-                ans[i++] = 'a';
-                ans[i++] = 'l';
-            }
-        }
-    }
-    ans[i] = '\0';
-    return ans;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

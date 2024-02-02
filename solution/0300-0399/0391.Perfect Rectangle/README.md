@@ -45,15 +45,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-利用哈希表统计小矩形顶点出现的次数，除了最终大矩形的四个顶点只出现 1 次外，其他顶点的出现次数只有可能是 2 或 4。另外，为了满足条件，小矩形的面积和必须等于大矩形（无重叠）
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -89,10 +83,6 @@ class Solution:
 
         return all(c == 2 or c == 4 for c in cnt.values())
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -161,8 +151,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -191,7 +179,7 @@ public:
             ++cnt[{r[2], r[1]}];
         }
 
-        if (area != (long long)(maxX - minX) * (maxY - minY) || cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 || cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
+        if (area != (long long) (maxX - minX) * (maxY - minY) || cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 || cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
             return false;
         }
 
@@ -206,8 +194,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type pair struct {
@@ -255,26 +241,8 @@ func isRectangleCover(rectangles [][]int) bool {
 	}
 	return true
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

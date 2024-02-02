@@ -38,17 +38,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def canPermutePalindrome(self, s: str) -> bool:
-        return sum(v % 2 for v in Counter(s).values()) <= 1
+        return sum(v & 1 for v in Counter(s).values()) < 2
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -57,47 +55,55 @@ class Solution {
         for (char c : s.toCharArray()) {
             ++cnt[c - 'a'];
         }
-        int n = 0;
-        for (int v : cnt) {
-            n += v % 2;
+        int odd = 0;
+        for (int x : cnt) {
+            odd += x & 1;
         }
-        return n < 2;
+        return odd < 2;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     bool canPermutePalindrome(string s) {
         vector<int> cnt(26);
-        for (char& c : s) ++cnt[c - 'a'];
-        int n = 0;
-        for (int& v : cnt) n += v & 1;
-        return n < 2;
+        for (char& c : s) {
+            ++cnt[c - 'a'];
+        }
+        int odd = 0;
+        for (int x : cnt) {
+            odd += x & 1;
+        }
+        return odd < 2;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func canPermutePalindrome(s string) bool {
-	cnt := make([]int, 26)
+	cnt := [26]int{}
 	for _, c := range s {
 		cnt[c-'a']++
 	}
-	n := 0
-	for _, v := range cnt {
-		n += v & 1
+	odd := 0
+	for _, x := range cnt {
+		odd += x & 1
 	}
-	return n < 2
+	return odd < 2
 }
 ```
 
-### **JavaScript**
+```ts
+function canPermutePalindrome(s: string): boolean {
+    const cnt: number[] = new Array(26).fill(0);
+    for (const c of s) {
+        ++cnt[c.charCodeAt(0) - 97];
+    }
+    return cnt.filter(c => c % 2 === 1).length < 2;
+}
+```
 
 ```js
 /**
@@ -105,22 +111,14 @@ func canPermutePalindrome(s string) bool {
  * @return {boolean}
  */
 var canPermutePalindrome = function (s) {
-    let ss = new Set();
-    for (let c of s) {
-        if (ss.has(c)) {
-            ss.delete(c);
-        } else {
-            ss.add(c);
-        }
+    const cnt = new Array(26).fill(0);
+    for (const c of s) {
+        ++cnt[c.charCodeAt() - 'a'.charCodeAt()];
     }
-    return ss.size < 2;
+    return cnt.filter(c => c % 2 === 1).length < 2;
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

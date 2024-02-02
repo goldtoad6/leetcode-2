@@ -45,13 +45,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -69,10 +65,6 @@ class Solution:
             ans.append(int(s))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -97,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -122,8 +112,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func kthPalindrome(queries []int, intLength int) []int64 {
@@ -150,8 +138,6 @@ func kthPalindrome(queries []int, intLength int) []int64 {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function kthPalindrome(queries: number[], intLength: number): number[] {
     const isOdd = intLength % 2 === 1;
@@ -174,13 +160,11 @@ function kthPalindrome(queries: number[], intLength: number): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn kth_palindrome(queries: Vec<i32>, int_length: i32) -> Vec<i64> {
-        let is_odd = int_length & 1 == 1;
-        let best_num = i32::pow(10, (int_length / 2 + if is_odd { 0 } else { -1 }) as u32);
+        let is_odd = (int_length & 1) == 1;
+        let best_num = i32::pow(10, (int_length / 2 + (if is_odd { 0 } else { -1 })) as u32);
         let max = best_num * 9;
         queries
             .iter()
@@ -192,24 +176,21 @@ impl Solution {
                 format!(
                     "{}{}",
                     num,
-                    num.to_string()
+                    num
+                        .to_string()
                         .chars()
                         .rev()
                         .skip(if is_odd { 1 } else { 0 })
                         .collect::<String>()
                 )
-                .parse()
-                .unwrap()
+                    .parse()
+                    .unwrap()
             })
             .collect()
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

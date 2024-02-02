@@ -13,7 +13,7 @@
 | player_id      | int     |
 | player_name    | varchar |
 +----------------+---------+
-player_id is the primary key for this table.
+player_id is the primary key (column with unique values) for this table.
 Each row in this table contains the name and the ID of a tennis player.
 </pre>
 
@@ -31,17 +31,17 @@ Each row in this table contains the name and the ID of a tennis player.
 | US_open       | int     |
 | Au_open       | int     |
 +---------------+---------+
-year is the primary key for this table.
+year is the primary key (column with unique values) for this table.
 Each row of this table contains the IDs of the players who won one each tennis tournament of the grand slam.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the number of grand slam tournaments won by each player. Do not include the players who did not win any tournament.</p>
+<p>Write a solution to report the number of grand slam tournaments won by each player. Do not include the players who did not win any tournament.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -79,12 +79,76 @@ Player 3 (Novak) did not win anything, we did not include them in the result tab
 
 ## Solutions
 
+### Solution 1: Union All + Equi-Join + Group By
+
+We can use `UNION ALL` to merge all player IDs who won Grand Slam titles into a table `T`, then use an equi-join `JOIN` to join `T` table with `Players` table on `player_id`, and finally use `GROUP BY` and `COUNT` to count the number of Grand Slam titles won by each player.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT Wimbledon AS player_id
+        FROM Championships
+        UNION ALL
+        SELECT Fr_open AS player_id
+        FROM Championships
+        UNION ALL
+        SELECT US_open AS player_id
+        FROM Championships
+        UNION ALL
+        SELECT Au_open AS player_id
+        FROM Championships
+    )
+SELECT player_id, player_name, COUNT(1) AS grand_slams_count
+FROM
+    T
+    JOIN Players USING (player_id)
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    player_id,
+    player_name,
+    SUM(
+        (
+            CASE
+                WHEN Wimbledon = player_id THEN 1
+                ELSE 0
+            END
+        ) + (
+            CASE
+                WHEN Fr_open = player_id THEN 1
+                ELSE 0
+            END
+        ) + (
+            CASE
+                WHEN US_open = player_id THEN 1
+                ELSE 0
+            END
+        ) + (
+            CASE
+                WHEN Au_open = player_id THEN 1
+                ELSE 0
+            END
+        )
+    ) AS grand_slams_count
+FROM
+    Championships
+    CROSS JOIN Players
+GROUP BY player_id
+HAVING grand_slams_count > 0;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

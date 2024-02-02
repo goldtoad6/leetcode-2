@@ -46,25 +46,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀和 + 哈希表**
+### 方法一：前缀和 + 哈希表
 
 若链表节点的两个前缀和相等，说明两个前缀和之间的连续节点序列的和为 $0$，那么可以消去这部分连续节点。
 
-第一次遍历链表，用哈希表 `last` 记录前缀和以及对应的链表节点，同一前缀和 $s$，**后者的链表节点覆盖前者**。
+我们第一次遍历链表，用哈希表 $last$ 记录前缀和以及对应的链表节点，对于同一前缀和 $s$，后面出现的节点覆盖前面的节点。
 
-第二次遍历链表，若当前节点 `cur` 的前缀和 $s$ 在 `last` 出现，说明 `cur` 与 `last[s]` 之间的所有节点和为 $0$，直接修改 `cur` 的指向，`cur.next = last[s].next`，就删去了这部分和为 $0$ 的连续节点。继续往后遍历，删除所有和为 $0$ 的连续节点。
+接下来，我们再次遍历链表，若当前节点 $cur$ 的前缀和 $s$ 在 $last$ 出现，说明 $cur$ 与 $last[s]$ 之间的所有节点和为 $0$，我们直接修改 $cur$ 的指向，即 $cur.next = last[s].next$，这样就删去了这部分和为 $0$ 的连续节点。继续往后遍历，删除所有和为 $0$ 的连续节点。
 
-最后返回链表的头节点 `dummy.next`。
+最后返回链表的头节点 $dummy.next$。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为链表的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for singly-linked list.
@@ -88,10 +82,6 @@ class Solution:
             cur = cur.next
         return dummy.next
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -126,8 +116,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -164,8 +152,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for singly-linked list.
@@ -195,10 +181,80 @@ func removeZeroSumSublists(head *ListNode) *ListNode {
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 
+function removeZeroSumSublists(head: ListNode | null): ListNode | null {
+    const dummy = new ListNode(0, head);
+    const last = new Map<number, ListNode>();
+    let s = 0;
+    for (let cur = dummy; cur; cur = cur.next) {
+        s += cur.val;
+        last.set(s, cur);
+    }
+    s = 0;
+    for (let cur = dummy; cur; cur = cur.next) {
+        s += cur.val;
+        cur.next = last.get(s)!.next;
+    }
+    return dummy.next;
+}
 ```
 
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn remove_zero_sum_sublists(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        let dummy = Some(Box::new(ListNode { val: 0, next: head }));
+        let mut last = std::collections::HashMap::new();
+        let mut s = 0;
+        let mut p = dummy.as_ref();
+        while let Some(node) = p {
+            s += node.val;
+            last.insert(s, node);
+            p = node.next.as_ref();
+        }
+
+        let mut dummy = Some(Box::new(ListNode::new(0)));
+        let mut q = dummy.as_mut();
+        s = 0;
+        while let Some(cur) = q {
+            s += cur.val;
+            if let Some(node) = last.get(&s) {
+                cur.next = node.next.clone();
+            }
+            q = cur.next.as_mut();
+        }
+        dummy.unwrap().next
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

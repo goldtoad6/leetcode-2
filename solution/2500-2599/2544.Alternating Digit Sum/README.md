@@ -52,34 +52,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
+直接根据题目描述模拟即可。
 
-从最高有效位开始，每次取出一位数字，根据其相邻数字的符号，决定当前数字的符号，然后将当前数字加入答案。
+我们定义一个初始符号 $sign=1$，然后从最高有效位开始，每次取出一位数字 $x$，与 $sign$ 相乘，将结果加到答案中，然后将 $sign$ 取反，继续处理下一位数字，直到处理完所有数字。
 
 时间复杂度 $O(\log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为给定数字。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def alternateDigitSum(self, n: int) -> int:
-        ans, sign = 0, 1
-        for c in str(n):
-            x = int(c)
-            ans += sign * x
-            sign *= -1
-        return ans
+        return sum((-1) ** i * int(x) for i, x in enumerate(str(n)))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -94,8 +81,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -112,21 +97,17 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func alternateDigitSum(n int) int {
-	ans, sign := 0, 1
+func alternateDigitSum(n int) (ans int) {
+	sign := 1
 	for _, c := range strconv.Itoa(n) {
 		x := int(c - '0')
 		ans += sign * x
 		sign *= -1
 	}
-	return ans
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function alternateDigitSum(n: number): number {
@@ -140,8 +121,6 @@ function alternateDigitSum(n: number): number {
     return ans * -sign;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -158,8 +137,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 int alternateDigitSum(int n) {
     int ans = 0;
@@ -173,10 +150,40 @@ int alternateDigitSum(int n) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def alternateDigitSum(self, n: int) -> int:
+        ans, sign = 0, 1
+        for c in str(n):
+            x = int(c)
+            ans += sign * x
+            sign *= -1
+        return ans
 ```
 
+```rust
+impl Solution {
+    pub fn alternate_digit_sum(n: i32) -> i32 {
+        let mut ans = 0;
+        let mut sign = 1;
+
+        for c in format!("{}", n).chars() {
+            let x = c.to_digit(10).unwrap() as i32;
+            ans += x * sign;
+            sign *= -1;
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

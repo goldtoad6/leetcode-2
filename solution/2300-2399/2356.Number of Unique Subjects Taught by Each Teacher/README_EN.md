@@ -14,17 +14,17 @@
 | subject_id  | int  |
 | dept_id     | int  |
 +-------------+------+
-(subject_id, dept_id) is the primary key for this table.
+(subject_id, dept_id) is the primary key (combinations of columns with unique values) of this table.
 Each row in this table indicates that the teacher with teacher_id teaches the subject subject_id in the department dept_id.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the number of unique subjects each teacher teaches in the university.</p>
+<p>Write a solution to calculate&nbsp;the number of unique subjects each teacher teaches in the university.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is shown in the following example.</p>
+<p>The&nbsp;result format is shown in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -63,12 +63,17 @@ Teacher 2:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM Teacher
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

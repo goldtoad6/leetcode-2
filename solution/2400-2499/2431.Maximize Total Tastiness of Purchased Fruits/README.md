@@ -19,15 +19,15 @@
 
 <p>你想购买一些水果，这样总的味道是最大的，总价不超过 <code>maxAmount</code>。</p>
 
-<p>此外，你还可以用优惠券以&nbsp;<strong>半价&nbsp;</strong>购买水果 (四舍五入到最接近的整数)。您最多可以使用 <code>maxCoupons</code>&nbsp;次该优惠券。</p>
+<p>此外，你还可以用优惠券以&nbsp;<strong>半价 </strong>购买水果 (向下取整到最接近的整数)。您最多可以使用 <code>maxCoupons</code>&nbsp;次该优惠券。</p>
 
 <p>返回可购买的最大总口味。</p>
 
 <p><strong>注意:</strong></p>
 
 <ul>
-	<li>每种水果最多只能购买一次。</li>
-	<li>一些水果你最多只能用一次折价券。</li>
+	<li>每个水果最多只能购买一次。</li>
+	<li>一个水果你最多只能用一次折价券。</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -69,11 +69,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：记忆化搜索
 
-**方法一：记忆化搜索**
-
-设计函数 $dfs(i, j, k)$ 表示从第 $i$ 个水果开始，剩余 $j$ 元钱，剩余 $k$ 张优惠券时，最大的总美味度。
+我们设计函数 $dfs(i, j, k)$ 表示从第 $i$ 个水果开始，剩余 $j$ 元钱，剩余 $k$ 张优惠券时，最大的总美味度。
 
 对于第 $i$ 个水果，可以选择购买或者不购买，如果购买，那么可以选择使用优惠券或者不使用优惠券。
 
@@ -87,13 +85,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def maxTastiness(self, price: List[int], tastiness: List[int], maxAmount: int, maxCoupons: int) -> int:
+    def maxTastiness(
+        self, price: List[int], tastiness: List[int], maxAmount: int, maxCoupons: int
+    ) -> int:
         @cache
         def dfs(i, j, k):
             if i == len(price):
@@ -102,16 +98,11 @@ class Solution:
             if j >= price[i]:
                 ans = max(ans, dfs(i + 1, j - price[i], k) + tastiness[i])
             if j >= price[i] // 2 and k:
-                ans = max(
-                    ans, dfs(i + 1, j - price[i] // 2, k - 1) + tastiness[i])
+                ans = max(ans, dfs(i + 1, j - price[i] // 2, k - 1) + tastiness[i])
             return ans
 
         return dfs(0, maxAmount, maxCoupons)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -148,8 +139,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -161,19 +150,18 @@ public:
             if (i == n) return 0;
             if (f[i][j][k]) return f[i][j][k];
             int ans = dfs(i + 1, j, k);
-            if (j >= price[i])  ans = max(ans, dfs(i + 1, j - price[i], k) + tastiness[i]);
+            if (j >= price[i]) ans = max(ans, dfs(i + 1, j - price[i], k) + tastiness[i]);
             if (j >= price[i] / 2 && k) ans = max(ans, dfs(i + 1, j - price[i] / 2, k - 1) + tastiness[i]);
             f[i][j][k] = ans;
             return ans;
         };
         return dfs(0, maxAmount, maxCoupons);
     }
+
 private:
     int f[101][1001][6];
 };
 ```
-
-### **Go**
 
 ```go
 func maxTastiness(price []int, tastiness []int, maxAmount int, maxCoupons int) int {
@@ -205,25 +193,8 @@ func maxTastiness(price []int, tastiness []int, maxAmount int, maxCoupons int) i
 	}
 	return dfs(0, maxAmount, maxCoupons)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

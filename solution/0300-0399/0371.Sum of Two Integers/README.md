@@ -34,9 +34,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：位运算**
+### 方法一：位运算
 
 两数字的二进制形式 a,b ，求和 s = a + b ，a(i)、b(i) 分别表示 a、b 的第 i 个二进制位。一共有 4 种情况：
 
@@ -58,12 +56,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-由于 python `int` 是无限长整型，左移不会自动溢出，因此需要特殊处理。
-
 ```python
 class Solution:
     def getSum(self, a: int, b: int) -> int:
@@ -74,10 +66,6 @@ class Solution:
         return a if a < 0x80000000 else ~(a ^ 0xFFFFFFFF)
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int getSum(int a, int b) {
@@ -86,14 +74,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int getSum(int a, int b) {
         while (b) {
-            unsigned int carry = (unsigned int)(a & b) << 1;
+            unsigned int carry = (unsigned int) (a & b) << 1;
             a = a ^ b;
             b = carry;
         }
@@ -101,8 +87,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func getSum(a int, b int) int {
@@ -115,10 +99,6 @@ func getSum(a int, b int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

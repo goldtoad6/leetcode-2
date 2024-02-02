@@ -13,7 +13,7 @@
 | id            | int     |
 | name          | varchar |
 +---------------+---------+
-id is the primary key for this table.
+id is the primary key (column with unique values) for this table.
 Each row of this table contains the id and the name of an employee in a company.
 </pre>
 
@@ -28,17 +28,17 @@ Each row of this table contains the id and the name of an employee in a company.
 | id            | int     |
 | unique_id     | int     |
 +---------------+---------+
-(id, unique_id) is the primary key for this table.
+(id, unique_id) is the primary key (combination of columns with unique values) for this table.
 Each row of this table contains the id and the corresponding unique id of an employee in the company.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to show the <strong>unique ID </strong>of each user, If a user does not have a unique ID replace just show <code>null</code>.</p>
+<p>Write a solution to show the <strong>unique ID </strong>of each user, If a user does not have a unique ID replace just show <code>null</code>.</p>
 
 <p>Return the result table in <strong>any</strong> order.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -82,21 +82,18 @@ The unique ID of Jonathan is 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **SQL**
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
-SELECT
-    b.unique_id AS unique_id,
-    a.name AS name
+SELECT unique_id, name
 FROM
-    Employees a
-LEFT JOIN
-    EmployeeUNI b
-ON
-    a.id = b.id;
+    Employees
+    LEFT JOIN EmployeeUNI USING (id);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

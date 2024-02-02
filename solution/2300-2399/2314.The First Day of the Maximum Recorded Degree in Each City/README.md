@@ -16,14 +16,14 @@
 | day         | date |
 | degree      | int  |
 +-------------+------+
-(city_id, day) 是该表的主键。
+(city_id, day) 是该表的主键（具有唯一值的列的组合）。
 该表中的每一行都包含某一天某个城市的天气程度。
 所有的学位都是在 2022 年获得的。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 来查询每个城市中有最高温度记录的日子。如果同一城市多次记录最高气温，则返回其中最早的一天。</p>
+<p>编写解决方案，找出每个城市中有最高温度记录的日子。如果同一城市多次记录最高气温，则返回其中最早的一天。</p>
 
 <p>返回按 <code>city_id</code> <strong>升序排序&nbsp;</strong>的结果表。</p>
 
@@ -63,16 +63,28 @@ Weather 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            *,
+            RANK() OVER (
+                PARTITION BY city_id
+                ORDER BY degree DESC, day
+            ) AS rk
+        FROM Weather
+    )
+SELECT city_id, day, degree
+FROM T
+WHERE rk = 1
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

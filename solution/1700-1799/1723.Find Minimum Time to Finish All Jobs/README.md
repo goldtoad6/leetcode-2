@@ -43,19 +43,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：DFS + 剪枝
 
-**方法一：DFS + 剪枝**
-
-本题与 [2305. 公平分发饼干](/solution/2300-2399/2305.Fair%20Distribution%20of%20Cookies/README.md) 基本一致，不同的地方仅在于 $k$ 值的大小。
+本题与 [2305. 公平分发饼干](https://github.com/doocs/leetcode/blob/main/solution/2300-2399/2305.Fair%20Distribution%20of%20Cookies/README.md) 基本一致，不同的地方仅在于 $k$ 值的大小。
 
 剪枝优化：优化分配花费时间较大的工作，因此可以先对 $jobs$ 按照降序排列。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -80,10 +74,6 @@ class Solution:
         dfs(0)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -131,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -162,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTimeRequired(jobs []int, k int) int {
 	cnt := make([]int, k)
@@ -174,10 +160,7 @@ func minimumTimeRequired(jobs []int, k int) int {
 	var dfs func(int)
 	dfs = func(i int) {
 		if i == len(jobs) {
-			mx := 0
-			for _, v := range cnt {
-				mx = max(mx, v)
-			}
+			mx := slices.Max(cnt)
 			ans = min(ans, mx)
 			return
 		}
@@ -196,26 +179,8 @@ func minimumTimeRequired(jobs []int, k int) int {
 	dfs(0)
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -53,9 +53,9 @@ Then, a<sub>prefix</sub> + b<sub>suffix</sub> = &quot;ula&quot; + &quot;alu&quot
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,12 +67,10 @@ class Solution:
             return i >= j or check2(a, i, j) or check2(b, i, j)
 
         def check2(a: str, i: int, j: int) -> bool:
-            return a[i: j + 1] == a[i: j + 1][::-1]
+            return a[i : j + 1] == a[i : j + 1][::-1]
 
         return check1(a, b) or check1(b, a)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -100,8 +98,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,7 +106,7 @@ public:
     }
 
 private:
-    bool check1(string &a, string &b) {
+    bool check1(string& a, string& b) {
         int i = 0, j = b.size() - 1;
         while (i < j && a[i] == b[j]) {
             ++i;
@@ -119,7 +115,7 @@ private:
         return i >= j || check2(a, i, j) || check2(b, i, j);
     }
 
-    bool check2(string &a, int i, int j) {
+    bool check2(string& a, int i, int j) {
         while (i <= j && a[i] == a[j]) {
             ++i;
             --j;
@@ -128,8 +124,6 @@ private:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func checkPalindromeFormation(a string, b string) bool {
@@ -154,7 +148,28 @@ func check2(a string, i, j int) bool {
 }
 ```
 
-### **Rust**
+```ts
+function checkPalindromeFormation(a: string, b: string): boolean {
+    const check1 = (a: string, b: string) => {
+        let i = 0;
+        let j = b.length - 1;
+        while (i < j && a.charAt(i) === b.charAt(j)) {
+            i++;
+            j--;
+        }
+        return i >= j || check2(a, i, j) || check2(b, i, j);
+    };
+
+    const check2 = (a: string, i: number, j: number) => {
+        while (i < j && a.charAt(i) === a.charAt(j)) {
+            i++;
+            j--;
+        }
+        return i >= j;
+    };
+    return check1(a, b) || check1(b, a);
+}
+```
 
 ```rust
 impl Solution {
@@ -186,35 +201,6 @@ impl Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function checkPalindromeFormation(a: string, b: string): boolean {
-    const check1 = (a: string, b: string) => {
-        let i = 0;
-        let j = b.length - 1;
-        while (i < j && a.charAt(i) === b.charAt(j)) {
-            i++;
-            j--;
-        }
-        return i >= j || check2(a, i, j) || check2(b, i, j);
-    };
-
-    const check2 = (a: string, i: number, j: number) => {
-        while (i < j && a.charAt(i) === a.charAt(j)) {
-            i++;
-            j--;
-        }
-        return i >= j;
-    };
-    return check1(a, b) || check1(b, a);
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

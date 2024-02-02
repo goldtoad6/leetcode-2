@@ -45,9 +45,9 @@ The indices 0 and 1 both violate the condition, so return false.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
         cnt = Counter(num)
         return all(cnt[str(i)] == int(v) for i, v in enumerate(num))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,8 +74,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -96,8 +92,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func digitCount(num string) bool {
 	cnt := [10]int{}
@@ -113,8 +107,6 @@ func digitCount(num string) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function digitCount(num: string): boolean {
     const n = num.length;
@@ -128,8 +120,6 @@ function digitCount(num: string): boolean {
     return count.every(v => v === 0);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -148,10 +138,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-bool digitCount(char *num) {
+bool digitCount(char* num) {
     int count[10] = {0};
     for (int i = 0; num[i]; i++) {
         count[i] = num[i] - '0';
@@ -168,10 +156,6 @@ bool digitCount(char *num) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

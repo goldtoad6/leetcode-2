@@ -46,9 +46,9 @@ We cannot move south or west because we cannot go outside of the grid.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -75,8 +75,6 @@ class Solution:
         blocked = set((x, y) for x, y in blocked)
         return dfs(source, target, set()) and dfs(target, source, set())
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -113,8 +111,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 typedef unsigned long long ULL;
 
@@ -126,7 +122,7 @@ public:
 
     bool isEscapePossible(vector<vector<int>>& blocked, vector<int>& source, vector<int>& target) {
         this->blocked.clear();
-        for (auto& b : blocked) this->blocked.insert((ULL)b[0] * N + b[1]);
+        for (auto& b : blocked) this->blocked.insert((ULL) b[0] * N + b[1]);
         unordered_set<ULL> s1;
         unordered_set<ULL> s2;
         return dfs(source, target, s1) && dfs(target, source, s2);
@@ -135,8 +131,8 @@ public:
     bool dfs(vector<int>& source, vector<int>& target, unordered_set<ULL>& seen) {
         int sx = source[0], sy = source[1];
         int tx = target[0], ty = target[1];
-        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N || blocked.count((ULL)sx * N + sy) || seen.count((ULL)sx * N + sy)) return 0;
-        seen.insert((ULL)sx * N + sy);
+        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N || blocked.count((ULL) sx * N + sy) || seen.count((ULL) sx * N + sy)) return 0;
+        seen.insert((ULL) sx * N + sy);
         if (seen.size() > 20000 || (sx == target[0] && sy == target[1])) return 1;
         for (auto& dir : dirs) {
             vector<int> next = {sx + dir[0], sy + dir[1]};
@@ -146,8 +142,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isEscapePossible(blocked [][]int, source []int, target []int) bool {
@@ -181,10 +175,8 @@ func isEscapePossible(blocked [][]int, source []int, target []int) bool {
 }
 ```
 
-### **Rust**
-
 ```rust
-use std::collections::{HashSet, VecDeque};
+use std::collections::{ HashSet, VecDeque };
 
 const BOUNDARY: i32 = 1_000_000;
 const MAX: usize = 20000;
@@ -214,12 +206,13 @@ fn bfs(block: &HashSet<(i32, i32)>, source: &Vec<i32>, target: &Vec<i32>) -> boo
         }
         for (dx, dy) in dir.iter() {
             let (nx, ny) = (x + dx, y + dy);
-            if nx < 0
-                || nx >= BOUNDARY
-                || ny < 0
-                || ny >= BOUNDARY
-                || vis.contains(&(nx, ny))
-                || block.contains(&(nx, ny))
+            if
+                nx < 0 ||
+                nx >= BOUNDARY ||
+                ny < 0 ||
+                ny >= BOUNDARY ||
+                vis.contains(&(nx, ny)) ||
+                block.contains(&(nx, ny))
             {
                 continue;
             }
@@ -232,10 +225,6 @@ fn bfs(block: &HashSet<(i32, i32)>, source: &Vec<i32>, target: &Vec<i32>) -> boo
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

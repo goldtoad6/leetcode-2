@@ -62,13 +62,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -98,10 +94,6 @@ class Solution:
             ans[-1].append(v)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -138,8 +130,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -186,12 +176,7 @@ function compare(a: Array<number>, b: Array<number>) {
     return a2 - b2;
 }
 
-function dfs(
-    root: TreeNode | null,
-    depth: number,
-    idx: number,
-    solution: Array<Array<number>>,
-) {
+function dfs(root: TreeNode | null, depth: number, idx: number, solution: Array<Array<number>>) {
     if (!root) return;
     solution.push([root.val, depth, idx]);
     dfs(root.left, depth + 1, idx - 1, solution);
@@ -199,10 +184,6 @@ function dfs(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

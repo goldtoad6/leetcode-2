@@ -41,9 +41,9 @@ Only the first number is divisible by 5, so answer[0] is true.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
             ans.append(x == 0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,8 +69,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -89,8 +85,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func prefixesDivBy5(nums []int) (ans []bool) {
 	x := 0
@@ -102,10 +96,18 @@ func prefixesDivBy5(nums []int) (ans []bool) {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function prefixesDivBy5(nums: number[]): boolean[] {
+    const ans: boolean[] = [];
+    let x = 0;
+    for (const v of nums) {
+        x = ((x << 1) | v) % 5;
+        ans.push(x === 0);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

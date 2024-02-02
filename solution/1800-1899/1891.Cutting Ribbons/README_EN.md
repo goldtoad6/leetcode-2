@@ -8,6 +8,7 @@
 
 <ul>
 	<li>For example, if you have a ribbon of length <code>4</code>, you can:
+
     <ul>
     	<li>Keep the ribbon of length <code>4</code>,</li>
     	<li>Cut it into one ribbon of length <code>3</code> and one ribbon of length <code>1</code>,</li>
@@ -16,6 +17,7 @@
     	<li>Cut it into four ribbons of length <code>1</code>.</li>
     </ul>
     </li>
+
 </ul>
 
 <p>Your goal is to obtain <code>k</code> ribbons of all the <strong>same positive integer length</strong>. You are allowed to throw away any excess ribbon as a result of cutting.</p>
@@ -65,14 +67,22 @@ Now you have 4 ribbons of length 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Binary Search
 
-### **Python3**
+We observe that if we can obtain $k$ ropes of length $x$, then we can also obtain $k$ ropes of length $x-1$. This implies that there is a monotonicity property, and we can use binary search to find the maximum length $x$ such that we can obtain $k$ ropes of length $x$.
+
+We define the left boundary of the binary search as $left=0$, the right boundary as $right=\max(ribbons)$, and the middle value as $mid=(left+right+1)/2$. We then calculate the number of ropes we can obtain with length $mid$, denoted as $cnt$. If $cnt \geq k$, it means we can obtain $k$ ropes of length $mid$, so we update $left$ to $mid$. Otherwise, we update $right$ to $mid-1$.
+
+Finally, we return $left$ as the maximum length of the ropes we can obtain.
+
+The time complexity is $O(n \times \log M)$, where $n$ and $M$ are the number of ropes and the maximum length of the ropes, respectively. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxLength(self, ribbons: List[int], k: int) -> int:
-        left, right = 0, 100000
+        left, right = 0, max(ribbons)
         while left < right:
             mid = (left + right + 1) >> 1
             cnt = sum(x // mid for x in ribbons)
@@ -83,12 +93,13 @@ class Solution:
         return left
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int maxLength(int[] ribbons, int k) {
-        int left = 0, right = 100000;
+        int left = 0, right = 0;
+        for (int x : ribbons) {
+            right = Math.max(right, x);
+        }
         while (left < right) {
             int mid = (left + right + 1) >>> 1;
             int cnt = 0;
@@ -106,13 +117,11 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int maxLength(vector<int>& ribbons, int k) {
-        int left = 0, right = 1e5;
+        int left = 0, right = *max_element(ribbons.begin(), ribbons.end());
         while (left < right) {
             int mid = (left + right + 1) >> 1;
             int cnt = 0;
@@ -130,11 +139,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxLength(ribbons []int, k int) int {
-	left, right := 0, 100000
+	left, right := 0, slices.Max(ribbons)
 	for left < right {
 		mid := (left + right + 1) >> 1
 		cnt := 0
@@ -151,39 +158,10 @@ func maxLength(ribbons []int, k int) int {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} ribbons
- * @param {number} k
- * @return {number}
- */
-var maxLength = function (ribbons, k) {
-    let left = 0;
-    let right = 1e5;
-    while (left < right) {
-        const mid = (left + right + 1) >> 1;
-        let cnt = 0;
-        for (const x of ribbons) {
-            cnt += Math.floor(x / mid);
-        }
-        if (cnt >= k) {
-            left = mid;
-        } else {
-            right = mid - 1;
-        }
-    }
-    return left;
-};
-```
-
-### **TypeScript**
-
 ```ts
 function maxLength(ribbons: number[], k: number): number {
     let left = 0;
-    let right = 1e5;
+    let right = Math.max(...ribbons);
     while (left < right) {
         const mid = (left + right + 1) >> 1;
         let cnt = 0;
@@ -200,10 +178,56 @@ function maxLength(ribbons: number[], k: number): number {
 }
 ```
 
-### **...**
-
+```rust
+impl Solution {
+    pub fn max_length(ribbons: Vec<i32>, k: i32) -> i32 {
+        let mut left = 0i32;
+        let mut right = *ribbons.iter().max().unwrap();
+        while left < right {
+            let mid = (left + right + 1) / 2;
+            let mut cnt = 0i32;
+            for &entry in ribbons.iter() {
+                cnt += entry / mid;
+                if cnt >= k {
+                    break;
+                }
+            }
+            if cnt >= k {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+}
 ```
 
+```js
+/**
+ * @param {number[]} ribbons
+ * @param {number} k
+ * @return {number}
+ */
+var maxLength = function (ribbons, k) {
+    let left = 0;
+    let right = Math.max(...ribbons);
+    while (left < right) {
+        const mid = (left + right + 1) >> 1;
+        let cnt = 0;
+        for (const x of ribbons) {
+            cnt += Math.floor(x / mid);
+        }
+        if (cnt >= k) {
+            left = mid;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return left;
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

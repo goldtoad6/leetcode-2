@@ -40,9 +40,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,12 +54,10 @@ class Solution:
             j = i
             while j < n and s[j] == 'D':
                 j += 1
-            ans[i: j + 1] = ans[i: j + 1][::-1]
+            ans[i : j + 1] = ans[i : j + 1][::-1]
             i = max(i + 1, j)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findPermutation(s string) []int {
@@ -139,19 +133,8 @@ func reverse(arr []int, i, j int) {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

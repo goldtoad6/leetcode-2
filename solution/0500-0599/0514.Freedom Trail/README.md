@@ -56,9 +56,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们首先预处理出字符串 $ring$ 中每个字符 $c$ 出现的位置列表，记录在数组 $pos[c]$ 中。不妨假设字符串 $key$ 和 $ring$ 的长度分别为 $m$ 和 $n$。
 
@@ -73,10 +71,6 @@
 时间复杂度 $O(m \times n^2)$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别是字符串 $key$ 和 $ring$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -96,10 +90,6 @@ class Solution:
                     )
         return min(f[-1][j] for j in pos[key[-1]])
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -135,8 +125,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -154,7 +142,7 @@ public:
         for (int i = 1; i < m; ++i) {
             for (int j : pos[key[i] - 'a']) {
                 for (int k : pos[key[i - 1] - 'a']) {
-                    f[i][j] = min(f[i][j], f[i - 1][k] + min(abs(j - k), n - abs(j -  k)) + 1);
+                    f[i][j] = min(f[i][j], f[i - 1][k] + min(abs(j - k), n - abs(j - k)) + 1);
                 }
             }
         }
@@ -166,8 +154,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findRotateSteps(ring string, key string) int {
@@ -200,13 +186,6 @@ func findRotateSteps(ring string, key string) int {
 	return ans
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -215,10 +194,40 @@ func abs(x int) int {
 }
 ```
 
-### **...**
+```ts
+function findRotateSteps(ring: string, key: string): number {
+    const m: number = key.length;
+    const n: number = ring.length;
+    const pos: number[][] = Array.from({ length: 26 }, () => []);
+    for (let i = 0; i < n; ++i) {
+        const j: number = ring.charCodeAt(i) - 'a'.charCodeAt(0);
+        pos[j].push(i);
+    }
 
-```
+    const f: number[][] = Array.from({ length: m }, () => Array(n).fill(1 << 30));
+    for (const j of pos[key.charCodeAt(0) - 'a'.charCodeAt(0)]) {
+        f[0][j] = Math.min(j, n - j) + 1;
+    }
 
+    for (let i = 1; i < m; ++i) {
+        for (const j of pos[key.charCodeAt(i) - 'a'.charCodeAt(0)]) {
+            for (const k of pos[key.charCodeAt(i - 1) - 'a'.charCodeAt(0)]) {
+                f[i][j] = Math.min(
+                    f[i][j],
+                    f[i - 1][k] + Math.min(Math.abs(j - k), n - Math.abs(j - k)) + 1,
+                );
+            }
+        }
+    }
+
+    let ans: number = 1 << 30;
+    for (const j of pos[key.charCodeAt(m - 1) - 'a'.charCodeAt(0)]) {
+        ans = Math.min(ans, f[m - 1][j]);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

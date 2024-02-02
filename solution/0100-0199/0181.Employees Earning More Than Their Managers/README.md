@@ -17,17 +17,17 @@
 | salary      | int     |
 | managerId   | int     |
 +-------------+---------+
-Id是该表的主键。
+id 是该表的主键（具有唯一值的列）。
 该表的每一行都表示雇员的ID、姓名、工资和经理的ID。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个SQL查询来查找收入比经理高的员工。</p>
+<p>编写解决方案，找出收入比经理高的员工。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -54,20 +54,48 @@ Employee 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
+
+
+def find_employees(employee: pd.DataFrame) -> pd.DataFrame:
+    df = employee.merge(right=employee, how="left", left_on="managerId", right_on="id")
+    emp = df[df["salary_x"] > df["salary_y"]]["name_x"]
+
+    return pd.DataFrame({"Employee": emp})
+```
 
 ```sql
-select Name as Employee
-from Employee Curr
-where Salary > (
-        select Salary
-        from Employee
-        where Id = Curr.ManagerId
-    )
+SELECT Name AS Employee
+FROM Employee AS Curr
+WHERE
+    Salary > (
+        SELECT Salary
+        FROM Employee
+        WHERE Id = Curr.ManagerId
+    );
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    e1.name AS Employee
+FROM
+    Employee AS e1
+    JOIN Employee AS e2 ON e1.managerId = e2.id
+WHERE e1.salary > e2.salary;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

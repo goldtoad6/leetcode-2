@@ -14,18 +14,18 @@
 | to_id       | int     |
 | duration    | int     |
 +-------------+---------+
-This table does not have a primary key, it may contain duplicates.
+This table does not have a primary key (column with unique values), it may contain duplicates.
 This table contains the duration of a phone call between from_id and to_id.
 from_id != to_id
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report the number of calls and the total call duration between each pair of distinct persons <code>(person1, person2)</code> where <code>person1 &lt; person2</code>.</p>
+<p>Write a solution&nbsp;to report the number of calls and the total call duration between each pair of distinct persons <code>(person1, person2)</code> where <code>person1 &lt; person2</code>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -60,22 +60,40 @@ Users 3 and 4 had 4 calls and the total duration is 999 (100 + 200 + 200 + 499).
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Grouping and Summing
 
-### **SQL**
+We can use the `if` function or the `least` and `greatest` functions to convert `from_id` and `to_id` into `person1` and `person2`, and then group by `person1` and `person2` and sum the values.
+
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
 SELECT
-    from_id AS person1,
-    to_id AS person2,
+    IF(from_id < to_id, from_id, to_id) AS person1,
+    IF(from_id < to_id, to_id, from_id) AS person2,
     COUNT(1) AS call_count,
     SUM(duration) AS total_duration
-FROM
-    Calls
-GROUP BY
-    LEAST(from_id, to_id),
-    GREATEST(from_id, to_id);
+FROM Calls
+GROUP BY 1, 2;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    LEAST(from_id, to_id) AS person1,
+    GREATEST(from_id, to_id) AS person2,
+    COUNT(1) AS call_count,
+    SUM(duration) AS total_duration
+FROM Calls
+GROUP BY 1, 2;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

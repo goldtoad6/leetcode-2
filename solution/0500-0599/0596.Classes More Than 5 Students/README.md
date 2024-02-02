@@ -15,13 +15,13 @@
 | student     | varchar |
 | class       | varchar |
 +-------------+---------+
-(student, class)是该表的主键列。
+在 SQL 中，(student, class)是该表的主键列。
 该表的每一行表示学生的名字和他们注册的班级。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个SQL查询来报告 <strong>至少有5个学生</strong> 的所有班级。</p>
+<p>查询&nbsp;<strong>至少有5个学生</strong> 的所有班级。</p>
 
 <p>以 <strong>任意顺序 </strong>返回结果表。</p>
 
@@ -61,21 +61,20 @@ Courses table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：分组统计
+
+我们可以使用 `GROUP BY` 语句，按照班级分组，然后使用 `HAVING` 语句，筛选出学生数量大于等于 $5$ 的班级。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-	class
-FROM
-	courses
-GROUP BY
-	class
-HAVING
-	COUNT( class ) >= 5
+# Write your MySQL query statement below
+SELECT class
+FROM Courses
+GROUP BY 1
+HAVING COUNT(1) >= 5;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

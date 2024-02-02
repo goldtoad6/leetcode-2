@@ -9,63 +9,47 @@
 <p>Return <em>the linked list after the deletions.</em></p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
-
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1800-1899/1836.Remove%20Duplicates%20From%20an%20Unsorted%20Linked%20List/images/tmp-linked-list.jpg" style="width: 422px; height: 222px;" />
-
 <pre>
-
 <strong>Input:</strong> head = [1,2,3,2]
-
 <strong>Output:</strong> [1,3]
-
 <strong>Explanation:</strong> 2 appears twice in the linked list, so all 2&#39;s should be deleted. After deleting all 2&#39;s, we are left with [1,3].
-
 </pre>
 
 <p><strong class="example">Example 2:</strong></p>
-
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1800-1899/1836.Remove%20Duplicates%20From%20an%20Unsorted%20Linked%20List/images/tmp-linked-list-1.jpg" style="width: 422px; height: 151px;" />
-
 <pre>
-
 <strong>Input:</strong> head = [2,1,1,2]
-
 <strong>Output:</strong> []
-
 <strong>Explanation:</strong> 2 and 1 both appear twice. All the elements should be deleted.
-
 </pre>
 
 <p><strong class="example">Example 3:</strong></p>
-
 <img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1800-1899/1836.Remove%20Duplicates%20From%20an%20Unsorted%20Linked%20List/images/tmp-linked-list-2.jpg" style="width: 500px; height: 142px;" />
-
 <pre>
-
 <strong>Input:</strong> head = [3,2,2,1,3,2,4]
-
 <strong>Output:</strong> [1,4]
-
 <strong>Explanation: </strong>3 appears twice and 2 appears three times. After deleting all 3&#39;s and 2&#39;s, we are left with [1,4].
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-    <li>The number of nodes in the list is in the range&nbsp;<code>[1, 10<sup>5</sup>]</code></li>
-    <li><code>1 &lt;= Node.val &lt;= 10<sup>5</sup></code></li>
+	<li>The number of nodes in the list is in the range&nbsp;<code>[1, 10<sup>5</sup>]</code></li>
+	<li><code>1 &lt;= Node.val &lt;= 10<sup>5</sup></code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We can use a hash table $cnt$ to count the number of occurrences of each element in the linked list, and then traverse the linked list to delete elements that appear more than once.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$, where $n$ is the length of the linked list.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -90,8 +74,6 @@ class Solution:
             cur = cur.next
         return dummy.next
 ```
-
-### **Java**
 
 ```java
 /**
@@ -122,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -156,8 +136,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for singly-linked list.
@@ -183,10 +161,37 @@ func deleteDuplicatesUnsorted(head *ListNode) *ListNode {
 }
 ```
 
-### **...**
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
 
-```
-
+function deleteDuplicatesUnsorted(head: ListNode | null): ListNode | null {
+    const cnt: Map<number, number> = new Map();
+    for (let cur = head; cur; cur = cur.next) {
+        const x = cur.val;
+        cnt.set(x, (cnt.get(x) ?? 0) + 1);
+    }
+    const dummy = new ListNode(0, head);
+    for (let pre = dummy, cur = head; cur; cur = cur.next) {
+        if (cnt.get(cur.val)! > 1) {
+            pre.next = cur.next;
+        } else {
+            pre = cur;
+        }
+    }
+    return dummy.next;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

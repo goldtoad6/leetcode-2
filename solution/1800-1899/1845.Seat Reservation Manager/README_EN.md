@@ -49,13 +49,22 @@ seatManager.unreserve(5); // Unreserve seat 5, so now the available seats are [5
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Priority Queue (Min Heap)
 
-### **Python3**
+We can use a priority queue (min heap) to maintain the smallest number of reservable seats.
+
+Initially, put all seat numbers into the priority queue.
+
+When the `reserve` method is called, take out the smallest number from the priority queue, which is the smallest number of reservable seats.
+
+When the `unreserve` method is called, put the seat number back into the priority queue.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Where $n$ is the number of seats.
+
+<!-- tabs:start -->
 
 ```python
 class SeatManager:
-
     def __init__(self, n: int):
         self.q = list(range(1, n + 1))
         heapify(self.q)
@@ -72,8 +81,6 @@ class SeatManager:
 # param_1 = obj.reserve()
 # obj.unreserve(seatNumber)
 ```
-
-### **Java**
 
 ```java
 class SeatManager {
@@ -101,8 +108,6 @@ class SeatManager {
  * obj.unreserve(seatNumber);
  */
 ```
-
-### **C++**
 
 ```cpp
 class SeatManager {
@@ -135,8 +140,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type SeatManager struct {
 	q hp
@@ -160,9 +163,9 @@ func (this *SeatManager) Unreserve(seatNumber int) {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -177,10 +180,36 @@ func (h *hp) Pop() interface{} {
  */
 ```
 
-### **...**
+```cs
+public class SeatManager {
+    private SortedSet<int> availableSeats;
 
-```
+    public SeatManager(int n) {
+        availableSeats = new SortedSet<int>();
+        for (int i = 1; i <= n; i++) {
+            availableSeats.Add(i);
+        }
+    }
 
+    public int Reserve() {
+        int reservedSeat = availableSeats.Min;
+        availableSeats.Remove(reservedSeat);
+        return reservedSeat;
+    }
+
+    public void Unreserve(int seatNumber) {
+        availableSeats.Add(seatNumber);
+    }
+}
+
+/**
+ * Your SeatManager object will be instantiated and called as such:
+ * SeatManager obj = new SeatManager(n);
+ * int param_1 = obj.Reserve();
+ * obj.Unreserve(seatNumber);
+ */
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

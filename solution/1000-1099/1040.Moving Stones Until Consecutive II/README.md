@@ -59,9 +59,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：排序 + 分类讨论 + 双指针**
+### 方法一：排序 + 分类讨论 + 双指针
 
 我们先对数组 `stones` 进行升序排序，接下来分别考虑最大移动次数 $mx$ 和最小移动次数 $mi$。
 
@@ -76,10 +74,6 @@
 时间复杂度 $O(n \times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组 `stones` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -97,10 +91,6 @@ class Solution:
                 mi = min(mi, n - (j - i + 1))
         return [mi, mx]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -123,8 +113,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -149,8 +137,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numMovesStonesII(stones []int) []int {
 	sort.Ints(stones)
@@ -170,32 +156,14 @@ func numMovesStonesII(stones []int) []int {
 	}
 	return []int{mi, mx}
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function numMovesStonesII(stones: number[]): number[] {
     stones.sort((a, b) => a - b);
     const n = stones.length;
     let mi = n;
-    const mx =
-        Math.max(stones[n - 1] - stones[1] + 1, stones[n - 2] - stones[0] + 1) -
-        (n - 1);
+    const mx = Math.max(stones[n - 1] - stones[1] + 1, stones[n - 2] - stones[0] + 1) - (n - 1);
     for (let i = 0, j = 0; j < n; ++j) {
         while (stones[j] - stones[i] + 1 > n) {
             ++i;
@@ -210,10 +178,6 @@ function numMovesStonesII(stones: number[]): number[] {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

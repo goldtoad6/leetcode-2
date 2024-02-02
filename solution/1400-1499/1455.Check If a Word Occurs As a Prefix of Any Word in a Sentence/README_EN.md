@@ -47,9 +47,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -59,8 +59,6 @@ class Solution:
                 return i
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -75,8 +73,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -94,8 +90,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isPrefixOfWord(sentence string, searchWord string) int {
 	for i, s := range strings.Split(sentence, " ") {
@@ -106,8 +100,6 @@ func isPrefixOfWord(sentence string, searchWord string) int {
 	return -1
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function isPrefixOfWord(sentence: string, searchWord: string): number {
@@ -121,8 +113,6 @@ function isPrefixOfWord(sentence: string, searchWord: string): number {
     return -1;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -138,10 +128,25 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $sentence
+     * @param String $searchWord
+     * @return Integer
+     */
+    function isPrefixOfWord($sentence, $searchWord) {
+        $arr = explode(' ', $sentence);
+        for ($i = 0; $i < count($arr); $i++) {
+            if (strpos($arr[$i], $searchWord) === 0) {
+                return $i + 1;
+            }
+        }
+        return -1;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,11 +49,9 @@
 
 ## Solutions
 
-DFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -64,18 +62,16 @@ class Solution:
                 ans = max(ans, t)
                 return
             for j in range(i + 1, len(s) + 1):
-                if s[i: j] not in vis:
-                    vis.add(s[i: j])
+                if s[i:j] not in vis:
+                    vis.add(s[i:j])
                     dfs(j, t + 1)
-                    vis.remove(s[i: j])
+                    vis.remove(s[i:j])
 
         vis = set()
         ans = 1
         dfs(0, 0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -104,8 +100,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -137,8 +131,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxUniqueSplit(s string) int {
 	ans := 1
@@ -162,19 +154,8 @@ func maxUniqueSplit(s string) int {
 	dfs(0, 0)
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

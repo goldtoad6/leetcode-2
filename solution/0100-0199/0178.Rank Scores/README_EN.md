@@ -13,13 +13,13 @@
 | id          | int     |
 | score       | decimal |
 +-------------+---------+
-id is the primary key for this table.
+id is the primary key (column with unique values) for this table.
 Each row of this table contains the score of a game. Score is a floating point value with two decimal places.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to rank the scores. The ranking should be calculated according to the following rules:</p>
+<p>Write a solution to find the rank of the scores. The ranking should be calculated according to the following rules:</p>
 
 <ul>
 	<li>The scores should be ranked from the highest to the lowest.</li>
@@ -29,7 +29,7 @@ Each row of this table contains the score of a game. Score is a floating point v
 
 <p>Return the result table ordered by <code>score</code> in descending order.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -62,40 +62,60 @@ Scores table:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **MySQL8**
+```python
+import pandas as pd
 
-Use `DENSE_RANK()` to solve this problem.
 
-```sql
-DENSE_RANK() OVER (
-    PARTITION BY <expression>[{,<expression>...}]
-    ORDER BY <expression> [ASC|DESC], [{,<expression>...}]
-)
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    # Use the rank method to assign ranks to the scores in descending order with no gaps
+    scores["rank"] = scores["score"].rank(method="dense", ascending=False)
+
+    # Drop id column & Sort the DataFrame by score in descending order
+    result_df = scores.drop("id", axis=1).sort_values(by="score", ascending=False)
+
+    return result_df
 ```
-
-Solution:
 
 ```sql
 # Write your MySQL query statement below
-SELECT Score, DENSE_RANK() OVER (ORDER BY Score DESC) 'Rank'
+SELECT
+    score,
+    DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
 FROM Scores;
 ```
 
-### **MySQL5**
+<!-- tabs:end -->
 
-MySQL only provides [window function](https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html) after version 8. In previous versions, variables can be used to achieve similar functions:
+### Solution 2
+
+<!-- tabs:start -->
 
 ```sql
-SELECT Score,
-       CONVERT(rk, SIGNED) `Rank`
-FROM (SELECT Score,
-             IF(@latest = Score, @rank, @rank := @rank + 1) rk,
-             @latest := Score
-      FROM Scores,
-           (SELECT @rank := 0, @latest := NULL) tmp
-      ORDER BY Score DESC) s;
+SELECT
+    Score,
+    CONVERT(rk, SIGNED) `Rank`
+FROM
+    (
+        SELECT
+            Score,
+            IF(@latest = Score, @rank, @rank := @rank + 1) rk,
+            @latest := Score
+        FROM
+            Scores,
+            (
+                SELECT
+                    @rank := 0,
+                    @latest := NULL
+            ) tmp
+        ORDER BY
+            Score DESC
+    ) s;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -43,9 +43,25 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Mathematics
 
-### **Python3**
+For a point $(x, y)$, its shortest distance to the center of the circle $(xCenter, yCenter)$ is $\sqrt{(x - xCenter)^2 + (y - yCenter)^2}$. If this distance is less than or equal to the radius $radius$, then this point is within the circle (including the boundary).
+
+For points within the rectangle (including the boundary), their x-coordinates $x$ satisfy $x_1 \leq x \leq x_2$, and their y-coordinates $y$ satisfy $y_1 \leq y \leq y_2$. To determine whether the circle and rectangle overlap, we need to find a point $(x, y)$ within the rectangle such that $a = |x - xCenter|$ and $b = |y - yCenter|$ are minimized. If $a^2 + b^2 \leq radius^2$, then the circle and rectangle overlap.
+
+Therefore, the problem is transformed into finding the minimum value of $a = |x - xCenter|$ when $x \in [x_1, x_2]$, and the minimum value of $b = |y - yCenter|$ when $y \in [y_1, y_2]$.
+
+For $x \in [x_1, x_2]$:
+
+-   If $x_1 \leq xCenter \leq x_2$, then the minimum value of $|x - xCenter|$ is $0$;
+-   If $xCenter < x_1$, then the minimum value of $|x - xCenter|$ is $x_1 - xCenter$;
+-   If $xCenter > x_2$, then the minimum value of $|x - xCenter|$ is $xCenter - x_2$.
+
+Similarly, we can find the minimum value of $|y - yCenter|$ when $y \in [y_1, y_2]$. We can use a function $f(i, j, k)$ to handle the above situations.
+
+That is, $a = f(x_1, x_2, xCenter)$, $b = f(y_1, y_2, yCenter)$. If $a^2 + b^2 \leq radius^2$, then the circle and rectangle overlap.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -59,67 +75,90 @@ class Solution:
         x2: int,
         y2: int,
     ) -> bool:
-        dx = dy = 0
-        if x1 > xCenter:
-            dx = xCenter - x1
-        elif x2 < xCenter:
-            dx = xCenter - x2
-        if y1 > yCenter:
-            dy = yCenter - y1
-        elif y2 < yCenter:
-            dy = yCenter - y2
-        return dx * dx + dy * dy <= radius * radius
-```
+        def f(i: int, j: int, k: int) -> int:
+            if i <= k <= j:
+                return 0
+            return i - k if k < i else k - j
 
-### **Java**
+        a = f(x1, x2, xCenter)
+        b = f(y1, y2, yCenter)
+        return a * a + b * b <= radius * radius
+```
 
 ```java
 class Solution {
     public boolean checkOverlap(
         int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
-        int dx = x1 > xCenter ? x1 - xCenter : (x2 < xCenter ? xCenter - x2 : 0);
-        int dy = y1 > yCenter ? y1 - yCenter : (y2 < yCenter ? yCenter - y2 : 0);
-        return dx * dx + dy * dy <= radius * radius;
+        int a = f(x1, x2, xCenter);
+        int b = f(y1, y2, yCenter);
+        return a * a + b * b <= radius * radius;
+    }
+
+    private int f(int i, int j, int k) {
+        if (i <= k && k <= j) {
+            return 0;
+        }
+        return k < i ? i - k : k - j;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     bool checkOverlap(int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
-        int dx = x1 > xCenter ? x1 - xCenter : (x2 < xCenter ? xCenter - x2 : 0);
-        int dy = y1 > yCenter ? y1 - yCenter : (y2 < yCenter ? yCenter - y2 : 0);
-        return dx * dx + dy * dy <= radius * radius;
+        auto f = [](int i, int j, int k) -> int {
+            if (i <= k && k <= j) {
+                return 0;
+            }
+            return k < i ? i - k : k - j;
+        };
+        int a = f(x1, x2, xCenter);
+        int b = f(y1, y2, yCenter);
+        return a * a + b * b <= radius * radius;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func checkOverlap(radius int, xCenter int, yCenter int, x1 int, y1 int, x2 int, y2 int) bool {
-	dx, dy := 0, 0
-	if x1 > xCenter {
-		dx = x1 - xCenter
-	} else if x2 < xCenter {
-		dx = x2 - xCenter
+	f := func(i, j, k int) int {
+		if i <= k && k <= j {
+			return 0
+		}
+		if k < i {
+			return i - k
+		}
+		return k - j
 	}
-	if y1 > yCenter {
-		dy = y1 - yCenter
-	} else if y2 < yCenter {
-		dy = y2 - yCenter
-	}
-	return dx*dx+dy*dy <= radius*radius
+	a := f(x1, x2, xCenter)
+	b := f(y1, y2, yCenter)
+	return a*a+b*b <= radius*radius
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function checkOverlap(
+    radius: number,
+    xCenter: number,
+    yCenter: number,
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+): boolean {
+    const f = (i: number, j: number, k: number) => {
+        if (i <= k && k <= j) {
+            return 0;
+        }
+        return k < i ? i - k : k - j;
+    };
+    const a = f(x1, x2, xCenter);
+    const b = f(y1, y2, yCenter);
+    return a * a + b * b <= radius * radius;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

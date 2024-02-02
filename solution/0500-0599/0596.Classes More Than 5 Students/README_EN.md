@@ -13,17 +13,17 @@
 | student     | varchar |
 | class       | varchar |
 +-------------+---------+
-(student, class) is the primary key column for this table.
+(student, class) is the primary key (combination of columns with unique values) for this table.
 Each row of this table indicates the name of a student and the class in which they are enrolled.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to report all the classes that have <strong>at least five students</strong>.</p>
+<p>Write a solution to find all the classes that have <strong>at least five students</strong>.</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -59,19 +59,20 @@ Courses table:
 
 ## Solutions
 
+### Solution 1: Grouping and Aggregation
+
+We can use the `GROUP BY` statement to group by class and then use the `HAVING` statement to filter out the classes with a student count greater than or equal to $5$.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-	class
-FROM
-	courses
-GROUP BY
-	class
-HAVING
-	COUNT( class ) >= 5
+# Write your MySQL query statement below
+SELECT class
+FROM Courses
+GROUP BY 1
+HAVING COUNT(1) >= 5;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -71,13 +71,9 @@ countAndSay(4) = 读 "21" = 一 个 2 + 一 个 1 = "12" + "11" = "1211"
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -96,10 +92,6 @@ class Solution:
             s = ''.join(t)
         return s
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -123,8 +115,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -145,8 +135,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countAndSay(n int) string {
@@ -169,7 +157,74 @@ func countAndSay(n int) string {
 }
 ```
 
-### **C#**
+```ts
+function countAndSay(n: number): string {
+    let s = '1';
+    for (let i = 1; i < n; i++) {
+        let t = '';
+        let cur = s[0];
+        let count = 1;
+        for (let j = 1; j < s.length; j++) {
+            if (s[j] !== cur) {
+                t += `${count}${cur}`;
+                cur = s[j];
+                count = 0;
+            }
+            count++;
+        }
+        t += `${count}${cur}`;
+        s = t;
+    }
+    return s;
+}
+```
+
+```rust
+use std::iter::once;
+
+impl Solution {
+    pub fn count_and_say(n: i32) -> String {
+        (1..n)
+            .fold(vec![1], |curr, _| {
+                let mut next = vec![];
+                let mut slow = 0;
+                for fast in 0..=curr.len() {
+                    if fast == curr.len() || curr[slow] != curr[fast] {
+                        next.extend(once((fast - slow) as u8).chain(once(curr[slow])));
+                        slow = fast;
+                    }
+                }
+                next
+            })
+            .into_iter()
+            .map(|digit| (digit + b'0') as char)
+            .collect()
+    }
+}
+```
+
+```js
+const countAndSay = function (n) {
+    let s = '1';
+
+    for (let i = 2; i <= n; i++) {
+        let count = 1,
+            str = '',
+            len = s.length;
+
+        for (let j = 0; j < len; j++) {
+            if (j < len - 1 && s[j] === s[j + 1]) {
+                count++;
+            } else {
+                str += `${count}${s[j]}`;
+                count = 1;
+            }
+        }
+        s = str;
+    }
+    return s;
+};
+```
 
 ```cs
 using System.Text;
@@ -211,59 +266,6 @@ public class Solution {
 }
 ```
 
-### **JavaScript**
-
-```js
-const countAndSay = function (n) {
-    let s = '1';
-
-    for (let i = 2; i <= n; i++) {
-        let count = 1,
-            str = '',
-            len = s.length;
-
-        for (let j = 0; j < len; j++) {
-            if (j < len - 1 && s[j] === s[j + 1]) {
-                count++;
-            } else {
-                str += `${count}${s[j]}`;
-                count = 1;
-            }
-        }
-        s = str;
-    }
-    return s;
-};
-```
-
-### **TypeScript**
-
-```ts
-function countAndSay(n: number): string {
-    let s = '1';
-    for (let i = 1; i < n; i++) {
-        let t = '';
-        let cur = s[0];
-        let count = 1;
-        for (let j = 1; j < s.length; j++) {
-            if (s[j] !== cur) {
-                t += `${count}${cur}`;
-                cur = s[j];
-                count = 0;
-            }
-            count++;
-        }
-        t += `${count}${cur}`;
-        s = t;
-    }
-    return s;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

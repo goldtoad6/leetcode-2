@@ -62,9 +62,9 @@ The sum of all the total strengths is 25 + 16 + 36 + 36 + 40 + 60 = 213.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -97,8 +97,6 @@ class Solution:
             ans = (ans + (a - b) * v) % mod
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -150,8 +148,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -180,16 +176,14 @@ public:
         for (int i = 0; i < n; ++i) {
             int v = strength[i];
             int l = left[i] + 1, r = right[i] - 1;
-            long a = (long)(i - l + 1) * (ss[r + 2] - ss[i + 1]);
-            long b = (long)(r - i + 1) * (ss[i + 1] - ss[l]);
+            long a = (long) (i - l + 1) * (ss[r + 2] - ss[i + 1]);
+            long b = (long) (r - i + 1) * (ss[i + 1] - ss[l]);
             ans = (ans + v * ((a - b) % mod)) % mod;
         }
-        return (int)(ans + mod) % mod;
+        return (int) (ans + mod) % mod;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func totalStrength(strength []int) int {
@@ -240,16 +234,6 @@ func totalStrength(strength []int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

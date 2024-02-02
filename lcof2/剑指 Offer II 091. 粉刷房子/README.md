@@ -47,13 +47,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -66,10 +62,6 @@ class Solution:
             b = min(_r, _g) + cost[2]
         return min(r, g, b)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -85,8 +77,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -104,8 +94,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCost(costs [][]int) int {
 	r, g, b := 0, 0, 0
@@ -117,32 +105,17 @@ func minCost(costs [][]int) int {
 	}
 	return min(r, min(g, b))
 }
-
-func min(x, y int) int {
-	if x < y {
-		return x
-	}
-	return y
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minCost(costs: number[][]): number {
     let [r, g, b] = [0, 0, 0];
     for (const [_r, _g, _b] of costs) {
-        [r, g, b] = [
-            _r + Math.min(g, b),
-            _g + Math.min(r, b),
-            _b + Math.min(r, g),
-        ];
+        [r, g, b] = [_r + Math.min(g, b), _g + Math.min(r, b), _b + Math.min(r, g)];
     }
     return Math.min(r, g, b);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -160,10 +133,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

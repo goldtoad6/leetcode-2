@@ -56,11 +56,9 @@
 
 ## Solutions
 
-BFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -85,8 +83,6 @@ class Solution:
         return -1
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int minimumJumps(int[] forbidden, int a, int b, int x) {
@@ -99,8 +95,7 @@ class Solution {
         final int n = 6000;
         boolean[][] vis = new boolean[n][2];
         vis[0][1] = true;
-        int ans = 0;
-        while (!q.isEmpty()) {
+        for (int ans = 0; !q.isEmpty(); ++ans) {
             for (int t = q.size(); t > 0; --t) {
                 var p = q.poll();
                 int i = p[0], k = p[1];
@@ -121,14 +116,11 @@ class Solution {
                     }
                 }
             }
-            ++ans;
         }
         return -1;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -141,8 +133,7 @@ public:
         bool vis[n][2];
         memset(vis, false, sizeof(vis));
         vis[0][1] = true;
-        int ans = 0;
-        while (!q.empty()) {
+        for (int ans = 0; q.size(); ++ans) {
             for (int t = q.size(); t; --t) {
                 auto [i, k] = q.front();
                 q.pop();
@@ -160,14 +151,11 @@ public:
                     }
                 }
             }
-            ++ans;
         }
         return -1;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minimumJumps(forbidden []int, a int, b int, x int) (ans int) {
@@ -179,7 +167,7 @@ func minimumJumps(forbidden []int, a int, b int, x int) (ans int) {
 	const n = 6000
 	vis := make([][2]bool, n)
 	vis[0][1] = true
-	for len(q) > 0 {
+	for ; len(q) > 0; ans++ {
 		for t := len(q); t > 0; t-- {
 			p := q[0]
 			q = q[1:]
@@ -199,16 +187,40 @@ func minimumJumps(forbidden []int, a int, b int, x int) (ans int) {
 				}
 			}
 		}
-		ans++
 	}
 	return -1
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function minimumJumps(forbidden: number[], a: number, b: number, x: number): number {
+    const s: Set<number> = new Set(forbidden);
+    const q: [number, number][] = [[0, 1]];
+    const n = 6000;
+    const vis: boolean[][] = Array.from({ length: n }, () => [false, false]);
+    vis[0][1] = true;
+    for (let ans = 0; q.length; ++ans) {
+        for (let t = q.length; t; --t) {
+            const [i, k] = q.shift()!;
+            if (i === x) {
+                return ans;
+            }
+            const nxt: [number, number][] = [[i + a, 1]];
+            if (k & 1) {
+                nxt.push([i - b, 0]);
+            }
+            for (const [j, k] of nxt) {
+                if (j >= 0 && j < n && !s.has(j) && !vis[j][k]) {
+                    vis[j][k] = true;
+                    q.push([j, k]);
+                }
+            }
+        }
+    }
+    return -1;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

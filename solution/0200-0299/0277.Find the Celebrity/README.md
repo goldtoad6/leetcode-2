@@ -65,9 +65,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：O(n) 遍历**
+### 方法一：O(n) 遍历
 
 经过验证，若暴力遍历，调用 $O(n^2)$ 次 $knows$ 方法，会报 TLE 错误。因此，我们需要寻找更优的解法。
 
@@ -106,14 +104,11 @@ ans = 6
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 # The knows API is already defined for you.
 # return a bool, whether a knows b
 # def knows(a: int, b: int) -> bool:
+
 
 class Solution:
     def findCelebrity(self, n: int) -> int:
@@ -127,10 +122,6 @@ class Solution:
                     return -1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /* The knows API is defined in the parent class Relation.
@@ -155,8 +146,6 @@ public class Solution extends Relation {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /* The knows API is defined for you.
@@ -183,8 +172,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * The knows API is already defined for you.
@@ -210,10 +197,6 @@ func solution(knows func(a int, b int) bool) func(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -53,9 +53,13 @@ Choosing index 2 is optimal: nums1[2] * nums2[2] = 3 * 10 = 30 is the maximum po
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting + Priority Queue (Min Heap)
 
-### **Python3**
+Sort nums2 and nums1 in descending order according to nums2, then traverse from front to back, maintaining a min heap. The heap stores elements from nums1, and the number of elements in the heap does not exceed $k$. At the same time, maintain a variable $s$ representing the sum of the elements in the heap, and continuously update the answer during the traversal process.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array nums1.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,8 +75,6 @@ class Solution:
                 s -= heappop(q)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -97,8 +99,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -126,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxScore(nums1 []int, nums2 []int, k int) int64 {
 	type pair struct{ a, b int }
@@ -151,18 +149,11 @@ func maxScore(nums1 []int, nums2 []int, k int) int64 {
 	return int64(ans)
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -170,10 +161,6 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

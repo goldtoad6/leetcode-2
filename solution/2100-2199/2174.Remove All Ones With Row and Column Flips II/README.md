@@ -65,15 +65,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：状态压缩 + BFS**
+### 方法一：状态压缩 + BFS
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -103,10 +97,6 @@ class Solution:
             ans += 1
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -157,8 +147,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -169,8 +157,8 @@ public:
             for (int j = 0; j < n; ++j)
                 if (grid[i][j])
                     state |= (1 << (i * n + j));
-        queue<int> q {{state}};
-        unordered_set<int> vis {{state}};
+        queue<int> q{{state}};
+        unordered_set<int> vis{{state}};
         int ans = 0;
         while (!q.empty()) {
             for (int k = q.size(); k > 0; --k) {
@@ -197,64 +185,52 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func removeOnes(grid [][]int) int {
-    m, n := len(grid), len(grid[0])
-    state := 0
-    for i, row := range grid {
-        for j, v := range row {
-            if v == 1 {
-                state |= 1 << (i * n + j)
-            }
-        }
-    }
-    q := []int{state}
-    vis := map[int]bool{state:true}
-    ans := 0
-    for len(q) > 0 {
-        for k := len(q); k > 0; k-- {
-            state = q[0]
-            if state == 0 {
-                return ans
-            }
-            q = q[1:]
-            for i, row := range grid {
-                for j, v := range row {
-                    if v == 0 {
-                        continue
-                    }
-                    nxt := state
-                    for r := 0; r < m; r++ {
-                        nxt &= ^(1 << (r * n + j))
-                    }
-                    for c := 0; c < n; c++ {
-                        nxt &= ^(1 << (i * n + c))
-                    }
-                    if !vis[nxt] {
-                        vis[nxt] = true
-                        q = append(q, nxt)
-                    }
-                }
-            }
-        }
-        ans++
-    }
-    return -1
+	m, n := len(grid), len(grid[0])
+	state := 0
+	for i, row := range grid {
+		for j, v := range row {
+			if v == 1 {
+				state |= 1 << (i*n + j)
+			}
+		}
+	}
+	q := []int{state}
+	vis := map[int]bool{state: true}
+	ans := 0
+	for len(q) > 0 {
+		for k := len(q); k > 0; k-- {
+			state = q[0]
+			if state == 0 {
+				return ans
+			}
+			q = q[1:]
+			for i, row := range grid {
+				for j, v := range row {
+					if v == 0 {
+						continue
+					}
+					nxt := state
+					for r := 0; r < m; r++ {
+						nxt &= ^(1 << (r*n + j))
+					}
+					for c := 0; c < n; c++ {
+						nxt &= ^(1 << (i*n + c))
+					}
+					if !vis[nxt] {
+						vis[nxt] = true
+						q = append(q, nxt)
+					}
+				}
+			}
+		}
+		ans++
+	}
+	return -1
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

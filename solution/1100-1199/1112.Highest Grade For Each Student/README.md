@@ -16,12 +16,12 @@
 | course_id     | int     |
 | grade         | int     |
 +---------------+---------+
-(student_id, course_id) 是该表的主键。
-</pre>
+(student_id, course_id) 是该表的主键（具有唯一值的列的组合）。
+grade 不会为 NULL。</pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询，查询每位学生获得的最高成绩和它所对应的科目，若科目成绩并列，取&nbsp;<code>course_id</code>&nbsp;最小的一门。查询结果需按&nbsp;<code>student_id</code>&nbsp;增序进行排序。</p>
+<p>编写解决方案，找出每位学生获得的最高成绩和它所对应的科目，若科目成绩并列，取&nbsp;<code>course_id</code>&nbsp;最小的一门。查询结果需按&nbsp;<code>student_id</code>&nbsp;增序进行排序。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
@@ -56,22 +56,52 @@ Enrollments 表：
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：RANK() OVER() 窗口函数
+
+我们可以使用 `RANK() OVER()` 窗口函数，按照每个学生的成绩降序排列，如果成绩相同，按照课程号升序排列，然后取每个学生排名为 $1$ 的记录。
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-  student_id,
-  course_id,
-  grade
-FROM (SELECT
-  *,
-  RANK() OVER (PARTITION BY student_id ORDER BY grade DESC, course_id) rk
-FROM Enrollments) a
-WHERE a.rk = 1;
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            *,
+            RANK() OVER (
+                PARTITION BY student_id
+                ORDER BY grade DESC, course_id
+            ) AS rk
+        FROM Enrollments
+    )
+SELECT student_id, course_id, grade
+FROM T
+WHERE rk = 1
+ORDER BY student_id;
 ```
 
 <!-- tabs:end -->
+
+### 方法二：子查询
+
+我们可以先查询每个学生的最高成绩，然后再查询每个学生的最高成绩对应的最小课程号。
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT student_id, MIN(course_id) AS course_id, grade
+FROM Enrollments
+WHERE
+    (student_id, grade) IN (
+        SELECT student_id, MAX(grade) AS grade
+        FROM Enrollments
+        GROUP BY 1
+    )
+GROUP BY 1
+ORDER BY 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

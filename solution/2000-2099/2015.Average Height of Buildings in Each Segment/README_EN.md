@@ -76,9 +76,15 @@ We cannot group the segments together because an empty space with no buildings s
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Differential Ordered Hash Table
 
-### **Python3**
+We use the differential idea and an ordered hash table `height` to record the height change at each position, and `cnt` to record the change in the number of buildings. By calculating the prefix sum of the ordered hash table, we can get the height and the number of buildings at each position.
+
+Finally, we traverse the ordered hash table. For each position, if both the height and the number of buildings are not zero, it means that there is a building at this position. We then check whether the average height of the building at this time is the same as that of the previous building. If it is the same, we merge them; otherwise, we add it to the result set.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the number of buildings.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -104,8 +110,6 @@ class Solution:
             n += cnt[j]
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -144,8 +148,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -175,8 +177,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func averageHeightOfBuildings(buildings [][]int) [][]int {
@@ -213,10 +213,6 @@ func averageHeightOfBuildings(buildings [][]int) [][]int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

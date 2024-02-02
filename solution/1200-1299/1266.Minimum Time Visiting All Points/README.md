@@ -56,9 +56,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 对于两个点 $p1=(x_1, y_1)$ 和 $p2=(x_2, y_2)$，横坐标和纵坐标分别移动的距离分别为 $dx = |x_1 - x_2|$ 和 $dy = |y_1 - y_2|$。
 
@@ -66,13 +64,9 @@
 
 我们可以遍历所有的点对，计算出每个点对之间的最短距离，然后求和即可。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为点的个数。
+时间复杂度 $O(n)$，其中 $n$ 为点的个数。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +75,6 @@ class Solution:
             max(abs(p1[0] - p2[0]), abs(p1[1] - p2[1])) for p1, p2 in pairwise(points)
         )
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -99,8 +89,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -117,8 +105,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minTimeToVisitAllPoints(points [][]int) (ans int) {
 	for i, p := range points[1:] {
@@ -129,13 +115,6 @@ func minTimeToVisitAllPoints(points [][]int) (ans int) {
 	return
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -143,8 +122,6 @@ func abs(x int) int {
 	return x
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minTimeToVisitAllPoints(points: number[][]): number {
@@ -157,8 +134,6 @@ function minTimeToVisitAllPoints(points: number[][]): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -175,12 +150,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int minTimeToVisitAllPoints(int **points, int pointsSize, int *pointsColSize) {
+int minTimeToVisitAllPoints(int** points, int pointsSize, int* pointsColSize) {
     int ans = 0;
     for (int i = 1; i < pointsSize; i++) {
         int x = abs(points[i - 1][0] - points[i][0]);
@@ -191,10 +164,6 @@ int minTimeToVisitAllPoints(int **points, int pointsSize, int *pointsColSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

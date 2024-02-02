@@ -75,9 +75,9 @@ Ans = 7 + 7 + 7 = 21
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -95,8 +95,6 @@ class Solution:
                 f[k][j] += days[j][k - 1]
         return max(f[-1][j] for j in range(n))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -129,8 +127,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -160,8 +156,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxVacationDays(flights [][]int, days [][]int) (ans int) {
 	n, K := len(flights), len(days[0])
@@ -189,19 +183,8 @@ func maxVacationDays(flights [][]int, days [][]int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

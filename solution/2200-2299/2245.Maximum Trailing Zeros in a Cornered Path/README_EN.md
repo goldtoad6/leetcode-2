@@ -56,9 +56,9 @@ There are no cornered paths in the grid that result in a product with a trailing
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -94,8 +94,6 @@ class Solution:
                 ans = max(ans, a, b, c, d)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -137,8 +135,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -178,8 +174,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxTrailingZeros(grid [][]int) (ans int) {
@@ -223,23 +217,7 @@ func get(m, n int) [][]int {
 	}
 	return f
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxTrailingZeros(grid: number[][]): number {
@@ -269,18 +247,9 @@ function maxTrailingZeros(grid: number[][]): number {
     let ans = 0;
     for (let i = 1; i <= m; ++i) {
         for (let j = 1; j <= n; ++j) {
-            const a = Math.min(
-                r2[i][j] + c2[i - 1][j],
-                r5[i][j] + c5[i - 1][j],
-            );
-            const b = Math.min(
-                r2[i][j] + c2[m][j] - c2[i][j],
-                r5[i][j] + c5[m][j] - c5[i][j],
-            );
-            const c = Math.min(
-                r2[i][n] - r2[i][j] + c2[i][j],
-                r5[i][n] - r5[i][j] + c5[i][j],
-            );
+            const a = Math.min(r2[i][j] + c2[i - 1][j], r5[i][j] + c5[i - 1][j]);
+            const b = Math.min(r2[i][j] + c2[m][j] - c2[i][j], r5[i][j] + c5[m][j] - c5[i][j]);
+            const c = Math.min(r2[i][n] - r2[i][j] + c2[i][j], r5[i][n] - r5[i][j] + c5[i][j]);
             const d = Math.min(
                 r2[i][n] - r2[i][j - 1] + c2[m][j] - c2[i][j],
                 r5[i][n] - r5[i][j - 1] + c5[m][j] - c5[i][j],
@@ -292,10 +261,6 @@ function maxTrailingZeros(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

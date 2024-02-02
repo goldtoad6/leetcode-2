@@ -52,9 +52,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -81,8 +81,6 @@ class Solution:
                         q.append((x, y))
         return ans if cnt == 0 else -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -120,8 +118,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -162,8 +158,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func orangesRotting(grid [][]int) int {
 	m, n := len(grid), len(grid[0])
@@ -202,8 +196,6 @@ func orangesRotting(grid [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function orangesRotting(grid: number[][]): number {
     const m = grid.length;
@@ -227,13 +219,7 @@ function orangesRotting(grid: number[][]): number {
             for (let j = 0; j < 4; j++) {
                 const newX = x + dris[j];
                 const newY = y + dris[j + 1];
-                if (
-                    newX >= 0 &&
-                    newX < m &&
-                    newY >= 0 &&
-                    newY <= n &&
-                    grid[newX][newY] === 1
-                ) {
+                if (newX >= 0 && newX < m && newY >= 0 && newY <= n && grid[newX][newY] === 1) {
                     grid[newX][newY] = 2;
                     queue.push([newX, newY]);
                     count--;
@@ -249,8 +235,6 @@ function orangesRotting(grid: number[][]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::VecDeque;
 
@@ -259,11 +243,14 @@ impl Solution {
         let mut queue = VecDeque::new();
         let m = grid.len();
         let n = grid[0].len();
+        // 新鲜橘子数量
         let mut count = 0;
         for i in 0..m {
             for j in 0..n {
                 match grid[i][j] {
-                    1 => count += 1,
+                    1 => {
+                        count += 1;
+                    }
                     2 => queue.push_back([i as i32, j as i32]),
                     _ => (),
                 }
@@ -278,11 +265,12 @@ impl Solution {
                 for i in 0..4 {
                     let new_x = x + dirs[i];
                     let new_y = y + dirs[i + 1];
-                    if new_x >= 0
-                        && new_x < m as i32
-                        && new_y >= 0
-                        && new_y < n as i32
-                        && grid[new_x as usize][new_y as usize] == 1
+                    if
+                        new_x >= 0 &&
+                        new_x < (m as i32) &&
+                        new_y >= 0 &&
+                        new_y < (n as i32) &&
+                        grid[new_x as usize][new_y as usize] == 1
                     {
                         grid[new_x as usize][new_y as usize] = 2;
                         queue.push_back([new_x, new_y]);
@@ -301,10 +289,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

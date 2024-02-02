@@ -15,7 +15,7 @@
 | salesperson_id | int     |
 | name           | varchar |
 +----------------+---------+
-sales_person_id 是这个表的主键。
+sales_person_id 包含唯一值。
 这个表中的每一行都显示一个销售人员的 ID。
 </pre>
 
@@ -30,7 +30,7 @@ sales_person_id 是这个表的主键。
 | customer_id    | int  |
 | salesperson_id | int  |
 +----------------+------+
-customer_id 是这个表的主键。
+customer_id 包含唯一值。
 salesperson_id 是一个来自于 <code>Salesperson 表的外键</code>
 <code>Customer </code>表中的每一行都显示了一个客户的 ID 和销售人员的 ID。
 </pre>
@@ -47,16 +47,16 @@ salesperson_id 是一个来自于 <code>Salesperson 表的外键</code>
 | customer_id | int  |
 | price       | int  |
 +-------------+------+
-sale_id 是这个表的主键。
+sale_id 包含唯一值。
 customer_id 是一个来自于 Customer 表的外键。
 <code>Sales </code>表中的每一行都显示了一个客户的 ID 以及他们在 sale_id 指代的交易中所支付的金额。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询用来报告每个销售人员的客户所支付的价格总和。如果销售人员没有任何客户，则总值应该为 <code>0</code> 。<br />
+<p>编写解决方案，报告每个销售人员的客户所支付的价格总和。如果销售人员没有任何客户，则总值应该为 <code>0</code> 。<br />
 以 <strong>任意顺序</strong> 返回结果表。<br />
-查询结果格式如下所示。</p>
+结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -112,16 +112,20 @@ Jerry 的总数是 0。</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT sp.salesperson_id, name, IFNULL(SUM(price), 0) AS total
+FROM
+    Salesperson AS sp
+    LEFT JOIN Customer AS c ON sp.salesperson_id = c.salesperson_id
+    LEFT JOIN Sales AS s ON s.customer_id = c.customer_id
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

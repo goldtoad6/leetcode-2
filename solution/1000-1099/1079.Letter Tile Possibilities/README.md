@@ -44,36 +44,34 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：计数 + 回溯
+
+我们先用一个哈希表或数组 $cnt$ 统计每个字母出现的次数。
+
+接下来定义一个函数 $dfs(cnt)$，表示当前剩余字母的计数为 $cnt$ 时，能够组成的不同序列的个数。
+
+在 $dfs$ 中，我们枚举 $cnt$ 中每个大于 $0$ 的值 $cnt[i]$，将 $cnt[i]$ 减 $1$ 表示使用了这个字母，序列个数加 $1$，然后进行下一层搜索，在搜索结束后，累加返回的序列个数，然后将 $cnt[i]$ 加 $1$。最后返回序列个数。
+
+时间复杂度 $O(n \times n!)$，空间复杂度 $O(n)$。其中 $n$ 为字母种类数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def numTilePossibilities(self, tiles: str) -> int:
-        def dfs():
+        def dfs(cnt: Counter) -> int:
             ans = 0
-            for i in range(26):
-                if cnt[i]:
+            for i, x in cnt.items():
+                if x > 0:
                     ans += 1
                     cnt[i] -= 1
-                    ans += dfs()
+                    ans += dfs(cnt)
                     cnt[i] += 1
             return ans
 
-        cnt = [0] * 26
-        for t in tiles:
-            cnt[ord(t) - ord('A')] += 1
-        return dfs()
+        cnt = Counter(tiles)
+        return dfs(cnt)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,61 +98,75 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int numTilePossibilities(string tiles) {
-        vector<int> cnt(26);
-        for (char& c : tiles) ++cnt[c - 'A'];
+        int cnt[26]{};
+        for (char c : tiles) {
+            ++cnt[c - 'A'];
+        }
+        function<int(int* cnt)> dfs = [&](int* cnt) -> int {
+            int res = 0;
+            for (int i = 0; i < 26; ++i) {
+                if (cnt[i] > 0) {
+                    ++res;
+                    --cnt[i];
+                    res += dfs(cnt);
+                    ++cnt[i];
+                }
+            }
+            return res;
+        };
         return dfs(cnt);
     }
+};
+```
 
-    int dfs(vector<int>& cnt) {
-        int res = 0;
-        for (int i = 0; i < 26; ++i) {
-            if (cnt[i]) {
-                --cnt[i];
+```go
+func numTilePossibilities(tiles string) int {
+	cnt := [26]int{}
+	for _, c := range tiles {
+		cnt[c-'A']++
+	}
+	var dfs func(cnt [26]int) int
+	dfs = func(cnt [26]int) (res int) {
+		for i, x := range cnt {
+			if x > 0 {
+				res++
+				cnt[i]--
+				res += dfs(cnt)
+				cnt[i]++
+			}
+		}
+		return
+	}
+	return dfs(cnt)
+}
+```
+
+```ts
+function numTilePossibilities(tiles: string): number {
+    const cnt: number[] = new Array(26).fill(0);
+    for (const c of tiles) {
+        ++cnt[c.charCodeAt(0) - 'A'.charCodeAt(0)];
+    }
+    const dfs = (cnt: number[]): number => {
+        let res = 0;
+        for (let i = 0; i < 26; ++i) {
+            if (cnt[i] > 0) {
                 ++res;
+                --cnt[i];
                 res += dfs(cnt);
                 ++cnt[i];
             }
         }
         return res;
-    }
-};
-```
-
-### **Go**
-
-```go
-func numTilePossibilities(tiles string) int {
-	cnt := make([]int, 26)
-	for _, c := range tiles {
-		cnt[c-'A']++
-	}
-	var dfs func() int
-	dfs = func() int {
-		res := 0
-		for i := 0; i < 26; i++ {
-			if cnt[i] > 0 {
-				res++
-				cnt[i]--
-				res += dfs()
-				cnt[i]++
-			}
-		}
-		return res
-	}
-	return dfs()
+    };
+    return dfs(cnt);
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

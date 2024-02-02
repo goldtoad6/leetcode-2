@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数学**
+### 方法一：数学
 
 题目实际上是求 $[1,n]$ 中有多少个 $5$ 的因数。
 
@@ -62,11 +60,9 @@
 1. 第 $3$ 次除以 $5$，得到 $1$，表示存在 $1$ 个包含因数 $5^3$ 的数；
 1. 累加得到从 $[1,n]$ 中所有 $5$ 的因数的个数。
 
+时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。
+
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -77,10 +73,6 @@ class Solution:
             ans += n
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -95,33 +87,19 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function trailingZeroes(n: number): number {
-    let ans = 0;
-    while (n > 0) {
-        n = Math.floor(n / 5);
-        ans += n;
-    }
-    return ans;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int trailingZeroes(int n) {
         int ans = 0;
-        for (int i = 5; i <= n; i *= 5) ans += n / i;
+        while (n) {
+            n /= 5;
+            ans += n;
+        }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func trailingZeroes(n int) int {
@@ -134,10 +112,17 @@ func trailingZeroes(n int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function trailingZeroes(n: number): number {
+    let ans = 0;
+    while (n > 0) {
+        n = Math.floor(n / 5);
+        ans += n;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

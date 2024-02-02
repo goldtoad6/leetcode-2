@@ -60,35 +60,32 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：枚举
+
+我们可以从大到小枚举每个数字 $i$，其中 $0 \le i \le 9$，然后判断连续的三个 $i$ 构成的字符串 $s$ 是否是 $num$ 的子串，若是，直接返回 $s$ 即可。
+
+若枚举完所有的 $i$ 都没有找到满足条件的字符串，则返回空字符串。
+
+时间复杂度 $O(10 \times n)$，其中 $n$ 是字符串 $num$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def largestGoodInteger(self, num: str) -> str:
         for i in range(9, -1, -1):
-            t = str(i) * 3
-            if t in num:
-                return t
-        return ''
+            if (s := str(i) * 3) in num:
+                return s
+        return ""
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
     public String largestGoodInteger(String num) {
         for (int i = 9; i >= 0; i--) {
-            String ret = String.valueOf(i).repeat(3);
-            if (num.contains(ret)) {
-                return ret;
+            String s = String.valueOf(i).repeat(3);
+            if (num.contains(s)) {
+                return s;
             }
         }
         return "";
@@ -96,51 +93,44 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function largestGoodInteger(num: string): string {
-    for (let i = 9; i >= 0; i--) {
-        const c = String(i).repeat(3);
-        if (num.includes(c)) return c;
-    }
-    return '';
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     string largestGoodInteger(string num) {
         for (char i = '9'; i >= '0'; --i) {
-            string t(3, i);
-            if (num.find(t) != string::npos) return t;
+            string s(3, i);
+            if (num.find(s) != string::npos) {
+                return s;
+            }
         }
         return "";
     }
 };
 ```
 
-### **Go**
-
 ```go
 func largestGoodInteger(num string) string {
 	for c := '9'; c >= '0'; c-- {
-		t := strings.Repeat(string(c), 3)
-		if strings.Contains(num, t) {
-			return t
+		if s := strings.Repeat(string(c), 3); strings.Contains(num, s) {
+			return s
 		}
 	}
 	return ""
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function largestGoodInteger(num: string): string {
+    for (let i = 9; i >= 0; i--) {
+        const s = String(i).repeat(3);
+        if (num.includes(s)) {
+            return s;
+        }
+    }
+    return '';
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

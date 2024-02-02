@@ -79,23 +79,20 @@ Result table
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-SELECT
-    DISTINCT c1.user_id AS user_id
+SELECT DISTINCT user_id
 FROM
-    Confirmations c1
-INNER JOIN Confirmations c2
-ON c1.user_id = c2.user_id
-WHERE c1.time_stamp < c2.time_stamp
-AND TIMESTAMPDIFF(SECOND, c1.time_stamp, c2.time_stamp) <= 24 * 60 * 60;
+    Confirmations AS c1
+    JOIN Confirmations AS c2 USING (user_id)
+WHERE
+    c1.time_stamp < c2.time_stamp
+    AND TIMESTAMPDIFF(SECOND, c1.time_stamp, c2.time_stamp) <= 24 * 60 * 60;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

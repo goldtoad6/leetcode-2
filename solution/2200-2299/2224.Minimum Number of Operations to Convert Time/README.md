@@ -45,15 +45,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心**
+### 方法一：贪心
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -66,10 +60,6 @@ class Solution:
             d %= i
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -88,8 +78,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -107,35 +95,23 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func convertTime(current string, correct string) int {
-    parse := func(s string) int {
-        h := int(s[0] - '0') * 10 + int(s[1] - '0')
-        m := int(s[3] - '0') * 10 + int(s[4] - '0')
-        return h * 60 + m
-    }
-    a, b := parse(current), parse(correct)
-    ans, d := 0, b - a
-    for _, i := range []int{60, 15, 5, 1} {
-        ans += d / i
-        d %= i
-    }
-    return ans
+	parse := func(s string) int {
+		h := int(s[0]-'0')*10 + int(s[1]-'0')
+		m := int(s[3]-'0')*10 + int(s[4]-'0')
+		return h*60 + m
+	}
+	a, b := parse(current), parse(correct)
+	ans, d := 0, b-a
+	for _, i := range []int{60, 15, 5, 1} {
+		ans += d / i
+		d %= i
+	}
+	return ans
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟 + 统计**
+### 方法一：模拟 + 统计
 
 对于每个好友关系，如果两个人掌握的语言集合不相交，则需要教一门语言，使得两个人可以相互沟通，我们将这些人放入一个哈希集合 $s$ 中。
 
@@ -67,13 +65,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def minimumTeachings(self, n: int, languages: List[List[int]], friendships: List[List[int]]) -> int:
+    def minimumTeachings(
+        self, n: int, languages: List[List[int]], friendships: List[List[int]]
+    ) -> int:
         def check(u, v):
             for x in languages[u - 1]:
                 for y in languages[v - 1]:
@@ -92,10 +88,6 @@ class Solution:
                 cnt[l] += 1
         return len(s) - max(cnt.values(), default=0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -137,8 +129,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -176,8 +166,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTeachings(n int, languages [][]int, friendships [][]int) int {
 	check := func(u, v int) bool {
@@ -206,25 +194,10 @@ func minimumTeachings(n int, languages [][]int, friendships [][]int) int {
 			cnt[l]++
 		}
 	}
-	mx := 0
-	for _, v := range cnt {
-		mx = max(mx, v)
-	}
-	return len(s) - mx
+	return len(s) - slices.Max(cnt)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

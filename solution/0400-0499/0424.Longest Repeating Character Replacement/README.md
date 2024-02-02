@@ -8,7 +8,7 @@
 
 <p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以选择字符串中的任一字符，并将其更改为任何其他大写英文字符。该操作最多可执行 <code>k</code> 次。</p>
 
-<p>在执行上述操作后，返回包含相同字母的最长子字符串的长度。</p>
+<p>在执行上述操作后，返回 <em>包含相同字母的最长子字符串的长度。</em></p>
 
 <p>&nbsp;</p>
 
@@ -28,6 +28,7 @@
 <strong>解释：</strong>
 将中间的一个'A'替换为'B',字符串变为 "AABBBBA"。
 子串 "BBBB" 有最长重复字母, 答案为 4。
+可能存在其他的方法来得到同样的结果。
 </pre>
 
 <p>&nbsp;</p>
@@ -42,20 +43,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-我们维护一个数组 `int[26]` 来存储当前窗口中各个字母的出现次数，j 表示窗口的左边界，i 表示窗口右边界。
-
--   窗口扩张：j 不变，i++
--   窗口滑动：j++，i++
-
-`maxCnt` 保存滑动窗口内相同字母出现次数的**历史最大值**，通过判断窗口宽度 `i - j + 1` 是否大于 `maxCnt + k` 来决定窗口是否做滑动，否则窗口就扩张。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -71,10 +61,6 @@ class Solution:
             i += 1
         return i - j
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -96,8 +82,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -118,8 +102,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func characterReplacement(s string, k int) int {
 	counter := make([]int, 26)
@@ -139,10 +121,6 @@ func characterReplacement(s string, k int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

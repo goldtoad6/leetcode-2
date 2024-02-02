@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数学 + 模拟**
+### 方法一：数学 + 模拟
 
 我们设计一个函数 $check(nums, l, r)$，用于判断子数组 $nums[l], nums[l+1], \dots, nums[r]$ 是否可以重新排列形成等差数列。
 
@@ -73,26 +71,20 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+    def checkArithmeticSubarrays(
+        self, nums: List[int], l: List[int], r: List[int]
+    ) -> List[bool]:
         def check(nums, l, r):
             n = r - l + 1
-            s = set(nums[l: l + n])
-            a1, an = min(nums[l: l + n]), max(nums[l: l + n])
+            s = set(nums[l : l + n])
+            a1, an = min(nums[l : l + n]), max(nums[l : l + n])
             d, mod = divmod(an - a1, n - 1)
             return mod == 0 and all((a1 + (i - 1) * d) in s for i in range(1, n))
 
         return [check(nums, left, right) for left, right in zip(l, r)]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -127,8 +119,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -161,8 +151,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func checkArithmeticSubarrays(nums []int, l []int, r []int) (ans []bool) {
@@ -197,14 +185,8 @@ func checkArithmeticSubarrays(nums []int, l []int, r []int) (ans []bool) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function checkArithmeticSubarrays(
-    nums: number[],
-    l: number[],
-    r: number[],
-): boolean[] {
+function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {
     const check = (nums: number[], l: number, r: number): boolean => {
         const s = new Set<number>();
         const n = r - l + 1;
@@ -234,8 +216,6 @@ function checkArithmeticSubarrays(
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn check_arithmetic_subarrays(nums: Vec<i32>, l: Vec<i32>, r: Vec<i32>) -> Vec<bool> {
@@ -256,10 +236,33 @@ impl Solution {
 }
 ```
 
-### **...**
+```cs
+class Solution {
+    public bool Check(int[] arr) {
+        Array.Sort(arr);
+        int diff = arr[1] - arr[0];
+        for (int i = 2; i < arr.Length; i++) {
+            if (arr[i] - arr[i - 1] != diff) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-```
-
+    public IList<bool> CheckArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        List<bool> ans = new List<bool>();
+        for (int i = 0; i < l.Length; i++) {
+            int[] arr = new int[r[i] - l[i] + 1];
+            for (int j = 0; j < arr.Length; j++) {
+                arr[j] = nums[l[i] + j];
+            }
+            ans.Add(Check(arr));
+        }
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

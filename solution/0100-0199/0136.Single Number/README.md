@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：位运算**
+### 方法一：位运算
 
 异或运算的性质：
 
@@ -60,23 +58,15 @@
 
 我们对该数组所有元素进行异或运算，结果就是那个只出现一次的数字。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 是数组 `nums` 的长度。
+时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 是数组 $nums$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         return reduce(xor, nums)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -90,28 +80,18 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int singleNumber(int[] nums) {
-        return Arrays.stream(nums).reduce(0, (a, b) -> a ^ b);
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int ans = 0;
-        for (int v : nums) ans ^= v;
+        for (int v : nums) {
+            ans ^= v;
+        }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func singleNumber(nums []int) (ans int) {
@@ -122,7 +102,21 @@ func singleNumber(nums []int) (ans int) {
 }
 ```
 
-### **JavaScript**
+```ts
+function singleNumber(nums: number[]): number {
+    return nums.reduce((r, v) => r ^ v);
+}
+```
+
+```rust
+impl Solution {
+    pub fn single_number(nums: Vec<i32>) -> i32 {
+        nums.into_iter()
+            .reduce(|r, v| r ^ v)
+            .unwrap()
+    }
+}
+```
 
 ```js
 /**
@@ -130,36 +124,20 @@ func singleNumber(nums []int) (ans int) {
  * @return {number}
  */
 var singleNumber = function (nums) {
-    let ans = 0;
-    for (const v of nums) {
-        ans ^= v;
-    }
-    return ans;
+    return nums.reduce((a, b) => a ^ b);
 };
 ```
 
-### **TypeScript**
-
-```ts
-function singleNumber(nums: number[]): number {
-    return nums.reduce((r, v) => r ^ v);
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn single_number(nums: Vec<i32>) -> i32 {
-        nums.into_iter().reduce(|r, v| r ^ v).unwrap()
+```cs
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        return nums.Aggregate(0, (a, b) => a ^ b);
     }
 }
 ```
 
-### **C**
-
 ```c
-int singleNumber(int *nums, int numsSize) {
+int singleNumber(int* nums, int numsSize) {
     int ans = 0;
     for (int i = 0; i < numsSize; i++) {
         ans ^= nums[i];
@@ -168,27 +146,28 @@ int singleNumber(int *nums, int numsSize) {
 }
 ```
 
-### **Swift**
-
 ```swift
 class Solution {
     func singleNumber(_ nums: [Int]) -> Int {
-        var a = nums.sorted()
-        var n = a.count
-        for i in stride(from: 0, through: n - 2, by: 2) {
-            if a[i] != a[i + 1] {
-                return a[i]
-            }
-        }
-        return a[n - 1]
+        return nums.reduce(0, ^)
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```java
+class Solution {
+    public int singleNumber(int[] nums) {
+        return Arrays.stream(nums).reduce(0, (a, b) -> a ^ b);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

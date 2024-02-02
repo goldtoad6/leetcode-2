@@ -47,9 +47,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Simulation
 
-### **Python3**
+We can use a hash table to store the corresponding character for each character entity. Then, we traverse the string, and when we encounter a character entity, we replace it with the corresponding character.
+
+The time complexity is $O(n \times l)$, and the space complexity is $O(l)$. Here, $n$ is the length of the string, and $l$ is the total length of the character entities.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -77,8 +81,6 @@ class Solution:
         return ''.join(ans)
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public String entityParser(String text) {
@@ -93,7 +95,7 @@ class Solution {
         int i = 0;
         int n = text.length();
         while (i < n) {
-            boolean find = false;
+            boolean found = false;
             for (int l = 1; l < 8; ++l) {
                 int j = i + l;
                 if (j <= n) {
@@ -101,12 +103,12 @@ class Solution {
                     if (d.containsKey(t)) {
                         ans.append(d.get(t));
                         i = j;
-                        find = true;
+                        found = true;
                         break;
                     }
                 }
             }
-            if (!find) {
+            if (!found) {
                 ans.append(text.charAt(i++));
             }
         }
@@ -115,23 +117,22 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     string entityParser(string text) {
-        unordered_map<string, string> d;
-        d["&quot;"] = "\"";
-        d["&apos;"] = "'";
-        d["&amp;"] = "&";
-        d["&gt;"] = ">";
-        d["&lt;"] = "<";
-        d["&frasl;"] = "/";
+        unordered_map<string, string> d = {
+            {"&quot;", "\""},
+            {"&apos;", "'"},
+            {"&amp;", "&"},
+            {"&gt;", ">"},
+            {"&lt;", "<"},
+            {"&frasl;", "/"},
+        };
         string ans = "";
         int i = 0, n = text.size();
         while (i < n) {
-            bool find = false;
+            bool found = false;
             for (int l = 1; l < 8; ++l) {
                 int j = i + l;
                 if (j <= n) {
@@ -139,22 +140,116 @@ public:
                     if (d.count(t)) {
                         ans += d[t];
                         i = j;
-                        find = true;
+                        found = true;
                         break;
                     }
                 }
             }
-            if (!find) ans += text[i++];
+            if (!found) ans += text[i++];
         }
         return ans;
     }
 };
 ```
 
-### **...**
+```go
+func entityParser(text string) string {
+	d := map[string]string{
+		"&quot;":  "\"",
+		"&apos;":  "'",
+		"&amp;":   "&",
+		"&gt;":    ">",
+		"&lt;":    "<",
+		"&frasl;": "/",
+	}
+	var ans strings.Builder
+	i, n := 0, len(text)
 
+	for i < n {
+		found := false
+		for l := 1; l < 8; l++ {
+			j := i + l
+			if j <= n {
+				t := text[i:j]
+				if val, ok := d[t]; ok {
+					ans.WriteString(val)
+					i = j
+					found = true
+					break
+				}
+			}
+		}
+		if !found {
+			ans.WriteByte(text[i])
+			i++
+		}
+	}
+
+	return ans.String()
+}
 ```
 
+```ts
+function entityParser(text: string): string {
+    const d: Record<string, string> = {
+        '&quot;': '"',
+        '&apos;': "'",
+        '&amp;': '&',
+        '&gt;': '>',
+        '&lt;': '<',
+        '&frasl;': '/',
+    };
+
+    let ans: string = '';
+    let i: number = 0;
+    const n: number = text.length;
+
+    while (i < n) {
+        let found: boolean = false;
+        for (let l: number = 1; l < 8; ++l) {
+            const j: number = i + l;
+            if (j <= n) {
+                const t: string = text.substring(i, j);
+                if (d.hasOwnProperty(t)) {
+                    ans += d[t];
+                    i = j;
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            ans += text[i++];
+        }
+    }
+
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```ts
+function entityParser(text: string): string {
+    const d: { [key: string]: string } = {
+        '&quot;': '"',
+        '&apos;': "'",
+        '&amp;': '&',
+        '&gt;': '>',
+        '&lt;': '<',
+        '&frasl;': '/',
+    };
+
+    const pattern = new RegExp(Object.keys(d).join('|'), 'g');
+    return text.replace(pattern, match => d[match]);
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -50,17 +50,15 @@ The 2nd customer is the richest with a wealth of 10.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maximumWealth(self, accounts: List[List[int]]) -> int:
         return max(sum(v) for v in accounts)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -79,8 +77,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -94,25 +90,21 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumWealth(accounts [][]int) int {
-    ans := 0
-    for _, e := range accounts {
-        s := 0
-        for _, v := range e {
-            s += v
-        }
-        if ans < s {
-            ans = s
-        }
-    }
-    return ans
+	ans := 0
+	for _, e := range accounts {
+		s := 0
+		for _, v := range e {
+			s += v
+		}
+		if ans < s {
+			ans = s
+		}
+	}
+	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function maximumWealth(accounts: number[][]): number {
@@ -127,8 +119,6 @@ function maximumWealth(accounts: number[][]): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
@@ -141,12 +131,32 @@ impl Solution {
 }
 ```
 
-### **C**
+```php
+class Solution {
+    /**
+     * @param Integer[][] $accounts
+     * @return Integer
+     */
+    function maximumWealth($accounts) {
+        $rs = 0;
+        for ($i = 0; $i < count($accounts); $i++) {
+            $sum = 0;
+            for ($j = 0; $j < count($accounts[$i]); $j++) {
+                $sum += $accounts[$i][$j];
+            }
+            if ($sum > $rs) {
+                $rs = $sum;
+            }
+        }
+        return $rs;
+    }
+}
+```
 
 ```c
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int maximumWealth(int **accounts, int accountsSize, int *accountsColSize) {
+int maximumWealth(int** accounts, int accountsSize, int* accountsColSize) {
     int ans = INT_MIN;
     for (int i = 0; i < accountsSize; i++) {
         int sum = 0;
@@ -158,8 +168,6 @@ int maximumWealth(int **accounts, int accountsSize, int *accountsColSize) {
     return ans;
 }
 ```
-
-### **Kotlin**
 
 ```kotlin
 class Solution {
@@ -176,10 +184,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -18,9 +18,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数位 DP**
+### 方法一：数位 DP
 
 这道题实际上是求在给定区间 $[l,..r]$ 中，数字中出现 $2$ 个数。个数与数的位数以及每一位上的数字有关。我们可以用数位 DP 的思路来解决这道题。数位 DP 中，数的大小对复杂度的影响很小。
 
@@ -49,13 +47,11 @@ $$
 
 时间复杂度 $O(\log n)$。
 
-相似题目：[233. 数字 1 的个数](/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
+相似题目：
+
+-   [233. 数字 1 的个数](https://github.com/doocs/leetcode/blob/main/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +74,6 @@ class Solution:
             n //= 10
         return dfs(l, 0, True)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -120,8 +112,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -158,8 +148,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOf2sInRange(n int) int {
 	a := make([]int, 12)
@@ -172,7 +160,7 @@ func numberOf2sInRange(n int) int {
 	}
 	l := 0
 	for n > 0 {
-        l++
+		l++
 		a[l] = n % 10
 		n /= 10
 	}
@@ -205,10 +193,6 @@ func numberOf2sInRange(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

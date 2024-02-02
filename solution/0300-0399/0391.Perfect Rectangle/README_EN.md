@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +82,6 @@ class Solution:
 
         return all(c == 2 or c == 4 for c in cnt.values())
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -152,8 +150,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -182,7 +178,7 @@ public:
             ++cnt[{r[2], r[1]}];
         }
 
-        if (area != (long long)(maxX - minX) * (maxY - minY) || cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 || cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
+        if (area != (long long) (maxX - minX) * (maxY - minY) || cnt[{minX, minY}] != 1 || cnt[{minX, maxY}] != 1 || cnt[{maxX, maxY}] != 1 || cnt[{maxX, minY}] != 1) {
             return false;
         }
 
@@ -197,8 +193,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type pair struct {
@@ -246,26 +240,8 @@ func isRectangleCover(rectangles [][]int) bool {
 	}
 	return true
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

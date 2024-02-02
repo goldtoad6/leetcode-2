@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
                 d[idx] = h
         return len(d)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -92,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -102,7 +98,7 @@ public:
             return e1[0] < e2[0] || (e1[0] == e2[0] && e1[1] > e2[1]);
         });
         int n = envelopes.size();
-        vector<int> d {envelopes[0][1]};
+        vector<int> d{envelopes[0][1]};
         for (int i = 1; i < n; ++i) {
             int x = envelopes[i][1];
             if (x > d[d.size() - 1])
@@ -117,8 +113,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxEnvelopes(envelopes [][]int) int {
@@ -157,10 +151,6 @@ func maxEnvelopes(envelopes [][]int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

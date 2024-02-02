@@ -31,15 +31,9 @@
 
 ## Solutions
 
-![](https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/0600-0699/0633.Sum%20of%20Square%20Numbers/images/table.png)
-
-The picture above shows the relationship between `a`, `b`, and `c`. This question is actually looking up `c` in this table
-
-From the upper right corner of the table, it is not difficult to find that it is similar to a binary search tree, so just start from the upper right corner and search according to the law of the binary search tree
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -55,8 +49,6 @@ class Solution:
                 b -= 1
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -78,32 +70,11 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function judgeSquareSum(c: number): boolean {
-    let a = 0,
-        b = Math.floor(Math.sqrt(c));
-    while (a <= b) {
-        let sum = a ** 2 + b ** 2;
-        if (sum == c) return true;
-        if (sum < c) {
-            ++a;
-        } else {
-            --b;
-        }
-    }
-    return false;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool judgeSquareSum(int c) {
-        long a = 0, b = (long)sqrt(c);
+        long a = 0, b = (long) sqrt(c);
         while (a <= b) {
             long s = a * a + b * b;
             if (s == c) return true;
@@ -116,8 +87,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func judgeSquareSum(c int) bool {
@@ -137,7 +106,22 @@ func judgeSquareSum(c int) bool {
 }
 ```
 
-### **Rust**
+```ts
+function judgeSquareSum(c: number): boolean {
+    let a = 0,
+        b = Math.floor(Math.sqrt(c));
+    while (a <= b) {
+        let sum = a ** 2 + b ** 2;
+        if (sum == c) return true;
+        if (sum < c) {
+            ++a;
+        } else {
+            --b;
+        }
+    }
+    return false;
+}
+```
 
 ```rust
 use std::cmp::Ordering;
@@ -149,9 +133,15 @@ impl Solution {
         while left <= right {
             let num = left * left + right * right;
             match num.cmp(&c) {
-                Ordering::Less => left += 1,
-                Ordering::Greater => right -= 1,
-                Ordering::Equal => return true,
+                Ordering::Less => {
+                    left += 1;
+                }
+                Ordering::Greater => {
+                    right -= 1;
+                }
+                Ordering::Equal => {
+                    return true;
+                }
             }
         }
         false
@@ -159,10 +149,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

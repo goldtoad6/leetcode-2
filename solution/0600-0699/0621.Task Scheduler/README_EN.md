@@ -55,9 +55,9 @@ A -&gt; B -&gt; C -&gt; A -&gt; D -&gt; E -&gt; A -&gt; F -&gt; G -&gt; A -&gt; 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +67,6 @@ class Solution:
         s = sum(v == x for v in cnt.values())
         return max(len(tasks), (x - 1) * (n + 1) + s)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func leastInterval(tasks []byte, n int) int {
 	cnt := make([]int, 26)
@@ -132,16 +126,7 @@ func leastInterval(tasks []byte, n int) int {
 	}
 	return max(len(tasks), (x-1)*(n+1)+s)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -161,10 +146,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

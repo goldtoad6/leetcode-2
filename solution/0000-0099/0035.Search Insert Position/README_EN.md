@@ -42,11 +42,13 @@
 
 ## Solutions
 
-Binary search.
+### Solution 1: Binary Search
+
+Since the array $nums$ is already sorted, we can use the binary search method to find the insertion position of the target value $target$.
+
+The time complexity is $O(\log n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array $nums$.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -60,14 +62,6 @@ class Solution:
                 left = mid + 1
         return left
 ```
-
-```python
-class Solution:
-    def searchInsert(self, nums: List[int], target: int) -> int:
-        return bisect_left(nums, target)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -105,17 +97,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int searchInsert(vector<int>& nums, int target) {
-        return lower_bound(nums.begin(), nums.end(), target) - nums.begin();
-    }
-};
-```
-
-### **Go**
-
 ```go
 func searchInsert(nums []int, target int) int {
 	left, right := 0, len(nums)
@@ -131,13 +112,30 @@ func searchInsert(nums []int, target int) int {
 }
 ```
 
-```go
-func searchInsert(nums []int, target int) int {
-	return sort.Search(len(nums), func(i int) bool { return nums[i] >= target })
+```rust
+use std::cmp::Ordering;
+impl Solution {
+    pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
+        let mut left = 0;
+        let mut right = nums.len();
+        while left < right {
+            let mid = left + (right - left) / 2;
+            match nums[mid].cmp(&target) {
+                Ordering::Less => {
+                    left = mid + 1;
+                }
+                Ordering::Greater => {
+                    right = mid;
+                }
+                Ordering::Equal => {
+                    return mid as i32;
+                }
+            }
+        }
+        left as i32
+    }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -160,31 +158,33 @@ var searchInsert = function (nums, target) {
 };
 ```
 
-### **Rust**
+<!-- tabs:end -->
 
-```rust
-use std::cmp::Ordering;
-impl Solution {
-    pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
-        let mut left = 0;
-        let mut right = nums.len();
-        while left < right {
-            let mid = left + (right - left) / 2;
-            match nums[mid].cmp(&target) {
-                Ordering::Less => left = mid + 1,
-                Ordering::Greater => right = mid,
-                Ordering::Equal => return mid as i32,
-            }
-        }
-        left as i32
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        return bisect_left(nums, target)
+```
+
+```cpp
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        return lower_bound(nums.begin(), nums.end(), target) - nums.begin();
     }
+};
+```
+
+```go
+func searchInsert(nums []int, target int) int {
+	return sort.SearchInts(nums, target)
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

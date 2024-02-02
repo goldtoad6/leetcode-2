@@ -35,82 +35,89 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy Algorithm
 
-### **Python3**
+To maximize the number of apples, we should try to minimize the weight of the apples. Therefore, we can sort the weights of the apples, and then put them into the basket in ascending order until the weight of the basket exceeds $5000$. We then return the number of apples in the basket at this point.
+
+If all the apples can be put into the basket, then we return the total number of apples.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$. Here, $n$ is the number of apples.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxNumberOfApples(self, weight: List[int]) -> int:
         weight.sort()
-        ans = 0
-        t = 0
-        for v in weight:
-            if t + v > 5000:
-                break
-            t += v
-            ans += 1
-        return ans
+        s = 0
+        for i, x in enumerate(weight):
+            s += x
+            if s > 5000:
+                return i
+        return len(weight)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int maxNumberOfApples(int[] weight) {
         Arrays.sort(weight);
-        int ans = 0, t = 0;
-        for (int v : weight) {
-            if (t + v > 5000) {
-                break;
+        int s = 0;
+        for (int i = 0; i < weight.length; ++i) {
+            s += weight[i];
+            if (s > 5000) {
+                return i;
             }
-            t += v;
-            ++ans;
         }
-        return ans;
+        return weight.length;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int maxNumberOfApples(vector<int>& weight) {
         sort(weight.begin(), weight.end());
-        int ans = 0, t = 0;
-        for (int v : weight) {
-            if (t + v > 5000) break;
-            t += v;
-            ++ans;
+        int s = 0;
+        for (int i = 0; i < weight.size(); ++i) {
+            s += weight[i];
+            if (s > 5000) {
+                return i;
+            }
         }
-        return ans;
+        return weight.size();
     }
 };
 ```
 
-### **Go**
-
 ```go
 func maxNumberOfApples(weight []int) int {
 	sort.Ints(weight)
-	ans, t := 0, 0
-	for _, v := range weight {
-		if t+v > 5000 {
-			break
+	s := 0
+	for i, x := range weight {
+		s += x
+		if s > 5000 {
+			return i
 		}
-		t += v
-		ans++
 	}
-	return ans
+	return len(weight)
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function maxNumberOfApples(weight: number[]): number {
+    weight.sort((a, b) => a - b);
+    let s = 0;
+    for (let i = 0; i < weight.length; ++i) {
+        s += weight[i];
+        if (s > 5000) {
+            return i;
+        }
+    }
+    return weight.length;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

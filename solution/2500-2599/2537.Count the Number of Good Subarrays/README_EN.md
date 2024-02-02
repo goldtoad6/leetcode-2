@@ -41,9 +41,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Two Pointers
 
-### **Python3**
+If a subarray contains $k$ pairs of identical elements, then an array that contains this subarray must contain at least $k$ pairs of identical elements.
+
+We use a hash table $cnt$ to count the number of occurrences of each element in the window, use $cur$ to count the number of pairs of identical elements in the window, and use $i$ to maintain the left endpoint of the window.
+
+We traverse the array $nums$, take the current element $x$ as the right endpoint, then the number of pairs of identical elements in the window will increase by $cnt[x]$, and the occurrence times of $x$ will be increased by one, i.e., $cnt[x] \leftarrow cnt[x] + 1$. Next, we loop to judge whether the number of pairs of identical elements in the window is greater than or equal to $k$ after removing the left endpoint. If it is greater than or equal to $k$, then we decrease the occurrence times of the left endpoint element by one, i.e., $cnt[nums[i]] \leftarrow cnt[nums[i]] - 1$, and decrease the number of pairs of identical elements in the window by $cnt[nums[i]]$, i.e., $cur \leftarrow cur - cnt[nums[i]]$, and move the left endpoint to the right, i.e., $i \leftarrow i + 1$. At this time, all elements to the left of the window left endpoint and the left endpoint itself can be used as the left endpoint of the current right endpoint, so the answer is increased by $i + 1$.
+
+Finally, we return the answer.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$, where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +72,6 @@ class Solution:
                 ans += i + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +93,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -110,8 +116,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countGood(nums []int, k int) int64 {
 	cnt := map[int]int{}
@@ -133,10 +137,6 @@ func countGood(nums []int, k int) int64 {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

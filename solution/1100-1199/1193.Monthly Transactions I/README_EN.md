@@ -55,12 +55,25 @@ Transactions table:
 
 ## Solutions
 
+### Solution 1: Grouping and Aggregation
+
+We can first group by month and country, and then use the `COUNT` and `SUM` functions to respectively calculate the number of transactions, the number of approved transactions, the total amount, and the total amount of approved transactions for each group.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    DATE_FORMAT(trans_date, '%Y-%m') AS month,
+    country,
+    COUNT(1) AS trans_count,
+    SUM(state = 'approved') AS approved_count,
+    SUM(amount) AS trans_total_amount,
+    SUM(IF(state = 'approved', amount, 0)) AS approved_total_amount
+FROM Transactions
+GROUP BY 1, 2;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

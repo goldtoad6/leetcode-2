@@ -34,9 +34,9 @@ Note that the digit d = 1 occurs twice in the number 11.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +54,7 @@ class Solution:
                 if i == 0 and lead:
                     ans += dfs(pos - 1, cnt, lead, limit and i == up)
                 else:
-                    ans += dfs(pos - 1, cnt + (i == d),
-                               False, limit and i == up)
+                    ans += dfs(pos - 1, cnt + (i == d), False, limit and i == up)
             return ans
 
         a = [0] * 11
@@ -66,8 +65,6 @@ class Solution:
             n //= 10
         return dfs(l, 0, True, True)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -116,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -163,8 +158,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func digitsCount(d int, low int, high int) int {
@@ -220,10 +213,6 @@ func digitsCount(d int, low int, high int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

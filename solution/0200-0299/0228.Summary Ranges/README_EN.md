@@ -53,14 +53,20 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We can use two pointers $i$ and $j$ to find the left and right endpoints of each interval.
+
+Traverse the array, when $j + 1 < n$ and $nums[j + 1] = nums[j] + 1$, move $j$ to the right, otherwise the interval $[i, j]$ has been found, add it to the answer, then move $i$ to the position of $j + 1$, and continue to find the next interval.
+
+Time complexity $O(n)$, where $n$ is the length of the array. Space complexity $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
-        def f(i, j):
+        def f(i: int, j: int) -> str:
             return str(nums[i]) if i == j else f'{nums[i]}->{nums[j]}'
 
         i = 0
@@ -74,8 +80,6 @@ class Solution:
             i = j + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -97,8 +101,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,8 +121,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func summaryRanges(nums []int) (ans []string) {
 	f := func(i, j int) string {
@@ -140,7 +140,63 @@ func summaryRanges(nums []int) (ans []string) {
 }
 ```
 
-### **C#**
+```ts
+function summaryRanges(nums: number[]): string[] {
+    const f = (i: number, j: number): string => {
+        return i === j ? `${nums[i]}` : `${nums[i]}->${nums[j]}`;
+    };
+    const n = nums.length;
+    const ans: string[] = [];
+    for (let i = 0, j = 0; i < n; i = j + 1) {
+        j = i;
+        while (j + 1 < n && nums[j + 1] === nums[j] + 1) {
+            ++j;
+        }
+        ans.push(f(i, j));
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn summary_ranges(nums: Vec<i32>) -> Vec<String> {
+        if nums.is_empty() {
+            return vec![];
+        }
+
+        let mut ret = Vec::new();
+        let mut start = nums[0];
+        let mut prev = nums[0];
+        let mut current = 0;
+        let n = nums.len();
+
+        for i in 1..n {
+            current = nums[i];
+            if current != prev + 1 {
+                if start == prev {
+                    ret.push(start.to_string());
+                } else {
+                    ret.push(start.to_string() + "->" + &prev.to_string());
+                }
+                start = current;
+                prev = current;
+            } else {
+                prev = current;
+            }
+        }
+
+        if start == prev {
+            ret.push(start.to_string());
+        } else {
+            ret.push(start.to_string() + "->" + &prev.to_string());
+        }
+
+        ret
+    }
+}
+```
 
 ```cs
 public class Solution {
@@ -162,10 +218,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

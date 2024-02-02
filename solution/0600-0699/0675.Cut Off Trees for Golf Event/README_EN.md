@@ -59,9 +59,9 @@ Note that you can cut off the first tree at (0, 0) before making any steps.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -100,8 +100,6 @@ class Solution:
             i, j = x, y
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -172,8 +170,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -231,8 +227,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 var dirs = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
@@ -297,13 +291,16 @@ func cutOffTree(forest [][]int) int {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashSet;
 use std::collections::VecDeque;
 
-const DIRS: [[i32; 2]; 4] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+const DIRS: [[i32; 2]; 4] = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+];
 
 impl Solution {
     pub fn cut_off_tree(forest: Vec<Vec<i32>>) -> i32 {
@@ -324,14 +321,15 @@ impl Solution {
                     }
                     for k in 0..4 {
                         let x = state / col + DIRS[k][0];
-                        let y = state % col + DIRS[k][1];
+                        let y = (state % col) + DIRS[k][1];
                         let nxt = x * col + y;
-                        if x >= 0
-                            && x < row
-                            && y >= 0
-                            && y < col
-                            && forest[x as usize][y as usize] != 0
-                            && !vis.contains(&nxt)
+                        if
+                            x >= 0 &&
+                            x < row &&
+                            y >= 0 &&
+                            y < col &&
+                            forest[x as usize][y as usize] != 0 &&
+                            !vis.contains(&nxt)
                         {
                             queue.push_back(nxt);
                             vis.insert(nxt);
@@ -369,10 +367,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

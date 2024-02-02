@@ -49,23 +49,25 @@ On the fourth turn, ans[0] += 4, and the final array is [5,2,3].
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We can directly simulate the process of each person receiving candies, following the rules described in the problem.
+
+The time complexity is $O(\max(\sqrt{candies}, num\_people))$, and the space complexity is $O(num\_people)$. Here, $candies$ is the number of candies.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def distributeCandies(self, candies: int, num_people: int) -> List[int]:
         ans = [0] * num_people
         i = 0
-        while candies > 0:
+        while candies:
             ans[i % num_people] += min(candies, i + 1)
             candies -= min(candies, i + 1)
             i += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -79,8 +81,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -96,8 +96,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func distributeCandies(candies int, num_people int) []int {
 	ans := make([]int, num_people)
@@ -107,19 +105,19 @@ func distributeCandies(candies int, num_people int) []int {
 	}
 	return ans
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function distributeCandies(candies: number, num_people: number): number[] {
+    const ans: number[] = Array(num_people).fill(0);
+    for (let i = 0; candies > 0; ++i) {
+        ans[i % num_people] += Math.min(candies, i + 1);
+        candies -= Math.min(candies, i + 1);
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

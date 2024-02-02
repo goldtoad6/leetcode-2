@@ -46,9 +46,9 @@ So the minimum time needed to complete 1 trip is 2.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
             range(mx), totalTrips, key=lambda x: sum(x // v for v in time)
         )
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -86,14 +84,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     long long minimumTime(vector<int>& time, int totalTrips) {
         int mi = *min_element(time.begin(), time.end());
-        long long left = 1, right = (long long)mi * totalTrips;
+        long long left = 1, right = (long long) mi * totalTrips;
         while (left < right) {
             long long cnt = 0;
             long long mid = (left + right) >> 1;
@@ -108,11 +104,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minimumTime(time []int, totalTrips int) int64 {
-	left, right := 1, 10000000*totalTrips
+	left, right := 1, slices.Min(time)*totalTrips
 	for left < right {
 		mid := (left + right) >> 1
 		cnt := 0
@@ -129,16 +123,6 @@ func minimumTime(time []int, totalTrips int) int64 {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

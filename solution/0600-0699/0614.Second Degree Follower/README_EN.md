@@ -13,7 +13,7 @@
 | followee    | varchar |
 | follower    | varchar |
 +-------------+---------+
-(followee, follower) is the primary key column for this table.
+(followee, follower) is the primary key (combination of columns with unique values) for this table.
 Each row of this table indicates that the user follower follows the user followee on a social network.
 There will not be a user following themself.
 </pre>
@@ -27,11 +27,11 @@ There will not be a user following themself.
 	<li>is followed by at least one user.</li>
 </ul>
 
-<p>Write an SQL query to report the <strong>second-degree users</strong> and the number of their followers.</p>
+<p>Write a solution&nbsp;to report the <strong>second-degree users</strong> and the number of their followers.</p>
 
 <p>Return the result table <strong>ordered</strong> by <code>follower</code> <strong>in alphabetical order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -62,12 +62,25 @@ User Alice has 1 follower. Alice is not a second-degree follower because she doe
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT f1.follower AS follower, f2.follower AS followee
+        FROM
+            Follow AS f1
+            JOIN Follow AS f2 ON f1.follower = f2.followee
+    )
+SELECT follower, COUNT(DISTINCT followee) AS num
+FROM T
+GROUP BY 1
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

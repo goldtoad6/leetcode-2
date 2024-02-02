@@ -35,11 +35,9 @@
 
 ## Solutions
 
-Slide window.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -51,8 +49,6 @@ class Solution:
             ans = max(ans, s)
         return ans / k
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +66,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function findMaxAverage(nums: number[], k: number): number {
@@ -91,8 +85,6 @@ function findMaxAverage(nums: number[], k: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn find_max_average(nums: Vec<i32>, k: i32) -> f64 {
@@ -109,10 +101,28 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Float
+     */
+    function findMaxAverage($nums, $k) {
+        $sum = 0;
+        for ($i = 0; $i < $k; $i++) {
+            $sum += $nums[$i];
+        }
+        $max = $sum;
+        for ($j = $k; $j < count($nums); $j++) {
+            $sum = $sum - $nums[$j - $k] + $nums[$j];
+            $max = max($max, $sum);
+        }
+        return $max / $k;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -66,9 +66,23 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Dynamic Programming
 
-### **Python3**
+We define $f[i][j]$ to represent the number of methods to get $j$ points exactly from the first $i$ types of questions. Initially, $f[0][0] = 1$, and the rest $f[i][j] = 0$. The answer is $f[n][target]$.
+
+We can enumerate the $i$th type of questions, suppose the number of questions of this type is $count$, and the score is $marks$. Then we can get the following state transition equation:
+
+$$
+f[i][j] = \sum_{k=0}^{count} f[i-1][j-k \times marks]
+$$
+
+where $k$ represents the number of questions of the $i$th type.
+
+The final answer is $f[n][target]$. Note that the answer may be very large and needs to be modulo $10^9 + 7$.
+
+The time complexity is $O(n \times target \times count)$ and the space complexity is $O(n \times target)$. $n$ is the number of types of questions, and $target$ and $count$ are the target score and the number of questions of each type, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -85,8 +99,6 @@ class Solution:
                         f[i][j] = (f[i][j] + f[i - 1][j - k * marks]) % mod
         return f[n][target]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -109,8 +121,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -136,8 +146,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func waysToReachTarget(target int, types [][]int) int {
 	n := len(types)
@@ -161,15 +169,11 @@ func waysToReachTarget(target int, types [][]int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function waysToReachTarget(target: number, types: number[][]): number {
     const n = types.length;
     const mod = 10 ** 9 + 7;
-    const f: number[][] = Array.from({ length: n + 1 }, () =>
-        Array(target + 1).fill(0),
-    );
+    const f: number[][] = Array.from({ length: n + 1 }, () => Array(target + 1).fill(0));
     f[0][0] = 1;
     for (let i = 1; i <= n; ++i) {
         const [count, marks] = types[i - 1];
@@ -185,10 +189,6 @@ function waysToReachTarget(target: number, types: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

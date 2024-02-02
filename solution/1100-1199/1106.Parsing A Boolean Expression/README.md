@@ -62,9 +62,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：栈**
+### 方法一：栈
 
 对于这种表达式解析问题，我们可以使用栈来辅助解决。
 
@@ -75,13 +73,9 @@
 
 遍历完表达式 `expression` 后，栈中只剩下一个字符，如果是 `'t'`，返回 `true`，否则返回 `false`。
 
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是表达式 `expression` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -106,10 +100,6 @@ class Solution:
                 stk.append(c)
         return stk[0] == 't'
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -138,15 +128,14 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool parseBoolExpr(string expression) {
         stack<char> stk;
         for (char c : expression) {
-            if (c != '(' && c != ')' && c != ',') stk.push(c);
+            if (c != '(' && c != ')' && c != ',')
+                stk.push(c);
             else if (c == ')') {
                 int t = 0, f = 0;
                 while (stk.top() == 't' || stk.top() == 'f') {
@@ -166,8 +155,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func parseBoolExpr(expression string) bool {
@@ -197,8 +184,6 @@ func parseBoolExpr(expression string) bool {
 	return stk[0] == 't'
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function parseBoolExpr(expression: string): boolean {
@@ -231,8 +216,6 @@ function parseBoolExpr(expression: string): boolean {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     fn dfs(i: &mut usize, expr: &[u8]) -> Vec<bool> {
@@ -255,10 +238,18 @@ impl Solution {
                     res.push(!Self::dfs(i, expr)[0]);
                 }
                 b'&' => {
-                    res.push(Self::dfs(i, expr).iter().all(|v| *v));
+                    res.push(
+                        Self::dfs(i, expr)
+                            .iter()
+                            .all(|v| *v)
+                    );
                 }
                 b'|' => {
-                    res.push(Self::dfs(i, expr).iter().any(|v| *v));
+                    res.push(
+                        Self::dfs(i, expr)
+                            .iter()
+                            .any(|v| *v)
+                    );
                 }
                 _ => {}
             }
@@ -274,10 +265,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

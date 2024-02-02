@@ -67,9 +67,9 @@ The total number of plots is 7 + 6 = 13.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +82,7 @@ class Solution:
                 if grid[i][j] == 0:
                     f[i][j] = -1
                 elif not (i == m - 1 or j == 0 or j == n - 1):
-                    f[i][j] = min(f[i + 1][j - 1], f[i + 1]
-                                  [j], f[i + 1][j + 1]) + 1
+                    f[i][j] = min(f[i + 1][j - 1], f[i + 1][j], f[i + 1][j + 1]) + 1
                     ans += f[i][j]
         for i in range(m):
             for j in range(n):
@@ -92,13 +91,10 @@ class Solution:
                 elif i == 0 or j == 0 or j == n - 1:
                     f[i][j] = 0
                 else:
-                    f[i][j] = min(f[i - 1][j - 1], f[i - 1]
-                                  [j], f[i - 1][j + 1]) + 1
+                    f[i][j] = min(f[i - 1][j - 1], f[i - 1][j], f[i - 1][j + 1]) + 1
                     ans += f[i][j]
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -134,8 +130,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -173,8 +167,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countPyramids(grid [][]int) (ans int) {
 	m, n := len(grid), len(grid[0])
@@ -208,19 +200,8 @@ func countPyramids(grid [][]int) (ans int) {
 	}
 	return
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,13 +49,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -63,10 +59,6 @@ class Solution:
         mx = max(candies)
         return [candy + extraCandies >= mx for candy in candies]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -84,8 +76,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -100,30 +90,15 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func kidsWithCandies(candies []int, extraCandies int) []bool {
-	mx := 0
+func kidsWithCandies(candies []int, extraCandies int) (ans []bool) {
+	mx := slices.Max(candies)
 	for _, candy := range candies {
-		mx = max(mx, candy)
+		ans = append(ans, candy+extraCandies >= mx)
 	}
-	var res []bool
-	for _, candy := range candies {
-		res = append(res, candy+extraCandies >= mx)
-	}
-	return res
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function kidsWithCandies(candies: number[], extraCandies: number): boolean[] {
@@ -132,30 +107,47 @@ function kidsWithCandies(candies: number[], extraCandies: number): boolean[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
         let max = *candies.iter().max().unwrap();
-        candies.iter().map(|v| v + extra_candies >= max).collect()
+        candies
+            .iter()
+            .map(|v| v + extra_candies >= max)
+            .collect()
     }
 }
 ```
 
-### **C**
+```php
+class Solution {
+    /**
+     * @param Integer[] $candies
+     * @param Integer $extraCandies
+     * @return Boolean[]
+     */
+    function kidsWithCandies($candies, $extraCandies) {
+        $max = max($candies);
+        $rs = [];
+        for ($i = 0; $i < count($candies); $i++) {
+            array_push($rs, $candies[$i] + $extraCandies >= $max);
+        }
+        return $rs;
+    }
+}
+```
 
 ```c
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-bool *kidsWithCandies(int *candies, int candiesSize, int extraCandies, int *returnSize) {
+bool* kidsWithCandies(int* candies, int candiesSize, int extraCandies, int* returnSize) {
     int mx = 0;
     for (int i = 0; i < candiesSize; i++) {
         mx = max(mx, candies[i]);
     }
-    bool *ans = malloc(candiesSize * sizeof(bool));
+    bool* ans = malloc(candiesSize * sizeof(bool));
     for (int i = 0; i < candiesSize; i++) {
         ans[i] = candies[i] + extraCandies >= mx;
     }
@@ -164,10 +156,6 @@ bool *kidsWithCandies(int *candies, int candiesSize, int extraCandies, int *retu
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

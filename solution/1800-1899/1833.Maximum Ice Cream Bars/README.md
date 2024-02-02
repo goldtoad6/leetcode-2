@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心 + 排序**
+### 方法一：贪心 + 排序
 
 要买尽可能多的雪糕，且可以按任意顺序购买，因此，我们应该优先选择定价小的雪糕。
 
@@ -66,10 +64,6 @@
 时间复杂度 $O(n \times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 是数组 `costs` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +75,6 @@ class Solution:
             coins -= c
         return len(costs)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -102,8 +92,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxIceCream(costs []int, coins int) int {
 	sort.Ints(costs)
@@ -134,7 +120,19 @@ func maxIceCream(costs []int, coins int) int {
 }
 ```
 
-### **JavaScript**
+```ts
+function maxIceCream(costs: number[], coins: number): number {
+    costs.sort((a, b) => a - b);
+    const n = costs.length;
+    for (let i = 0; i < n; ++i) {
+        if (coins < costs[i]) {
+            return i;
+        }
+        coins -= costs[i];
+    }
+    return n;
+}
+```
 
 ```js
 /**
@@ -155,10 +153,6 @@ var maxIceCream = function (costs, coins) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

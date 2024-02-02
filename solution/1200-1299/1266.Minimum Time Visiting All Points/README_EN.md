@@ -10,6 +10,7 @@
 
 <ul>
 	<li>In <code>1</code> second, you can either:
+
     <ul>
     	<li>move vertically by one&nbsp;unit,</li>
     	<li>move horizontally by one unit, or</li>
@@ -18,6 +19,7 @@
     </li>
     <li>You have to visit the points in the same order as they appear in the array.</li>
     <li>You are allowed to pass through points that appear later in the order, but these do not count as visits.</li>
+
 </ul>
 
 <p>&nbsp;</p>
@@ -50,9 +52,17 @@ Total time = 7 seconds</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+For two points $p1=(x_1, y_1)$ and $p2=(x_2, y_2)$, the distances moved in the x-axis and y-axis are $dx = |x_1 - x_2|$ and $dy = |y_1 - y_2|$ respectively.
+
+If $dx \ge dy$, move along the diagonal for $dy$ steps, then move horizontally for $dx - dy$ steps. If $dx < dy$, move along the diagonal for $dx$ steps, then move vertically for $dy - dx$ steps. Therefore, the minimum distance between the two points is $max(dx, dy)$.
+
+We can iterate through all pairs of points, calculate the minimum distance between each pair of points, and then sum them up.
+
+The time complexity is $O(n)$, where $n$ is the number of points. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +71,6 @@ class Solution:
             max(abs(p1[0] - p2[0]), abs(p1[1] - p2[1])) for p1, p2 in pairwise(points)
         )
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -77,8 +85,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -95,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minTimeToVisitAllPoints(points [][]int) (ans int) {
 	for i, p := range points[1:] {
@@ -107,13 +111,6 @@ func minTimeToVisitAllPoints(points [][]int) (ans int) {
 	return
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func abs(x int) int {
 	if x < 0 {
 		return -x
@@ -121,8 +118,6 @@ func abs(x int) int {
 	return x
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minTimeToVisitAllPoints(points: number[][]): number {
@@ -135,8 +130,6 @@ function minTimeToVisitAllPoints(points: number[][]): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -153,12 +146,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int minTimeToVisitAllPoints(int **points, int pointsSize, int *pointsColSize) {
+int minTimeToVisitAllPoints(int** points, int pointsSize, int* pointsColSize) {
     int ans = 0;
     for (int i = 1; i < pointsSize; i++) {
         int x = abs(points[i - 1][0] - points[i][0]);
@@ -169,10 +160,6 @@ int minTimeToVisitAllPoints(int **points, int pointsSize, int *pointsColSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

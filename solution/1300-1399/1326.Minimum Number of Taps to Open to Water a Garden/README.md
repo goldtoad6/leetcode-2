@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心**
+### 方法一：贪心
 
 我们注意到，对于所有能覆盖某个左端点的水龙头，选择能覆盖最远右端点的那个水龙头是最优的。
 
@@ -78,15 +76,11 @@
 
 相似题目：
 
--   [45. 跳跃游戏 II](/solution/0000-0099/0045.Jump%20Game%20II/README.md)
--   [55. 跳跃游戏](/solution/0000-0099/0055.Jump%20Game/README.md)
--   [1024. 视频拼接](/solution/1000-1099/1024.Video%20Stitching/README.md)
+-   [45. 跳跃游戏 II](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0045.Jump%20Game%20II/README.md)
+-   [55. 跳跃游戏](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0055.Jump%20Game/README.md)
+-   [1024. 视频拼接](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1024.Video%20Stitching/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -106,10 +100,6 @@ class Solution:
                 pre = mx
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -134,8 +124,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -162,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minTaps(n int, ranges []int) (ans int) {
 	last := make([]int, n+1)
@@ -184,16 +170,7 @@ func minTaps(n int, ranges []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minTaps(n: number, ranges: number[]): number {
@@ -220,10 +197,43 @@ function minTaps(n: number, ranges: number[]): number {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn min_taps(n: i32, ranges: Vec<i32>) -> i32 {
+        let mut last = vec![0; (n + 1) as usize];
+        let mut ans = 0;
+        let mut mx = 0;
+        let mut pre = 0;
 
-```
+        // Initialize the last vector
+        for (i, &r) in ranges.iter().enumerate() {
+            if (i as i32) - r >= 0 {
+                last[((i as i32) - r) as usize] = std::cmp::max(
+                    last[((i as i32) - r) as usize],
+                    (i as i32) + r
+                );
+            } else {
+                last[0] = std::cmp::max(last[0], (i as i32) + r);
+            }
+        }
 
+        for i in 0..n as usize {
+            mx = std::cmp::max(mx, last[i]);
+            if mx <= (i as i32) {
+                return -1;
+            }
+            if pre == (i as i32) {
+                ans += 1;
+                pre = mx;
+            }
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -53,9 +53,9 @@ Since 4 is the maximum number of enemy forts that can be captured, we return 4.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -72,8 +72,6 @@ class Solution:
             i = j
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -96,8 +94,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -122,8 +118,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func captureForts(forts []int) (ans int) {
 	n := len(forts)
@@ -142,16 +136,7 @@ func captureForts(forts []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function captureForts(forts: number[]): number {
@@ -173,8 +158,6 @@ function captureForts(forts: number[]): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -199,10 +182,44 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn capture_forts(forts: Vec<i32>) -> i32 {
+        let mut ans = 0;
+        let mut i = 0;
+
+        while
+            let Some((idx, &value)) = forts
+                .iter()
+                .enumerate()
+                .skip(i)
+                .find(|&(_, &x)| x != 0)
+        {
+            if
+                let Some((jdx, _)) = forts
+                    .iter()
+                    .enumerate()
+                    .skip(idx + 1)
+                    .find(|&(_, &x)| x != 0)
+            {
+                if value + forts[jdx] == 0 {
+                    ans = ans.max(jdx - idx - 1);
+                }
+            }
+            i = idx + 1;
+        }
+
+        ans as i32
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -60,15 +60,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-DFS。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -89,10 +83,6 @@ class Solution:
 
         return dfs(root, 0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -128,8 +118,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -157,8 +145,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -169,17 +155,21 @@ public:
  * }
  */
 func sumNumbers(root *TreeNode) int {
-    var dfs func(root *TreeNode, presum int) int
-    dfs = func(root *TreeNode, presum int) int {
-        if root == nil {
-            return 0
-        }
-        presum = presum * 10 + root.Val
-        if root.Left == nil && root.Right == nil {
-            return presum
-        }
-        return dfs(root.Left, presum) + dfs(root.Right, presum)
-    }
-    return dfs(root, 0)
+	var dfs func(root *TreeNode, presum int) int
+	dfs = func(root *TreeNode, presum int) int {
+		if root == nil {
+			return 0
+		}
+		presum = presum*10 + root.Val
+		if root.Left == nil && root.Right == nil {
+			return presum
+		}
+		return dfs(root.Left, presum) + dfs(root.Right, presum)
+	}
+	return dfs(root, 0)
 }
 ```
+
+<!-- tabs:end -->
+
+<!-- end -->

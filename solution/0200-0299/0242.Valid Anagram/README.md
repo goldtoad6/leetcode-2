@@ -40,31 +40,28 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：计数
 
-数组或哈希表累加 s 中每个字符出现的次数，再减去 t 中对应的每个字符出现的次数。遍历结束后，若字符中出现次数不为 0 的情况，返回 false，否则返回 true。
+我们先判断两个字符串的长度是否相等，如果不相等，说明两个字符串中的字符肯定不同，返回 `false`。
+
+否则，我们用哈希表或者一个长度为 $26$ 的数组来记录字符串 $s$ 中每个字符出现的次数，然后遍历另一个字符串 $t$，每遍历到一个字符，就将哈希表中对应的字符次数减一，如果减一后的次数小于 $0$，说明该字符在两个字符串中出现的次数不同，返回 `false`。如果遍历完两个字符串后，哈希表中的所有字符次数都为 $0$，说明两个字符串中的字符出现次数相同，返回 `true`。
+
+时间复杂度 $O(n)$，空间复杂度 $O(C)$，其中 $n$ 是字符串的长度；而 $C$ 是字符集的大小，本题中 $C=26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
-        chars = [0] * 26
-        for i in range(len(s)):
-            chars[ord(s[i]) - ord('a')] += 1
-            chars[ord(t[i]) - ord('a')] -= 1
-        return all(c == 0 for c in chars)
+        cnt = Counter(s)
+        for c in t:
+            cnt[c] -= 1
+            if cnt[c] < 0:
+                return False
+        return True
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -72,13 +69,13 @@ class Solution {
         if (s.length() != t.length()) {
             return false;
         }
-        int[] chars = new int[26];
+        int[] cnt = new int[26];
         for (int i = 0; i < s.length(); ++i) {
-            ++chars[s.charAt(i) - 'a'];
-            --chars[t.charAt(i) - 'a'];
+            ++cnt[s.charAt(i) - 'a'];
+            --cnt[t.charAt(i) - 'a'];
         }
-        for (int c : chars) {
-            if (c != 0) {
+        for (int i = 0; i < 26; ++i) {
+            if (cnt[i] != 0) {
                 return false;
             }
         }
@@ -87,42 +84,35 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        if (s.size() != t.size())
+        if (s.size() != t.size()) {
             return false;
-        vector<int> chars(26, 0);
-        for (int i = 0, n = s.size(); i < n; ++i) {
-            ++chars[s[i] - 'a'];
-            --chars[t[i] - 'a'];
         }
-        for (int c : chars) {
-            if (c != 0)
-                return false;
+        vector<int> cnt(26);
+        for (int i = 0; i < s.size(); ++i) {
+            ++cnt[s[i] - 'a'];
+            --cnt[t[i] - 'a'];
         }
-        return true;
+        return all_of(cnt.begin(), cnt.end(), [](int x) { return x == 0; });
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isAnagram(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}
-	var chars [26]int
+	cnt := [26]int{}
 	for i := 0; i < len(s); i++ {
-		chars[s[i]-'a']++
-		chars[t[i]-'a']--
+		cnt[s[i]-'a']++
+		cnt[t[i]-'a']--
 	}
-	for _, c := range chars {
-		if c != 0 {
+	for _, v := range cnt {
+		if v != 0 {
 			return false
 		}
 	}
@@ -130,53 +120,19 @@ func isAnagram(s string, t string) bool {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
- */
-var isAnagram = function (s, t) {
-    if (s.length != t.length) return false;
-    let record = new Array(26).fill(0);
-    let base = 'a'.charCodeAt(0);
-    for (let i = 0; i < s.length; ++i) {
-        ++record[s.charCodeAt(i) - base];
-        --record[t.charCodeAt(i) - base];
-    }
-    return record.every(v => v == 0);
-};
-```
-
-### **TypeScript**
-
 ```ts
 function isAnagram(s: string, t: string): boolean {
-    const n = s.length;
-    const m = t.length;
-    return n === m && [...s].sort().join('') === [...t].sort().join('');
-}
-```
-
-```ts
-function isAnagram(s: string, t: string): boolean {
-    const n = s.length;
-    const m = t.length;
-    if (n !== m) {
+    if (s.length !== t.length) {
         return false;
     }
-    const count = new Array(26).fill(0);
-    for (let i = 0; i < n; i++) {
-        count[s.charCodeAt(i) - 'a'.charCodeAt(0)]++;
-        count[t.charCodeAt(i) - 'a'.charCodeAt(0)]--;
+    const cnt = new Array(26).fill(0);
+    for (let i = 0; i < s.length; ++i) {
+        ++cnt[s.charCodeAt(i) - 'a'.charCodeAt(0)];
+        --cnt[t.charCodeAt(i) - 'a'.charCodeAt(0)];
     }
-    return count.every(v => v === 0);
+    return cnt.every(x => x === 0);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -200,6 +156,70 @@ impl Solution {
 }
 ```
 
+```js
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function (s, t) {
+    if (s.length !== t.length) {
+        return false;
+    }
+    const cnt = new Array(26).fill(0);
+    for (let i = 0; i < s.length; ++i) {
+        ++cnt[s.charCodeAt(i) - 'a'.charCodeAt(0)];
+        --cnt[t.charCodeAt(i) - 'a'.charCodeAt(0)];
+    }
+    return cnt.every(x => x === 0);
+};
+```
+
+```cs
+public class Solution {
+    public bool IsAnagram(string s, string t) {
+        if (s.Length != t.Length) {
+            return false;
+        }
+        int[] cnt = new int[26];
+        for (int i = 0; i < s.Length; ++i) {
+            ++cnt[s[i] - 'a'];
+            --cnt[t[i] - 'a'];
+        }
+        return cnt.All(x => x == 0);
+    }
+}
+```
+
+```c
+int cmp(const void* a, const void* b) {
+    return *(char*) a - *(char*) b;
+}
+
+bool isAnagram(char* s, char* t) {
+    int n = strlen(s);
+    int m = strlen(t);
+    if (n != m) {
+        return 0;
+    }
+    qsort(s, n, sizeof(char), cmp);
+    qsort(t, n, sizeof(char), cmp);
+    return !strcmp(s, t);
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+```
+
 ```rust
 impl Solution {
     pub fn is_anagram(s: String, t: String) -> bool {
@@ -219,27 +239,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-int cmp(const void *a, const void *b) {
-    return *(char *) a - *(char *) b;
-}
-
-bool isAnagram(char *s, char *t) {
-    int n = strlen(s);
-    int m = strlen(t);
-    if (n != m) {
-        return 0;
-    }
-    qsort(s, n, sizeof(char), cmp);
-    qsort(t, n, sizeof(char), cmp);
-    return !strcmp(s, t);
-}
-```
-
-```c
-bool isAnagram(char *s, char *t) {
+bool isAnagram(char* s, char* t) {
     int n = strlen(s);
     int m = strlen(t);
     if (n != m) {
@@ -259,10 +260,6 @@ bool isAnagram(char *s, char *t) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

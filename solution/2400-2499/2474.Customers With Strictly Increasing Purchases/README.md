@@ -81,16 +81,31 @@ Orders 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT
+    customer_id
+FROM
+    (
+        SELECT
+            customer_id,
+            YEAR(order_date),
+            SUM(price) AS total,
+            YEAR(order_date) - RANK() OVER (
+                PARTITION BY customer_id
+                ORDER BY SUM(price)
+            ) AS rk
+        FROM Orders
+        GROUP BY customer_id, YEAR(order_date)
+    ) AS t
+GROUP BY customer_id
+HAVING COUNT(DISTINCT rk) = 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -50,9 +50,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数组 + 枚举**
+### 方法一：数组 + 枚举
 
 我们可以先将每个数组中的元素放入数组中，然后枚举 $1$ 到 $100$ 中的每个数 $i$，判断 $i$ 是否在至少两个数组中出现过。若是，则将 $i$ 加入答案数组中。
 
@@ -60,20 +58,14 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def twoOutOfThree(self, nums1: List[int], nums2: List[int], nums3: List[int]) -> List[int]:
+    def twoOutOfThree(
+        self, nums1: List[int], nums2: List[int], nums3: List[int]
+    ) -> List[int]:
         s1, s2, s3 = set(nums1), set(nums2), set(nums3)
         return [i for i in range(1, 101) if (i in s1) + (i in s2) + (i in s3) > 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -98,15 +90,13 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) {
         auto get = [](vector<int>& nums) {
             vector<int> cnt(101);
-            for (int& v :nums) cnt[v] = 1;
+            for (int& v : nums) cnt[v] = 1;
             return cnt;
         };
         auto s1 = get(nums1), s2 = get(nums2), s3 = get(nums3);
@@ -120,8 +110,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func twoOutOfThree(nums1 []int, nums2 []int, nums3 []int) (ans []int) {
@@ -141,14 +129,8 @@ func twoOutOfThree(nums1 []int, nums2 []int, nums3 []int) (ans []int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function twoOutOfThree(
-    nums1: number[],
-    nums2: number[],
-    nums3: number[],
-): number[] {
+function twoOutOfThree(nums1: number[], nums2: number[], nums3: number[]): number[] {
     const count = new Array(101).fill(0);
     new Set(nums1).forEach(v => count[v]++);
     new Set(nums2).forEach(v => count[v]++);
@@ -163,8 +145,6 @@ function twoOutOfThree(
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashSet;
 impl Solution {
@@ -174,32 +154,37 @@ impl Solution {
             .into_iter()
             .collect::<HashSet<i32>>()
             .iter()
-            .for_each(|&v| count[v as usize] += 1);
+            .for_each(|&v| {
+                count[v as usize] += 1;
+            });
         nums2
             .into_iter()
             .collect::<HashSet<i32>>()
             .iter()
-            .for_each(|&v| count[v as usize] += 1);
+            .for_each(|&v| {
+                count[v as usize] += 1;
+            });
         nums3
             .into_iter()
             .collect::<HashSet<i32>>()
             .iter()
-            .for_each(|&v| count[v as usize] += 1);
+            .for_each(|&v| {
+                count[v as usize] += 1;
+            });
         let mut ans = Vec::new();
-        count.iter().enumerate().for_each(|(i, v)| {
-            if *v >= 2 {
-                ans.push(i as i32);
-            }
-        });
+        count
+            .iter()
+            .enumerate()
+            .for_each(|(i, v)| {
+                if *v >= 2 {
+                    ans.push(i as i32);
+                }
+            });
         ans
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

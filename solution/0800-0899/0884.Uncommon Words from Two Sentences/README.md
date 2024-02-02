@@ -44,9 +44,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 根据题目描述，只要单词出现一次，就符合题目要求。因此，我们用哈希表 $cnt$ 记录所有单词以及出现的次数。
 
@@ -56,20 +54,12 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
         cnt = Counter(s1.split()) + Counter(s2.split())
         return [s for s, v in cnt.items() if v == 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -92,8 +82,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -107,33 +95,30 @@ public:
         add(s1);
         add(s2);
         vector<string> ans;
-        for (auto& [s, v] : cnt) if (v == 1) ans.emplace_back(s);
+        for (auto& [s, v] : cnt)
+            if (v == 1) ans.emplace_back(s);
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func uncommonFromSentences(s1 string, s2 string) (ans []string) {
-    cnt := map[string]int{}
-    for _, s := range strings.Split(s1, " ") {
-        cnt[s]++
-    }
-    for _, s := range strings.Split(s2, " ") {
-        cnt[s]++
-    }
-    for s, v := range cnt {
-        if v == 1 {
-            ans = append(ans, s)
-        }
-    }
-    return
+	cnt := map[string]int{}
+	for _, s := range strings.Split(s1, " ") {
+		cnt[s]++
+	}
+	for _, s := range strings.Split(s2, " ") {
+		cnt[s]++
+	}
+	for s, v := range cnt {
+		if v == 1 {
+			ans = append(ans, s)
+		}
+	}
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function uncommonFromSentences(s1: string, s2: string): string[] {
@@ -151,8 +136,6 @@ function uncommonFromSentences(s1: string, s2: string): string[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 
@@ -168,15 +151,13 @@ impl Solution {
         let mut res = Vec::new();
         for (k, v) in map {
             if v {
-                res.push(String::from(k))
+                res.push(String::from(k));
             }
         }
         res
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -199,10 +180,6 @@ var uncommonFromSentences = function (s1, s2) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

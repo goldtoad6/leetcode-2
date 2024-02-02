@@ -43,9 +43,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,25 +63,6 @@ class Solution:
                 ans = min(ans, n - (i - j))
         return -1 if ans == inf else ans
 ```
-
-```python
-class Solution:
-    def minOperations(self, nums: List[int], x: int) -> int:
-        x = sum(nums) - x
-        ans = inf
-        n = len(nums)
-        s = j = 0
-        for i, v in enumerate(nums):
-            s += v
-            while j <= i and s > x:
-                s -= nums[j]
-                j += 1
-            if s == x:
-                ans = min(ans, n - (i - j + 1))
-        return -1 if ans == inf else ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -107,31 +88,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int minOperations(int[] nums, int x) {
-        x = -x;
-        for (int v : nums) {
-            x += v;
-        }
-        int n = nums.length;
-        int ans = 1 << 30;
-        for (int i = 0, j = 0, s = 0; i < n; ++i) {
-            s += nums[i];
-            while (j <= i && s > x) {
-                s -= nums[j++];
-            }
-            if (s == x) {
-                ans = Math.min(ans, n - (i - j + 1));
-            }
-        }
-        return ans == 1 << 30 ? -1 : ans;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -154,29 +110,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    int minOperations(vector<int>& nums, int x) {
-        x = accumulate(nums.begin(), nums.end(), 0) - x;
-        int n = nums.size();
-        int ans = 1 << 30;
-        for (int i = 0, j = 0, s = 0; i < n; ++i) {
-            s += nums[i];
-            while (j <= i && s > x) {
-                s -= nums[j++];
-            }
-            if (s == x) {
-                ans = min(ans, n - (i - j + 1));
-            }
-        }
-        return ans == 1 << 30 ? -1 : ans;
-    }
-};
-```
-
-### **Go**
 
 ```go
 func minOperations(nums []int, x int) int {
@@ -201,49 +134,7 @@ func minOperations(nums []int, x int) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-```go
-func minOperations(nums []int, x int) int {
-	x = -x
-	for _, v := range nums {
-		x += v
-	}
-	ans := 1 << 30
-	s, n := 0, len(nums)
-	j := 0
-	for i, v := range nums {
-		s += v
-		for j <= i && s > x {
-			s -= nums[j]
-			j++
-		}
-		if s == x {
-			ans = min(ans, n-(i-j+1))
-		}
-	}
-	if ans == 1<<30 {
-		return -1
-	}
-	return ans
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
 
 ```ts
 function minOperations(nums: number[], x: number): number {
@@ -266,26 +157,6 @@ function minOperations(nums: number[], x: number): number {
 }
 ```
 
-```ts
-function minOperations(nums: number[], x: number): number {
-    x = nums.reduce((a, b) => a + b, 0) - x;
-    const n = nums.length;
-    let ans = 1 << 30;
-    for (let i = 0, j = 0, s = 0; i < n; ++i) {
-        s += nums[i];
-        while (j <= i && s > x) {
-            s -= nums[j++];
-        }
-        if (s == x) {
-            ans = Math.min(ans, n - (i - j + 1));
-        }
-    }
-    return ans == 1 << 30 ? -1 : ans;
-}
-```
-
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn min_operations(nums: Vec<i32>, x: i32) -> i32 {
@@ -304,7 +175,7 @@ impl Solution {
                 i += 1;
             }
             if sum == target {
-                ans = ans.min((n - 1 - (j - i)) as i32)
+                ans = ans.min((n - 1 - (j - i)) as i32);
             }
         }
         if ans == i32::MAX {
@@ -315,12 +186,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int minOperations(int *nums, int numsSize, int x) {
+int minOperations(int* nums, int numsSize, int x) {
     int target = -x;
     for (int i = 0; i < numsSize; i++) {
         target += nums[i];
@@ -347,10 +216,117 @@ int minOperations(int *nums, int numsSize, int x) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minOperations(self, nums: List[int], x: int) -> int:
+        x = sum(nums) - x
+        ans = inf
+        n = len(nums)
+        s = j = 0
+        for i, v in enumerate(nums):
+            s += v
+            while j <= i and s > x:
+                s -= nums[j]
+                j += 1
+            if s == x:
+                ans = min(ans, n - (i - j + 1))
+        return -1 if ans == inf else ans
 ```
 
+```java
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        x = -x;
+        for (int v : nums) {
+            x += v;
+        }
+        int n = nums.length;
+        int ans = 1 << 30;
+        for (int i = 0, j = 0, s = 0; i < n; ++i) {
+            s += nums[i];
+            while (j <= i && s > x) {
+                s -= nums[j++];
+            }
+            if (s == x) {
+                ans = Math.min(ans, n - (i - j + 1));
+            }
+        }
+        return ans == 1 << 30 ? -1 : ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        x = accumulate(nums.begin(), nums.end(), 0) - x;
+        int n = nums.size();
+        int ans = 1 << 30;
+        for (int i = 0, j = 0, s = 0; i < n; ++i) {
+            s += nums[i];
+            while (j <= i && s > x) {
+                s -= nums[j++];
+            }
+            if (s == x) {
+                ans = min(ans, n - (i - j + 1));
+            }
+        }
+        return ans == 1 << 30 ? -1 : ans;
+    }
+};
+```
+
+```go
+func minOperations(nums []int, x int) int {
+	x = -x
+	for _, v := range nums {
+		x += v
+	}
+	ans := 1 << 30
+	s, n := 0, len(nums)
+	j := 0
+	for i, v := range nums {
+		s += v
+		for j <= i && s > x {
+			s -= nums[j]
+			j++
+		}
+		if s == x {
+			ans = min(ans, n-(i-j+1))
+		}
+	}
+	if ans == 1<<30 {
+		return -1
+	}
+	return ans
+}
+```
+
+```ts
+function minOperations(nums: number[], x: number): number {
+    x = nums.reduce((a, b) => a + b, 0) - x;
+    const n = nums.length;
+    let ans = 1 << 30;
+    for (let i = 0, j = 0, s = 0; i < n; ++i) {
+        s += nums[i];
+        while (j <= i && s > x) {
+            s -= nums[j++];
+        }
+        if (s == x) {
+            ans = Math.min(ans, n - (i - j + 1));
+        }
+    }
+    return ans == 1 << 30 ? -1 : ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

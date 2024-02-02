@@ -56,18 +56,15 @@
 
 ## Solutions
 
-BFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def getFood(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
-        i, j = next((i, j) for i in range(m)
-                    for j in range(n) if grid[i][j] == '*')
+        i, j = next((i, j) for i in range(m) for j in range(n) if grid[i][j] == '*')
         q = deque([(i, j)])
         dirs = (-1, 0, 1, 0, -1)
         ans = 0
@@ -85,8 +82,6 @@ class Solution:
                             q.append((x, y))
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -129,8 +124,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -171,8 +164,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func getFood(grid [][]byte) (ans int) {
 	m, n := len(grid), len(grid[0])
@@ -210,8 +201,6 @@ func getFood(grid [][]byte) (ans int) {
 	return -1
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -256,10 +245,6 @@ var getFood = function (grid) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

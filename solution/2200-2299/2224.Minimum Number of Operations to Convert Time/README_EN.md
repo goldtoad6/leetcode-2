@@ -43,9 +43,9 @@ It can be proven that it is not possible to convert current to correct in fewer 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
             d %= i
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -78,8 +76,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -97,35 +93,23 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func convertTime(current string, correct string) int {
-    parse := func(s string) int {
-        h := int(s[0] - '0') * 10 + int(s[1] - '0')
-        m := int(s[3] - '0') * 10 + int(s[4] - '0')
-        return h * 60 + m
-    }
-    a, b := parse(current), parse(correct)
-    ans, d := 0, b - a
-    for _, i := range []int{60, 15, 5, 1} {
-        ans += d / i
-        d %= i
-    }
-    return ans
+	parse := func(s string) int {
+		h := int(s[0]-'0')*10 + int(s[1]-'0')
+		m := int(s[3]-'0')*10 + int(s[4]-'0')
+		return h*60 + m
+	}
+	a, b := parse(current), parse(correct)
+	ans, d := 0, b-a
+	for _, i := range []int{60, 15, 5, 1} {
+		ans += d / i
+		d %= i
+	}
+	return ans
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

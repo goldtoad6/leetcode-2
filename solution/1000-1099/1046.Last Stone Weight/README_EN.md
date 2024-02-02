@@ -47,9 +47,9 @@ we combine 1 and 1 to get 0 so the array converts to [1] then that&#39;s the val
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +62,6 @@ class Solution:
                 heappush(h, x - y)
         return 0 if not h else -h[0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +81,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -108,8 +104,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func lastStoneWeight(stones []int) int {
 	q := &hp{stones}
@@ -128,9 +122,9 @@ func lastStoneWeight(stones []int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -140,7 +134,22 @@ func (h *hp) push(v int) { heap.Push(h, v) }
 func (h *hp) pop() int   { return heap.Pop(h).(int) }
 ```
 
-### **JavaScript**
+```ts
+function lastStoneWeight(stones: number[]): number {
+    const pq = new MaxPriorityQueue();
+    for (const x of stones) {
+        pq.enqueue(x);
+    }
+    while (pq.size() > 1) {
+        const y = pq.dequeue().element;
+        const x = pq.dequeue().element;
+        if (x !== y) {
+            pq.enqueue(y - x);
+        }
+    }
+    return pq.isEmpty() ? 0 : pq.dequeue().element;
+}
+```
 
 ```js
 /**
@@ -163,29 +172,6 @@ var lastStoneWeight = function (stones) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function lastStoneWeight(stones: number[]): number {
-    const pq = new MaxPriorityQueue();
-    for (const x of stones) {
-        pq.enqueue(x);
-    }
-    while (pq.size() > 1) {
-        const y = pq.dequeue().element;
-        const x = pq.dequeue().element;
-        if (x !== y) {
-            pq.enqueue(y - x);
-        }
-    }
-    return pq.isEmpty() ? 0 : pq.dequeue().element;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

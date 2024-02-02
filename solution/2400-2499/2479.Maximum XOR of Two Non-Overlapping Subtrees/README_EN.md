@@ -50,9 +50,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Trie:
@@ -112,8 +112,6 @@ class Solution:
         dfs2(0, -1)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Trie {
@@ -196,8 +194,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using ll = long long;
 
@@ -206,7 +202,7 @@ public:
     vector<Trie*> children;
     string v;
     Trie()
-        : children(2) { }
+        : children(2) {}
 
     void insert(ll x) {
         Trie* node = this;
@@ -270,8 +266,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type Trie struct {
@@ -347,19 +341,8 @@ func maxXor(n int, edges [][]int, values []int) int64 {
 	dfs2(0, -1)
 	return int64(ans)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

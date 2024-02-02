@@ -60,23 +60,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表**
+### 方法一：哈希表
 
 遍历链表，并使用哈希表记录每个节点。当某个节点二次出现时，则表示存在环，直接返回 `true`。否则链表遍历结束，返回 `false`。
 
-**方法二：快慢指针**
-
-定义快慢指针 `slow`、`fast`，初始指向 `head`。
-
-快指针每次走两步，慢指针每次走一步，不断循环。当相遇时，说明链表存在环。如果循环结束依然没有相遇，说明链表不存在环。
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是链表中的节点数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for singly-linked list.
@@ -95,10 +85,6 @@ class Solution:
                 return True
         return False
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -128,8 +114,6 @@ public class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -156,7 +140,52 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func hasCycle(head *ListNode) bool {
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		slow, fast = slow.Next, fast.Next.Next
+		if slow == fast {
+			return true
+		}
+	}
+	return false
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+    const set = new Set<ListNode>();
+    let node = head;
+    while (node !== null) {
+        if (set.has(node)) {
+            return true;
+        }
+        set.add(node);
+        node = node.next;
+    }
+    return false;
+}
+```
 
 ```js
 /**
@@ -177,7 +206,7 @@ var hasCycle = function (head) {
     while (fast && fast.next) {
         slow = slow.next;
         fast = fast.next.next;
-        if (slow == fast) {
+        if (slow === fast) {
             return true;
         }
     }
@@ -185,91 +214,73 @@ var hasCycle = function (head) {
 };
 ```
 
-### **Go**
-
-```go
+```cs
 /**
  * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func hasCycle(head *ListNode) bool {
-    slow, fast := head, head
-    for fast != nil && fast.Next != nil {
-        slow, fast = slow.Next, fast.Next.Next
-        if slow == fast {
-            return true
-        }
-    }
-    return false
-}
-```
-
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) {
+ *         val = x;
+ *         next = null;
  *     }
  * }
  */
-
-function hasCycle(head: ListNode | null): boolean {
-    const set = new Set<ListNode>();
-    let node = head;
-    while (node != null) {
-        if (set.has(node)) {
-            return true;
+public class Solution {
+    public bool HasCycle(ListNode head) {
+        var fast = head;
+        var slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
         }
-        set.add(node);
-        node = node.next;
-    }
-    return false;
-}
-```
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function hasCycle(head: ListNode | null): boolean {
-    if (head == null) {
         return false;
     }
-    let slow = head;
-    let fast = head.next;
-    while (fast != null && fast.next != null) {
-        if (slow == fast) {
-            return true;
-        }
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    return false;
 }
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+### 方法二：快慢指针
+
+我们定义快慢指针 $fast$ 和 $slow$，初始时均指向 $head$。
+
+快指针每次走两步，慢指针每次走一步，不断循环。当快慢指针相遇时，说明链表存在环。如果循环结束依然没有相遇，说明链表不存在环。
+
+时间复杂度 $O(n)$，其中 $n$ 是链表中的节点数。空间复杂度 $O(1)$。
+
+<!-- tabs:start -->
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+    let slow = head;
+    let fast = head;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow === fast) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

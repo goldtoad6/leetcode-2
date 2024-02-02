@@ -57,19 +57,31 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: State Compression + Dynamic Programming
 
-### **Python3**
+We can preprocess to get the greatest common divisor of any two numbers in the array `nums`, stored in the two-dimensional array $g$, where $g[i][j]$ represents the greatest common divisor of $nums[i]$ and $nums[j]$.
+
+Then define $f[k]$ to represent the maximum score that can be obtained when the state after the current operation is $k$. Suppose $m$ is the number of elements in the array `nums`, then there are a total of $2^m$ states, that is, the range of $k$ is $[0, 2^m - 1]$.
+
+Enumerate all states from small to large, for each state $k$, first determine whether the number of $1$s in the binary bits of this state $cnt$ is even, if so, perform the following operations:
+
+Enumerate the positions where the binary bits in $k$ are 1, suppose they are $i$ and $j$, then the elements at positions $i$ and $j$ can perform one operation, and the score that can be obtained at this time is $\frac{cnt}{2} \times g[i][j]$, update the maximum value of $f[k]$.
+
+The final answer is $f[2^m - 1]$.
+
+The time complexity is $O(2^m \times m^2)$, and the space complexity is $O(2^m)$. Here, $m$ is the number of elements in the array `nums`.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxScore(self, nums: List[int]) -> int:
         m = len(nums)
+        f = [0] * (1 << m)
         g = [[0] * m for _ in range(m)]
         for i in range(m):
             for j in range(i + 1, m):
                 g[i][j] = gcd(nums[i], nums[j])
-        f = [0] * (1 << m)
         for k in range(1 << m):
             if (cnt := k.bit_count()) % 2 == 0:
                 for i in range(m):
@@ -82,8 +94,6 @@ class Solution:
                                 )
         return f[-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -120,8 +130,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -154,8 +162,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxScore(nums []int) int {
 	m := len(nums)
@@ -183,13 +189,6 @@ func maxScore(nums []int) int {
 	return f[1<<m-1]
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func gcd(a, b int) int {
 	if b == 0 {
 		return a
@@ -198,10 +197,48 @@ func gcd(a, b int) int {
 }
 ```
 
-### **...**
+```ts
+function maxScore(nums: number[]): number {
+    const m = nums.length;
+    const f: number[] = new Array(1 << m).fill(0);
+    const g: number[][] = new Array(m).fill(0).map(() => new Array(m).fill(0));
+    for (let i = 0; i < m; ++i) {
+        for (let j = i + 1; j < m; ++j) {
+            g[i][j] = gcd(nums[i], nums[j]);
+        }
+    }
+    for (let k = 0; k < 1 << m; ++k) {
+        const cnt = bitCount(k);
+        if (cnt % 2 === 0) {
+            for (let i = 0; i < m; ++i) {
+                if ((k >> i) & 1) {
+                    for (let j = i + 1; j < m; ++j) {
+                        if ((k >> j) & 1) {
+                            const t = f[k ^ (1 << i) ^ (1 << j)] + ~~(cnt / 2) * g[i][j];
+                            f[k] = Math.max(f[k], t);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return f[(1 << m) - 1];
+}
 
-```
+function gcd(a: number, b: number): number {
+    return b ? gcd(b, a % b) : a;
+}
 
+function bitCount(i: number): number {
+    i = i - ((i >>> 1) & 0x55555555);
+    i = (i & 0x33333333) + ((i >>> 2) & 0x33333333);
+    i = (i + (i >>> 4)) & 0x0f0f0f0f;
+    i = i + (i >>> 8);
+    i = i + (i >>> 16);
+    return i & 0x3f;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

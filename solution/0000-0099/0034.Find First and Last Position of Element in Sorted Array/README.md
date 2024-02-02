@@ -17,13 +17,13 @@
 <p><strong>示例 1：</strong></p>
 
 <pre>
-<strong>输入：</strong>nums = [5,7,7,8,8,10], target = 8
+<strong>输入：</strong>nums = [<code>5,7,7,8,8,10]</code>, target = 8
 <strong>输出：</strong>[3,4]</pre>
 
 <p><strong>示例&nbsp;2：</strong></p>
 
 <pre>
-<strong>输入：</strong>nums = [5,7,7,8,8,10], target = 6
+<strong>输入：</strong>nums = [<code>5,7,7,8,8,10]</code>, target = 6
 <strong>输出：</strong>[-1,-1]</pre>
 
 <p><strong>示例 3：</strong></p>
@@ -45,20 +45,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：二分查找**
+### 方法一：二分查找
 
 我们可以进行两次二分查找，分别查找出左边界和右边界。
 
-时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。其中 $n$ 是数组 `nums` 的长度。
+时间复杂度 $O(\log n)$，空间复杂度 $O(1)$。其中 $n$ 是数组 $nums$ 的长度。
 
 以下是二分查找的两个通用模板：
 
 模板 1：
 
 ```java
-boolean check(int x) {}
+boolean check(int x) {
+}
 
 int search(int left, int right) {
     while (left < right) {
@@ -76,7 +75,8 @@ int search(int left, int right) {
 模板 2：
 
 ```java
-boolean check(int x) {}
+boolean check(int x) {
+}
 
 int search(int left, int right) {
     while (left < right) {
@@ -91,22 +91,18 @@ int search(int left, int right) {
 }
 ```
 
-做二分题目时，可以按照以下步骤：
+做二分题目时，可以按照以下套路：
 
-1. 写出循环条件：`while (left < right)`，注意是 `left < right`，而非 `left <= right`；
-1. 循环体内，先无脑写出 `mid = (left + right) >> 1`；
-1. 根据具体题目，实现 `check()` 函数（有时很简单的逻辑，可以不定义 `check`），想一下究竟要用 `right = mid`（模板 1） 还是 `left = mid`（模板 2）；
-    - 如果 `right = mid`，那么无脑写出 else 语句 `left = mid + 1`，并且不需要更改 mid 的计算，即保持 `mid = (left + right) >> 1`；
-    - 如果 `left = mid`，那么无脑写出 else 语句 `right = mid - 1`，并且在 mid 计算时补充 +1，即 `mid = (left + right + 1) >> 1`。
-1. 循环结束时，left 与 right 相等。
+1. 写出循环条件 $left < right$；
+1. 循环体内，不妨先写 $mid = \lfloor \frac{left + right}{2} \rfloor$；
+1. 根据具体题目，实现 $check()$ 函数（有时很简单的逻辑，可以不定义 $check$），想一下究竟要用 $right = mid$（模板 $1$） 还是 $left = mid$（模板 $2$）；
+       - 如果 $right = mid$，那么写出 else 语句 $left = mid + 1$，并且不需要更改 mid 的计算，即保持 $mid = \lfloor \frac{left + right}{2} \rfloor$；
+       - 如果 $left = mid$，那么写出 else 语句 $right = mid - 1$，并且在 $mid$ 计算时补充 +1，即 $mid = \lfloor \frac{left + right + 1}{2} \rfloor$；
+1. 循环结束时，$left$ 与 $right$ 相等。
 
-注意，这两个模板的优点是始终保持答案位于二分区间内，二分结束条件对应的值恰好在答案所处的位置。 对于可能无解的情况，只要判断二分结束后的 left 或者 right 是否满足题意即可。
+注意，这两个模板的优点是始终保持答案位于二分区间内，二分结束条件对应的值恰好在答案所处的位置。 对于可能无解的情况，只要判断二分结束后的 $left$ 或者 $right$ 是否满足题意即可。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -115,10 +111,6 @@ class Solution:
         r = bisect_left(nums, target + 1)
         return [-1, -1] if l == r else [l, r - 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -143,8 +135,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -157,18 +147,21 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+func searchRange(nums []int, target int) []int {
+	l := sort.SearchInts(nums, target)
+	r := sort.SearchInts(nums, target+1)
+	if l == r {
+		return []int{-1, -1}
+	}
+	return []int{l, r - 1}
+}
+```
 
-```js
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var searchRange = function (nums, target) {
-    function search(x) {
-        let left = 0,
-            right = nums.length;
+```ts
+function searchRange(nums: number[], target: number): number[] {
+    const search = (x: number): number => {
+        let [left, right] = [0, nums.length];
         while (left < right) {
             const mid = (left + right) >> 1;
             if (nums[mid] >= x) {
@@ -178,27 +171,12 @@ var searchRange = function (nums, target) {
             }
         }
         return left;
-    }
+    };
     const l = search(target);
     const r = search(target + 1);
-    return l == r ? [-1, -1] : [l, r - 1];
-};
-```
-
-### **Go**
-
-```go
-func searchRange(nums []int, target int) []int {
-	l := sort.Search(len(nums), func(i int) bool { return nums[i] >= target })
-	r := sort.Search(len(nums), func(i int) bool { return nums[i] > target })
-	if l == r {
-		return []int{-1, -1}
-	}
-	return []int{l, r - 1}
+    return l === r ? [-1, -1] : [l, r - 1];
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -227,10 +205,13 @@ impl Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function searchRange(nums: number[], target: number): number[] {
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var searchRange = function (nums, target) {
     function search(x) {
         let left = 0,
             right = nums.length;
@@ -247,13 +228,9 @@ function searchRange(nums: number[], target: number): number[] {
     const l = search(target);
     const r = search(target + 1);
     return l == r ? [-1, -1] : [l, r - 1];
-}
-```
-
-### **...**
-
-```
-
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

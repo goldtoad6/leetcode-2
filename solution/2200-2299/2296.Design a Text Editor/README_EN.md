@@ -74,13 +74,12 @@ textEditor.cursorRight(6); // return &quot;practi&quot;
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class TextEditor:
-
     def __init__(self):
         self.left = []
         self.right = []
@@ -106,6 +105,7 @@ class TextEditor:
             self.left.append(self.right.pop())
         return ''.join(self.left[-10:])
 
+
 # Your TextEditor object will be instantiated and called as such:
 # obj = TextEditor()
 # obj.addText(text)
@@ -113,8 +113,6 @@ class TextEditor:
 # param_3 = obj.cursorLeft(k)
 # param_4 = obj.cursorRight(k)
 ```
-
-### **Java**
 
 ```java
 class TextEditor {
@@ -162,8 +160,6 @@ class TextEditor {
  * String param_4 = obj.cursorRight(k);
  */
 ```
-
-### **C++**
 
 ```cpp
 class TextEditor {
@@ -213,8 +209,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type TextEditor struct {
 	left, right []byte
@@ -256,20 +250,6 @@ func (this *TextEditor) CursorRight(k int) string {
 	return string(this.left[max(len(this.left)-10, 0):])
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your TextEditor object will be instantiated and called as such:
  * obj := Constructor();
@@ -280,16 +260,6 @@ func min(a, b int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

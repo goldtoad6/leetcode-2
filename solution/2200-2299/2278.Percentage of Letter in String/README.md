@@ -39,23 +39,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def percentageLetter(self, s: str, letter: str) -> int:
         return s.count(letter) * 100 // len(s)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -71,8 +63,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -83,8 +73,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func percentageLetter(s string, letter byte) int {
@@ -98,8 +86,6 @@ func percentageLetter(s string, letter byte) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function percentageLetter(s: string, letter: string): number {
     let count = 0;
@@ -111,8 +97,6 @@ function percentageLetter(s: string, letter: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn percentage_letter(s: String, letter: char) -> i32 {
@@ -122,15 +106,11 @@ impl Solution {
                 count += 1;
             }
         }
-        (count * 100 / s.len()) as i32
+        ((count * 100) / s.len()) as i32
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

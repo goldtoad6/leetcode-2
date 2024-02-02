@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：脑筋急转弯**
+### 方法一：脑筋急转弯
 
 由于按位与的操作，不会使得数字变大，因此最大值就是数组中的最大值。
 
@@ -66,10 +64,6 @@
 时间复杂度 $O(n)$。其中 $n$ 为数组的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -84,10 +78,6 @@ class Solution:
                 cnt = 0
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -110,8 +100,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -131,14 +119,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestSubarray(nums []int) int {
-	mx := 0
-	for _, v := range nums {
-		mx = max(mx, v)
-	}
+	mx := slices.Max(nums)
 	ans, cnt := 0, 0
 	for _, v := range nums {
 		if v == mx {
@@ -150,25 +133,8 @@ func longestSubarray(nums []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

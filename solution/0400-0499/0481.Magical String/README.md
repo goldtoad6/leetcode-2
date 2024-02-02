@@ -43,9 +43,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟构造过程**
+### 方法一：模拟构造过程
 
 根据题目，我们得知，字符串 $s$ 的每一组数字都可以由字符串 $s$ 自身的数字得到。
 
@@ -81,10 +79,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def magicalString(self, n: int) -> int:
@@ -98,10 +92,6 @@ class Solution:
             i += 1
         return s[:n].count(1)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -125,8 +115,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -143,8 +131,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func magicalString(n int) (ans int) {
@@ -165,8 +151,6 @@ func magicalString(n int) (ans int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function magicalString(n: number): number {
     const cs = [...'1221121'];
@@ -183,8 +167,6 @@ function magicalString(n: number): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn magical_string(n: i32) -> i32 {
@@ -199,15 +181,15 @@ impl Solution {
             }
             i += 1;
         }
-        s.as_bytes()[0..n].iter().filter(|&v| v == &b'1').count() as i32
+        s
+            .as_bytes()
+            [0..n].iter()
+            .filter(|&v| v == &b'1')
+            .count() as i32
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

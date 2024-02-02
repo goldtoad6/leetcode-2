@@ -57,13 +57,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -83,10 +79,6 @@ class Solution:
             i += 1
         return check(nums, i - 1) or check(nums, i)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -113,8 +105,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -136,8 +126,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func canBeIncreasing(nums []int) bool {
@@ -163,10 +151,56 @@ func check(nums []int, i int) bool {
 }
 ```
 
-### **...**
-
+```ts
+function canBeIncreasing(nums: number[]): boolean {
+    const check = (p: number) => {
+        let prev = undefined;
+        for (let j = 0; j < nums.length; j++) {
+            if (p != j) {
+                if (prev !== undefined && prev >= nums[j]) {
+                    return false;
+                }
+                prev = nums[j];
+            }
+        }
+        return true;
+    };
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i - 1] >= nums[i]) {
+            return check(i - 1) || check(i);
+        }
+    }
+    return true;
+}
 ```
 
+```rust
+impl Solution {
+    pub fn can_be_increasing(nums: Vec<i32>) -> bool {
+        let check = |p: usize| -> bool {
+            let mut prev = None;
+            for j in 0..nums.len() {
+                if p != j {
+                    if let Some(value) = prev {
+                        if value >= nums[j] {
+                            return false;
+                        }
+                    }
+                    prev = Some(nums[j]);
+                }
+            }
+            true
+        };
+        for i in 1..nums.len() {
+            if nums[i - 1] >= nums[i] {
+                return check(i - 1) || check(i);
+            }
+        }
+        true
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

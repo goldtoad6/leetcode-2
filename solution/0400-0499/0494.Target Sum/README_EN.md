@@ -47,13 +47,9 @@
 
 ## Solutions
 
-Dynamic programming.
-
-It is similar to the 0-1 Knapsack problem, except that the index may appear negative, which requires special handling.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -71,40 +67,6 @@ class Solution:
                     dp[i][j] += dp[i - 1][j - nums[i - 1]]
         return dp[-1][-1]
 ```
-
-```python
-class Solution:
-    def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        s = sum(nums)
-        if s < target or (s - target) % 2 != 0:
-            return 0
-        n = (s - target) // 2
-        dp = [0] * (n + 1)
-        dp[0] = 1
-        for v in nums:
-            for j in range(n, v - 1, -1):
-                dp[j] += dp[j - v]
-        return dp[-1]
-```
-
-DFS:
-
-```python
-class Solution:
-    def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        @cache
-        def dfs(i, t):
-            if i == n:
-                if t == target:
-                    return 1
-                return 0
-            return dfs(i + 1, t + nums[i]) + dfs(i + 1, t - nums[i])
-
-        ans, n = 0, len(nums)
-        return dfs(0, 0)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -133,31 +95,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int findTargetSumWays(int[] nums, int target) {
-        int s = 0;
-        for (int v : nums) {
-            s += v;
-        }
-        if (s < target || (s - target) % 2 != 0) {
-            return 0;
-        }
-        int n = (s - target) / 2;
-        int[] dp = new int[n + 1];
-        dp[0] = 1;
-        for (int v : nums) {
-            for (int j = n; j >= v; --j) {
-                dp[j] += dp[j - v];
-            }
-        }
-        return dp[n];
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -177,25 +114,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int s = accumulate(nums.begin(), nums.end(), 0);
-        if (s < target || (s - target) % 2 != 0) return 0;
-        int n = (s - target) / 2;
-        vector<int> dp(n + 1);
-        dp[0] = 1;
-        for (int& v : nums)
-            for (int j = n; j >= v; --j)
-                dp[j] += dp[j - v];
-        return dp[n];
-    }
-};
-```
-
-### **Go**
 
 ```go
 func findTargetSumWays(nums []int, target int) int {
@@ -224,28 +142,44 @@ func findTargetSumWays(nums []int, target int) int {
 }
 ```
 
-```go
-func findTargetSumWays(nums []int, target int) int {
-	s := 0
-	for _, v := range nums {
-		s += v
-	}
-	if s < target || (s-target)%2 != 0 {
-		return 0
-	}
-	n := (s - target) / 2
-	dp := make([]int, n+1)
-	dp[0] = 1
-	for _, v := range nums {
-		for j := n; j >= v; j-- {
-			dp[j] += dp[j-v]
-		}
-	}
-	return dp[n]
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {
+        let mut sum = 0;
+        for e in &nums {
+            sum += *e;
+        }
+
+        // -x + (sum - x) = target <-> -2 * x + sum = target <-> 2 * x = sum - target
+        if sum < target || (sum - target) % 2 != 0 {
+            // There is no way to get any expression in this case
+            return 0;
+        }
+        let n = nums.len();
+        let m = (sum - target) / 2;
+
+        let mut dp: Vec<Vec<i32>> = vec![vec![0; m as usize + 1]; n + 1];
+
+        // Initialize the dp vector
+        dp[0][0] = 1;
+
+        // Begin the actual dp phase
+        for i in 1..=n {
+            for j in 0..=m as usize {
+                // nums[i - 1] is not included
+                dp[i][j] = dp[i - 1][j];
+                if nums[i - 1] <= (j as i32) {
+                    // nums[i - 1] is included
+                    dp[i][j] += dp[i - 1][j - (nums[i - 1] as usize)];
+                }
+            }
+        }
+
+        dp[n][m as usize]
+    }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -274,10 +208,141 @@ var findTargetSumWays = function (nums, target) {
 };
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        s = sum(nums)
+        if s < target or (s - target) % 2 != 0:
+            return 0
+        n = (s - target) // 2
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        for v in nums:
+            for j in range(n, v - 1, -1):
+                dp[j] += dp[j - v]
+        return dp[-1]
 ```
 
+```java
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int s = 0;
+        for (int v : nums) {
+            s += v;
+        }
+        if (s < target || (s - target) % 2 != 0) {
+            return 0;
+        }
+        int n = (s - target) / 2;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        for (int v : nums) {
+            for (int j = n; j >= v; --j) {
+                dp[j] += dp[j - v];
+            }
+        }
+        return dp[n];
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int s = accumulate(nums.begin(), nums.end(), 0);
+        if (s < target || (s - target) % 2 != 0) return 0;
+        int n = (s - target) / 2;
+        vector<int> dp(n + 1);
+        dp[0] = 1;
+        for (int& v : nums)
+            for (int j = n; j >= v; --j)
+                dp[j] += dp[j - v];
+        return dp[n];
+    }
+};
+```
+
+```go
+func findTargetSumWays(nums []int, target int) int {
+	s := 0
+	for _, v := range nums {
+		s += v
+	}
+	if s < target || (s-target)%2 != 0 {
+		return 0
+	}
+	n := (s - target) / 2
+	dp := make([]int, n+1)
+	dp[0] = 1
+	for _, v := range nums {
+		for j := n; j >= v; j-- {
+			dp[j] += dp[j-v]
+		}
+	}
+	return dp[n]
+}
+```
+
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {
+        let mut sum = 0;
+        for e in &nums {
+            sum += *e;
+        }
+
+        if sum < target || (sum - target) % 2 != 0 {
+            // Just directly return
+            return 0;
+        }
+
+        let n = ((sum - target) / 2) as usize;
+        let mut dp: Vec<i32> = vec![0; n + 1];
+
+        // Initialize the dp vector
+        dp[0] = 1;
+
+        // Begin the actual dp phase
+        for e in &nums {
+            for i in (*e as usize..=n).rev() {
+                dp[i] += dp[i - (*e as usize)];
+            }
+        }
+
+        dp[n]
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        @cache
+        def dfs(i, t):
+            if i == n:
+                if t == target:
+                    return 1
+                return 0
+            return dfs(i + 1, t + nums[i]) + dfs(i + 1, t - nums[i])
+
+        ans, n = 0, len(nums)
+        return dfs(0, 0)
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,8 +53,6 @@ class Solution:
             if gcd(i, j) == 1
         ]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,52 +74,25 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function simplifiedFractions(n: number): string[] {
-    let ans: Array<string> = [];
-    for (let j = 2; j <= n; j++) {
-        for (let i = 1; i < j; i++) {
-            if (gcd(i, j) == 1) {
-                ans.push(`${i}/${j}`);
-            }
-        }
-    }
-    return ans;
-}
-
-// a < b
-function gcd(a: number, b: number): number {
-    if (a > b) [a, b] = [b, a];
-    while (a) {
-        [a, b] = [b % a, a];
-    }
-    return b;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<string> simplifiedFractions(int n) {
         vector<string> ans;
-        for (int i = 1; i < n; ++i)
-            for (int j = i + 1; j < n + 1; ++j)
-                if (gcd(i, j) == 1)
+        for (int i = 1; i < n; ++i) {
+            for (int j = i + 1; j < n + 1; ++j) {
+                if (__gcd(i, j) == 1) {
                     ans.push_back(to_string(i) + "/" + to_string(j));
+                }
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func simplifiedFractions(n int) []string {
-	var ans []string
+func simplifiedFractions(n int) (ans []string) {
 	for i := 1; i < n; i++ {
 		for j := i + 1; j < n+1; j++ {
 			if gcd(i, j) == 1 {
@@ -133,14 +104,30 @@ func simplifiedFractions(n int) []string {
 }
 
 func gcd(a, b int) int {
-	if b <= 0 {
+	if b == 0 {
 		return a
 	}
 	return gcd(b, a%b)
 }
 ```
 
-### **Rust**
+```ts
+function simplifiedFractions(n: number): string[] {
+    const ans: string[] = [];
+    for (let i = 1; i < n; ++i) {
+        for (let j = i + 1; j < n + 1; ++j) {
+            if (gcd(i, j) === 1) {
+                ans.push(`${i}/${j}`);
+            }
+        }
+    }
+    return ans;
+}
+
+function gcd(a: number, b: number): number {
+    return b === 0 ? a : gcd(b, a % b);
+}
+```
 
 ```rust
 impl Solution {
@@ -165,10 +152,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

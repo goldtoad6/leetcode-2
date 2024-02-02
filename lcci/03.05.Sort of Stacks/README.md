@@ -33,15 +33,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-利用辅助栈实现 `push` 操作，其余操作不变。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class SortedStack:
@@ -66,10 +60,6 @@ class SortedStack:
     def isEmpty(self) -> bool:
         return len(self.s) == 0
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class SortedStack {
@@ -114,7 +104,45 @@ class SortedStack {
  */
 ```
 
-### **TypeScript**
+```go
+type SortedStack struct {
+	data []int
+}
+
+func Constructor() SortedStack {
+	return SortedStack{make([]int, 0)}
+}
+
+func (s *SortedStack) Push(val int) {
+	temp := make([]int, 0)
+	for !s.IsEmpty() && s.Peek() < val {
+		temp = append(temp, s.Peek())
+		s.Pop()
+	}
+	s.data = append(s.data, val)
+	for len(temp) > 0 {
+		s.data = append(s.data, temp[len(temp)-1])
+		temp = temp[:len(temp)-1]
+	}
+}
+
+func (s *SortedStack) Pop() {
+	if !s.IsEmpty() {
+		s.data = s.data[:len(s.data)-1]
+	}
+}
+
+func (s *SortedStack) Peek() int {
+	if !s.IsEmpty() {
+		return s.data[len(s.data)-1]
+	}
+	return -1
+}
+
+func (s *SortedStack) IsEmpty() bool {
+	return len(s.data) == 0
+}
+```
 
 ```ts
 class SortedStack {
@@ -156,6 +184,58 @@ class SortedStack {
  * var param_4 = obj.isEmpty()
  */
 ```
+
+```rust
+use std::collections::VecDeque;
+struct SortedStack {
+    stack: VecDeque<i32>,
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl SortedStack {
+    fn new() -> Self {
+        Self { stack: VecDeque::new() }
+    }
+
+    fn push(&mut self, val: i32) {
+        if self.is_empty() || self.peek() > val {
+            self.stack.push_back(val);
+            return;
+        }
+        let t = self.stack.pop_back().unwrap();
+        self.push(val);
+        self.stack.push_back(t);
+    }
+
+    fn pop(&mut self) {
+        self.stack.pop_back();
+    }
+
+    fn peek(&self) -> i32 {
+        *self.stack.back().unwrap_or(&-1)
+    }
+
+    fn is_empty(&self) -> bool {
+        self.stack.is_empty()
+    }
+}/**
+ * Your SortedStack object will be instantiated and called as such:
+ * let obj = SortedStack::new();
+ * obj.push(val);
+ * obj.pop();
+ * let ret_3: i32 = obj.peek();
+ * let ret_4: bool = obj.is_empty();
+ */
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
 
 ```ts
 class SortedStack {
@@ -199,104 +279,6 @@ class SortedStack {
  */
 ```
 
-### **Go**
-
-```go
-type SortedStack struct {
-	data []int
-}
-
-func Constructor() SortedStack {
-	return SortedStack{make([]int, 0)}
-}
-
-func (s *SortedStack) Push(val int) {
-	temp := make([]int, 0)
-	for !s.IsEmpty() && s.Peek() < val {
-		temp = append(temp, s.Peek())
-		s.Pop()
-	}
-	s.data = append(s.data, val)
-	for len(temp) > 0 {
-		s.data = append(s.data, temp[len(temp)-1])
-		temp = temp[:len(temp)-1]
-	}
-}
-
-func (s *SortedStack) Pop() {
-	if !s.IsEmpty() {
-		s.data = s.data[:len(s.data)-1]
-	}
-}
-
-func (s *SortedStack) Peek() int {
-	if !s.IsEmpty() {
-		return s.data[len(s.data)-1]
-	}
-	return -1
-}
-
-func (s *SortedStack) IsEmpty() bool {
-	return len(s.data) == 0
-}
-```
-
-### **Rust**
-
-```rust
-use std::collections::VecDeque;
-struct SortedStack {
-    stack: VecDeque<i32>
-}
-
-
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
-impl SortedStack {
-
-    fn new() -> Self {
-        Self { stack: VecDeque::new() }
-    }
-
-    fn push(&mut self, val: i32) {
-        if self.is_empty() || self.peek() > val {
-            self.stack.push_back(val);
-            return;
-        }
-        let t = self.stack.pop_back().unwrap();
-        self.push(val);
-        self.stack.push_back(t);
-    }
-
-    fn pop(&mut self) {
-        self.stack.pop_back();
-    }
-
-    fn peek(&self) -> i32 {
-        *self.stack.back().unwrap_or(&-1)
-    }
-
-    fn is_empty(&self) -> bool {
-        self.stack.is_empty()
-    }
-}
-
-/**
- * Your SortedStack object will be instantiated and called as such:
- * let obj = SortedStack::new();
- * obj.push(val);
- * obj.pop();
- * let ret_3: i32 = obj.peek();
- * let ret_4: bool = obj.is_empty();
- */
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

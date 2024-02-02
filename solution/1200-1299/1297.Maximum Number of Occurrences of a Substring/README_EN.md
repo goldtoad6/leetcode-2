@@ -4,7 +4,7 @@
 
 ## Description
 
-<p>Given a string <code>s</code>, return the maximum number of ocurrences of <strong>any</strong> substring under the following rules:</p>
+<p>Given a string <code>s</code>, return the maximum number of occurrences of <strong>any</strong> substring under the following rules:</p>
 
 <ul>
 	<li>The number of unique characters in the substring must be less than or equal to <code>maxLetters</code>.</li>
@@ -17,7 +17,7 @@
 <pre>
 <strong>Input:</strong> s = &quot;aababcaab&quot;, maxLetters = 2, minSize = 3, maxSize = 4
 <strong>Output:</strong> 2
-<strong>Explanation:</strong> Substring &quot;aab&quot; has 2 ocurrences in the original string.
+<strong>Explanation:</strong> Substring &quot;aab&quot; has 2 occurrences in the original string.
 It satisfies the conditions, 2 unique letters and size 3 (between minSize and maxSize).
 </pre>
 
@@ -41,9 +41,9 @@ It satisfies the conditions, 2 unique letters and size 3 (between minSize and ma
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,15 +51,13 @@ class Solution:
         ans = 0
         cnt = Counter()
         for i in range(len(s) - minSize + 1):
-            t = s[i: i + minSize]
+            t = s[i : i + minSize]
             ss = set(t)
             if len(ss) <= maxLetters:
                 cnt[t] += 1
                 ans = max(ans, cnt[t])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -101,8 +97,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxFreq(s string, maxLetters int, minSize int, maxSize int) (ans int) {
@@ -124,10 +118,6 @@ func maxFreq(s string, maxLetters int, minSize int, maxSize int) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

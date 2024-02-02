@@ -55,19 +55,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：双指针
 
-**方法一：双指针**
-
-我们用指针 $i$ 遍历数组 $forts$，指针 $j$ 从 $i$ 的下一个位置开始遍历，直到遇到第一个非 $0$ 的位置，即 $forts[j] \neq 0$。如果 $forts[i] + forts[j] = 0$，说明 $forts[i]$ 和 $forts[j]$ 是一对敌对城堡，我们可以将军队从 $forts[i]$ 移动到 $forts[j]$，摧毁 $j - i - 1$ 个敌人城堡。我们用变量 $ans$ 记录最多可以摧毁的敌人城堡数目即可。
+我们用指针 $i$ 遍历数组 $forts$，指针 $j$ 从 $i$ 的下一个位置开始遍历，直到遇到第一个非 $0$ 的位置，即 $forts[j] \neq 0$。如果 $forts[i] + forts[j] = 0$，那么我们可以将军队在 $i$ 和 $j$ 之间移动，摧毁 $j - i - 1$ 个敌人城堡。我们用变量 $ans$ 记录最多可以摧毁的敌人城堡数目即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `forts` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -84,10 +78,6 @@ class Solution:
             i = j
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -110,8 +100,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -136,8 +124,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func captureForts(forts []int) (ans int) {
 	n := len(forts)
@@ -156,16 +142,7 @@ func captureForts(forts []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function captureForts(forts: number[]): number {
@@ -187,8 +164,6 @@ function captureForts(forts: number[]): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -213,10 +188,44 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### 方法二
 
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn capture_forts(forts: Vec<i32>) -> i32 {
+        let mut ans = 0;
+        let mut i = 0;
+
+        while
+            let Some((idx, &value)) = forts
+                .iter()
+                .enumerate()
+                .skip(i)
+                .find(|&(_, &x)| x != 0)
+        {
+            if
+                let Some((jdx, _)) = forts
+                    .iter()
+                    .enumerate()
+                    .skip(idx + 1)
+                    .find(|&(_, &x)| x != 0)
+            {
+                if value + forts[jdx] == 0 {
+                    ans = ans.max(jdx - idx - 1);
+                }
+            }
+            i = idx + 1;
+        }
+
+        ans as i32
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

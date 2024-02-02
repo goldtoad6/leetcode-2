@@ -67,9 +67,9 @@ Note other possible ways are 0076, 076, 0116, and 116, but none of them produces
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -96,8 +96,6 @@ class Solution:
         ans = min(f(m, s), f(m - 1, s + 60))
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -129,8 +127,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -156,8 +152,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCostSetTime(startAt int, moveCost int, pushCost int, targetSeconds int) int {
 	m, s := targetSeconds/60, targetSeconds%60
@@ -182,25 +176,8 @@ func minCostSetTime(startAt int, moveCost int, pushCost int, targetSeconds int) 
 	}
 	return min(f(m, s), f(m-1, s+60))
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

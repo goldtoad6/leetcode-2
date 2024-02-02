@@ -55,31 +55,30 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：分类讨论
 
-**方法一：分类讨论**
+-   当 $n=1$ 时，不需要切割，即切割次数为 $0$；
+-   当 $n$ 为奇数时，不存在共线的情况，最少需要 $n$ 次切割；
+-   当 $n$ 为偶数时，可以两两共线，最少需要 $\frac{n}{2}$ 次切割。
 
--   当 $n=1$ 时，不需要切割，返回 $0$；
--   当 $n$ 为奇数时，不存在共线的情况，返回 $n$；
--   当 $n$ 为偶数时，可以两两共线，返回 $\frac{n}{2}$。
+综上，可以得到：
+
+$$
+\text{ans} = \begin{cases}
+n, & n \gt 1 \text{ 且 } n \text{ 为奇数} \\
+\frac{n}{2}, & n \text{ 为其它} \\
+\end{cases}
+$$
 
 时间复杂度 $O(1)$，空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def numberOfCuts(self, n: int) -> int:
-        return n if n > 1 and n % 2 else n >> 1
+        return n if (n > 1 and n & 1) else n >> 1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -88,8 +87,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -100,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfCuts(n int) int {
 	if n > 1 && n%2 == 1 {
@@ -111,10 +106,31 @@ func numberOfCuts(n int) int {
 }
 ```
 
-### **...**
-
+```ts
+function numberOfCuts(n: number): number {
+    return n > 1 && n & 1 ? n : n >> 1;
+}
 ```
 
+```rust
+impl Solution {
+    pub fn number_of_cuts(n: i32) -> i32 {
+        if n > 1 && n % 2 == 1 {
+            return n;
+        }
+        n >> 1
+    }
+}
+```
+
+```cs
+public class Solution {
+    public int NumberOfCuts(int n) {
+        return n > 1 && n % 2 == 1 ? n : n >> 1;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

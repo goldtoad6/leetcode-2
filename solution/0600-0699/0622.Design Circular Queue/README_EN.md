@@ -56,9 +56,9 @@ myCircularQueue.Rear();     // return 4
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class MyCircularQueue:
@@ -108,8 +108,6 @@ class MyCircularQueue:
 # param_5 = obj.isEmpty()
 # param_6 = obj.isFull()
 ```
-
-### **Java**
 
 ```java
 class MyCircularQueue {
@@ -178,8 +176,6 @@ class MyCircularQueue {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MyCircularQueue {
 private:
@@ -241,8 +237,6 @@ public:
  * bool param_6 = obj->isFull();
  */
 ```
-
-### **Go**
 
 ```go
 type MyCircularQueue struct {
@@ -311,8 +305,6 @@ func (this *MyCircularQueue) IsFull() bool {
  */
 ```
 
-### **TypeScript**
-
 ```ts
 class MyCircularQueue {
     private queue: number[];
@@ -379,8 +371,6 @@ class MyCircularQueue {
  */
 ```
 
-### **Rust**
-
 ```rust
 struct MyCircularQueue {
     queue: Vec<i32>,
@@ -442,8 +432,7 @@ impl MyCircularQueue {
     fn is_full(&self) -> bool {
         self.right - self.left == self.capacity
     }
-}
-/**
+}/**
  * Your MyCircularQueue object will be instantiated and called as such:
  * let obj = MyCircularQueue::new(k);
  * let ret_1: bool = obj.en_queue(value);
@@ -453,13 +442,8 @@ impl MyCircularQueue {
  * let ret_5: bool = obj.is_empty();
  * let ret_6: bool = obj.is_full();
  */
- */
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

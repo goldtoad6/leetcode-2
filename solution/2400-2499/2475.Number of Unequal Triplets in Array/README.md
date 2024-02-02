@@ -53,35 +53,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：暴力枚举**
+### 方法一：暴力枚举
 
 我们可以直接枚举所有的三元组 $(i, j, k)$，统计所有符合条件的数量。
 
-时间复杂度 $O(n^3)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `nums` 的长度。
-
-**方法二：排序 + 枚举中间元素 + 二分查找**
-
-我们可以先对数组 `nums` 进行排序。
-
-然后遍历 `nums`，枚举中间元素 $nums[j]$，在 $nums[j]$ 左侧找到最近的下标 $i$，使得 $nums[i] \lt nums[j]$ 成立；在 $nums[j]$ 右侧找到最近的下标 $k$，使得 $nums[k] \gt nums[j]$ 成立。那么以 $nums[j]$ 作为中间元素，且符合条件的三元组数量为 $(i+1) \times (n - k)$，累加到答案中。
-
-时间复杂度 $O(n\times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组 `nums` 的长度。
-
-**方法三：哈希表**
-
-我们还可以使用哈希表 $cnt$ 来统计数组 `nums` 中每个元素的数量。
-
-然后遍历哈希表 $cnt$，枚举中间元素的个数 $b$，左侧元素个数记为 $a$，那么右侧元素个数有 $n-a-b$，此时符合条件的三元组数量为 $a \times b \times c$，累加到答案中。接着更新 $a=a+b$，继续枚举中间元素的个数 $b$。
-
-时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `nums` 的长度。
+时间复杂度 $O(n^3)$，其中 $n$ 为数组 $nums$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -91,38 +69,11 @@ class Solution:
         for i in range(n):
             for j in range(i + 1, n):
                 for k in range(j + 1, n):
-                    ans += nums[i] != nums[j] and nums[j] != nums[k] and nums[i] != nums[k]
+                    ans += (
+                        nums[i] != nums[j] and nums[j] != nums[k] and nums[i] != nums[k]
+                    )
         return ans
 ```
-
-```python
-class Solution:
-    def unequalTriplets(self, nums: List[int]) -> int:
-        nums.sort()
-        ans, n = 0, len(nums)
-        for j in range(1, n - 1):
-            i = bisect_left(nums, nums[j], hi=j) - 1
-            k = bisect_right(nums, nums[j], lo=j+1)
-            ans += (i >= 0 and k < n) * (i + 1) * (n - k)
-        return ans
-```
-
-```python
-class Solution:
-    def unequalTriplets(self, nums: List[int]) -> int:
-        cnt = Counter(nums)
-        n = len(nums)
-        ans = a = 0
-        for b in cnt.values():
-            c = n - a - b
-            ans += a * b * c
-            a += b
-        return ans
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -143,11 +94,107 @@ class Solution {
 }
 ```
 
+```cpp
+class Solution {
+public:
+    int unequalTriplets(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                for (int k = j + 1; k < n; ++k) {
+                    if (nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k]) {
+                        ++ans;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func unequalTriplets(nums []int) (ans int) {
+	n := len(nums)
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			for k := j + 1; k < n; k++ {
+				if nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k] {
+					ans++
+				}
+			}
+		}
+	}
+	return
+}
+```
+
+```ts
+function unequalTriplets(nums: number[]): number {
+    const n = nums.length;
+    let ans = 0;
+    for (let i = 0; i < n - 2; i++) {
+        for (let j = i + 1; j < n - 1; j++) {
+            for (let k = j + 1; k < n; k++) {
+                if (nums[i] !== nums[j] && nums[j] !== nums[k] && nums[i] !== nums[k]) {
+                    ans++;
+                }
+            }
+        }
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    pub fn unequal_triplets(nums: Vec<i32>) -> i32 {
+        let n = nums.len();
+        let mut ans = 0;
+        for i in 0..n - 2 {
+            for j in i + 1..n - 1 {
+                for k in j + 1..n {
+                    if nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k] {
+                        ans += 1;
+                    }
+                }
+            }
+        }
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：排序 + 枚举中间元素 + 二分查找
+
+我们也可以先对数组 $nums$ 进行排序。
+
+然后遍历 $nums$，枚举中间元素 $nums[j]$，利用二分查找，在 $nums[j]$ 左侧找到最近的下标 $i$，使得 $nums[i] \lt nums[j]$ 成立；在 $nums[j]$ 右侧找到最近的下标 $k$，使得 $nums[k] \gt nums[j]$ 成立。那么以 $nums[j]$ 作为中间元素，且符合条件的三元组数量为 $(i + 1) \times (n - k)$，累加到答案中。
+
+时间复杂度 $O(n \times \log n)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组 $nums$ 的长度。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def unequalTriplets(self, nums: List[int]) -> int:
+        nums.sort()
+        ans, n = 0, len(nums)
+        for j in range(1, n - 1):
+            i = bisect_left(nums, nums[j], hi=j) - 1
+            k = bisect_right(nums, nums[j], lo=j + 1)
+            ans += (i >= 0 and k < n) * (i + 1) * (n - k)
+        return ans
+```
+
 ```java
 class Solution {
     public int unequalTriplets(int[] nums) {
         Arrays.sort(nums);
-        int ans = 0, n  = nums.length;
+        int ans = 0, n = nums.length;
         for (int j = 1; j < n - 1; ++j) {
             int i = search(nums, nums[j], 0, j) - 1;
             int k = search(nums, nums[j] + 1, j + 1, n);
@@ -172,47 +219,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int unequalTriplets(int[] nums) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int v : nums) {
-            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
-        }
-        int ans = 0, a = 0;
-        int n = nums.length;
-        for (int b : cnt.values()) {
-            int c = n - a - b;
-            ans += a * b * c;
-            a += b;
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int unequalTriplets(vector<int>& nums) {
-        int n = nums.size();
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                for (int k = j + 1; k < n; ++k) {
-                    if (nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k]) {
-                        ++ans;
-                    }
-                }
-            }
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -231,42 +237,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int unequalTriplets(vector<int>& nums) {
-        unordered_map<int, int> cnt;
-        for (int& v : nums) ++cnt[v];
-        int ans = 0, a = 0;
-        int n = nums.size();
-        for (auto& [_, b] : cnt) {
-            int c = n - a - b;
-            ans += a * b * c;
-            a += b;
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
-
-```go
-func unequalTriplets(nums []int) (ans int) {
-	n := len(nums)
-	for i := 0; i < n; i++ {
-		for j := i + 1; j < n; j++ {
-			for k := j + 1; k < n; k++ {
-				if nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k] {
-					ans++
-				}
-			}
-		}
-	}
-	return
-}
-```
-
 ```go
 func unequalTriplets(nums []int) (ans int) {
 	sort.Ints(nums)
@@ -279,45 +249,6 @@ func unequalTriplets(nums []int) (ans int) {
 		}
 	}
 	return
-}
-```
-
-```go
-func unequalTriplets(nums []int) (ans int) {
-	cnt := map[int]int{}
-	for _, v := range nums {
-		cnt[v]++
-	}
-	a, n := 0, len(nums)
-	for _, b := range cnt {
-		c := n - a - b
-		ans += a * b * c
-		a += b
-	}
-	return
-}
-```
-
-### **TypeScript**
-
-```ts
-function unequalTriplets(nums: number[]): number {
-    const n = nums.length;
-    let ans = 0;
-    for (let i = 0; i < n - 2; i++) {
-        for (let j = i + 1; j < n - 1; j++) {
-            for (let k = j + 1; k < n; k++) {
-                if (
-                    nums[i] !== nums[j] &&
-                    nums[j] !== nums[k] &&
-                    nums[i] !== nums[k]
-                ) {
-                    ans++;
-                }
-            }
-        }
-    }
-    return ans;
 }
 ```
 
@@ -339,27 +270,6 @@ function unequalTriplets(nums: number[]): number {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn unequal_triplets(nums: Vec<i32>) -> i32 {
-        let n = nums.len();
-        let mut ans = 0;
-        for i in 0..n - 2 {
-            for j in i + 1..n - 1 {
-                for k in j + 1..n {
-                    if nums[i] != nums[j] && nums[j] != nums[k] && nums[i] != nums[k] {
-                        ans += 1;
-                    }
-                }
-            }
-        }
-        ans
-    }
-}
-```
-
 ```rust
 use std::collections::HashMap;
 impl Solution {
@@ -373,7 +283,7 @@ impl Solution {
         let mut a = 0;
         for v in cnt.values() {
             let b = n - a - v;
-            ans += v * a * b;;
+            ans += v * a * b;
             a += v;
         }
         ans as i32
@@ -381,10 +291,157 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### 方法三：哈希表
+
+我们还可以使用哈希表 $cnt$ 来统计数组 $nums$ 中每个元素的数量。
+
+然后遍历哈希表 $cnt$，枚举中间元素的个数 $b$，左侧元素个数记为 $a$，那么右侧元素个数有 $c = n - a - b$，此时符合条件的三元组数量为 $a \times b \times c$，累加到答案中。接着更新 $a = a + b$，继续枚举中间元素的个数 $b$。
+
+时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 $nums$ 的长度。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def unequalTriplets(self, nums: List[int]) -> int:
+        cnt = Counter(nums)
+        n = len(nums)
+        ans = a = 0
+        for b in cnt.values():
+            c = n - a - b
+            ans += a * b * c
+            a += b
+        return ans
 ```
 
+```java
+class Solution {
+    public int unequalTriplets(int[] nums) {
+        Map<Integer, Integer> cnt = new HashMap<>();
+        for (int v : nums) {
+            cnt.merge(v, 1, Integer::sum);
+        }
+        int ans = 0, a = 0;
+        int n = nums.length;
+        for (int b : cnt.values()) {
+            int c = n - a - b;
+            ans += a * b * c;
+            a += b;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int unequalTriplets(vector<int>& nums) {
+        unordered_map<int, int> cnt;
+        for (int& v : nums) {
+            ++cnt[v];
+        }
+        int ans = 0, a = 0;
+        int n = nums.size();
+        for (auto& [_, b] : cnt) {
+            int c = n - a - b;
+            ans += a * b * c;
+            a += b;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func unequalTriplets(nums []int) (ans int) {
+	cnt := map[int]int{}
+	for _, v := range nums {
+		cnt[v]++
+	}
+	a, n := 0, len(nums)
+	for _, b := range cnt {
+		c := n - a - b
+		ans += a * b * c
+		a += b
+	}
+	return
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn unequal_triplets(nums: Vec<i32>) -> i32 {
+        let cnt = nums.iter().fold(HashMap::new(), |mut map, &n| {
+            *map.entry(n).or_insert(0) += 1;
+            map
+        });
+
+        let mut ans = 0;
+        let n = nums.len();
+        let mut a = 0;
+        for &b in cnt.values() {
+            let c = n - a - b;
+            ans += a * b * c;
+            a += b;
+        }
+
+        ans as i32
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+### 方法四
+
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn unequal_triplets(nums: Vec<i32>) -> i32 {
+        let mut ans = 0;
+        let mut nums = nums;
+        nums.sort();
+        let n = nums.len();
+
+        for i in 1..n - 1 {
+            let mut l = 0;
+            let mut r = i;
+            while l < r {
+                let mid = (l + r) >> 1;
+                if nums[mid] >= nums[i] {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            let j = r;
+
+            let mut l = i + 1;
+            let mut r = n;
+            while l < r {
+                let mid = (l + r) >> 1;
+                if nums[mid] > nums[i] {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            let k = r;
+
+            ans += j * (n - k);
+        }
+
+        ans as i32
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

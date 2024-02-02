@@ -38,15 +38,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：滑动窗口**
+### 方法一：滑动窗口
 
 定义一个滑动窗口，窗口内的 $0$ 的个数不超过 $k$，窗口的右边界不断向右移动，当窗口内的 $0$ 的个数超过 $k$ 时，窗口的左边界向右移动，直到窗口内的 $0$ 的个数不超过 $k$ 为止。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组的长度。
 
-相似题目：[487. 最大连续 1 的个数 II](/solution/0400-0499/0487.Max%20Consecutive%20Ones%20II/README.md)
+相似题目：
+
+-   [487. 最大连续 1 的个数 II](https://github.com/doocs/leetcode/blob/main/solution/0400-0499/0487.Max%20Consecutive%20Ones%20II/README.md)
 
 以下是滑动窗口的优化版本。
 
@@ -58,13 +58,11 @@
 -   `r++` 每次都会执行，`l++` 只有资源 `k < 0` 时才触发，因此 `r - l` 的值只会单调递增（或保持不变）
 -   移动左端点时，如果当前元素是 0，说明可以释放一个资源，k 加 1
 
-相似题目： [2024. 考试的最大困扰度](/solution/2000-2099/2024.Maximize%20the%20Confusion%20of%20an%20Exam/README.md)
+相似题目：
+
+-   [2024. 考试的最大困扰度](https://github.com/doocs/leetcode/blob/main/solution/2000-2099/2024.Maximize%20the%20Confusion%20of%20an%20Exam/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,25 +79,6 @@ class Solution:
             ans = max(ans, i - j + 1)
         return ans
 ```
-
-```python
-class Solution:
-    def longestOnes(self, nums: List[int], k: int) -> int:
-        l = r = -1
-        while r < len(nums) - 1:
-            r += 1
-            if nums[r] == 0:
-                k -= 1
-            if k < 0:
-                l += 1
-                if nums[l] == 0:
-                    k += 1
-        return r - l
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -121,25 +100,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public int longestOnes(int[] nums, int k) {
-        int l = 0, r = 0;
-        while (r < nums.length) {
-            if (nums[r++] == 0) {
-                --k;
-            }
-            if (k < 0 && nums[l++] == 0) {
-                ++k;
-            }
-        }
-        return r - l;
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -163,22 +123,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int longestOnes(vector<int>& nums, int k) {
-        int l = 0, r = 0;
-        while (r < nums.size()) {
-            if (nums[r++] == 0) --k;
-            if (k < 0 && nums[l++] == 0) ++k;
-        }
-        return r - l;
-    }
-};
-```
-
-### **Go**
-
 ```go
 func longestOnes(nums []int, k int) int {
 	ans := 0
@@ -197,35 +141,7 @@ func longestOnes(nums []int, k int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-```go
-func longestOnes(nums []int, k int) int {
-	l, r := -1, -1
-	for r < len(nums)-1 {
-		r++
-		if nums[r] == 0 {
-			k--
-		}
-		if k < 0 {
-			l++
-			if nums[l] == 0 {
-				k++
-			}
-		}
-	}
-	return r - l
-}
-```
-
-### **TypeScript**
 
 ```ts
 function longestOnes(nums: number[], k: number): number {
@@ -242,26 +158,6 @@ function longestOnes(nums: number[], k: number): number {
     return n - l;
 }
 ```
-
-```ts
-function longestOnes(nums: number[], k: number): number {
-    const n = nums.length;
-    let l = 0;
-    let res = k;
-    const count = [0, 0];
-    for (let r = 0; r < n; r++) {
-        count[nums[r]]++;
-        res = Math.max(res, r - l);
-        while (count[0] > k) {
-            count[nums[l]]--;
-            l++;
-        }
-    }
-    return Math.max(res, n - l);
-}
-```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -284,10 +180,95 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:
+        l = r = -1
+        while r < len(nums) - 1:
+            r += 1
+            if nums[r] == 0:
+                k -= 1
+            if k < 0:
+                l += 1
+                if nums[l] == 0:
+                    k += 1
+        return r - l
 ```
 
+```java
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int l = 0, r = 0;
+        while (r < nums.length) {
+            if (nums[r++] == 0) {
+                --k;
+            }
+            if (k < 0 && nums[l++] == 0) {
+                ++k;
+            }
+        }
+        return r - l;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int l = 0, r = 0;
+        while (r < nums.size()) {
+            if (nums[r++] == 0) --k;
+            if (k < 0 && nums[l++] == 0) ++k;
+        }
+        return r - l;
+    }
+};
+```
+
+```go
+func longestOnes(nums []int, k int) int {
+	l, r := -1, -1
+	for r < len(nums)-1 {
+		r++
+		if nums[r] == 0 {
+			k--
+		}
+		if k < 0 {
+			l++
+			if nums[l] == 0 {
+				k++
+			}
+		}
+	}
+	return r - l
+}
+```
+
+```ts
+function longestOnes(nums: number[], k: number): number {
+    const n = nums.length;
+    let l = 0;
+    let res = k;
+    const count = [0, 0];
+    for (let r = 0; r < n; r++) {
+        count[nums[r]]++;
+        res = Math.max(res, r - l);
+        while (count[0] > k) {
+            count[nums[l]]--;
+            l++;
+        }
+    }
+    return Math.max(res, n - l);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

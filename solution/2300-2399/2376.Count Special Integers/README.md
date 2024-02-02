@@ -46,9 +46,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：数位 DP**
+### 方法一：数位 DP
 
 定义 $m$ 表示数字 $n$ 的位数。我们可以将数字分成两类：(1) 数字位数小于 $m$；(2) 数字位数等于 $m$。
 
@@ -68,18 +66,14 @@ $$
 
 相似题目：
 
--   [233. 数字 1 的个数](/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
--   [357. 统计各位数字都不同的数字个数](/solution/0300-0399/0357.Count%20Numbers%20with%20Unique%20Digits/README.md)
--   [600. 不含连续 1 的非负整数](/solution/0600-0699/0600.Non-negative%20Integers%20without%20Consecutive%20Ones/README.md)
--   [788. 旋转数字](/solution/0700-0799/0788.Rotated%20Digits/README.md)
--   [902. 最大为 N 的数字组合](/solution/0900-0999/0902.Numbers%20At%20Most%20N%20Given%20Digit%20Set/README.md)
--   [1012. 至少有 1 位重复的数字](/solution/1000-1099/1012.Numbers%20With%20Repeated%20Digits/README.md)
+-   [233. 数字 1 的个数](https://github.com/doocs/leetcode/blob/main/solution/0200-0299/0233.Number%20of%20Digit%20One/README.md)
+-   [357. 统计各位数字都不同的数字个数](https://github.com/doocs/leetcode/blob/main/solution/0300-0399/0357.Count%20Numbers%20with%20Unique%20Digits/README.md)
+-   [600. 不含连续 1 的非负整数](https://github.com/doocs/leetcode/blob/main/solution/0600-0699/0600.Non-negative%20Integers%20without%20Consecutive%20Ones/README.md)
+-   [788. 旋转数字](https://github.com/doocs/leetcode/blob/main/solution/0700-0799/0788.Rotated%20Digits/README.md)
+-   [902. 最大为 N 的数字组合](https://github.com/doocs/leetcode/blob/main/solution/0900-0999/0902.Numbers%20At%20Most%20N%20Given%20Digit%20Set/README.md)
+-   [1012. 至少有 1 位重复的数字](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1012.Numbers%20With%20Repeated%20Digits/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -107,40 +101,6 @@ class Solution:
                 ans += 1
         return ans
 ```
-
-```python
-class Solution:
-    def countSpecialNumbers(self, n: int) -> int:
-        return self.f(n)
-
-    def f(self, n):
-        @cache
-        def dfs(pos, mask, lead, limit):
-            if pos <= 0:
-                return lead ^ 1
-            up = a[pos] if limit else 9
-            ans = 0
-            for i in range(up + 1):
-                if (mask >> i) & 1:
-                    continue
-                if i == 0 and lead:
-                    ans += dfs(pos - 1, mask, lead, limit and i == up)
-                else:
-                    ans += dfs(pos - 1, mask | 1 << i, False, limit and i == up)
-            return ans
-
-        a = [0] * 11
-        l = 0
-        while n:
-            l += 1
-            a[l] = n % 10
-            n //= 10
-        return dfs(l, 0, True, True)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -179,6 +139,124 @@ class Solution {
         return n == 0 ? 1 : A(m, n - 1) * (m - n + 1);
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    int countSpecialNumbers(int n) {
+        int ans = 0;
+        vector<int> digits;
+        while (n) {
+            digits.push_back(n % 10);
+            n /= 10;
+        }
+        int m = digits.size();
+        vector<bool> vis(10);
+        for (int i = 1; i < m; ++i) {
+            ans += 9 * A(9, i - 1);
+        }
+        for (int i = m - 1; ~i; --i) {
+            int v = digits[i];
+            for (int j = i == m - 1 ? 1 : 0; j < v; ++j) {
+                if (!vis[j]) {
+                    ans += A(10 - (m - i), i);
+                }
+            }
+            if (vis[v]) {
+                break;
+            }
+            vis[v] = true;
+            if (i == 0) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+
+    int A(int m, int n) {
+        return n == 0 ? 1 : A(m, n - 1) * (m - n + 1);
+    }
+};
+```
+
+```go
+func countSpecialNumbers(n int) int {
+	digits := []int{}
+	for n != 0 {
+		digits = append(digits, n%10)
+		n /= 10
+	}
+	m := len(digits)
+	vis := make([]bool, 10)
+	ans := 0
+	for i := 1; i < m; i++ {
+		ans += 9 * A(9, i-1)
+	}
+	for i := m - 1; i >= 0; i-- {
+		v := digits[i]
+		j := 0
+		if i == m-1 {
+			j = 1
+		}
+		for ; j < v; j++ {
+			if !vis[j] {
+				ans += A(10-(m-i), i)
+			}
+		}
+		if vis[v] {
+			break
+		}
+		vis[v] = true
+		if i == 0 {
+			ans++
+		}
+	}
+	return ans
+}
+
+func A(m, n int) int {
+	if n == 0 {
+		return 1
+	}
+	return A(m, n-1) * (m - n + 1)
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def countSpecialNumbers(self, n: int) -> int:
+        return self.f(n)
+
+    def f(self, n):
+        @cache
+        def dfs(pos, mask, lead, limit):
+            if pos <= 0:
+                return lead ^ 1
+            up = a[pos] if limit else 9
+            ans = 0
+            for i in range(up + 1):
+                if (mask >> i) & 1:
+                    continue
+                if i == 0 and lead:
+                    ans += dfs(pos - 1, mask, lead, limit and i == up)
+                else:
+                    ans += dfs(pos - 1, mask | 1 << i, False, limit and i == up)
+            return ans
+
+        a = [0] * 11
+        l = 0
+        while n:
+            l += 1
+            a[l] = n % 10
+            n //= 10
+        return dfs(l, 0, True, True)
 ```
 
 ```java
@@ -229,47 +307,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int countSpecialNumbers(int n) {
-        int ans = 0;
-        vector<int> digits;
-        while (n) {
-            digits.push_back(n % 10);
-            n /= 10;
-        }
-        int m = digits.size();
-        vector<bool> vis(10);
-        for (int i = 1; i < m; ++i) {
-            ans += 9 * A(9, i - 1);
-        }
-        for (int i = m - 1; ~i; --i) {
-            int v = digits[i];
-            for (int j = i == m - 1 ? 1 : 0; j < v; ++j) {
-                if (!vis[j]) {
-                    ans += A(10 - (m - i), i);
-                }
-            }
-            if (vis[v]) {
-                break;
-            }
-            vis[v] = true;
-            if (i == 0) {
-                ++ans;
-            }
-        }
-        return ans;
-    }
-
-    int A(int m, int n) {
-        return n == 0 ? 1 : A(m, n - 1) * (m - n + 1);
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -315,54 +352,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countSpecialNumbers(n int) int {
-	digits := []int{}
-	for n != 0 {
-		digits = append(digits, n%10)
-		n /= 10
-	}
-	m := len(digits)
-	vis := make([]bool, 10)
-	ans := 0
-	for i := 1; i < m; i++ {
-		ans += 9 * A(9, i-1)
-	}
-	for i := m - 1; i >= 0; i-- {
-		v := digits[i]
-		j := 0
-		if i == m-1 {
-			j = 1
-		}
-		for ; j < v; j++ {
-			if !vis[j] {
-				ans += A(10-(m-i), i)
-			}
-		}
-		if vis[v] {
-			break
-		}
-		vis[v] = true
-		if i == 0 {
-			ans++
-		}
-	}
-	return ans
-}
-
-func A(m, n int) int {
-	if n == 0 {
-		return 1
-	}
-	return A(m, n-1) * (m - n + 1)
-}
-```
-
-```go
-func countSpecialNumbers(n int) int {
-    return f(n)
+	return f(n)
 }
 
 func f(n int) int {
@@ -416,17 +408,6 @@ func f(n int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

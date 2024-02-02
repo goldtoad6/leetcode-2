@@ -42,9 +42,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We traverse two linked lists $l_1$ and $l_2$ at the same time, and use the variable $carry$ to indicate whether there is a carry.
+
+Each time we traverse, we take out the current bit of the corresponding linked list, calculate the sum with the carry $carry$, and then update the value of the carry. Then we add the current bit to the answer linked list. If both linked lists are traversed, and the carry is $0$, the traversal ends.
+
+Finally, we return the head node of the answer linked list.
+
+The time complexity is $O(\max (m, n))$, where $m$ and $n$ are the lengths of the two linked lists. We need to traverse the entire position of the two linked lists, and each position only needs $O(1)$ time. Ignoring the space consumption of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for singly-linked list.
@@ -67,8 +75,6 @@ class Solution:
             l2 = l2.next if l2 else None
         return dummy.next
 ```
-
-### **Java**
 
 ```java
 /**
@@ -98,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -131,7 +135,116 @@ public:
 };
 ```
 
-### **JavaScript**
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	dummy := &ListNode{}
+	carry := 0
+	cur := dummy
+	for l1 != nil || l2 != nil || carry != 0 {
+		s := carry
+		if l1 != nil {
+			s += l1.Val
+		}
+		if l2 != nil {
+			s += l2.Val
+		}
+		carry = s / 10
+		cur.Next = &ListNode{s % 10, nil}
+		cur = cur.Next
+		if l1 != nil {
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			l2 = l2.Next
+		}
+	}
+	return dummy.Next
+}
+```
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+    const dummy = new ListNode();
+    let cur = dummy;
+    let sum = 0;
+    while (l1 != null || l2 != null || sum !== 0) {
+        if (l1 != null) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        if (l2 != null) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        cur.next = new ListNode(sum % 10);
+        cur = cur.next;
+        sum = Math.floor(sum / 10);
+    }
+    return dummy.next;
+}
+```
+
+```rust
+// Definition for singly-linked list.
+// #[derive(PartialEq, Eq, Clone, Debug)]
+// pub struct ListNode {
+//   pub val: i32,
+//   pub next: Option<Box<ListNode>>
+// }
+//
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+impl Solution {
+    pub fn add_two_numbers(
+        mut l1: Option<Box<ListNode>>,
+        mut l2: Option<Box<ListNode>>
+    ) -> Option<Box<ListNode>> {
+        let mut dummy = Some(Box::new(ListNode::new(0)));
+        let mut cur = &mut dummy;
+        let mut sum = 0;
+        while l1.is_some() || l2.is_some() || sum != 0 {
+            if let Some(node) = l1 {
+                sum += node.val;
+                l1 = node.next;
+            }
+            if let Some(node) = l2 {
+                sum += node.val;
+                l2 = node.next;
+            }
+            cur.as_mut().unwrap().next = Some(Box::new(ListNode::new(sum % 10)));
+            cur = &mut cur.as_mut().unwrap().next;
+            sum /= 10;
+        }
+        dummy.unwrap().next.take()
+    }
+}
+```
 
 ```js
 /**
@@ -161,8 +274,6 @@ var addTwoNumbers = function (l1, l2) {
     return dummy.next;
 };
 ```
-
-### **C#**
 
 ```cs
 /**
@@ -194,73 +305,55 @@ public class Solution {
 }
 ```
 
-### **Go**
-
-```go
+```php
 /**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
+ * Definition for a singly-linked list.
+ * class ListNode {
+ *     public $val = 0;
+ *     public $next = null;
+ *     function __construct($val = 0, $next = null) {
+ *         $this->val = $val;
+ *         $this->next = $next;
+ *     }
  * }
  */
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-    dummy := &ListNode{}
-    carry := 0
-    cur := dummy
-    for l1 != nil || l2 != nil || carry != 0 {
-        s := carry
-        if l1 != nil {
-            s += l1.Val
+class Solution {
+    /**
+     * @param ListNode $l1
+     * @param ListNode $l2
+     * @return ListNode
+     */
+    function addTwoNumbers($l1, $l2) {
+        $dummy = new ListNode(0);
+        $current = $dummy;
+        $carry = 0;
+
+        while ($l1 !== null || $l2 !== null) {
+            $x = $l1 !== null ? $l1->val : 0;
+            $y = $l2 !== null ? $l2->val : 0;
+
+            $sum = $x + $y + $carry;
+            $carry = (int) ($sum / 10);
+            $current->next = new ListNode($sum % 10);
+            $current = $current->next;
+
+            if ($l1 !== null) {
+                $l1 = $l1->next;
+            }
+
+            if ($l2 !== null) {
+                $l2 = $l2->next;
+            }
         }
-        if l2 != nil {
-            s += l2.Val
+
+        if ($carry > 0) {
+            $current->next = new ListNode($carry);
         }
-        carry = s / 10
-        cur.Next = &ListNode{s % 10, nil}
-        cur = cur.Next
-        if l1 != nil {
-            l1 = l1.Next
-        }
-        if l2 != nil {
-            l2 = l2.Next
-        }
+
+        return $dummy->next;
     }
-    return dummy.Next
 }
 ```
-
-### **Ruby**
-
-```rb
-# Definition for singly-linked list.
-# class ListNode
-#     attr_accessor :val, :next
-#     def initialize(val = 0, _next = nil)
-#         @val = val
-#         @next = _next
-#     end
-# end
-# @param {ListNode} l1
-# @param {ListNode} l2
-# @return {ListNode}
-def add_two_numbers(l1, l2)
-    dummy = ListNode.new()
-    carry = 0
-    cur = dummy
-    while !l1.nil? || !l2.nil? || carry > 0
-        s = (l1.nil? ? 0 : l1.val) + (l2.nil? ? 0 : l2.val) + carry
-        carry = s / 10
-        cur.next = ListNode.new(s % 10)
-        cur = cur.next
-        l1 = l1.nil? ? l1 : l1.next
-        l2 = l2.nil? ? l2 : l2.next
-    end
-    dummy.next
-end
-```
-
-### **Swift**
 
 ```swift
 /**
@@ -293,7 +386,33 @@ class Solution {
 }
 ```
 
-### **Nim**
+```rb
+# Definition for singly-linked list.
+# class ListNode
+#     attr_accessor :val, :next
+#     def initialize(val = 0, _next = nil)
+#         @val = val
+#         @next = _next
+#     end
+# end
+# @param {ListNode} l1
+# @param {ListNode} l2
+# @return {ListNode}
+def add_two_numbers(l1, l2)
+    dummy = ListNode.new()
+    carry = 0
+    cur = dummy
+    while !l1.nil? || !l2.nil? || carry > 0
+        s = (l1.nil? ? 0 : l1.val) + (l2.nil? ? 0 : l2.val) + carry
+        carry = s / 10
+        cur.next = ListNode.new(s % 10)
+        cur = cur.next
+        l1 = l1.nil? ? l1 : l1.next
+        l2 = l2.nil? ? l2 : l2.next
+    end
+    dummy.next
+end
+```
 
 ```nim
 #[
@@ -329,94 +448,6 @@ proc addTwoNumbers(l1: var SinglyLinkedList, l2: var SinglyLinkedList): SinglyLi
   result = aggregate
 ```
 
-### **TypeScript**
-
-```ts
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
-
-function addTwoNumbers(
-    l1: ListNode | null,
-    l2: ListNode | null,
-): ListNode | null {
-    const dummy = new ListNode();
-    let cur = dummy;
-    let sum = 0;
-    while (l1 != null || l2 != null || sum !== 0) {
-        if (l1 != null) {
-            sum += l1.val;
-            l1 = l1.next;
-        }
-        if (l2 != null) {
-            sum += l2.val;
-            l2 = l2.next;
-        }
-        cur.next = new ListNode(sum % 10);
-        cur = cur.next;
-        sum = Math.floor(sum / 10);
-    }
-    return dummy.next;
-}
-```
-
-### **Rust**
-
-```rust
-// Definition for singly-linked list.
-// #[derive(PartialEq, Eq, Clone, Debug)]
-// pub struct ListNode {
-//   pub val: i32,
-//   pub next: Option<Box<ListNode>>
-// }
-//
-// impl ListNode {
-//   #[inline]
-//   fn new(val: i32) -> Self {
-//     ListNode {
-//       next: None,
-//       val
-//     }
-//   }
-// }
-impl Solution {
-    pub fn add_two_numbers(
-        mut l1: Option<Box<ListNode>>,
-        mut l2: Option<Box<ListNode>>,
-    ) -> Option<Box<ListNode>> {
-        let mut dummy = Some(Box::new(ListNode::new(0)));
-        let mut cur = &mut dummy;
-        let mut sum = 0;
-        while l1.is_some() || l2.is_some() || sum != 0 {
-            if let Some(node) = l1 {
-                sum += node.val;
-                l1 = node.next;
-            }
-            if let Some(node) = l2 {
-                sum += node.val;
-                l2 = node.next;
-            }
-            cur.as_mut().unwrap().next = Some(Box::new(ListNode::new(sum % 10)));
-            cur = &mut cur.as_mut().unwrap().next;
-            sum /= 10;
-        }
-        dummy.unwrap().next.take()
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

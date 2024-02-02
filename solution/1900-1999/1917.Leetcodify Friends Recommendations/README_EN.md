@@ -14,7 +14,7 @@
 | song_id     | int     |
 | day         | date    |
 +-------------+---------+
-There is no primary key for this table. It may contain duplicates.
+This table may contain duplicates (In other words, there is no primary key for this table in SQL).
 Each row of this table indicates that the user user_id listened to the song song_id on the day day.
 </pre>
 
@@ -29,14 +29,14 @@ Each row of this table indicates that the user user_id listened to the song song
 | user1_id      | int     |
 | user2_id      | int     |
 +---------------+---------+
-(user1_id, user2_id) is the primary key for this table.
+In SQL,(user1_id, user2_id) is the primary key for this table.
 Each row of this table indicates that the users user1_id and user2_id are friends.
 Note that user1_id &lt; user2_id.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to recommend friends to Leetcodify users. We recommend user <code>x</code> to user <code>y</code> if:</p>
+<p>Recommend friends to Leetcodify users. We recommend user <code>x</code> to user <code>y</code> if:</p>
 
 <ul>
 	<li>Users <code>x</code> and <code>y</code> are not friends, and</li>
@@ -47,7 +47,7 @@ Note that user1_id &lt; user2_id.
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -100,12 +100,35 @@ Similarly, we can see that users 2 and 3 listened to songs 10, 11, and 12 on the
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT user1_id, user2_id FROM Friendship
+        UNION
+        SELECT user2_id AS user1_id, user1_id AS user2_id FROM Friendship
+    )
+SELECT DISTINCT l1.user_id, l2.user_id AS recommended_id
+FROM
+    Listens AS l1,
+    Listens AS l2
+WHERE
+    l1.day = l2.day
+    AND l1.song_id = l2.song_id
+    AND l1.user_id != l2.user_id
+    AND NOT EXISTS (
+        SELECT 1
+        FROM T AS t
+        WHERE l1.user_id = t.user1_id AND l2.user_id = t.user2_id
+    )
+GROUP BY l1.day, l1.user_id, l2.user_id
+HAVING COUNT(DISTINCT l1.song_id) >= 3;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

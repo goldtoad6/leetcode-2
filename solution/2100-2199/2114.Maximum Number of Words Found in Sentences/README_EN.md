@@ -45,17 +45,15 @@ In this example, the second and third sentences (underlined) have the same numbe
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def mostWordsFound(self, sentences: List[str]) -> int:
         return 1 + max(s.count(' ') for s in sentences)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -75,8 +73,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -91,8 +87,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func mostWordsFound(sentences []string) (ans int) {
 	for _, s := range sentences {
@@ -104,8 +98,6 @@ func mostWordsFound(sentences []string) (ans int) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function mostWordsFound(sentences: string[]): number {
@@ -119,8 +111,6 @@ function mostWordsFound(sentences: string[]): number {
     );
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -140,15 +130,13 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-int mostWordsFound(char **sentences, int sentencesSize) {
+int mostWordsFound(char** sentences, int sentencesSize) {
     int ans = 0;
     for (int i = 0; i < sentencesSize; i++) {
-        char *s = sentences[i];
+        char* s = sentences[i];
         int count = 1;
         for (int j = 0; s[j]; j++) {
             if (s[j] == ' ') {
@@ -161,10 +149,6 @@ int mostWordsFound(char **sentences, int sentencesSize) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -8,12 +8,19 @@
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
-<pre><strong>Input:</strong> s = "Let's take LeetCode contest"
-<strong>Output:</strong> "s'teL ekat edoCteeL tsetnoc"
-</pre><p><strong class="example">Example 2:</strong></p>
-<pre><strong>Input:</strong> s = "God Ding"
-<strong>Output:</strong> "doG gniD"
+
+<pre>
+<strong>Input:</strong> s = &quot;Let&#39;s take LeetCode contest&quot;
+<strong>Output:</strong> &quot;s&#39;teL ekat edoCteeL tsetnoc&quot;
 </pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> s = &quot;Mr Ding&quot;
+<strong>Output:</strong> &quot;rM gniD&quot;
+</pre>
+
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
 
@@ -27,17 +34,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def reverseWords(self, s: str) -> str:
         return ' '.join([t[::-1] for t in s.split(' ')])
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -54,8 +59,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -71,8 +74,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func reverseWords(s string) string {
@@ -91,8 +92,6 @@ func reverseWords(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function reverseWords(s: string): string {
     return s
@@ -108,8 +107,6 @@ function reverseWords(s: string): string {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn reverse_words(s: String) -> String {
@@ -120,8 +117,6 @@ impl Solution {
     }
 }
 ```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -134,15 +129,11 @@ class Solution {
         for ($i = 0; $i < count($sArr); $i++) {
             $sArr[$i] = strrev($sArr[$i]);
         }
-        return implode(" ", $sArr);
+        return implode(' ', $sArr);
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

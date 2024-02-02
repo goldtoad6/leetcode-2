@@ -66,9 +66,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀和 + 枚举**
+### 方法一：前缀和 + 枚举
 
 我们先算出前 $i$ 小时有多少顾客到达，记录在前缀和数组 $s$ 中。
 
@@ -77,10 +75,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串 $customers$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -96,10 +90,6 @@ class Solution:
                 ans, cost = j, t
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -121,8 +111,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -146,8 +134,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func bestClosingTime(customers string) (ans int) {
 	n := len(customers)
@@ -169,10 +155,33 @@ func bestClosingTime(customers string) (ans int) {
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn best_closing_time(customers: String) -> i32 {
+        let n = customers.len();
+        let mut penalty = i32::MAX;
+        let mut ret = -1;
+        let mut prefix_sum = vec![0; n + 1];
 
-```
+        // Initialize the vector
+        for (i, c) in customers.chars().enumerate() {
+            prefix_sum[i + 1] = prefix_sum[i] + (if c == 'Y' { 1 } else { 0 });
+        }
 
+        // Calculate the answer
+        for i in 0..=n {
+            if penalty > ((prefix_sum[n] - prefix_sum[i]) as i32) + ((i - prefix_sum[i]) as i32) {
+                penalty = ((prefix_sum[n] - prefix_sum[i]) as i32) + ((i - prefix_sum[i]) as i32);
+                ret = i as i32;
+            }
+        }
+
+        ret
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

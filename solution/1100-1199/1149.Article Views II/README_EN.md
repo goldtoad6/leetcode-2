@@ -15,17 +15,17 @@
 | viewer_id     | int     |
 | view_date     | date    |
 +---------------+---------+
-There is no primary key for this table, it may have duplicate rows.
+This table may have duplicate rows.
 Each row of this table indicates that some viewer viewed an article (written by some author) on some date. 
 Note that equal author_id and viewer_id indicate the same person.</pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find all the people who viewed more than one article on the same date.</p>
+<p>Write a solution to find all the people who viewed more than one article on the same date.</p>
 
 <p>Return the result table sorted by <code>id</code> in ascending order.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -56,22 +56,19 @@ Views table:
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **SQL**
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
-SELECT
-    DISTINCT(viewer_id) as id
-FROM
-    Views
-GROUP BY
-    view_date, viewer_id
-HAVING
-    COUNT(DISTINCT(article_id)) > 1
-ORDER BY
-    id;
+SELECT DISTINCT viewer_id AS id
+FROM Views
+GROUP BY viewer_id, view_date
+HAVING COUNT(DISTINCT article_id) > 1
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

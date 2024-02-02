@@ -50,23 +50,17 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：两次 DFS
 
-**方法一：两次 DFS**
+我们先进行一次 DFS，判断从 $(0, 0)$ 到 $(m - 1, n - 1)$ 是否存在路径，记结果为 $a$。在 DFS 的过程中，我们将访问过的格子的值置为 $0$，以防止重复访问。
 
-我们先进行一次 DFS，判断从 `(0, 0)` 到 `(m - 1, n - 1)` 是否存在路径，记结果为 $a$。在 DFS 的过程中，我们将访问过的格子的值置为 $0$，以防止重复访问。
-
-接下来，我们将 `(0, 0)` 和 `(m - 1, n - 1)` 的值置为 $1$，再进行一次 DFS，判断从 `(0, 0)` 到 `(m - 1, n - 1)` 是否存在路径，记结果为 $b$。在 DFS 的过程中，我们将访问过的格子的值置为 $0$，以防止重复访问。
+接下来，我们将 $(0, 0)$ 和 $(m - 1, n - 1)$ 的值置为 $1$，再进行一次 DFS，判断从 $(0, 0)$ 到 $(m - 1, n - 1)$ 是否存在路径，记结果为 $b$。在 DFS 的过程中，我们将访问过的格子的值置为 $0$，避免重复访问。
 
 最后，如果 $a$ 和 $b$ 都为 `true`，则返回 `false`，否则返回 `true`。
 
 时间复杂度 $O(m \times n)$，空间复杂度 $O(m \times n)$。其中 $m$ 和 $n$ 分别是矩阵的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,10 +79,6 @@ class Solution:
         b = dfs(0, 0)
         return not (a and b)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -120,8 +110,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -145,8 +133,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isPossibleToCutPath(grid [][]int) bool {
 	m, n := len(grid), len(grid[0])
@@ -168,10 +154,29 @@ func isPossibleToCutPath(grid [][]int) bool {
 }
 ```
 
-### **...**
+```ts
+function isPossibleToCutPath(grid: number[][]): boolean {
+    const m = grid.length;
+    const n = grid[0].length;
 
-```
-
+    const dfs = (i: number, j: number): boolean => {
+        if (i >= m || j >= n || grid[i][j] !== 1) {
+            return false;
+        }
+        grid[i][j] = 0;
+        if (i === m - 1 && j === n - 1) {
+            return true;
+        }
+        return dfs(i + 1, j) || dfs(i, j + 1);
+    };
+    const a = dfs(0, 0);
+    grid[0][0] = 1;
+    grid[m - 1][n - 1] = 1;
+    const b = dfs(0, 0);
+    return !(a && b);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

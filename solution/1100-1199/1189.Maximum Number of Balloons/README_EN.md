@@ -44,9 +44,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We count the frequency of each letter in the string `text`, and then divide the frequency of the letters 'o' and 'l' by 2, because the word `balloon` contains the letters 'o' and 'l' twice.
+
+Next, we traverse each letter in the word `balon`, and find the minimum frequency of each letter in the string `text`. This minimum frequency is the maximum number of times the word `balloon` can appear in the string `text`.
+
+The time complexity is $O(n)$, and the space complexity is $O(C)$. Here, $n$ is the length of the string `text`, and $C$ is the size of the character set. In this problem, $C = 26$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +62,6 @@ class Solution:
         cnt['l'] >>= 1
         return min(cnt[c] for c in 'balon')
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,8 +80,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -99,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxNumberOfBalloons(text string) int {
 	cnt := [26]int{}
@@ -119,8 +119,6 @@ func maxNumberOfBalloons(text string) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function maxNumberOfBalloons(text: string): number {
     const cnt = new Array(26).fill(0);
@@ -131,19 +129,27 @@ function maxNumberOfBalloons(text: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn max_number_of_balloons(text: String) -> i32 {
         let mut arr = [0; 5];
         for c in text.chars() {
             match c {
-                'b' => arr[0] += 1,
-                'a' => arr[1] += 1,
-                'l' => arr[2] += 1,
-                'o' => arr[3] += 1,
-                'n' => arr[4] += 1,
+                'b' => {
+                    arr[0] += 1;
+                }
+                'a' => {
+                    arr[1] += 1;
+                }
+                'l' => {
+                    arr[2] += 1;
+                }
+                'o' => {
+                    arr[3] += 1;
+                }
+                'n' => {
+                    arr[4] += 1;
+                }
                 _ => {}
             }
         }
@@ -158,8 +164,6 @@ impl Solution {
 }
 ```
 
-### **PHP**
-
 ```php
 class Solution {
     /**
@@ -169,11 +173,17 @@ class Solution {
     function maxNumberOfBalloons($text) {
         $cnt1 = $cnt2 = $cnt3 = $cnt4 = $cnt5 = 0;
         for ($i = 0; $i < strlen($text); $i++) {
-            if ($text[$i] == "b") $cnt1 += 1;
-            else if ($text[$i] == "a") $cnt2 += 1;
-            else if ($text[$i] == "l") $cnt3 += 1;
-            else if ($text[$i] == "o") $cnt4 += 1;
-            else if ($text[$i] == "n") $cnt5 += 1;
+            if ($text[$i] == 'b') {
+                $cnt1 += 1;
+            } elseif ($text[$i] == 'a') {
+                $cnt2 += 1;
+            } elseif ($text[$i] == 'l') {
+                $cnt3 += 1;
+            } elseif ($text[$i] == 'o') {
+                $cnt4 += 1;
+            } elseif ($text[$i] == 'n') {
+                $cnt5 += 1;
+            }
         }
         $cnt3 = floor($cnt3 / 2);
         $cnt4 = floor($cnt4 / 2);
@@ -182,10 +192,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

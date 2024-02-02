@@ -44,9 +44,9 @@ It covers 2 white tiles, so we return 2.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,11 +62,9 @@ class Solution:
                 ans = max(ans, s + li + carpetLen - tiles[j][0])
             else:
                 ans = max(ans, s)
-            s -= (ri - li + 1)
+            s -= ri - li + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -116,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumWhiteTiles(tiles [][]int, carpetLen int) int {
 	sort.Slice(tiles, func(i, j int) bool { return tiles[i][0] < tiles[j][0] })
@@ -137,25 +131,8 @@ func maximumWhiteTiles(tiles [][]int, carpetLen int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

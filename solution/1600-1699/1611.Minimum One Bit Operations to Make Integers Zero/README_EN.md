@@ -45,44 +45,119 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def minimumOneBitOperations(self, n: int) -> int:
-        if n <= 1:
-            return n
-        for i in range(64):
-            if (n >> i) == 1:
-                base = 1 << i
-                break
-        return 2*base-1 - self.minimumOneBitOperations(n-base)
+        ans = 0
+        while n:
+            ans ^= n
+            n >>= 1
+        return ans
 ```
 
-### **Go**
-
-```go
-func minimumOneBitOperations(n int) int {
-	if n <= 1 {
-		return n
-	}
-	base := 0
-	for i := 0; i < 64; i++ {
-		if (n >> i) == 1 {
-			base = 1 << i
-			break
-		}
-	}
-	return (base << 1) - 1 - minimumOneBitOperations(n-base)
+```java
+class Solution {
+    public int minimumOneBitOperations(int n) {
+        int ans = 0;
+        for (; n > 0; n >>= 1) {
+            ans ^= n;
+        }
+        return ans;
+    }
 }
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int minimumOneBitOperations(int n) {
+        int ans = 0;
+        for (; n > 0; n >>= 1) {
+            ans ^= n;
+        }
+        return ans;
+    }
+};
 ```
 
+```go
+func minimumOneBitOperations(n int) (ans int) {
+	for ; n > 0; n >>= 1 {
+		ans ^= n
+	}
+	return
+}
+```
+
+```ts
+function minimumOneBitOperations(n: number): number {
+    let ans = 0;
+    for (; n > 0; n >>= 1) {
+        ans ^= n;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minimumOneBitOperations(self, n: int) -> int:
+        if n == 0:
+            return 0
+        return n ^ self.minimumOneBitOperations(n >> 1)
+```
+
+```java
+class Solution {
+    public int minimumOneBitOperations(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return n ^ minimumOneBitOperations(n >> 1);
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int minimumOneBitOperations(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return n ^ minimumOneBitOperations(n >> 1);
+    }
+};
+```
+
+```go
+func minimumOneBitOperations(n int) int {
+	if n == 0 {
+		return 0
+	}
+	return n ^ minimumOneBitOperations(n>>1)
+}
+```
+
+```ts
+function minimumOneBitOperations(n: number): number {
+    if (n === 0) {
+        return 0;
+    }
+    return n ^ minimumOneBitOperations(n >> 1);
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

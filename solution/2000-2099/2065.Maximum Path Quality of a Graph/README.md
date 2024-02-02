@@ -82,41 +82,14 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-DFS
+### 方法一
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-
-```
-
-### **TypeScript**
-
 ```ts
-function maximalPathQuality(
-    values: number[],
-    edges: number[][],
-    maxTime: number,
-): number {
+function maximalPathQuality(values: number[], edges: number[][], maxTime: number): number {
     const n = values.length;
-    let g: Array<Array<Array<number>>> = Array.from(
-        { length: n },
-        v => new Array(),
-    );
+    let g: Array<Array<Array<number>>> = Array.from({ length: n }, v => new Array());
     for (let edge of edges) {
         let [u, v, t] = edge;
         g[u].push([v, t]);
@@ -151,10 +124,6 @@ function maximalPathQuality(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

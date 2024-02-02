@@ -54,19 +54,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 我们统计字符串 `s` 和 `target` 中每个字符出现的次数，记为 `cnt1` 和 `cnt2`。对于 `target` 中的每个字符，我们计算 `cnt1` 中该字符出现的次数除以 `cnt2` 中该字符出现的次数，取最小值即可。
 
 时间复杂度 $O(n + m)$，空间复杂度 $O(C)$。其中 $n$ 和 $m$ 分别是字符串 `s` 和 `target` 的长度。而 $C$ 是字符集的大小，本题中 $C=26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -75,10 +69,6 @@ class Solution:
         cnt2 = Counter(target)
         return min(cnt1[c] // v for c, v in cnt2.items())
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,8 +91,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -127,8 +115,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func rearrangeCharacters(s string, target string) int {
 	var cnt1, cnt2 [26]int
@@ -146,16 +132,7 @@ func rearrangeCharacters(s string, target string) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function rearrangeCharacters(s: string, target: string): number {
@@ -177,8 +154,6 @@ function rearrangeCharacters(s: string, target: string): number {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -202,12 +177,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int rearrangeCharacters(char *s, char *target) {
+int rearrangeCharacters(char* s, char* target) {
     int count1[26] = {0};
     int count2[26] = {0};
     for (int i = 0; s[i]; i++) {
@@ -226,10 +199,6 @@ int rearrangeCharacters(char *s, char *target) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -32,7 +32,7 @@ The output order does not matter. Returning [9,0] is fine too.
 <strong>Input:</strong> s = &quot;wordgoodgoodgoodbestword&quot;, words = [&quot;word&quot;,&quot;good&quot;,&quot;best&quot;,&quot;word&quot;]
 <strong>Output:</strong> []
 <strong>Explanation:</strong> Since words.length == 4 and words[i].length == 4, the concatenated substring has to be of length 16.
-There is no substring of length 16 is s that is equal to the concatenation of any permutation of words.
+There is no substring of length 16 in s that is equal to the concatenation of any permutation of words.
 We return an empty array.
 </pre>
 
@@ -59,24 +59,32 @@ The substring starting at 12 is &quot;thefoobar&quot;. It is the concatenation o
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Sliding Window
 
-### **Python3**
+We use a hash table $cnt$ to count the number of times each word appears in $words$, and use a hash table $cnt1$ to count the number of times each word appears in the current sliding window. We denote the length of the string $s$ as $m$, the number of words in the string array $words$ as $n$, and the length of each word as $k$.
+
+We can enumerate the starting point $i$ of the sliding window, where $0 \lt i < k$. For each starting point, we maintain a sliding window with the left boundary as $l$, the right boundary as $r$, and the number of words in the sliding window as $t$. Additionally, we use a hash table $cnt1$ to count the number of times each word appears in the sliding window.
+
+Each time, we extract the string $s[r:r+k]$. If $s[r:r+k]$ is not in the hash table $cnt$, it means that the words in the current sliding window are not valid. We update the left boundary $l$ to $r$, clear the hash table $cnt1$, and reset the word count $t$ to 0. If $s[r:r+k]$ is in the hash table $cnt$, it means that the words in the current sliding window are valid. We increase the word count $t$ by 1, and increase the count of $s[r:r+k]$ in the hash table $cnt1$ by 1. If $cnt1[s[r:r+k]]$ is greater than $cnt[s[r:r+k]]$, it means that $s[r:r+k]$ appears too many times in the current sliding window. We need to move the left boundary $l$ to the right until $cnt1[s[r:r+k]] = cnt[s[r:r+k]]$. If $t = n$, it means that the words in the current sliding window are exactly valid, and we add the left boundary $l$ to the answer array.
+
+The time complexity is $O(m \times k)$, and the space complexity is $O(n \times k)$. Here, $m$ and $n$ are the lengths of the string $s$ and the string array $words$ respectively, and $k$ is the length of the words in the string array $words$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         cnt = Counter(words)
-        sublen = len(words[0])
-        n, m = len(s), len(words)
+        m, n = len(s), len(words)
+        k = len(words[0])
         ans = []
-        for i in range(sublen):
+        for i in range(k):
             cnt1 = Counter()
             l = r = i
             t = 0
-            while r + sublen <= n:
-                w = s[r : r + sublen]
-                r += sublen
+            while r + k <= m:
+                w = s[r : r + k]
+                r += k
                 if w not in cnt:
                     l = r
                     cnt1.clear()
@@ -85,49 +93,47 @@ class Solution:
                 cnt1[w] += 1
                 t += 1
                 while cnt1[w] > cnt[w]:
-                    remove = s[l : l + sublen]
-                    l += sublen
+                    remove = s[l : l + k]
+                    l += k
                     cnt1[remove] -= 1
                     t -= 1
-                if m == t:
+                if t == n:
                     ans.append(l)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         Map<String, Integer> cnt = new HashMap<>();
         for (String w : words) {
-            cnt.put(w, cnt.getOrDefault(w, 0) + 1);
+            cnt.merge(w, 1, Integer::sum);
         }
-        int subLen = words[0].length();
-        int n = s.length(), m = words.length;
+        int m = s.length(), n = words.length;
+        int k = words[0].length();
         List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < subLen; ++i) {
+        for (int i = 0; i < k; ++i) {
             Map<String, Integer> cnt1 = new HashMap<>();
             int l = i, r = i;
             int t = 0;
-            while (r + subLen <= n) {
-                String w = s.substring(r, r + subLen);
-                r += subLen;
+            while (r + k <= m) {
+                String w = s.substring(r, r + k);
+                r += k;
                 if (!cnt.containsKey(w)) {
-                    l = r;
                     cnt1.clear();
+                    l = r;
                     t = 0;
                     continue;
                 }
-                cnt1.put(w, cnt1.getOrDefault(w, 0) + 1);
+                cnt1.merge(w, 1, Integer::sum);
                 ++t;
                 while (cnt1.get(w) > cnt.get(w)) {
-                    String remove = s.substring(l, l + subLen);
-                    l += subLen;
-                    cnt1.put(remove, cnt1.get(remove) - 1);
+                    String remove = s.substring(l, l + k);
+                    l += k;
+                    cnt1.merge(remove, -1, Integer::sum);
                     --t;
                 }
-                if (m == t) {
+                if (t == n) {
                     ans.add(l);
                 }
             }
@@ -137,45 +143,171 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
         unordered_map<string, int> cnt;
-        for (auto& w : words) cnt[w]++;
-        int subLen = words[0].size();
-        int n = s.size(), m = words.size();
+        for (auto& w : words) {
+            ++cnt[w];
+        }
+        int m = s.size(), n = words.size(), k = words[0].size();
         vector<int> ans;
-        for (int i = 0; i < subLen; ++i) {
+        for (int i = 0; i < k; ++i) {
             unordered_map<string, int> cnt1;
             int l = i, r = i;
             int t = 0;
-            while (r + subLen <= n) {
-                string w = s.substr(r, subLen);
-                r += subLen;
+            while (r + k <= m) {
+                string w = s.substr(r, k);
+                r += k;
                 if (!cnt.count(w)) {
+                    cnt1.clear();
                     l = r;
                     t = 0;
-                    cnt1.clear();
                     continue;
                 }
-                cnt1[w]++;
-                t++;
+                ++cnt1[w];
+                ++t;
                 while (cnt1[w] > cnt[w]) {
-                    string remove = s.substr(l, subLen);
-                    l += subLen;
-                    cnt1[remove]--;
+                    string remove = s.substr(l, k);
+                    l += k;
+                    --cnt1[remove];
                     --t;
                 }
-                if (t == m) ans.push_back(l);
+                if (t == n) {
+                    ans.push_back(l);
+                }
             }
         }
         return ans;
     }
 };
 ```
+
+```go
+func findSubstring(s string, words []string) (ans []int) {
+	cnt := map[string]int{}
+	for _, w := range words {
+		cnt[w]++
+	}
+	m, n, k := len(s), len(words), len(words[0])
+	for i := 0; i < k; i++ {
+		cnt1 := map[string]int{}
+		l, r, t := i, i, 0
+		for r+k <= m {
+			w := s[r : r+k]
+			r += k
+			if _, ok := cnt[w]; !ok {
+				l, t = r, 0
+				cnt1 = map[string]int{}
+				continue
+			}
+			cnt1[w]++
+			t++
+			for cnt1[w] > cnt[w] {
+				cnt1[s[l:l+k]]--
+				l += k
+				t--
+			}
+			if t == n {
+				ans = append(ans, l)
+			}
+		}
+	}
+	return
+}
+```
+
+```ts
+function findSubstring(s: string, words: string[]): number[] {
+    const cnt: Map<string, number> = new Map();
+    for (const w of words) {
+        cnt.set(w, (cnt.get(w) || 0) + 1);
+    }
+    const m = s.length;
+    const n = words.length;
+    const k = words[0].length;
+    const ans: number[] = [];
+    for (let i = 0; i < k; ++i) {
+        const cnt1: Map<string, number> = new Map();
+        let l = i;
+        let r = i;
+        let t = 0;
+        while (r + k <= m) {
+            const w = s.slice(r, r + k);
+            r += k;
+            if (!cnt.has(w)) {
+                cnt1.clear();
+                l = r;
+                t = 0;
+                continue;
+            }
+            cnt1.set(w, (cnt1.get(w) || 0) + 1);
+            ++t;
+            while (cnt1.get(w)! - cnt.get(w)! > 0) {
+                const remove = s.slice(l, l + k);
+                cnt1.set(remove, cnt1.get(remove)! - 1);
+                l += k;
+                --t;
+            }
+            if (t === n) {
+                ans.push(l);
+            }
+        }
+    }
+    return ans;
+}
+```
+
+```cs
+public class Solution {
+    public IList<int> FindSubstring(string s, string[] words) {
+        var cnt = new Dictionary<string, int>();
+        foreach (var w in words) {
+            if (!cnt.ContainsKey(w)) {
+                cnt[w] = 0;
+            }
+            ++cnt[w];
+        }
+        int m = s.Length, n = words.Length, k = words[0].Length;
+        var ans = new List<int>();
+        for (int i = 0; i < k; ++i) {
+            var cnt1 = new Dictionary<string, int>();
+            int l = i, r = i, t = 0;
+            while (r + k <= m) {
+                var w = s.Substring(r, k);
+                r += k;
+                if (!cnt.ContainsKey(w)) {
+                    cnt1.Clear();
+                    t = 0;
+                    l = r;
+                    continue;
+                }
+                if (!cnt1.ContainsKey(w)) {
+                    cnt1[w] = 0;
+                }
+                ++cnt1[w];
+                ++t;
+                while (cnt1[w] > cnt[w]) {
+                    --cnt1[s.Substring(l, k)];
+                    l += k;
+                    --t;
+                }
+                if (t == n) {
+                    ans.Add(l);
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```cpp
 class Solution {
@@ -205,109 +337,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func findSubstring(s string, words []string) []int {
-	cnt := map[string]int{}
-	for _, w := range words {
-		cnt[w]++
-	}
-	subLen := len(words[0])
-	n, m := len(s), len(words)
-	var ans []int
-	for i := 0; i < subLen; i++ {
-		cnt1 := map[string]int{}
-		l, r := i, i
-		t := 0
-		for r+subLen <= n {
-			w := s[r : r+subLen]
-			r += subLen
-			if _, ok := cnt[w]; !ok {
-				l = r
-				t = 0
-				cnt1 = map[string]int{}
-				continue
-			}
-			cnt1[w]++
-			t++
-			for cnt1[w] > cnt[w] {
-				remove := s[l : l+subLen]
-				l += subLen
-				cnt1[remove]--
-				t--
-			}
-			if t == m {
-				ans = append(ans, l)
-			}
-		}
-	}
-	return ans
-}
-```
-
-### **C#**
-
-```cs
-public class Solution {
-    public IList<int> FindSubstring(string s, string[] words) {
-        var wordsDict = new Dictionary<string, int>();
-        foreach (var word in words)
-        {
-            if (!wordsDict.ContainsKey(word))
-            {
-                wordsDict.Add(word, 1);
-            }
-            else
-            {
-                ++wordsDict[word];
-            }
-        }
-
-        var wordOfS = new string[s.Length];
-        var wordLength = words[0].Length;
-        var wordCount = words.Length;
-        for (var i = 0; i <= s.Length - wordLength; ++i)
-        {
-            var substring = s.Substring(i, wordLength);
-            if (wordsDict.ContainsKey(substring))
-            {
-                wordOfS[i] = substring;
-            }
-        }
-
-        var result = new List<int>();
-        for (var i = 0; i <= s.Length - wordLength * wordCount; ++i)
-        {
-            var tempDict = new Dictionary<string, int>(wordsDict);
-            var tempCount = 0;
-            for (var j = i; j <= i + wordLength * (wordCount - 1); j += wordLength)
-            {
-                if (wordOfS[j] != null && tempDict[wordOfS[j]] > 0)
-                {
-                    --tempDict[wordOfS[j]];
-                    ++tempCount;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if (tempCount == wordCount)
-            {
-                result.Add(i);
-            }
-        }
-
-        return result;
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

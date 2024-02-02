@@ -64,69 +64,46 @@ M             1000</pre>
 
 ## Solutions
 
-**Approach 1: Simulation**
+### Solution 1: Hash Table + Simulation
 
-Time complexity $O(1)$, Space complexity $O(1)$.
+First, we use a hash table $d$ to record the numerical value corresponding to each character. Then, we traverse the string $s$ from left to right. If the numerical value corresponding to the current character is less than the numerical value corresponding to the character on the right, we subtract the numerical value corresponding to the current character. Otherwise, we add the numerical value corresponding to the current character.
+
+The time complexity is $O(n)$, and the space complexity is $O(m)$. Here, $n$ and $m$ are the length of the string $s$ and the size of the character set, respectively.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def romanToInt(self, s: str) -> int:
-        romans = {'I': 1, 'V': 5, 'X': 10,
-                  'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-        ans = 0
-        for i in range(len(s) - 1):
-            if romans[s[i]] < romans[s[i + 1]]:
-                ans -= romans[s[i]]
-            else:
-                ans += romans[s[i]]
-        return ans + romans[s[-1]]
+        d = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        return sum((-1 if d[a] < d[b] else 1) * d[a] for a, b in pairwise(s)) + d[s[-1]]
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int romanToInt(String s) {
-        Map<String, Integer> nums = new HashMap<>();
-        nums.put("M", 1000);
-        nums.put("CM", 900);
-        nums.put("D", 500);
-        nums.put("CD", 400);
-        nums.put("C", 100);
-        nums.put("XC", 90);
-        nums.put("L", 50);
-        nums.put("XL", 40);
-        nums.put("X", 10);
-        nums.put("IX", 9);
-        nums.put("V", 5);
-        nums.put("IV", 4);
-        nums.put("I", 1);
-        int res = 0;
-        for (int i = 0; i < s.length();) {
-            if (i + 1 < s.length() && nums.get(s.substring(i, i + 2)) != null) {
-                res += nums.get(s.substring(i, i + 2));
-                i += 2;
-            } else {
-                res += nums.get(s.substring(i, i + 1));
-                i += 1;
-            }
+        String cs = "IVXLCDM";
+        int[] vs = {1, 5, 10, 50, 100, 500, 1000};
+        Map<Character, Integer> d = new HashMap<>();
+        for (int i = 0; i < vs.length; ++i) {
+            d.put(cs.charAt(i), vs[i]);
         }
-        return res;
+        int n = s.length();
+        int ans = d.get(s.charAt(n - 1));
+        for (int i = 0; i < n - 1; ++i) {
+            int sign = d.get(s.charAt(i)) < d.get(s.charAt(i + 1)) ? -1 : 1;
+            ans += sign * d.get(s.charAt(i));
+        }
+        return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int romanToInt(string s) {
-        unordered_map<char, int> nums {
+        unordered_map<char, int> nums{
             {'I', 1},
             {'V', 5},
             {'X', 10},
@@ -135,36 +112,91 @@ public:
             {'D', 500},
             {'M', 1000},
         };
-        int ans = 0;
+        int ans = nums[s.back()];
         for (int i = 0; i < s.size() - 1; ++i) {
-            if (nums[s[i]] < nums[s[i + 1]])
-                ans -= nums[s[i]];
-            else
-                ans += nums[s[i]];
+            int sign = nums[s[i]] < nums[s[i + 1]] ? -1 : 1;
+            ans += sign * nums[s[i]];
         }
-        return ans + nums[s.back()];
+        return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func romanToInt(s string) int {
-	romans := map[byte]int{'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-	ans := 0
+func romanToInt(s string) (ans int) {
+	d := map[byte]int{'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
 	for i := 0; i < len(s)-1; i++ {
-		if romans[s[i]] < romans[s[i+1]] {
-			ans -= romans[s[i]]
+		if d[s[i]] < d[s[i+1]] {
+			ans -= d[s[i]]
 		} else {
-			ans += romans[s[i]]
+			ans += d[s[i]]
 		}
 	}
-	return ans + romans[s[len(s)-1]]
+	ans += d[s[len(s)-1]]
+	return
 }
 ```
 
-### **PHP**
+```ts
+function romanToInt(s: string): number {
+    const d: Map<string, number> = new Map([
+        ['I', 1],
+        ['V', 5],
+        ['X', 10],
+        ['L', 50],
+        ['C', 100],
+        ['D', 500],
+        ['M', 1000],
+    ]);
+    let ans: number = d.get(s[s.length - 1])!;
+    for (let i = 0; i < s.length - 1; ++i) {
+        const sign = d.get(s[i])! < d.get(s[i + 1])! ? -1 : 1;
+        ans += sign * d.get(s[i])!;
+    }
+    return ans;
+}
+```
+
+```js
+const romanToInt = function (s) {
+    const d = {
+        I: 1,
+        V: 5,
+        X: 10,
+        L: 50,
+        C: 100,
+        D: 500,
+        M: 1000,
+    };
+    let ans = d[s[s.length - 1]];
+    for (let i = 0; i < s.length - 1; ++i) {
+        const sign = d[s[i]] < d[s[i + 1]] ? -1 : 1;
+        ans += sign * d[s[i]];
+    }
+    return ans;
+};
+```
+
+```cs
+public class Solution {
+    public int RomanToInt(string s) {
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        d.Add('I', 1);
+        d.Add('V', 5);
+        d.Add('X', 10);
+        d.Add('L', 50);
+        d.Add('C', 100);
+        d.Add('D', 500);
+        d.Add('M', 1000);
+        int ans = d[s[s.Length - 1]];
+        for (int i = 0; i < s.Length - 1; ++i) {
+            int sign = d[s[i]] < d[s[i + 1]] ? -1 : 1;
+            ans += sign * d[s[i]];
+        }
+        return ans;
+    }
+}
+```
 
 ```php
 class Solution {
@@ -173,23 +205,65 @@ class Solution {
      * @return Integer
      */
     function romanToInt($s) {
-        $hashmap = array('I' => 1, 'V' => 5, 'X' => 10, 'L' => 50, 'C' => 100, 'D' => 500, 'M' => 1000);
+        $hashmap = [
+            'I' => 1,
+            'V' => 5,
+            'X' => 10,
+            'L' => 50,
+            'C' => 100,
+            'D' => 500,
+            'M' => 1000,
+        ];
         $rs = 0;
         for ($i = 0; $i < strlen($s); $i++) {
             $left = $hashmap[$s[$i]];
             $right = $hashmap[$s[$i + 1]];
-            if ($left >= $right) $rs += $left;
-            else $rs -= $left;
+            if ($left >= $right) {
+                $rs += $left;
+            } else {
+                $rs -= $left;
+            }
         }
         return $rs;
     }
 }
 ```
 
-### **...**
+```rb
+# @param {String} s
+# @return {Integer}
+def roman_to_int(s)
+  hash = Hash[
+      'I' => 1,
+      'V' => 5,
+      'X' => 10,
+      'L' => 50,
+      'C' => 100,
+      'D' => 500,
+      'M' => 1000,
+      'IV' => 4,
+      'IX' => 9,
+      'XL' => 40,
+      'XC' => 90,
+      'CD' => 400,
+      'CM' => 900
+  ]
+  res = 0
+  i = 0
+  while i < s.length
+    if i < s.length - 1 && !hash[s[i..i+1]].nil?
+      res += hash[s[i..i+1]]
+      i += 2
+    else
+      res += hash[s[i]]
+      i += 1
+    end
+  end
 
-```
-
+  res
+end
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

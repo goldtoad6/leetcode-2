@@ -99,13 +99,14 @@ sol.read(buf, 1); // We have reached the end of file, no more characters can be 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # The read4 API is already defined for you.
 # def read4(buf4: List[str]) -> int:
+
 
 class Solution:
     def __init__(self):
@@ -126,8 +127,6 @@ class Solution:
                 j += 1
         return j
 ```
-
-### **Java**
 
 ```java
 /**
@@ -164,8 +163,6 @@ public class Solution extends Reader4 {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * The read4 API is defined in the parent class Reader4.
@@ -179,7 +176,7 @@ public:
      * @param n   Number of characters to read
      * @return    The number of actual characters read
      */
-    int read(char *buf, int n) {
+    int read(char* buf, int n) {
         int j = 0;
         while (j < n) {
             if (i == size) {
@@ -193,13 +190,11 @@ public:
     }
 
 private:
-    char *buf4 = new char[4];
+    char* buf4 = new char[4];
     int i = 0;
     int size = 0;
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -239,16 +234,6 @@ var solution = func(read4 func([]byte) int) func([]byte, int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

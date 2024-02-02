@@ -50,43 +50,35 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：模拟
 
-**方法一：模拟**
+我们可以遍历数组 $nums$，用变量 $j$ 记录上一个 $1$ 的下标，那么当前位置 $i$ 的元素为 $1$ 时，只需要判断 $i - j - 1$ 是否小于 $k$ 即可。如果小于 $k$，则说明存在两个 $1$ 之间的 $0$ 的个数小于 $k$，返回 `false`；否则，将 $j$ 更新为 $i$，继续遍历数组。
 
-直接遍历数组 `nums`，比较相邻两个 $1$ 的间距是否小于 $k$，是则返回 `false`，否则遍历结束返回 `true`。
+遍历结束后，返回 `true`。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。
+时间复杂度 $O(n)$，其中 $n$ 为数组 $nums$ 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def kLengthApart(self, nums: List[int], k: int) -> bool:
-        j = -1
-        for i, v in enumerate(nums):
-            if v == 1:
-                if j > -1 and i - j - 1 < k:
+        j = -inf
+        for i, x in enumerate(nums):
+            if x:
+                if i - j - 1 < k:
                     return False
                 j = i
         return True
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public boolean kLengthApart(int[] nums, int k) {
-        int j = -1;
+        int j = -(k + 1);
         for (int i = 0; i < nums.length; ++i) {
             if (nums[i] == 1) {
-                if (j != -1 && i - j - 1 < k) {
+                if (i - j - 1 < k) {
                     return false;
                 }
                 j = i;
@@ -97,16 +89,14 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool kLengthApart(vector<int>& nums, int k) {
-        int j = -1;
+        int j = -(k + 1);
         for (int i = 0; i < nums.size(); ++i) {
             if (nums[i] == 1) {
-                if (j != -1 && i - j - 1 < k) {
+                if (i - j - 1 < k) {
                     return false;
                 }
                 j = i;
@@ -117,14 +107,12 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func kLengthApart(nums []int, k int) bool {
-	j := -1
-	for i, v := range nums {
-		if v == 1 {
-			if j != -1 && i-j-1 < k {
+	j := -(k + 1)
+	for i, x := range nums {
+		if x == 1 {
+			if i-j-1 < k {
 				return false
 			}
 			j = i
@@ -134,10 +122,21 @@ func kLengthApart(nums []int, k int) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function kLengthApart(nums: number[], k: number): boolean {
+    let j = -(k + 1);
+    for (let i = 0; i < nums.length; ++i) {
+        if (nums[i] === 1) {
+            if (i - j - 1 < k) {
+                return false;
+            }
+            j = i;
+        }
+    }
+    return true;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

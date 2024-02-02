@@ -35,9 +35,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -47,7 +47,9 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def splitBST(self, root: Optional[TreeNode], target: int) -> List[Optional[TreeNode]]:
+    def splitBST(
+        self, root: Optional[TreeNode], target: int
+    ) -> List[Optional[TreeNode]]:
         def dfs(root):
             if root is None:
                 return [None, None]
@@ -62,8 +64,6 @@ class Solution:
 
         return dfs(root)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -108,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -148,8 +146,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -176,8 +172,6 @@ func splitBST(root *TreeNode, target int) []*TreeNode {
 	}
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -211,10 +205,6 @@ var splitBST = function (root, target) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

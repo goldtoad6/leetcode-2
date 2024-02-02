@@ -35,29 +35,41 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy
 
-### **Python3**
+We use a variable $mx$ to maintain the farthest index that can currently be reached, initially $mx = 0$.
+
+We traverse the array from left to right. For each position $i$ we traverse, if $mx < i$, it means that the current position cannot be reached, so we directly return `false`. Otherwise, the farthest position that we can reach by jumping from position $i$ is $i+nums[i]$, we use $i+nums[i]$ to update the value of $mx$, that is, $mx = \max(mx, i + nums[i])$.
+
+At the end of the traversal, we directly return `true`.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+Similar problems:
+
+-   [45. Jump Game II](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0045.Jump%20Game%20II/README_EN.md)
+-   [1024. Video Stitching](https://github.com/doocs/leetcode/blob/main/solution/1000-1099/1024.Video%20Stitching/README_EN.md)
+-   [1326. Minimum Number of Taps to Open to Water a Garden](https://github.com/doocs/leetcode/blob/main/solution/1300-1399/1326.Minimum%20Number%20of%20Taps%20to%20Open%20to%20Water%20a%20Garden/README_EN.md)
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         mx = 0
-        for i, num in enumerate(nums):
-            if i > mx:
+        for i, x in enumerate(nums):
+            if mx < i:
                 return False
-            mx = max(mx, i + num)
+            mx = max(mx, i + x)
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public boolean canJump(int[] nums) {
         int mx = 0;
         for (int i = 0; i < nums.length; ++i) {
-            if (i > mx) {
+            if (mx < i) {
                 return false;
             }
             mx = Math.max(mx, i + nums[i]);
@@ -67,15 +79,13 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
         int mx = 0;
         for (int i = 0; i < nums.size(); ++i) {
-            if (i > mx) {
+            if (mx < i) {
                 return false;
             }
             mx = max(mx, i + nums[i]);
@@ -85,29 +95,50 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func canJump(nums []int) bool {
 	mx := 0
-	for i, num := range nums {
-		if i > mx {
+	for i, x := range nums {
+		if mx < i {
 			return false
 		}
-		mx = max(mx, i+num)
+		mx = max(mx, i+x)
 	}
 	return true
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function canJump(nums: number[]): boolean {
+    let mx: number = 0;
+    for (let i = 0; i < nums.length; ++i) {
+        if (mx < i) {
+            return false;
+        }
+        mx = Math.max(mx, i + nums[i]);
+    }
+    return true;
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn can_jump(nums: Vec<i32>) -> bool {
+        let n = nums.len();
+        let mut mx = 0;
+
+        for i in 0..n {
+            if mx < i {
+                return false;
+            }
+            mx = std::cmp::max(mx, i + (nums[i] as usize));
+        }
+
+        true
+    }
+}
+```
 
 ```js
 /**
@@ -117,7 +148,7 @@ func max(a, b int) int {
 var canJump = function (nums) {
     let mx = 0;
     for (let i = 0; i < nums.length; ++i) {
-        if (i > mx) {
+        if (mx < i) {
             return false;
         }
         mx = Math.max(mx, i + nums[i]);
@@ -126,14 +157,12 @@ var canJump = function (nums) {
 };
 ```
 
-### **C#**
-
 ```cs
 public class Solution {
     public bool CanJump(int[] nums) {
         int mx = 0;
         for (int i = 0; i < nums.Length; ++i) {
-            if (i > mx) {
+            if (mx < i) {
                 return false;
             }
             mx = Math.Max(mx, i + nums[i]);
@@ -143,10 +172,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -41,9 +41,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -54,8 +54,6 @@ class Solution:
             n //= 3
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,8 +69,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -86,8 +82,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func checkPowersOfThree(n int) bool {
 	for n > 0 {
@@ -100,10 +94,16 @@ func checkPowersOfThree(n int) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function checkPowersOfThree(n: number): boolean {
+    while (n) {
+        if (n % 3 > 1) return false;
+        n = Math.floor(n / 3);
+    }
+    return true;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

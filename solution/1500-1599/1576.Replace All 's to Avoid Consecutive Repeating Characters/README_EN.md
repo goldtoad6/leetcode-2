@@ -37,9 +37,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
                     break
         return "".join(s)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -79,8 +77,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -102,8 +98,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func modifyString(s string) string {
 	n := len(s)
@@ -123,8 +117,6 @@ func modifyString(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function modifyString(s: string): string {
     const cs = s.split('');
@@ -132,10 +124,7 @@ function modifyString(s: string): string {
     for (let i = 0; i < n; ++i) {
         if (cs[i] === '?') {
             for (const c of 'abc') {
-                if (
-                    (i > 0 && cs[i - 1] === c) ||
-                    (i + 1 < n && cs[i + 1] === c)
-                ) {
+                if ((i > 0 && cs[i - 1] === c) || (i + 1 < n && cs[i + 1] === c)) {
                     continue;
                 }
                 cs[i] = c;
@@ -147,10 +136,6 @@ function modifyString(s: string): string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

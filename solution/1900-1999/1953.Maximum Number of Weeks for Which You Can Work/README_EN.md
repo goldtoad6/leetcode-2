@@ -62,9 +62,9 @@ Thus, one milestone in project 0 will remain unfinished.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -73,8 +73,6 @@ class Solution:
         rest = s - mx
         return rest * 2 + 1 if mx > rest + 1 else s
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -105,14 +101,12 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfWeeks(milestones []int) int64 {
-	mx, s := 0, 0
-	for _, e := range milestones {
-		mx = max(mx, e)
-		s += e
+	mx := slices.Max(milestones)
+	s := 0
+	for _, x := range milestones {
+		s += x
 	}
 	rest := s - mx
 	if mx > rest+1 {
@@ -120,19 +114,8 @@ func numberOfWeeks(milestones []int) int64 {
 	}
 	return int64(s)
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

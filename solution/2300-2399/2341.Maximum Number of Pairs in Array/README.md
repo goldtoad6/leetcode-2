@@ -54,9 +54,7 @@ nums[0] 和 nums[1] 形成一个数对，并从 nums 中移除，nums = [2] 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数**
+### 方法一：计数
 
 我们可以统计数组 `nums` 中每个数字 $x$ 出现的次数，记录在哈希表或数组 `cnt` 中。
 
@@ -70,10 +68,6 @@ nums[0] 和 nums[1] 形成一个数对，并从 nums 中移除，nums = [2] 。
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def numberOfPairs(self, nums: List[int]) -> List[int]:
@@ -81,10 +75,6 @@ class Solution:
         s = sum(v // 2 for v in cnt.values())
         return [s, len(nums) - s * 2]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,8 +91,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -121,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func numberOfPairs(nums []int) []int {
 	cnt := [101]int{}
@@ -137,8 +123,6 @@ func numberOfPairs(nums []int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function numberOfPairs(nums: number[]): number[] {
     const n = nums.length;
@@ -150,8 +134,6 @@ function numberOfPairs(nums: number[]): number[] {
     return [sum, n - sum * 2];
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -170,31 +152,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int *numberOfPairs(int *nums, int numsSize, int *returnSize) {
-    int count[101] = {0};
-    for (int i = 0; i < numsSize; i++) {
-        count[nums[i]]++;
-    }
-    int sum = 0;
-    for (int i = 0; i < 101; i++) {
-        sum += count[i] >> 1;
-    }
-    int *ans = malloc(sizeof(int) * 2);
-    ans[0] = sum;
-    ans[1] = numsSize - sum * 2;
-    *returnSize = 2;
-    return ans;
-}
-```
-
-### **JavaScript**
-
 ```js
 /**
  * @param {number[]} nums
@@ -209,8 +166,6 @@ var numberOfPairs = function (nums) {
     return [s, nums.length - s * 2];
 };
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -228,10 +183,27 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* numberOfPairs(int* nums, int numsSize, int* returnSize) {
+    int count[101] = {0};
+    for (int i = 0; i < numsSize; i++) {
+        count[nums[i]]++;
+    }
+    int sum = 0;
+    for (int i = 0; i < 101; i++) {
+        sum += count[i] >> 1;
+    }
+    int* ans = malloc(sizeof(int) * 2);
+    ans[0] = sum;
+    ans[1] = numsSize - sum * 2;
+    *returnSize = 2;
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

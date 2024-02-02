@@ -44,9 +44,15 @@ The best solution that has 4 ones is:
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Count Equivalent Positions
 
-### **Python3**
+For convenience, let's denote $x = sideLength$.
+
+Consider a $x \times x$ square, we need to select at most $maxOnes$ points inside the square and set them to 1. Note that when the point at coordinate $(i, j)$ is selected, all points at coordinates $(i\pm k_1 \times x, j\pm k_2 \times x)$ can be equivalently set to 1. Therefore, we calculate the number of equivalent positions of the coordinate $(i, j)$ in the matrix, and select the top $maxOnes$ with the most quantities.
+
+The time complexity is $O(m \times n)$, where $m$ and $n$ are the number of rows and columns of the matrix, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +68,6 @@ class Solution:
         cnt.sort(reverse=True)
         return sum(cnt[:maxOnes])
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +89,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -110,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumNumberOfOnes(width int, height int, sideLength int, maxOnes int) int {
 	x := sideLength
@@ -131,8 +131,6 @@ func maximumNumberOfOnes(width int, height int, sideLength int, maxOnes int) int
 }
 ```
 
-### **JavaScript**
-
 ```js
 /**
  * @param {number} width
@@ -151,18 +149,10 @@ var maximumNumberOfOnes = function (width, height, sideLength, maxOnes) {
         }
     }
     cnt.sort((a, b) => b - a);
-    let ans = 0;
-    for (let i = 0; i < maxOnes; ++i) {
-        ans += cnt[i];
-    }
-    return ans;
+    return cnt.slice(0, maxOnes).reduce((a, b) => a + b, 0);
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

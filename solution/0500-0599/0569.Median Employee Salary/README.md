@@ -16,13 +16,13 @@
 | company      | varchar |
 | salary       | int     |
 +--------------+---------+
-Id是该表的主键列。
+id 是该表的主键列(具有唯一值的列)。
 该表的每一行表示公司和一名员工的工资。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>写一个SQL查询，找出每个公司的工资中位数。</p>
+<p>编写解决方案，找出每个公司的工资中位数。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
@@ -74,14 +74,31 @@ Employee 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    t AS (
+        SELECT
+            *,
+            ROW_NUMBER() OVER (
+                PARTITION BY company
+                ORDER BY salary ASC
+            ) AS rk,
+            COUNT(id) OVER (PARTITION BY company) AS n
+        FROM Employee
+    )
+SELECT
+    id,
+    company,
+    salary
+FROM t
+WHERE rk >= n / 2 AND rk <= n / 2 + 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

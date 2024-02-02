@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
                 d[c] = i
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,8 +78,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -101,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxLengthBetweenEqualCharacters(s string) int {
 	d := make([]int, 26)
@@ -120,39 +114,7 @@ func maxLengthBetweenEqualCharacters(s string) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **C**
-
-```c
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-
-int maxLengthBetweenEqualCharacters(char *s) {
-    int pos[26];
-    memset(pos, -1, sizeof(pos));
-    int n = strlen(s);
-    int res = -1;
-    for (int i = 0; i < n; i++) {
-        char c = s[i];
-        int j = c - 'a';
-        if (pos[j] == -1) {
-            pos[j] = i;
-        } else {
-            res = max(res, i - pos[j] - 1);
-        }
-    }
-    return res;
-}
-```
-
-### **TypeScript**
 
 ```ts
 function maxLengthBetweenEqualCharacters(s: string): number {
@@ -170,8 +132,6 @@ function maxLengthBetweenEqualCharacters(s: string): number {
     return res;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -194,10 +154,27 @@ impl Solution {
 }
 ```
 
-### **...**
+```c
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 
-```
-
+int maxLengthBetweenEqualCharacters(char* s) {
+    int pos[26];
+    memset(pos, -1, sizeof(pos));
+    int n = strlen(s);
+    int res = -1;
+    for (int i = 0; i < n; i++) {
+        char c = s[i];
+        int j = c - 'a';
+        if (pos[j] == -1) {
+            pos[j] = i;
+        } else {
+            res = max(res, i - pos[j] - 1);
+        }
+    }
+    return res;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

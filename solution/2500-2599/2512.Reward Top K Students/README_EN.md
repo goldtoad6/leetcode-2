@@ -53,9 +53,17 @@ Since student 2 has more points, [2,1] is returned.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Sorting
 
-### **Python3**
+We can store the positive words in a hash table $ps$ and the negative words in a hash table $ns$.
+
+Then, we traverse the $report$ and for each student, we store their score in an array $arr$, where each element is a tuple $(t, sid)$, where $t$ represents the student's score and $sid$ represents the student's ID.
+
+Finally, we sort the array $arr$ in descending order by score, and if the scores are the same, we sort by ID in ascending order. Then, we take the IDs of the top $k$ students.
+
+The time complexity is $O(n \times \log n + (|ps| + |ns| + n) \times |s|)$, and the space complexity is $O((|ps|+|ns|) \times |s| + n)$. Here, $n$ is the number of students, $|ps|$ and $|ns|$ are the number of positive and negative words, respectively, and $|s|$ is the average length of a word.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -82,8 +90,6 @@ class Solution:
         return [v[1] for v in arr[:k]]
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public List<Integer> topStudents(String[] positive_feedback, String[] negative_feedback,
@@ -97,7 +103,7 @@ class Solution {
             ns.add(s);
         }
         int n = report.length;
-        int[][] arr = new int[n][2];
+        int[][] arr = new int[n][0];
         for (int i = 0; i < n; ++i) {
             int sid = student_id[i];
             int t = 0;
@@ -119,8 +125,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -163,8 +167,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func topStudents(positive_feedback []string, negative_feedback []string, report []string, student_id []int, k int) (ans []int) {
 	ps := map[string]bool{}
@@ -194,8 +196,6 @@ func topStudents(positive_feedback []string, negative_feedback []string, report 
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function topStudents(
@@ -235,17 +235,15 @@ function topStudents(
 }
 ```
 
-### **Rust**
-
 ```rust
-use std::collections::{HashMap, HashSet};
+use std::collections::{ HashMap, HashSet };
 impl Solution {
     pub fn top_students(
         positive_feedback: Vec<String>,
         negative_feedback: Vec<String>,
         report: Vec<String>,
         student_id: Vec<i32>,
-        k: i32,
+        k: i32
     ) -> Vec<i32> {
         let n = student_id.len();
         let ps = positive_feedback.iter().collect::<HashSet<&String>>();
@@ -271,15 +269,14 @@ impl Solution {
             }
             b.1.cmp(&a.1)
         });
-        t.iter().map(|v| v.0).collect::<Vec<i32>>()[0..k as usize].to_vec()
+        t.iter()
+            .map(|v| v.0)
+            .collect::<Vec<i32>>()
+            [0..k as usize].to_vec()
     }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

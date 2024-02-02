@@ -28,64 +28,23 @@
 
 ## Solutions
 
-DFS.
+### Solution 1: DFS (Backtracking)
+
+We design a function $dfs(i)$ to represent that the first $i$ positions have been filled, and now we need to fill the $i+1$ position. We enumerate all possible numbers, if this number has not been filled, we fill in this number, and then continue to fill the next position, until all positions are filled.
+
+The time complexity is $O(n \times n!)$, where $n$ is the length of the array. There are $n!$ permutations in total, and each permutation takes $O(n)$ time to construct.
+
+Similar problems:
+
+-   [47. Permutations II](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0047.Permutations%20II/README_EN.md)
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         return list(permutations(nums))
 ```
-
-```python
-class Solution:
-    def permute(self, nums: List[int]) -> List[List[int]]:
-        def dfs(i):
-            if i == n:
-                ans.append(t[:])
-                return
-            for j in range(n):
-                if not vis[j]:
-                    vis[j] = True
-                    t[i] = nums[j]
-                    dfs(i + 1)
-                    vis[j] = False
-
-        n = len(nums)
-        vis = [False] * n
-        t = [0] * n
-        ans = []
-        dfs(0)
-        return ans
-```
-
-```python
-class Solution:
-    def permute(self, nums: List[int]) -> List[List[int]]:
-        def dfs(i):
-            nonlocal mask
-            if i == n:
-                ans.append(t[:])
-                return
-            for j in range(n):
-                if (mask >> j & 1) == 0:
-                    mask |= 1 << j
-                    t[i] = nums[j]
-                    dfs(i + 1)
-                    mask ^= 1 << j
-
-        n = len(nums)
-        mask = 0
-        t = [0] * n
-        ans = []
-        dfs(0)
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -119,8 +78,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -149,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func permute(nums []int) (ans [][]int) {
 	n := len(nums)
@@ -159,9 +114,7 @@ func permute(nums []int) (ans [][]int) {
 	var dfs func(int)
 	dfs = func(i int) {
 		if i == n {
-			cp := make([]int, n)
-			copy(cp, t)
-			ans = append(ans, cp)
+			ans = append(ans, slices.Clone(t))
 			return
 		}
 		for j, v := range nums {
@@ -178,7 +131,47 @@ func permute(nums []int) (ans [][]int) {
 }
 ```
 
-### **JavaScript**
+```ts
+function permute(nums: number[]): number[][] {
+    const n = nums.length;
+    const res: number[][] = [];
+    const dfs = (i: number) => {
+        if (i === n) {
+            res.push([...nums]);
+        }
+        for (let j = i; j < n; j++) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+            dfs(i + 1);
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+        }
+    };
+    dfs(0);
+    return res;
+}
+```
+
+```rust
+impl Solution {
+    fn dfs(i: usize, nums: &mut Vec<i32>, res: &mut Vec<Vec<i32>>) {
+        let n = nums.len();
+        if i == n {
+            res.push(nums.clone());
+            return;
+        }
+        for j in i..n {
+            nums.swap(i, j);
+            Self::dfs(i + 1, nums, res);
+            nums.swap(i, j);
+        }
+    }
+
+    pub fn permute(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut res = vec![];
+        Self::dfs(0, &mut nums, &mut res);
+        res
+    }
+}
+```
 
 ```js
 /**
@@ -210,8 +203,6 @@ var permute = function (nums) {
 };
 ```
 
-### **C#**
-
 ```cs
 public class Solution {
     public IList<IList<int>> Permute(int[] nums) {
@@ -240,56 +231,103 @@ public class Solution {
 }
 ```
 
-### **TypeScript**
+<!-- tabs:end -->
 
-```ts
-function permute(nums: number[]): number[][] {
-    const n = nums.length;
-    const res: number[][] = [];
-    const dfs = (i: number) => {
-        if (i === n) {
-            res.push([...nums]);
-        }
-        for (let j = i; j < n; j++) {
-            [nums[i], nums[j]] = [nums[j], nums[i]];
-            dfs(i + 1);
-            [nums[i], nums[j]] = [nums[j], nums[i]];
-        }
-    };
-    dfs(0);
-    return res;
-}
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def dfs(i):
+            if i == n:
+                ans.append(t[:])
+                return
+            for j in range(n):
+                if not vis[j]:
+                    vis[j] = True
+                    t[i] = nums[j]
+                    dfs(i + 1)
+                    vis[j] = False
+
+        n = len(nums)
+        vis = [False] * n
+        t = [0] * n
+        ans = []
+        dfs(0)
+        return ans
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
-    fn dfs(i: usize, nums: &mut Vec<i32>, res: &mut Vec<Vec<i32>>) {
-        let n = nums.len();
-        if i == n {
-            res.push(nums.clone());
-            return;
-        }
-        for j in i..n {
-            nums.swap(i, j);
-            Self::dfs(i + 1, nums, res);
-            nums.swap(i, j);
-        }
+    #[allow(dead_code)]
+    pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut ret = Vec::new();
+        let mut cur_vec = Vec::new();
+        let mut vis = vec![false; nums.len() + 1];
+        Self::dfs(&nums, &mut vis, 0, &mut cur_vec, &mut ret);
+        ret
     }
 
-    pub fn permute(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
-        let mut res = vec![];
-        Self::dfs(0, &mut nums, &mut res);
-        res
+    #[allow(dead_code)]
+    fn dfs(
+        nums: &Vec<i32>,
+        vis: &mut Vec<bool>,
+        index: i32,
+        cur_vec: &mut Vec<i32>,
+        ans: &mut Vec<Vec<i32>>
+    ) {
+        let n = nums.len();
+        if (index as usize) == n {
+            ans.push(cur_vec.clone());
+            return;
+        }
+        // Otherwise, let's iterate the nums vector
+        for i in 0..n {
+            if !vis[i] {
+                // If this number hasn't been visited, then visit it
+                vis[i] = true;
+                cur_vec.push(nums[i]);
+                Self::dfs(nums, vis, index + 1, cur_vec, ans);
+                // Reset the changes
+                cur_vec.pop().unwrap();
+                vis[i] = false;
+            }
+        }
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 3
 
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def dfs(i):
+            nonlocal mask
+            if i == n:
+                ans.append(t[:])
+                return
+            for j in range(n):
+                if (mask >> j & 1) == 0:
+                    mask |= 1 << j
+                    t[i] = nums[j]
+                    dfs(i + 1)
+                    mask ^= 1 << j
+
+        n = len(nums)
+        mask = 0
+        t = [0] * n
+        ans = []
+        dfs(0)
+        return ans
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

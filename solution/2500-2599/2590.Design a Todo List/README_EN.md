@@ -57,25 +57,37 @@ todoList.getAllTasks(1); // return [&quot;Task3&quot;, &quot;Task1&quot;]. User 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table + Sorted Set
 
-### **Python3**
+We use a hash table $tasks$ to record the set of tasks for each user, where the key is the user ID and the value is a sorted set sorted by the deadline of the task. In addition, we use a variable $i$ to record the current task ID.
+
+When calling the `addTask` method, we add the task to the task set of the corresponding user and return the task ID. The time complexity of this operation is $O(\log n)$.
+
+When calling the `getAllTasks` method, we traverse the task set of the corresponding user and add the description of the unfinished task to the result list, and then return the result list. The time complexity of this operation is $O(n)$.
+
+When calling the `getTasksForTag` method, we traverse the task set of the corresponding user and add the description of the unfinished task to the result list, and then return the result list. The time complexity of this operation is $O(n)$.
+
+When calling the `completeTask` method, we traverse the task set of the corresponding user and mark the task whose task ID is $taskId$ as completed. The time complexity of this operation is $(n)$.
+
+The space complexity is $O(n)$. Where $n$ is the number of all tasks.
+
+<!-- tabs:start -->
 
 ```python
 from sortedcontainers import SortedList
 
 
 class TodoList:
-
     def __init__(self):
         self.i = 1
         self.tasks = defaultdict(SortedList)
 
-    def addTask(self, userId: int, taskDescription: str, dueDate: int, tags: List[str]) -> int:
+    def addTask(
+        self, userId: int, taskDescription: str, dueDate: int, tags: List[str]
+    ) -> int:
         taskId = self.i
         self.i += 1
-        self.tasks[userId].add(
-            [dueDate, taskDescription, set(tags), taskId, False])
+        self.tasks[userId].add([dueDate, taskDescription, set(tags), taskId, False])
         return taskId
 
     def getAllTasks(self, userId: int) -> List[str]:
@@ -98,8 +110,6 @@ class TodoList:
 # param_3 = obj.getTasksForTag(userId,tag)
 # obj.completeTask(userId,taskId)
 ```
-
-### **Java**
 
 ```java
 class Task {
@@ -177,22 +187,120 @@ class TodoList {
  */
 ```
 
-### **C++**
+```rust
+use std::collections::{ HashMap, HashSet };
 
-```cpp
+#[derive(Clone)]
+struct Task {
+    task_id: i32,
+    description: String,
+    tags: HashSet<String>,
+    due_date: i32,
+}
 
-```
+struct TodoList {
+    /// The global task id
+    id: i32,
+    /// The mapping from `user_id` to `task`
+    user_map: HashMap<i32, Vec<Task>>,
+}
 
-### **Go**
+impl TodoList {
+    fn new() -> Self {
+        Self {
+            id: 1,
+            user_map: HashMap::new(),
+        }
+    }
 
-```go
+    fn add_task(
+        &mut self,
+        user_id: i32,
+        task_description: String,
+        due_date: i32,
+        tags: Vec<String>
+    ) -> i32 {
+        if self.user_map.contains_key(&user_id) {
+            // Just add the task
+            self.user_map
+                .get_mut(&user_id)
+                .unwrap()
+                .push(Task {
+                    task_id: self.id,
+                    description: task_description,
+                    tags: tags.into_iter().collect::<HashSet<String>>(),
+                    due_date,
+                });
+            // Increase the global id
+            self.id += 1;
+            return self.id - 1;
+        }
+        // Otherwise, create a new user
+        self.user_map.insert(
+            user_id,
+            vec![Task {
+                task_id: self.id,
+                description: task_description,
+                tags: tags.into_iter().collect::<HashSet<String>>(),
+                due_date,
+            }]
+        );
+        self.id += 1;
+        self.id - 1
+    }
 
-```
+    fn get_all_tasks(&self, user_id: i32) -> Vec<String> {
+        if
+            !self.user_map.contains_key(&user_id) ||
+            self.user_map.get(&user_id).unwrap().is_empty()
+        {
+            return vec![];
+        }
+        // Get the task vector
+        let mut ret_vec = (*self.user_map.get(&user_id).unwrap()).clone();
+        // Sort by due date
+        ret_vec.sort_by(|lhs, rhs| { lhs.due_date.cmp(&rhs.due_date) });
+        // Return the description vector
+        ret_vec
+            .into_iter()
+            .map(|x| x.description)
+            .collect()
+    }
 
-### **...**
+    fn get_tasks_for_tag(&self, user_id: i32, tag: String) -> Vec<String> {
+        if
+            !self.user_map.contains_key(&user_id) ||
+            self.user_map.get(&user_id).unwrap().is_empty()
+        {
+            return vec![];
+        }
+        // Get the task vector
+        let mut ret_vec = (*self.user_map.get(&user_id).unwrap()).clone();
+        // Sort by due date
+        ret_vec.sort_by(|lhs, rhs| { lhs.due_date.cmp(&rhs.due_date) });
+        // Return the description vector
+        ret_vec
+            .into_iter()
+            .filter(|x| x.tags.contains(&tag))
+            .map(|x| x.description)
+            .collect()
+    }
 
-```
-
+    fn complete_task(&mut self, user_id: i32, task_id: i32) {
+        if
+            !self.user_map.contains_key(&user_id) ||
+            self.user_map.get(&user_id).unwrap().is_empty()
+        {
+            return;
+        }
+        self.user_map
+            .get_mut(&user_id)
+            .unwrap()
+            .retain(|x| (*x).task_id != task_id);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

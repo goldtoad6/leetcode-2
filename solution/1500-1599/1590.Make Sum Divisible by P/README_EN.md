@@ -46,9 +46,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +67,6 @@ class Solution:
             last[cur] = i
         return -1 if ans == len(nums) else ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -97,8 +95,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -129,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minSubarray(nums []int, p int) int {
 	k := 0
@@ -157,16 +151,7 @@ func minSubarray(nums []int, p int) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minSubarray(nums: number[], p: number): number {
@@ -195,10 +180,6 @@ function minSubarray(nums: number[], p: number): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

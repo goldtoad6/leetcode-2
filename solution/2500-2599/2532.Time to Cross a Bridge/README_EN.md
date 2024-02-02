@@ -79,9 +79,9 @@ The whole process ends after 58 minutes. We return 50 because the problem asks f
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -127,8 +127,6 @@ class Solution:
                 n -= 1
                 heappush(work_in_right, (cur + time[i][1], i))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -195,8 +193,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -266,8 +262,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findCrossingTime(n int, k int, time [][]int) int {
 	sort.SliceStable(time, func(i, j int) bool { return time[i][0]+time[i][2] < time[j][0]+time[j][2] })
@@ -323,9 +317,9 @@ func findCrossingTime(n int, k int, time [][]int) int {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -335,24 +329,13 @@ func (h *hp) Pop() interface{} {
 type pair struct{ t, i int }
 type hp2 []pair
 
-func (h hp2) Len() int            { return len(h) }
-func (h hp2) Less(i, j int) bool  { return h[i].t < h[j].t }
-func (h hp2) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp2) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp2) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
+func (h hp2) Len() int           { return len(h) }
+func (h hp2) Less(i, j int) bool { return h[i].t < h[j].t }
+func (h hp2) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp2) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp2) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

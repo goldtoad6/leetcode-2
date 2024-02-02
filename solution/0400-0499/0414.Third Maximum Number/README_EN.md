@@ -53,9 +53,9 @@ The third distinct maximum is 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -72,8 +72,6 @@ class Solution:
                 m3 = num
         return m3 if m3 != -inf else m1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +99,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -121,12 +117,10 @@ public:
                 m3 = num;
             }
         }
-        return (int)(m3 != LONG_MIN ? m3 : m1);
+        return (int) (m3 != LONG_MIN ? m3 : m1);
     }
 };
 ```
-
-### **Go**
 
 ```go
 func thirdMax(nums []int) int {
@@ -150,10 +144,6 @@ func thirdMax(nums []int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

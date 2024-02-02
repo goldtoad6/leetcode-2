@@ -52,15 +52,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-BFS。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -88,10 +82,6 @@ class Solution:
             ans += 1
         return 0
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -129,14 +119,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> words(wordList.begin(), wordList.end());
-        queue<string> q {{beginWord}};
+        queue<string> q{{beginWord}};
         int ans = 1;
         while (!q.empty()) {
             for (int i = q.size(); i > 0; --i) {
@@ -160,8 +148,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func ladderLength(beginWord string, endWord string, wordList []string) int {
@@ -199,10 +185,6 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

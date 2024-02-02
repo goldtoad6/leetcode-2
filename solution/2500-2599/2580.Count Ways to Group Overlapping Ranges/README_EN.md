@@ -60,9 +60,17 @@ Thus, there are four possible ways to group them:
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting + Counting + Fast Power
 
-### **Python3**
+We can first sort the intervals in the range, merge the overlapping intervals, and count the number of non-overlapping intervals, denoted as $cnt$.
+
+Each non-overlapping interval can be chosen to be put in the first group or the second group, so the number of plans is $2^{cnt}$. Note that $2^{cnt}$ may be very large, so we need to take modulo $10^9 + 7$. Here, we can use fast power to solve this problem.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$. Here, $n$ is the number of intervals.
+
+Alternatively, we can also avoid using fast power. Once a new non-overlapping interval is found, we multiply the number of plans by 2 and take modulo $10^9 + 7$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -77,6 +85,107 @@ class Solution:
         return pow(2, cnt, mod)
 ```
 
+```java
+class Solution {
+    public int countWays(int[][] ranges) {
+        Arrays.sort(ranges, (a, b) -> a[0] - b[0]);
+        int cnt = 0, mx = -1;
+        for (int[] e : ranges) {
+            if (e[0] > mx) {
+                ++cnt;
+            }
+            mx = Math.max(mx, e[1]);
+        }
+        return qpow(2, cnt, (int) 1e9 + 7);
+    }
+
+    private int qpow(long a, int n, int mod) {
+        long ans = 1;
+        for (; n > 0; n >>= 1) {
+            if ((n & 1) == 1) {
+                ans = ans * a % mod;
+            }
+            a = a * a % mod;
+        }
+        return (int) ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int countWays(vector<vector<int>>& ranges) {
+        sort(ranges.begin(), ranges.end());
+        int cnt = 0, mx = -1;
+        for (auto& e : ranges) {
+            cnt += e[0] > mx;
+            mx = max(mx, e[1]);
+        }
+        using ll = long long;
+        auto qpow = [&](ll a, int n, int mod) {
+            ll ans = 1;
+            for (; n; n >>= 1) {
+                if (n & 1) {
+                    ans = ans * a % mod;
+                }
+                a = a * a % mod;
+            }
+            return ans;
+        };
+        return qpow(2, cnt, 1e9 + 7);
+    }
+};
+```
+
+```go
+func countWays(ranges [][]int) int {
+	sort.Slice(ranges, func(i, j int) bool { return ranges[i][0] < ranges[j][0] })
+	cnt, mx := 0, -1
+	for _, e := range ranges {
+		if e[0] > mx {
+			cnt++
+		}
+		if mx < e[1] {
+			mx = e[1]
+		}
+	}
+	qpow := func(a, n, mod int) int {
+		ans := 1
+		for ; n > 0; n >>= 1 {
+			if n&1 == 1 {
+				ans = ans * a % mod
+			}
+			a = a * a % mod
+		}
+		return ans
+	}
+	return qpow(2, cnt, 1e9+7)
+}
+```
+
+```ts
+function countWays(ranges: number[][]): number {
+    ranges.sort((a, b) => a[0] - b[0]);
+    let mx = -1;
+    let ans = 1;
+    const mod = 10 ** 9 + 7;
+    for (const [start, end] of ranges) {
+        if (start > mx) {
+            ans = (ans * 2) % mod;
+        }
+        mx = Math.max(mx, end);
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```python
 class Solution:
     def countWays(self, ranges: List[List[int]]) -> int:
@@ -89,36 +198,6 @@ class Solution:
                 ans = ans * 2 % mod
             mx = max(mx, end)
         return ans
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int countWays(int[][] ranges) {
-        Arrays.sort(ranges, (a, b) -> a[0] - b[0]);
-        int cnt = 0, mx = -1;
-        for (int[] e : ranges) {
-            if (e[0] > mx) {
-                ++cnt;
-            }
-            mx = Math.max(mx, e[1]);
-        }
-        return qmi(2, cnt, (int) 1e9 + 7);
-    }
-
-    int qmi(long a, long k, int p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
-            }
-            k >>= 1;
-            a = a * a % p;
-        }
-        return (int) res;
-    }
-}
 ```
 
 ```java
@@ -139,35 +218,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int countWays(vector<vector<int>>& ranges) {
-        sort(ranges.begin(), ranges.end());
-        int cnt = 0, mx = -1;
-        for (auto& e : ranges) {
-            cnt += e[0] > mx;
-            mx = max(mx, e[1]);
-        }
-        return qmi(2, cnt, 1e9 + 7);
-    }
-
-    int qmi(long a, long k, int p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
-            }
-            k >>= 1;
-            a = a * a % p;
-        }
-        return res;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -184,36 +234,6 @@ public:
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func countWays(ranges [][]int) int {
-	sort.Slice(ranges, func(i, j int) bool { return ranges[i][0] < ranges[j][0] })
-	cnt, mx := 0, -1
-	for _, e := range ranges {
-		if e[0] > mx {
-			cnt++
-		}
-		if mx < e[1] {
-			mx = e[1]
-		}
-	}
-	return qmi(2, cnt, 1e9+7)
-}
-
-func qmi(a, k, p int) int {
-	res := 1
-	for k != 0 {
-		if k&1 == 1 {
-			res = res * a % p
-		}
-		k >>= 1
-		a = a * a % p
-	}
-	return res
-}
 ```
 
 ```go
@@ -233,28 +253,6 @@ func countWays(ranges [][]int) int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function countWays(ranges: number[][]): number {
-    ranges.sort((a, b) => a[0] - b[0]);
-    let mx = -1;
-    let ans = 1;
-    const mod = 10 ** 9 + 7;
-    for (const [start, end] of ranges) {
-        if (start > mx) {
-            ans = (ans * 2) % mod;
-        }
-        mx = Math.max(mx, end);
-    }
-    return ans;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

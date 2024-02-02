@@ -37,38 +37,35 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting
 
-### **Python3**
+We can first sort the array $nums$ in descending order, then add the elements to the array from largest to smallest. After each addition, we check whether the sum of the current elements is greater than the sum of the remaining elements. If it is, we return the current array.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$. Where $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def minSubsequence(self, nums: List[int]) -> List[int]:
-        nums.sort(reverse=True)
-        s = sum(nums)
         ans = []
-        t = 0
-        for v in nums:
-            ans.append(v)
-            t += v
+        s, t = sum(nums), 0
+        for x in sorted(nums, reverse=True):
+            t += x
+            ans.append(x)
             if t > s - t:
                 break
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public List<Integer> minSubsequence(int[] nums) {
         Arrays.sort(nums);
         List<Integer> ans = new ArrayList<>();
-        int s = 0;
-        for (int v : nums) {
-            s += v;
-        }
+        int s = Arrays.stream(nums).sum();
         int t = 0;
-        for (int i = nums.length - 1; i >= 0; --i) {
+        for (int i = nums.length - 1; i >= 0; i--) {
             t += nums[i];
             ans.add(nums[i]);
             if (t > s - t) {
@@ -80,68 +77,56 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> minSubsequence(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int s = 0;
-        for (int v : nums) s += v;
+        sort(nums.rbegin(), nums.rend());
+        int s = accumulate(nums.begin(), nums.end(), 0);
         int t = 0;
         vector<int> ans;
-        for (int i = nums.size() - 1; ~i; --i) {
-            t += nums[i];
-            ans.push_back(nums[i]);
-            if (t > s - t) break;
+        for (int x : nums) {
+            t += x;
+            ans.push_back(x);
+            if (t > s - t) {
+                break;
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func minSubsequence(nums []int) []int {
+func minSubsequence(nums []int) (ans []int) {
 	sort.Ints(nums)
 	s, t := 0, 0
-	for _, v := range nums {
-		s += v
+	for _, x := range nums {
+		s += x
 	}
-	ans := []int{}
-	for i := len(nums) - 1; i >= 0; i-- {
+	for i := len(nums) - 1; ; i-- {
 		t += nums[i]
 		ans = append(ans, nums[i])
 		if t > s-t {
-			break
+			return
 		}
 	}
-	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function minSubsequence(nums: number[]): number[] {
     nums.sort((a, b) => b - a);
-    const sum = nums.reduce((r, c) => r + c);
-    const res: number[] = [];
+    const s = nums.reduce((r, c) => r + c);
     let t = 0;
-    for (const num of nums) {
-        t += num;
-        res.push(num);
-        if (t > sum - t) {
-            break;
+    for (let i = 0; ; ++i) {
+        t += nums[i];
+        if (t > s - t) {
+            return nums.slice(0, i + 1);
         }
     }
-    return res;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -162,10 +147,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

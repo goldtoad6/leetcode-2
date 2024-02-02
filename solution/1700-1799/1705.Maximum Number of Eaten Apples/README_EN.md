@@ -46,9 +46,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy + Priority Queue
 
-### **Python3**
+We can greedily choose the apple that is most likely to rot among the unrotten apples, so that we can eat as many apples as possible.
+
+Therefore, we can use a priority queue (min heap) to store the rotting time of the apples and the corresponding number of apples. Each time we take out the apple with the smallest rotting time from the priority queue, then reduce its quantity by one. If the quantity of the apple is not zero after reduction, we put it back into the priority queue. If the apple has rotted, we pop it out from the priority queue.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array `apples` or `days`.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -70,8 +76,6 @@ class Solution:
             i += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -100,8 +104,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using pii = pair<int, int>;
 
@@ -127,8 +129,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func eatenApples(apples []int, days []int) int {
@@ -159,17 +159,13 @@ type pair struct {
 
 type hp []pair
 
-func (a hp) Len() int            { return len(a) }
-func (a hp) Swap(i, j int)       { a[i], a[j] = a[j], a[i] }
-func (a hp) Less(i, j int) bool  { return a[i].first < a[j].first }
-func (a *hp) Push(x interface{}) { *a = append(*a, x.(pair)) }
-func (a *hp) Pop() interface{}   { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
-```
-
-### **...**
-
-```
-
+func (a hp) Len() int           { return len(a) }
+func (a hp) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a hp) Less(i, j int) bool { return a[i].first < a[j].first }
+func (a *hp) Push(x any)        { *a = append(*a, x.(pair)) }
+func (a *hp) Pop() any          { l := len(*a); t := (*a)[l-1]; *a = (*a)[:l-1]; return t }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -52,9 +52,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：哈希表 + 枚举**
+### 方法一：哈希表 + 枚举
 
 我们先用哈希表 $ss$ 记录字符串 $s$ 中出现的所有字母，然后从大写字母表的最后一个字母开始枚举，如果当前字母的大写和小写形式都在 $ss$ 中，则返回该字母。
 
@@ -62,21 +60,7 @@
 
 时间复杂度 $O(n)$，空间复杂度 $O(C)$。其中 $n$ 和 $C$ 分别是字符串 $s$ 的长度和字符集的大小。
 
-**方法二：位运算（空间优化）**
-
-我们可以用两个整数 $mask1$ 和 $mask2$ 分别记录字符串 $s$ 中出现的小写字母和大写字母，其中 $mask1$ 的第 $i$ 位表示第 $i$ 个小写字母是否出现，而 $mask2$ 的第 $i$ 位表示第 $i$ 个大写字母是否出现。
-
-然后我们将 $mask1$ 和 $mask2$ 进行与运算，得到的结果 $mask$ 的第 $i$ 位表示第 $i$ 个字母的大小写是否同时出现。
-
-接下来我们只要获取 $mask$ 的二进制表示中最高位的 $1$ 的位置，将其转换为对应的大写字母即可。如果所有二进制位都不为 $1$，说明不存在大小写同时出现的字母，返回空字符串。
-
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 是字符串 $s$ 的长度。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -87,23 +71,6 @@ class Solution:
                 return c
         return ''
 ```
-
-```python
-class Solution:
-    def greatestLetter(self, s: str) -> str:
-        mask1 = mask2 = 0
-        for c in s:
-            if c.islower():
-                mask1 |= 1 << (ord(c) - ord("a"))
-            else:
-                mask2 |= 1 << (ord(c) - ord("A"))
-        mask = mask1 & mask2
-        return chr(mask.bit_length() - 1 + ord("A")) if mask else ""
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -120,6 +87,118 @@ class Solution {
         return "";
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    string greatestLetter(string s) {
+        unordered_set<char> ss(s.begin(), s.end());
+        for (char c = 'Z'; c >= 'A'; --c) {
+            if (ss.count(c) && ss.count(char(c + 32))) {
+                return string(1, c);
+            }
+        }
+        return "";
+    }
+};
+```
+
+```go
+func greatestLetter(s string) string {
+	ss := map[rune]bool{}
+	for _, c := range s {
+		ss[c] = true
+	}
+	for c := 'Z'; c >= 'A'; c-- {
+		if ss[c] && ss[rune(c+32)] {
+			return string(c)
+		}
+	}
+	return ""
+}
+```
+
+```ts
+function greatestLetter(s: string): string {
+    const ss = new Array(128).fill(false);
+    for (const c of s) {
+        ss[c.charCodeAt(0)] = true;
+    }
+    for (let i = 90; i >= 65; --i) {
+        if (ss[i] && ss[i + 32]) {
+            return String.fromCharCode(i);
+        }
+    }
+    return '';
+}
+```
+
+```rust
+impl Solution {
+    pub fn greatest_letter(s: String) -> String {
+        let mut arr = [0; 26];
+        for &c in s.as_bytes().iter() {
+            if c >= b'a' {
+                arr[(c - b'a') as usize] |= 1;
+            } else {
+                arr[(c - b'A') as usize] |= 2;
+            }
+        }
+        for i in (0..26).rev() {
+            if arr[i] == 3 {
+                return char::from(b'A' + (i as u8)).to_string();
+            }
+        }
+        "".to_string()
+    }
+}
+```
+
+```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var greatestLetter = function (s) {
+    const ss = new Array(128).fill(false);
+    for (const c of s) {
+        ss[c.charCodeAt(0)] = true;
+    }
+    for (let i = 90; i >= 65; --i) {
+        if (ss[i] && ss[i + 32]) {
+            return String.fromCharCode(i);
+        }
+    }
+    return '';
+};
+```
+
+<!-- tabs:end -->
+
+### 方法二：位运算（空间优化）
+
+我们可以用两个整数 $mask1$ 和 $mask2$ 分别记录字符串 $s$ 中出现的小写字母和大写字母，其中 $mask1$ 的第 $i$ 位表示第 $i$ 个小写字母是否出现，而 $mask2$ 的第 $i$ 位表示第 $i$ 个大写字母是否出现。
+
+然后我们将 $mask1$ 和 $mask2$ 进行与运算，得到的结果 $mask$ 的第 $i$ 位表示第 $i$ 个字母的大小写是否同时出现。
+
+接下来我们只要获取 $mask$ 的二进制表示中最高位的 $1$ 的位置，将其转换为对应的大写字母即可。如果所有二进制位都不为 $1$，说明不存在大小写同时出现的字母，返回空字符串。
+
+时间复杂度 $O(n)$，其中 $n$ 是字符串 $s$ 的长度。空间复杂度 $O(1)$。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def greatestLetter(self, s: str) -> str:
+        mask1 = mask2 = 0
+        for c in s:
+            if c.islower():
+                mask1 |= 1 << (ord(c) - ord("a"))
+            else:
+                mask2 |= 1 << (ord(c) - ord("A"))
+        mask = mask1 & mask2
+        return chr(mask.bit_length() - 1 + ord("A")) if mask else ""
 ```
 
 ```java
@@ -141,23 +220,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    string greatestLetter(string s) {
-        unordered_set<char> ss(s.begin(), s.end());
-        for (char c = 'Z'; c >= 'A'; --c) {
-            if (ss.count(c) && ss.count(char(c + 32))) {
-                return string(1, c);
-            }
-        }
-        return "";
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -174,23 +236,6 @@ public:
         return mask ? string(1, 31 - __builtin_clz(mask) + 'A') : "";
     }
 };
-```
-
-### **Go**
-
-```go
-func greatestLetter(s string) string {
-	ss := map[rune]bool{}
-	for _, c := range s {
-		ss[c] = true
-	}
-	for c := 'Z'; c >= 'A'; c-- {
-		if ss[c] && ss[rune(c+32)] {
-			return string(c)
-		}
-	}
-	return ""
-}
 ```
 
 ```go
@@ -211,71 +256,6 @@ func greatestLetter(s string) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function greatestLetter(s: string): string {
-    const ss = new Array(128).fill(false);
-    for (const c of s) {
-        ss[c.charCodeAt(0)] = true;
-    }
-    for (let i = 90; i >= 65; --i) {
-        if (ss[i] && ss[i + 32]) {
-            return String.fromCharCode(i);
-        }
-    }
-    return '';
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn greatest_letter(s: String) -> String {
-        let mut arr = [0; 26];
-        for &c in s.as_bytes().iter() {
-            if c >= b'a' {
-                arr[(c - b'a') as usize] |= 1;
-            } else {
-                arr[(c - b'A') as usize] |= 2;
-            }
-        }
-        for i in (0..26).rev() {
-            if arr[i] == 3 {
-                return char::from(b'A' + i as u8).to_string();
-            }
-        }
-        "".to_string()
-    }
-}
-```
-
-### **JavaScript**
-
-```js
-/**
- * @param {string} s
- * @return {string}
- */
-var greatestLetter = function (s) {
-    const ss = new Array(128).fill(false);
-    for (const c of s) {
-        ss[c.charCodeAt(0)] = true;
-    }
-    for (let i = 90; i >= 65; --i) {
-        if (ss[i] && ss[i + 32]) {
-            return String.fromCharCode(i);
-        }
-    }
-    return '';
-};
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

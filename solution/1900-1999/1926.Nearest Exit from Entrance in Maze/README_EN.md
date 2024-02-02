@@ -60,11 +60,9 @@ Thus, the nearest exit is [1,2], which is 2 steps away.
 
 ## Solutions
 
-BFS.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -87,8 +85,6 @@ class Solution:
                         maze[x][y] = '+'
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -122,14 +118,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
         int m = maze.size(), n = maze[0].size();
-        queue<vector<int>> q {{entrance}};
+        queue<vector<int>> q{{entrance}};
         maze[entrance[0]][entrance[1]] = '+';
         int ans = 0;
         vector<int> dirs = {-1, 0, 1, 0, -1};
@@ -152,8 +146,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func nearestExit(maze [][]byte, entrance []int) int {
@@ -183,10 +175,6 @@ func nearestExit(maze [][]byte, entrance []int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

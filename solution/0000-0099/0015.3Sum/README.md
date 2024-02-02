@@ -56,21 +56,29 @@ nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：排序 + 双指针
 
-**方法一：排序 + 双指针**
+我们注意到，题目不要求我们按照顺序返回三元组，因此我们不妨先对数组进行排序，这样就可以方便地跳过重复的元素。
 
-题目不要求我们按照顺序返回三元组，因此我们可以先对数组进行排序，这样就可以方便地跳过重复的元素。
+接下来，我们枚举三元组的第一个元素 $nums[i]$，其中 $0 \leq i \lt n - 2$。对于每个 $i$，我们可以通过维护两个指针 $j = i + 1$ 和 $k = n - 1$，从而找到满足 $nums[i] + nums[j] + nums[k] = 0$ 的 $j$ 和 $k$。在枚举的过程中，我们需要跳过重复的元素，以避免出现重复的三元组。
 
-接着枚举数组中的第一个元素 $nums[i]$，我们可以使用双指针的方法枚举第二个元素 $nums[j]$ 和第三个元素 $nums[k]$，使得它们的和为 $-nums[i]$。在枚举的过程中，我们需要跳过重复的元素，以避免出现重复的三元组。
+具体判断逻辑如下：
 
-时间复杂度 $O(n^2 + n\times \log n)$。其中 $n$ 是数组的长度。枚举第一个元素需要 $O(n)$ 的时间，枚举第二个元素和第三个元素需要 $O(n)$ 的时间，排序的时间复杂度为 $O(n\times \log n)$。
+如果 $i \gt 0$ 并且 $nums[i] = nums[i - 1]$，则说明当前枚举的元素与上一个元素相同，我们可以直接跳过，因为不会产生新的结果。
+
+如果 $nums[i] \gt 0$，则说明当前枚举的元素大于 $0$，则三数之和必然无法等于 $0$，结束枚举。
+
+否则，我们令左指针 $j = i + 1$，右指针 $k = n - 1$，当 $j \lt k$ 时，执行循环，计算三数之和 $x = nums[i] + nums[j] + nums[k]$，并与 $0$ 比较：
+
+-   如果 $x \lt 0$，则说明 $nums[j]$ 太小，我们需要将 $j$ 右移一位。
+-   如果 $x \gt 0$，则说明 $nums[k]$ 太大，我们需要将 $k$ 左移一位。
+-   否则，说明我们找到了一个合法的三元组，将其加入答案，并将 $j$ 右移一位，将 $k$ 左移一位，同时跳过所有重复的元素，继续寻找下一个合法的三元组。
+
+枚举结束后，我们即可得到三元组的答案。
+
+时间复杂度 $O(n^2)$，空间复杂度 $O(\log n)$。其中 $n$ 为数组的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -85,23 +93,20 @@ class Solution:
                 continue
             j, k = i + 1, n - 1
             while j < k:
-                if nums[i] + nums[j] + nums[k] == 0:
+                x = nums[i] + nums[j] + nums[k]
+                if x < 0:
+                    j += 1
+                elif x > 0:
+                    k -= 1
+                else:
                     ans.append([nums[i], nums[j], nums[k]])
                     j, k = j + 1, k - 1
-                    while j < n and nums[j] == nums[j - 1]:
+                    while j < k and nums[j] == nums[j - 1]:
                         j += 1
-                    while k > j and nums[k] == nums[k + 1]:
+                    while j < k and nums[k] == nums[k + 1]:
                         k -= 1
-                elif nums[i] + nums[j] + nums[k] < 0:
-                    j += 1
-                else:
-                    k -= 1
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -115,18 +120,19 @@ class Solution {
             }
             int j = i + 1, k = n - 1;
             while (j < k) {
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    ans.add(Arrays.asList(nums[i], nums[j++], nums[k--]));
-                    while (j < n && nums[j] == nums[j - 1]) {
+                int x = nums[i] + nums[j] + nums[k];
+                if (x < 0) {
+                    ++j;
+                } else if (x > 0) {
+                    --k;
+                } else {
+                    ans.add(List.of(nums[i], nums[j++], nums[k--]));
+                    while (j < k && nums[j] == nums[j - 1]) {
                         ++j;
                     }
-                    while (k > j && nums[k] == nums[k + 1]) {
+                    while (j < k && nums[k] == nums[k + 1]) {
                         --k;
                     }
-                } else if (nums[i] + nums[j] + nums[k] < 0) {
-                    ++j;
-                } else {
-                    --k;
                 }
             }
         }
@@ -135,27 +141,32 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         sort(nums.begin(), nums.end());
-        int n = nums.size();
         vector<vector<int>> ans;
+        int n = nums.size();
         for (int i = 0; i < n - 2 && nums[i] <= 0; ++i) {
-            if (i && nums[i] == nums[i - 1]) continue;
+            if (i && nums[i] == nums[i - 1]) {
+                continue;
+            }
             int j = i + 1, k = n - 1;
             while (j < k) {
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    ans.push_back({nums[i], nums[j++], nums[k--]});
-                    while (j < k && nums[j] == nums[j - 1]) ++j;
-                    while (j < k && nums[k] == nums[k + 1]) --k;
-                } else if (nums[i] + nums[j] + nums[k] < 0) {
+                int x = nums[i] + nums[j] + nums[k];
+                if (x < 0) {
                     ++j;
-                } else {
+                } else if (x > 0) {
                     --k;
+                } else {
+                    ans.push_back({nums[i], nums[j++], nums[k--]});
+                    while (j < k && nums[j] == nums[j - 1]) {
+                        ++j;
+                    }
+                    while (j < k && nums[k] == nums[k + 1]) {
+                        --k;
+                    }
                 }
             }
         }
@@ -164,39 +175,111 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func threeSum(nums []int) (ans [][]int) {
-    sort.Ints(nums)
-    n := len(nums)
-    for i := 0; i < n - 2 && nums[i] <= 0; i++ {
-        if i > 0 && nums[i] == nums[i - 1] {
-            continue
-        }
-        j, k := i + 1, n - 1
-        for j < k {
-            if nums[i] + nums[j] + nums[k] == 0 {
-                ans = append(ans, []int{nums[i], nums[j], nums[k]})
-                j, k = j + 1, k - 1
-                for j < k && nums[j] == nums[j - 1] {
-                    j++
-                }
-                for j < k && nums[k] == nums[k + 1] {
-                    k--
-                }
-            } else if nums[i] + nums[j] + nums[k] < 0 {
-                j++
-            } else {
-                k--
-            }
-        }
-    }
-    return
+	sort.Ints(nums)
+	n := len(nums)
+	for i := 0; i < n-2 && nums[i] <= 0; i++ {
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+		j, k := i+1, n-1
+		for j < k {
+			x := nums[i] + nums[j] + nums[k]
+			if x < 0 {
+				j++
+			} else if x > 0 {
+				k--
+			} else {
+				ans = append(ans, []int{nums[i], nums[j], nums[k]})
+				j, k = j+1, k-1
+				for j < k && nums[j] == nums[j-1] {
+					j++
+				}
+				for j < k && nums[k] == nums[k+1] {
+					k--
+				}
+			}
+		}
+	}
+	return
 }
 ```
 
-### **JavaScript**
+```ts
+function threeSum(nums: number[]): number[][] {
+    nums.sort((a, b) => a - b);
+    const ans: number[][] = [];
+    const n = nums.length;
+    for (let i = 0; i < n - 2 && nums[i] <= 0; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            continue;
+        }
+        let j = i + 1;
+        let k = n - 1;
+        while (j < k) {
+            const x = nums[i] + nums[j] + nums[k];
+            if (x < 0) {
+                ++j;
+            } else if (x > 0) {
+                --k;
+            } else {
+                ans.push([nums[i], nums[j++], nums[k--]]);
+                while (j < k && nums[j] === nums[j - 1]) {
+                    ++j;
+                }
+                while (j < k && nums[k] === nums[k + 1]) {
+                    --k;
+                }
+            }
+        }
+    }
+    return ans;
+}
+```
+
+```rust
+use std::cmp::Ordering;
+
+impl Solution {
+    pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
+        nums.sort();
+        let n = nums.len();
+        let mut res = vec![];
+        let mut i = 0;
+        while i < n - 2 && nums[i] <= 0 {
+            let mut l = i + 1;
+            let mut r = n - 1;
+            while l < r {
+                match (nums[i] + nums[l] + nums[r]).cmp(&0) {
+                    Ordering::Less => {
+                        l += 1;
+                    }
+                    Ordering::Greater => {
+                        r -= 1;
+                    }
+                    Ordering::Equal => {
+                        res.push(vec![nums[i], nums[l], nums[r]]);
+                        l += 1;
+                        r -= 1;
+                        while l < n && nums[l] == nums[l - 1] {
+                            l += 1;
+                        }
+                        while r > 0 && nums[r] == nums[r + 1] {
+                            r -= 1;
+                        }
+                    }
+                }
+            }
+            i += 1;
+            while i < n - 2 && nums[i] == nums[i - 1] {
+                i += 1;
+            }
+        }
+        res
+    }
+}
+```
 
 ```js
 /**
@@ -205,29 +288,34 @@ func threeSum(nums []int) (ans [][]int) {
  */
 var threeSum = function (nums) {
     const n = nums.length;
-    let res = [];
     nums.sort((a, b) => a - b);
+    const ans = [];
     for (let i = 0; i < n - 2 && nums[i] <= 0; ++i) {
-        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            continue;
+        }
         let j = i + 1;
         let k = n - 1;
         while (j < k) {
-            if (nums[i] + nums[j] + nums[k] === 0) {
-                res.push([nums[i], nums[j++], nums[k--]]);
-                while (nums[j] === nums[j - 1]) ++j;
-                while (nums[k] === nums[k + 1]) --k;
-            } else if (nums[i] + nums[j] + nums[k] < 0) {
+            const x = nums[i] + nums[j] + nums[k];
+            if (x < 0) {
                 ++j;
-            } else {
+            } else if (x > 0) {
                 --k;
+            } else {
+                ans.push([nums[i], nums[j++], nums[k--]]);
+                while (j < k && nums[j] === nums[j - 1]) {
+                    ++j;
+                }
+                while (j < k && nums[k] === nums[k + 1]) {
+                    --k;
+                }
             }
         }
     }
-    return res;
+    return ans;
 };
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -241,18 +329,19 @@ public class Solution {
             }
             int j = i + 1, k = n - 1;
             while (j < k) {
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    ans.Add(new List<int> { nums[i], nums[j++], nums[k--] });
-                    while (j < n && nums[j] == nums[j - 1]) {
+                int x = nums[i] + nums[j] + nums[k];
+                if (x < 0) {
+                    ++j;
+                } else if (x > 0) {
+                    --k;
+                } else {
+                    ans.Add(new List<int> { nums[i], nums[j--], nums[k--] });
+                    while (j < k && nums[j] == nums[j + 1]) {
                         ++j;
                     }
-                    while (k > j && nums[k] == nums[k + 1]) {
+                    while (j < k && nums[k] == nums[k + 1]) {
                         --k;
                     }
-                } else if (nums[i] + nums[j] + nums[k] < 0) {
-                    ++j;
-                } else {
-                    --k;
                 }
             }
         }
@@ -260,8 +349,6 @@ public class Solution {
     }
 }
 ```
-
-### **Ruby**
 
 ```rb
 # @param {Integer[]} nums
@@ -294,85 +381,6 @@ def three_sum(nums)
 end
 ```
 
-### **TypeScript**
-
-```ts
-function threeSum(nums: number[]): number[][] {
-    nums.sort((a, b) => a - b);
-    const ans = [];
-    const n = nums.length;
-    for (let i = 0; i < n - 2 && nums[i] <= 0; i++) {
-        const target = 0 - nums[i];
-        let l = i + 1;
-        let r = n - 1;
-        while (l < r) {
-            if (nums[l] + nums[r] === target) {
-                ans.push([nums[i], nums[l++], nums[r--]]);
-                while (nums[l] === nums[l - 1]) {
-                    l++;
-                }
-                while (nums[r] === nums[r + 1]) {
-                    r--;
-                }
-            } else if (nums[l] + nums[r] < target) {
-                l++;
-            } else {
-                r--;
-            }
-        }
-        while (nums[i] === nums[i + 1]) {
-            i++;
-        }
-    }
-    return ans;
-}
-```
-
-### **Rust**
-
-```rust
-use std::cmp::Ordering;
-
-impl Solution {
-    pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
-        nums.sort();
-        let n = nums.len();
-        let mut res = vec![];
-        let mut i = 0;
-        while i < n - 2 && nums[i] <= 0 {
-            let mut l = i + 1;
-            let mut r = n - 1;
-            while l < r {
-                match (nums[i] + nums[l] + nums[r]).cmp(&0) {
-                    Ordering::Less => l += 1,
-                    Ordering::Greater => r -= 1,
-                    Ordering::Equal => {
-                        res.push(vec![nums[i], nums[l], nums[r]]);
-                        l += 1;
-                        r -= 1;
-                        while l < n && nums[l] == nums[l - 1] {
-                            l += 1;
-                        }
-                        while r > 0 && nums[r] == nums[r + 1] {
-                            r -= 1;
-                        }
-                    }
-                }
-            }
-            i += 1;
-            while i < n - 2 && nums[i] == nums[i - 1] {
-                i += 1;
-            }
-        }
-        res
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

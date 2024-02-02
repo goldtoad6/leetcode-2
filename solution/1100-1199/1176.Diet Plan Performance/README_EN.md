@@ -60,13 +60,21 @@ calories[2] + calories[3] &lt; lower so 1 point is lost.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Prefix Sum
 
-### **Python3**
+First, we preprocess a prefix sum array $s$ of length $n+1$, where $s[i]$ represents the total calories of the first $i$ days.
+
+Then we traverse the prefix sum array $s$. For each position $i$, we calculate $s[i+k]-s[i]$, which is the total calories for the consecutive $k$ days starting from the $i$th day. According to the problem description, for each $s[i+k]-s[i]$, we judge its value with $lower$ and $upper$, and update the answer accordingly.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the `calories` array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def dietPlanPerformance(self, calories: List[int], k: int, lower: int, upper: int) -> int:
+    def dietPlanPerformance(
+        self, calories: List[int], k: int, lower: int, upper: int
+    ) -> int:
         s = list(accumulate(calories, initial=0))
         ans, n = 0, len(calories)
         for i in range(n - k + 1):
@@ -77,26 +85,6 @@ class Solution:
                 ans += 1
         return ans
 ```
-
-```python
-class Solution:
-    def dietPlanPerformance(self, calories: List[int], k: int, lower: int, upper: int) -> int:
-        def check(s):
-            if s < lower:
-                return -1
-            if s > upper:
-                return 1
-            return 0
-
-        s, n = sum(calories[:k]), len(calories)
-        ans = check(s)
-        for i in range(k, n):
-            s += calories[i] - calories[i - k]
-            ans += check(s)
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -118,6 +106,99 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    int dietPlanPerformance(vector<int>& calories, int k, int lower, int upper) {
+        int n = calories.size();
+        int s[n + 1];
+        s[0] = 0;
+        for (int i = 0; i < n; ++i) {
+            s[i + 1] = s[i] + calories[i];
+        }
+        int ans = 0;
+        for (int i = 0; i < n - k + 1; ++i) {
+            int t = s[i + k] - s[i];
+            if (t < lower) {
+                --ans;
+            } else if (t > upper) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func dietPlanPerformance(calories []int, k int, lower int, upper int) (ans int) {
+	n := len(calories)
+	s := make([]int, n+1)
+	for i, x := range calories {
+		s[i+1] = s[i] + x
+	}
+	for i := 0; i < n-k+1; i++ {
+		t := s[i+k] - s[i]
+		if t < lower {
+			ans--
+		} else if t > upper {
+			ans++
+		}
+	}
+	return
+}
+```
+
+```ts
+function dietPlanPerformance(calories: number[], k: number, lower: number, upper: number): number {
+    const n = calories.length;
+    const s: number[] = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; ++i) {
+        s[i + 1] = s[i] + calories[i];
+    }
+    let ans = 0;
+    for (let i = 0; i < n - k + 1; ++i) {
+        const t = s[i + k] - s[i];
+        if (t < lower) {
+            --ans;
+        } else if (t > upper) {
+            ++ans;
+        }
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Sliding Window
+
+We maintain a sliding window of length $k$, and the sum of the elements in the window is denoted as $s$. If $s \lt lower$, the score decreases by $1$; if $s > upper$, the score increases by $1$.
+
+The time complexity is $O(n)$, where $n$ is the length of the `calories` array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def dietPlanPerformance(
+        self, calories: List[int], k: int, lower: int, upper: int
+    ) -> int:
+        def check(s):
+            if s < lower:
+                return -1
+            if s > upper:
+                return 1
+            return 0
+
+        s, n = sum(calories[:k]), len(calories)
+        ans = check(s)
+        for i in range(k, n):
+            s += calories[i] - calories[i - k]
+            ans += check(s)
+        return ans
 ```
 
 ```java
@@ -146,26 +227,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int dietPlanPerformance(vector<int>& calories, int k, int lower, int upper) {
-        int n = calories.size();
-        vector<int> s(n + 1);
-        for (int i = 0; i < n; ++i) s[i + 1] = s[i] + calories[i];
-        int ans = 0;
-        for (int i = 0; i < n - k + 1; ++i) {
-            int t = s[i + k] - s[i];
-            if (t < lower) --ans;
-            else if (t > upper) ++ans;
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -173,69 +234,70 @@ public:
         int n = calories.size();
         int s = accumulate(calories.begin(), calories.begin() + k, 0);
         int ans = 0;
-        if (s < lower) --ans;
-        else if (s > upper) ++ans;
+        if (s < lower) {
+            --ans;
+        } else if (s > upper) {
+            ++ans;
+        }
         for (int i = k; i < n; ++i) {
             s += calories[i] - calories[i - k];
-            if (s < lower) --ans;
-            else if (s > upper) ++ans;
+            if (s < lower) {
+                --ans;
+            } else if (s > upper) {
+                ++ans;
+            }
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func dietPlanPerformance(calories []int, k int, lower int, upper int) int {
+func dietPlanPerformance(calories []int, k int, lower int, upper int) (ans int) {
 	n := len(calories)
-	s := make([]int, n+1)
-	for i, v := range calories {
-		s[i+1] = s[i] + v
+	s := 0
+	for _, x := range calories[:k] {
+		s += x
 	}
-	ans := 0
-	for i := 0; i < n-k+1; i++ {
-		t := s[i+k] - s[i]
-		if t < lower {
+	if s < lower {
+		ans--
+	} else if s > upper {
+		ans++
+	}
+	for i := k; i < n; i++ {
+		s += calories[i] - calories[i-k]
+		if s < lower {
 			ans--
-		} else if t > upper {
+		} else if s > upper {
 			ans++
 		}
 	}
-	return ans
+	return
 }
 ```
 
-```go
-func dietPlanPerformance(calories []int, k int, lower int, upper int) int {
-	check := func(s int) int {
-		if s < lower {
-			return -1
-		}
-		if s > upper {
-			return 1
-		}
-		return 0
-	}
-	n := len(calories)
-	s := 0
-	for i := 0; i < k; i++ {
-		s += calories[i]
-	}
-	ans := check(s)
-	for i := k; i < n; i++ {
-		s += calories[i] - calories[i-k]
-		ans += check(s)
-	}
-	return ans
+```ts
+function dietPlanPerformance(calories: number[], k: number, lower: number, upper: number): number {
+    const n = calories.length;
+    let s = calories.slice(0, k).reduce((a, b) => a + b);
+    let ans = 0;
+    if (s < lower) {
+        --ans;
+    } else if (s > upper) {
+        ++ans;
+    }
+    for (let i = k; i < n; ++i) {
+        s += calories[i] - calories[i - k];
+        if (s < lower) {
+            --ans;
+        } else if (s > upper) {
+            ++ans;
+        }
+    }
+    return ans;
 }
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

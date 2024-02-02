@@ -60,9 +60,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：优先队列（小根堆）**
+### 方法一：优先队列（小根堆）
 
 我们用一个优先队列（小根堆）维护当前的候选工人，用变量 $i$ 和 $j$ 标记最前面工人的最大小标和最后面工人的最小下标。初始时 $i = candidates - 1$，而 $j = n - candidates$。
 
@@ -75,10 +73,6 @@
 时间复杂度 $O(n\times \log n)$。其中 $n$ 为数组 $costs$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -106,10 +100,6 @@ class Solution:
                     heappush(q, (costs[j], j))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -151,8 +141,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 using pii = pair<int, int>;
 
@@ -163,7 +151,8 @@ public:
         int n = costs.size();
         int i = candidates - 1, j = n - candidates;
         for (int h = 0; h < candidates; ++h) q.push({costs[h], h});
-        for (int h = n - candidates; h < n; ++h) if (h > i) q.push({costs[h], h});
+        for (int h = n - candidates; h < n; ++h)
+            if (h > i) q.push({costs[h], h});
         long long ans = 0;
         while (k--) {
             auto [c, x] = q.top();
@@ -184,8 +173,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func totalCost(costs []int, k int, candidates int) int64 {
@@ -225,23 +212,13 @@ func totalCost(costs []int, k int, candidates int) int64 {
 type pair struct{ c, x int }
 type hp []pair
 
-func (h hp) Len() int            { return len(h) }
-func (h hp) Less(i, j int) bool  { return h[i].c < h[j].c || h[i].c == h[j].c && h[i].x < h[j].x }
-func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *hp) Push(v interface{}) { *h = append(*h, v.(pair)) }
-func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
+func (h hp) Len() int           { return len(h) }
+func (h hp) Less(i, j int) bool { return h[i].c < h[j].c || h[i].c == h[j].c && h[i].x < h[j].x }
+func (h hp) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v any)        { *h = append(*h, v.(pair)) }
+func (h *hp) Pop() any          { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

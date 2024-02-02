@@ -39,9 +39,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two Pointers
 
-### **Python3**
+We use two pointers to point to the left and right ends of the string, respectively. Each time, we check whether the characters pointed to by the two pointers are the same. If they are not the same, we check whether the string is a palindrome after deleting the character corresponding to the left pointer, or we check whether the string is a palindrome after deleting the character corresponding to the right pointer. If the characters pointed to by the two pointers are the same, we move both pointers towards the middle by one position, until the two pointers meet.
+
+If we have not encountered a situation where the characters pointed to by the pointers are different by the end of the traversal, then the string itself is a palindrome, and we return `true`.
+
+The time complexity is $O(n)$, where $n$ is the length of the string $s$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +66,6 @@ class Solution:
             i, j = i + 1, j - 1
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,53 +89,28 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function validPalindrome(s: string): boolean {
-    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
-        if (s.charAt(i) != s.charAt(j)) {
-            return (
-                isPalinddrome(s.slice(i, j)) ||
-                isPalinddrome(s.slice(i + 1, j + 1))
-            );
-        }
-    }
-    return true;
-}
-
-function isPalinddrome(s: string): boolean {
-    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
-        if (s.charAt(i) != s.charAt(j)) {
-            return false;
-        }
-    }
-    return true;
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool validPalindrome(string s) {
-        for (int i = 0, j = s.size() - 1; i < j; ++i, --j)
-            if (s[i] != s[j])
+        for (int i = 0, j = s.size() - 1; i < j; ++i, --j) {
+            if (s[i] != s[j]) {
                 return check(s, i + 1, j) || check(s, i, j - 1);
+            }
+        }
         return 1;
     }
 
     bool check(string s, int i, int j) {
-        for (; i < j; ++i, --j)
-            if (s[i] != s[j])
-                return 0;
-        return 1;
+        for (; i < j; ++i, --j) {
+            if (s[i] != s[j]) {
+                return false;
+            }
+        }
+        return true;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func validPalindrome(s string) bool {
@@ -152,7 +131,25 @@ func validPalindrome(s string) bool {
 }
 ```
 
-### **JavaScript**
+```ts
+function validPalindrome(s: string): boolean {
+    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
+        if (s.charAt(i) != s.charAt(j)) {
+            return isPalinddrome(s.slice(i, j)) || isPalinddrome(s.slice(i + 1, j + 1));
+        }
+    }
+    return true;
+}
+
+function isPalinddrome(s: string): boolean {
+    for (let i: number = 0, j = s.length - 1; i < j; ++i, --j) {
+        if (s.charAt(i) != s.charAt(j)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
 
 ```js
 /**
@@ -177,10 +174,33 @@ var validPalindrome = function (s) {
 };
 ```
 
-### **...**
+```cs
+public class Solution {
+    public bool ValidPalindrome(string s) {
+        int i = 0, j = s.Length - 1;
+        while (i < j && s[i] == s[j]) {
+            i++;
+            j--;
+        }
+        if (i >= j) {
+            return true;
+        }
+        return check(s, i + 1, j) || check(s, i, j - 1);
+    }
 
-```
-
+    private bool check(string s, int i, int j) {
+        while (i < j) {
+            if (s[i] != s[j]) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

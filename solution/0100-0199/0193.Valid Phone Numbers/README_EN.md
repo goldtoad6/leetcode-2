@@ -29,12 +29,4 @@
 
 ## Solutions
 
-<!-- tabs:start -->
-
-### **Bash**
-
-```sh
-
-```
-
-<!-- tabs:end -->
+<!-- end -->

@@ -46,13 +46,85 @@ G -&gt; G
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：字符串替换**
+### 方法一：字符串替换
 
 根据题意，只需要将字符串 `command` 中的 `"()"` 替换为 `'o'`，`"(al)"` 替换为 `"al"` 即可。
 
-**方法二：字符串遍历**
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def interpret(self, command: str) -> str:
+        return command.replace('()', 'o').replace('(al)', 'al')
+```
+
+```java
+class Solution {
+    public String interpret(String command) {
+        return command.replace("()", "o").replace("(al)", "al");
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    string interpret(string command) {
+        while (command.find("()") != -1) command.replace(command.find("()"), 2, "o");
+        while (command.find("(al)") != -1) command.replace(command.find("(al)"), 4, "al");
+        return command;
+    }
+};
+```
+
+```go
+func interpret(command string) string {
+	command = strings.ReplaceAll(command, "()", "o")
+	command = strings.ReplaceAll(command, "(al)", "al")
+	return command
+}
+```
+
+```ts
+function interpret(command: string): string {
+    return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
+}
+```
+
+```rust
+impl Solution {
+    pub fn interpret(command: String) -> String {
+        command.replace("()", "o").replace("(al)", "al")
+    }
+}
+```
+
+```c
+char* interpret(char* command) {
+    int n = strlen(command);
+    char* ans = malloc(sizeof(char) * n + 1);
+    int i = 0;
+    for (int j = 0; j < n; j++) {
+        char c = command[j];
+        if (c == 'G') {
+            ans[i++] = 'G';
+        } else if (c == '(') {
+            if (command[j + 1] == ')') {
+                ans[i++] = 'o';
+            } else {
+                ans[i++] = 'a';
+                ans[i++] = 'l';
+            }
+        }
+    }
+    ans[i] = '\0';
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：字符串遍历
 
 我们也可以遍历字符串 `command`，对于每个字符 $c$：
 
@@ -65,16 +137,6 @@ G -&gt; G
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```python
-class Solution:
-    def interpret(self, command: str) -> str:
-        return command.replace('()', 'o').replace('(al)', 'al')
-```
-
 ```python
 class Solution:
     def interpret(self, command: str) -> str:
@@ -85,18 +147,6 @@ class Solution:
             elif c == '(':
                 ans.append('o' if command[i + 1] == ')' else 'al')
         return ''.join(ans)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class Solution {
-    public String interpret(String command) {
-        return command.replace("()", "o").replace("(al)", "al");
-    }
-}
 ```
 
 ```java
@@ -116,19 +166,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    string interpret(string command) {
-        while (command.find("()") != -1) command.replace(command.find("()"), 2, "o");
-        while (command.find("(al)") != -1) command.replace(command.find("(al)"), 4, "al");
-        return command;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -136,22 +173,14 @@ public:
         string ans;
         for (int i = 0; i < command.size(); ++i) {
             char c = command[i];
-            if (c == 'G') ans += c;
-            else if (c == '(') ans += command[i + 1] == ')' ? "o" : "al";
+            if (c == 'G')
+                ans += c;
+            else if (c == '(')
+                ans += command[i + 1] == ')' ? "o" : "al";
         }
         return ans;
     }
 };
-```
-
-### **Go**
-
-```go
-func interpret(command string) string {
-    command = strings.ReplaceAll(command, "()", "o")
-    command = strings.ReplaceAll(command, "(al)", "al")
-    return command
-}
 ```
 
 ```go
@@ -172,14 +201,6 @@ func interpret(command string) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function interpret(command: string): string {
-    return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
-}
-```
-
 ```ts
 function interpret(command: string): string {
     const n = command.length;
@@ -196,16 +217,6 @@ function interpret(command: string): string {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn interpret(command: String) -> String {
-        command.replace("()", "o").replace("(al)", "al")
-    }
-}
-```
-
 ```rust
 impl Solution {
     pub fn interpret(command: String) -> String {
@@ -217,12 +228,8 @@ impl Solution {
             }
             if bs[i] == b'(' {
                 ans.push_str({
-                    if bs[i + 1] == b')' {
-                        "o"
-                    } else {
-                        "al"
-                    }
-                })
+                    if bs[i + 1] == b')' { "o" } else { "al" }
+                });
             }
         }
         ans
@@ -230,35 +237,6 @@ impl Solution {
 }
 ```
 
-### **C**
-
-```c
-char *interpret(char *command) {
-    int n = strlen(command);
-    char *ans = malloc(sizeof(char) * n + 1);
-    int i = 0;
-    for (int j = 0; j < n; j++) {
-        char c = command[j];
-        if (c == 'G') {
-            ans[i++] = 'G';
-        } else if (c == '(') {
-            if (command[j + 1] == ')') {
-                ans[i++] = 'o';
-            } else {
-                ans[i++] = 'a';
-                ans[i++] = 'l';
-            }
-        }
-    }
-    ans[i] = '\0';
-    return ans;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -55,15 +55,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：维护行最小值和列最大值
 
-取行最小值与列最大值的交集即可。
+我们可以使用两个数组 $rows$ 和 $cols$ 记录矩阵中每一行的最小值和每一列的最大值，然后遍历矩阵中的每一个元素，检查该元素是否为所在行的最小值且为所在列的最大值，如果是则该元素为幸运数，我们将其加入答案数组。
+
+遍历结束后，我们返回答案数组即可。
+
+时间复杂度 $O(m \times n)$，空间复杂度 $O(m + n)$。其中 $m$ 和 $n$ 分别是矩阵的行数和列数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -73,17 +73,13 @@ class Solution:
         return list(rows & cols)
 ```
 
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public List<Integer> luckyNumbers(int[][] matrix) {
         int m = matrix.length, n = matrix[0].length;
         int[] rows = new int[m];
         int[] cols = new int[n];
-        Arrays.fill(rows, Integer.MAX_VALUE);
+        Arrays.fill(rows, 1 << 30);
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 rows[i] = Math.min(rows[i], matrix[i][j]);
@@ -94,7 +90,7 @@ class Solution {
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (rows[i] == cols[j]) {
-                    ans.add(matrix[i][j]);
+                    ans.add(rows[i]);
                 }
             }
         }
@@ -103,15 +99,15 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> luckyNumbers(vector<vector<int>>& matrix) {
         int m = matrix.size(), n = matrix[0].size();
-        vector<int> rows(m, INT_MAX);
-        vector<int> cols(n);
+        int rows[m];
+        int cols[n];
+        memset(rows, 0x3f, sizeof(rows));
+        memset(cols, 0, sizeof(cols));
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 rows[i] = min(rows[i], matrix[i][j]);
@@ -119,85 +115,65 @@ public:
             }
         }
         vector<int> ans;
-        for (int i = 0; i < m; ++i)
-            for (int j = 0; j < n; ++j)
-                if (rows[i] == cols[j])
-                    ans.push_back(matrix[i][j]);
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (rows[i] == cols[j]) {
+                    ans.push_back(rows[i]);
+                }
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func luckyNumbers (matrix [][]int) []int {
-    m, n := len(matrix), len(matrix[0])
-    rows, cols := make([]int, m), make([]int, n)
-    for i := range rows {
-        rows[i] = math.MaxInt32
-    }
-    for i, row := range matrix {
-        for j, v := range row {
-            rows[i] = min(rows[i], v)
-            cols[j] = max(cols[j], v)
-        }
-    }
-    var ans []int
-    for i, row := range matrix {
-        for j, v := range row {
-            if rows[i] == cols[j] {
-                ans = append(ans, v)
-            }
-        }
-    }
-    return ans
-}
-
-func min(a, b int) int {
-    if a < b {
-        return a
-    }
-    return b
-}
-
-func max(a, b int) int {
-    if a > b {
-        return a
-    }
-    return b
+func luckyNumbers(matrix [][]int) (ans []int) {
+	m, n := len(matrix), len(matrix[0])
+	rows, cols := make([]int, m), make([]int, n)
+	for i := range rows {
+		rows[i] = 1 << 30
+	}
+	for i, row := range matrix {
+		for j, x := range row {
+			rows[i] = min(rows[i], x)
+			cols[j] = max(cols[j], x)
+		}
+	}
+	for i, row := range matrix {
+		for j, x := range row {
+			if rows[i] == cols[j] {
+				ans = append(ans, x)
+			}
+		}
+	}
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function luckyNumbers(matrix: number[][]): number[] {
     const m = matrix.length;
     const n = matrix[0].length;
-    const col = new Array(n).fill(0);
-    const res = [];
-    for (let j = 0; j < n; j++) {
-        for (let i = 0; i < m; i++) {
-            col[j] = Math.max(col[j], matrix[i][j]);
+    const rows: number[] = new Array(m).fill(1 << 30);
+    const cols: number[] = new Array(n).fill(0);
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; j++) {
+            rows[i] = Math.min(rows[i], matrix[i][j]);
+            cols[j] = Math.max(cols[j], matrix[i][j]);
         }
     }
-    for (let x = 0; x < m; x++) {
-        let i = 0;
-        for (let y = 1; y < n; y++) {
-            if (matrix[x][i] > matrix[x][y]) {
-                i = y;
+    const ans: number[] = [];
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; j++) {
+            if (rows[i] === cols[j]) {
+                ans.push(rows[i]);
             }
         }
-        if (matrix[x][i] === col[i]) {
-            res.push(col[i]);
-        }
     }
-    return res;
+    return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -227,10 +203,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -61,29 +61,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：自定义排序
 
-**方法一：自定义排序**
+我们将数组 $arr$ 按照题目要求排序，即按照二进制表示中数字 $1$ 的数目升序排序，如果存在多个数字二进制中 $1$ 的数目相同，则必须将它们按照数值大小升序排列。
 
-将数组 `arr` 按照题目要求排序，即按照二进制表示中数字 $1$ 的数目升序排序，如果存在多个数字二进制中 $1$ 的数目相同，则必须将它们按照数值大小升序排列。
-
-时间复杂度 $O(n \times \log n)$，其中 $n$ 是数组 `arr` 的长度。
+时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 $arr$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def sortByBits(self, arr: List[int]) -> List[int]:
         return sorted(arr, key=lambda x: (x.bit_count(), x))
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,6 +90,100 @@ class Solution {
     }
 }
 ```
+
+```cpp
+class Solution {
+public:
+    vector<int> sortByBits(vector<int>& arr) {
+        for (int& v : arr) {
+            v += __builtin_popcount(v) * 100000;
+        }
+        sort(arr.begin(), arr.end());
+        for (int& v : arr) {
+            v %= 100000;
+        }
+        return arr;
+    }
+};
+```
+
+```go
+func sortByBits(arr []int) []int {
+	for i, v := range arr {
+		arr[i] += bits.OnesCount(uint(v)) * 100000
+	}
+	sort.Ints(arr)
+	for i := range arr {
+		arr[i] %= 100000
+	}
+	return arr
+}
+```
+
+```ts
+function sortByBits(arr: number[]): number[] {
+    const countOnes = (n: number) => {
+        let res = 0;
+        while (n) {
+            n &= n - 1;
+            res++;
+        }
+        return res;
+    };
+    return arr.sort((a, b) => countOnes(a) - countOnes(b) || a - b);
+}
+```
+
+```rust
+impl Solution {
+    pub fn sort_by_bits(mut arr: Vec<i32>) -> Vec<i32> {
+        arr.sort_by(|a, b| {
+            let res = a.count_ones().cmp(&b.count_ones());
+            if res == std::cmp::Ordering::Equal {
+                return a.cmp(&b);
+            }
+            res
+        });
+        arr
+    }
+}
+```
+
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int countOnes(int n) {
+    int res = 0;
+    while (n) {
+        n &= n - 1;
+        res++;
+    }
+    return res;
+}
+
+int cmp(const void* _a, const void* _b) {
+    int a = *(int*) _a;
+    int b = *(int*) _b;
+    int res = countOnes(a) - countOnes(b);
+    if (res == 0) {
+        return a - b;
+    }
+    return res;
+}
+
+int* sortByBits(int* arr, int arrSize, int* returnSize) {
+    qsort(arr, arrSize, sizeof(int), cmp);
+    *returnSize = arrSize;
+    return arr;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
 
 ```java
 class Solution {
@@ -121,24 +205,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    vector<int> sortByBits(vector<int>& arr) {
-        for (int& v : arr) {
-            v += __builtin_popcount(v) * 100000;
-        }
-        sort(arr.begin(), arr.end());
-        for (int& v : arr) {
-            v %= 100000;
-        }
-        return arr;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -152,21 +218,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func sortByBits(arr []int) []int {
-	for i, v := range arr {
-		arr[i] += bits.OnesCount(uint(v)) * 100000
-	}
-	sort.Ints(arr)
-	for i := range arr {
-		arr[i] %= 100000
-	}
-	return arr
-}
-```
-
 ```go
 func sortByBits(arr []int) []int {
 	sort.Slice(arr, func(i, j int) bool {
@@ -177,75 +228,6 @@ func sortByBits(arr []int) []int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-function sortByBits(arr: number[]): number[] {
-    const countOnes = (n: number) => {
-        let res = 0;
-        while (n) {
-            n &= n - 1;
-            res++;
-        }
-        return res;
-    };
-    return arr.sort((a, b) => countOnes(a) - countOnes(b) || a - b);
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn sort_by_bits(mut arr: Vec<i32>) -> Vec<i32> {
-        arr.sort_by(|a, b| {
-            let res = a.count_ones().cmp(&b.count_ones());
-            if res == std::cmp::Ordering::Equal {
-                return a.cmp(&b);
-            }
-            res
-        });
-        arr
-    }
-}
-```
-
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int countOnes(int n) {
-    int res = 0;
-    while (n) {
-        n &= n - 1;
-        res++;
-    }
-    return res;
-}
-
-int cmp(const void *_a, const void *_b) {
-    int a = *(int *) _a;
-    int b = *(int *) _b;
-    int res = countOnes(a) - countOnes(b);
-    if (res == 0) {
-        return a - b;
-    }
-    return res;
-}
-
-int *sortByBits(int *arr, int arrSize, int *returnSize) {
-    qsort(arr, arrSize, sizeof(int), cmp);
-    *returnSize = arrSize;
-    return arr;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

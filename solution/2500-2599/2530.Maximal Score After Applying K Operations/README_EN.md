@@ -49,9 +49,15 @@ The final score is 10 + 4 + 3 = 17.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Priority Queue (Max Heap)
 
-### **Python3**
+To maximize the sum of scores, we need to select the element with the maximum value at each step. Therefore, we can use a priority queue (max heap) to maintain the element with the maximum value.
+
+At each step, we take out the element with the maximum value $v$ from the priority queue, add $v$ to the answer, and replace $v$ with $\lceil \frac{v}{3} \rceil$, and then add it to the priority queue. After repeating this process $k$ times, we return the answer.
+
+The time complexity is $O(n + k \times \log n)$, and the space complexity is $O(n)$ or $O(1)$. Here, $n$ is the length of the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,20 +71,6 @@ class Solution:
             heappush(h, -(ceil(v / 3)))
         return ans
 ```
-
-```python
-class Solution:
-    def maxKelements(self, nums: List[int], k: int) -> int:
-        for i, v in enumerate(nums):
-            nums[i] = -v
-        heapify(nums)
-        ans = 0
-        for _ in range(k):
-            ans -= heapreplace(nums, -ceil(-nums[0] / 3))
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -98,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -115,6 +105,85 @@ public:
         return ans;
     }
 };
+```
+
+```go
+func maxKelements(nums []int, k int) (ans int64) {
+	h := &hp{nums}
+	heap.Init(h)
+	for ; k > 0; k-- {
+		v := h.pop()
+		ans += int64(v)
+		h.push((v + 2) / 3)
+	}
+	return
+}
+
+type hp struct{ sort.IntSlice }
+
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
+	a := h.IntSlice
+	v := a[len(a)-1]
+	h.IntSlice = a[:len(a)-1]
+	return v
+}
+func (h *hp) push(v int) { heap.Push(h, v) }
+func (h *hp) pop() int   { return heap.Pop(h).(int) }
+```
+
+```ts
+function maxKelements(nums: number[], k: number): number {
+    const pq = new MaxPriorityQueue();
+    nums.forEach(num => pq.enqueue(num));
+    let ans = 0;
+    while (k > 0) {
+        const v = pq.dequeue()!.element;
+        ans += v;
+        pq.enqueue(Math.floor((v + 2) / 3));
+        k--;
+    }
+    return ans;
+}
+```
+
+```rust
+use std::collections::BinaryHeap;
+
+impl Solution {
+    pub fn max_kelements(nums: Vec<i32>, k: i32) -> i64 {
+        let mut pq = BinaryHeap::from(nums);
+        let mut ans = 0;
+        let mut k = k;
+        while k > 0 {
+            if let Some(v) = pq.pop() {
+                ans += v as i64;
+                pq.push((v + 2) / 3);
+                k -= 1;
+            }
+        }
+        ans
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maxKelements(self, nums: List[int], k: int) -> int:
+        for i, v in enumerate(nums):
+            nums[i] = -v
+        heapify(nums)
+        ans = 0
+        for _ in range(k):
+            ans -= heapreplace(nums, -ceil(-nums[0] / 3))
+        return ans
 ```
 
 ```cpp
@@ -135,34 +204,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func maxKelements(nums []int, k int) (ans int64) {
-	h := &hp{nums}
-	heap.Init(h)
-	for ; k > 0; k-- {
-		v := h.pop()
-		ans += int64(v)
-		h.push((v + 2) / 3)
-	}
-	return
-}
-
-type hp struct{ sort.IntSlice }
-
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
-	a := h.IntSlice
-	v := a[len(a)-1]
-	h.IntSlice = a[:len(a)-1]
-	return v
-}
-func (h *hp) push(v int) { heap.Push(h, v) }
-func (h *hp) pop() int   { return heap.Pop(h).(int) }
-```
-
 ```go
 func maxKelements(nums []int, k int) (ans int64) {
 	h := hp{nums}
@@ -178,14 +219,10 @@ func maxKelements(nums []int, k int) (ans int64) {
 type hp struct{ sort.IntSlice }
 
 func (h hp) Less(i, j int) bool { return h.IntSlice[i] > h.IntSlice[j] }
-func (hp) Push(interface{})     {}
-func (hp) Pop() (_ interface{}) { return }
-```
-
-### **...**
-
-```
-
+func (hp) Push(any)             {}
+func (hp) Pop() (_ any)         { return }
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

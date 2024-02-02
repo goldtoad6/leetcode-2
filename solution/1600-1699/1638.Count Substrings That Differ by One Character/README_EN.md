@@ -50,9 +50,9 @@ The underlined portions are the substrings that are chosen from s and t.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,11 +65,90 @@ class Solution:
                     l = r = 0
                     while i > l and j > l and s[i - l - 1] == t[j - l - 1]:
                         l += 1
-                    while i + r + 1 < m and j + r + 1 < n and s[i + r + 1] == t[j + r + 1]:
+                    while (
+                        i + r + 1 < m and j + r + 1 < n and s[i + r + 1] == t[j + r + 1]
+                    ):
                         r += 1
                     ans += (l + 1) * (r + 1)
         return ans
 ```
+
+```java
+class Solution {
+    public int countSubstrings(String s, String t) {
+        int ans = 0;
+        int m = s.length(), n = t.length();
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (s.charAt(i) != t.charAt(j)) {
+                    int l = 0, r = 0;
+                    while (i - l > 0 && j - l > 0 && s.charAt(i - l - 1) == t.charAt(j - l - 1)) {
+                        ++l;
+                    }
+                    while (i + r + 1 < m && j + r + 1 < n
+                        && s.charAt(i + r + 1) == t.charAt(j + r + 1)) {
+                        ++r;
+                    }
+                    ans += (l + 1) * (r + 1);
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int countSubstrings(string s, string t) {
+        int ans = 0;
+        int m = s.size(), n = t.size();
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (s[i] != t[j]) {
+                    int l = 0, r = 0;
+                    while (i - l > 0 && j - l > 0 && s[i - l - 1] == t[j - l - 1]) {
+                        ++l;
+                    }
+                    while (i + r + 1 < m && j + r + 1 < n && s[i + r + 1] == t[j + r + 1]) {
+                        ++r;
+                    }
+                    ans += (l + 1) * (r + 1);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func countSubstrings(s string, t string) (ans int) {
+	m, n := len(s), len(t)
+	for i, a := range s {
+		for j, b := range t {
+			if a != b {
+				l, r := 0, 0
+				for i > l && j > l && s[i-l-1] == t[j-l-1] {
+					l++
+				}
+				for i+r+1 < m && j+r+1 < n && s[i+r+1] == t[j+r+1] {
+					r++
+				}
+				ans += (l + 1) * (r + 1)
+			}
+		}
+	}
+	return
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -89,32 +168,6 @@ class Solution:
                 else:
                     ans += (f[i][j] + 1) * (g[i + 1][j + 1] + 1)
         return ans
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int countSubstrings(String s, String t) {
-        int ans = 0;
-        int m = s.length(), n = t.length();
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (s.charAt(i) != t.charAt(j)) {
-                    int l = 0, r = 0;
-                    while (i - l > 0 && j - l > 0 && s.charAt(i - l - 1) == t.charAt(j - l - 1)) {
-                        ++l;
-                    }
-                    while (i + r + 1 < m && j + r + 1 < n && s.charAt(i + r + 1) == t.charAt(j + r + 1)) {
-                        ++r;
-                    }
-                    ans += (l + 1) * (r + 1);
-                }
-            }
-        }
-        return ans;
-    }
-}
 ```
 
 ```java
@@ -143,33 +196,6 @@ class Solution {
         return ans;
     }
 }
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int countSubstrings(string s, string t) {
-        int ans = 0;
-        int m = s.size(), n = t.size();
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (s[i] != t[j]) {
-                    int l = 0, r = 0;
-                    while (i - l > 0 && j - l > 0 && s[i - l - 1] == t[j - l - 1]) {
-                        ++l;
-                    }
-                    while (i + r + 1 < m && j + r + 1 < n && s[i + r + 1] == t[j + r + 1]) {
-                        ++r;
-                    }
-                    ans += (l + 1) * (r + 1);
-                }
-            }
-        }
-        return ans;
-    }
-};
 ```
 
 ```cpp
@@ -203,29 +229,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func countSubstrings(s string, t string) (ans int) {
-	m, n := len(s), len(t)
-	for i, a := range s {
-		for j, b := range t {
-			if a != b {
-				l, r := 0, 0
-				for i > l && j > l && s[i-l-1] == t[j-l-1] {
-					l++
-				}
-				for i+r+1 < m && j+r+1 < n && s[i+r+1] == t[j+r+1] {
-					r++
-				}
-				ans += (l + 1) * (r + 1)
-			}
-		}
-	}
-	return
-}
-```
-
 ```go
 func countSubstrings(s string, t string) (ans int) {
 	m, n := len(s), len(t)
@@ -255,10 +258,6 @@ func countSubstrings(s string, t string) (ans int) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

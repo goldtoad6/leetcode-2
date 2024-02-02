@@ -58,42 +58,24 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：位运算
 
-**方法一：位运算**
+异或运算的性质：
 
-对于数组中的每个元素，都可以与下标进行异或运算，最终的结果就是缺失的数字。
+-   任何数和 $0$ 做异或运算，结果仍然是原来的数，即 $x \oplus 0 = x$；
+-   任何数和其自身做异或运算，结果是 $0$，即 $x \oplus x = 0$；
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组长度。
-
-**方法二：数学**
-
-我们也可以用数学求解。求出 $[0,..n]$ 的和，减去数组中所有数的和，就得到了缺失的数字。
+因此，我们可以遍历数组，将数字 $[0,..n]$ 与数组中的元素进行异或运算，最后的结果就是缺失的数字。
 
 时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         return reduce(xor, (i ^ v for i, v in enumerate(nums, 1)))
 ```
-
-```python
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        return (1 + n) * n // 2 - sum(nums)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -106,6 +88,104 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int ans = n;
+        for (int i = 0; i < n; ++i) {
+            ans ^= (i ^ nums[i]);
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func missingNumber(nums []int) (ans int) {
+	n := len(nums)
+	ans = n
+	for i, v := range nums {
+		ans ^= (i ^ v)
+	}
+	return
+}
+```
+
+```ts
+function missingNumber(nums: number[]): number {
+    const n = nums.length;
+    let ans = n;
+    for (let i = 0; i < n; ++i) {
+        ans ^= i ^ nums[i];
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    pub fn missing_number(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut ans = n;
+        for (i, v) in nums.iter().enumerate() {
+            ans ^= (i as i32) ^ v;
+        }
+        ans
+    }
+}
+```
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function (nums) {
+    const n = nums.length;
+    let ans = n;
+    for (let i = 0; i < n; ++i) {
+        ans ^= i ^ nums[i];
+    }
+    return ans;
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function missingNumber($nums) {
+        $n = count($nums);
+        $sumN = (($n + 1) * $n) / 2;
+        for ($i = 0; $i < $n; $i++) {
+            $sumN -= $nums[$i];
+        }
+        return $sumN;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：数学
+
+我们也可以用数学求解。求出 $[0,..n]$ 的和，减去数组中所有数的和，就得到了缺失的数字。
+
+时间复杂度 $O(n)$，其中 $n$ 为数组长度。空间复杂度 $O(1)$。
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        n = len(nums)
+        return (1 + n) * n // 2 - sum(nums)
 ```
 
 ```java
@@ -121,22 +201,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int missingNumber(vector<int>& nums) {
-        int n = nums.size();
-        int ans = n;
-        for (int i = 0; i < n; ++i) {
-            ans ^= (i ^ nums[i]);
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -145,19 +209,6 @@ public:
         return (1 + n) * n / 2 - accumulate(nums.begin(), nums.end(), 0);
     }
 };
-```
-
-### **Go**
-
-```go
-func missingNumber(nums []int) (ans int) {
-	n := len(nums)
-	ans = n
-	for i, v := range nums {
-		ans ^= (i ^ v)
-	}
-	return
-}
 ```
 
 ```go
@@ -171,21 +222,28 @@ func missingNumber(nums []int) (ans int) {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var missingNumber = function (nums) {
+```ts
+function missingNumber(nums: number[]): number {
     const n = nums.length;
     let ans = n;
     for (let i = 0; i < n; ++i) {
-        ans ^= i ^ nums[i];
+        ans += i - nums[i];
     }
     return ans;
-};
+}
+```
+
+```rust
+impl Solution {
+    pub fn missing_number(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut ans = n;
+        for (i, &v) in nums.iter().enumerate() {
+            ans += (i as i32) - v;
+        }
+        ans
+    }
+}
 ```
 
 ```js
@@ -203,29 +261,6 @@ var missingNumber = function (nums) {
 };
 ```
 
-### **PHP**
-
-```php
-class Solution {
-    /**
-     * @param Integer[] $nums
-     * @return Integer
-     */
-    function missingNumber($nums) {
-        $n = count($nums);
-        $sumN = ($n + 1) * $n / 2;
-        for ($i = 0; $i < $n; $i++) {
-            $sumN -= $nums[$i];
-        }
-        return $sumN;
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

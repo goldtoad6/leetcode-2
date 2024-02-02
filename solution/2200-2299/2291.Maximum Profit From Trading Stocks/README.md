@@ -49,9 +49,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们定义 $f[i][j]$ 表示前 $i$ 支股票，预算为 $j$ 时的最大收益。那么答案就是 $f[n][budget]$。
 
@@ -68,10 +66,6 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def maximumProfit(self, present: List[int], future: List[int], budget: int) -> int:
@@ -84,20 +78,6 @@ class Solution:
         return f[-1][-1]
 ```
 
-```python
-class Solution:
-    def maximumProfit(self, present: List[int], future: List[int], budget: int) -> int:
-        f = [0] * (budget + 1)
-        for a, b in zip(present, future):
-            for j in range(budget, a - 1, -1):
-                f[j] = max(f[j], f[j - a] + b - a)
-        return f[-1]
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public int maximumProfit(int[] present, int[] future, int budget) {
@@ -107,7 +87,8 @@ class Solution {
             for (int j = 0; j <= budget; ++j) {
                 f[i][j] = f[i - 1][j];
                 if (j >= present[i - 1]) {
-                    f[i][j] = Math.max(f[i][j], f[i - 1][j - present[i - 1]] + future[i - 1] - present[i - 1]);
+                    f[i][j] = Math.max(
+                        f[i][j], f[i - 1][j - present[i - 1]] + future[i - 1] - present[i - 1]);
                 }
             }
         }
@@ -115,24 +96,6 @@ class Solution {
     }
 }
 ```
-
-```java
-class Solution {
-    public int maximumProfit(int[] present, int[] future, int budget) {
-        int n = present.length;
-        int[] f = new int[budget + 1];
-        for (int i = 0; i < n; ++i) {
-            int a = present[i], b = future[i];
-            for (int j = budget; j >= a; --j) {
-                f[j] = Math.max(f[j], f[j - a] + b - a);
-            }
-        }
-        return f[budget];
-    }
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -154,6 +117,70 @@ public:
 };
 ```
 
+```go
+func maximumProfit(present []int, future []int, budget int) int {
+	n := len(present)
+	f := make([][]int, n+1)
+	for i := range f {
+		f[i] = make([]int, budget+1)
+	}
+	for i := 1; i <= n; i++ {
+		for j := 0; j <= budget; j++ {
+			f[i][j] = f[i-1][j]
+			if j >= present[i-1] {
+				f[i][j] = max(f[i][j], f[i-1][j-present[i-1]]+future[i-1]-present[i-1])
+			}
+		}
+	}
+	return f[n][budget]
+}
+```
+
+```ts
+function maximumProfit(present: number[], future: number[], budget: number): number {
+    const f = new Array(budget + 1).fill(0);
+    for (let i = 0; i < present.length; ++i) {
+        const [a, b] = [present[i], future[i]];
+        for (let j = budget; j >= a; --j) {
+            f[j] = Math.max(f[j], f[j - a] + b - a);
+        }
+    }
+    return f[budget];
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maximumProfit(self, present: List[int], future: List[int], budget: int) -> int:
+        f = [0] * (budget + 1)
+        for a, b in zip(present, future):
+            for j in range(budget, a - 1, -1):
+                f[j] = max(f[j], f[j - a] + b - a)
+        return f[-1]
+```
+
+```java
+class Solution {
+    public int maximumProfit(int[] present, int[] future, int budget) {
+        int n = present.length;
+        int[] f = new int[budget + 1];
+        for (int i = 0; i < n; ++i) {
+            int a = present[i], b = future[i];
+            for (int j = budget; j >= a; --j) {
+                f[j] = Math.max(f[j], f[j - a] + b - a);
+            }
+        }
+        return f[budget];
+    }
+}
+```
+
 ```cpp
 class Solution {
 public:
@@ -172,34 +199,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func maximumProfit(present []int, future []int, budget int) int {
-	n := len(present)
-	f := make([][]int, n+1)
-	for i := range f {
-		f[i] = make([]int, budget+1)
-	}
-	for i := 1; i <= n; i++ {
-		for j := 0; j <= budget; j++ {
-			f[i][j] = f[i-1][j]
-			if j >= present[i-1] {
-				f[i][j] = max(f[i][j], f[i-1][j-present[i-1]]+future[i-1]-present[i-1])
-			}
-		}
-	}
-	return f[n][budget]
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
 ```go
 func maximumProfit(present []int, future []int, budget int) int {
 	f := make([]int, budget+1)
@@ -210,38 +209,8 @@ func maximumProfit(present []int, future []int, budget int) int {
 	}
 	return f[budget]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-function maximumProfit(
-    present: number[],
-    future: number[],
-    budget: number,
-): number {
-    const f = new Array(budget + 1).fill(0);
-    for (let i = 0; i < present.length; ++i) {
-        const [a, b] = [present[i], future[i]];
-        for (let j = budget; j >= a; --j) {
-            f[j] = Math.max(f[j], f[j - a] + b - a);
-        }
-    }
-    return f[budget];
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

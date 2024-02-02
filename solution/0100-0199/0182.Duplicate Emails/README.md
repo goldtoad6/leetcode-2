@@ -17,17 +17,17 @@
 | id          | int     |
 | email       | varchar |
 +-------------+---------+
-id 是该表的主键列。
+id 是该表的主键（具有唯一值的列）。
 此表的每一行都包含一封电子邮件。电子邮件不包含大写字母。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询来报告所有重复的电子邮件。 请注意，可以保证电子邮件字段不为 NULL。</p>
+<p>编写解决方案来报告所有重复的电子邮件。 请注意，可以保证电子邮件字段不为 NULL。</p>
 
 <p>以&nbsp;<strong>任意顺序&nbsp;</strong>返回结果表。</p>
 
-<p>查询结果格式如下例。</p>
+<p>结果格式如下例。</p>
 
 <p>&nbsp;</p>
 
@@ -53,25 +53,48 @@ Person 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：分组统计
+
+我们可以使用 `GROUP BY` 语句，按照 `email` 字段进行分组，然后使用 `HAVING` 语句，筛选出现次数大于 $1$ 的 `email`。
 
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
 
-```sql
-SELECT Email
-FROM Person
-GROUP BY Email
-HAVING count(Email) > 1;
+
+def duplicate_emails(person: pd.DataFrame) -> pd.DataFrame:
+    results = pd.DataFrame()
+
+    results = person.loc[person.duplicated(subset=["email"]), ["email"]]
+
+    return results.drop_duplicates()
 ```
 
 ```sql
-SELECT DISTINCT p1.email
-FROM person AS p1,
-    person AS p2
-WHERE p1.id != p2.id
-    AND p1.email = p2.email;
+# Write your MySQL query statement below
+SELECT email
+FROM Person
+GROUP BY 1
+HAVING COUNT(1) > 1;
 ```
 
 <!-- tabs:end -->
+
+### 方法二：自连接
+
+我们可以使用自连接的方法，将 `Person` 表自身连接一次，然后筛选出 `id` 不同，但 `email` 相同的记录。
+
+<!-- tabs:start -->
+
+```sql
+SELECT DISTINCT p1.email
+FROM
+    person AS p1,
+    person AS p2
+WHERE p1.id != p2.id AND p1.email = p2.email;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

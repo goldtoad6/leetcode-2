@@ -80,16 +80,22 @@ Streams table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT COUNT(sub.account_id) AS accounts_count
+FROM
+    Subscriptions AS sub
+    LEFT JOIN Streams USING (account_id)
+WHERE
+    YEAR(start_date) <= 2021
+    AND YEAR(end_date) >= 2021
+    AND (YEAR(stream_date) != 2021 OR stream_date > end_date);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

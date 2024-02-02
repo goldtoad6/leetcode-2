@@ -46,30 +46,117 @@ Note that slots 2, 5, 6, and 8 are empty which is permitted.
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def maximumANDSum(self, nums: List[int], numSlots: int) -> int:
+        n = len(nums)
+        m = numSlots << 1
+        f = [0] * (1 << m)
+        for i in range(1 << m):
+            cnt = i.bit_count()
+            if cnt > n:
+                continue
+            for j in range(m):
+                if i >> j & 1:
+                    f[i] = max(f[i], f[i ^ (1 << j)] + (nums[cnt - 1] & (j // 2 + 1)))
+        return max(f)
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public int maximumANDSum(int[] nums, int numSlots) {
+        int n = nums.length;
+        int m = numSlots << 1;
+        int[] f = new int[1 << m];
+        int ans = 0;
+        for (int i = 0; i < 1 << m; ++i) {
+            int cnt = Integer.bitCount(i);
+            if (cnt > n) {
+                continue;
+            }
+            for (int j = 0; j < m; ++j) {
+                if ((i >> j & 1) == 1) {
+                    f[i] = Math.max(f[i], f[i ^ (1 << j)] + (nums[cnt - 1] & (j / 2 + 1)));
+                }
+            }
+            ans = Math.max(ans, f[i]);
+        }
+        return ans;
+    }
+}
 ```
 
-### **TypeScript**
+```cpp
+class Solution {
+public:
+    int maximumANDSum(vector<int>& nums, int numSlots) {
+        int n = nums.size();
+        int m = numSlots << 1;
+        int f[1 << m];
+        memset(f, 0, sizeof(f));
+        for (int i = 0; i < 1 << m; ++i) {
+            int cnt = __builtin_popcount(i);
+            if (cnt > n) {
+                continue;
+            }
+            for (int j = 0; j < m; ++j) {
+                if (i >> j & 1) {
+                    f[i] = max(f[i], f[i ^ (1 << j)] + (nums[cnt - 1] & (j / 2 + 1)));
+                }
+            }
+        }
+        return *max_element(f, f + (1 << m));
+    }
+};
+```
+
+```go
+func maximumANDSum(nums []int, numSlots int) int {
+	n := len(nums)
+	m := numSlots << 1
+	f := make([]int, 1<<m)
+	for i := range f {
+		cnt := bits.OnesCount(uint(i))
+		if cnt > n {
+			continue
+		}
+		for j := 0; j < m; j++ {
+			if i>>j&1 == 1 {
+				f[i] = max(f[i], f[i^(1<<j)]+(nums[cnt-1]&(j/2+1)))
+			}
+		}
+	}
+	return slices.Max(f)
+}
+```
 
 ```ts
-
-```
-
-### **...**
-
-```
-
+function maximumANDSum(nums: number[], numSlots: number): number {
+    const n = nums.length;
+    const m = numSlots << 1;
+    const f: number[] = new Array(1 << m).fill(0);
+    for (let i = 0; i < 1 << m; ++i) {
+        const cnt = i
+            .toString(2)
+            .split('')
+            .filter(c => c === '1').length;
+        if (cnt > n) {
+            continue;
+        }
+        for (let j = 0; j < m; ++j) {
+            if (((i >> j) & 1) === 1) {
+                f[i] = Math.max(f[i], f[i ^ (1 << j)] + (nums[cnt - 1] & ((j >> 1) + 1)));
+            }
+        }
+    }
+    return Math.max(...f);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

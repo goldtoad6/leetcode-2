@@ -57,13 +57,14 @@ atm.withdraw(550);        // Returns [0,1,0,0,1]. The machine uses 1 $50 banknot
 	<li><code>1 &lt;= amount &lt;= 10<sup>9</sup></code></li>
 	<li>At most <code>5000</code> calls <strong>in total</strong> will be made to <code>withdraw</code> and <code>deposit</code>.</li>
 	<li>At least <strong>one</strong> call will be made to each function <code>withdraw</code> and <code>deposit</code>.</li>
+	<li>Sum of <code>banknotesCount[i]</code> in all deposits doesn&#39;t exceed <code>10<sup>9</sup></code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class ATM:
@@ -92,8 +93,6 @@ class ATM:
 # obj.deposit(banknotesCount)
 # param_2 = obj.withdraw(amount)
 ```
-
-### **Java**
 
 ```java
 class ATM {
@@ -133,13 +132,10 @@ class ATM {
  */
 ```
 
-### **C++**
-
 ```cpp
 class ATM {
 public:
     ATM() {
-
     }
 
     void deposit(vector<int> banknotesCount) {
@@ -176,8 +172,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type ATM struct {
 	d   [5]int
@@ -209,13 +203,6 @@ func (this *ATM) Withdraw(amount int) []int {
 	return ans
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 /**
  * Your ATM object will be instantiated and called as such:
  * obj := Constructor();
@@ -224,16 +211,6 @@ func min(a, b int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

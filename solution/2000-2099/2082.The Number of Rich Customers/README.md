@@ -16,19 +16,19 @@
 | customer_id | int  |
 | amount      | int  |
 +-------------+------+
-bill_id 是这个表的主键。
+bill_id 是这个表的主键(具有唯一值的列)。
 每一行包含一个订单的金额及相关客户的信息。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>写一条 SQL 语句，查询<strong>至少有一个</strong>订单的金额<strong>严格大于</strong> <code>500</code> 的客户的数量。</p>
+<p>编写解决方案找出&nbsp;<strong>至少有一个&nbsp;</strong>订单的金额&nbsp;<strong>严格大于</strong> <code>500</code> 的客户的数量。</p>
 
-<p>查询结果格式如下示例所示：</p>
+<p>返回结果格式如下示例所示：</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例:</strong></p>
+<p><strong>示例 1:</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -56,22 +56,18 @@ Store 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```sql
 # Write your MySQL query statement below
 SELECT
-    COUNT(DISTINCT(customer_id)) AS rich_count
-FROM
-    Store
-WHERE
-    amount > 500;
+    COUNT(DISTINCT customer_id) AS rich_count
+FROM Store
+WHERE amount > 500;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

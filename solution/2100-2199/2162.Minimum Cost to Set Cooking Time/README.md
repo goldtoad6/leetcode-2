@@ -73,13 +73,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -106,10 +102,6 @@ class Solution:
         ans = min(f(m, s), f(m - 1, s + 60))
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -141,8 +133,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -168,8 +158,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minCostSetTime(startAt int, moveCost int, pushCost int, targetSeconds int) int {
 	m, s := targetSeconds/60, targetSeconds%60
@@ -194,25 +182,8 @@ func minCostSetTime(startAt int, moveCost int, pushCost int, targetSeconds int) 
 	}
 	return min(f(m, s), f(m-1, s+60))
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

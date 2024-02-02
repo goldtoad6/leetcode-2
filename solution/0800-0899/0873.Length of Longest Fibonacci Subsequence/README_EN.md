@@ -40,11 +40,9 @@
 
 ## Solutions
 
-Dynamic programming.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -64,8 +62,6 @@ class Solution:
                     ans = max(ans, dp[j][i])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,8 +95,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,8 +124,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func lenLongestFibSubseq(arr []int) int {
 	n := len(arr)
@@ -159,16 +151,7 @@ func lenLongestFibSubseq(arr []int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -202,10 +185,6 @@ var lenLongestFibSubseq = function (arr) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

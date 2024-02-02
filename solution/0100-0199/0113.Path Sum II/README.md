@@ -49,19 +49,13 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：DFS**
+### 方法一：DFS
 
 我们从根节点开始，递归遍历所有从根节点到叶子节点的路径，并记录路径和。当遍历到叶子节点时，如果此时路径和等于 `targetSum`，则将此路径加入答案。
 
 时间复杂度 $O(n^2)$，其中 $n$ 是二叉树的节点数。空间复杂度 $O(n)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 # Definition for a binary tree node.
@@ -88,10 +82,6 @@ class Solution:
         dfs(root, 0)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /**
@@ -134,8 +124,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -168,8 +156,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -189,9 +175,7 @@ func pathSum(root *TreeNode, targetSum int) (ans [][]int) {
 		s -= root.Val
 		t = append(t, root.Val)
 		if root.Left == nil && root.Right == nil && s == 0 {
-			cp := make([]int, len(t))
-			copy(cp, t)
-			ans = append(ans, cp)
+			ans = append(ans, slices.Clone(t))
 		}
 		dfs(root.Left, s)
 		dfs(root.Right, s)
@@ -201,8 +185,6 @@ func pathSum(root *TreeNode, targetSum int) (ans [][]int) {
 	return
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -228,9 +210,9 @@ use std::cell::RefCell;
 impl Solution {
     fn dfs(
         root: Option<Rc<RefCell<TreeNode>>>,
-        paths: &mut  Vec<i32>,
+        paths: &mut Vec<i32>,
         mut target_sum: i32,
-        res: &mut Vec<Vec<i32>>,
+        res: &mut Vec<Vec<i32>>
     ) {
         if let Some(node) = root {
             let mut node = node.borrow_mut();
@@ -255,13 +237,11 @@ impl Solution {
     pub fn path_sum(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
         let mut res = vec![];
         let mut paths = vec![];
-        Self::dfs(root, &mut paths,  target_sum, &mut res);
+        Self::dfs(root, &mut paths, target_sum, &mut res);
         res
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -294,10 +274,6 @@ var pathSum = function (root, targetSum) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

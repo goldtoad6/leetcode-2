@@ -16,7 +16,7 @@
 | product_name     | varchar |
 | product_category | varchar |
 +------------------+---------+
-product_id 是该表主键。
+product_id 是该表主键(具有唯一值的列)。
 该表包含该公司产品的数据。
 </pre>
 
@@ -32,14 +32,14 @@ product_id 是该表主键。
 | order_date    | date    |
 | unit          | int     |
 +---------------+---------+
-该表无主键，可能包含重复行。
-product_id 是表单 Products 的外键。
+该表可能包含重复行。
+product_id 是表单 Products 的外键（reference 列）。
 unit 是在日期 order_date 内下单产品的数目。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>写一个 SQL 语句，要求获取在 2020 年 2 月份下单的数量不少于 100 的产品的名字和数目。</p>
+<p>写一个解决方案，要求获取在 2020 年 2 月份下单的数量不少于 100 的产品的名字和数目。</p>
 
 <p>返回结果表单的 <strong>顺序无要求 </strong>。</p>
 
@@ -94,14 +94,21 @@ Orders 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT product_name, SUM(unit) AS unit
+FROM
+    Orders AS o
+    JOIN Products AS p ON o.product_id = p.product_id
+WHERE DATE_FORMAT(order_date, '%Y-%m') = '2020-02'
+GROUP BY o.product_id
+HAVING unit >= 100;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

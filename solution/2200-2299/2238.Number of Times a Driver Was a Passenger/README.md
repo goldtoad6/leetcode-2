@@ -16,17 +16,17 @@
 | driver_id    | int  |
 | passenger_id | int  |
 +--------------+------+
-ride_id 是该表的主键。
+ride_id 是该表的主键（具有唯一值的列）。
 该表的每一行都包含驾驶员的 ID 和在 ride_id 中乘车的乘客的 ID。
 注意 driver_id != passenger_id。</pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询，获取每个司机的 ID 和他们作为乘客的次数。</p>
+<p>编写解决方案，获取每个司机的 ID 和他们作为乘客的次数。</p>
 
 <p data-group="1-1">以&nbsp;<strong>任意顺序&nbsp;</strong>返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -59,16 +59,20 @@ ID = 11 的司机从来不是乘客。</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH T AS (SELECT DISTINCT driver_id FROM Rides)
+SELECT t.driver_id, COUNT(passenger_id) AS cnt
+FROM
+    T AS t
+    LEFT JOIN Rides AS r ON t.driver_id = r.passenger_id
+GROUP BY 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

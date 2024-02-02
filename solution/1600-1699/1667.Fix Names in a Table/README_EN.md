@@ -13,17 +13,17 @@
 | user_id        | int     |
 | name           | varchar |
 +----------------+---------+
-user_id is the primary key for this table.
+user_id is the primary key (column with unique values) for this table.
 This table contains the ID and the name of the user. The name consists of only lowercase and uppercase characters.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase.</p>
+<p>Write a solution to fix the names so that only the first character is uppercase and the rest are lowercase.</p>
 
 <p>Return the result table ordered by <code>user_id</code>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -48,11 +48,9 @@ Users table:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
-
-### **SQL**
-
-MySQL
 
 ```sql
 SELECT
@@ -64,7 +62,11 @@ ORDER BY
     user_id;
 ```
 
-SQL Server
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```sql
 SELECT
@@ -80,3 +82,5 @@ ORDER BY
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

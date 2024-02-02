@@ -37,33 +37,40 @@
 
 ## Solutions
 
-BFS.
+### Solution 1: BFS
+
+We can add all land cells to the queue $q$. If the queue is empty, or the number of elements in the queue equals the number of cells in the grid, it means that the grid contains only land or ocean, so return $-1$.
+
+Otherwise, we start BFS from the land cells. Define the initial step count $ans=-1$.
+
+In each round of search, we spread all cells in the queue in four directions. If a cell is an ocean cell, we mark it as a land cell and add it to the queue. After a round of spreading, we increase the step count by $1$. Repeat this process until the queue is empty.
+
+Finally, we return the step count $ans$.
+
+The time complexity is $O(n^2)$, and the space complexity is $O(n^2)$. Here, $n$ is the side length of the grid.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
     def maxDistance(self, grid: List[List[int]]) -> int:
         n = len(grid)
-        q = deque([(i, j) for i in range(n) for j in range(n) if grid[i][j] == 1])
+        q = deque((i, j) for i in range(n) for j in range(n) if grid[i][j])
         ans = -1
-        valid = False
+        if len(q) in (0, n * n):
+            return ans
+        dirs = (-1, 0, 1, 0, -1)
         while q:
-            ans += 1
             for _ in range(len(q)):
                 i, j = q.popleft()
-                for a, b in [[0, 1], [0, -1], [1, 0], [-1, 0]]:
-                    x, y = i + a, b + j
+                for a, b in pairwise(dirs):
+                    x, y = i + a, j + b
                     if 0 <= x < n and 0 <= y < n and grid[x][y] == 0:
-                        valid = True
                         grid[x][y] = 1
                         q.append((x, y))
-        return ans if valid else -1
+            ans += 1
+        return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,8 +106,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -139,8 +144,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxDistance(grid [][]int) int {
 	n := len(grid)
@@ -174,8 +177,6 @@ func maxDistance(grid [][]int) int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function maxDistance(grid: number[][]): number {
@@ -211,10 +212,6 @@ function maxDistance(grid: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

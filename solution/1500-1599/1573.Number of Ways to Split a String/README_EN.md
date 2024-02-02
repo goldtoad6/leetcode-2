@@ -49,9 +49,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,6 +62,7 @@ class Solution:
                 t += int(c == '1')
                 if t == x:
                     return i
+
         cnt, m = divmod(sum(c == '1' for c in s), 3)
         if m:
             return 0
@@ -73,8 +74,6 @@ class Solution:
         j1, j2 = find(cnt * 2), find(cnt * 2 + 1)
         return (i2 - i1) * (j2 - j1) % (10**9 + 7)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -115,8 +114,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -137,7 +134,7 @@ public:
         cnt /= 3;
         auto find = [&](int x) {
             int t = 0;
-            for (int i = 0; ; ++i) {
+            for (int i = 0;; ++i) {
                 t += s[i] == '1';
                 if (t == x) {
                     return i;
@@ -150,8 +147,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numWays(s string) int {
@@ -188,10 +183,6 @@ func numWays(s string) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

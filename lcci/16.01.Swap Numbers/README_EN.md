@@ -24,9 +24,27 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Bitwise Operation
 
-### **Python3**
+We can use the XOR operation $\oplus$ to implement the swap of two numbers.
+
+The XOR operation has the following three properties:
+
+-   Any number XORed with $0$ remains unchanged, i.e., $a \oplus 0=a$.
+-   Any number XORed with itself results in $0$, i.e., $a \oplus a=0$.
+-   The XOR operation satisfies the commutative and associative laws, i.e., $a \oplus b \oplus a=b \oplus a \oplus a=b \oplus (a \oplus a)=b \oplus 0=b$.
+
+Therefore, we can perform the following operations on two numbers $a$ and $b$ in the array $numbers$:
+
+-   $a=a \oplus b$, now $a$ stores the XOR result of the two numbers;
+-   $b=a \oplus b$, now $b$ stores the original value of $a$;
+-   $a=a \oplus b$, now $a$ stores the original value of $b$;
+
+In this way, we can swap two numbers without using a temporary variable.
+
+The time complexity is $O(1)$, and the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -36,8 +54,6 @@ class Solution:
         numbers[0] ^= numbers[1]
         return numbers
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -49,19 +65,6 @@ class Solution {
     }
 }
 ```
-
-## **TypeScript**
-
-```ts
-function swapNumbers(numbers: number[]): number[] {
-    numbers[0] ^= numbers[1];
-    numbers[1] ^= numbers[0];
-    numbers[0] ^= numbers[1];
-    return numbers;
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -75,8 +78,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func swapNumbers(numbers []int) []int {
 	numbers[0] ^= numbers[1]
@@ -86,10 +87,28 @@ func swapNumbers(numbers []int) []int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function swapNumbers(numbers: number[]): number[] {
+    numbers[0] ^= numbers[1];
+    numbers[1] ^= numbers[0];
+    numbers[0] ^= numbers[1];
+    return numbers;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```ts
+function swapNumbers(numbers: number[]): number[] {
+    [numbers[0], numbers[1]] = [numbers[1], numbers[0]];
+    return numbers;
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

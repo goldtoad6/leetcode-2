@@ -17,7 +17,7 @@
 | x           | int  |
 | y           | int  |
 +-------------+------+
-(x, y) 是这张表的主键
+(x, y) 是该表的主键列(具有唯一值的列的组合)。
 这张表的每一行表示 X-Y 平面上一个点的位置
 </pre>
 
@@ -25,13 +25,13 @@
 
 <p><code>p<sub>1</sub>(x<sub>1</sub>, y<sub>1</sub>)</code> 和 <code>p<sub>2</sub>(x<sub>2</sub>, y<sub>2</sub>)</code> 这两点之间的距离是 <code>sqrt((x<sub>2</sub> - x<sub>1</sub>)<sup>2</sup> + (y<sub>2</sub> - y<sub>1</sub>)<sup>2</sup>)</code> 。</p>
 
-<p>请你写一个 SQL 查询报告 <code>Point2D</code> 表中任意两点之间的最短距离。保留 <strong>2 位小数</strong> 。</p>
+<p>编写解决方案，报告 <code>Point2D</code> 表中任意两点之间的最短距离。保留 <strong>2 位小数</strong> 。</p>
 
-<p>查询结果格式如下例所示。</p>
+<p>返回结果格式如下例所示。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例：</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -58,14 +58,20 @@ Point2D table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT ROUND(SQRT(POW(p1.x - p2.x, 2) + POW(p1.y - p2.y, 2)), 2) AS shortest
+FROM
+    Point2D AS p1
+    JOIN Point2D AS p2 ON p1.x != p2.x OR p1.y != p2.y
+ORDER BY 1
+LIMIT 1;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

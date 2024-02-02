@@ -54,9 +54,9 @@ Note that strs[0] &gt; strs[1] - the array strs is not necessarily in lexicograp
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -69,8 +69,6 @@ class Solution:
                     dp[i] = max(dp[i], dp[j] + 1)
         return n - max(dp)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +99,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -130,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minDeletionSize(strs []string) int {
 	n := len(strs[0])
@@ -157,19 +151,8 @@ func minDeletionSize(strs []string) int {
 	}
 	return n - mx
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -38,9 +38,13 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We use a hash table $cnt$ to count the frequency of each number in the array $arr$, and then use another hash table $vis$ to count the types of frequencies. Finally, we check whether the sizes of $cnt$ and $vis$ are equal.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -48,8 +52,6 @@ class Solution:
         cnt = Counter(arr)
         return len(set(cnt.values())) == len(cnt)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -62,8 +64,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -85,8 +85,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func uniqueOccurrences(arr []int) bool {
 	cnt := map[int]int{}
@@ -104,10 +102,16 @@ func uniqueOccurrences(arr []int) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function uniqueOccurrences(arr: number[]): boolean {
+    const cnt: Map<number, number> = new Map();
+    for (const x of arr) {
+        cnt.set(x, (cnt.get(x) || 0) + 1);
+    }
+    return cnt.size === new Set(cnt.values()).size;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

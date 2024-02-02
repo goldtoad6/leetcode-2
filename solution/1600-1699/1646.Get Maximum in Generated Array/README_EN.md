@@ -58,9 +58,9 @@ Hence, nums = [0,1,1,2,1,3,2,3], and the maximum is max(0,1,1,2,1,3,2,3) = 3.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -73,8 +73,6 @@ class Solution:
             nums[i] = nums[i >> 1] if i % 2 == 0 else nums[i >> 1] + nums[(i >> 1) + 1]
         return max(nums)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -112,10 +108,8 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func getMaximumGenerated(n int) (ans int) {
+func getMaximumGenerated(n int) int {
 	if n < 2 {
 		return n
 	}
@@ -127,20 +121,10 @@ func getMaximumGenerated(n int) (ans int) {
 		} else {
 			nums[i] = nums[i/2] + nums[i/2+1]
 		}
-		ans = max(ans, nums[i])
 	}
-	return
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return slices.Max(nums)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function getMaximumGenerated(n: number): number {
@@ -150,17 +134,12 @@ function getMaximumGenerated(n: number): number {
     const nums: number[] = new Array(n + 1).fill(0);
     nums[1] = 1;
     for (let i = 2; i < n + 1; ++i) {
-        nums[i] =
-            i % 2 === 0 ? nums[i >> 1] : nums[i >> 1] + nums[(i >> 1) + 1];
+        nums[i] = i % 2 === 0 ? nums[i >> 1] : nums[i >> 1] + nums[(i >> 1) + 1];
     }
     return Math.max(...nums);
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

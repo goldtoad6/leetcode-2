@@ -50,9 +50,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -62,8 +62,11 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+    def lowestCommonAncestor(
+        self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode'
+    ) -> 'TreeNode':
         def dfs(root, p, q):
             if root is None:
                 return False
@@ -80,8 +83,6 @@ class Solution:
         dfs(root, p, q)
         return ans
 ```
-
-### **Java**
 
 ```java
 /**
@@ -117,8 +118,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -157,10 +156,41 @@ private:
 };
 ```
 
-### **...**
-
-```
-
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+    const dfs = root => {
+        if (!root) {
+            return false;
+        }
+        const l = dfs(root.left);
+        const r = dfs(root.right);
+        if (l && r) {
+            ans = root;
+        }
+        if ((l || r) && (root.val === p.val || root.val === q.val)) {
+            ans = root;
+        }
+        return l || r || root.val === p.val || root.val === q.val;
+    };
+    let ans = null;
+    dfs(root);
+    return ans;
+};
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

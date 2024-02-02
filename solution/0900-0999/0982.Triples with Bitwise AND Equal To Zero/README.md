@@ -56,9 +56,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：枚举 + 计数**
+### 方法一：枚举 + 计数
 
 我们可以先枚举任意两个数 $x$ 和 $y$，用哈希表或数组 $cnt$ 统计它们的按位与结果 $x \& y$ 出现的次数。
 
@@ -70,20 +68,12 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def countTriplets(self, nums: List[int]) -> int:
         cnt = Counter(x & y for x in nums for y in nums)
         return sum(v for xy, v in cnt.items() for z in nums if xy & z == 0)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -111,8 +101,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -138,14 +126,9 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countTriplets(nums []int) (ans int) {
-	mx := 0
-	for _, x := range nums {
-		mx = max(mx, x)
-	}
+	mx := slices.Max(nums)
 	cnt := make([]int, mx+1)
 	for _, x := range nums {
 		for _, y := range nums {
@@ -161,19 +144,29 @@ func countTriplets(nums []int) (ans int) {
 	}
 	return
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function countTriplets(nums: number[]): number {
+    const mx = Math.max(...nums);
+    const cnt: number[] = Array(mx + 1).fill(0);
+    for (const x of nums) {
+        for (const y of nums) {
+            cnt[x & y]++;
+        }
+    }
+    let ans = 0;
+    for (let xy = 0; xy <= mx; ++xy) {
+        for (const z of nums) {
+            if ((xy & z) === 0) {
+                ans += cnt[xy];
+            }
+        }
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

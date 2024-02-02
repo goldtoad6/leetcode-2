@@ -13,7 +13,7 @@
 | student_id  | int  |
 | score       | int  |
 +-------------+------+
-student_id is the primary key for this table.
+In SQL, student_id is the primary key for this table.
 Each row contains information about the score of one student from New York University in an exam.
 </pre>
 
@@ -28,7 +28,7 @@ Each row contains information about the score of one student from New York Unive
 | student_id  | int  |
 | score       | int  |
 +-------------+------+
-student_id is the primary key for this table.
+In SQL, student_id is the primary key for this table.
 Each row contains information about the score of one student from California University in an exam.
 </pre>
 
@@ -38,7 +38,7 @@ Each row contains information about the score of one student from California Uni
 
 <p>An <strong>excellent student</strong> is a student that scored <code>90%</code> or more in the exam.</p>
 
-<p>Write an SQL query to report:</p>
+<p>Return:</p>
 
 <ul>
 	<li><strong>&quot;New York University&quot;</strong> if New York University wins the competition.</li>
@@ -46,7 +46,7 @@ Each row contains information about the score of one student from California Uni
 	<li><strong>&quot;No Winner&quot;</strong> if the competition ends in a draw.</li>
 </ul>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -135,9 +135,9 @@ Both New York University and California University have 1 excellent student.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **SQL**
+<!-- tabs:start -->
 
 ```sql
 # Write your MySQL query statement below
@@ -148,8 +148,10 @@ SELECT
         ELSE 'No Winner'
     END AS winner
 FROM
-    (SELECT count(1) cnt FROM NewYork WHERE score >= 90) n1,
-    (SELECT COUNT(1) cnt FROM California WHERE score >= 90) n2;
+    (SELECT COUNT(1) AS cnt FROM NewYork WHERE score >= 90) AS n1,
+    (SELECT COUNT(1) AS cnt FROM California WHERE score >= 90) AS n2;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

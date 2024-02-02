@@ -50,23 +50,21 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们定义 $f[i][j]$ 表示以 $nums[i]$ 结尾且公差为 $j$ 的等差数列的最大长度。初始时 $f[i][j]=1$，即每个元素自身都是一个长度为 $1$ 的等差数列。
 
-考虑 $f[i][j]$，我们可以枚举 $nums[i]$ 的前一个元素 $nums[k]$，那么 $d=nums[i]-nums[k]+500$，此时有 $f[i][j]=\max(f[i][j], f[k][j]+1)$，然后我们更新答案 $ans=\max(ans, f[i][j])$。
+> 由于公差可能为负数，且最大差值为 $500$，因此，我们可以将统一将公差加上 $500$，这样公差的范围就变成了 $[0, 1000]$。
+
+考虑 $f[i]$，我们可以枚举 $nums[i]$ 的前一个元素 $nums[k]$，那么公差 $j=nums[i]-nums[k]+500$，此时有 $f[i][j]=\max(f[i][j], f[k][j]+1)$，然后我们更新答案 $ans=\max(ans, f[i][j])$。
 
 最后返回答案即可。
 
-时间复杂度 $O(n \times d)$，空间复杂度 $O(n \times d)$。其中 $n$ 和 $d$ 分别是数组 $nums$ 的长度以及数组 $nums$ 中元素的最大值与最小值的差值。
+> 如果初始时 $f[i][j]=0$，那么我们需要在最后返回答案时加上 $1$。
+
+时间复杂度 $O(n \times (d + n))$，空间复杂度 $O(n \times d)$。其中 $n$ 和 $d$ 分别是数组 $nums$ 的长度以及数组 $nums$ 中元素的最大值与最小值的差值。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -81,10 +79,6 @@ class Solution:
                 ans = max(ans, f[i][j])
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -103,8 +97,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -126,8 +118,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestArithSeqLength(nums []int) int {
 	n := len(nums)
@@ -145,19 +135,24 @@ func longestArithSeqLength(nums []int) int {
 	}
 	return ans + 1
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function longestArithSeqLength(nums: number[]): number {
+    const n = nums.length;
+    let ans = 0;
+    const f: number[][] = Array.from({ length: n }, () => new Array(1001).fill(0));
+    for (let i = 1; i < n; ++i) {
+        for (let k = 0; k < i; ++k) {
+            const j = nums[i] - nums[k] + 500;
+            f[i][j] = Math.max(f[i][j], f[k][j] + 1);
+            ans = Math.max(ans, f[i][j]);
+        }
+    }
+    return ans + 1;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

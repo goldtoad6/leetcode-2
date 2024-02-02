@@ -59,24 +59,101 @@ The array product is 1 * 6 * 1 * 6 * 1 * 6 * 7 = 1512, which is the minimum poss
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def minNonZeroProduct(self, p: int) -> int:
+        mod = 10**9 + 7
+        return (2**p - 1) * pow(2**p - 2, 2 ** (p - 1) - 1, mod) % mod
 ```
-
-### **Java**
 
 ```java
+class Solution {
+    public int minNonZeroProduct(int p) {
+        final int mod = (int) 1e9 + 7;
+        long a = ((1L << p) - 1) % mod;
+        long b = qpow(((1L << p) - 2) % mod, (1L << (p - 1)) - 1, mod);
+        return (int) (a * b % mod);
+    }
 
+    private long qpow(long a, long n, int mod) {
+        long ans = 1;
+        for (; n > 0; n >>= 1) {
+            if ((n & 1) == 1) {
+                ans = ans * a % mod;
+            }
+            a = a * a % mod;
+        }
+        return ans;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int minNonZeroProduct(int p) {
+        using ll = long long;
+        const int mod = 1e9 + 7;
+        auto qpow = [](ll a, ll n) {
+            ll ans = 1;
+            for (; n; n >>= 1) {
+                if (n & 1) {
+                    ans = ans * a % mod;
+                }
+                a = a * a % mod;
+            }
+            return ans;
+        };
+        ll a = ((1LL << p) - 1) % mod;
+        ll b = qpow(((1LL << p) - 2) % mod, (1L << (p - 1)) - 1);
+        return a * b % mod;
+    }
+};
 ```
 
+```go
+func minNonZeroProduct(p int) int {
+	const mod int = 1e9 + 7
+	qpow := func(a, n int) int {
+		ans := 1
+		for ; n > 0; n >>= 1 {
+			if n&1 == 1 {
+				ans = ans * a % mod
+			}
+			a = a * a % mod
+		}
+		return ans
+	}
+	a := ((1 << p) - 1) % mod
+	b := qpow(((1<<p)-2)%mod, (1<<(p-1))-1)
+	return a * b % mod
+}
+```
+
+```ts
+function minNonZeroProduct(p: number): number {
+    const mod = BigInt(1e9 + 7);
+
+    const qpow = (a: bigint, n: bigint): bigint => {
+        let ans = BigInt(1);
+        for (; n; n >>= BigInt(1)) {
+            if (n & BigInt(1)) {
+                ans = (ans * a) % mod;
+            }
+            a = (a * a) % mod;
+        }
+        return ans;
+    };
+    const a = (2n ** BigInt(p) - 1n) % mod;
+    const b = qpow((2n ** BigInt(p) - 2n) % mod, 2n ** (BigInt(p) - 1n) - 1n);
+    return Number((a * b) % mod);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -6,9 +6,11 @@
 
 <p>You are given an <code>m x n</code> integer matrix <code>grid</code>, and three integers <code>row</code>, <code>col</code>, and <code>color</code>. Each value in the grid represents the color of the grid square at that location.</p>
 
-<p>Two squares belong to the same <strong>connected component</strong> if they have the same color and are next to each other in any of the 4 directions.</p>
+<p>Two squares are called <strong>adjacent</strong> if they are next to each other in any of the 4 directions.</p>
 
-<p>The <strong>border of a connected component</strong> is all the squares in the connected component that are either <strong>4-directionally</strong> adjacent to a square not in the component, or on the boundary of the grid (the first or last row or column).</p>
+<p>Two squares belong to the same <strong>connected component</strong> if they have the same color and they are adjacent.</p>
+
+<p>The <strong>border of a connected component</strong> is all the squares in the connected component that are either adjacent to (at least) a square not in the component, or on the boundary of the grid (the first or last row or column).</p>
 
 <p>You should color the <strong>border</strong> of the <strong>connected component</strong> that contains the square <code>grid[row][col]</code> with <code>color</code>.</p>
 
@@ -39,9 +41,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +68,6 @@ class Solution:
         dfs(row, col, grid[row][col])
         return grid
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -108,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -143,8 +141,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func colorBorder(grid [][]int, row int, col int, color int) [][]int {
 	m, n := len(grid), len(grid[0])
@@ -176,15 +172,8 @@ func colorBorder(grid [][]int, row int, col int, color int) [][]int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function colorBorder(
-    grid: number[][],
-    row: number,
-    col: number,
-    color: number,
-): number[][] {
+function colorBorder(grid: number[][], row: number, col: number, color: number): number[][] {
     const m = grid.length;
     const n = grid[0].length;
     const vis = new Array(m).fill(0).map(() => new Array(n).fill(false));
@@ -212,10 +201,6 @@ function colorBorder(
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

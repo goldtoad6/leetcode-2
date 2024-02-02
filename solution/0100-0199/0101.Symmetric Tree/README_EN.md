@@ -34,9 +34,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Recursion
 
-### **Python3**
+We design a function $dfs(root1, root2)$ to determine whether two binary trees are symmetric. The answer is $dfs(root, root)$.
+
+The logic of the function $dfs(root1, root2)$ is as follows:
+
+-   If both $root1$ and $root2$ are null, then the two binary trees are symmetric, return `true`.
+-   If only one of $root1$ and $root2$ is null, or if $root1.val \neq root2.val$, then the two binary trees are not symmetric, return `false`.
+-   Otherwise, determine whether the left subtree of $root1$ is symmetric to the right subtree of $root2$, and whether the right subtree of $root1$ is symmetric to the left subtree of $root2$. Here we use recursion.
+
+The time complexity is $O(n)$, and the space complexity is $O(n)$. Here, $n$ is the number of nodes in the binary tree.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -56,8 +66,6 @@ class Solution:
 
         return dfs(root, root)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -92,8 +100,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -119,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -144,8 +148,6 @@ func isSymmetric(root *TreeNode) bool {
 	return dfs(root, root)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -176,8 +178,6 @@ function isSymmetric(root: TreeNode | null): boolean {
     return dfs(root.left, root.right);
 }
 ```
-
-### **Rust**
 
 ```rust
 // Definition for a binary tree node.
@@ -210,9 +210,9 @@ impl Solution {
         }
         let node1 = root1.as_ref().unwrap().borrow();
         let node2 = root2.as_ref().unwrap().borrow();
-        node1.val == node2.val
-            && Self::dfs(&node1.left, &node2.right)
-            && Self::dfs(&node1.right, &node2.left)
+        node1.val == node2.val &&
+            Self::dfs(&node1.left, &node2.right) &&
+            Self::dfs(&node1.right, &node2.left)
     }
 
     pub fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
@@ -221,6 +221,35 @@ impl Solution {
     }
 }
 ```
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function (root) {
+    function dfs(root1, root2) {
+        if (!root1 && !root2) return true;
+        if (!root1 || !root2 || root1.val != root2.val) return false;
+        return dfs(root1.left, root2.right) && dfs(root1.right, root2.left);
+    }
+    return dfs(root, root);
+};
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```rust
 // Definition for a binary tree node.
@@ -272,10 +301,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -69,9 +69,9 @@ i=3:
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -101,8 +101,6 @@ class Solution:
             ans[i] = max(ans[i], ans[i + 1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -145,8 +143,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -187,8 +183,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMaximums(nums []int) []int {
 	n := len(nums)
@@ -228,19 +222,8 @@ func findMaximums(nums []int) []int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

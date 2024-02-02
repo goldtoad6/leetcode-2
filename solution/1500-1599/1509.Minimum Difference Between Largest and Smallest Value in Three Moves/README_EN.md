@@ -32,7 +32,7 @@ After performing 3 moves, the difference between the minimum and maximum is 3 - 
 In the first move, change 5 to 0. nums becomes [1,0,0,10,14].
 In the second move, change 10 to 0. nums becomes [1,0,0,0,14].
 In the third move, change 14 to 1. nums becomes [1,0,0,0,1].
-After performing 3 moves, the difference between the minimum and maximum is 1 - 0 = 0.
+After performing 3 moves, the difference between the minimum and maximum is 1 - 0 = 1.
 It can be shown that there is no way to make the difference 0 in 3 moves.</pre>
 
 <p><strong class="example">Example 3:</strong></p>
@@ -41,9 +41,9 @@ It can be shown that there is no way to make the difference 0 in 3 moves.</pre>
 <strong>Input:</strong> nums = [3,100,20]
 <strong>Output:</strong> 0
 <strong>Explanation:</strong> We can make at most 3 moves.
-In the first move, change 100 to 7. nums becomes [4,7,20].
-In the second move, change 20 to 7. nums becomes [4,7,7].
-In the third move, change 4 to 3. nums becomes [7,7,7].
+In the first move, change 100 to 7. nums becomes [3,7,20].
+In the second move, change 20 to 7. nums becomes [3,7,7].
+In the third move, change 3 to 7. nums becomes [7,7,7].
 After performing 3 moves, the difference between the minimum and maximum is 7 - 7 = 0.
 </pre>
 
@@ -57,9 +57,9 @@ After performing 3 moves, the difference between the minimum and maximum is 7 - 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -74,8 +74,6 @@ class Solution:
             ans = min(ans, nums[n - 1 - r] - nums[l])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -94,8 +92,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -116,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minDifference(nums []int) int {
 	n := len(nums)
@@ -132,19 +126,8 @@ func minDifference(nums []int) int {
 	}
 	return ans
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

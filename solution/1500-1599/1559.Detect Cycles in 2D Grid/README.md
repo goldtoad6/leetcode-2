@@ -58,75 +58,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-构造并查集，遍历每个坐标 `(i, j)`，如果下方或者右侧的元素 `(x, y)` 与当前元素 `(i, j)` 相同，进行合并操作。若是，若此前两个坐标已经处于连通状态，再进行合并时会形成环，直接返回 true。否则遍历结束返回 false。
-
-并查集模板：
-
-模板 1——朴素并查集：
-
-```python
-# 初始化，p存储每个点的父节点
-p = list(range(n))
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-```
-
-模板 2——维护 size 的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，size只有当节点是祖宗节点时才有意义，表示祖宗节点所在集合中，点的数量
-p = list(range(n))
-size = [1] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-# 合并a和b所在的两个集合
-if find(a) != find(b):
-    size[find(b)] += size[find(a)]
-    p[find(a)] = find(b)
-```
-
-模板 3——维护到祖宗节点距离的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，d[x]存储x到p[x]的距离
-p = list(range(n))
-d = [0] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        t = find(p[x])
-        d[x] += d[p[x]]
-        p[x] = t
-    return p[x]
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-d[find(a)] = distance
-```
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -148,10 +82,6 @@ class Solution:
                         p[find(x * n + y)] = find(i * n + j)
         return False
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -191,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -223,8 +151,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func containsCycle(grid [][]byte) bool {
@@ -258,7 +184,64 @@ func containsCycle(grid [][]byte) bool {
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn contains_cycle(grid: Vec<Vec<char>>) -> bool {
+        let n = grid.len();
+        let m = grid[0].len();
+        let mut d_set: Vec<usize> = vec![0; n * m];
+
+        // Initialize the disjoint set
+        for i in 0..n * m {
+            d_set[i] = i;
+        }
+
+        // Traverse the grid
+        for i in 0..n {
+            for j in 0..m {
+                if i + 1 < n && grid[i + 1][j] == grid[i][j] {
+                    // Check the below cell
+                    let p_curr = Self::find(i * m + j, &mut d_set);
+                    let p_below = Self::find((i + 1) * m + j, &mut d_set);
+                    if p_curr == p_below {
+                        return true;
+                    }
+                    // Otherwise, union the two cells
+                    Self::union(p_curr, p_below, &mut d_set);
+                }
+                // Same to the right cell
+                if j + 1 < m && grid[i][j + 1] == grid[i][j] {
+                    let p_curr = Self::find(i * m + j, &mut d_set);
+                    let p_right = Self::find(i * m + (j + 1), &mut d_set);
+                    if p_curr == p_right {
+                        return true;
+                    }
+                    // Otherwise, union the two cells
+                    Self::union(p_curr, p_right, &mut d_set);
+                }
+            }
+        }
+
+        false
+    }
+
+    #[allow(dead_code)]
+    fn find(x: usize, d_set: &mut Vec<usize>) -> usize {
+        if d_set[x] != x {
+            d_set[x] = Self::find(d_set[x], d_set);
+        }
+        d_set[x]
+    }
+
+    #[allow(dead_code)]
+    fn union(x: usize, y: usize, d_set: &mut Vec<usize>) {
+        let p_x = Self::find(x, d_set);
+        let p_y = Self::find(y, d_set);
+        d_set[p_x] = p_y;
+    }
+}
+```
 
 ```js
 /**
@@ -294,10 +277,6 @@ var containsCycle = function (grid) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

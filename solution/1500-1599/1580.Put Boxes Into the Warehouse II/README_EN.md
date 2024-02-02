@@ -55,9 +55,9 @@ Other valid solutions are to put the green box in room 2 or to put the orange bo
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -83,8 +83,6 @@ class Solution:
             ans, i = ans + 1, i + 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -122,8 +120,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -160,8 +156,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxBoxesInWarehouse(boxes []int, warehouse []int) (ans int) {
 	n := len(warehouse)
@@ -194,26 +188,8 @@ func maxBoxesInWarehouse(boxes []int, warehouse []int) (ans int) {
 	}
 	return
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

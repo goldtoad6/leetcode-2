@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +60,6 @@ class Solution:
             ans = max(ans, t)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxVowels(s string, k int) int {
@@ -139,16 +133,7 @@ func maxVowels(s string, k int) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxVowels(s: string, k: number): number {
@@ -175,10 +160,39 @@ function maxVowels(s: string, k: number): number {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @param Integer $k
+     * @return Integer
+     */
+    function isVowel($c) {
+        return $c === 'a' || $c === 'e' || $c === 'i' || $c === 'o' || $c === 'u';
+    }
+    function maxVowels($s, $k) {
+        $cnt = 0;
+        $rs = 0;
+        for ($i = 0; $i < $k; $i++) {
+            if ($this->isVowel($s[$i])) {
+                $cnt++;
+            }
+        }
+        $rs = $cnt;
+        for ($j = $k; $j < strlen($s); $j++) {
+            if ($this->isVowel($s[$j - $k])) {
+                $cnt--;
+            }
+            if ($this->isVowel($s[$j])) {
+                $cnt++;
+            }
+            $rs = max($rs, $cnt);
+        }
+        return $rs;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

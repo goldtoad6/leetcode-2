@@ -41,9 +41,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,8 +63,6 @@ class Solution:
                 j += 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -88,8 +86,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +106,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func intervalIntersection(firstList [][]int, secondList [][]int) [][]int {
 	m, n := len(firstList), len(secondList)
@@ -130,29 +124,10 @@ func intervalIntersection(firstList [][]int, secondList [][]int) [][]int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **TypeScript**
-
 ```ts
-function intervalIntersection(
-    firstList: number[][],
-    secondList: number[][],
-): number[][] {
+function intervalIntersection(firstList: number[][], secondList: number[][]): number[][] {
     const n = firstList.length;
     const m = secondList.length;
     const res = [];
@@ -174,13 +149,11 @@ function intervalIntersection(
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn interval_intersection(
         first_list: Vec<Vec<i32>>,
-        second_list: Vec<Vec<i32>>,
+        second_list: Vec<Vec<i32>>
     ) -> Vec<Vec<i32>> {
         let n = first_list.len();
         let m = second_list.len();
@@ -203,10 +176,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -54,13 +54,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,10 +68,6 @@ class Solution:
             ans.append(c)
         return ''.join(ans)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -93,8 +85,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +100,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func makeFancyString(s string) string {
 	ans := []rune{}
@@ -126,10 +114,26 @@ func makeFancyString(s string) string {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function makeFancyString($s) {
+        $rs = '';
+        for ($i = 0; $i < strlen($s); $i++) {
+            if ($s[$i] == $s[$i + 1] && $s[$i] == $s[$i + 2]) {
+                continue;
+            } else {
+                $rs .= $s[$i];
+            }
+        }
+        return $rs;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

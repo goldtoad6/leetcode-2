@@ -35,9 +35,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -57,8 +57,6 @@ class Solution:
             q.append(node.right)
         return all(node is None for node in q)
 ```
-
-### **Java**
 
 ```java
 /**
@@ -93,8 +91,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -110,7 +106,7 @@ class Solution {
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
-        queue<TreeNode*> q {{root}};
+        queue<TreeNode*> q{{root}};
         while (q.front()) {
             root = q.front();
             q.pop();
@@ -122,8 +118,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -149,10 +143,6 @@ func isCompleteTree(root *TreeNode) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

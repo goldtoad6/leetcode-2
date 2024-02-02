@@ -14,17 +14,17 @@
 | start_day   | date |
 | end_day     | date |
 +-------------+------+
-There is no primary key in this table. It may contain duplicates.
+This table may contain duplicates rows.
 Each row of this table indicates the start day and end day of an event and the hall in which the event is held.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to merge all the overlapping events that are held <strong>in the same hall</strong>. Two events overlap if they have <strong>at least one day</strong> in common.</p>
+<p>Write a solution to merge all the overlapping events that are held <strong>in the same hall</strong>. Two events overlap if they have <strong>at least one day</strong> in common.</p>
 
 <p>Return the result table <strong>in any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The&nbsp;result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -63,12 +63,51 @@ Hall 3:
 
 ## Solutions
 
+### Solution 1
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    S AS (
+        SELECT
+            hall_id,
+            start_day,
+            end_day,
+            MAX(end_day) OVER (
+                PARTITION BY hall_id
+                ORDER BY start_day
+            ) AS cur_max_end_day
+        FROM HallEvents
+    ),
+    T AS (
+        SELECT
+            *,
+            IF(
+                start_day <= LAG(cur_max_end_day) OVER (
+                    PARTITION BY hall_id
+                    ORDER BY start_day
+                ),
+                0,
+                1
+            ) AS start
+        FROM S
+    ),
+    P AS (
+        SELECT
+            *,
+            SUM(start) OVER (
+                PARTITION BY hall_id
+                ORDER BY start_day
+            ) AS gid
+        FROM T
+    )
+SELECT hall_id, MIN(start_day) AS start_day, MAX(end_day) AS end_day
+FROM P
+GROUP BY hall_id, gid;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

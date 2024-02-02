@@ -44,15 +44,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-“哈希表”实现。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -65,10 +59,6 @@ class Solution:
                 counter[num] -= 1
         return res
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -93,7 +83,79 @@ class Solution {
 }
 ```
 
-### **JavaScript**
+```cpp
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> counter;
+        for (int num : nums1) ++counter[num];
+        vector<int> res;
+        for (int num : nums2) {
+            if (counter[num] > 0) {
+                --counter[num];
+                res.push_back(num);
+            }
+        }
+        return res;
+    }
+};
+```
+
+```go
+func intersect(nums1 []int, nums2 []int) []int {
+	counter := make(map[int]int)
+	for _, num := range nums1 {
+		counter[num]++
+	}
+	var res []int
+	for _, num := range nums2 {
+		if counter[num] > 0 {
+			counter[num]--
+			res = append(res, num)
+		}
+	}
+	return res
+}
+```
+
+```ts
+function intersect(nums1: number[], nums2: number[]): number[] {
+    const map = new Map<number, number>();
+    for (const num of nums1) {
+        map.set(num, (map.get(num) ?? 0) + 1);
+    }
+
+    const res = [];
+    for (const num of nums2) {
+        if (map.has(num) && map.get(num) !== 0) {
+            res.push(num);
+            map.set(num, map.get(num) - 1);
+        }
+    }
+    return res;
+}
+```
+
+```rust
+use std::collections::HashMap;
+impl Solution {
+    pub fn intersect(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let mut map = HashMap::new();
+        for num in nums1.iter() {
+            *map.entry(num).or_insert(0) += 1;
+        }
+
+        let mut res = vec![];
+        for num in nums2.iter() {
+            if map.contains_key(num) && map.get(num).unwrap() != &0 {
+                map.insert(num, map.get(&num).unwrap() - 1);
+                res.push(*num);
+            }
+        }
+        res
+    }
+}
+```
 
 ```js
 /**
@@ -117,89 +179,36 @@ var intersect = function (nums1, nums2) {
 };
 ```
 
-### **C++**
+```cs
+public class Solution {
+    public int[] Intersect(int[] nums1, int[] nums2) {
+        HashSet<int> hs1 = new HashSet<int>(nums1.Concat(nums2).ToArray());
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        List<int> result = new List<int>();
 
-```cpp
-class Solution {
-public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        unordered_map<int, int> counter;
-        for (int num : nums1) ++counter[num];
-        vector<int> res;
-        for (int num : nums2) {
-            if (counter[num] > 0) {
-                --counter[num];
-                res.push_back(num);
+        foreach (int x in hs1) {
+            dict[x] = 0;
+        }
+
+        foreach (int x in nums1) {
+            if (dict.ContainsKey(x)) {
+                dict[x] += 1;
+            } else {
+                dict[x] = 1;
             }
         }
-        return res;
-    }
-};
-```
 
-### **Go**
-
-```go
-func intersect(nums1 []int, nums2 []int) []int {
-	counter := make(map[int]int)
-	for _, num := range nums1 {
-		counter[num]++
-	}
-	var res []int
-	for _, num := range nums2 {
-		if counter[num] > 0 {
-			counter[num]--
-			res = append(res, num)
-		}
-	}
-	return res
-}
-```
-
-### **TypeScript**
-
-```ts
-function intersect(nums1: number[], nums2: number[]): number[] {
-    const map = new Map<number, number>();
-    for (const num of nums1) {
-        map.set(num, (map.get(num) ?? 0) + 1);
-    }
-
-    const res = [];
-    for (const num of nums2) {
-        if (map.has(num) && map.get(num) !== 0) {
-            res.push(num);
-            map.set(num, map.get(num) - 1);
-        }
-    }
-    return res;
-}
-```
-
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-impl Solution {
-    pub fn intersect(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
-        let mut map = HashMap::new();
-        for num in nums1.iter() {
-            *map.entry(num).or_insert(0) += 1;
-        }
-
-        let mut res = vec![];
-        for num in nums2.iter() {
-            if map.contains_key(num) && map.get(num).unwrap() != &0 {
-                map.insert(num, map.get(&num).unwrap() - 1);
-                res.push(*num);
+        foreach (int x in nums2) {
+            if (dict[x] > 0) {
+                result.Add(x);
+                dict[x] -=1;
             }
         }
-        res
+
+        return result.ToArray();
     }
 }
 ```
-
-### **PHP**
 
 ```php
 class Solution {
@@ -224,10 +233,6 @@ class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

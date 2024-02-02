@@ -4,7 +4,7 @@
 
 列表所有题解均由 [开源社区 Doocs](https://github.com/doocs) 贡献者提供，正在完善中，欢迎贡献你的题解！
 
-快速搜索题号、题解、标签等，请善用 <kbd>Control</kbd>+<kbd>F</kbd>（或者 <kbd>Command</kbd>+<kbd>F</kbd>）。
+快速搜索题号、题解、标签等，请善用 <kbd>Control</kbd> + <kbd>F</kbd>（或者 <kbd>Command</kbd> + <kbd>F</kbd>）。
 
 | 题号                                                                 | 题解                                                                                                                     | 标签                                                                                | 难度 |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---- |
@@ -80,7 +80,29 @@
 | [LCP 69](https://leetcode.cn/problems/rMeRt2)                        | [ Hello LeetCode!](/lcp/LCP%2069.%20Hello%20LeetCode%21/README.md)                                                       | `位运算`,`数组`,`字符串`,`动态规划`,`状态压缩`                                      | 困难 |
 | [LCP 70](https://leetcode.cn/problems/XxZZjK)                        | [ 沙地治理](/lcp/LCP%2070.%20%E6%B2%99%E5%9C%B0%E6%B2%BB%E7%90%86/README.md)                                             | `数组`,`数学`                                                                       | 困难 |
 | [LCP 71](https://leetcode.cn/problems/kskhHQ)                        | [ 集水器](/lcp/LCP%2071.%20%E9%9B%86%E6%B0%B4%E5%99%A8/README.md)                                                        | `并查集`,`数组`,`矩阵`                                                              | 困难 |
+| [LCP 72](https://leetcode.cn/problems/hqCnmP)                        | [ 补给马车](/lcp/LCP%2072.%20%E8%A1%A5%E7%BB%99%E9%A9%AC%E8%BD%A6/README.md)                                             |                                                                                     | 简单 |
+| [LCP 73](https://leetcode.cn/problems/0Zeoeg)                        | [ 探险营地](/lcp/LCP%2073.%20%E6%8E%A2%E9%99%A9%E8%90%A5%E5%9C%B0/README.md)                                             |                                                                                     | 中等 |
+| [LCP 74](https://leetcode.cn/problems/xepqZ5)                        | [ 最强祝福力场](/lcp/LCP%2074.%20%E6%9C%80%E5%BC%BA%E7%A5%9D%E7%A6%8F%E5%8A%9B%E5%9C%BA/README.md)                       |                                                                                     | 中等 |
+| [LCP 75](https://leetcode.cn/problems/rdmXM7)                        | [ 传送卷轴](/lcp/LCP%2075.%20%E4%BC%A0%E9%80%81%E5%8D%B7%E8%BD%B4/README.md)                                             |                                                                                     | 困难 |
+| [LCP 76](https://leetcode.cn/problems/1ybDKD)                        | [ 魔法棋盘](/lcp/LCP%2076.%20%E9%AD%94%E6%B3%95%E6%A3%8B%E7%9B%98/README.md)                                             |                                                                                     | 困难 |
+| [LCP 77](https://leetcode.cn/problems/W2ZX4X)                        | [ 符文储备](/lcp/LCP%2077.%20%E7%AC%A6%E6%96%87%E5%82%A8%E5%A4%87/README.md)                                             |                                                                                     | 简单 |
+| [LCP 78](https://leetcode.cn/problems/Nsibyl)                        | [ 城墙防线](/lcp/LCP%2078.%20%E5%9F%8E%E5%A2%99%E9%98%B2%E7%BA%BF/README.md)                                             |                                                                                     | 中等 |
+| [LCP 79](https://leetcode.cn/problems/kjpLFZ)                        | [ 提取咒文](/lcp/LCP%2079.%20%E6%8F%90%E5%8F%96%E5%92%92%E6%96%87/README.md)                                             |                                                                                     | 中等 |
+| [LCP 80](https://leetcode.cn/problems/qoQAMX)                        | [ 生物进化录](/lcp/LCP%2080.%20%E7%94%9F%E7%89%A9%E8%BF%9B%E5%8C%96%E5%BD%95/README.md)                                  |                                                                                     | 困难 |
+| [LCP 81](https://leetcode.cn/problems/ryfUiz)                        | [ 与非的谜题](/lcp/LCP%2081.%20%E4%B8%8E%E9%9D%9E%E7%9A%84%E8%B0%9C%E9%A2%98/README.md)                                  |                                                                                     | 困难 |
+| [LCP 82](https://leetcode.cn/problems/cnHoX6)                        | [ 万灵之树](/lcp/LCP%2082.%20%E4%B8%87%E7%81%B5%E4%B9%8B%E6%A0%91/README.md)                                             |                                                                                     | 困难 |
 
 ## 版权
 
-著作权归 [GitHub 开源社区 Doocs](https://github.com/doocs) 所有，商业转载请联系 [@yanglbme](mailto:contact@yanglibin.info) 获得授权，非商业转载请注明出处。
+本项目著作权归 [GitHub 开源社区 Doocs](https://github.com/doocs) 所有，商业转载请联系 @yanglbme 获得授权，非商业转载请注明出处。
+
+## 联系我们
+
+欢迎各位小伙伴们添加 @yanglbme 的个人微信（微信号：YLB0109），备注 「**leetcode**」。后续我们会创建算法、技术相关的交流群，大家一起交流学习，分享经验，共同进步。
+
+| <img src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/images/qrcode-for-yanglbme.png" width="260px" align="left"/> |
+| ------------------------------------------------------------------------------------------------------------------------------ |
+
+## 许可证
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 版权归属-相同方式共享 4.0 国际 公共许可证</a>

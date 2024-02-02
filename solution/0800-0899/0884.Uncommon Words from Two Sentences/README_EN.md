@@ -30,9 +30,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -40,8 +40,6 @@ class Solution:
         cnt = Counter(s1.split()) + Counter(s2.split())
         return [s for s, v in cnt.items() if v == 1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -64,8 +62,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -79,33 +75,30 @@ public:
         add(s1);
         add(s2);
         vector<string> ans;
-        for (auto& [s, v] : cnt) if (v == 1) ans.emplace_back(s);
+        for (auto& [s, v] : cnt)
+            if (v == 1) ans.emplace_back(s);
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
 func uncommonFromSentences(s1 string, s2 string) (ans []string) {
-    cnt := map[string]int{}
-    for _, s := range strings.Split(s1, " ") {
-        cnt[s]++
-    }
-    for _, s := range strings.Split(s2, " ") {
-        cnt[s]++
-    }
-    for s, v := range cnt {
-        if v == 1 {
-            ans = append(ans, s)
-        }
-    }
-    return
+	cnt := map[string]int{}
+	for _, s := range strings.Split(s1, " ") {
+		cnt[s]++
+	}
+	for _, s := range strings.Split(s2, " ") {
+		cnt[s]++
+	}
+	for s, v := range cnt {
+		if v == 1 {
+			ans = append(ans, s)
+		}
+	}
+	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function uncommonFromSentences(s1: string, s2: string): string[] {
@@ -123,8 +116,6 @@ function uncommonFromSentences(s1: string, s2: string): string[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 
@@ -140,15 +131,13 @@ impl Solution {
         let mut res = Vec::new();
         for (k, v) in map {
             if v {
-                res.push(String::from(k))
+                res.push(String::from(k));
             }
         }
         res
     }
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -171,10 +160,6 @@ var uncommonFromSentences = function (s1, s2) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

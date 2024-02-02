@@ -14,17 +14,18 @@
 | recordDate    | date    |
 | temperature   | int     |
 +---------------+---------+
-id is the primary key for this table.
+id is the column with unique values for this table.
+There are no different rows with the same recordDate.
 This table contains information about the temperature on a certain day.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find all dates&#39; <code>Id</code> with higher temperatures compared to its previous dates (yesterday).</p>
+<p>Write a solution to find all dates&#39; <code>Id</code> with higher temperatures compared to its previous dates (yesterday).</p>
 
 <p>Return the result table in <strong>any order</strong>.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -54,27 +55,47 @@ In 2015-01-04, the temperature was higher than the previous day (20 -&gt; 30).
 
 ## Solutions
 
+### Solution 1: Self-Join + DATEDIFF/SUBDATE Function
+
+We can use self-join to compare each row in the `Weather` table with its previous row. If the temperature is higher and the date difference is one day, then it is the result we are looking for.
+
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
 
-```sql
-select w1.Id
-from
-    Weather w1,
-    Weather w2
-where
-    DATEDIFF(w1.RecordDate, w2.RecordDate) = 1 and w1.Temperature > w2.Temperature
+
+def rising_temperature(weather: pd.DataFrame) -> pd.DataFrame:
+    weather.sort_values(by="recordDate", inplace=True)
+    return weather[
+        (weather.temperature.diff() > 0) & (weather.recordDate.diff().dt.days == 1)
+    ][["id"]]
 ```
 
 ```sql
-SELECT
-	w2.id AS Id
+# Write your MySQL query statement below
+SELECT w1.id
 FROM
-	weather AS w1
-	JOIN weather AS w2 ON DATE_ADD( w1.recordDate, INTERVAL 1 DAY) = w2.recordDate
-WHERE
-	w1.temperature < w2.temperature
+    Weather AS w1
+    JOIN Weather AS w2
+        ON DATEDIFF(w1.recordDate, w2.recordDate) = 1 AND w1.temperature > w2.temperature;
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT w1.id
+FROM
+    Weather AS w1
+    JOIN Weather AS w2
+        ON SUBDATE(w1.recordDate, 1) = w2.recordDate AND w1.temperature > w2.temperature;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -58,13 +58,15 @@ We can create &quot;burger&quot; since we have the ingredient &quot;meat&quot; a
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+    def findAllRecipes(
+        self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]
+    ) -> List[str]:
         g = defaultdict(list)
         indeg = defaultdict(int)
         for a, b in zip(recipes, ingredients):
@@ -83,8 +85,6 @@ class Solution:
                         q.append(j)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -120,8 +120,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -156,8 +154,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findAllRecipes(recipes []string, ingredients [][]string, supplies []string) []string {
 	g := map[string][]string{}
@@ -190,16 +186,6 @@ func findAllRecipes(recipes []string, ingredients [][]string, supplies []string)
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

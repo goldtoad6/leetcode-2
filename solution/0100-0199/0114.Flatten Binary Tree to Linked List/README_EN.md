@@ -46,9 +46,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Find Predecessor Node
 
-### **Python3**
+The visit order of preorder traversal is "root, left subtree, right subtree". After the last node of the left subtree is visited, the right subtree node of the root node will be visited next.
+
+Therefore, for the current node, if its left child node is not null, we find the rightmost node of the left subtree as the predecessor node, and then assign the right child node of the current node to the right child node of the predecessor node. Then assign the left child node of the current node to the right child node of the current node, and set the left child node of the current node to null. Then take the right child node of the current node as the next node and continue processing until all nodes are processed.
+
+The time complexity is $O(n)$, where $n$ is the number of nodes in the tree. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -73,8 +79,6 @@ class Solution:
             root = root.right
 ```
 
-### **Java**
-
 ```java
 /**
  * Definition for a binary tree node.
@@ -95,11 +99,16 @@ class Solution {
     public void flatten(TreeNode root) {
         while (root != null) {
             if (root.left != null) {
+                // 找到当前节点左子树的最右节点
                 TreeNode pre = root.left;
                 while (pre.right != null) {
                     pre = pre.right;
                 }
+
+                // 将左子树的最右节点指向原来的右子树
                 pre.right = root.right;
+
+                // 将当前节点指向左子树
                 root.right = root.left;
                 root.left = null;
             }
@@ -108,8 +117,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 /**
@@ -142,8 +149,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a binary tree node.
@@ -169,33 +174,6 @@ func flatten(root *TreeNode) {
 }
 ```
 
-```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func flatten(root *TreeNode) {
-	for root != nil {
-		left, right := root.Left, root.Right
-		root.Left = nil
-		if left != nil {
-			root.Right = left
-			for left.Right != nil {
-				left = left.Right
-			}
-			left.Right = right
-		}
-		root = root.Right
-	}
-}
-```
-
-### **TypeScript**
-
 ```ts
 /**
  * Definition for a binary tree node.
@@ -215,10 +193,10 @@ func flatten(root *TreeNode) {
  Do not return anything, modify root in-place instead.
  */
 function flatten(root: TreeNode | null): void {
-    while (root != null) {
-        if (root.left != null) {
+    while (root !== null) {
+        if (root.left !== null) {
             let pre = root.left;
-            while (pre.right != null) {
+            while (pre.right !== null) {
                 pre = pre.right;
             }
             pre.right = root.right;
@@ -230,7 +208,60 @@ function flatten(root: TreeNode | null): void {
 }
 ```
 
-### **JavaScript**
+```rust
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    #[allow(dead_code)]
+    pub fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
+        if root.is_none() {
+            return;
+        }
+        let mut v: Vec<Option<Rc<RefCell<TreeNode>>>> = Vec::new();
+        // Initialize the vector
+        Self::pre_order_traverse(&mut v, root);
+        // Traverse the vector
+        let n = v.len();
+        for i in 0..n - 1 {
+            v[i].as_ref().unwrap().borrow_mut().left = None;
+            v[i].as_ref().unwrap().borrow_mut().right = v[i + 1].clone();
+        }
+    }
+
+    #[allow(dead_code)]
+    fn pre_order_traverse(
+        v: &mut Vec<Option<Rc<RefCell<TreeNode>>>>,
+        root: &Option<Rc<RefCell<TreeNode>>>
+    ) {
+        if root.is_none() {
+            return;
+        }
+        v.push(root.clone());
+        let left = root.as_ref().unwrap().borrow().left.clone();
+        let right = root.as_ref().unwrap().borrow().right.clone();
+        Self::pre_order_traverse(v, &left);
+        Self::pre_order_traverse(v, &right);
+    }
+}
+```
 
 ```js
 /**
@@ -261,10 +292,37 @@ var flatten = function (root) {
 };
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func flatten(root *TreeNode) {
+	for root != nil {
+		left, right := root.Left, root.Right
+		root.Left = nil
+		if left != nil {
+			root.Right = left
+			for left.Right != nil {
+				left = left.Right
+			}
+			left.Right = right
+		}
+		root = root.Right
+	}
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

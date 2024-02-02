@@ -7,17 +7,17 @@
 <p>A string is a <em>valid parentheses string</em>&nbsp;(denoted VPS) if and only if it consists of <code>&quot;(&quot;</code> and <code>&quot;)&quot;</code> characters only, and:</p>
 
 <ul>
-    <li>It is the empty string, or</li>
-    <li>It can be written as&nbsp;<code>AB</code>&nbsp;(<code>A</code>&nbsp;concatenated with&nbsp;<code>B</code>), where&nbsp;<code>A</code>&nbsp;and&nbsp;<code>B</code>&nbsp;are VPS&#39;s, or</li>
-    <li>It can be written as&nbsp;<code>(A)</code>, where&nbsp;<code>A</code>&nbsp;is a VPS.</li>
+	<li>It is the empty string, or</li>
+	<li>It can be written as&nbsp;<code>AB</code>&nbsp;(<code>A</code>&nbsp;concatenated with&nbsp;<code>B</code>), where&nbsp;<code>A</code>&nbsp;and&nbsp;<code>B</code>&nbsp;are VPS&#39;s, or</li>
+	<li>It can be written as&nbsp;<code>(A)</code>, where&nbsp;<code>A</code>&nbsp;is a VPS.</li>
 </ul>
 
 <p>We can&nbsp;similarly define the <em>nesting depth</em> <code>depth(S)</code> of any VPS <code>S</code> as follows:</p>
 
 <ul>
-    <li><code>depth(&quot;&quot;) = 0</code></li>
-    <li><code>depth(A + B) = max(depth(A), depth(B))</code>, where <code>A</code> and <code>B</code> are VPS&#39;s</li>
-    <li><code>depth(&quot;(&quot; + A + &quot;)&quot;) = 1 + depth(A)</code>, where <code>A</code> is a VPS.</li>
+	<li><code>depth(&quot;&quot;) = 0</code></li>
+	<li><code>depth(A + B) = max(depth(A), depth(B))</code>, where <code>A</code> and <code>B</code> are VPS&#39;s</li>
+	<li><code>depth(&quot;(&quot; + A + &quot;)&quot;) = 1 + depth(A)</code>, where <code>A</code> is a VPS.</li>
 </ul>
 
 <p>For example,&nbsp; <code>&quot;&quot;</code>,&nbsp;<code>&quot;()()&quot;</code>, and&nbsp;<code>&quot;()(()())&quot;</code>&nbsp;are VPS&#39;s (with nesting depths 0, 1, and 2), and <code>&quot;)(&quot;</code> and <code>&quot;(()&quot;</code> are not VPS&#39;s.</p>
@@ -54,47 +54,29 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Greedy
 
-### **Python3**
+We use a variable $x$ to maintain the current balance of parentheses, which is the number of left parentheses minus the number of right parentheses.
+
+We traverse the string $seq$, updating the value of $x$. If $x$ is odd, we assign the current left parenthesis to $A$, otherwise we assign it to $B$.
+
+The time complexity is $O(n)$, where $n$ is the length of the string $seq$. Ignoring the space consumption of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxDepthAfterSplit(self, seq: str) -> List[int]:
         ans = [0] * len(seq)
-        a = b = 0
+        x = 0
         for i, c in enumerate(seq):
             if c == "(":
-                if a < b:
-                    a += 1
-                else:
-                    b += 1
-                    ans[i] = 1
+                ans[i] = x & 1
+                x += 1
             else:
-                if a > b:
-                    a -= 1
-                else:
-                    b -= 1
-                    ans[i] = 1
+                x -= 1
+                ans[i] = x & 1
         return ans
-```
-
-### **Java**
-
-```java
-class Solution {
-    public int[] maxDepthAfterSplit(String seq) {
-        int[] res = new int[seq.length()];
-        for (int i = 0, cnt = 0; i < res.length; ++i) {
-            if (seq.charAt(i) == '(') {
-                res[i] = cnt++ & 1;
-            } else {
-                res[i] = --cnt & 1;
-            }
-        }
-        return res;
-    }
-}
 ```
 
 ```java
@@ -102,31 +84,17 @@ class Solution {
     public int[] maxDepthAfterSplit(String seq) {
         int n = seq.length();
         int[] ans = new int[n];
-        int a = 0, b = 0;
-        for (int i = 0; i < n; ++i) {
-            char c = seq.charAt(i);
-            if (c == '(') {
-                if (a < b) {
-                    ++a;
-                } else {
-                    ++b;
-                    ans[i] = 1;
-                }
+        for (int i = 0, x = 0; i < n; ++i) {
+            if (seq.charAt(i) == '(') {
+                ans[i] = x++ & 1;
             } else {
-                if (a > b) {
-                    --a;
-                } else {
-                    --b;
-                    ans[i] = 1;
-                }
+                ans[i] = --x & 1;
             }
         }
         return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -134,19 +102,11 @@ public:
     vector<int> maxDepthAfterSplit(string seq) {
         int n = seq.size();
         vector<int> ans(n);
-        int a = 0, b = 0;
-        for (int i = 0; i < n; ++i) {
-            char c = seq[i];
-            if (c == '(') {
-                if (a < b)
-                    ++a;
-                else
-                    ++b, ans[i] = 1;
+        for (int i = 0, x = 0; i < n; ++i) {
+            if (seq[i] == '(') {
+                ans[i] = x++ & 1;
             } else {
-                if (a > b)
-                    --a;
-                else
-                    --b, ans[i] = 1;
+                ans[i] = --x & 1;
             }
         }
         return ans;
@@ -154,37 +114,38 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxDepthAfterSplit(seq string) []int {
-	ans := make([]int, len(seq))
-	a, b := 0, 0
-	for i, c := range seq {
-		if c == '(' {
-			if a < b {
-				a++
-			} else {
-				b++
-				ans[i] = 1
-			}
+	n := len(seq)
+	ans := make([]int, n)
+	for i, x := 0, 0; i < n; i++ {
+		if seq[i] == '(' {
+			ans[i] = x & 1
+			x++
 		} else {
-			if a > b {
-				a--
-			} else {
-				b--
-				ans[i] = 1
-			}
+			x--
+			ans[i] = x & 1
 		}
 	}
 	return ans
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function maxDepthAfterSplit(seq: string): number[] {
+    const n = seq.length;
+    const ans: number[] = new Array(n);
+    for (let i = 0, x = 0; i < n; ++i) {
+        if (seq[i] === '(') {
+            ans[i] = x++ & 1;
+        } else {
+            ans[i] = --x & 1;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

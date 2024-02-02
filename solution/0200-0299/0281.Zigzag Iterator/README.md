@@ -34,15 +34,9 @@ v2 = [3,4,5,6]
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-定义 vectors 列表保存输入的所有一维向量，indexes 表示 vectors 列表每一项当前所遍历到的下标位置，cur 表示当前遍历到的 vector 列表，而 size 表示 vectors 列表元素个数。具体实现参考以下代码实现。
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class ZigzagIterator:
@@ -73,10 +67,6 @@ class ZigzagIterator:
 # i, v = ZigzagIterator(v1, v2), []
 # while i.hasNext(): v.append(i.next())
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 public class ZigzagIterator {
@@ -122,10 +112,62 @@ public class ZigzagIterator {
  */
 ```
 
-### **...**
+```rust
+struct ZigzagIterator {
+    v1: Vec<i32>,
+    v2: Vec<i32>,
+    /// `false` represents `v1`, `true` represents `v2`
+    flag: bool,
+}
 
-```
+impl ZigzagIterator {
+    fn new(v1: Vec<i32>, v2: Vec<i32>) -> Self {
+        Self {
+            v1,
+            v2,
+            // Initially beginning with `v1`
+            flag: false,
+        }
+    }
 
+    fn next(&mut self) -> i32 {
+        if !self.flag {
+            // v1
+            if self.v1.is_empty() && !self.v2.is_empty() {
+                self.flag = true;
+                let ret = self.v2.remove(0);
+                return ret;
+            }
+            if self.v2.is_empty() {
+                let ret = self.v1.remove(0);
+                return ret;
+            }
+            let ret = self.v1.remove(0);
+            self.flag = true;
+            return ret;
+        } else {
+            // v2
+            if self.v2.is_empty() && !self.v1.is_empty() {
+                self.flag = false;
+                let ret = self.v1.remove(0);
+                return ret;
+            }
+            if self.v1.is_empty() {
+                let ret = self.v2.remove(0);
+                return ret;
+            }
+            let ret = self.v2.remove(0);
+            self.flag = false;
+            return ret;
+        }
+    }
+
+    fn has_next(&self) -> bool {
+        !self.v1.is_empty() || !self.v2.is_empty()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

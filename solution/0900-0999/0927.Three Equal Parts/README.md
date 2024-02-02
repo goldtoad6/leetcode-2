@@ -55,9 +55,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：计数 + 三指针**
+### 方法一：计数 + 三指针
 
 我们记数组的长度为 $n$，数组中 $1$ 的数量为 $cnt$。
 
@@ -85,13 +83,9 @@
 
 相似题目：
 
--   [1573. 分割字符串的方案数](/solution/1500-1599/1573.Number%20of%20Ways%20to%20Split%20a%20String/README.md)
+-   [1573. 分割字符串的方案数](https://github.com/doocs/leetcode/blob/main/solution/1500-1599/1573.Number%20of%20Ways%20to%20Split%20a%20String/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -115,10 +109,6 @@ class Solution:
             i, j, k = i + 1, j + 1, k + 1
         return [i - 1, j] if k == n else [-1, -1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -158,8 +148,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -184,8 +172,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func threeEqualParts(arr []int) []int {
@@ -221,8 +207,6 @@ func threeEqualParts(arr []int) []int {
 }
 ```
 
-### **JavaScript**
-
 ```js
 /**
  * @param {number[]} arr
@@ -257,10 +241,6 @@ var threeEqualParts = function (arr) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

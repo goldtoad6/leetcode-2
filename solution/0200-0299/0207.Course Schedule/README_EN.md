@@ -44,9 +44,17 @@ To take course 1 you should have finished course 0, and to take course 0 you sho
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Topological Sorting
 
-### **Python3**
+For this problem, we can consider the courses as nodes in a graph, and prerequisites as edges in the graph. Thus, we can transform this problem into determining whether there is a cycle in the directed graph.
+
+Specifically, we can use the idea of topological sorting. For each node with an in-degree of $0$, we reduce the in-degree of its out-degree nodes by $1$, until all nodes have been traversed.
+
+If all nodes have been traversed, it means there is no cycle in the graph, and we can complete all courses; otherwise, we cannot complete all courses.
+
+The time complexity is $O(n + m)$, and the space complexity is $O(n + m)$. Here, $n$ and $m$ are the number of courses and prerequisites respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +75,6 @@ class Solution:
                     q.append(j)
         return cnt == numCourses
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +107,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -137,8 +141,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func canFinish(numCourses int, prerequisites [][]int) bool {
 	g := make([][]int, numCourses)
@@ -170,8 +172,6 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
     const g: number[][] = new Array(numCourses).fill(0).map(() => []);
@@ -200,7 +200,55 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 }
 ```
 
-### **C#**
+```rust
+use std::collections::VecDeque;
+
+impl Solution {
+    #[allow(dead_code)]
+    pub fn can_finish(num_course: i32, prerequisites: Vec<Vec<i32>>) -> bool {
+        let num_course = num_course as usize;
+        // The graph representation
+        let mut graph: Vec<Vec<i32>> = vec![vec![]; num_course];
+        // Record the in degree for each node
+        let mut in_degree_vec: Vec<i32> = vec![0; num_course];
+        let mut q: VecDeque<usize> = VecDeque::new();
+        let mut count = 0;
+
+        // Initialize the graph & in degree vector
+        for p in &prerequisites {
+            let (from, to) = (p[0], p[1]);
+            graph[from as usize].push(to);
+            in_degree_vec[to as usize] += 1;
+        }
+
+        // Enqueue the first batch of nodes with in degree 0
+        for i in 0..num_course {
+            if in_degree_vec[i] == 0 {
+                q.push_back(i);
+            }
+        }
+
+        // Begin the traverse & update through the graph
+        while !q.is_empty() {
+            // Get the current node index
+            let index = q.front().unwrap().clone();
+            // This course can be finished
+            count += 1;
+            q.pop_front();
+            for i in &graph[index] {
+                // Update the in degree for the current node
+                in_degree_vec[*i as usize] -= 1;
+                // See if can be enqueued
+                if in_degree_vec[*i as usize] == 0 {
+                    q.push_back(*i as usize);
+                }
+            }
+        }
+
+        count == num_course
+    }
+}
+```
 
 ```cs
 public class Solution {
@@ -236,10 +284,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

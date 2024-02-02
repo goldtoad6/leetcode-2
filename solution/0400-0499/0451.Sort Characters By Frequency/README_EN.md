@@ -46,9 +46,9 @@ Note that &#39;A&#39; and &#39;a&#39; are treated as two different characters.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,8 +56,6 @@ class Solution:
         cnt = Counter(s)
         return ''.join(c * v for c, v in sorted(cnt.items(), key=lambda x: -x[1]))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -78,8 +76,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -105,8 +101,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func frequencySort(s string) string {
 	cnt := map[byte]int{}
@@ -126,8 +120,6 @@ func frequencySort(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function frequencySort(s: string): string {
     const cnt: Map<string, number> = new Map();
@@ -142,8 +134,6 @@ function frequencySort(s: string): string {
     return ans.join('');
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashMap;
@@ -162,10 +152,26 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function frequencySort($s) {
+        for ($i = 0; $i < strlen($s); $i++) {
+            $hashtable[$s[$i]] += 1;
+        }
+        arsort($hashtable);
+        $keys = array_keys($hashtable);
+        for ($j = 0; $j < count($keys); $j++) {
+            $rs = $rs . str_repeat($keys[$j], $hashtable[$keys[$j]]);
+        }
+        return $rs;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

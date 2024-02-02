@@ -56,9 +56,9 @@ Please notice that another valid answer is [5,2,6,null,4,null,7] and it&#39;s al
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 # Definition for a binary tree node.
@@ -88,8 +88,6 @@ class Solution:
         root = root.right
         return root
 ```
-
-### **Java**
 
 ```java
 /**
@@ -137,8 +135,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -173,8 +169,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 /**
@@ -212,8 +206,6 @@ func deleteNode(root *TreeNode, key int) *TreeNode {
 	return root
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -263,8 +255,6 @@ function deleteNode(root: TreeNode | null, key: number): TreeNode | null {
 }
 ```
 
-### **Rust**
-
 ```rust
 // Definition for a binary tree node.
 // #[derive(Debug, PartialEq, Eq)]
@@ -297,7 +287,7 @@ impl Solution {
 
     pub fn delete_node(
         mut root: Option<Rc<RefCell<TreeNode>>>,
-        key: i32,
+        key: i32
     ) -> Option<Rc<RefCell<TreeNode>>> {
         if root.is_some() {
             let mut node = root.as_mut().unwrap().borrow_mut();
@@ -310,9 +300,15 @@ impl Solution {
                 }
                 std::cmp::Ordering::Equal => {
                     match (node.left.is_some(), node.right.is_some()) {
-                        (false, false) => return None,
-                        (true, false) => return node.left.take(),
-                        (false, true) => return node.right.take(),
+                        (false, false) => {
+                            return None;
+                        }
+                        (true, false) => {
+                            return node.left.take();
+                        }
+                        (false, true) => {
+                            return node.right.take();
+                        }
                         (true, true) => {
                             if node.right.as_ref().unwrap().borrow().left.is_none() {
                                 let mut r = node.right.take();
@@ -333,10 +329,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

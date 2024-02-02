@@ -50,9 +50,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -65,11 +65,10 @@ class Solution:
         return ans
 ```
 
-### **Java**
-
 ```java
 class Solution {
     public int findMinArrowShots(int[][] points) {
+        // 直接 a[1] - b[1] 可能会溢出
         Arrays.sort(points, Comparator.comparingInt(a -> a[1]));
         int ans = 0;
         long last = -(1L << 60);
@@ -84,8 +83,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -108,8 +105,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func findMinArrowShots(points [][]int) (ans int) {
 	sort.Slice(points, func(i, j int) bool { return points[i][1] < points[j][1] })
@@ -124,8 +119,6 @@ func findMinArrowShots(points [][]int) (ans int) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function findMinArrowShots(points: number[][]): number {
@@ -142,10 +135,23 @@ function findMinArrowShots(points: number[][]): number {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int FindMinArrowShots(int[][] points) {
+        Array.Sort(points, (a, b) => a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0);
+        int ans = 0;
+        long last = long.MinValue;
+        foreach (var point in points) {
+            if (point[0] > last) {
+                ++ans;
+                last = point[1];
+            }
+        }
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -39,9 +39,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -60,8 +60,6 @@ class Solution:
                 i += 1
         return int(''.join(s))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,15 +82,14 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int monotoneIncreasingDigits(int n) {
         string s = to_string(n);
         int i = 1;
-        for (; i < s.size() && s[i - 1] <= s[i]; ++i);
+        for (; i < s.size() && s[i - 1] <= s[i]; ++i)
+            ;
         if (i < s.size()) {
             for (; i > 0 && s[i - 1] > s[i]; --i) {
                 --s[i - 1];
@@ -106,8 +103,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func monotoneIncreasingDigits(n int) int {
@@ -129,10 +124,6 @@ func monotoneIncreasingDigits(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

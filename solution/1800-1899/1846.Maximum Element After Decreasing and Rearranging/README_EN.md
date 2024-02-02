@@ -41,7 +41,7 @@ One possible way to satisfy the conditions is by doing the following:
 1. Rearrange <code>arr</code> so it becomes <code>[1,100,1000]</code>.
 2. Decrease the value of the second element to 2.
 3. Decrease the value of the third element to 3.
-Now <code>arr = [1,2,3], which </code>satisfies the conditions.
+Now <code>arr = [1,2,3]</code>, which<code> </code>satisfies the conditions.
 The largest element in <code>arr is 3.</code>
 </pre>
 
@@ -63,9 +63,17 @@ The largest element in <code>arr is 3.</code>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Sorting + Greedy Algorithm
 
-### **Python3**
+First, we sort the array and then set the first element of the array to $1$.
+
+Next, we start traversing the array from the second element. If the difference between the current element and the previous one is more than $1$, we greedily reduce the current element to the previous element plus $1$.
+
+Finally, we return the maximum element in the array.
+
+The time complexity is $O(n \times \log n)$, and the space complexity is $O(\log n)$. Where $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -77,8 +85,6 @@ class Solution:
             arr[i] -= d
         return max(arr)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -95,8 +101,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -115,8 +119,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 	sort.Ints(arr)
@@ -129,19 +131,36 @@ func maximumElementAfterDecrementingAndRearranging(arr []int) int {
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function maximumElementAfterDecrementingAndRearranging(arr: number[]): number {
+    arr.sort((a, b) => a - b);
+    arr[0] = 1;
+    let ans = 1;
+    for (let i = 1; i < arr.length; ++i) {
+        const d = Math.max(0, arr[i] - arr[i - 1] - 1);
+        arr[i] -= d;
+        ans = Math.max(ans, arr[i]);
+    }
+    return ans;
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public int MaximumElementAfterDecrementingAndRearranging(int[] arr) {
+        Array.Sort(arr);
+        int n = arr.Length;
+        arr[0] = 1;
+        for (int i = 1; i < n; ++i) {
+            arr[i] = Math.Min(arr[i], arr[i - 1] + 1);
+        }
+        return arr[n - 1];
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

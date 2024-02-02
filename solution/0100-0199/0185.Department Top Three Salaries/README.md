@@ -17,8 +17,8 @@
 | salary       | int     |
 | departmentId | int     |
 +--------------+---------+
-Id是该表的主键列。
-departmentId是Department表中ID的外键。
+id 是该表的主键列(具有唯一值的列)。
+departmentId 是 Department 表中 ID 的外键（reference 列）。
 该表的每一行都表示员工的ID、姓名和工资。它还包含了他们部门的ID。
 </pre>
 
@@ -33,7 +33,7 @@ departmentId是Department表中ID的外键。
 | id          | int     |
 | name        | varchar |
 +-------------+---------+
-Id是该表的主键列。
+id 是该表的主键列(具有唯一值的列)。
 该表的每一行表示部门ID和部门名。
 </pre>
 
@@ -41,11 +41,11 @@ Id是该表的主键列。
 
 <p>公司的主管们感兴趣的是公司每个部门中谁赚的钱最多。一个部门的 <strong>高收入者</strong> 是指一个员工的工资在该部门的 <strong>不同</strong> 工资中 <strong>排名前三</strong> 。</p>
 
-<p>编写一个SQL查询，找出每个部门中 <strong>收入高的员工</strong> 。</p>
+<p>编写解决方案，找出每个部门中 <strong>收入高的员工</strong> 。</p>
 
 <p>以 <strong>任意顺序</strong> 返回结果表。</p>
 
-<p>查询结果格式如下所示。</p>
+<p>返回结果格式如下所示。</p>
 
 <p>&nbsp;</p>
 
@@ -96,30 +96,76 @@ Department  表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
+```python
+import pandas as pd
+
+
+def top_three_salaries(
+    employee: pd.DataFrame, department: pd.DataFrame
+) -> pd.DataFrame:
+    salary_cutoff = (
+        employee.drop_duplicates(["salary", "departmentId"])
+        .groupby("departmentId")["salary"]
+        .nlargest(3)
+        .groupby("departmentId")
+        .min()
+    )
+    employee["Department"] = department.set_index("id")["name"][
+        employee["departmentId"]
+    ].values
+    employee["cutoff"] = salary_cutoff[employee["departmentId"]].values
+    return employee[employee["salary"] >= employee["cutoff"]].rename(
+        columns={"name": "Employee", "salary": "Salary"}
+    )[["Department", "Employee", "Salary"]]
+```
 
 ```sql
 SELECT
-	Department.NAME AS Department,
-	Employee.NAME AS Employee,
-	Salary
+    Department.NAME AS Department,
+    Employee.NAME AS Employee,
+    Salary
 FROM
-	Employee,
-	Department
+    Employee,
+    Department
 WHERE
-	Employee.DepartmentId = Department.Id
-	AND  (SELECT
+    Employee.DepartmentId = Department.Id
+    AND (
+        SELECT
             COUNT(DISTINCT e2.Salary)
-        FROM
-            Employee e2
-        WHERE
-            e2.Salary > Employee.Salary
-                AND Employee.DepartmentId = e2.DepartmentId
-    ) < 3
+        FROM Employee AS e2
+        WHERE e2.Salary > Employee.Salary AND Employee.DepartmentId = e2.DepartmentId
+    ) < 3;
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT
+            *,
+            DENSE_RANK() OVER (
+                PARTITION BY departmentId
+                ORDER BY salary DESC
+            ) AS rk
+        FROM Employee
+    )
+SELECT d.name AS Department, t.name AS Employee, salary AS Salary
+FROM
+    T AS t
+    JOIN Department AS d ON t.departmentId = d.id
+WHERE rk <= 3;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

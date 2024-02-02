@@ -71,16 +71,40 @@ Orders table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    T AS (
+        SELECT DISTINCT customer_id
+        FROM Orders
+        WHERE order_type = 0
+    )
+SELECT *
+FROM Orders AS o
+WHERE order_type = 0 OR NOT EXISTS (SELECT 1 FROM T AS t WHERE t.customer_id = o.customer_id);
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```sql
+SELECT DISTINCT
+    a.order_id,
+    a.customer_id,
+    a.order_type
+FROM
+    Orders AS a
+    LEFT JOIN Orders AS b ON a.customer_id = b.customer_id AND a.order_type != b.order_type
+WHERE b.order_type IS NULL OR b.order_type = 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

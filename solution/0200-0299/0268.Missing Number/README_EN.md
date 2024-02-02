@@ -46,24 +46,24 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Bitwise Operation
 
-### **Python3**
+The XOR operation has the following properties:
+
+-   Any number XOR 0 is still the original number, i.e., $x \oplus 0 = x$;
+-   Any number XOR itself is 0, i.e., $x \oplus x = 0$;
+
+Therefore, we can traverse the array, perform XOR operation between each element and the numbers $[0,..n]$, and the final result will be the missing number.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         return reduce(xor, (i ^ v for i, v in enumerate(nums, 1)))
 ```
-
-```python
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        return (1 + n) * n // 2 - sum(nums)
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,6 +76,104 @@ class Solution {
         return ans;
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int ans = n;
+        for (int i = 0; i < n; ++i) {
+            ans ^= (i ^ nums[i]);
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func missingNumber(nums []int) (ans int) {
+	n := len(nums)
+	ans = n
+	for i, v := range nums {
+		ans ^= (i ^ v)
+	}
+	return
+}
+```
+
+```ts
+function missingNumber(nums: number[]): number {
+    const n = nums.length;
+    let ans = n;
+    for (let i = 0; i < n; ++i) {
+        ans ^= i ^ nums[i];
+    }
+    return ans;
+}
+```
+
+```rust
+impl Solution {
+    pub fn missing_number(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut ans = n;
+        for (i, v) in nums.iter().enumerate() {
+            ans ^= (i as i32) ^ v;
+        }
+        ans
+    }
+}
+```
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function (nums) {
+    const n = nums.length;
+    let ans = n;
+    for (let i = 0; i < n; ++i) {
+        ans ^= i ^ nums[i];
+    }
+    return ans;
+};
+```
+
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function missingNumber($nums) {
+        $n = count($nums);
+        $sumN = (($n + 1) * $n) / 2;
+        for ($i = 0; $i < $n; $i++) {
+            $sumN -= $nums[$i];
+        }
+        return $sumN;
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Mathematics
+
+We can also solve this problem using mathematics. By calculating the sum of $[0,..n]$, subtracting the sum of all numbers in the array, we can obtain the missing number.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        n = len(nums)
+        return (1 + n) * n // 2 - sum(nums)
 ```
 
 ```java
@@ -91,22 +189,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int missingNumber(vector<int>& nums) {
-        int n = nums.size();
-        int ans = n;
-        for (int i = 0; i < n; ++i) {
-            ans ^= (i ^ nums[i]);
-        }
-        return ans;
-    }
-};
-```
-
 ```cpp
 class Solution {
 public:
@@ -115,19 +197,6 @@ public:
         return (1 + n) * n / 2 - accumulate(nums.begin(), nums.end(), 0);
     }
 };
-```
-
-### **Go**
-
-```go
-func missingNumber(nums []int) (ans int) {
-	n := len(nums)
-	ans = n
-	for i, v := range nums {
-		ans ^= (i ^ v)
-	}
-	return
-}
 ```
 
 ```go
@@ -141,21 +210,28 @@ func missingNumber(nums []int) (ans int) {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var missingNumber = function (nums) {
+```ts
+function missingNumber(nums: number[]): number {
     const n = nums.length;
     let ans = n;
     for (let i = 0; i < n; ++i) {
-        ans ^= i ^ nums[i];
+        ans += i - nums[i];
     }
     return ans;
-};
+}
+```
+
+```rust
+impl Solution {
+    pub fn missing_number(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut ans = n;
+        for (i, &v) in nums.iter().enumerate() {
+            ans += (i as i32) - v;
+        }
+        ans
+    }
+}
 ```
 
 ```js
@@ -173,29 +249,6 @@ var missingNumber = function (nums) {
 };
 ```
 
-### **PHP**
-
-```php
-class Solution {
-    /**
-     * @param Integer[] $nums
-     * @return Integer
-     */
-    function missingNumber($nums) {
-        $n = count($nums);
-        $sumN = ($n + 1) * $n / 2;
-        for ($i = 0; $i < $n; $i++) {
-            $sumN -= $nums[$i];
-        }
-        return $sumN;
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

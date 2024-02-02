@@ -33,18 +33,16 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def sumOfThree(self, num: int) -> List[int]:
-        a, b = divmod(num, 3)
-        return [] if b else [a - 1, a, a + 1]
+        x, mod = divmod(num, 3)
+        return [] if mod else [x - 1, x, x + 1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -58,20 +56,18 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<long long> sumOfThree(long long num) {
-        if (num % 3) return {};
+        if (num % 3) {
+            return {};
+        }
         long long x = num / 3;
         return {x - 1, x, x + 1};
     }
 };
 ```
-
-### **Go**
 
 ```go
 func sumOfThree(num int64) []int64 {
@@ -83,16 +79,16 @@ func sumOfThree(num int64) []int64 {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function sumOfThree(num: number): number[] {
+    if (num % 3) {
+        return [];
+    }
+    const x = Math.floor(num / 3);
+    return [x - 1, x, x + 1];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

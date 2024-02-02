@@ -45,9 +45,13 @@ answer = [7,1,3,9].
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+Split each number in the array into digits, then put the split numbers into the answer array in order.
+
+The time complexity is $O(n \times \log_{10} M)$, and the space complexity is $O(n \times \log_{10} M)$. Where $n$ is the length of the array $nums$, and $M$ is the maximum value in the array $nums$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +65,6 @@ class Solution:
             ans.extend(t[::-1])
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +87,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -107,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func separateDigits(nums []int) (ans []int) {
 	for _, x := range nums {
@@ -125,8 +123,6 @@ func separateDigits(nums []int) (ans []int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function separateDigits(nums: number[]): number[] {
     const ans: number[] = [];
@@ -142,8 +138,6 @@ function separateDigits(nums: number[]): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn separate_digits(nums: Vec<i32>) -> Vec<i32> {
@@ -155,20 +149,20 @@ impl Solution {
                 t.push(num % 10);
                 num /= 10;
             }
-            t.into_iter().rev().for_each(|v| ans.push(v));
+            t.into_iter()
+                .rev()
+                .for_each(|v| ans.push(v));
         }
         ans
     }
 }
 ```
 
-### **C**
-
 ```c
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int *separateDigits(int *nums, int numsSize, int *returnSize) {
+int* separateDigits(int* nums, int numsSize, int* returnSize) {
     int n = 0;
     for (int i = 0; i < numsSize; i++) {
         int t = nums[i];
@@ -177,7 +171,7 @@ int *separateDigits(int *nums, int numsSize, int *returnSize) {
             n++;
         }
     }
-    int *ans = malloc(sizeof(int) * n);
+    int* ans = malloc(sizeof(int) * n);
     for (int i = numsSize - 1, j = n - 1; i >= 0; i--) {
         int t = nums[i];
         while (t != 0) {
@@ -190,10 +184,36 @@ int *separateDigits(int *nums, int numsSize, int *returnSize) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn separate_digits(nums: Vec<i32>) -> Vec<i32> {
+        let mut ans = vec![];
+
+        for n in nums {
+            let mut t = vec![];
+            let mut x = n;
+
+            while x != 0 {
+                t.push(x % 10);
+                x /= 10;
+            }
+
+            for i in (0..t.len()).rev() {
+                ans.push(t[i]);
+            }
+        }
+
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

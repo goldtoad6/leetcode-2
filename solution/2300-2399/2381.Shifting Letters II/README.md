@@ -44,9 +44,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：差分数组**
+### 方法一：差分数组
 
 用差分数组 $d$ 记录区间的变化，然后对 $d$ 求前缀和，得到每个下标 $i$ 的变化量 $d[i]$。
 
@@ -55,10 +53,6 @@
 时间复杂度 $O(n+m)$。其中 $n$ 是原字符串 $s$ 的长度，而 $m$ 是移位操作 $shifts$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -72,12 +66,10 @@ class Solution:
             d[j + 1] -= v
         for i in range(1, n + 1):
             d[i] += d[i - 1]
-        return ''.join(chr(ord('a') + (ord(s[i]) - ord('a') + d[i] + 26) % 26) for i in range(n))
+        return ''.join(
+            chr(ord('a') + (ord(s[i]) - ord('a') + d[i] + 26) % 26) for i in range(n)
+        )
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -103,8 +95,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -132,8 +122,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func shiftingLetters(s string, shifts [][]int) string {
 	n := len(s)
@@ -157,17 +145,6 @@ func shiftingLetters(s string, shifts [][]int) string {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

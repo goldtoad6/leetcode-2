@@ -56,9 +56,9 @@ There are no pairs of indices that meet the requirements.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -73,8 +73,6 @@ class Solution:
                 d[s] = i
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -97,8 +95,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -120,8 +116,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func widestPairOfIndices(nums1 []int, nums2 []int) (ans int) {
 	d := map[int]int{0: -1}
@@ -136,19 +130,8 @@ func widestPairOfIndices(nums1 []int, nums2 []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

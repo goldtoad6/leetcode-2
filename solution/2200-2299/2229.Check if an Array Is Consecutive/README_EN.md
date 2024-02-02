@@ -52,9 +52,9 @@ Therefore, nums is consecutive.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,8 +63,6 @@ class Solution:
         n = len(nums)
         return len(set(nums)) == n and mx == mi + n - 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +81,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -98,45 +94,17 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isConsecutive(nums []int) bool {
-	s := make(map[int]bool)
-	mi, mx := nums[0], nums[0]
-	for _, v := range nums {
-		s[v] = true
-		mi = min(mi, v)
-		mx = max(mx, v)
+	s := map[int]bool{}
+	mi, mx := slices.Min(nums), slices.Max(nums)
+	for _, x := range nums {
+		s[x] = true
 	}
 	return len(s) == len(nums) && mx == mi+len(nums)-1
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

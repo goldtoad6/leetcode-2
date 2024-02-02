@@ -47,9 +47,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双优先队列（大小根堆） + 延迟删除**
+### 方法一：双优先队列（大小根堆） + 延迟删除
 
 我们可以使用两个优先队列（大小根堆）维护当前窗口中的元素，其中一个优先队列存储当前窗口中较小的一半元素，另一个优先队列存储当前窗口中较大的一半元素。这样，当前窗口的中位数就是两个优先队列的堆顶元素的平均值或其中的一个。
 
@@ -74,10 +72,6 @@
 时间复杂度 $O(n \times \log n)$，空间复杂度 $O(n)$。其中 $n$ 为数组 `nums` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class MedianFinder:
@@ -146,10 +140,6 @@ class Solution:
             ans.append(finder.find_median())
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class MedianFinder {
@@ -238,8 +228,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class MedianFinder {
 public:
@@ -286,7 +274,7 @@ private:
     int largeSize = 0;
     int k;
 
-    template<typename T>
+    template <typename T>
     void prune(T& pq) {
         while (!pq.empty() && delayed[pq.top()]) {
             if (--delayed[pq.top()] == 0) {
@@ -330,8 +318,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type MedianFinder struct {
@@ -424,9 +410,9 @@ func medianSlidingWindow(nums []int, k int) []float64 {
 
 type hp struct{ sort.IntSlice }
 
-func (h hp) Less(i, j int) bool  { return h.IntSlice[i] < h.IntSlice[j] }
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h hp) Less(i, j int) bool { return h.IntSlice[i] < h.IntSlice[j] }
+func (h *hp) Push(v any)        { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -434,10 +420,6 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

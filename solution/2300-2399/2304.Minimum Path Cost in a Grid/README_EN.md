@@ -49,9 +49,23 @@ So the total cost of this path is 5 + 1 = 6.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Dynamic Programming
 
-### **Python3**
+We define $f[i][j]$ to represent the minimum path cost from the first row to the $i$th row and $j$th column. Since we can only move from a column in the previous row to a column in the current row, the value of $f[i][j]$ can be transferred from $f[i - 1][k]$, where the range of $k$ is $[0, n - 1]$. Therefore, the state transition equation is:
+
+$$
+f[i][j] = \min_{0 \leq k < n} \{f[i - 1][k] + \text{moveCost}[grid[i - 1][k]][j] + grid[i][j]\}
+$$
+
+where $\text{moveCost}[grid[i - 1][k]][j]$ represents the cost of moving from the $k$th column of the $i - 1$th row to the $j$th column of the $i$th row.
+
+The final answer is $\min_{0 \leq j < n} \{f[m - 1][j]\}$.
+
+Since each transition only needs the state of the previous row, we can use a rolling array to optimize the space complexity to $O(n)$.
+
+The time complexity is $O(m \times n^2)$, and the space complexity is $O(n)$. Here, $m$ and $n$ are the number of rows and columns of the grid, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +80,6 @@ class Solution:
             f = g
         return min(f)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -96,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -119,94 +129,64 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minPathCost(grid [][]int, moveCost [][]int) int {
 	m, n := len(grid), len(grid[0])
-	const inf = 1 << 30
 	f := grid[0]
 	for i := 1; i < m; i++ {
 		g := make([]int, n)
 		for j := 0; j < n; j++ {
-			g[j] = inf
+			g[j] = 1 << 30
 			for k := 0; k < n; k++ {
 				g[j] = min(g[j], f[k]+moveCost[grid[i-1][k]][j]+grid[i][j])
 			}
 		}
 		f = g
 	}
-	ans := inf
-	for _, v := range f {
-		ans = min(ans, v)
-	}
-	return ans
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+	return slices.Min(f)
 }
 ```
 
-### **Rust**
+```ts
+function minPathCost(grid: number[][], moveCost: number[][]): number {
+    const m = grid.length;
+    const n = grid[0].length;
+    const f = grid[0];
+    for (let i = 1; i < m; ++i) {
+        const g: number[] = Array(n).fill(Infinity);
+        for (let j = 0; j < n; ++j) {
+            for (let k = 0; k < n; ++k) {
+                g[j] = Math.min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j]);
+            }
+        }
+        f.splice(0, n, ...g);
+    }
+    return Math.min(...f);
+}
+```
 
 ```rust
 impl Solution {
     pub fn min_path_cost(grid: Vec<Vec<i32>>, move_cost: Vec<Vec<i32>>) -> i32 {
-        let (m, n) = (grid.len(), grid[0].len());
-        let mut dp = vec![0; n];
-        for i in 0..m - 1 {
-            let mut counter = vec![i32::MAX; n];
+        let m = grid.len();
+        let n = grid[0].len();
+        let mut f = grid[0].clone();
+
+        for i in 1..m {
+            let mut g: Vec<i32> = vec![i32::MAX; n];
             for j in 0..n {
-                let val = grid[i][j];
                 for k in 0..n {
-                    counter[k] = counter[k].min(val + move_cost[val as usize][k] + dp[j]);
+                    g[j] = g[j].min(f[k] + move_cost[grid[i - 1][k] as usize][j] + grid[i][j]);
                 }
             }
-            for j in 0..n {
-                dp[j] = counter[j];
-            }
+            f.copy_from_slice(&g);
         }
-        let mut res = i32::MAX;
-        for i in 0..n {
-            res = res.min(dp[i] + grid[m - 1][i]);
-        }
-        res
+
+        f.iter().cloned().min().unwrap_or(0)
     }
 }
-```
-
-### **TypeScript**
-
-```ts
-function minPathCost(grid: number[][], moveCost: number[][]): number {
-    const m = grid.length,
-        n = grid[0].length;
-    let pre = grid[0].slice();
-    for (let i = 1; i < m; i++) {
-        let next = new Array(n);
-        for (let j = 0; j < n; j++) {
-            const key = grid[i - 1][j];
-            for (let k = 0; k < n; k++) {
-                let sum = pre[j] + moveCost[key][k] + grid[i][k];
-                if (j == 0 || next[k] > sum) {
-                    next[k] = sum;
-                }
-            }
-        }
-        pre = next;
-    }
-    return Math.min(...pre);
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

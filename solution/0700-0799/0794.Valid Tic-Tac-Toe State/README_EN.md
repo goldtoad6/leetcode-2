@@ -54,9 +54,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -79,8 +79,6 @@ class Solution:
             return False
         return not (win('O') and x != o)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -127,15 +125,14 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     bool validTicTacToe(vector<string>& board) {
         auto count = [&](char x) {
             int ans = 0;
-            for (auto& row : board) for (auto& c : row) ans += c == x;
+            for (auto& row : board)
+                for (auto& c : row) ans += c == x;
             return ans;
         };
         auto win = [&](char x) {
@@ -153,8 +150,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func validTicTacToe(board []string) bool {
@@ -191,8 +186,6 @@ func validTicTacToe(board []string) bool {
 	return !(win('O') && x != o)
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -234,10 +227,6 @@ var validTicTacToe = function (board) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

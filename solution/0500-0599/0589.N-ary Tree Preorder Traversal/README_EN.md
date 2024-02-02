@@ -41,9 +41,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 """
@@ -68,8 +68,6 @@ class Solution:
                 stk.append(child)
         return ans
 ```
-
-### **Java**
 
 ```java
 /*
@@ -112,8 +110,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /*
 // Definition for a Node.
@@ -154,8 +150,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for a Node.
@@ -183,8 +177,6 @@ func preorder(root *Node) []int {
 	return ans
 }
 ```
-
-### **TypeScript**
 
 ```ts
 /**
@@ -217,6 +209,44 @@ function preorder(root: Node | null): number[] {
 }
 ```
 
+```c
+/**
+ * Definition for a Node.
+ * struct Node {
+ *     int val;
+ *     int numChildren;
+ *     struct Node** children;
+ * };
+ */
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+void dfs(struct Node* root, int* ans, int* i) {
+    if (!root) {
+        return;
+    }
+    ans[(*i)++] = root->val;
+    for (int j = 0; j < root->numChildren; j++) {
+        dfs(root->children[j], ans, i);
+    }
+}
+
+int* preorder(struct Node* root, int* returnSize) {
+    int* ans = malloc(sizeof(int) * 10000);
+    *returnSize = 0;
+    dfs(root, ans, returnSize);
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```ts
 /**
  * Definition for node.
@@ -246,44 +276,6 @@ function preorder(root: Node | null): number[] {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Definition for a Node.
- * struct Node {
- *     int val;
- *     int numChildren;
- *     struct Node** children;
- * };
- */
-
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-
-void dfs(struct Node *root, int *ans, int *i) {
-    if (!root) {
-        return;
-    }
-    ans[(*i)++] = root->val;
-    for (int j = 0; j < root->numChildren; j++) {
-        dfs(root->children[j], ans, i);
-    }
-}
-
-int *preorder(struct Node *root, int *returnSize) {
-    int *ans = malloc(sizeof(int) * 10000);
-    *returnSize = 0;
-    dfs(root, ans, returnSize);
-    return ans;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

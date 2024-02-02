@@ -72,9 +72,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：直接计算**
+### 方法一：直接计算
 
 我们先初始化一个数组 $ans$，长度为 $m$，用于存储答案，初始化所有元素为 $-1$。
 
@@ -89,27 +87,19 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
     def elementInNums(self, nums: List[int], queries: List[List[int]]) -> List[int]:
         n, m = len(nums), len(queries)
         ans = [-1] * m
         for j, (t, i) in enumerate(queries):
-            t %= (2 * n)
+            t %= 2 * n
             if t < n and i < n - t:
                 ans[j] = nums[i + t]
             elif t > n and i < t - n:
                 ans[j] = nums[i]
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -131,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -153,8 +141,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func elementInNums(nums []int, queries [][]int) []int {
 	n, m := len(nums), len(queries)
@@ -173,16 +159,6 @@ func elementInNums(nums []int, queries [][]int) []int {
 }
 ```
 
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

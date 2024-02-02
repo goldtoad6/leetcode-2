@@ -44,9 +44,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Array Mark
 
-### **Python3**
+We use arrays `rows` and `cols` to mark the rows and columns to be cleared.
+
+Then traverse the matrix again, and clear the elements in the rows and columns marked in `rows` and `cols`.
+
+The time complexity is $O(m\times n)$, and the space complexity is $O(m+n)$. Where $m$ and $n$ are the number of rows and columns of the matrix respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,30 +69,6 @@ class Solution:
                 if rows[i] or cols[j]:
                     matrix[i][j] = 0
 ```
-
-```python
-class Solution:
-    def setZeroes(self, matrix: List[List[int]]) -> None:
-        m, n = len(matrix), len(matrix[0])
-        i0 = any(v == 0 for v in matrix[0])
-        j0 = any(matrix[i][0] == 0 for i in range(m))
-        for i in range(1, m):
-            for j in range(1, n):
-                if matrix[i][j] == 0:
-                    matrix[i][0] = matrix[0][j] = 0
-        for i in range(1, m):
-            for j in range(1, n):
-                if matrix[i][0] == 0 or matrix[0][j] == 0:
-                    matrix[i][j] = 0
-        if i0:
-            for j in range(n):
-                matrix[0][j] = 0
-        if j0:
-            for i in range(m):
-                matrix[i][0] = 0
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -111,6 +93,168 @@ class Solution {
         }
     }
 }
+```
+
+```cpp
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<bool> rows(m);
+        vector<bool> cols(n);
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (!matrix[i][j]) {
+                    rows[i] = 1;
+                    cols[j] = 1;
+                }
+            }
+        }
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (rows[i] || cols[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+};
+```
+
+```go
+func setZeroes(matrix [][]int) {
+	m, n := len(matrix), len(matrix[0])
+	rows := make([]bool, m)
+	cols := make([]bool, n)
+	for i, row := range matrix {
+		for j, v := range row {
+			if v == 0 {
+				rows[i] = true
+				cols[j] = true
+			}
+		}
+	}
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if rows[i] || cols[j] {
+				matrix[i][j] = 0
+			}
+		}
+	}
+}
+```
+
+```ts
+/**
+ Do not return anything, modify matrix in-place instead.
+ */
+function setZeroes(matrix: number[][]): void {
+    const m = matrix.length;
+    const n = matrix[0].length;
+    const rows: boolean[] = new Array(m).fill(false);
+    const cols: boolean[] = new Array(n).fill(false);
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (matrix[i][j] === 0) {
+                rows[i] = true;
+                cols[j] = true;
+            }
+        }
+    }
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (rows[i] || cols[j]) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+```
+
+```js
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var setZeroes = function (matrix) {
+    const m = matrix.length;
+    const n = matrix[0].length;
+    const rows = new Array(m).fill(false);
+    const cols = new Array(n).fill(false);
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (matrix[i][j] == 0) {
+                rows[i] = true;
+                cols[j] = true;
+            }
+        }
+    }
+    for (let i = 0; i < m; ++i) {
+        for (let j = 0; j < n; ++j) {
+            if (rows[i] || cols[j]) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+};
+```
+
+```cs
+public class Solution {
+    public void SetZeroes(int[][] matrix) {
+        int m = matrix.Length, n = matrix[0].Length;
+        bool[] rows = new bool[m], cols = new bool[n];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == 0) {
+                    rows[i] = true;
+                    cols[j] = true;
+                }
+            }
+        }
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (rows[i] || cols[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2: Mark in Place
+
+In the first method, we use an additional array to mark the rows and columns to be cleared. In fact, we can also use the first row and first column of the matrix to mark them, without creating an additional array.
+
+Since the first row and the first column are used to mark, their values ​​may change due to the mark, so we need additional variables $i0$, $j0$ to mark whether the first row and the first column need to be cleared.
+
+The time complexity is $O(m\times n)$, and the space complexity is $O(1)$. Where $m$ and $n$ are the number of rows and columns of the matrix respectively.
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        m, n = len(matrix), len(matrix[0])
+        i0 = any(v == 0 for v in matrix[0])
+        j0 = any(matrix[i][0] == 0 for i in range(m))
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = matrix[0][j] = 0
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+        if i0:
+            for j in range(n):
+                matrix[0][j] = 0
+        if j0:
+            for i in range(m):
+                matrix[i][0] = 0
 ```
 
 ```java
@@ -157,34 +301,6 @@ class Solution {
         }
     }
 }
-```
-
-### **C++**
-
-```cpp
-class Solution {
-public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        int m = matrix.size(), n = matrix[0].size();
-        vector<bool> rows(m);
-        vector<bool> cols(n);
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (!matrix[i][j]) {
-                    rows[i] = 1;
-                    cols[j] = 1;
-                }
-            }
-        }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (rows[i] || cols[j]) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-    }
-};
 ```
 
 ```cpp
@@ -234,31 +350,6 @@ public:
 };
 ```
 
-### **Go**
-
-```go
-func setZeroes(matrix [][]int) {
-	m, n := len(matrix), len(matrix[0])
-	rows := make([]bool, m)
-	cols := make([]bool, n)
-	for i, row := range matrix {
-		for j, v := range row {
-			if v == 0 {
-				rows[i] = true
-				cols[j] = true
-			}
-		}
-	}
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
-			if rows[i] || cols[j] {
-				matrix[i][j] = 0
-			}
-		}
-	}
-}
-```
-
 ```go
 func setZeroes(matrix [][]int) {
 	m, n := len(matrix), len(matrix[0])
@@ -302,34 +393,39 @@ func setZeroes(matrix [][]int) {
 }
 ```
 
-### **JavaScript**
-
-```js
+```ts
 /**
- * @param {number[][]} matrix
- * @return {void} Do not return anything, modify matrix in-place instead.
+ Do not return anything, modify matrix in-place instead.
  */
-var setZeroes = function (matrix) {
+function setZeroes(matrix: number[][]): void {
     const m = matrix.length;
     const n = matrix[0].length;
-    const rows = new Array(m).fill(false);
-    const cols = new Array(n).fill(false);
-    for (let i = 0; i < m; ++i) {
-        for (let j = 0; j < n; ++j) {
-            if (matrix[i][j] == 0) {
-                rows[i] = true;
-                cols[j] = true;
+    const i0 = matrix[0].includes(0);
+    const j0 = matrix.map(row => row[0]).includes(0);
+    for (let i = 1; i < m; ++i) {
+        for (let j = 1; j < n; ++j) {
+            if (matrix[i][j] === 0) {
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
             }
         }
     }
-    for (let i = 0; i < m; ++i) {
-        for (let j = 0; j < n; ++j) {
-            if (rows[i] || cols[j]) {
+    for (let i = 1; i < m; ++i) {
+        for (let j = 1; j < n; ++j) {
+            if (matrix[i][0] === 0 || matrix[0][j] === 0) {
                 matrix[i][j] = 0;
             }
         }
     }
-};
+    if (i0) {
+        matrix[0].fill(0);
+    }
+    if (j0) {
+        for (let i = 0; i < m; ++i) {
+            matrix[i][0] = 0;
+        }
+    }
+}
 ```
 
 ```js
@@ -376,10 +472,46 @@ var setZeroes = function (matrix) {
 };
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public void SetZeroes(int[][] matrix) {
+        int m = matrix.Length, n = matrix[0].Length;
+        bool i0 = matrix[0].Contains(0), j0 = false;
+        for (int i = 0; i < m; ++i) {
+            if (matrix[i][0] == 0) {
+                j0 = true;
+                break;
+            }
+        }
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if (i0) {
+            for (int j = 0; j < n; ++j) {
+                matrix[0][j] = 0;
+            }
+        }
+        if (j0) {
+            for (int i = 0; i < m; ++i) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

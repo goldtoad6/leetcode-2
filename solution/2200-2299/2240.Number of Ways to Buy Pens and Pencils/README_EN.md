@@ -38,9 +38,9 @@ The total number of ways to buy pens and pencils is 5 + 3 + 1 = 9.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -51,8 +51,6 @@ class Solution:
             ans += y
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -66,8 +64,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -83,8 +79,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func waysToBuyPensPencils(total int, cost1 int, cost2 int) (ans int64) {
 	for x := 0; x <= total/cost1; x++ {
@@ -95,14 +89,8 @@ func waysToBuyPensPencils(total int, cost1 int, cost2 int) (ans int64) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function waysToBuyPensPencils(
-    total: number,
-    cost1: number,
-    cost2: number,
-): number {
+function waysToBuyPensPencils(total: number, cost1: number, cost2: number): number {
     let ans = 0;
     for (let x = 0; x <= Math.floor(total / cost1); ++x) {
         const y = Math.floor((total - x * cost1) / cost2) + 1;
@@ -112,10 +100,18 @@ function waysToBuyPensPencils(
 }
 ```
 
-### **...**
-
-```
-
+```rust
+impl Solution {
+    pub fn ways_to_buy_pens_pencils(total: i32, cost1: i32, cost2: i32) -> i64 {
+        let mut ans: i64 = 0;
+        for pen in 0..=total / cost1 {
+            ans += (((total - pen * cost1) / cost2) as i64) + 1;
+        }
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

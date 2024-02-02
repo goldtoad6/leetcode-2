@@ -34,13 +34,11 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：DFS + 剪枝
 
-**方法一：DFS + 剪枝**
+题目中 $n$ 的范围为 $[1, 8]$，因此我们直接通过“暴力搜索 + 剪枝”的方式通过本题。
 
-题目中 $n$ 的范围为 $[1, 8]$，因此我们直接通过“暴力搜索 + 剪枝”的方式快速解决本题。
-
-我们设计函数 `dfs(l, r, t)`，其中 $l$ 和 $r$ 分别表示左括号和右括号的数量，而 $t$ 表示当前的括号序列。那么我们可以得到如下的递归结构：
+我们设计一个函数 $dfs(l, r, t)$，其中 $l$ 和 $r$ 分别表示左括号和右括号的数量，而 $t$ 表示当前的括号序列。那么我们可以得到如下的递归结构：
 
 -   如果 $l \gt n$ 或者 $r \gt n$ 或者 $l \lt r$，那么当前括号组合 $t$ 不合法，直接返回；
 -   如果 $l = n$ 且 $r = n$，那么当前括号组合 $t$ 合法，将其加入答案数组 `ans` 中，直接返回；
@@ -50,10 +48,6 @@
 时间复杂度 $O(2^{n\times 2} \times n)$，空间复杂度 $O(n)$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -71,10 +65,6 @@ class Solution:
         dfs(0, 0, '')
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -101,8 +91,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -123,8 +111,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func generateParenthesis(n int) (ans []string) {
 	var dfs func(int, int, string)
@@ -144,33 +130,6 @@ func generateParenthesis(n int) (ans []string) {
 }
 ```
 
-### **JavaScript**
-
-```js
-/**
- * @param {number} n
- * @return {string[]}
- */
-var generateParenthesis = function (n) {
-    function dfs(l, r, t) {
-        if (l > n || r > n || l < r) {
-            return;
-        }
-        if (l == n && r == n) {
-            ans.push(t);
-            return;
-        }
-        dfs(l + 1, r, t + '(');
-        dfs(l, r + 1, t + ')');
-    }
-    let ans = [];
-    dfs(0, 0, '');
-    return ans;
-};
-```
-
-### **TypeScript**
-
 ```ts
 function generateParenthesis(n: number): string[] {
     function dfs(l, r, t) {
@@ -189,8 +148,6 @@ function generateParenthesis(n: number): string[] {
     return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -219,10 +176,66 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```js
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function (n) {
+    function dfs(l, r, t) {
+        if (l > n || r > n || l < r) {
+            return;
+        }
+        if (l == n && r == n) {
+            ans.push(t);
+            return;
+        }
+        dfs(l + 1, r, t + '(');
+        dfs(l, r + 1, t + ')');
+    }
+    let ans = [];
+    dfs(0, 0, '');
+    return ans;
+};
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn generate_parenthesis(n: i32) -> Vec<String> {
+        let mut dp: Vec<Vec<String>> = vec![vec![]; n as usize + 1];
+
+        // Initialize the dp vector
+        dp[0].push(String::from(""));
+        dp[1].push(String::from("()"));
+
+        // Begin the actual dp process
+        for i in 2..=n as usize {
+            for j in 0..i as usize {
+                let dp_c = dp.clone();
+                let first_half = &dp_c[j];
+                let second_half = &dp_c[i - j - 1];
+
+                for f in first_half {
+                    for s in second_half {
+                        let f_c = f.clone();
+                        let cur_str = f_c + "(" + &*s + ")";
+                        dp[i].push(cur_str);
+                    }
+                }
+            }
+        }
+
+        dp[n as usize].clone()
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

@@ -52,13 +52,15 @@ The compatibility score sum is 3 + 2 + 3 = 8.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def maxCompatibilitySum(self, students: List[List[int]], mentors: List[List[int]]) -> int:
+    def maxCompatibilitySum(
+        self, students: List[List[int]], mentors: List[List[int]]
+    ) -> int:
         def dfs(i, t):
             if i == m:
                 nonlocal ans
@@ -80,8 +82,6 @@ class Solution:
         dfs(0, 0)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -121,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -160,8 +158,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxCompatibilitySum(students [][]int, mentors [][]int) (ans int) {
 	m, n := len(students), len(students[0])
@@ -194,19 +190,8 @@ func maxCompatibilitySum(students [][]int, mentors [][]int) (ans int) {
 	dfs(0, 0)
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

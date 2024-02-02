@@ -15,23 +15,23 @@
 | first_col   | int  |
 | second_col  | int  |
 +-------------+------+
-该表没有主键且可能包含重复数据。
+该表可能包含重复数据。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>请你编写 SQL 使：</p>
+<p>编写解决方案，使：</p>
 
 <ul>
 	<li><code>first_col</code> 按照<strong> 升序 </strong>排列。</li>
 	<li><code>second_col</code> 按照 <strong>降序 </strong>排列。</li>
 </ul>
 
-<p>查询返回的结果格式如下。</p>
+<p>返回的结果格式如下。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例：</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -57,16 +57,31 @@ Data 表：
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+WITH
+    S AS (
+        SELECT
+            first_col,
+            ROW_NUMBER() OVER (ORDER BY first_col) AS rk
+        FROM Data
+    ),
+    T AS (
+        SELECT
+            second_col,
+            ROW_NUMBER() OVER (ORDER BY second_col DESC) AS rk
+        FROM Data
+    )
+SELECT first_col, second_col
+FROM
+    S
+    JOIN T USING (rk);
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

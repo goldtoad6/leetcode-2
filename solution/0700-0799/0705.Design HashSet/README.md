@@ -48,9 +48,7 @@ myHashSet.contains(2); // 返回 False ，（已移除）</pre>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：静态数组实现**
+### 方法一：静态数组实现
 
 直接创建一个大小为 $1000001$ 的数组，初始时数组中的每个元素都为 `false`，表示哈希集合中不存在该元素。
 
@@ -58,19 +56,10 @@ myHashSet.contains(2); // 返回 False ，（已移除）</pre>
 
 以上操作的时间复杂度均为 $O(1)$。
 
-**方法二：数组嵌套链表**
-
-我们也可以开辟一个大小为 `SIZE=1000` 的数组，数组的每个位置是一个链表。
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class MyHashSet:
-
     def __init__(self):
         self.data = [False] * 1000001
 
@@ -91,9 +80,136 @@ class MyHashSet:
 # param_3 = obj.contains(key)
 ```
 
+```java
+class MyHashSet {
+    private boolean[] data = new boolean[1000001];
+
+    public MyHashSet() {
+    }
+
+    public void add(int key) {
+        data[key] = true;
+    }
+
+    public void remove(int key) {
+        data[key] = false;
+    }
+
+    public boolean contains(int key) {
+        return data[key];
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet obj = new MyHashSet();
+ * obj.add(key);
+ * obj.remove(key);
+ * boolean param_3 = obj.contains(key);
+ */
+```
+
+```cpp
+class MyHashSet {
+public:
+    bool data[1000001];
+
+    MyHashSet() {
+        memset(data, false, sizeof data);
+    }
+
+    void add(int key) {
+        data[key] = true;
+    }
+
+    void remove(int key) {
+        data[key] = false;
+    }
+
+    bool contains(int key) {
+        return data[key];
+    }
+};
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
+```
+
+```go
+type MyHashSet struct {
+	data []bool
+}
+
+func Constructor() MyHashSet {
+	data := make([]bool, 1000010)
+	return MyHashSet{data}
+}
+
+func (this *MyHashSet) Add(key int) {
+	this.data[key] = true
+}
+
+func (this *MyHashSet) Remove(key int) {
+	this.data[key] = false
+}
+
+func (this *MyHashSet) Contains(key int) bool {
+	return this.data[key]
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Add(key);
+ * obj.Remove(key);
+ * param_3 := obj.Contains(key);
+ */
+```
+
+```ts
+class MyHashSet {
+    data: Array<boolean>;
+    constructor() {
+        this.data = new Array(10 ** 6 + 1).fill(false);
+    }
+
+    add(key: number): void {
+        this.data[key] = true;
+    }
+
+    remove(key: number): void {
+        this.data[key] = false;
+    }
+
+    contains(key: number): boolean {
+        return this.data[key];
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * var obj = new MyHashSet()
+ * obj.add(key)
+ * obj.remove(key)
+ * var param_3 = obj.contains(key)
+ */
+```
+
+<!-- tabs:end -->
+
+### 方法二：数组嵌套链表
+
+我们也可以开辟一个大小为 `SIZE=1000` 的数组，数组的每个位置是一个链表。
+
+<!-- tabs:start -->
+
 ```python
 class MyHashSet:
-
     def __init__(self):
         self.size = 1000
         self.data = [[] for _ in range(self.size)]
@@ -123,40 +239,6 @@ class MyHashSet:
 # obj.add(key)
 # obj.remove(key)
 # param_3 = obj.contains(key)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-```java
-class MyHashSet {
-    private boolean[] data = new boolean[1000001];
-
-    public MyHashSet() {
-
-    }
-
-    public void add(int key) {
-        data[key] = true;
-    }
-
-    public void remove(int key) {
-        data[key] = false;
-    }
-
-    public boolean contains(int key) {
-        return data[key];
-    }
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet obj = new MyHashSet();
- * obj.add(key);
- * obj.remove(key);
- * boolean param_3 = obj.contains(key);
- */
 ```
 
 ```java
@@ -213,39 +295,6 @@ class MyHashSet {
  */
 ```
 
-### **C++**
-
-```cpp
-class MyHashSet {
-public:
-    bool data[1000001];
-
-    MyHashSet() {
-        memset(data, false, sizeof data);
-    }
-
-    void add(int key) {
-        data[key] = true;
-    }
-
-    void remove(int key) {
-        data[key] = false;
-    }
-
-    bool contains(int key) {
-        return data[key];
-    }
-};
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet* obj = new MyHashSet();
- * obj->add(key);
- * obj->remove(key);
- * bool param_3 = obj->contains(key);
- */
-```
-
 ```cpp
 class MyHashSet {
 private:
@@ -253,8 +302,8 @@ private:
     vector<list<int>> data;
 
 public:
-    MyHashSet(): data(size) {
-
+    MyHashSet()
+        : data(size) {
     }
 
     void add(int key) {
@@ -294,39 +343,6 @@ public:
  * obj->add(key);
  * obj->remove(key);
  * bool param_3 = obj->contains(key);
- */
-```
-
-### **Go**
-
-```go
-type MyHashSet struct {
-	data []bool
-}
-
-func Constructor() MyHashSet {
-	data := make([]bool, 1000010)
-	return MyHashSet{data}
-}
-
-func (this *MyHashSet) Add(key int) {
-	this.data[key] = true
-}
-
-func (this *MyHashSet) Remove(key int) {
-	this.data[key] = false
-}
-
-func (this *MyHashSet) Contains(key int) bool {
-	return this.data[key]
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * obj := Constructor();
- * obj.Add(key);
- * obj.Remove(key);
- * param_3 := obj.Contains(key);
  */
 ```
 
@@ -379,41 +395,6 @@ func (this *MyHashSet) hash(key int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class MyHashSet {
-    data: Array<boolean>;
-    constructor() {
-        this.data = new Array(10 ** 6 + 1).fill(false);
-    }
-
-    add(key: number): void {
-        this.data[key] = true;
-    }
-
-    remove(key: number): void {
-        this.data[key] = false;
-    }
-
-    contains(key: number): boolean {
-        return this.data[key];
-    }
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * var obj = new MyHashSet()
- * obj.add(key)
- * obj.remove(key)
- * var param_3 = obj.contains(key)
- */
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

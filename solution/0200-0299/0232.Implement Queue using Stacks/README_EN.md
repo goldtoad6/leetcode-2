@@ -55,9 +55,9 @@ myQueue.empty(); // return false
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class MyQueue:
@@ -92,8 +92,6 @@ class MyQueue:
 # param_3 = obj.peek()
 # param_4 = obj.empty()
 ```
-
-### **Java**
 
 ```java
 class MyQueue {
@@ -139,8 +137,6 @@ class MyQueue {
  * boolean param_4 = obj.empty();
  */
 ```
-
-### **C++**
 
 ```cpp
 class MyQueue {
@@ -192,8 +188,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type MyQueue struct {
 	stk1 []int
@@ -243,8 +237,6 @@ func (this *MyQueue) move() {
  */
 ```
 
-### **TypeScript**
-
 ```ts
 class MyQueue {
     stk1: number[];
@@ -292,21 +284,17 @@ class MyQueue {
  */
 ```
 
-### **Rust**
-
 ```rust
 struct MyQueue {
     in_stack: Vec<i32>,
     out_stack: Vec<i32>,
 }
 
-
 /**
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MyQueue {
-
     fn new() -> Self {
         Self {
             in_stack: vec![],
@@ -336,7 +324,7 @@ impl MyQueue {
         self.in_stack.is_empty() && self.out_stack.is_empty()
     }
 
-    fn fill_out(&mut self){
+    fn fill_out(&mut self) {
         let MyQueue { in_stack, out_stack } = self;
         if out_stack.is_empty() {
             while !in_stack.is_empty() {
@@ -344,9 +332,7 @@ impl MyQueue {
             }
         }
     }
-}
-
-/**
+}/**
  * Your MyQueue object will be instantiated and called as such:
  * let obj = MyQueue::new();
  * obj.push(x);
@@ -356,10 +342,6 @@ impl MyQueue {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

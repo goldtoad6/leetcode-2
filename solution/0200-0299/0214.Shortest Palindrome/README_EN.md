@@ -26,9 +26,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -47,8 +47,6 @@ class Solution:
                 idx = i + 1
         return s if idx == n else s[idx:][::-1] + s
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,8 +74,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 typedef unsigned long long ull;
 
@@ -103,8 +99,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func shortestPalindrome(s string) string {
@@ -132,10 +126,72 @@ func shortestPalindrome(s string) string {
 }
 ```
 
-### **...**
-
+```rust
+impl Solution {
+    pub fn shortest_palindrome(s: String) -> String {
+        let base = 131;
+        let (mut idx, mut prefix, mut suffix, mut mul) = (0, 0, 0, 1);
+        for (i, c) in s.chars().enumerate() {
+            let t = (c as u64) - ('0' as u64) + 1;
+            prefix = prefix * base + t;
+            suffix = suffix + t * mul;
+            mul *= base;
+            if prefix == suffix {
+                idx = i + 1;
+            }
+        }
+        if idx == s.len() {
+            s
+        } else {
+            let x: String = (&s[idx..]).chars().rev().collect();
+            String::from(x + &s)
+        }
+    }
+}
 ```
 
+```cs
+﻿// https://leetcode.com/problems/shortest-palindrome/
+
+using System.Text;
+
+public partial class Solution
+{
+    public string ShortestPalindrome(string s)
+    {
+        for (var i = s.Length - 1; i >= 0; --i)
+        {
+            var k = i;
+            var j = 0;
+            while (j < k)
+            {
+                if (s[j] == s[k])
+                {
+                    ++j;
+                    --k;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (j >= k)
+            {
+                var sb = new StringBuilder(s.Length * 2 - i - 1);
+                for (var l = s.Length - 1; l >= i + 1; --l)
+                {
+                    sb.Append(s[l]);
+                }
+                sb.Append(s);
+                return sb.ToString();
+            }
+        }
+
+        return string.Empty;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -73,11 +73,9 @@ Hence the result is [0,0].
 
 ## Solutions
 
-Union find.
+### Solution 1
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -127,8 +125,6 @@ class Solution:
             ans.append(max(0, curr - prev - 1))
         return ans[::-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -215,8 +211,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -279,8 +273,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func hitBricks(grid [][]int, hits [][]int) []int {
@@ -358,19 +350,8 @@ func hitBricks(grid [][]int, hits [][]int) []int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

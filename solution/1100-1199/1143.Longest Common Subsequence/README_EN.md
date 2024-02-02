@@ -49,19 +49,23 @@
 
 ## Solutions
 
-Dynamic programming.
+### Solution 1: Dynamic Programming
+
+We define $f[i][j]$ as the length of the longest common subsequence of the first $i$ characters of $text1$ and the first $j$ characters of $text2$. Therefore, the answer is $f[m][n]$, where $m$ and $n$ are the lengths of $text1$ and $text2$, respectively.
+
+If the $i$th character of $text1$ and the $j$th character of $text2$ are the same, then $f[i][j] = f[i - 1][j - 1] + 1$; if the $i$th character of $text1$ and the $j$th character of $text2$ are different, then $f[i][j] = max(f[i - 1][j], f[i][j - 1])$. The state transition equation is:
 
 $$
 f[i][j] =
 \begin{cases}
-f[i - 1][j - 1] + 1, & text1[i - 1] = text2[j - 1] \\
-max(f[i - 1][j], f[i][j - 1]), & text1[i - 1] \neq text2[j - 1]
+f[i - 1][j - 1] + 1, & \text{if } text1[i - 1] = text2[j - 1] \\
+\max(f[i - 1][j], f[i][j - 1]), & \text{if } text1[i - 1] \neq text2[j - 1]
 \end{cases}
 $$
 
-<!-- tabs:start -->
+The time complexity is $O(m \times n)$, and the space complexity is $O(m \times n)$. Here, $m$ and $n$ are the lengths of $text1$ and $text2$, respectively.
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -76,8 +80,6 @@ class Solution:
                     f[i][j] = max(f[i - 1][j], f[i][j - 1])
         return f[m][n]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -97,8 +99,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -121,8 +121,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func longestCommonSubsequence(text1 string, text2 string) int {
 	m, n := len(text1), len(text2)
@@ -141,16 +139,45 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 	}
 	return f[m][n]
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function longestCommonSubsequence(text1: string, text2: string): number {
+    const m = text1.length;
+    const n = text2.length;
+    const f = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (text1[i - 1] === text2[j - 1]) {
+                f[i][j] = f[i - 1][j - 1] + 1;
+            } else {
+                f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
+            }
+        }
+    }
+    return f[m][n];
 }
 ```
 
-### **JavaScript**
+```rust
+impl Solution {
+    pub fn longest_common_subsequence(text1: String, text2: String) -> i32 {
+        let (m, n) = (text1.len(), text2.len());
+        let (text1, text2) = (text1.as_bytes(), text2.as_bytes());
+        let mut f = vec![vec![0; n + 1]; m + 1];
+        for i in 1..=m {
+            for j in 1..=n {
+                f[i][j] = if text1[i - 1] == text2[j - 1] {
+                    f[i - 1][j - 1] + 1
+                } else {
+                    f[i - 1][j].max(f[i][j - 1])
+                };
+            }
+        }
+        f[m][n]
+    }
+}
+```
 
 ```js
 /**
@@ -175,50 +202,6 @@ var longestCommonSubsequence = function (text1, text2) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function longestCommonSubsequence(text1: string, text2: string): number {
-    const m = text1.length;
-    const n = text2.length;
-    const f = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-    for (let i = 1; i <= m; i++) {
-        for (let j = 1; j <= n; j++) {
-            if (text1[i - 1] === text2[j - 1]) {
-                f[i][j] = f[i - 1][j - 1] + 1;
-            } else {
-                f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
-            }
-        }
-    }
-    return f[m][n];
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn longest_common_subsequence(text1: String, text2: String) -> i32 {
-        let (m, n) = (text1.len(), text2.len());
-        let (text1, text2) = (text1.as_bytes(), text2.as_bytes());
-        let mut f = vec![vec![0; n + 1]; m + 1];
-        for i in 1..=m {
-            for j in 1..=n {
-                f[i][j] = if text1[i - 1] == text2[j - 1] {
-                    f[i - 1][j - 1] + 1
-                } else {
-                    f[i - 1][j].max(f[i][j - 1])
-                }
-            }
-        }
-        f[m][n]
-    }
-}
-```
-
-### **C#**
-
 ```cs
 public class Solution {
     public int LongestCommonSubsequence(string text1, string text2) {
@@ -238,10 +221,26 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
+```kotlin
+class Solution {
+    fun longestCommonSubsequence(text1: String, text2: String): Int {
+        val m = text1.length
+        val n = text2.length
+        val f = Array(m + 1) { IntArray(n + 1) }
+        for (i in 1..m) {
+            for (j in 1..n) {
+                if (text1[i - 1] == text2[j - 1]) {
+                    f[i][j] = f[i - 1][j - 1] + 1
+                } else {
+                    f[i][j] = Math.max(f[i - 1][j], f[i][j - 1])
+                }
+            }
+        }
+        return f[m][n]
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

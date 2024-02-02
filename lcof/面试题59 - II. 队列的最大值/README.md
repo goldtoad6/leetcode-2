@@ -35,9 +35,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：双队列**
+### 方法一：双队列
 
 我们维护两个队列 $q_1$ 和 $q_2$，其中 $q_1$ 用于存储所有元素，而 $q_2$ 用于存储当前队列中的最大值。
 
@@ -50,10 +48,6 @@
 以上操作的时间复杂度均为 $O(1)$，空间复杂度为 $O(n)$。其中 $n$ 为队列中的元素个数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class MaxQueue:
@@ -85,10 +79,6 @@ class MaxQueue:
 # obj.push_back(value)
 # param_3 = obj.pop_front()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class MaxQueue {
@@ -131,13 +121,10 @@ class MaxQueue {
  */
 ```
 
-### **C++**
-
 ```cpp
 class MaxQueue {
 public:
     MaxQueue() {
-
     }
 
     int max_value() {
@@ -177,8 +164,6 @@ private:
  * int param_3 = obj->pop_front();
  */
 ```
-
-### **Go**
 
 ```go
 type MaxQueue struct {
@@ -225,7 +210,95 @@ func (this *MaxQueue) Pop_front() int {
  */
 ```
 
-### **JavaScript**
+```ts
+class MaxQueue {
+    private queue: number[];
+    private deque: number[];
+
+    constructor() {
+        this.queue = [];
+        this.deque = [];
+    }
+
+    max_value(): number {
+        return this.deque[0] ?? -1;
+    }
+
+    push_back(value: number): void {
+        this.queue.push(value);
+        while (this.deque.length !== 0 && this.deque[this.deque.length - 1] < value) {
+            this.deque.pop();
+        }
+        this.deque.push(value);
+    }
+
+    pop_front(): number {
+        const res = this.queue.shift();
+        if (res === this.deque[0]) {
+            this.deque.shift();
+        }
+        return res ?? -1;
+    }
+}
+
+/**
+ * Your MaxQueue object will be instantiated and called as such:
+ * var obj = new MaxQueue()
+ * var param_1 = obj.max_value()
+ * obj.push_back(value)
+ * var param_3 = obj.pop_front()
+ */
+```
+
+```rust
+use std::collections::VecDeque;
+struct MaxQueue {
+    queue: VecDeque<i32>,
+    deque: VecDeque<i32>,
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MaxQueue {
+    fn new() -> Self {
+        Self {
+            queue: VecDeque::new(),
+            deque: VecDeque::new(),
+        }
+    }
+
+    fn max_value(&self) -> i32 {
+        *self.deque.front().unwrap_or(&-1)
+    }
+
+    fn push_back(&mut self, value: i32) {
+        self.queue.push_back(value);
+        while !self.deque.is_empty() && *self.deque.back().unwrap() < value {
+            self.deque.pop_back();
+        }
+        self.deque.push_back(value);
+    }
+
+    fn pop_front(&mut self) -> i32 {
+        if self.queue.is_empty() {
+            return -1;
+        }
+        let res = self.queue.pop_front().unwrap();
+        if res == self.deque[0] {
+            self.deque.pop_front();
+        }
+        res
+    }
+}/**
+ * Your MaxQueue object will be instantiated and called as such:
+ * let obj = MaxQueue::new();
+ * let ret_1: i32 = obj.max_value();
+ * obj.push_back(value);
+ * let ret_3: i32 = obj.pop_front();
+ */
+```
 
 ```js
 var MaxQueue = function () {
@@ -275,107 +348,6 @@ MaxQueue.prototype.pop_front = function () {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class MaxQueue {
-    private queue: number[];
-    private deque: number[];
-
-    constructor() {
-        this.queue = [];
-        this.deque = [];
-    }
-
-    max_value(): number {
-        return this.deque[0] ?? -1;
-    }
-
-    push_back(value: number): void {
-        this.queue.push(value);
-        while (
-            this.deque.length !== 0 &&
-            this.deque[this.deque.length - 1] < value
-        ) {
-            this.deque.pop();
-        }
-        this.deque.push(value);
-    }
-
-    pop_front(): number {
-        const res = this.queue.shift();
-        if (res === this.deque[0]) {
-            this.deque.shift();
-        }
-        return res ?? -1;
-    }
-}
-
-/**
- * Your MaxQueue object will be instantiated and called as such:
- * var obj = new MaxQueue()
- * var param_1 = obj.max_value()
- * obj.push_back(value)
- * var param_3 = obj.pop_front()
- */
-```
-
-### **Rust**
-
-```rust
-use std::collections::VecDeque;
-struct MaxQueue {
-    queue: VecDeque<i32>,
-    deque: VecDeque<i32>,
-}
-
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
-impl MaxQueue {
-    fn new() -> Self {
-        Self {
-            queue: VecDeque::new(),
-            deque: VecDeque::new(),
-        }
-    }
-
-    fn max_value(&self) -> i32 {
-        *self.deque.front().unwrap_or(&-1)
-    }
-
-    fn push_back(&mut self, value: i32) {
-        self.queue.push_back(value);
-        while !self.deque.is_empty() && *self.deque.back().unwrap() < value {
-            self.deque.pop_back();
-        }
-        self.deque.push_back(value);
-    }
-
-    fn pop_front(&mut self) -> i32 {
-        if self.queue.is_empty() {
-            return -1;
-        }
-        let res = self.queue.pop_front().unwrap();
-        if res == self.deque[0] {
-            self.deque.pop_front();
-        }
-        res
-    }
-}
-
-/**
- * Your MaxQueue object will be instantiated and called as such:
- * let obj = MaxQueue::new();
- * let ret_1: i32 = obj.max_value();
- * obj.push_back(value);
- * let ret_3: i32 = obj.pop_front();
- */
-```
-
-### **C#**
-
 ```cs
 public class MaxQueue {
     LinkedList<int> mvq;
@@ -422,10 +394,6 @@ public class MaxQueue {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：后缀和**
+### 方法一：后缀和
 
 对于字符串 $s$ 中的每个字符，我们需要计算其最终的偏移量，即 `shifts[i]` 与 `shifts[i + 1]` 与 `shifts[i + 2]` ... 的和。我们可以使用后缀和的思想，从后往前遍历 `shifts`，计算每个字符的最终偏移量，然后对 $26$ 取模，得到最终的字符。
 
@@ -63,9 +61,17 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
+```python
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[int]) -> str:
+        n, t = len(s), 0
+        s = list(s)
+        for i in range(n - 1, -1, -1):
+            t += shifts[i]
+            j = (ord(s[i]) - ord('a') + t) % 26
+            s[i] = ascii_lowercase[j]
+        return ''.join(s)
+```
 
 ```python
 class Solution:
@@ -88,22 +94,6 @@ class Solution:
         return ''.join(ans)
 ```
 
-```python
-class Solution:
-    def shiftingLetters(self, s: str, shifts: List[int]) -> str:
-        n, t = len(s), 0
-        s = list(s)
-        for i in range(n - 1, -1, -1):
-            t += shifts[i]
-            j = (ord(s[i]) - ord('a') + t) % 26
-            s[i] = ascii_lowercase[j]
-        return ''.join(s)
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```java
 class Solution {
     public String shiftingLetters(String s, int[] shifts) {
@@ -119,8 +109,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -138,8 +126,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func shiftingLetters(s string, shifts []int) string {
 	t := 0
@@ -154,10 +140,6 @@ func shiftingLetters(s string, shifts []int) string {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -40,11 +40,17 @@
 
 ## Solutions
 
-Priority Queue.
+### Solution 1: Priority Queue (Min Heap)
+
+We use a priority queue (min heap) to maintain all possible super ugly numbers, initially putting $1$ into the queue.
+
+Each time we take the smallest super ugly number $x$ from the queue, multiply $x$ by each number in the array `primes`, and put the product into the queue. Repeat the above operation $n$ times to get the $n$th super ugly number.
+
+Since the problem guarantees that the $n$th super ugly number is within the range of a 32-bit signed integer, before we put the product into the queue, we can first check whether the product exceeds $2^{31} - 1$. If it does, there is no need to put the product into the queue. In addition, the Euler sieve can be used for optimization.
+
+The time complexity is $O(n \times m \times \log (n \times m))$, and the space complexity is $O(n \times m)$. Where $m$ and $n$ are the length of the array `primes` and the given integer $n$ respectively.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -61,8 +67,6 @@ class Solution:
                     break
         return x
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +93,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -115,8 +117,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func nthSuperUglyNumber(n int, primes []int) (x int) {
 	q := hp{[]int{1}}
@@ -137,8 +137,8 @@ func nthSuperUglyNumber(n int, primes []int) (x int) {
 
 type hp struct{ sort.IntSlice }
 
-func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
-func (h *hp) Pop() interface{} {
+func (h *hp) Push(v any) { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() any {
 	a := h.IntSlice
 	v := a[len(a)-1]
 	h.IntSlice = a[:len(a)-1]
@@ -146,15 +146,21 @@ func (h *hp) Pop() interface{} {
 }
 ```
 
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```go
 type Ugly struct{ value, prime, index int }
 type Queue []Ugly
 
-func (u Queue) Len() int            { return len(u) }
-func (u Queue) Swap(i, j int)       { u[i], u[j] = u[j], u[i] }
-func (u Queue) Less(i, j int) bool  { return u[i].value < u[j].value }
-func (u *Queue) Push(v interface{}) { *u = append(*u, v.(Ugly)) }
-func (u *Queue) Pop() interface{} {
+func (u Queue) Len() int           { return len(u) }
+func (u Queue) Swap(i, j int)      { u[i], u[j] = u[j], u[i] }
+func (u Queue) Less(i, j int) bool { return u[i].value < u[j].value }
+func (u *Queue) Push(v any)        { *u = append(*u, v.(Ugly)) }
+func (u *Queue) Pop() any {
 	old, x := *u, (*u)[len(*u)-1]
 	*u = old[:len(old)-1]
 	return x
@@ -179,10 +185,6 @@ func nthSuperUglyNumber(n int, primes []int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

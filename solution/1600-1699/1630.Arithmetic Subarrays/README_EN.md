@@ -55,24 +55,24 @@ In the 2<sup>nd</sup> query, the subarray is <code>[5,9,3,7]. This</code> can be
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+    def checkArithmeticSubarrays(
+        self, nums: List[int], l: List[int], r: List[int]
+    ) -> List[bool]:
         def check(nums, l, r):
             n = r - l + 1
-            s = set(nums[l: l + n])
-            a1, an = min(nums[l: l + n]), max(nums[l: l + n])
+            s = set(nums[l : l + n])
+            a1, an = min(nums[l : l + n]), max(nums[l : l + n])
             d, mod = divmod(an - a1, n - 1)
             return mod == 0 and all((a1 + (i - 1) * d) in s for i in range(1, n))
 
         return [check(nums, left, right) for left, right in zip(l, r)]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -107,8 +107,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -141,8 +139,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func checkArithmeticSubarrays(nums []int, l []int, r []int) (ans []bool) {
@@ -177,14 +173,8 @@ func checkArithmeticSubarrays(nums []int, l []int, r []int) (ans []bool) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-function checkArithmeticSubarrays(
-    nums: number[],
-    l: number[],
-    r: number[],
-): boolean[] {
+function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {
     const check = (nums: number[], l: number, r: number): boolean => {
         const s = new Set<number>();
         const n = r - l + 1;
@@ -214,8 +204,6 @@ function checkArithmeticSubarrays(
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn check_arithmetic_subarrays(nums: Vec<i32>, l: Vec<i32>, r: Vec<i32>) -> Vec<bool> {
@@ -236,10 +224,33 @@ impl Solution {
 }
 ```
 
-### **...**
+```cs
+class Solution {
+    public bool Check(int[] arr) {
+        Array.Sort(arr);
+        int diff = arr[1] - arr[0];
+        for (int i = 2; i < arr.Length; i++) {
+            if (arr[i] - arr[i - 1] != diff) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-```
-
+    public IList<bool> CheckArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        List<bool> ans = new List<bool>();
+        for (int i = 0; i < l.Length; i++) {
+            int[] arr = new int[r[i] - l[i] + 1];
+            for (int j = 0; j < arr.Length; j++) {
+                arr[j] = nums[l[i] + j];
+            }
+            ans.Add(Check(arr));
+        }
+        return ans;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

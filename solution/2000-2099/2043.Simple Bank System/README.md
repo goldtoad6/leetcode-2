@@ -61,9 +61,7 @@ bank.withdraw(10, 50);   // 返回 false ，交易无效，因为账户 10 并�
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：模拟**
+### 方法一：模拟
 
 根据题意，我们可以使用一个数组 `balance` 来模拟银行账户的余额，数组下标从 0 开始，数组的值表示账户的余额。
 
@@ -75,10 +73,6 @@ bank.withdraw(10, 50);   // 返回 false ，交易无效，因为账户 10 并�
 以上操作的时间复杂度均为 $O(1)$，空间复杂度为 $O(n)$。其中，$n$ 为 `balance` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Bank:
@@ -112,10 +106,6 @@ class Bank:
 # param_2 = obj.deposit(account,money)
 # param_3 = obj.withdraw(account,money)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Bank {
@@ -162,56 +152,6 @@ class Bank {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class Bank {
-    balance: number[];
-    constructor(balance: number[]) {
-        this.balance = balance;
-    }
-
-    transfer(account1: number, account2: number, money: number): boolean {
-        if (
-            account1 > this.balance.length ||
-            account2 > this.balance.length ||
-            money > this.balance[account1 - 1]
-        )
-            return false;
-        this.balance[account1 - 1] -= money;
-        this.balance[account2 - 1] += money;
-        return true;
-    }
-
-    deposit(account: number, money: number): boolean {
-        if (account > this.balance.length) return false;
-        this.balance[account - 1] += money;
-        return true;
-    }
-
-    withdraw(account: number, money: number): boolean {
-        if (
-            account > this.balance.length ||
-            money > this.balance[account - 1]
-        ) {
-            return false;
-        }
-        this.balance[account - 1] -= money;
-        return true;
-    }
-}
-
-/**
- * Your Bank object will be instantiated and called as such:
- * var obj = new Bank(balance)
- * var param_1 = obj.transfer(account1,account2,money)
- * var param_2 = obj.deposit(account,money)
- * var param_3 = obj.withdraw(account,money)
- */
-```
-
-### **C++**
-
 ```cpp
 class Bank {
 public:
@@ -251,8 +191,6 @@ public:
  * bool param_3 = obj->withdraw(account,money);
  */
 ```
-
-### **Go**
 
 ```go
 type Bank struct {
@@ -298,7 +236,48 @@ func (this *Bank) Withdraw(account int, money int64) bool {
  */
 ```
 
-### **Rust**
+```ts
+class Bank {
+    balance: number[];
+    constructor(balance: number[]) {
+        this.balance = balance;
+    }
+
+    transfer(account1: number, account2: number, money: number): boolean {
+        if (
+            account1 > this.balance.length ||
+            account2 > this.balance.length ||
+            money > this.balance[account1 - 1]
+        )
+            return false;
+        this.balance[account1 - 1] -= money;
+        this.balance[account2 - 1] += money;
+        return true;
+    }
+
+    deposit(account: number, money: number): boolean {
+        if (account > this.balance.length) return false;
+        this.balance[account - 1] += money;
+        return true;
+    }
+
+    withdraw(account: number, money: number): boolean {
+        if (account > this.balance.length || money > this.balance[account - 1]) {
+            return false;
+        }
+        this.balance[account - 1] -= money;
+        return true;
+    }
+}
+
+/**
+ * Your Bank object will be instantiated and called as such:
+ * var obj = new Bank(balance)
+ * var param_1 = obj.transfer(account1,account2,money)
+ * var param_2 = obj.deposit(account,money)
+ * var param_3 = obj.withdraw(account,money)
+ */
+```
 
 ```rust
 struct Bank {
@@ -328,7 +307,7 @@ impl Bank {
     }
 
     fn deposit(&mut self, account: i32, money: i64) -> bool {
-        let (account,  n) = (account as usize, self.balance.len());
+        let (account, n) = (account as usize, self.balance.len());
         if n < account {
             return false;
         }
@@ -337,7 +316,7 @@ impl Bank {
     }
 
     fn withdraw(&mut self, account: i32, money: i64) -> bool {
-        let (account,  n) = (account as usize, self.balance.len());
+        let (account, n) = (account as usize, self.balance.len());
         if n < account {
             return false;
         }
@@ -347,9 +326,7 @@ impl Bank {
         self.balance[account - 1] -= money;
         true
     }
-}
-
-/**
+}/**
  * Your Bank object will be instantiated and called as such:
  * let obj = Bank::new(balance);
  * let ret_1: bool = obj.transfer(account1, account2, money);
@@ -358,10 +335,6 @@ impl Bank {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

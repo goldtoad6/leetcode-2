@@ -79,9 +79,7 @@ t.getInheritanceOrder(); // 返回 ["king", "andy", "matthew", "alex", "asha", "
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：多叉树的前序遍历**
+### 方法一：多叉树的前序遍历
 
 可以发现，题目中王位的继承顺序，实际上是多叉树的前序遍历。
 
@@ -91,13 +89,8 @@ t.getInheritanceOrder(); // 返回 ["king", "andy", "matthew", "alex", "asha", "
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class ThroneInheritance:
-
     def __init__(self, kingName: str):
         self.g = defaultdict(list)
         self.dead = set()
@@ -120,16 +113,13 @@ class ThroneInheritance:
         dfs(self.king)
         return ans
 
+
 # Your ThroneInheritance object will be instantiated and called as such:
 # obj = ThroneInheritance(kingName)
 # obj.birth(parentName,childName)
 # obj.death(name)
 # param_3 = obj.getInheritanceOrder()
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class ThroneInheritance {
@@ -175,8 +165,6 @@ class ThroneInheritance {
  */
 ```
 
-### **C++**
-
 ```cpp
 class ThroneInheritance {
 public:
@@ -221,8 +209,6 @@ public:
  * vector<string> param_3 = obj->getInheritanceOrder();
  */
 ```
-
-### **Go**
 
 ```go
 type ThroneInheritance struct {
@@ -270,10 +256,6 @@ func (this *ThroneInheritance) GetInheritanceOrder() []string {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

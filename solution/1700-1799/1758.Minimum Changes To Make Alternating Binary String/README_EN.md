@@ -45,9 +45,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -55,8 +55,6 @@ class Solution:
         cnt = sum(c != '01'[i & 1] for i, c in enumerate(s))
         return min(cnt, len(s) - cnt)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -70,8 +68,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -83,8 +79,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minOperations(s string) int {
 	cnt := 0
@@ -95,16 +89,7 @@ func minOperations(s string) int {
 	}
 	return min(cnt, len(s)-cnt)
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function minOperations(s: string): number {
@@ -116,8 +101,6 @@ function minOperations(s: string): number {
     return Math.min(count, n - count);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -134,12 +117,10 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-int minOperations(char *s) {
+int minOperations(char* s) {
     int n = strlen(s);
     int count = 0;
     for (int i = 0; i < n; i++) {
@@ -149,10 +130,6 @@ int minOperations(char *s) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

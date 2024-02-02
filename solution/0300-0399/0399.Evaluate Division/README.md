@@ -14,9 +14,11 @@
 
 <p><strong>注意：</strong>输入总是有效的。你可以假设除法运算中不会出现除数为 0 的情况，且不存在任何矛盾的结果。</p>
 
-<p> </p>
+<p><strong>注意：</strong>未在等式列表中出现的变量是未定义的，因此无法确定它们的答案。</p>
 
-<p><strong>示例 1：</strong></p>
+<p>&nbsp;</p>
+
+<p><strong class="example">示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>equations = [["a","b"],["b","c"]], values = [2.0,3.0], queries = [["a","c"],["b","a"],["a","e"],["a","a"],["x","x"]]
@@ -25,113 +27,49 @@
 条件：<em>a / b = 2.0</em>, <em>b / c = 3.0</em>
 问题：<em>a / c = ?</em>, <em>b / a = ?</em>, <em>a / e = ?</em>, <em>a / a = ?</em>, <em>x / x = ?</em>
 结果：[6.0, 0.5, -1.0, 1.0, -1.0 ]
-</pre>
+注意：x 是未定义的 =&gt; -1.0</pre>
 
-<p><strong>示例 2：</strong></p>
+<p><strong class="example">示例 2：</strong></p>
 
 <pre>
 <strong>输入：</strong>equations = [["a","b"],["b","c"],["bc","cd"]], values = [1.5,2.5,5.0], queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"]]
 <strong>输出：</strong>[3.75000,0.40000,5.00000,0.20000]
 </pre>
 
-<p><strong>示例 3：</strong></p>
+<p><strong class="example">示例 3：</strong></p>
 
 <pre>
 <strong>输入：</strong>equations = [["a","b"]], values = [0.5], queries = [["a","b"],["b","a"],["a","c"],["x","y"]]
 <strong>输出：</strong>[0.50000,2.00000,-1.00000,-1.00000]
 </pre>
 
-<p> </p>
+<p>&nbsp;</p>
 
 <p><strong>提示：</strong></p>
 
 <ul>
-	<li><code>1 <= equations.length <= 20</code></li>
+	<li><code>1 &lt;= equations.length &lt;= 20</code></li>
 	<li><code>equations[i].length == 2</code></li>
-	<li><code>1 <= A<sub>i</sub>.length, B<sub>i</sub>.length <= 5</code></li>
+	<li><code>1 &lt;= A<sub>i</sub>.length, B<sub>i</sub>.length &lt;= 5</code></li>
 	<li><code>values.length == equations.length</code></li>
-	<li><code>0.0 < values[i] <= 20.0</code></li>
-	<li><code>1 <= queries.length <= 20</code></li>
+	<li><code>0.0 &lt; values[i] &lt;= 20.0</code></li>
+	<li><code>1 &lt;= queries.length &lt;= 20</code></li>
 	<li><code>queries[i].length == 2</code></li>
-	<li><code>1 <= C<sub>j</sub>.length, D<sub>j</sub>.length <= 5</code></li>
+	<li><code>1 &lt;= C<sub>j</sub>.length, D<sub>j</sub>.length &lt;= 5</code></li>
 	<li><code>A<sub>i</sub>, B<sub>i</sub>, C<sub>j</sub>, D<sub>j</sub></code> 由小写英文字母与数字组成</li>
 </ul>
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-并查集。对于本题，具备等式关系的所有变量构成同一个集合，同时，需要维护一个权重数组 w，初始时 `w[i] = 1`。对于等式关系如 `a / b = 2`，令 `w[a] = 2`。在 `find()` 查找祖宗节点的时候，同时进行路径压缩，并更新节点权重。而在合并节点时，`p[pa] = pb`，同时更新 pa 的权重为 `w[pa] = w[b] * (a / b) / w[a]`。
-
-以下是并查集的几个常用模板。
-
-模板 1——朴素并查集：
-
-```python
-# 初始化，p存储每个点的父节点
-p = list(range(n))
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-```
-
-模板 2——维护 size 的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，size只有当节点是祖宗节点时才有意义，表示祖宗节点所在集合中，点的数量
-p = list(range(n))
-size = [1] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-# 合并a和b所在的两个集合
-if find(a) != find(b):
-    size[find(b)] += size[find(a)]
-    p[find(a)] = find(b)
-```
-
-模板 3——维护到祖宗节点距离的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，d[x]存储x到p[x]的距离
-p = list(range(n))
-d = [0] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        t = find(p[x])
-        d[x] += d[p[x]]
-        p[x] = t
-    return p[x]
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-d[find(a)] = distance
-```
+### 方法一
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    def calcEquation(
+        self, equations: List[List[str]], values: List[float], queries: List[List[str]]
+    ) -> List[float]:
         def find(x):
             if p[x] != x:
                 origin = p[x]
@@ -150,12 +88,11 @@ class Solution:
                 continue
             p[pa] = pb
             w[pa] = w[b] * v / w[a]
-        return [-1 if c not in p or d not in p or find(c) != find(d) else w[c] / w[d] for c, d in queries]
+        return [
+            -1 if c not in p or d not in p or find(c) != find(d) else w[c] / w[d]
+            for c, d in queries
+        ]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -205,8 +142,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -248,8 +183,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func calcEquation(equations [][]string, values []float64, queries [][]string) []float64 {
@@ -293,10 +226,93 @@ func calcEquation(equations [][]string, values []float64, queries [][]string) []
 }
 ```
 
-### **...**
+```rust
+use std::collections::HashMap;
 
-```
+#[derive(Debug)]
+pub struct DSUNode {
+    parent: String,
+    weight: f64,
+}
 
+pub struct DisjointSetUnion {
+    nodes: HashMap<String, DSUNode>,
+}
+
+impl DisjointSetUnion {
+    pub fn new(equations: &Vec<Vec<String>>) -> DisjointSetUnion {
+        let mut nodes = HashMap::new();
+        for equation in equations.iter() {
+            for iter in equation.iter() {
+                nodes.insert(iter.clone(), DSUNode {
+                    parent: iter.clone(),
+                    weight: 1.0,
+                });
+            }
+        }
+        DisjointSetUnion { nodes }
+    }
+
+    pub fn find(&mut self, v: &String) -> String {
+        let origin = self.nodes[v].parent.clone();
+        if origin == *v {
+            return origin;
+        }
+
+        let root = self.find(&origin);
+        self.nodes.get_mut(v).unwrap().parent = root.clone();
+        self.nodes.get_mut(v).unwrap().weight *= self.nodes[&origin].weight;
+        root
+    }
+
+    pub fn union(&mut self, a: &String, b: &String, v: f64) {
+        let pa = self.find(a);
+        let pb = self.find(b);
+        if pa == pb {
+            return;
+        }
+        let (wa, wb) = (self.nodes[a].weight, self.nodes[b].weight);
+        self.nodes.get_mut(&pa).unwrap().parent = pb;
+        self.nodes.get_mut(&pa).unwrap().weight = (wb * v) / wa;
+    }
+
+    pub fn exist(&mut self, k: &String) -> bool {
+        self.nodes.contains_key(k)
+    }
+
+    pub fn calc_value(&mut self, a: &String, b: &String) -> f64 {
+        if !self.exist(a) || !self.exist(b) || self.find(a) != self.find(b) {
+            -1.0
+        } else {
+            let wa = self.nodes[a].weight;
+            let wb = self.nodes[b].weight;
+            wa / wb
+        }
+    }
+}
+
+impl Solution {
+    pub fn calc_equation(
+        equations: Vec<Vec<String>>,
+        values: Vec<f64>,
+        queries: Vec<Vec<String>>
+    ) -> Vec<f64> {
+        let mut dsu = DisjointSetUnion::new(&equations);
+        for (i, &v) in values.iter().enumerate() {
+            let (a, b) = (&equations[i][0], &equations[i][1]);
+            dsu.union(a, b, v);
+        }
+
+        let mut ans = vec![];
+        for querie in queries {
+            let (c, d) = (&querie[0], &querie[1]);
+            ans.push(dsu.calc_value(c, d));
+        }
+        ans
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

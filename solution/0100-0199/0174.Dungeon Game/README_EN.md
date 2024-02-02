@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -56,12 +56,9 @@ class Solution:
         dp[m][n - 1] = dp[m - 1][n] = 1
         for i in range(m - 1, -1, -1):
             for j in range(n - 1, -1, -1):
-                dp[i][j] = max(
-                    1, min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j])
+                dp[i][j] = max(1, min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j])
         return dp[0][0]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +79,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -101,8 +96,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func calculateMinimumHP(dungeon [][]int) int {
@@ -122,23 +115,7 @@ func calculateMinimumHP(dungeon [][]int) int {
 	}
 	return dp[0][0]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -160,10 +137,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

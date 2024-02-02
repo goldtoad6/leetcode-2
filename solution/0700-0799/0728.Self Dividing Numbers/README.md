@@ -42,13 +42,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -59,10 +55,6 @@ class Solution:
             if all(i != '0' and num % int(i) == 0 for i in str(num))
         ]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -88,34 +80,6 @@ class Solution {
 }
 ```
 
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
-        let mut res = vec![];
-        for i in left..=right {
-            let mut num = i;
-            if loop {
-                if num == 0 {
-                    break true;
-                }
-                let j = num % 10;
-                if j == 0 || i % j != 0 {
-                    break false;
-                }
-                num /= 10;
-            } {
-                res.push(i);
-            }
-        }
-        res
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -136,8 +100,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func selfDividingNumbers(left int, right int) []int {
@@ -161,10 +123,32 @@ func selfDividingNumbers(left int, right int) []int {
 }
 ```
 
-### **...**
-
-```
-
+```rust
+impl Solution {
+    pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
+        let mut res = vec![];
+        for i in left..=right {
+            let mut num = i;
+            if (
+                loop {
+                    if num == 0 {
+                        break true;
+                    }
+                    let j = num % 10;
+                    if j == 0 || i % j != 0 {
+                        break false;
+                    }
+                    num /= 10;
+                }
+            ) {
+                res.push(i);
+            }
+        }
+        res
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

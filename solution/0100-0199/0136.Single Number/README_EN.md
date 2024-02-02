@@ -30,17 +30,24 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Bitwise Operation
 
-### **Python3**
+The XOR operation has the following properties:
+
+-   Any number XOR 0 is still the original number, i.e., $x \oplus 0 = x$;
+-   Any number XOR itself is 0, i.e., $x \oplus x = 0$;
+
+Performing XOR operation on all elements in the array will result in the number that only appears once.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         return reduce(xor, nums)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -54,28 +61,18 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int singleNumber(int[] nums) {
-        return Arrays.stream(nums).reduce(0, (a, b) -> a ^ b);
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int ans = 0;
-        for (int v : nums) ans ^= v;
+        for (int v : nums) {
+            ans ^= v;
+        }
         return ans;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func singleNumber(nums []int) (ans int) {
@@ -86,7 +83,21 @@ func singleNumber(nums []int) (ans int) {
 }
 ```
 
-### **JavaScript**
+```ts
+function singleNumber(nums: number[]): number {
+    return nums.reduce((r, v) => r ^ v);
+}
+```
+
+```rust
+impl Solution {
+    pub fn single_number(nums: Vec<i32>) -> i32 {
+        nums.into_iter()
+            .reduce(|r, v| r ^ v)
+            .unwrap()
+    }
+}
+```
 
 ```js
 /**
@@ -94,36 +105,20 @@ func singleNumber(nums []int) (ans int) {
  * @return {number}
  */
 var singleNumber = function (nums) {
-    let ans = 0;
-    for (const v of nums) {
-        ans ^= v;
-    }
-    return ans;
+    return nums.reduce((a, b) => a ^ b);
 };
 ```
 
-### **TypeScript**
-
-```ts
-function singleNumber(nums: number[]): number {
-    return nums.reduce((r, v) => r ^ v);
-}
-```
-
-### **Rust**
-
-```rust
-impl Solution {
-    pub fn single_number(nums: Vec<i32>) -> i32 {
-        nums.into_iter().reduce(|r, v| r ^ v).unwrap()
+```cs
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        return nums.Aggregate(0, (a, b) => a ^ b);
     }
 }
 ```
 
-### **C**
-
 ```c
-int singleNumber(int *nums, int numsSize) {
+int singleNumber(int* nums, int numsSize) {
     int ans = 0;
     for (int i = 0; i < numsSize; i++) {
         ans ^= nums[i];
@@ -132,27 +127,28 @@ int singleNumber(int *nums, int numsSize) {
 }
 ```
 
-### **Swift**
-
 ```swift
 class Solution {
     func singleNumber(_ nums: [Int]) -> Int {
-        var a = nums.sorted()
-        var n = a.count
-        for i in stride(from: 0, through: n - 2, by: 2) {
-            if a[i] != a[i + 1] {
-                return a[i]
-            }
-        }
-        return a[n - 1]
+        return nums.reduce(0, ^)
     }
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```java
+class Solution {
+    public int singleNumber(int[] nums) {
+        return Arrays.stream(nums).reduce(0, (a, b) -> a ^ b);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

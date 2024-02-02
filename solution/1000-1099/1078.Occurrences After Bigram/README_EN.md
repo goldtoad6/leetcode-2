@@ -29,21 +29,21 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def findOcurrences(self, text: str, first: str, second: str) -> List[str]:
-        ws = text.split()
-        n = len(ws)
-        return [
-            ws[i + 2] for i in range(n - 2) if ws[i] == first and ws[i + 1] == second
-        ]
+        words = text.split()
+        ans = []
+        for i in range(len(words) - 2):
+            a, b, c = words[i : i + 3]
+            if a == first and b == second:
+                ans.append(c)
+        return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -61,8 +61,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -70,35 +68,48 @@ public:
         istringstream is(text);
         vector<string> words;
         string word;
-        while (is >> word) words.push_back(word);
+        while (is >> word) {
+            words.emplace_back(word);
+        }
         vector<string> ans;
-        for (int i = 0; i < words.size() - 2; ++i)
-            if (words[i] == first && words[i + 1] == second)
-                ans.push_back(words[i + 2]);
+        int n = words.size();
+        for (int i = 0; i < n - 2; ++i) {
+            if (words[i] == first && words[i + 1] == second) {
+                ans.emplace_back(words[i + 2]);
+            }
+        }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func findOcurrences(text string, first string, second string) []string {
+func findOcurrences(text string, first string, second string) (ans []string) {
 	words := strings.Split(text, " ")
-	var ans []string
-	for i := 0; i < len(words)-2; i++ {
+	n := len(words)
+	for i := 0; i < n-2; i++ {
 		if words[i] == first && words[i+1] == second {
 			ans = append(ans, words[i+2])
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function findOcurrences(text: string, first: string, second: string): string[] {
+    const words = text.split(' ');
+    const n = words.length;
+    const ans: string[] = [];
+    for (let i = 0; i < n - 2; i++) {
+        if (words[i] === first && words[i + 1] === second) {
+            ans.push(words[i + 2]);
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

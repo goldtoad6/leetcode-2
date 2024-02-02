@@ -54,9 +54,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Two traversals
 
-### **Python3**
+We first traverse the array from back to front and find the first position $i$ where $nums[i] \lt nums[i + 1]$.
+
+Then traverse the array from back to front again and find the first position $j$ where $nums[j] \gt nums[i]$. Swap $nums[i]$ and $nums[j]$, and then reverse the elements from $nums[i + 1]$ to $nums[n - 1]$, the next permutation can be obtained.
+
+The time complexity is $O(n)$ and the space complexity is $O(1)$. Where $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +74,6 @@ class Solution:
             nums[i], nums[j] = nums[j], nums[i]
         nums[i + 1 :] = nums[i + 1 :][::-1]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -103,15 +107,15 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
         int n = nums.size();
         int i = n - 2;
-        for (; ~i; --i) if (nums[i] < nums[i + 1]) break;
+        while (~i && nums[i] >= nums[i + 1]) {
+            --i;
+        }
         if (~i) {
             for (int j = n - 1; j > i; --j) {
                 if (nums[j] > nums[i]) {
@@ -125,16 +129,11 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func nextPermutation(nums []int) {
 	n := len(nums)
 	i := n - 2
-	for ; i >= 0; i-- {
-		if nums[i] < nums[i+1] {
-			break
-		}
+	for ; i >= 0 && nums[i] >= nums[i+1]; i-- {
 	}
 	if i >= 0 {
 		for j := n - 1; j > i; j-- {
@@ -150,10 +149,80 @@ func nextPermutation(nums []int) {
 }
 ```
 
-### **...**
-
+```ts
+function nextPermutation(nums: number[]): void {
+    const n = nums.length;
+    let i = n - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        --i;
+    }
+    if (i >= 0) {
+        for (let j = n - 1; j > i; --j) {
+            if (nums[j] > nums[i]) {
+                [nums[i], nums[j]] = [nums[j], nums[i]];
+                break;
+            }
+        }
+    }
+    for (let j = n - 1; j > i; --j, ++i) {
+        [nums[i + 1], nums[j]] = [nums[j], nums[i + 1]];
+    }
+}
 ```
 
+```js
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var nextPermutation = function (nums) {
+    const n = nums.length;
+    let i = n - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        --i;
+    }
+    if (i >= 0) {
+        let j = n - 1;
+        while (j > i && nums[j] <= nums[i]) {
+            --j;
+        }
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+    for (i = i + 1, j = n - 1; i < j; ++i, --j) {
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+};
+```
+
+```cs
+public class Solution {
+    public void NextPermutation(int[] nums) {
+        int n = nums.Length;
+        int i = n - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            --i;
+        }
+        if (i >= 0) {
+            for (int j = n - 1; j > i; --j) {
+                if (nums[j] > nums[i]) {
+                    swap(nums, i, j);
+                    break;
+                }
+            }
+        }
+        for (int j = i + 1, k = n - 1; j < k; ++j, --k) {
+            swap(nums, j, k);
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int t = nums[j];
+        nums[j] = nums[i];
+        nums[i] = t;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

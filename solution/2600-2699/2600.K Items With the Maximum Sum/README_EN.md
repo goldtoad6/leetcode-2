@@ -47,23 +47,21 @@ It can be proven that 3 is the maximum possible sum.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def kItemsWithMaximumSum(self, numOnes: int, numZeros: int, numNegOnes: int, k: int) -> int:
+    def kItemsWithMaximumSum(
+        self, numOnes: int, numZeros: int, numNegOnes: int, k: int
+    ) -> int:
         if numOnes >= k:
             return k
-        k -= numOnes
-        if numZeros >= k:
+        if numZeros >= k - numOnes:
             return numOnes
-        k -= numZeros
-        return numOnes - k
+        return numOnes - (k - numOnes - numZeros)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -71,17 +69,13 @@ class Solution {
         if (numOnes >= k) {
             return k;
         }
-        k -= numOnes;
-        if (numZeros >= k) {
+        if (numZeros >= k - numOnes) {
             return numOnes;
         }
-        k -= numZeros;
-        return numOnes - k;
+        return numOnes - (k - numOnes - numZeros);
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -90,33 +84,25 @@ public:
         if (numOnes >= k) {
             return k;
         }
-        k -= numOnes;
-        if (numZeros >= k) {
+        if (numZeros >= k - numOnes) {
             return numOnes;
         }
-        k -= numZeros;
-        return numOnes - k;
+        return numOnes - (k - numOnes - numZeros);
     }
 };
 ```
-
-### **Go**
 
 ```go
 func kItemsWithMaximumSum(numOnes int, numZeros int, numNegOnes int, k int) int {
 	if numOnes >= k {
 		return k
 	}
-	k -= numOnes
-	if numZeros >= k {
+	if numZeros >= k-numOnes {
 		return numOnes
 	}
-	k -= numZeros
-	return numOnes - k
+	return numOnes - (k - numOnes - numZeros)
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function kItemsWithMaximumSum(
@@ -128,19 +114,48 @@ function kItemsWithMaximumSum(
     if (numOnes >= k) {
         return k;
     }
-    k -= numOnes;
-    if (numZeros >= k) {
+    if (numZeros >= k - numOnes) {
         return numOnes;
     }
-    k -= numZeros;
-    return numOnes - k;
+    return numOnes - (k - numOnes - numZeros);
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn k_items_with_maximum_sum(
+        num_ones: i32,
+        num_zeros: i32,
+        num_neg_ones: i32,
+        k: i32
+    ) -> i32 {
+        if num_ones > k {
+            return k;
+        }
 
+        if num_ones + num_zeros > k {
+            return num_ones;
+        }
+
+        num_ones - (k - num_ones - num_zeros)
+    }
+}
 ```
 
+```cs
+public class Solution {
+    public int KItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k) {
+        if (numOnes >= k) {
+            return k;
+        }
+        if (numZeros >= k - numOnes) {
+            return numOnes;
+        }
+        return numOnes - (k - numOnes - numZeros);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

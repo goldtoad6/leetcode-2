@@ -27,9 +27,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Determine Leap Year
 
-### **Python3**
+We can first determine whether the given year is a leap year. If the year can be divided by $4$ but not by $100$, or can be divided by $400$, then this year is a leap year.
+
+February has $29$ days in a leap year and $28$ days in a common year.
+
+We can use an array $days$ to store the number of days in each month of the current year, where $days[0]=0$, $days[i]$ represents the number of days in the $i$th month of the current year. Then the answer is $days[month]$.
+
+The time complexity is $O(1)$, and the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -38,8 +46,6 @@ class Solution:
         days = [0, 31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         return days[month]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -51,8 +57,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -63,8 +67,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func numberOfDays(year int, month int) int {
@@ -78,10 +80,14 @@ func numberOfDays(year int, month int) int {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function numberOfDays(year: number, month: number): number {
+    const leap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    const days = [0, 31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    return days[month];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

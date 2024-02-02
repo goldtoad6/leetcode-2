@@ -47,9 +47,9 @@ There are 2 asterisks considered. Therefore, we return 2.</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +62,6 @@ class Solution:
                 ok ^= 1
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -82,8 +80,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -101,8 +97,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countAsterisks(s string) (ans int) {
 	ok := 1
@@ -116,8 +110,6 @@ func countAsterisks(s string) (ans int) {
 	return
 }
 ```
-
-### **TypeScript**
 
 ```ts
 function countAsterisks(s: string): number {
@@ -134,8 +126,6 @@ function countAsterisks(s: string): number {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn count_asterisks(s: String) -> i32 {
@@ -143,34 +133,15 @@ impl Solution {
         let mut ok = 1;
         for &c in s.as_bytes() {
             if c == b'*' {
-                ans += ok
+                ans += ok;
             } else if c == b'|' {
-                ok ^= 1
+                ok ^= 1;
             }
         }
         ans
     }
 }
 ```
-
-### **C**
-
-```c
-int countAsterisks(char * s){
-    int ans = 0;
-    int ok = 1;
-    for (int i = 0; s[i]; i++) {
-        if (s[i] == '*') {
-            ans += ok;
-        } else if (s[i] == '|') {
-            ok ^= 1;
-        }
-    }
-    return ans;
-}
-```
-
-### **C#**
 
 ```cs
 public class Solution {
@@ -188,10 +159,21 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+int countAsterisks(char* s) {
+    int ans = 0;
+    int ok = 1;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] == '*') {
+            ans += ok;
+        } else if (s[i] == '|') {
+            ok ^= 1;
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

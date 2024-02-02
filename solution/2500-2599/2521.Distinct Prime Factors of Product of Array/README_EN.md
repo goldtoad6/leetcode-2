@@ -44,9 +44,9 @@ There is 1 distinct prime factor so we return 1.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -64,8 +64,6 @@ class Solution:
                 s.add(n)
         return len(s)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,14 +87,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int distinctPrimeFactors(vector<int>& nums) {
         unordered_set<int> s;
-        for (int& n :nums) {
+        for (int& n : nums) {
             for (int i = 2; i <= n / i; ++i) {
                 if (n % i == 0) {
                     s.insert(i);
@@ -113,8 +109,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func distinctPrimeFactors(nums []int) int {
@@ -136,10 +130,6 @@ func distinctPrimeFactors(nums []int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

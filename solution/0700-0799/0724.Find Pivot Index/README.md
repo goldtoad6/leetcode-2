@@ -60,9 +60,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：前缀和**
+### 方法一：前缀和
 
 我们定义变量 $left$ 表示数组 `nums` 中下标 $i$ 左侧元素之和，变量 $right$ 表示数组 `nums` 中下标 $i$ 右侧元素之和。初始时 $left = 0$, $right = \sum_{i = 0}^{n - 1} nums[i]$。
 
@@ -74,14 +72,10 @@
 
 相似题目：
 
--   [1991. 找到数组的中间位置](/solution/1900-1999/1991.Find%20the%20Middle%20Index%20in%20Array/README.md)
--   [2574. 左右元素和的差值](/solution/2500-2599/2574.Left%20and%20Right%20Sum%20Differences/README.md)
+-   [1991. 找到数组的中间位置](https://github.com/doocs/leetcode/blob/main/solution/1900-1999/1991.Find%20the%20Middle%20Index%20in%20Array/README.md)
+-   [2574. 左右元素和的差值](https://github.com/doocs/leetcode/blob/main/solution/2500-2599/2574.Left%20and%20Right%20Sum%20Differences/README.md)
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -94,10 +88,6 @@ class Solution:
             left += x
         return -1
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -114,8 +104,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -134,8 +122,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func pivotIndex(nums []int) int {
 	var left, right int
@@ -153,7 +139,36 @@ func pivotIndex(nums []int) int {
 }
 ```
 
-### **JavaScript**
+```ts
+function pivotIndex(nums: number[]): number {
+    let left = 0,
+        right = nums.reduce((a, b) => a + b);
+    for (let i = 0; i < nums.length; ++i) {
+        right -= nums[i];
+        if (left == right) {
+            return i;
+        }
+        left += nums[i];
+    }
+    return -1;
+}
+```
+
+```rust
+impl Solution {
+    pub fn pivot_index(nums: Vec<i32>) -> i32 {
+        let (mut left, mut right): (i32, i32) = (0, nums.iter().sum());
+        for i in 0..nums.len() {
+            right -= nums[i];
+            if left == right {
+                return i as i32;
+            }
+            left += nums[i];
+        }
+        -1
+    }
+}
+```
 
 ```js
 /**
@@ -174,27 +189,6 @@ var pivotIndex = function (nums) {
 };
 ```
 
-### **TypeScript**
-
-```ts
-function pivotIndex(nums: number[]): number {
-    let left = 0,
-        right = nums.reduce((a, b) => a + b);
-    for (let i = 0; i < nums.length; ++i) {
-        right -= nums[i];
-        if (left == right) {
-            return i;
-        }
-        left += nums[i];
-    }
-    return -1;
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

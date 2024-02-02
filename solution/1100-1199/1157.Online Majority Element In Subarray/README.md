@@ -50,11 +50,9 @@ majorityChecker.query(2,3,2); // 返回 2
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：线段树 + 摩尔投票 + 二分查找
 
-**方法一：线段树 + 摩尔投票 + 二分查找**
-
-我们注意到，题目需要我们找出特定区间内可能的众数，我们可以用线段树来维护每个区间内的候选众数以及其出现的次数。
+我们注意到，题目需要我们找出特定区间内可能的众数，考虑使用线段树来维护每个区间内的候选众数以及其出现的次数。
 
 我们定义线段树的每个节点为 `Node`，每个节点包含如下属性：
 
@@ -77,12 +75,10 @@ majorityChecker.query(2,3,2); // 返回 2
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Node:
+    __slots__ = ("l", "r", "x", "cnt")
+
     def __init__(self):
         self.l = self.r = 0
         self.x = self.cnt = 0
@@ -136,7 +132,6 @@ class SegmentTree:
 
 
 class MajorityChecker:
-
     def __init__(self, arr: List[int]):
         self.tree = SegmentTree(arr)
         self.d = defaultdict(list)
@@ -154,10 +149,6 @@ class MajorityChecker:
 # obj = MajorityChecker(arr)
 # param_1 = obj.query(left,right,threshold)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Node {
@@ -270,8 +261,6 @@ class MajorityChecker {
  */
 ```
 
-### **C++**
-
 ```cpp
 class Node {
 public:
@@ -377,8 +366,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type node struct {
 	l, r, x, cnt int
@@ -482,10 +469,6 @@ func (this *MajorityChecker) Query(left int, right int, threshold int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

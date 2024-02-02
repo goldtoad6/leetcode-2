@@ -61,9 +61,23 @@ Double again so x = 10
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Backtracking + Greedy
 
-### **Python3**
+Let's start by backtracking from the final state. Assuming the final state is $target$, we can get the previous state of $target$ as $target - 1$ or $target / 2$, depending on the parity of $target$ and the value of $maxDoubles$.
+
+If $target=1$, no operation is needed, and we can return $0$ directly.
+
+If $maxDoubles=0$, we can only use the increment operation, so we need $target-1$ operations.
+
+If $target$ is even and $maxDoubles>0$, we can use the doubling operation, so we need $1$ operation, and then recursively solve $target/2$ and $maxDoubles-1$.
+
+If $target$ is odd, we can only use the increment operation, so we need $1$ operation, and then recursively solve $target-1$ and $maxDoubles$.
+
+The time complexity is $O(\min(\log target, maxDoubles))$, and the space complexity is $O(\min(\log target, maxDoubles))$.
+
+We can also change the above process to an iterative way to avoid the space overhead of recursion.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -76,8 +90,6 @@ class Solution:
             return 1 + self.minMoves(target >> 1, maxDoubles - 1)
         return 1 + self.minMoves(target - 1, maxDoubles)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -96,21 +108,23 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int minMoves(int target, int maxDoubles) {
-        if (target == 1) return 0;
-        if (maxDoubles == 0) return target - 1;
-        if (target % 2 == 0 && maxDoubles) return 1 + minMoves(target >> 1, maxDoubles - 1);
+        if (target == 1) {
+            return 0;
+        }
+        if (maxDoubles == 0) {
+            return target - 1;
+        }
+        if (target % 2 == 0 && maxDoubles > 0) {
+            return 1 + minMoves(target >> 1, maxDoubles - 1);
+        }
         return 1 + minMoves(target - 1, maxDoubles);
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minMoves(target int, maxDoubles int) int {
@@ -127,16 +141,114 @@ func minMoves(target int, maxDoubles int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function minMoves(target: number, maxDoubles: number): number {
+    if (target === 1) {
+        return 0;
+    }
+    if (maxDoubles === 0) {
+        return target - 1;
+    }
+    if (target % 2 === 0 && maxDoubles) {
+        return 1 + minMoves(target >> 1, maxDoubles - 1);
+    }
+    return 1 + minMoves(target - 1, maxDoubles);
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def minMoves(self, target: int, maxDoubles: int) -> int:
+        ans = 0
+        while maxDoubles and target > 1:
+            ans += 1
+            if target % 2 == 1:
+                target -= 1
+            else:
+                maxDoubles -= 1
+                target >>= 1
+        ans += target - 1
+        return ans
+```
+
+```java
+class Solution {
+    public int minMoves(int target, int maxDoubles) {
+        int ans = 0;
+        while (maxDoubles > 0 && target > 1) {
+            ++ans;
+            if (target % 2 == 1) {
+                --target;
+            } else {
+                --maxDoubles;
+                target >>= 1;
+            }
+        }
+        ans += target - 1;
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int minMoves(int target, int maxDoubles) {
+        int ans = 0;
+        while (maxDoubles > 0 && target > 1) {
+            ++ans;
+            if (target % 2 == 1) {
+                --target;
+            } else {
+                --maxDoubles;
+                target >>= 1;
+            }
+        }
+        ans += target - 1;
+        return ans;
+    }
+};
+```
+
+```go
+func minMoves(target int, maxDoubles int) (ans int) {
+	for maxDoubles > 0 && target > 1 {
+		ans++
+		if target&1 == 1 {
+			target--
+		} else {
+			maxDoubles--
+			target >>= 1
+		}
+	}
+	ans += target - 1
+	return
+}
+```
+
+```ts
+function minMoves(target: number, maxDoubles: number): number {
+    let ans = 0;
+    while (maxDoubles && target > 1) {
+        ++ans;
+        if (target & 1) {
+            --target;
+        } else {
+            --maxDoubles;
+            target >>= 1;
+        }
+    }
+    ans += target - 1;
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

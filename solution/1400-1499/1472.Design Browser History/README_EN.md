@@ -52,13 +52,12 @@ browserHistory.back(7);                   // You are in &quot;google.com&quot;, 
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class BrowserHistory:
-
     def __init__(self, homepage: str):
         self.stk1 = []
         self.stk2 = []
@@ -87,8 +86,6 @@ class BrowserHistory:
 # param_2 = obj.back(steps)
 # param_3 = obj.forward(steps)
 ```
-
-### **Java**
 
 ```java
 class BrowserHistory {
@@ -127,8 +124,6 @@ class BrowserHistory {
  * String param_3 = obj.forward(steps);
  */
 ```
-
-### **C++**
 
 ```cpp
 class BrowserHistory {
@@ -170,8 +165,6 @@ public:
  * string param_3 = obj->forward(steps);
  */
 ```
-
-### **Go**
 
 ```go
 type BrowserHistory struct {
@@ -215,10 +208,6 @@ func (this *BrowserHistory) Forward(steps int) string {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

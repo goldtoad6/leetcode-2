@@ -45,9 +45,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -67,8 +67,6 @@ class Solution:
                 return True
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -99,8 +97,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -122,8 +118,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func isAlienSorted(words []string, order string) bool {
@@ -155,8 +149,6 @@ func isAlienSorted(words []string, order string) bool {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function isAlienSorted(words: string[], order: string): boolean {
     const map = new Map();
@@ -186,17 +178,19 @@ function isAlienSorted(words: string[], order: string): boolean {
 }
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 impl Solution {
     pub fn is_alien_sorted(words: Vec<String>, order: String) -> bool {
         let n = words.len();
         let mut map = HashMap::new();
-        order.as_bytes().iter().enumerate().for_each(|(i, &v)| {
-            map.insert(v, i);
-        });
+        order
+            .as_bytes()
+            .iter()
+            .enumerate()
+            .for_each(|(i, &v)| {
+                map.insert(v, i);
+            });
         for i in 1..n {
             let s1 = words[i - 1].as_bytes();
             let s2 = words[i].as_bytes();
@@ -219,19 +213,17 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-bool isAlienSorted(char **words, int wordsSize, char *order) {
+bool isAlienSorted(char** words, int wordsSize, char* order) {
     int map[26] = {0};
     for (int i = 0; i < 26; i++) {
         map[order[i] - 'a'] = i;
     }
     for (int i = 1; i < wordsSize; i++) {
-        char *s1 = words[i - 1];
-        char *s2 = words[i];
+        char* s1 = words[i - 1];
+        char* s2 = words[i];
         int n = strlen(s1);
         int m = strlen(s2);
         int len = min(n, m);
@@ -253,10 +245,6 @@ bool isAlienSorted(char **words, int wordsSize, char *order) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

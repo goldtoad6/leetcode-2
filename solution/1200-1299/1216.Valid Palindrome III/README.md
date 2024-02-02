@@ -1,4 +1,4 @@
-# [1216. 验证回文字符串 III](https://leetcode.cn/problems/valid-palindrome-iii)
+# [1216. 验证回文串 III](https://leetcode.cn/problems/valid-palindrome-iii)
 
 [English Version](/solution/1200-1299/1216.Valid%20Palindrome%20III/README_EN.md)
 
@@ -6,7 +6,7 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给出一个字符串&nbsp;<code>s</code>&nbsp;和一个整数&nbsp;<code>k</code>，若这个字符串是不是一个「k&nbsp;<strong>回文</strong>&nbsp;」，则返回 <code>true</code> 。</p>
+<p>给出一个字符串&nbsp;<code>s</code>&nbsp;和一个整数&nbsp;<code>k</code>，若这个字符串是一个「k&nbsp;<strong>回文</strong>&nbsp;」，则返回 <code>true</code> 。</p>
 
 <p>如果可以通过从字符串中删去最多 <code>k</code> 个字符将其转换为回文，那么这个字符串就是一个「<strong>k</strong>&nbsp;<strong>回文</strong>&nbsp;」。</p>
 
@@ -39,9 +39,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 题目要求删去最多 $k$ 个字符，使得剩余的字符串是回文串。可以转换为求最长回文子序列的问题。
 
@@ -56,10 +54,6 @@
 时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。其中 $n$ 为字符串 $s$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +72,6 @@ class Solution:
                     return True
         return False
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -107,8 +97,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -137,8 +125,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isValidPalindrome(s string, k int) bool {
 	n := len(s)
@@ -161,19 +147,61 @@ func isValidPalindrome(s string, k int) bool {
 	}
 	return false
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function isValidPalindrome(s: string, k: number): boolean {
+    const n = s.length;
+    const f: number[][] = Array.from({ length: n }, () => Array.from({ length: n }, () => 0));
+    for (let i = 0; i < n; ++i) {
+        f[i][i] = 1;
+    }
+    for (let i = n - 2; ~i; --i) {
+        for (let j = i + 1; j < n; ++j) {
+            if (s[i] === s[j]) {
+                f[i][j] = f[i + 1][j - 1] + 2;
+            } else {
+                f[i][j] = Math.max(f[i + 1][j], f[i][j - 1]);
+            }
+            if (f[i][j] + k >= n) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 ```
 
-### **...**
+```rust
+impl Solution {
+    pub fn is_valid_palindrome(s: String, k: i32) -> bool {
+        let s = s.as_bytes();
+        let n = s.len();
+        let mut f = vec![vec![0; n]; n];
 
-```
+        for i in 0..n {
+            f[i][i] = 1;
+        }
 
+        for i in (0..n - 2).rev() {
+            for j in i + 1..n {
+                if s[i] == s[j] {
+                    f[i][j] = f[i + 1][j - 1] + 2;
+                } else {
+                    f[i][j] = std::cmp::max(f[i + 1][j], f[i][j - 1]);
+                }
+
+                if f[i][j] + k >= (n as i32) {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

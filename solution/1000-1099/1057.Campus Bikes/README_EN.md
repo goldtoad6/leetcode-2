@@ -48,18 +48,19 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
-    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> List[int]:
+    def assignBikes(
+        self, workers: List[List[int]], bikes: List[List[int]]
+    ) -> List[int]:
         n, m = len(workers), len(bikes)
         arr = []
         for i, j in product(range(n), range(m)):
-            dist = abs(workers[i][0] - bikes[j][0]) + \
-                abs(workers[i][1] - bikes[j][1])
+            dist = abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])
             arr.append((dist, i, j))
         arr.sort()
         vis1 = [False] * n
@@ -71,8 +72,6 @@ class Solution:
                 ans[i] = j
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -111,8 +110,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -139,8 +136,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func assignBikes(workers [][]int, bikes [][]int) []int {
@@ -183,10 +178,6 @@ func abs(x int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

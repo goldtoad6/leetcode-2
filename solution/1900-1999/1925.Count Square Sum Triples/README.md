@@ -36,13 +36,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -56,10 +52,6 @@ class Solution:
                     res += 1
         return res
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -79,8 +71,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -89,7 +79,7 @@ public:
         for (int a = 1; a <= n; ++a) {
             for (int b = 1; b <= n; ++b) {
                 int t = a * a + b * b;
-                int c = (int)sqrt(t);
+                int c = (int) sqrt(t);
                 if (c <= n && c * c == t) {
                     ++res;
                 }
@@ -99,8 +89,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func countTriples(n int) int {
@@ -118,10 +106,6 @@ func countTriples(n int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

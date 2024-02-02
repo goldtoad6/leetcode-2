@@ -37,56 +37,71 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def repeatedNTimes(self, nums: List[int]) -> int:
         s = set()
-        for num in nums:
-            if num in s:
-                return num
-            s.add(num)
+        for x in nums:
+            if x in s:
+                return x
+            s.add(x)
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int repeatedNTimes(int[] nums) {
-        Set<Integer> s = new HashSet<>();
-        for (int num : nums) {
-            if (s.contains(num)) {
-                return num;
+        Set<Integer> s = new HashSet<>(nums.length / 2 + 1);
+        for (int i = 0;; ++i) {
+            if (!s.add(nums[i])) {
+                return nums[i];
             }
-            s.add(num);
         }
-        return -1;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
 public:
     int repeatedNTimes(vector<int>& nums) {
         unordered_set<int> s;
-        for (auto& num : nums) {
-            if (s.find(num) != s.end()) {
-                return num;
+        for (int i = 0;; ++i) {
+            if (s.count(nums[i])) {
+                return nums[i];
             }
-            s.insert(num);
+            s.insert(nums[i]);
         }
-        return -1;
     }
 };
 ```
 
-### **JavaScript**
+```go
+func repeatedNTimes(nums []int) int {
+	s := map[int]bool{}
+	for i := 0; ; i++ {
+		if s[nums[i]] {
+			return nums[i]
+		}
+		s[nums[i]] = true
+	}
+}
+```
+
+```ts
+function repeatedNTimes(nums: number[]): number {
+    const s: Set<number> = new Set();
+    for (const x of nums) {
+        if (s.has(x)) {
+            return x;
+        }
+        s.add(x);
+    }
+}
+```
 
 ```js
 /**
@@ -95,20 +110,15 @@ public:
  */
 var repeatedNTimes = function (nums) {
     const s = new Set();
-    for (const num of nums) {
-        if (s.has(num)) {
-            return num;
+    for (const x of nums) {
+        if (s.has(x)) {
+            return x;
         }
-        s.add(num);
+        s.add(x);
     }
-    return -1;
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

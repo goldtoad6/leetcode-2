@@ -15,21 +15,21 @@
 | user_id        | int     |
 | name           | varchar |
 +----------------+---------+
-user_id 是该表的主键。
+user_id 是该表的主键(具有唯一值的列)。
 该表包含用户的 ID 和名字。名字仅由小写和大写字符组成。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询来修复名字，使得只有第一个字符是大写的，其余都是小写的。</p>
+<p>编写解决方案，修复名字，使得只有第一个字符是大写的，其余都是小写的。</p>
 
 <p>返回按 <code>user_id</code> 排序的结果表。</p>
 
-<p>查询结果格式示例如下。</p>
+<p>返回结果格式示例如下。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例 1：</strong></p>
+<p><strong class="example">示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -50,13 +50,9 @@ Users table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **SQL**
-
-MySQL
 
 ```sql
 SELECT
@@ -68,7 +64,11 @@ ORDER BY
     user_id;
 ```
 
-SQL Server
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
 
 ```sql
 SELECT
@@ -84,3 +84,5 @@ ORDER BY
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

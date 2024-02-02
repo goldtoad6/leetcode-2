@@ -42,9 +42,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：贪心 + 二分查找**
+### 方法一：贪心 + 二分查找
 
 我们可以将题意转换为，将题目最多分成 $m$ 组，每一组去掉最大值后不超过 $T$ ，求最小的满足条件的 $T$。
 
@@ -57,10 +55,6 @@
 时间复杂度 $O(n \times \log S)$，空间复杂度 $O(1)$。其中 $n$ 和 $S$ 分别为题目数量和题目总耗时。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -78,10 +72,6 @@ class Solution:
 
         return bisect_left(range(sum(time)), True, key=check)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -118,8 +108,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -155,8 +143,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func minTime(time []int, m int) int {
 	right := 0
@@ -177,19 +163,39 @@ func minTime(time []int, m int) int {
 		return d <= m
 	})
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function minTime(time: number[], m: number): number {
+    let left = 0;
+    let right = time.reduce((a, b) => a + b);
+    const check = (t: number): boolean => {
+        let s = 0;
+        let mx = 0;
+        let d = 1;
+        for (const x of time) {
+            s += x;
+            mx = Math.max(mx, x);
+            if (s - mx > t) {
+                s = x;
+                mx = x;
+                d++;
+            }
+        }
+        return d <= m;
+    };
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        if (check(mid)) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

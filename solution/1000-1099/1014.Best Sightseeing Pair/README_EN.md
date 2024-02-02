@@ -36,9 +36,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -49,8 +49,6 @@ class Solution:
             mx = max(mx, values[j] + j)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -64,8 +62,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -81,8 +77,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxScoreSightseeingPair(values []int) (ans int) {
 	for j, mx := 1, values[0]; j < len(values); j++ {
@@ -91,16 +85,7 @@ func maxScoreSightseeingPair(values []int) (ans int) {
 	}
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxScoreSightseeingPair(values: number[]): number {
@@ -114,10 +99,6 @@ function maxScoreSightseeingPair(values: number[]): number {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

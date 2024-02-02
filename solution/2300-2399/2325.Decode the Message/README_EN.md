@@ -51,9 +51,9 @@ It is obtained by taking the first appearance of each letter in &quot;<u><strong
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +66,6 @@ class Solution:
                 i += 1
         return "".join(d[c] for c in message)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +87,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -111,8 +107,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func decodeMessage(key string, message string) string {
 	d := [128]byte{}
@@ -131,8 +125,6 @@ func decodeMessage(key string, message string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function decodeMessage(key: string, message: string): string {
     const d = new Map<string, string>();
@@ -146,8 +138,6 @@ function decodeMessage(key: string, message: string): string {
     return [...message].map(v => d.get(v)).join('');
 }
 ```
-
-### **Rust**
 
 ```rust
 use std::collections::HashMap;
@@ -169,10 +159,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-char *decodeMessage(char *key, char *message) {
+char* decodeMessage(char* key, char* message) {
     int m = strlen(key);
     int n = strlen(message);
     char d[26];
@@ -183,7 +171,7 @@ char *decodeMessage(char *key, char *message) {
         }
         d[key[i] - 'a'] = 'a' + j++;
     }
-    char *ans = malloc(n + 1);
+    char* ans = malloc(n + 1);
     for (int i = 0; i < n; i++) {
         ans[i] = message[i] == ' ' ? ' ' : d[message[i] - 'a'];
     }
@@ -192,10 +180,6 @@ char *decodeMessage(char *key, char *message) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -49,9 +49,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -84,8 +84,6 @@ class Solution:
             ans += 1
         return -1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -139,8 +137,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -151,8 +147,8 @@ public:
             for (int j = 0; j < n; ++j)
                 if (mat[i][j])
                     state |= (1 << (i * n + j));
-        queue<int> q {{state}};
-        unordered_set<int> vis {{state}};
+        queue<int> q{{state}};
+        unordered_set<int> vis{{state}};
         int ans = 0;
         vector<int> dirs = {0, -1, 0, 1, 0, 0};
         while (!q.empty()) {
@@ -184,8 +180,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func minFlips(mat [][]int) int {
@@ -236,10 +230,6 @@ func minFlips(mat [][]int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

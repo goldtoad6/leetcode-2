@@ -16,24 +16,56 @@
 
 ## Solutions
 
+### Solution 1: Bitwise Operation
+
+We can extract the sign bit $k$ of $a-b$. If the sign bit is $1$, it means $a \lt b$; if the sign bit is $0$, it means $a \ge b$.
+
+Then the final result is $a \times (k \oplus 1) + b \times k$.
+
+The time complexity is $O(1)$, and the space complexity is $O(1)$.
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def maximum(self, a: int, b: int) -> int:
+        k = (int(((a - b) & 0xFFFFFFFFFFFFFFFF) >> 63)) & 1
+        return a * (k ^ 1) + b * k
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public int maximum(int a, int b) {
+        int k = (int) (((long) a - (long) b) >> 63) & 1;
+        return a * (k ^ 1) + b * k;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int maximum(int a, int b) {
+        int k = ((static_cast<long long>(a) - static_cast<long long>(b)) >> 63) & 1;
+        return a * (k ^ 1) + b * k;
+    }
+};
 ```
 
+```go
+func maximum(a int, b int) int {
+	k := (a - b) >> 63 & 1
+	return a*(k^1) + b*k
+}
+```
+
+```ts
+function maximum(a: number, b: number): number {
+    const k: number = Number(((BigInt(a) - BigInt(b)) >> BigInt(63)) & BigInt(1));
+    return a * (k ^ 1) + b * k;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

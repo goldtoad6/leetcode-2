@@ -53,9 +53,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：预处理 + 回溯**
+### 方法一：预处理 + 回溯
 
 预处理出每个学生与每个导师的兼容性评分，然后使用回溯的方法枚举所有的配对方案，求出最大的兼容性评分和。
 
@@ -63,13 +61,11 @@
 
 <!-- tabs:start -->
 
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```python
 class Solution:
-    def maxCompatibilitySum(self, students: List[List[int]], mentors: List[List[int]]) -> int:
+    def maxCompatibilitySum(
+        self, students: List[List[int]], mentors: List[List[int]]
+    ) -> int:
         def dfs(i, t):
             if i == m:
                 nonlocal ans
@@ -91,10 +87,6 @@ class Solution:
         dfs(0, 0)
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -134,8 +126,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -173,8 +163,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxCompatibilitySum(students [][]int, mentors [][]int) (ans int) {
 	m, n := len(students), len(students[0])
@@ -207,19 +195,8 @@ func maxCompatibilitySum(students [][]int, mentors [][]int) (ans int) {
 	dfs(0, 0)
 	return
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

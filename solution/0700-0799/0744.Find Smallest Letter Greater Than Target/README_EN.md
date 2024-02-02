@@ -46,9 +46,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +62,6 @@ class Solution:
                 left = mid + 1
         return letters[left % len(letters)]
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -81,27 +79,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function nextGreatestLetter(letters: string[], target: string): string {
-    const n = letters.length;
-    let left = 0;
-    let right = letters.length;
-    while (left < right) {
-        let mid = (left + right) >>> 1;
-        if (letters[mid] > target) {
-            right = mid;
-        } else {
-            left = mid + 1;
-        }
-    }
-    return letters[left % n];
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -121,8 +98,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func nextGreatestLetter(letters []byte, target byte) byte {
 	left, right := 0, len(letters)
@@ -138,15 +113,66 @@ func nextGreatestLetter(letters []byte, target byte) byte {
 }
 ```
 
-### **Rust**
+```ts
+function nextGreatestLetter(letters: string[], target: string): string {
+    const n = letters.length;
+    let left = 0;
+    let right = letters.length;
+    while (left < right) {
+        let mid = (left + right) >>> 1;
+        if (letters[mid] > target) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return letters[left % n];
+}
+```
 
 ```rust
 impl Solution {
     pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
-        *letters.iter().find(|&&c| c > target).unwrap_or(&letters[0])
+        *letters
+            .iter()
+            .find(|&&c| c > target)
+            .unwrap_or(&letters[0])
     }
 }
 ```
+
+```php
+class Solution {
+    /**
+     * @param String[] $letters
+     * @param String $target
+     * @return String
+     */
+    function nextGreatestLetter($letters, $target) {
+        $left = 0;
+        $right = count($letters);
+        while ($left <= $right) {
+            $mid = floor($left + ($right - $left) / 2);
+            if ($letters[$mid] > $target) {
+                $right = $mid - 1;
+            } else {
+                $left = $mid + 1;
+            }
+        }
+        if ($left >= count($letters)) {
+            return $letters[0];
+        } else {
+            return $letters[$left];
+        }
+    }
+}
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```rust
 impl Solution {
@@ -167,33 +193,6 @@ impl Solution {
 }
 ```
 
-### **PHP**
-
-```php
-class Solution {
-    /**
-     * @param String[] $letters
-     * @param String $target
-     * @return String
-     */
-    function nextGreatestLetter($letters, $target) {
-        $left = 0;
-        $right = count($letters);
-        while ($left <= $right) {
-            $mid = floor($left + ($right - $left) / 2);
-            if ($letters[$mid] > $target) $right = $mid - 1;
-            else $left = $mid + 1;
-        }
-        if ($left >= count($letters)) return $letters[0];
-        else return $letters[$left];
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -40,13 +40,20 @@ snapshotArr.get(0,0);  // Get the value of array[0] with snap_id = 0, return 5</
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Array + Binary Search
 
-### **Python3**
+Maintain an array, each element of which is a list storing the values set each time and their corresponding snapshot IDs.
+
+Each time a value is set, add the value and snapshot ID to the list at the corresponding index.
+
+Each time a value is retrieved, use binary search to find the first value in the corresponding position that is greater than the snapshot ID `snap_id`, and then return the previous value.
+
+In terms of time complexity, the time complexity of setting a value is $O(1)$, the time complexity of a snapshot is $O(1)$, and the time complexity of getting a value is $O(\log n)$.
+
+<!-- tabs:start -->
 
 ```python
 class SnapshotArray:
-
     def __init__(self, length: int):
         self.idx = 0
         self.arr = defaultdict(list)
@@ -70,8 +77,6 @@ class SnapshotArray:
 # param_2 = obj.snap()
 # param_3 = obj.get(index,snap_id)
 ```
-
-### **Java**
 
 ```java
 class SnapshotArray {
@@ -114,8 +119,6 @@ class SnapshotArray {
  * int param_3 = obj.get(index,snap_id);
  */
 ```
-
-### **C++**
 
 ```cpp
 class SnapshotArray {
@@ -161,8 +164,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type SnapshotArray struct {
 	idx int
@@ -202,10 +203,6 @@ type pair struct{ i, v int }
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

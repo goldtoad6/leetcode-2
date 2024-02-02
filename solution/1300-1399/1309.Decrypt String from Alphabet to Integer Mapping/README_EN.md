@@ -42,9 +42,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -63,8 +63,6 @@ class Solution:
                 i += 1
         return ''.join(res)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -89,8 +87,6 @@ class Solution {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function freqAlphabets(s: string): string {
     const n = s.length;
@@ -105,13 +101,9 @@ function freqAlphabets(s: string): string {
             i += 1;
         }
     }
-    return ans
-        .map(c => String.fromCharCode('a'.charCodeAt(0) + Number(c) - 1))
-        .join('');
+    return ans.map(c => String.fromCharCode('a'.charCodeAt(0) + Number(c) - 1)).join('');
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -129,21 +121,19 @@ impl Solution {
                 code = s[i];
                 i += 1;
             }
-            res.push(char::from('a' as u8 + code - b'1'));
+            res.push(char::from(('a' as u8) + code - b'1'));
         }
         res
     }
 }
 ```
 
-### **C**
-
 ```c
-char *freqAlphabets(char *s) {
+char* freqAlphabets(char* s) {
     int n = strlen(s);
     int i = 0;
     int j = 0;
-    char *ans = malloc(sizeof(s) * n);
+    char* ans = malloc(sizeof(s) * n);
     while (i < n) {
         int t;
         if (i + 2 < n && s[i + 2] == '#') {
@@ -160,10 +150,6 @@ char *freqAlphabets(char *s) {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

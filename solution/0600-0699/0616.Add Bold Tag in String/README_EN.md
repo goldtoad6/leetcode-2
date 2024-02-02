@@ -35,7 +35,7 @@ We add &lt;b&gt; before each substring and &lt;/b&gt; after each substring.
 &quot;b&quot; appears as a substring three times: &quot;aaa<u>b</u>bb&quot;, &quot;aaab<u>b</u>b&quot;, and &quot;aaabb<u>b</u>&quot;.
 We add &lt;b&gt; before each substring and &lt;/b&gt; after each substring: &quot;&lt;b&gt;a&lt;b&gt;a&lt;/b&gt;a&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&quot;.
 Since the first two &lt;b&gt;&#39;s overlap, we merge them: &quot;&lt;b&gt;aaa&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&lt;b&gt;b&lt;/b&gt;&quot;.
-Since now the four &lt;b&gt;&#39;s are consecuutive, we merge them: &quot;&lt;b&gt;aaabbb&lt;/b&gt;&quot;.
+Since now the four &lt;b&gt;&#39;s are consecutive, we merge them: &quot;&lt;b&gt;aaabbb&lt;/b&gt;&quot;.
 </pre>
 
 <p>&nbsp;</p>
@@ -54,9 +54,9 @@ Since now the four &lt;b&gt;&#39;s are consecuutive, we merge them: &quot;&lt;b&
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Trie:
@@ -119,8 +119,6 @@ class Solution:
 
         return ''.join(ans)
 ```
-
-### **Java**
 
 ```java
 class Trie {
@@ -199,8 +197,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Trie {
 public:
@@ -269,8 +265,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 type Trie struct {
@@ -346,19 +340,8 @@ func addBoldTag(s string, words []string) string {
 	}
 	return ans.String()
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

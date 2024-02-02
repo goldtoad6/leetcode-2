@@ -51,9 +51,9 @@ Therefore, you can&#39;t travel around the circuit once no matter where you star
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -71,8 +71,6 @@ class Solution:
                 cnt += 1
         return -1 if s < 0 else i
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -94,8 +92,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -119,34 +115,70 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func canCompleteCircuit(gas []int, cost []int) int {
-    n := len(gas)
-    i, j := n - 1, n - 1
-    cnt, s := 0, 0
-    for cnt < n {
-        s += gas[j] - cost[j]
-        cnt++
-        j = (j + 1) % n
-        for s < 0 && cnt < n {
-            i--
-            s += gas[i] - cost[i]
-            cnt++
-        }
-    }
-    if s < 0 {
-        return -1
-    }
-    return i
+	n := len(gas)
+	i, j := n-1, n-1
+	cnt, s := 0, 0
+	for cnt < n {
+		s += gas[j] - cost[j]
+		cnt++
+		j = (j + 1) % n
+		for s < 0 && cnt < n {
+			i--
+			s += gas[i] - cost[i]
+			cnt++
+		}
+	}
+	if s < 0 {
+		return -1
+	}
+	return i
 }
 ```
 
-### **...**
-
+```ts
+function canCompleteCircuit(gas: number[], cost: number[]): number {
+    const n = gas.length;
+    let i = n - 1;
+    let j = n - 1;
+    let s = 0;
+    let cnt = 0;
+    while (cnt < n) {
+        s += gas[j] - cost[j];
+        ++cnt;
+        j = (j + 1) % n;
+        while (s < 0 && cnt < n) {
+            --i;
+            s += gas[i] - cost[i];
+            ++cnt;
+        }
+    }
+    return s < 0 ? -1 : i;
+}
 ```
 
+```cs
+public class Solution {
+    public int CanCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.Length;
+        int i = n - 1, j = n - 1;
+        int s = 0, cnt = 0;
+        while (cnt < n) {
+            s += gas[j] - cost[j];
+            ++cnt;
+            j = (j + 1) % n;
+            while (s < 0 && cnt < n) {
+                --i;
+                s += gas[i] - cost[i];
+                ++cnt;
+            }
+        }
+        return s < 0 ? -1 : i;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -17,7 +17,7 @@
 | years_of_exp | int      |
 | interview_id | int      |
 +--------------+----------+
-candidate_id 是这个表的主键。
+candidate_id 是这个表的主键（具有唯一值的列）。
 该表的每一行都表示候选人的姓名、工作年限以及面试 ID 。
 </pre>
 
@@ -33,13 +33,13 @@ candidate_id 是这个表的主键。
 | round_id     | int  |
 | score        | int  |
 +--------------+------+
-(interview_id, round_id）是本表的主键。
+(interview_id, round_id）是本表的主键（具有唯一值的列的组合）。
 本表的每一行都表示一轮面试的分数
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写一个 SQL 查询，查询出至少有两年工作经验、且面试分数之和 <strong>严格大于 <code>15</code>&nbsp;</strong>的候选人的 ID<strong> 。</strong></p>
+<p>编写解决方案，找出 <strong>至少有两年</strong> 工作经验、且面试分数之和 <strong>严格大于 <code>15</code>&nbsp;</strong>的候选人的 ID<strong> 。</strong></p>
 
 <p>可以以 <strong>任何顺序 </strong>返回结果表。</p>
 
@@ -47,7 +47,7 @@ candidate_id 是这个表的主键。
 
 <p>&nbsp;</p>
 
-<p><strong>示例：</strong></p>
+<p><strong>示例 1：</strong></p>
 
 <pre>
 <strong>输入：</strong>
@@ -92,16 +92,21 @@ Rounds table:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
 ```sql
-
+# Write your MySQL query statement below
+SELECT candidate_id
+FROM
+    Candidates AS c
+    LEFT JOIN Rounds AS r ON c.interview_id = r.interview_id
+WHERE years_of_exp >= 2
+GROUP BY c.interview_id
+HAVING SUM(score) > 15;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

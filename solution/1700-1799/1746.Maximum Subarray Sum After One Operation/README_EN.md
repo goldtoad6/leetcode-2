@@ -9,41 +9,33 @@
 <p>Return <em>the <strong>maximum</strong> possible subarray sum after <strong>exactly&nbsp;one</strong> operation</em>. The subarray must be non-empty.</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> nums = [2,-1,-4,-3]
-
 <strong>Output:</strong> 17
-
 <strong>Explanation:</strong> You can perform the operation on index 2 (0-indexed) to make nums = [2,-1,<strong>16</strong>,-3]. Now, the maximum subarray sum is 2 + -1 + 16 = 17.</pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
 <pre>
-
 <strong>Input:</strong> nums = [1,-1,1,1,-1,-1,1]
-
 <strong>Output:</strong> 4
-
 <strong>Explanation:</strong> You can perform the operation on index 1 (0-indexed) to make nums = [1,<strong>1</strong>,1,1,-1,-1,1]. Now, the maximum subarray sum is 1 + 1 + 1 + 1 = 4.</pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-    <li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
-    <li><code>-10<sup>4</sup>&nbsp;&lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
+	<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
+	<li><code>-10<sup>4</sup>&nbsp;&lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -57,8 +49,6 @@ class Solution:
             ans = max(ans, f, g)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -76,8 +66,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -97,8 +85,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func maxSumAfterOperation(nums []int) int {
 	var f, g int
@@ -111,19 +97,36 @@ func maxSumAfterOperation(nums []int) int {
 	}
 	return ans
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn max_sum_after_operation(nums: Vec<i32>) -> i32 {
+        // Here f[i] represents the value of max sub-array that ends with nums[i] with no substitution
+        let mut f = 0;
+        // g[i] represents the case with exact one substitution
+        let mut g = 0;
+        let mut ret = 1 << 31;
+
+        // Begin the actual dp process
+        for e in &nums {
+            // f[i] = MAX(f[i - 1], 0) + nums[i]
+            let new_f = std::cmp::max(f, 0) + *e;
+            // g[i] = MAX(MAX(f[i - 1], 0) + nums[i] * nums[i], g[i - 1] + nums[i])
+            let new_g = std::cmp::max(std::cmp::max(f, 0) + *e * *e, g + *e);
+            // Update f[i] & g[i]
+            f = new_f;
+            g = new_g;
+            // Since we start at 0, update answer after updating f[i] & g[i]
+            ret = std::cmp::max(ret, g);
+        }
+
+        ret
+    }
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

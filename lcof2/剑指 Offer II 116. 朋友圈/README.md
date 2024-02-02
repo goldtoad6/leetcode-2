@@ -49,79 +49,11 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：深度优先搜索**
+### 方法一：深度优先搜索
 
 判断城市之间是否属于同一个连通分量，最后连通分量的总数即为结果。
 
-**方法二：并查集**
-
-模板 1——朴素并查集：
-
-```python
-# 初始化，p存储每个点的父节点
-p = list(range(n))
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-```
-
-模板 2——维护 size 的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，size只有当节点是祖宗节点时才有意义，表示祖宗节点所在集合中，点的数量
-p = list(range(n))
-size = [1] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        # 路径压缩
-        p[x] = find(p[x])
-    return p[x]
-
-# 合并a和b所在的两个集合
-if find(a) != find(b):
-    size[find(b)] += size[find(a)]
-    p[find(a)] = find(b)
-```
-
-模板 3——维护到祖宗节点距离的并查集：
-
-```python
-# 初始化，p存储每个点的父节点，d[x]存储x到p[x]的距离
-p = list(range(n))
-d = [0] * n
-
-# 返回x的祖宗节点
-def find(x):
-    if p[x] != x:
-        t = find(p[x])
-        d[x] += d[p[x]]
-        p[x] = t
-    return p[x]
-
-# 合并a和b所在的两个集合
-p[find(a)] = find(b)
-d[find(a)] = distance
-```
-
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-深度优先搜索：
 
 ```python
 class Solution:
@@ -141,31 +73,6 @@ class Solution:
                 ans += 1
         return ans
 ```
-
-并查集：
-
-```python
-class Solution:
-    def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        def find(x):
-            if p[x] != x:
-                p[x] = find(p[x])
-            return p[x]
-
-        n = len(isConnected)
-        p = list(range(n))
-        for i in range(n):
-            for j in range(i + 1, n):
-                if isConnected[i][j]:
-                    p[find(i)] = find(j)
-        return sum(i == v for i, v in enumerate(p))
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
-
-深度优先搜索：
 
 ```java
 class Solution {
@@ -198,7 +105,145 @@ class Solution {
 }
 ```
 
-并查集：
+```cpp
+class Solution {
+public:
+    vector<vector<int>> isConnected;
+    vector<bool> vis;
+    int n;
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        n = isConnected.size();
+        vis.resize(n);
+        this->isConnected = isConnected;
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            if (!vis[i]) {
+                dfs(i);
+                ++ans;
+            }
+        }
+        return ans;
+    }
+
+    void dfs(int i) {
+        vis[i] = true;
+        for (int j = 0; j < n; ++j)
+            if (!vis[j] && isConnected[i][j])
+                dfs(j);
+    }
+};
+```
+
+```go
+func findCircleNum(isConnected [][]int) int {
+	n := len(isConnected)
+	vis := make([]bool, n)
+	var dfs func(i int)
+	dfs = func(i int) {
+		vis[i] = true
+		for j := 0; j < n; j++ {
+			if !vis[j] && isConnected[i][j] == 1 {
+				dfs(j)
+			}
+		}
+	}
+	ans := 0
+	for i := 0; i < n; i++ {
+		if !vis[i] {
+			dfs(i)
+			ans++
+		}
+	}
+	return ans
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：并查集
+
+模板 1——朴素并查集：
+
+```python
+# 初始化，p存储每个点的父节点
+p = list(range(n))
+
+
+# 返回x的祖宗节点
+def find(x):
+    if p[x] != x:
+        # 路径压缩
+        p[x] = find(p[x])
+    return p[x]
+
+
+# 合并a和b所在的两个集合
+p[find(a)] = find(b)
+```
+
+模板 2——维护 size 的并查集：
+
+```python
+# 初始化，p存储每个点的父节点，size只有当节点是祖宗节点时才有意义，表示祖宗节点所在集合中，点的数量
+p = list(range(n))
+size = [1] * n
+
+
+# 返回x的祖宗节点
+def find(x):
+    if p[x] != x:
+        # 路径压缩
+        p[x] = find(p[x])
+    return p[x]
+
+
+# 合并a和b所在的两个集合
+if find(a) != find(b):
+    size[find(b)] += size[find(a)]
+    p[find(a)] = find(b)
+```
+
+模板 3——维护到祖宗节点距离的并查集：
+
+```python
+# 初始化，p存储每个点的父节点，d[x]存储x到p[x]的距离
+p = list(range(n))
+d = [0] * n
+
+
+# 返回x的祖宗节点
+def find(x):
+    if p[x] != x:
+        t = find(p[x])
+        d[x] += d[p[x]]
+        p[x] = t
+    return p[x]
+
+
+# 合并a和b所在的两个集合
+p[find(a)] = find(b)
+d[find(a)] = distance
+```
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        def find(x):
+            if p[x] != x:
+                p[x] = find(p[x])
+            return p[x]
+
+        n = len(isConnected)
+        p = list(range(n))
+        for i in range(n):
+            for j in range(i + 1, n):
+                if isConnected[i][j]:
+                    p[find(i)] = find(j)
+        return sum(i == v for i, v in enumerate(p))
+```
 
 ```java
 class Solution {
@@ -235,42 +280,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
-深度优先搜索：
-
-```cpp
-class Solution {
-public:
-    vector<vector<int>> isConnected;
-    vector<bool> vis;
-    int n;
-
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        n = isConnected.size();
-        vis.resize(n);
-        this->isConnected = isConnected;
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            if (!vis[i]) {
-                dfs(i);
-                ++ans;
-            }
-        }
-        return ans;
-    }
-
-    void dfs(int i) {
-        vis[i] = true;
-        for (int j = 0; j < n; ++j)
-            if (!vis[j] && isConnected[i][j])
-                dfs(j);
-    }
-};
-```
-
-并查集：
-
 ```cpp
 class Solution {
 public:
@@ -289,7 +298,6 @@ public:
             if (i == p[i])
                 ++ans;
         return ans;
-
     }
 
     int find(int x) {
@@ -298,36 +306,6 @@ public:
     }
 };
 ```
-
-### **Go**
-
-深度优先搜索：
-
-```go
-func findCircleNum(isConnected [][]int) int {
-    n := len(isConnected)
-    vis := make([]bool, n)
-    var dfs func(i int)
-    dfs = func(i int) {
-        vis[i] = true
-        for j := 0; j < n; j++ {
-            if !vis[j] && isConnected[i][j] == 1 {
-                dfs(j)
-            }
-        }
-    }
-    ans := 0
-    for i := 0; i < n; i++ {
-        if !vis[i] {
-            dfs(i)
-            ans++
-        }
-    }
-    return ans
-}
-```
-
-并查集：
 
 ```go
 func findCircleNum(isConnected [][]int) int {
@@ -360,10 +338,6 @@ func findCircleNum(isConnected [][]int) int {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

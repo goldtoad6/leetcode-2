@@ -46,9 +46,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +61,6 @@ class Solution:
             s2 = min(s2, f2)
         return s1 if s1 <= 0 else max(s1, sum(nums) - s2)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,7 +78,39 @@ class Solution {
 }
 ```
 
-### **TypeScript**
+```cpp
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int s1 = nums[0], s2 = nums[0], f1 = nums[0], f2 = nums[0], total = nums[0];
+        for (int i = 1; i < nums.size(); ++i) {
+            total += nums[i];
+            f1 = nums[i] + max(f1, 0);
+            f2 = nums[i] + min(f2, 0);
+            s1 = max(s1, f1);
+            s2 = min(s2, f2);
+        }
+        return s1 > 0 ? max(s1, total - s2) : s1;
+    }
+};
+```
+
+```go
+func maxSubarraySumCircular(nums []int) int {
+	s1, s2, f1, f2, total := nums[0], nums[0], nums[0], nums[0], nums[0]
+	for i := 1; i < len(nums); i++ {
+		total += nums[i]
+		f1 = nums[i] + max(f1, 0)
+		f2 = nums[i] + min(f2, 0)
+		s1 = max(s1, f1)
+		s2 = min(s2, f2)
+	}
+	if s1 <= 0 {
+		return s1
+	}
+	return max(s1, total-s2)
+}
+```
 
 ```ts
 function maxSubarraySumCircular(nums: number[]): number {
@@ -103,62 +133,95 @@ function maxSubarraySumCircular(nums: number[]): number {
 }
 ```
 
-### **C++**
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maxSubarraySumCircular(self, nums: List[int]) -> int:
+        pmi, pmx = 0, -inf
+        ans, s, smi = -inf, 0, inf
+        for x in nums:
+            s += x
+            ans = max(ans, s - pmi)
+            smi = min(smi, s - pmx)
+            pmi = min(pmi, s)
+            pmx = max(pmx, s)
+        return max(ans, s - smi)
+```
+
+```java
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        final int inf = 1 << 30;
+        int pmi = 0, pmx = -inf;
+        int ans = -inf, s = 0, smi = inf;
+        for (int x : nums) {
+            s += x;
+            ans = Math.max(ans, s - pmi);
+            smi = Math.min(smi, s - pmx);
+            pmi = Math.min(pmi, s);
+            pmx = Math.max(pmx, s);
+        }
+        return Math.max(ans, s - smi);
+    }
+}
+```
 
 ```cpp
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& nums) {
-        int s1 = nums[0], s2 = nums[0], f1 = nums[0], f2 = nums[0], total = nums[0];
-        for (int i = 1; i < nums.size(); ++i) {
-            total += nums[i];
-            f1 = nums[i] + max(f1, 0);
-            f2 = nums[i] + min(f2, 0);
-            s1 = max(s1, f1);
-            s2 = min(s2, f2);
+        const int inf = 1 << 30;
+        int pmi = 0, pmx = -inf;
+        int ans = -inf, s = 0, smi = inf;
+        for (int x : nums) {
+            s += x;
+            ans = max(ans, s - pmi);
+            smi = min(smi, s - pmx);
+            pmi = min(pmi, s);
+            pmx = max(pmx, s);
         }
-        return s1 > 0 ? max(s1, total - s2) : s1;
+        return max(ans, s - smi);
     }
 };
 ```
 
-### **Go**
-
 ```go
 func maxSubarraySumCircular(nums []int) int {
-	s1, s2, f1, f2, total := nums[0], nums[0], nums[0], nums[0], nums[0]
-	for i := 1; i < len(nums); i++ {
-		total += nums[i]
-		f1 = nums[i] + max(f1, 0)
-		f2 = nums[i] + min(f2, 0)
-		s1 = max(s1, f1)
-		s2 = min(s2, f2)
+	const inf = 1 << 30
+	pmi, pmx := 0, -inf
+	ans, s, smi := -inf, 0, inf
+	for _, x := range nums {
+		s += x
+		ans = max(ans, s-pmi)
+		smi = min(smi, s-pmx)
+		pmi = min(pmi, s)
+		pmx = max(pmx, s)
 	}
-	if s1 <= 0 {
-		return s1
-	}
-	return max(s1, total-s2)
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+	return max(ans, s-smi)
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function maxSubarraySumCircular(nums: number[]): number {
+    const inf = 1 << 30;
+    let [pmi, pmx] = [0, -inf];
+    let [ans, s, smi] = [-inf, 0, inf];
+    for (const x of nums) {
+        s += x;
+        ans = Math.max(ans, s - pmi);
+        smi = Math.min(smi, s - pmx);
+        pmi = Math.min(pmi, s);
+        pmx = Math.max(pmx, s);
+    }
+    return Math.max(ans, s - smi);
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

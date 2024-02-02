@@ -48,9 +48,13 @@ The absolute difference between the element sum and digit sum is |10 - 10| = 0.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We traverse the array $nums$, calculate the sum of elements $a$ and the sum of digits $b$, and finally return $|a - b|$.
+
+The time complexity is $O(n)$, where $n$ is the length of the array $nums$. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -62,8 +66,6 @@ class Solution:
                 x //= 10
         return abs(a - b)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -80,8 +82,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -97,8 +97,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func differenceOfSum(nums []int) int {
@@ -120,8 +118,6 @@ func abs(x int) int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function differenceOfSum(nums: number[]): number {
     return nums.reduce((r, v) => {
@@ -134,8 +130,6 @@ function differenceOfSum(nums: number[]): number {
     }, 0);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -154,10 +148,8 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
-int differenceOfSum(int *nums, int numsSize) {
+int differenceOfSum(int* nums, int numsSize) {
     int ans = 0;
     for (int i = 0; i < numsSize; i++) {
         ans += nums[i];
@@ -170,10 +162,31 @@ int differenceOfSum(int *nums, int numsSize) {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
-```
+### Solution 2
 
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn difference_of_sum(nums: Vec<i32>) -> i32 {
+        let a: i32 = nums.iter().sum();
+        let b: i32 = nums
+            .iter()
+            .map(|&n|
+                n
+                    .to_string()
+                    .chars()
+                    .map(|c| c.to_digit(10).unwrap() as i32)
+                    .sum::<i32>()
+            )
+            .sum();
+        (a - b).abs()
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

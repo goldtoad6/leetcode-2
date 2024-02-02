@@ -54,13 +54,22 @@ authenticationManager.<code>countUnexpiredTokens</code>(15); // The token with t
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Hash Table
 
-### **Python3**
+We can simply maintain a hash table $d$, where the key is `tokenId` and the value is the expiration time.
+
+-   During the `generate` operation, we store `tokenId` as the key and `currentTime + timeToLive` as the value in the hash table $d$.
+-   During the `renew` operation, if `tokenId` is not in the hash table $d$, or `currentTime >= d[tokenId]`, we ignore this operation; otherwise, we update `d[tokenId]` to `currentTime + timeToLive`.
+-   During the `countUnexpiredTokens` operation, we traverse the hash table $d$ and count the number of unexpired `tokenId`.
+
+In terms of time complexity, both `generate` and `renew` operations have a time complexity of $O(1)$, and the `countUnexpiredTokens` operation has a time complexity of $O(n)$, where $n$ is the number of key-value pairs in the hash table $d$.
+
+The space complexity is $O(n)$, where $n$ is the number of key-value pairs in the hash table $d$.
+
+<!-- tabs:start -->
 
 ```python
 class AuthenticationManager:
-
     def __init__(self, timeToLive: int):
         self.t = timeToLive
         self.d = defaultdict(int)
@@ -83,8 +92,6 @@ class AuthenticationManager:
 # obj.renew(tokenId,currentTime)
 # param_3 = obj.countUnexpiredTokens(currentTime)
 ```
-
-### **Java**
 
 ```java
 class AuthenticationManager {
@@ -126,8 +133,6 @@ class AuthenticationManager {
  */
 ```
 
-### **C++**
-
 ```cpp
 class AuthenticationManager {
 public:
@@ -163,8 +168,6 @@ private:
  * int param_3 = obj->countUnexpiredTokens(currentTime);
  */
 ```
-
-### **Go**
 
 ```go
 type AuthenticationManager struct {
@@ -205,8 +208,6 @@ func (this *AuthenticationManager) CountUnexpiredTokens(currentTime int) int {
  * param_3 := obj.CountUnexpiredTokens(currentTime);
  */
 ```
-
-### **TypeScript**
 
 ```ts
 class AuthenticationManager {
@@ -249,8 +250,6 @@ class AuthenticationManager {
  */
 ```
 
-### **Rust**
-
 ```rust
 use std::collections::HashMap;
 struct AuthenticationManager {
@@ -282,12 +281,12 @@ impl AuthenticationManager {
     }
 
     fn count_unexpired_tokens(&self, current_time: i32) -> i32 {
-        self.map.values().filter(|&time| *time > current_time).count() as i32
+        self.map
+            .values()
+            .filter(|&time| *time > current_time)
+            .count() as i32
     }
-}
-
-
-/**
+}/**
  * Your AuthenticationManager object will be instantiated and called as such:
  * let obj = AuthenticationManager::new(timeToLive);
  * obj.generate(tokenId, currentTime);
@@ -296,10 +295,6 @@ impl AuthenticationManager {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

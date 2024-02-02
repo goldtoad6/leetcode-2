@@ -48,27 +48,15 @@ left = &quot;01110&quot; and right = &quot;1&quot;, score = 2 + 1 = 3
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxScore(self, s: str) -> int:
         return max(s[:i].count('0') + s[i:].count('1') for i in range(1, len(s)))
 ```
-
-```python
-class Solution:
-    def maxScore(self, s: str) -> int:
-        ans = t = (s[0] == '0') + s[1:].count('1')
-        for i in range(1, len(s) - 1):
-            t += 1 if s[i] == '0' else -1
-            ans = max(ans, t)
-        return ans
-```
-
-### **Java**
 
 ```java
 class Solution {
@@ -93,30 +81,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int maxScore(String s) {
-        int t = 0;
-        if (s.charAt(0) == '0') {
-            t++;
-        }
-        for (int i = 1; i < s.length(); ++i) {
-            if (s.charAt(i) == '1') {
-                t++;
-            }
-        }
-        int ans = t;
-        for (int i = 1; i < s.length() - 1; ++i) {
-            t += s.charAt(i) == '0' ? 1 : -1;
-            ans = Math.max(ans, t);
-        }
-        return ans;
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -137,25 +101,6 @@ public:
 };
 ```
 
-```cpp
-class Solution {
-public:
-    int maxScore(string s) {
-        int t = 0;
-        if (s[0] == '0') ++t;
-        for (int i = 1; i < s.size(); ++i) t += s[i] == '1';
-        int ans = t;
-        for (int i = 1; i < s.size() - 1; ++i) {
-            t += s[i] == '0' ? 1 : -1;
-            ans = max(ans, t);
-        }
-        return ans;
-    }
-};
-```
-
-### **Go**
-
 ```go
 func maxScore(s string) int {
 	ans := 0
@@ -175,48 +120,7 @@ func maxScore(s string) int {
 	}
 	return ans
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-```go
-func maxScore(s string) int {
-	t := 0
-	if s[0] == '0' {
-		t++
-	}
-	n := len(s)
-	for i := 1; i < n; i++ {
-		if s[i] == '1' {
-			t++
-		}
-	}
-	ans := t
-	for i := 1; i < n-1; i++ {
-		if s[i] == '0' {
-			t++
-		} else {
-			t--
-		}
-		ans = max(ans, t)
-	}
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
 
 ```ts
 function maxScore(s: string): number {
@@ -243,8 +147,6 @@ function maxScore(s: string): number {
     return res;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -275,10 +177,86 @@ impl Solution {
 }
 ```
 
-### **...**
+<!-- tabs:end -->
 
+### Solution 2
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def maxScore(self, s: str) -> int:
+        ans = t = (s[0] == '0') + s[1:].count('1')
+        for i in range(1, len(s) - 1):
+            t += 1 if s[i] == '0' else -1
+            ans = max(ans, t)
+        return ans
 ```
 
+```java
+class Solution {
+    public int maxScore(String s) {
+        int t = 0;
+        if (s.charAt(0) == '0') {
+            t++;
+        }
+        for (int i = 1; i < s.length(); ++i) {
+            if (s.charAt(i) == '1') {
+                t++;
+            }
+        }
+        int ans = t;
+        for (int i = 1; i < s.length() - 1; ++i) {
+            t += s.charAt(i) == '0' ? 1 : -1;
+            ans = Math.max(ans, t);
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Solution {
+public:
+    int maxScore(string s) {
+        int t = 0;
+        if (s[0] == '0') ++t;
+        for (int i = 1; i < s.size(); ++i) t += s[i] == '1';
+        int ans = t;
+        for (int i = 1; i < s.size() - 1; ++i) {
+            t += s[i] == '0' ? 1 : -1;
+            ans = max(ans, t);
+        }
+        return ans;
+    }
+};
+```
+
+```go
+func maxScore(s string) int {
+	t := 0
+	if s[0] == '0' {
+		t++
+	}
+	n := len(s)
+	for i := 1; i < n; i++ {
+		if s[i] == '1' {
+			t++
+		}
+	}
+	ans := t
+	for i := 1; i < n-1; i++ {
+		if s[i] == '0' {
+			t++
+		} else {
+			t--
+		}
+		ans = max(ans, t)
+	}
+	return ans
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

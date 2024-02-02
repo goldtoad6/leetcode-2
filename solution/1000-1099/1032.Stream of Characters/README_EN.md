@@ -54,9 +54,9 @@ streamChecker.query(&quot;l&quot;); // return True, because &#39;kl&#39; is in t
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Trie:
@@ -86,7 +86,6 @@ class Trie:
 
 
 class StreamChecker:
-
     def __init__(self, words: List[str]):
         self.trie = Trie()
         self.cs = []
@@ -96,14 +95,13 @@ class StreamChecker:
 
     def query(self, letter: str) -> bool:
         self.cs.append(letter)
-        return self.trie.search(self.cs[-self.limit:])
+        return self.trie.search(self.cs[-self.limit :])
+
 
 # Your StreamChecker object will be instantiated and called as such:
 # obj = StreamChecker(words)
 # param_1 = obj.query(letter)
 ```
-
-### **Java**
 
 ```java
 class Trie {
@@ -160,8 +158,6 @@ class StreamChecker {
  * boolean param_1 = obj.query(letter);
  */
 ```
-
-### **C++**
 
 ```cpp
 class Trie {
@@ -226,8 +222,6 @@ public:
  */
 ```
 
-### **Go**
-
 ```go
 type Trie struct {
 	children [26]*Trie
@@ -290,10 +284,6 @@ func (this *StreamChecker) Query(letter byte) bool {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

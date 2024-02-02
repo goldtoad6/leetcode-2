@@ -58,17 +58,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：枚举计数
 
-**方法一：枚举计数**
+我们定义 $f[i][j]$ 表示 $ideas$ 中以第 $i$ 个字母开头，替换为第 $j$ 个字母后，不在 $ideas$ 中的字符串的个数。初始时 $f[i][j] = 0$。另外，用一个哈希表 $s$ 记录 $ideas$ 中的字符串，方便我们开快速判断某个字符串是否在 $ideas$ 中。
 
-$f[i][j]$ 表示有多少个首字母为 $i$ 的字符串，将首字符换成 $j$ 后，未在 $ideas$ 中出现过的字符串个数。
+接下来，我们遍历 $ideas$ 中字符串，对于当前遍历到的字符串 $v$，我们枚举替换后的第一个字母 $j$，如果 $v$ 替换后的字符串不在 $ideas$ 中，那么我们就更新 $f[i][j] = f[i][j] + 1$。
+
+最后，我们再次遍历 $ideas$ 中字符串，对于当前遍历到的字符串 $v$，我们枚举替换后的第一个字母 $j$，如果 $v$ 替换后的字符串不在 $ideas$ 中，那么我们就更新答案 $ans = ans + f[j][i]$。
+
+最终答案即为 $ans$。
+
+时间复杂度 $O(n \times m \times |\Sigma|)$，空间复杂度 $O(|\Sigma|^2)$。其中 $n$ 和 $m$ 分别是 $ideas$ 中字符串的个数和字符串的最大长度，而 $|\Sigma|$ 是字符串中出现的字符集，本题中 $|\Sigma| \leq 26$。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -92,10 +94,6 @@ class Solution:
                     ans += f[j][i]
         return ans
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -131,14 +129,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     long long distinctNames(vector<string>& ideas) {
         unordered_set<string> s(ideas.begin(), ideas.end());
-        vector<vector<int>> f(26, vector<int>(26));
+        int f[26][26]{};
         for (auto v : ideas) {
             int i = v[0] - 'a';
             for (int j = 0; j < 26; ++j) {
@@ -149,7 +145,7 @@ public:
             }
         }
         long long ans = 0;
-        for (auto v : ideas) {
+        for (auto& v : ideas) {
             int i = v[0] - 'a';
             for (int j = 0; j < 26; ++j) {
                 v[0] = j + 'a';
@@ -163,18 +159,13 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
-func distinctNames(ideas []string) int64 {
+func distinctNames(ideas []string) (ans int64) {
 	s := map[string]bool{}
 	for _, v := range ideas {
 		s[v] = true
 	}
-	f := make([][]int, 26)
-	for i := range f {
-		f[i] = make([]int, 26)
-	}
+	f := [26][26]int{}
 	for _, v := range ideas {
 		i := int(v[0] - 'a')
 		t := []byte(v)
@@ -185,7 +176,7 @@ func distinctNames(ideas []string) int64 {
 			}
 		}
 	}
-	var ans int64
+
 	for _, v := range ideas {
 		i := int(v[0] - 'a')
 		t := []byte(v)
@@ -196,20 +187,41 @@ func distinctNames(ideas []string) int64 {
 			}
 		}
 	}
-	return ans
+	return
 }
 ```
 
-### **TypeScript**
-
 ```ts
-
-```
-
-### **...**
-
-```
-
+function distinctNames(ideas: string[]): number {
+    const s = new Set(ideas);
+    const f: number[][] = Array(26)
+        .fill(0)
+        .map(() => Array(26).fill(0));
+    for (const v of s) {
+        const i = v.charCodeAt(0) - 'a'.charCodeAt(0);
+        const t = [...v];
+        for (let j = 0; j < 26; ++j) {
+            t[0] = String.fromCharCode('a'.charCodeAt(0) + j);
+            if (!s.has(t.join(''))) {
+                f[i][j]++;
+            }
+        }
+    }
+    let ans = 0;
+    for (const v of s) {
+        const i = v.charCodeAt(0) - 'a'.charCodeAt(0);
+        const t = [...v];
+        for (let j = 0; j < 26; ++j) {
+            t[0] = String.fromCharCode('a'.charCodeAt(0) + j);
+            if (!s.has(t.join(''))) {
+                ans += f[j][i];
+            }
+        }
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

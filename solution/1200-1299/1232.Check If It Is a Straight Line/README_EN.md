@@ -9,17 +9,13 @@
 <p>&nbsp;</p>
 
 <p>&nbsp;</p>
-
 <p><strong class="example">Example 1:</strong></p>
 
 <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1232.Check%20If%20It%20Is%20a%20Straight%20Line/images/untitled-diagram-2.jpg" style="width: 336px; height: 336px;" /></p>
 
 <pre>
-
 <strong>Input:</strong> coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
-
 <strong>Output:</strong> true
-
 </pre>
 
 <p><strong class="example">Example 2:</strong></p>
@@ -27,34 +23,27 @@
 <p><strong><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1200-1299/1232.Check%20If%20It%20Is%20a%20Straight%20Line/images/untitled-diagram-1.jpg" style="width: 348px; height: 336px;" /></strong></p>
 
 <pre>
-
 <strong>Input:</strong> coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
-
 <strong>Output:</strong> false
-
 </pre>
 
 <p>&nbsp;</p>
-
 <p><strong>Constraints:</strong></p>
 
 <ul>
-
-    <li><code>2 &lt;=&nbsp;coordinates.length &lt;= 1000</code></li>
-
-    <li><code>coordinates[i].length == 2</code></li>
-
-    <li><code>-10^4 &lt;=&nbsp;coordinates[i][0],&nbsp;coordinates[i][1] &lt;= 10^4</code></li>
-
-    <li><code>coordinates</code>&nbsp;contains no duplicate point.</li>
-
+	<li><code>2 &lt;=&nbsp;coordinates.length &lt;= 1000</code></li>
+	<li><code>coordinates[i].length == 2</code></li>
+	<li><code>-10^4 &lt;=&nbsp;coordinates[i][0],&nbsp;coordinates[i][1] &lt;= 10^4</code></li>
+	<li><code>coordinates</code>&nbsp;contains no duplicate point.</li>
 </ul>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Mathematics
 
-### **Python3**
+The time complexity is $O(n)$, where $n$ is the length of the `coordinates` array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -66,8 +55,6 @@ class Solution:
                 return False
         return True
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +71,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -104,8 +89,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func checkStraightLine(coordinates [][]int) bool {
 	x1, y1 := coordinates[0][0], coordinates[0][1]
@@ -120,10 +103,6 @@ func checkStraightLine(coordinates [][]int) bool {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

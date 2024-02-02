@@ -83,18 +83,9 @@ class Node {
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-判断 node 是否有右子树，
-
--   若有，找到右子树的最左节点返回
--   若没有，则向上寻找父节点，直到节点等于父节点的左孩子，返回父节点
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 """
@@ -119,10 +110,6 @@ class Solution:
             node = node.parent
         return node.parent
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 /*
@@ -153,8 +140,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 /*
 // Definition for a Node.
@@ -181,8 +166,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 /**
  * Definition for Node.
@@ -195,21 +178,19 @@ public:
  */
 
 func inorderSuccessor(node *Node) *Node {
-    if node.Right != nil {
-        node = node.Right
-        for node.Left != nil {
-            node = node.Left
-        }
-        return node
-    }
-    for node.Parent != nil && node == node.Parent.Right {
-        node = node.Parent
-    }
-    return node.Parent
+	if node.Right != nil {
+		node = node.Right
+		for node.Left != nil {
+			node = node.Left
+		}
+		return node
+	}
+	for node.Parent != nil && node == node.Parent.Right {
+		node = node.Parent
+	}
+	return node.Parent
 }
 ```
-
-### **JavaScript**
 
 ```js
 /**
@@ -237,10 +218,6 @@ var inorderSuccessor = function (node) {
 };
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

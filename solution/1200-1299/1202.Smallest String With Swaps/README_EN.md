@@ -54,14 +54,20 @@ Swap s[0] and s[1], s = &quot;abc&quot;
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Union-Find
 
-### **Python3**
+We notice that the index pairs have transitivity, i.e., if $a$ and $b$ can be swapped, and $b$ and $c$ can be swapped, then $a$ and $c$ can also be swapped. Therefore, we can consider using a union-find data structure to maintain the connectivity of these index pairs, and sort the characters belonging to the same connected component in lexicographical order.
+
+Finally, we traverse the string. For the character at the current position, we replace it with the smallest character in the connected component, then remove this character from the connected component, and continue to traverse the string.
+
+The time complexity is $O(n \times \log n + m \times \alpha(m))$, and the space complexity is $O(n)$. Here, $n$ and $m$ are the length of the string and the number of index pairs, respectively, and $\alpha$ is the inverse Ackermann function.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
-        def find(x):
+        def find(x: int) -> int:
             if p[x] != x:
                 p[x] = find(p[x])
             return p[x]
@@ -70,13 +76,13 @@ class Solution:
         p = list(range(n))
         for a, b in pairs:
             p[find(a)] = find(b)
-        mp = defaultdict(list)
+        d = defaultdict(list)
         for i, c in enumerate(s):
-            heappush(mp[find(i)], c)
-        return ''.join(heappop(mp[find(i)]) for i in range(n))
+            d[find(i)].append(c)
+        for i in d.keys():
+            d[i].sort(reverse=True)
+        return "".join(d[find(i)].pop() for i in range(n))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,21 +91,27 @@ class Solution {
     public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
         int n = s.length();
         p = new int[n];
+        List<Character>[] d = new List[n];
         for (int i = 0; i < n; ++i) {
             p[i] = i;
+            d[i] = new ArrayList<>();
         }
-        for (List<Integer> pair : pairs) {
-            p[find(pair.get(0))] = find(pair.get(1));
+        for (var pair : pairs) {
+            int a = pair.get(0), b = pair.get(1);
+            p[find(a)] = find(b);
         }
-        Map<Integer, PriorityQueue<Character>> mp = new HashMap<>();
-        char[] chars = s.toCharArray();
+        char[] cs = s.toCharArray();
         for (int i = 0; i < n; ++i) {
-            mp.computeIfAbsent(find(i), k -> new PriorityQueue<>()).offer(chars[i]);
+            d[find(i)].add(cs[i]);
+        }
+        for (var e : d) {
+            e.sort((a, b) -> b - a);
         }
         for (int i = 0; i < n; ++i) {
-            chars[i] = mp.get(find(i)).poll();
+            var e = d[find(i)];
+            cs[i] = e.remove(e.size() - 1);
         }
-        return new String(chars);
+        return String.valueOf(cs);
     }
 
     private int find(int x) {
@@ -111,46 +123,49 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
-    vector<int> p;
-
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
-        int n = s.length();
-        p.resize(n);
-        for (int i = 0; i < n; ++i) p[i] = i;
-        for (auto& pair : pairs) p[find(pair[0])] = find(pair[1]);
-        unordered_map<int, vector<char>> mp;
-        for (int i = 0; i < n; ++i) mp[find(i)].push_back(s[i]);
-        for (auto& [k, v] : mp) sort(v.rbegin(), v.rend());
-        string ans;
-        for (int i = 0; i < n; ++i) {
-            ans.push_back(mp[find(i)].back());
-            mp[find(i)].pop_back();
+        int n = s.size();
+        int p[n];
+        iota(p, p + n, 0);
+        vector<char> d[n];
+        function<int(int)> find = [&](int x) -> int {
+            if (p[x] != x) {
+                p[x] = find(p[x]);
+            }
+            return p[x];
+        };
+        for (auto e : pairs) {
+            int a = e[0], b = e[1];
+            p[find(a)] = find(b);
         }
-        return ans;
-    }
-
-    int find(int x) {
-        if (p[x] != x) p[x] = find(p[x]);
-        return p[x];
+        for (int i = 0; i < n; ++i) {
+            d[find(i)].push_back(s[i]);
+        }
+        for (auto& e : d) {
+            sort(e.rbegin(), e.rend());
+        }
+        for (int i = 0; i < n; ++i) {
+            auto& e = d[find(i)];
+            s[i] = e.back();
+            e.pop_back();
+        }
+        return s;
     }
 };
 ```
-
-### **Go**
 
 ```go
 func smallestStringWithSwaps(s string, pairs [][]int) string {
 	n := len(s)
 	p := make([]int, n)
+	d := make([][]byte, n)
 	for i := range p {
 		p[i] = i
 	}
-	var find func(x int) int
+	var find func(int) int
 	find = func(x int) int {
 		if p[x] != x {
 			p[x] = find(p[x])
@@ -158,30 +173,113 @@ func smallestStringWithSwaps(s string, pairs [][]int) string {
 		return p[x]
 	}
 	for _, pair := range pairs {
-		p[find(pair[0])] = find(pair[1])
+		a, b := pair[0], pair[1]
+		p[find(a)] = find(b)
 	}
-	mp := make(map[int][]rune)
-	for i, c := range s {
-		mp[find(i)] = append(mp[find(i)], c)
+	cs := []byte(s)
+	for i, c := range cs {
+		j := find(i)
+		d[j] = append(d[j], c)
 	}
-	for _, v := range mp {
-		sort.Slice(v, func(i, j int) bool {
-			return v[i] < v[j]
-		})
+	for i := range d {
+		sort.Slice(d[i], func(a, b int) bool { return d[i][a] > d[i][b] })
 	}
-	var ans []rune
-	for i := 0; i < n; i++ {
-		ans = append(ans, mp[find(i)][0])
-		mp[find(i)] = mp[find(i)][1:]
+	for i := range cs {
+		j := find(i)
+		cs[i] = d[j][len(d[j])-1]
+		d[j] = d[j][:len(d[j])-1]
 	}
-	return string(ans)
+	return string(cs)
 }
 ```
 
-### **...**
-
+```ts
+function smallestStringWithSwaps(s: string, pairs: number[][]): string {
+    const n = s.length;
+    const p = new Array(n).fill(0).map((_, i) => i);
+    const find = (x: number): number => {
+        if (p[x] !== x) {
+            p[x] = find(p[x]);
+        }
+        return p[x];
+    };
+    const d: string[][] = new Array(n).fill(0).map(() => []);
+    for (const [a, b] of pairs) {
+        p[find(a)] = find(b);
+    }
+    for (let i = 0; i < n; ++i) {
+        d[find(i)].push(s[i]);
+    }
+    for (const e of d) {
+        e.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
+    }
+    const ans: string[] = [];
+    for (let i = 0; i < n; ++i) {
+        ans.push(d[find(i)].pop()!);
+    }
+    return ans.join('');
+}
 ```
 
+```rust
+impl Solution {
+    #[allow(dead_code)]
+    pub fn smallest_string_with_swaps(s: String, pairs: Vec<Vec<i32>>) -> String {
+        let n = s.as_bytes().len();
+        let s = s.as_bytes();
+        let mut disjoint_set: Vec<usize> = vec![0; n];
+        let mut str_vec: Vec<Vec<u8>> = vec![Vec::new(); n];
+        let mut ret_str = String::new();
+
+        // Initialize the disjoint set
+        for i in 0..n {
+            disjoint_set[i] = i;
+        }
+
+        // Union the pairs
+        for pair in pairs {
+            Self::union(pair[0] as usize, pair[1] as usize, &mut disjoint_set);
+        }
+
+        // Initialize the return vector
+        for (i, c) in s.iter().enumerate() {
+            let p_c = Self::find(i, &mut disjoint_set);
+            str_vec[p_c].push(*c);
+        }
+
+        // Sort the return vector in reverse order
+        for cur_vec in &mut str_vec {
+            cur_vec.sort();
+            cur_vec.reverse();
+        }
+
+        // Construct the return string
+        for i in 0..n {
+            let index = Self::find(i, &mut disjoint_set);
+            ret_str.push(str_vec[index].last().unwrap().clone() as char);
+            str_vec[index].pop();
+        }
+
+        ret_str
+    }
+
+    #[allow(dead_code)]
+    fn find(x: usize, d_set: &mut Vec<usize>) -> usize {
+        if d_set[x] != x {
+            d_set[x] = Self::find(d_set[x], d_set);
+        }
+        d_set[x]
+    }
+
+    #[allow(dead_code)]
+    fn union(x: usize, y: usize, d_set: &mut Vec<usize>) {
+        let p_x = Self::find(x, d_set);
+        let p_y = Self::find(y, d_set);
+        d_set[p_x] = p_y;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

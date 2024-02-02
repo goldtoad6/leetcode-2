@@ -44,9 +44,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -59,8 +59,6 @@ class Solution:
             if mask >> i & 1 ^ 1:
                 return "1" * i + "0" * (n - i)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +82,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -95,7 +91,7 @@ public:
             int cnt = count(x.begin(), x.end(), '1');
             mask |= 1 << cnt;
         }
-        for (int i = 0; ; ++i) {
+        for (int i = 0;; ++i) {
             if (mask >> i & 1 ^ 1) {
                 return string(i, '1') + string(nums.size() - i, '0');
             }
@@ -103,8 +99,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findDifferentBinaryString(nums []string) string {
@@ -120,10 +114,23 @@ func findDifferentBinaryString(nums []string) string {
 }
 ```
 
-### **...**
-
-```
-
+```cs
+public class Solution {
+    public string FindDifferentBinaryString(string[] nums) {
+        int mask = 0;
+        foreach (var x in nums) {
+            int cnt = x.Count(c => c == '1');
+            mask |= 1 << cnt;
+        }
+        int i = 0;
+        while ((mask >> i & 1) == 1) {
+            i++;
+        }
+        return string.Format("{0}{1}", new string('1', i), new string('0', nums.Length - i));
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

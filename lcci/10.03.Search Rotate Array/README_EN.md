@@ -28,24 +28,171 @@
 
 ## Solutions
 
+### Solution 1: Binary Search
+
+We define the left boundary of the binary search as $l=0$ and the right boundary as $r=n-1$, where $n$ is the length of the array.
+
+In each binary search process, we get the current midpoint $mid=(l+r)/2$.
+
+-   If $nums[mid] > nums[r]$, it means that $[l,mid]$ is ordered. If $nums[l] \leq target \leq nums[mid]$, it means that $target$ is in $[l,mid]$, otherwise $target$ is in $[mid+1,r]$.
+-   If $nums[mid] < nums[r]$, it means that $[mid+1,r]$ is ordered. If $nums[mid] < target \leq nums[r]$, it means that $target$ is in $[mid+1,r]$, otherwise $target$ is in $[l,mid]$.
+-   If $nums[mid] = nums[r]$, it means that the elements $nums[mid]$ and $nums[r]$ are equal. At this time, we cannot determine which interval $target$ is in, we can only decrease $r$ by $1$.
+
+After the binary search ends, if $nums[l] = target$, it means that the target value $target$ exists in the array, otherwise it does not exist.
+
+Note that if initially $nums[l] = nums[r]$, we loop to decrease $r$ by $1$ until $nums[l] \neq nums[r]$.
+
+The time complexity is approximately $O(\log n)$, and the space complexity is $O(1)$. Here, $n$ is the length of the array.
+
+Similar problems:
+
+-   [81. Search in Rotated Sorted Array II](https://github.com/doocs/leetcode/blob/main/solution/0000-0099/0081.Search%20in%20Rotated%20Sorted%20Array%20II/README.md)
+
 <!-- tabs:start -->
 
-### **Python3**
-
 ```python
-
+class Solution:
+    def search(self, arr: List[int], target: int) -> int:
+        l, r = 0, len(arr) - 1
+        while arr[l] == arr[r]:
+            r -= 1
+        while l < r:
+            mid = (l + r) >> 1
+            if arr[mid] > arr[r]:
+                if arr[l] <= target <= arr[mid]:
+                    r = mid
+                else:
+                    l = mid + 1
+            elif arr[mid] < arr[r]:
+                if arr[mid] < target <= arr[r]:
+                    l = mid + 1
+                else:
+                    r = mid
+            else:
+                r -= 1
+        return l if arr[l] == target else -1
 ```
-
-### **Java**
 
 ```java
-
+class Solution {
+    public int search(int[] arr, int target) {
+        int l = 0, r = arr.length - 1;
+        while (arr[l] == arr[r]) {
+            --r;
+        }
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (arr[mid] > arr[r]) {
+                if (arr[l] <= target && target <= arr[mid]) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            } else if (arr[mid] < arr[r]) {
+                if (arr[mid] < target && target <= arr[r]) {
+                    l = mid + 1;
+                } else {
+                    r = mid;
+                }
+            } else {
+                --r;
+            }
+        }
+        return arr[l] == target ? l : -1;
+    }
+}
 ```
 
-### **...**
-
+```cpp
+class Solution {
+public:
+    int search(vector<int>& arr, int target) {
+        int l = 0, r = arr.size() - 1;
+        while (arr[l] == arr[r]) {
+            --r;
+        }
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (arr[mid] > arr[r]) {
+                if (arr[l] <= target && target <= arr[mid]) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            } else if (arr[mid] < arr[r]) {
+                if (arr[mid] < target && target <= arr[r]) {
+                    l = mid + 1;
+                } else {
+                    r = mid;
+                }
+            } else {
+                --r;
+            }
+        }
+        return arr[l] == target ? l : -1;
+    }
+};
 ```
 
+```go
+func search(arr []int, target int) int {
+	l, r := 0, len(arr)-1
+	for arr[l] == arr[r] {
+		r--
+	}
+	for l < r {
+		mid := (l + r) >> 1
+		if arr[mid] > arr[r] {
+			if arr[l] <= target && target <= arr[mid] {
+				r = mid
+			} else {
+				l = mid + 1
+			}
+		} else if arr[mid] < arr[r] {
+			if arr[mid] < target && target <= arr[r] {
+				l = mid + 1
+			} else {
+				r = mid
+			}
+		} else {
+			r--
+		}
+	}
+	if arr[l] == target {
+		return l
+	}
+	return -1
+}
+```
+
+```ts
+function search(arr: number[], target: number): number {
+    let [l, r] = [0, arr.length - 1];
+    while (arr[l] === arr[r]) {
+        --r;
+    }
+    while (l < r) {
+        const mid = (l + r) >> 1;
+        if (arr[mid] > arr[r]) {
+            if (arr[l] <= target && target <= arr[mid]) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        } else if (arr[mid] < arr[r]) {
+            if (arr[mid] < target && target <= arr[r]) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        } else {
+            --r;
+        }
+    }
+    return arr[l] === target ? l : -1;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

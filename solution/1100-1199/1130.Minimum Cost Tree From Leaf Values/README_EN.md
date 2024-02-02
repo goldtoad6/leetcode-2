@@ -44,15 +44,46 @@ The first has a non-leaf node sum 36, and the second has non-leaf node sum 32.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Memoization Search
 
-### **Python3**
+According to the problem description, the values in the array $arr$ correspond one-to-one with the values in the inorder traversal of each leaf node of the tree. We can divide the array into two non-empty sub-arrays, corresponding to the left and right subtrees of the tree, and recursively solve for the minimum possible sum of all non-leaf node values in each subtree.
+
+We design a function $dfs(i, j)$, which represents the minimum possible sum of all non-leaf node values in the index range $[i, j]$ of the array $arr$. The answer is $dfs(0, n - 1)$, where $n$ is the length of the array $arr$.
+
+The calculation process of the function $dfs(i, j)$ is as follows:
+
+-   If $i = j$, it means that there is only one element in the array $arr[i..j]$, and there are no non-leaf nodes, so $dfs(i, j) = 0$.
+-   Otherwise, we enumerate $k \in [i, j - 1]$, divide the array $arr$ into two sub-arrays $arr[i..k]$ and $arr[k + 1..j]$. For each $k$, we recursively calculate $dfs(i, k)$ and $dfs(k + 1, j)$. Here, $dfs(i, k)$ represents the minimum possible sum of all non-leaf node values in the index range $[i, k]$ of the array $arr$, and $dfs(k + 1, j)$ represents the minimum possible sum of all non-leaf node values in the index range $[k + 1, j]$ of the array $arr$. So $dfs(i, j) = \min_{i \leq k < j} \{dfs(i, k) + dfs(k + 1, j) + \max_{i \leq t \leq k} \{arr[t]\} \max_{k < t \leq j} \{arr[t]\}\}$.
+
+In summary, we can get:
+
+$$
+dfs(i, j) = \begin{cases}
+0, & \text{if } i = j \\
+\min_{i \leq k < j} \{dfs(i, k) + dfs(k + 1, j) + \max_{i \leq t \leq k} \{arr[t]\} \max_{k < t \leq j} \{arr[t]\}\}, & \text{if } i < j
+\end{cases}
+$$
+
+In the above recursive process, we can use the method of memoization search to avoid repeated calculations. Additionally, we can use an array $g$ to record the maximum value of all leaf nodes in the index range $[i, j]$ of the array $arr$. This allows us to optimize the calculation process of $dfs(i, j)$:
+
+$$
+dfs(i, j) = \begin{cases}
+0, & \text{if } i = j \\
+\min_{i \leq k < j} \{dfs(i, k) + dfs(k + 1, j) + g[i][k] \cdot g[k + 1][j]\}, & \text{if } i < j
+\end{cases}
+$$
+
+Finally, we return $dfs(0, n - 1)$.
+
+The time complexity is $O(n^3)$, and the space complexity is $O(n^2)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def mctFromLeafValues(self, arr: List[int]) -> int:
         @cache
-        def dfs(i: int, j: int):
+        def dfs(i: int, j: int) -> Tuple:
             if i == j:
                 return 0, arr[i]
             s, mx = inf, -1
@@ -68,26 +99,6 @@ class Solution:
         return dfs(0, len(arr) - 1)[0]
 ```
 
-```python
-class Solution:
-    def mctFromLeafValues(self, arr: List[int]) -> int:
-        n = len(arr)
-        f = [[0] * n for _ in range(n)]
-        g = [[0] * n for _ in range(n)]
-        for i in range(n):
-            g[i][i] = arr[i]
-            for j in range(i + 1, n):
-                g[i][j] = max(g[i][j - 1], arr[j])
-        for i in range(n - 1, -1, -1):
-            for j in range(i + 1, n):
-                f[i][j] = inf
-                for k in range(i, j):
-                    f[i][j] = min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j])
-        return f[0][n - 1]
-```
-
-### **Java**
-
 ```java
 class Solution {
     private Integer[][] f;
@@ -97,9 +108,9 @@ class Solution {
         int n = arr.length;
         f = new Integer[n][n];
         g = new int[n][n];
-        for (int i = 0; i < n; i++) {
+        for (int i = n - 1; i >= 0; --i) {
             g[i][i] = arr[i];
-            for (int j = i + 1; j < n; j++) {
+            for (int j = i + 1; j < n; ++j) {
                 g[i][j] = Math.max(g[i][j - 1], arr[j]);
             }
         }
@@ -122,33 +133,6 @@ class Solution {
 }
 ```
 
-```java
-class Solution {
-    public int mctFromLeafValues(int[] arr) {
-        int n = arr.length;
-        int[][] f = new int[n][n];
-        int[][] g = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            g[i][i] = arr[i];
-            for (int j = i + 1; j < n; ++j) {
-                g[i][j] = Math.max(g[i][j - 1], arr[j]);
-            }
-        }
-        for (int i = n - 2; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                f[i][j] = 1 << 30;
-                for (int k = i; k < j; ++k) {
-                    f[i][j] = Math.min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j]);
-                }
-            }
-        }
-        return f[0][n - 1];
-    }
-}
-```
-
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -157,7 +141,7 @@ public:
         int f[n][n];
         int g[n][n];
         memset(f, 0, sizeof(f));
-        for (int i = 0; i < n; ++i) {
+        for (int i = n - 1; ~i; --i) {
             g[i][i] = arr[i];
             for (int j = i + 1; j < n; ++j) {
                 g[i][j] = max(g[i][j - 1], arr[j]);
@@ -180,35 +164,6 @@ public:
     }
 };
 ```
-
-```cpp
-class Solution {
-public:
-    int mctFromLeafValues(vector<int>& arr) {
-        int n = arr.size();
-        int f[n][n];
-        int g[n][n];
-        memset(f, 0, sizeof(f));
-        for (int i = 0; i < n; ++i) {
-            g[i][i] = arr[i];
-            for (int j = i + 1; j < n; ++j) {
-                g[i][j] = max(g[i][j - 1], arr[j]);
-            }
-        }
-        for (int i = n - 2; ~i; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                f[i][j] = 1 << 30;
-                for (int k = i; k < j; ++k) {
-                    f[i][j] = min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j]);
-                }
-            }
-        }
-        return f[0][n - 1];
-    }
-};
-```
-
-### **Go**
 
 ```go
 func mctFromLeafValues(arr []int) int {
@@ -239,20 +194,119 @@ func mctFromLeafValues(arr []int) int {
 	}
 	return dfs(0, n-1)
 }
+```
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+```ts
+function mctFromLeafValues(arr: number[]): number {
+    const n = arr.length;
+    const f: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    const g: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    for (let i = n - 1; i >= 0; --i) {
+        g[i][i] = arr[i];
+        for (let j = i + 1; j < n; ++j) {
+            g[i][j] = Math.max(g[i][j - 1], arr[j]);
+        }
+    }
+    const dfs = (i: number, j: number): number => {
+        if (i === j) {
+            return 0;
+        }
+        if (f[i][j] > 0) {
+            return f[i][j];
+        }
+        let ans = 1 << 30;
+        for (let k = i; k < j; ++k) {
+            ans = Math.min(ans, dfs(i, k) + dfs(k + 1, j) + g[i][k] * g[k + 1][j]);
+        }
+        return (f[i][j] = ans);
+    };
+    return dfs(0, n - 1);
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+<!-- tabs:end -->
+
+### Solution 2: Dynamic Programming
+
+We can change the memoization search in Solution 1 to dynamic programming.
+
+Define $f[i][j]$ to represent the minimum possible sum of all non-leaf node values in the index range $[i, j]$ of the array $arr$, and $g[i][j]$ to represent the maximum value of all leaf nodes in the index range $[i, j]$ of the array $arr$. Then, the state transition equation is:
+
+$$
+f[i][j] = \begin{cases}
+0, & \text{if } i = j \\
+\min_{i \leq k < j} \{f[i][k] + f[k + 1][j] + g[i][k] \cdot g[k + 1][j]\}, & \text{if } i < j
+\end{cases}
+$$
+
+Finally, we return $f[0][n - 1]$.
+
+The time complexity is $O(n^3)$, and the space complexity is $O(n^2)$. Here, $n$ is the length of the array $arr$.
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def mctFromLeafValues(self, arr: List[int]) -> int:
+        @cache
+        def dfs(i: int, j: int) -> int:
+            if i == j:
+                return 0
+            return min(
+                dfs(i, k) + dfs(k + 1, j) + g[i][k] * g[k + 1][j] for k in range(i, j)
+            )
+
+        n = len(arr)
+        g = [[0] * n for _ in range(n)]
+        for i in range(n - 1, -1, -1):
+            g[i][i] = arr[i]
+            for j in range(i + 1, n):
+                g[i][j] = max(g[i][j - 1], arr[j])
+        return dfs(0, n - 1)
+```
+
+```java
+class Solution {
+    public int mctFromLeafValues(int[] arr) {
+        int n = arr.length;
+        int[][] f = new int[n][n];
+        int[][] g = new int[n][n];
+        for (int i = n - 1; i >= 0; --i) {
+            g[i][i] = arr[i];
+            for (int j = i + 1; j < n; ++j) {
+                g[i][j] = Math.max(g[i][j - 1], arr[j]);
+                f[i][j] = 1 << 30;
+                for (int k = i; k < j; ++k) {
+                    f[i][j] = Math.min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j]);
+                }
+            }
+        }
+        return f[0][n - 1];
+    }
 }
+```
+
+```cpp
+class Solution {
+public:
+    int mctFromLeafValues(vector<int>& arr) {
+        int n = arr.size();
+        int f[n][n];
+        int g[n][n];
+        memset(f, 0, sizeof(f));
+        for (int i = n - 1; ~i; --i) {
+            g[i][i] = arr[i];
+            for (int j = i + 1; j < n; ++j) {
+                g[i][j] = max(g[i][j - 1], arr[j]);
+                f[i][j] = 1 << 30;
+                for (int k = i; k < j; ++k) {
+                    f[i][j] = min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j]);
+                }
+            }
+        }
+        return f[0][n - 1];
+    }
+};
 ```
 
 ```go
@@ -263,13 +317,11 @@ func mctFromLeafValues(arr []int) int {
 	for i := range g {
 		f[i] = make([]int, n)
 		g[i] = make([]int, n)
+	}
+	for i := n - 1; i >= 0; i-- {
 		g[i][i] = arr[i]
 		for j := i + 1; j < n; j++ {
 			g[i][j] = max(g[i][j-1], arr[j])
-		}
-	}
-	for i := n - 2; i >= 0; i-- {
-		for j := i + 1; j < n; j++ {
 			f[i][j] = 1 << 30
 			for k := i; k < j; k++ {
 				f[i][j] = min(f[i][j], f[i][k]+f[k+1][j]+g[i][k]*g[k+1][j])
@@ -278,26 +330,49 @@ func mctFromLeafValues(arr []int) int {
 	}
 	return f[0][n-1]
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 ```
 
-### **...**
-
-```
-
+```ts
+function mctFromLeafValues(arr: number[]): number {
+    const n = arr.length;
+    const f: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    const g: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    for (let i = n - 1; i >= 0; --i) {
+        g[i][i] = arr[i];
+        for (let j = i + 1; j < n; ++j) {
+            g[i][j] = Math.max(g[i][j - 1], arr[j]);
+            f[i][j] = 1 << 30;
+            for (let k = i; k < j; ++k) {
+                f[i][j] = Math.min(f[i][j], f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j]);
+            }
+        }
+    }
+    return f[0][n - 1];
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 3
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def mctFromLeafValues(self, arr: List[int]) -> int:
+        n = len(arr)
+        f = [[0] * n for _ in range(n)]
+        g = [[0] * n for _ in range(n)]
+        for i in range(n - 1, -1, -1):
+            g[i][i] = arr[i]
+            for j in range(i + 1, n):
+                g[i][j] = max(g[i][j - 1], arr[j])
+                f[i][j] = min(
+                    f[i][k] + f[k + 1][j] + g[i][k] * g[k + 1][j] for k in range(i, j)
+                )
+        return f[0][n - 1]
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

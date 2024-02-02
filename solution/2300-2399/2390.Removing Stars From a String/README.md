@@ -57,9 +57,7 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：栈模拟**
+### 方法一：栈模拟
 
 我们可以使用栈模拟操作过程。遍历字符串 $s$，如果当前字符不是星号，则将其入栈；如果当前字符是星号，则将栈顶元素出栈。
 
@@ -68,10 +66,6 @@
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为字符串 $s$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -84,10 +78,6 @@ class Solution:
                 ans.append(c)
         return ''.join(ans)
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -104,8 +94,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -124,8 +112,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func removeStars(s string) string {
 	ans := []rune{}
@@ -140,8 +126,6 @@ func removeStars(s string) string {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function removeStars(s: string): string {
     const ans: string[] = [];
@@ -155,8 +139,6 @@ function removeStars(s: string): string {
     return ans.join('');
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -174,10 +156,26 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```php
+class Solution {
+    /**
+     * @param String $s
+     * @return String
+     */
+    function removeStars($s) {
+        $rs = [];
+        for ($i = 0; $i < strlen($s); $i++) {
+            if ($s[$i] == '*') {
+                array_pop($rs);
+            } else {
+                array_push($rs, $s[$i]);
+            }
+        }
+        return join($rs);
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

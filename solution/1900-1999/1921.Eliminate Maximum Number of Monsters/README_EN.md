@@ -8,7 +8,7 @@
 
 <p>The monsters walk toward the city at a <strong>constant</strong> speed. The speed of each monster is given to you in an integer array <code>speed</code> of size <code>n</code>, where <code>speed[i]</code> is the speed of the <code>i<sup>th</sup></code> monster in kilometers per minute.</p>
 
-<p>You have a weapon that, once fully charged, can eliminate a <strong>single</strong> monster. However, the weapon takes <strong>one minute</strong> to charge.The weapon is fully charged at the very start.</p>
+<p>You have a weapon that, once fully charged, can eliminate a <strong>single</strong> monster. However, the weapon takes <strong>one minute</strong> to charge. The weapon is fully charged at the very start.</p>
 
 <p>You lose when any monster reaches your city. If a monster reaches the city at the exact moment the weapon is fully charged, it counts as a <strong>loss</strong>, and the game ends before you can use your weapon.</p>
 
@@ -23,7 +23,7 @@
 <strong>Explanation:</strong>
 In the beginning, the distances of the monsters are [1,3,4]. You eliminate the first monster.
 After a minute, the distances of the monsters are [X,2,3]. You eliminate the second monster.
-After a minute, the distances of the monsters are [X,X,2]. You eliminate the thrid monster.
+After a minute, the distances of the monsters are [X,X,2]. You eliminate the third monster.
 All 3 monsters can be eliminated.</pre>
 
 <p><strong class="example">Example 2:</strong></p>
@@ -59,22 +59,19 @@ You can only eliminate 1 monster.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def eliminateMaximum(self, dist: List[int], speed: List[int]) -> int:
-        times = [(d - 1) // s for d, s in zip(dist, speed)]
-        times.sort()
+        times = sorted((d - 1) // s for d, s in zip(dist, speed))
         for i, t in enumerate(times):
             if t < i:
                 return i
-        return len(dist)
+        return len(times)
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -95,7 +92,59 @@ class Solution {
 }
 ```
 
-### **JavaScript**
+```cpp
+class Solution {
+public:
+    int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
+        int n = dist.size();
+        vector<int> times;
+        for (int i = 0; i < n; ++i) {
+            times.push_back((dist[i] - 1) / speed[i]);
+        }
+        sort(times.begin(), times.end());
+        for (int i = 0; i < n; ++i) {
+            if (times[i] < i) {
+                return i;
+            }
+        }
+        return n;
+    }
+};
+```
+
+```go
+func eliminateMaximum(dist []int, speed []int) int {
+	n := len(dist)
+	times := make([]int, n)
+	for i, d := range dist {
+		times[i] = (d - 1) / speed[i]
+	}
+	sort.Ints(times)
+	for i, t := range times {
+		if t < i {
+			return i
+		}
+	}
+	return n
+}
+```
+
+```ts
+function eliminateMaximum(dist: number[], speed: number[]): number {
+    const n = dist.length;
+    const times = new Array(n).fill(0);
+    for (let i = 0; i < n; ++i) {
+        times[i] = Math.floor((dist[i] - 1) / speed[i]);
+    }
+    times.sort((a, b) => a - b);
+    for (let i = 0; i < n; ++i) {
+        if (times[i] < i) {
+            return i;
+        }
+    }
+    return n;
+}
+```
 
 ```js
 /**
@@ -118,18 +167,15 @@ var eliminateMaximum = function (dist, speed) {
 };
 ```
 
-### **C++**
-
-```cpp
-class Solution {
-public:
-    int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
-        int n = dist.size();
-        vector<int> times;
+```cs
+public class Solution {
+    public int EliminateMaximum(int[] dist, int[] speed) {
+        int n = dist.Length;
+        int[] times = new int[n];
         for (int i = 0; i < n; ++i) {
-            times.push_back((dist[i] - 1) / speed[i]);
+            times[i] = (dist[i] - 1) / speed[i];
         }
-        sort(times.begin(), times.end());
+        Array.Sort(times);
         for (int i = 0; i < n; ++i) {
             if (times[i] < i) {
                 return i;
@@ -137,51 +183,9 @@ public:
         }
         return n;
     }
-};
-```
-
-### **Go**
-
-```go
-func eliminateMaximum(dist []int, speed []int) int {
-	n := len(dist)
-	times := make([]int, n)
-	for i, d := range dist {
-		times[i] = (d - 1) / speed[i]
-	}
-	sort.Ints(times)
-	for i, t := range times {
-		if t < i {
-			return i
-		}
-	}
-	return n
 }
-```
-
-### **TypeScript**
-
-```ts
-function eliminateMaximum(dist: number[], speed: number[]): number {
-    const n = dist.length;
-    const times = new Array(n).fill(0);
-    for (let i = 0; i < n; ++i) {
-        times[i] = Math.floor((dist[i] - 1) / speed[i]);
-    }
-    times.sort((a, b) => a - b);
-    for (let i = 0; i < n; ++i) {
-        if (times[i] < i) {
-            return i;
-        }
-    }
-    return n;
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

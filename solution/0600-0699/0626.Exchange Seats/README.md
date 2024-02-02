@@ -13,16 +13,16 @@
 | Column Name | Type    |
 +-------------+---------+
 | id          | int     |
-| name        | varchar |
+| student     | varchar |
 +-------------+---------+
-Id是该表的主键列。
-该表的每一行都表示学生的姓名和ID。
-Id是一个连续的增量。
+<code>id</code> 是该表的主键（唯一值）列。
+该表的每一行都表示学生的姓名和 ID。
+id 是一个连续的增量。
 </pre>
 
 <p>&nbsp;</p>
 
-<p>编写SQL查询来交换每两个连续的学生的座位号。如果学生的数量是奇数，则最后一个学生的id不交换。</p>
+<p>编写解决方案来交换每两个连续的学生的座位号。如果学生的数量是奇数，则最后一个学生的id不交换。</p>
 
 <p>按 <code>id</code> <strong>升序</strong> 返回结果表。</p>
 
@@ -59,37 +59,74 @@ Seat 表:
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
-SELECT
-	s1.id,
-	COALESCE ( s2.student, s1.student ) AS student
+# Write your MySQL query statement below
+SELECT s1.id, COALESCE(s2.student, s1.student) AS student
 FROM
-	seat s1
-	LEFT JOIN seat s2 ON ( s1.id + 1 ) ^ 1 - 1 = s2.id
-ORDER BY
-	s1.id;
-```
-
-```sql
-SELECT
-    id + (
-        CASE
-            WHEN id % 2 = 1 AND id != (SELECT MAX(id) FROM seat) THEN 1
-			WHEN id % 2 = 0 THEN -1
-			ELSE 0
-		END
-    ) AS id,
-    student
-FROM
-    seat
-ORDER BY
-	id;
+    Seat AS s1
+    LEFT JOIN Seat AS s2 ON (s1.id + 1) ^ 1 - 1 = s2.id
+ORDER BY 1;
 ```
 
 <!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    id + (
+        CASE
+            WHEN id % 2 = 1
+            AND id != (SELECT MAX(id) FROM Seat) THEN 1
+            WHEN id % 2 = 0 THEN -1
+            ELSE 0
+        END
+    ) AS id,
+    student
+FROM Seat
+ORDER BY 1;
+```
+
+<!-- tabs:end -->
+
+### 方法三
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    RANK() OVER (ORDER BY (id - 1) ^ 1) AS id,
+    student
+FROM Seat;
+```
+
+<!-- tabs:end -->
+
+### 方法四
+
+<!-- tabs:start -->
+
+```sql
+# Write your MySQL query statement below
+SELECT
+    CASE
+        WHEN id & 1 = 0 THEN id - 1
+        WHEN ROW_NUMBER() OVER (ORDER BY id) != COUNT(id) OVER () THEN id + 1
+        ELSE id
+    END AS id,
+    student
+FROM Seat
+ORDER BY 1;
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

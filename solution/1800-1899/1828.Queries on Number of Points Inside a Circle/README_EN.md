@@ -50,9 +50,13 @@ queries[0] is green, queries[1] is red, queries[2] is blue, and queries[3] is pu
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Enumeration
 
-### **Python3**
+Enumerate all the circles $(x, y, r)$. For each circle, calculate the number of points within the circle to get the answer.
+
+The time complexity is $O(m \times n)$, where $m$ and $n$ are the lengths of the arrays `queries` and `points` respectively. Ignoring the space consumption of the answer, the space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -68,8 +72,6 @@ class Solution:
             ans.append(cnt)
         return ans
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -91,8 +93,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -113,8 +113,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func countPoints(points [][]int, queries [][]int) (ans []int) {
 	for _, q := range queries {
@@ -133,8 +131,6 @@ func countPoints(points [][]int, queries [][]int) (ans []int) {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function countPoints(points: number[][], queries: number[][]): number[] {
     return queries.map(([cx, cy, r]) => {
@@ -149,8 +145,6 @@ function countPoints(points: number[][], queries: number[][]): number[] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     pub fn count_points(points: Vec<Vec<i32>>, queries: Vec<Vec<i32>>) -> Vec<i32> {
@@ -162,7 +156,7 @@ impl Solution {
                 let r = v[2].pow(2);
                 let mut count = 0;
                 for p in points.iter() {
-                    if ((p[0] - cx).pow(2) + (p[1] - cy).pow(2)) <= r {
+                    if (p[0] - cx).pow(2) + (p[1] - cy).pow(2) <= r {
                         count += 1;
                     }
                 }
@@ -173,15 +167,13 @@ impl Solution {
 }
 ```
 
-### **C**
-
 ```c
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int *countPoints(int **points, int pointsSize, int *pointsColSize, int **queries, int queriesSize, int *queriesColSize,
-                 int *returnSize) {
-    int *ans = malloc(sizeof(int) * queriesSize);
+int* countPoints(int** points, int pointsSize, int* pointsColSize, int** queries, int queriesSize, int* queriesColSize,
+    int* returnSize) {
+    int* ans = malloc(sizeof(int) * queriesSize);
     for (int i = 0; i < queriesSize; i++) {
         int cx = queries[i][0];
         int cy = queries[i][1];
@@ -199,10 +191,6 @@ int *countPoints(int **points, int pointsSize, int *pointsColSize, int **queries
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

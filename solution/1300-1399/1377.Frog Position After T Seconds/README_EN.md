@@ -42,11 +42,25 @@
 
 ## Solutions
 
-BFS.
+### Solution 1: BFS
+
+First, based on the undirected tree edges given in the problem, we construct an adjacency list $g$, where $g[u]$ represents all adjacent vertices of vertex $u$.
+
+Then, we define the following data structures:
+
+-   Queue $q$, used to store the vertices and their probabilities for each round of search. Initially, $q = [(1, 1.0)]$, indicating that the probability of the frog being at vertex $1$ is $1.0$;
+-   Array $vis$, used to record whether each vertex has been visited. Initially, $vis[1] = true$, and all other elements are $false$.
+
+Next, we start the breadth-first search.
+
+In each round of search, we take out the head element $(u, p)$ of the queue, where $u$ and $p$ represent the current vertex and its probability, respectively. The number of unvisited adjacent vertices of the current vertex $u$ is denoted as $cnt$.
+
+-   If $u = target$, it means that the frog has reached the target vertex. At this time, we judge whether the frog reaches the target vertex in $t$ seconds, or it reaches the target vertex in less than $t$ seconds but cannot jump to other vertices (i.e., $t=0$ or $cnt=0$). If so, return $p$, otherwise return $0$.
+-   If $u \neq target$, we evenly distribute the probability $p$ to all unvisited adjacent vertices of $u$, then add these vertices to the queue $q$, and mark these vertices as visited.
+
+At the end of a round of search, we decrease $t$ by $1$, and then continue the next round of search until the queue is empty or $t \lt 0$.
 
 <!-- tabs:start -->
-
-### **Python3**
 
 ```python
 class Solution:
@@ -63,24 +77,23 @@ class Solution:
         while q and t >= 0:
             for _ in range(len(q)):
                 u, p = q.popleft()
-                nxt = [v for v in g[u] if not vis[v]]
-                if u == target and (not nxt or t == 0):
-                    return p
-                for v in nxt:
-                    vis[v] = True
-                    q.append((v, p / len(nxt)))
+                cnt = len(g[u]) - int(u != 1)
+                if u == target:
+                    return p if cnt * t == 0 else 0
+                for v in g[u]:
+                    if not vis[v]:
+                        vis[v] = True
+                        q.append((v, p / cnt))
             t -= 1
         return 0
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public double frogPosition(int n, int[][] edges, int t, int target) {
         List<Integer>[] g = new List[n + 1];
         Arrays.setAll(g, k -> new ArrayList<>());
-        for (int[] e : edges) {
+        for (var e : edges) {
             int u = e[0], v = e[1];
             g[u].add(v);
             g[v].add(u);
@@ -89,33 +102,27 @@ class Solution {
         q.offer(new Pair<>(1, 1.0));
         boolean[] vis = new boolean[n + 1];
         vis[1] = true;
-        while (!q.isEmpty() && t >= 0) {
+        for (; !q.isEmpty() && t >= 0; --t) {
             for (int k = q.size(); k > 0; --k) {
-                Pair<Integer, Double> x = q.poll();
+                var x = q.poll();
                 int u = x.getKey();
                 double p = x.getValue();
-                List<Integer> nxt = new ArrayList<>();
+                int cnt = g[u].size() - (u == 1 ? 0 : 1);
+                if (u == target) {
+                    return cnt * t == 0 ? p : 0;
+                }
                 for (int v : g[u]) {
                     if (!vis[v]) {
-                        nxt.add(v);
                         vis[v] = true;
+                        q.offer(new Pair<>(v, p / cnt));
                     }
                 }
-                if (u == target && (nxt.isEmpty() || t == 0)) {
-                    return p;
-                }
-                for (int v : nxt) {
-                    q.offer(new Pair<>(v, p / nxt.size()));
-                }
             }
-            --t;
         }
         return 0;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -127,42 +134,32 @@ public:
             g[u].push_back(v);
             g[v].push_back(u);
         }
-        typedef pair<int, double> pid;
-        queue<pid> q;
-        q.push({1, 1.0});
-        vector<bool> vis(n + 1);
+        queue<pair<int, double>> q{{{1, 1.0}}};
+        bool vis[n + 1];
+        memset(vis, false, sizeof(vis));
         vis[1] = true;
-        while (!q.empty() && t >= 0) {
+        for (; q.size() && t >= 0; --t) {
             for (int k = q.size(); k; --k) {
-                auto x = q.front();
+                auto [u, p] = q.front();
                 q.pop();
-                int u = x.first;
-                double p = x.second;
-                vector<int> nxt;
+                int cnt = g[u].size() - (u != 1);
+                if (u == target) {
+                    return cnt * t == 0 ? p : 0;
+                }
                 for (int v : g[u]) {
                     if (!vis[v]) {
                         vis[v] = true;
-                        nxt.push_back(v);
+                        q.push({v, p / cnt});
                     }
                 }
-                if (u == target && (t == 0 || nxt.empty())) return p;
-                for (int v : nxt) q.push({v, p / nxt.size()});
             }
-            --t;
         }
         return 0;
     }
 };
 ```
 
-### **Go**
-
 ```go
-type pid struct {
-	x int
-	p float64
-}
-
 func frogPosition(n int, edges [][]int, t int, target int) float64 {
 	g := make([][]int, n+1)
 	for _, e := range edges {
@@ -170,38 +167,104 @@ func frogPosition(n int, edges [][]int, t int, target int) float64 {
 		g[u] = append(g[u], v)
 		g[v] = append(g[v], u)
 	}
-	q := []pid{pid{1, 1.0}}
+	type pair struct {
+		u int
+		p float64
+	}
+	q := []pair{{1, 1}}
 	vis := make([]bool, n+1)
 	vis[1] = true
-	for len(q) > 0 && t >= 0 {
+	for ; len(q) > 0 && t >= 0; t-- {
 		for k := len(q); k > 0; k-- {
-			x := q[0]
+			u, p := q[0].u, q[0].p
 			q = q[1:]
-			u, p := x.x, x.p
-			var nxt []int
+			cnt := len(g[u])
+			if u != 1 {
+				cnt--
+			}
+			if u == target {
+				if cnt*t == 0 {
+					return p
+				}
+				return 0
+			}
 			for _, v := range g[u] {
 				if !vis[v] {
 					vis[v] = true
-					nxt = append(nxt, v)
+					q = append(q, pair{v, p / float64(cnt)})
 				}
 			}
-			if u == target && (len(nxt) == 0 || t == 0) {
-				return p
-			}
-			for _, v := range nxt {
-				q = append(q, pid{v, p / float64(len(nxt))})
-			}
 		}
-		t--
 	}
 	return 0
 }
 ```
 
-### **...**
-
+```ts
+function frogPosition(n: number, edges: number[][], t: number, target: number): number {
+    const g: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v] of edges) {
+        g[u].push(v);
+        g[v].push(u);
+    }
+    const q: number[][] = [[1, 1]];
+    const vis: boolean[] = Array.from({ length: n + 1 }, () => false);
+    vis[1] = true;
+    for (; q.length > 0 && t >= 0; --t) {
+        for (let k = q.length; k > 0; --k) {
+            const [u, p] = q.shift()!;
+            const cnt = g[u].length - (u === 1 ? 0 : 1);
+            if (u === target) {
+                return cnt * t === 0 ? p : 0;
+            }
+            for (const v of g[u]) {
+                if (!vis[v]) {
+                    vis[v] = true;
+                    q.push([v, p / cnt]);
+                }
+            }
+        }
+    }
+    return 0;
+}
 ```
 
+```cs
+public class Solution {
+    public double FrogPosition(int n, int[][] edges, int t, int target) {
+        List<int>[] g = new List<int>[n + 1];
+        for (int i = 0; i < n + 1; i++) {
+            g[i] = new List<int>();
+        }
+        foreach (int[] e in edges) {
+            int u = e[0], v = e[1];
+            g[u].Add(v);
+            g[v].Add(u);
+        }
+        Queue<Tuple<int, double>> q = new Queue<Tuple<int, double>>();
+        q.Enqueue(new Tuple<int, double>(1, 1.0));
+        bool[] vis = new bool[n + 1];
+        vis[1] = true;
+        for (; q.Count > 0 && t >= 0; --t) {
+            for (int k = q.Count; k > 0; --k) {
+                (var u, var p) = q.Dequeue();
+                int cnt = g[u].Count - (u == 1 ? 0 : 1);
+                if (u == target) {
+                    return cnt * t == 0 ? p : 0;
+                }
+                foreach (int v in g[u]) {
+                    if (!vis[v]) {
+                        vis[v] = true;
+                        q.Enqueue(new Tuple<int, double>(v, p / cnt));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

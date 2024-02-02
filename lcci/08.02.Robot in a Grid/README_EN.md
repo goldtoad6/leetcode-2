@@ -5,7 +5,7 @@
 ## Description
 
 <p>Imagine a robot sitting on the upper left corner of grid with r rows and c columns. The robot can only move in two directions, right and down, but certain cells are &quot;off limits&quot; such that the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to the bottom right.</p>
-![](./images/robot_maze.png)
+![](https://fastly.jsdelivr.net/gh/doocs/leetcode@main/lcci/08.02.Robot%20in%20a%20Grid/images/robot_maze.png)
 <p>&quot;off limits&quot; and empty grid are represented by&nbsp;<code>1</code> and&nbsp;<code>0</code>&nbsp;respectively.</p>
 <p>Return a valid path, consisting of row number and column number of grids in the path.</p>
 <p><strong>Example&nbsp;1:</strong></p>
@@ -32,9 +32,15 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: DFS (Depth-First Search)
 
-### **Python3**
+We can use depth-first search to solve this problem. We start from the top left corner and move right or down until we reach the bottom right corner. If at some step, we find that the current position is an obstacle, or the current position is already in the path, then we return. Otherwise, we add the current position to the path and mark the current position as visited, then continue to move right or down.
+
+If we can finally reach the bottom right corner, then we have found a feasible path, otherwise, it means there is no feasible path.
+
+The time complexity is $O(m \times n)$, and the space complexity is $O(m \times n)$. Here, $m$ and $n$ are the number of rows and columns of the grid, respectively.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -53,8 +59,6 @@ class Solution:
         ans = []
         return ans if dfs(0, 0) else []
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -85,8 +89,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -110,8 +112,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func pathWithObstacles(obstacleGrid [][]int) [][]int {
@@ -137,8 +137,6 @@ func pathWithObstacles(obstacleGrid [][]int) [][]int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function pathWithObstacles(obstacleGrid: number[][]): number[][] {
     const m = obstacleGrid.length;
@@ -163,8 +161,6 @@ function pathWithObstacles(obstacleGrid: number[][]): number[][] {
 }
 ```
 
-### **Rust**
-
 ```rust
 impl Solution {
     fn dfs(grid: &mut Vec<Vec<i32>>, path: &mut Vec<Vec<i32>>, i: usize, j: usize) -> bool {
@@ -173,9 +169,10 @@ impl Solution {
         }
         path.push(vec![i as i32, j as i32]);
         grid[i as usize][j as usize] = 1;
-        if (i + 1 == grid.len() && j + 1 == grid[0].len())
-            || Self::dfs(grid, path, i + 1, j)
-            || Self::dfs(grid, path, i, j + 1)
+        if
+            (i + 1 == grid.len() && j + 1 == grid[0].len()) ||
+            Self::dfs(grid, path, i + 1, j) ||
+            Self::dfs(grid, path, i, j + 1)
         {
             return true;
         }
@@ -193,10 +190,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

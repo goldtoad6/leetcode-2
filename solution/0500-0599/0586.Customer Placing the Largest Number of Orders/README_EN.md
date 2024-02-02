@@ -13,17 +13,17 @@
 | order_number    | int      |
 | customer_number | int      |
 +-----------------+----------+
-order_number is the primary key for this table.
+order_number is the primary key (column with unique values) for this table.
 This table contains information about the order ID and the customer ID.
 </pre>
 
 <p>&nbsp;</p>
 
-<p>Write an SQL query to find the <code>customer_number</code> for the customer who has placed <strong>the largest number of orders</strong>.</p>
+<p>Write a solution to find the <code>customer_number</code> for the customer who has placed <strong>the largest number of orders</strong>.</p>
 
 <p>The test cases are generated so that <strong>exactly one customer</strong> will have placed more orders than any other customer.</p>
 
-<p>The query result format is in the following example.</p>
+<p>The result format is in the following example.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -55,23 +55,30 @@ So the result is customer_number 3.
 
 ## Solutions
 
+### Solution 1: Group By + Sorting
+
+We can use `GROUP BY` to group the data by `customer_number`, and then sort the groups in descending order by `count(1)`. Finally, we can take the `customer_number` of the first record as the result.
+
 <!-- tabs:start -->
 
-### **SQL**
-
 ```sql
+# Write your MySQL query statement below
 SELECT
     customer_number
-FROM
-    Orders
+FROM orders
 GROUP BY customer_number
-ORDER BY COUNT(customer_number) DESC
+ORDER BY COUNT(1) DESC
 LIMIT 1;
 ```
 
-SQL Server
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
 
 ```sql
+/* Write your T-SQL query statement below */
 SELECT TOP 1
     customer_number
 FROM
@@ -81,3 +88,5 @@ ORDER BY COUNT(customer_number) DESC;
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

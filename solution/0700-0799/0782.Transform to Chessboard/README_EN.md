@@ -49,9 +49,9 @@ The second move swaps the second and third row.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -85,7 +85,10 @@ class Solution:
             for j in range(n):
                 curRowMask |= board[i][j] << j
                 curColMask |= board[j][i] << j
-            if curRowMask not in (rowMask, revRowMask) or curColMask not in (colMask, revColMask):
+            if curRowMask not in (rowMask, revRowMask) or curColMask not in (
+                colMask,
+                revColMask,
+            ):
                 return -1
             sameRow += curRowMask == rowMask
             sameCol += curColMask == colMask
@@ -93,8 +96,6 @@ class Solution:
         t2 = f(colMask, sameCol)
         return -1 if t1 == -1 or t2 == -1 else t1 + t2
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -153,8 +154,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -201,8 +200,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func movesToChessboard(board [][]int) int {
@@ -268,19 +265,8 @@ func abs(x int) int {
 	}
 	return x
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

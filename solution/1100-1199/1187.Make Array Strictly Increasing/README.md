@@ -14,23 +14,26 @@
 
 <p>&nbsp;</p>
 
-<p><strong>示例 1：</strong></p>
+<p><strong class="example">示例 1：</strong></p>
 
-<pre><strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [1,3,2,4]
+<pre>
+<strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [1,3,2,4]
 <strong>输出：</strong>1
 <strong>解释：</strong>用 2 来替换 <code>5，之后</code> <code>arr1 = [1, 2, 3, 6, 7]</code>。
 </pre>
 
-<p><strong>示例 2：</strong></p>
+<p><strong class="example">示例 2：</strong></p>
 
-<pre><strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [4,3,1]
+<pre>
+<strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [4,3,1]
 <strong>输出：</strong>2
 <strong>解释：</strong>用 3 来替换 <code>5，然后</code>用 4 来替换 3<code>，得到</code> <code>arr1 = [1, 3, 4, 6, 7]</code>。
 </pre>
 
-<p><strong>示例&nbsp;3：</strong></p>
+<p><strong class="example">示例&nbsp;3：</strong></p>
 
-<pre><strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [1,6,3,3]
+<pre>
+<strong>输入：</strong>arr1 = [1,5,3,6,7], arr2 = [1,6,3,3]
 <strong>输出：</strong>-1
 <strong>解释：</strong>无法使 <code>arr1 严格递增</code>。</pre>
 
@@ -47,25 +50,19 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
-
-**方法一：动态规划**
+### 方法一：动态规划
 
 我们定义 $f[i]$ 表示将 $arr1[0,..,i]$ 转换为严格递增数组，且 $arr1[i]$ 不替换的最小操作数。因此，我们在 $arr1$ 设置首尾两个哨兵 $-\infty$ 和 $\infty$。最后一个数一定是不替换，因此 $f[n-1]$ 即为答案。我们初始化 $f[0]=0$，其余 $f[i]=\infty$。
 
 接下来我们对数组 $arr2$ 进行排序并去重，方便进行二分查找。
 
-对于 $i=1,..,n-1$，我们考虑 $arr1[i-1]$ 是否替换。如果 $arr1[i-1] \lt arr1[i]$，那么 $f[i]$ 可以从 $f[i-1]$ 转移而来，即 $f[i] = f[i-1]$。然后，我们考虑 $arr[i-1]$ 替换的情况，显然 $arr[i-1]$ 应该替换成一个尽可能大的、且比 $arr[i]$ 小的数字，我们在数组 $arr2$ 中进行二分查找，找到第一个大于等于 $arr[i]$ 的下标 $j$。然后我们在 $k \in [1, min(i-1, j)]$ 的范围内枚举替换的个数，如果满足 $arr[i-k-1] \lt arr2[j-k]$，那么 $f[i]$ 可以从 $f[i-k-1]$ 转移而来，即 $f[i] = min(f[i], f[i-k-1] + k)$。
+对于 $i=1,..,n-1$，我们考虑 $arr1[i-1]$ 是否替换。如果 $arr1[i-1] \lt arr1[i]$，那么 $f[i]$ 可以从 $f[i-1]$ 转移而来，即 $f[i] = f[i-1]$。然后，我们考虑 $arr[i-1]$ 替换的情况，显然 $arr[i-1]$ 应该替换成一个尽可能大的、且比 $arr[i]$ 小的数字，我们在数组 $arr2$ 中进行二分查找，找到第一个大于等于 $arr[i]$ 的下标 $j$。然后我们在 $k \in [1, \min(i-1, j)]$ 的范围内枚举替换的个数，如果满足 $arr[i-k-1] \lt arr2[j-k]$，那么 $f[i]$ 可以从 $f[i-k-1]$ 转移而来，即 $f[i] = \min(f[i], f[i-k-1] + k)$。
 
 最后，如果 $f[n-1] \geq \infty$，说明无法转换为严格递增数组，返回 $-1$，否则返回 $f[n-1]$。
 
-时间复杂度 $(n^2)$，空间复杂度 $O(n)$。其中 $n$ 为 $arr1$ 的长度。
+时间复杂度 $(n \times (\log m + \min(m, n)))$，空间复杂度 $O(n)$。其中 $n$ 为 $arr1$ 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -90,10 +87,6 @@ class Solution:
                     f[i] = min(f[i], f[i - k - 1] + k)
         return -1 if f[n - 1] >= inf else f[n - 1]
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -142,8 +135,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -171,8 +162,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func makeArrayIncreasing(arr1 []int, arr2 []int) int {
@@ -210,19 +199,100 @@ func makeArrayIncreasing(arr1 []int, arr2 []int) int {
 	}
 	return f[n-1]
 }
+```
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+```ts
+function makeArrayIncreasing(arr1: number[], arr2: number[]): number {
+    arr2.sort((a, b) => a - b);
+    let m = 0;
+    for (const x of arr2) {
+        if (m === 0 || x !== arr2[m - 1]) {
+            arr2[m++] = x;
+        }
+    }
+    arr2 = arr2.slice(0, m);
+    const inf = 1 << 30;
+    arr1 = [-inf, ...arr1, inf];
+    const n = arr1.length;
+    const f: number[] = new Array(n).fill(inf);
+    f[0] = 0;
+    const search = (arr: number[], x: number): number => {
+        let l = 0;
+        let r = arr.length;
+        while (l < r) {
+            const mid = (l + r) >> 1;
+            if (arr[mid] >= x) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    };
+    for (let i = 1; i < n; ++i) {
+        if (arr1[i - 1] < arr1[i]) {
+            f[i] = f[i - 1];
+        }
+        const j = search(arr2, arr1[i]);
+        for (let k = 1; k <= Math.min(i - 1, j); ++k) {
+            if (arr1[i - k - 1] < arr2[j - k]) {
+                f[i] = Math.min(f[i], f[i - k - 1] + k);
+            }
+        }
+    }
+    return f[n - 1] >= inf ? -1 : f[n - 1];
 }
 ```
 
-### **...**
+```cs
+public class Solution {
+    public int MakeArrayIncreasing(int[] arr1, int[] arr2) {
+        Array.Sort(arr2);
+        int m = 0;
+        foreach (int x in arr2) {
+            if (m == 0 || x != arr2[m - 1]) {
+                arr2[m++] = x;
+            }
+        }
+        int inf = 1 << 30;
+        int[] arr = new int[arr1.Length + 2];
+        arr[0] = -inf;
+        arr[arr.Length - 1] = inf;
+        for (int i = 0; i < arr1.Length; ++i) {
+            arr[i + 1] = arr1[i];
+        }
+        int[] f = new int[arr.Length];
+        Array.Fill(f, inf);
+        f[0] = 0;
+        for (int i = 1; i < arr.Length; ++i) {
+            if (arr[i - 1] < arr[i]) {
+                f[i] = f[i - 1];
+            }
+            int j = search(arr2, arr[i], m);
+            for (int k = 1; k <= Math.Min(i - 1, j); ++k) {
+                if (arr[i - k - 1] < arr2[j - k]) {
+                    f[i] = Math.Min(f[i], f[i - k - 1] + k);
+                }
+            }
+        }
+        return f[arr.Length - 1] >= inf ? -1 : f[arr.Length - 1];
+    }
 
-```
-
+    private int search(int[] nums, int x, int n) {
+        int l = 0, r = n;
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (nums[mid] >= x) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

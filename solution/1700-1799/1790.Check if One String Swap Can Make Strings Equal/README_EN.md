@@ -44,9 +44,17 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Counting
 
-### **Python3**
+We use a variable $cnt$ to record the number of characters at the same position in the two strings that are different. If the two strings meet the requirements of the problem, then $cnt$ must be $0$ or $2$. We also use two character variables $c1$ and $c2$ to record the characters that are different at the same position in the two strings.
+
+While traversing the two strings simultaneously, for two characters $a$ and $b$ at the same position, if $a \ne b$, then $cnt$ is incremented by $1$. If at this time $cnt$ is greater than $2$, or $cnt$ is $2$ and $a \ne c2$ or $b \ne c1$, then we directly return `false`. Note to record $c1$ and $c2$.
+
+At the end of the traversal, if $cnt \neq 1$, return `true`.
+
+The time complexity is $O(n)$, where $n$ is the length of the string. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -61,8 +69,6 @@ class Solution:
                 c1, c2 = a, b
         return cnt != 1
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -84,8 +90,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -106,8 +110,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func areAlmostEqual(s1 string, s2 string) bool {
 	cnt := 0
@@ -125,37 +127,6 @@ func areAlmostEqual(s1 string, s2 string) bool {
 	return cnt != 1
 }
 ```
-
-### **C**
-
-```c
-bool areAlmostEqual(char *s1, char *s2) {
-    int n = strlen(s1);
-    int i1 = -1;
-    int i2 = -1;
-    for (int i = 0; i < n; i++) {
-        if (s1[i] != s2[i]) {
-            if (i1 == -1) {
-                i1 = i;
-            } else if (i2 == -1) {
-                i2 = i;
-            } else {
-                return 0;
-            }
-        }
-    }
-    if (i1 == -1 && i2 == -1) {
-        return 1;
-    }
-    if (i1 == -1 || i2 == -1) {
-        return 0;
-    }
-    return s1[i1] == s2[i2] && s1[i2] == s2[i1];
-}
-
-```
-
-### **TypeScript**
 
 ```ts
 function areAlmostEqual(s1: string, s2: string): boolean {
@@ -175,8 +146,6 @@ function areAlmostEqual(s1: string, s2: string): boolean {
     return cnt != 1;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -199,10 +168,32 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
+```c
+bool areAlmostEqual(char* s1, char* s2) {
+    int n = strlen(s1);
+    int i1 = -1;
+    int i2 = -1;
+    for (int i = 0; i < n; i++) {
+        if (s1[i] != s2[i]) {
+            if (i1 == -1) {
+                i1 = i;
+            } else if (i2 == -1) {
+                i2 = i;
+            } else {
+                return 0;
+            }
+        }
+    }
+    if (i1 == -1 && i2 == -1) {
+        return 1;
+    }
+    if (i1 == -1 || i2 == -1) {
+        return 0;
+    }
+    return s1[i1] == s2[i2] && s1[i2] == s2[i1];
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

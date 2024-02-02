@@ -58,9 +58,9 @@ It can be proven that 4 is the minimum number of operations needed.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -78,8 +78,6 @@ class Solution:
 
         return min(solve(nums), solve(nums[::-1]))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -115,8 +113,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -142,8 +138,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func convertArray(nums []int) int {
@@ -180,25 +174,8 @@ func abs(x int) int {
 	}
 	return x
 }
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-```
-
-### **TypeScript**
-
-```ts
-
-```
-
-### **...**
-
-```
-
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

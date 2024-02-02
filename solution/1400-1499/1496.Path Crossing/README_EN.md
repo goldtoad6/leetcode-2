@@ -34,9 +34,9 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -58,8 +58,6 @@ class Solution:
             vis.add((i, j))
         return False
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -83,8 +81,6 @@ class Solution {
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +109,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func isPathCrossing(path string) bool {
 	i, j := 0, 0
@@ -139,10 +133,31 @@ func isPathCrossing(path string) bool {
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function isPathCrossing(path: string): boolean {
+    let [i, j] = [0, 0];
+    const vis: Set<number> = new Set();
+    vis.add(0);
+    for (const c of path) {
+        if (c === 'N') {
+            --i;
+        } else if (c === 'S') {
+            ++i;
+        } else if (c === 'E') {
+            ++j;
+        } else if (c === 'W') {
+            --j;
+        }
+        const t = i * 20000 + j;
+        if (vis.has(t)) {
+            return true;
+        }
+        vis.add(t);
+    }
+    return false;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -46,12 +46,35 @@ majorityChecker.query(2, 3, 2); // return 2
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Segment Tree + Boyer-Moore Voting Algorithm + Binary Search
 
-### **Python3**
+We notice that the problem requires us to find the possible majority element in a specific interval, so we consider using a segment tree to maintain the candidate majority element and its occurrence in each interval.
+
+We define each node of the segment tree as `Node`, each node contains the following attributes:
+
+-   `l`: The left endpoint of the node, the index starts from $1$.
+-   `r`: The right endpoint of the node, the index starts from $1$.
+-   `x`: The candidate majority element of the node.
+-   `cnt`: The occurrence of the candidate majority element of the node.
+
+The segment tree mainly has the following operations:
+
+-   `build(u, l, r)`: Build the segment tree.
+-   `pushup(u)`: Use the information of the child nodes to update the information of the parent node.
+-   `query(u, l, r)`: Query the interval sum.
+
+In the initialization method of the main function, we first create a segment tree, and use a hash table $d$ to record all indexes of each element in the array.
+
+In the `query(left, right, threshold)` method, we directly call the `query` method of the segment tree to get the candidate majority element $x$. Then use binary search to find the first index $l$ in the array that is greater than or equal to $left$, and the first index $r$ that is greater than $right$. If $r - l \ge threshold$, return $x$, otherwise return $-1$.
+
+In terms of time complexity, the time complexity of the initialization method is $O(n)$, and the time complexity of the query method is $O(\log n)$. The space complexity is $O(n)$. Here, $n$ is the length of the array.
+
+<!-- tabs:start -->
 
 ```python
 class Node:
+    __slots__ = ("l", "r", "x", "cnt")
+
     def __init__(self):
         self.l = self.r = 0
         self.x = self.cnt = 0
@@ -105,7 +128,6 @@ class SegmentTree:
 
 
 class MajorityChecker:
-
     def __init__(self, arr: List[int]):
         self.tree = SegmentTree(arr)
         self.d = defaultdict(list)
@@ -123,8 +145,6 @@ class MajorityChecker:
 # obj = MajorityChecker(arr)
 # param_1 = obj.query(left,right,threshold)
 ```
-
-### **Java**
 
 ```java
 class Node {
@@ -237,8 +257,6 @@ class MajorityChecker {
  */
 ```
 
-### **C++**
-
 ```cpp
 class Node {
 public:
@@ -344,8 +362,6 @@ private:
  */
 ```
 
-### **Go**
-
 ```go
 type node struct {
 	l, r, x, cnt int
@@ -449,10 +465,6 @@ func (this *MajorityChecker) Query(left int, right int, threshold int) int {
  */
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

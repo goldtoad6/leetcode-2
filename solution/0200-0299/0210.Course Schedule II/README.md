@@ -53,23 +53,20 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：拓扑排序
 
-**方法一：拓扑排序**
+我们创建一个邻接表 $g$，用于存储每个节点的后继节点，同时还需要一个数组 $indeg$ 存储每个节点的入度。在构建邻接表的同时，我们也统计每个节点的入度。当入度为 $0$ 的节点代表没有任何前置课程，可以直接学习，我们将其加入队列 $q$ 中。
 
-对于本题，我们可以将课程看作图中的节点，先修课程看作图中的边，那么我们可以将本题转化为判断有向图中是否存在环。
+当队列 $q$ 不为空的时候，我们取出队首的节点 $i$：
 
-具体地，我们可以使用拓扑排序的思想，对于每个入度为 $0$ 的节点，我们将其出度的节点的入度减 $1$，直到所有节点都被遍历到。
+-   我们将 $i$ 放入答案中；
+-   接下来，我们将 $i$ 的所有后继节点的入度减少 $1$。如果发现某个后继节点 $j$ 的入度变为 $0$，则将 $j$ 放入队列 $q$ 中。
 
-如果所有节点都被遍历到，说明图中不存在环，那么我们就可以完成所有课程的学习；否则，我们就无法完成所有课程的学习。
+在广度优先搜索的结束时，如果答案中包含了这 $n$ 个节点，那么我们就找到了一种拓扑排序，否则说明图中存在环，也就不存在拓扑排序了。
 
-时间复杂度 $O(n + m)$，空间复杂度 $O(n + m)$。其中 $n$ 和 $m$ 分别为课程数和先修课程数。
+时间复杂度 $O(n + m)$，空间复杂度 $O(n + m)$。其中 $n$ 和 $m$ 分别是节点数和边数。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -90,10 +87,6 @@ class Solution:
                     q.append(j)
         return ans if len(ans) == numCourses else []
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -128,8 +121,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -162,8 +153,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func findOrder(numCourses int, prerequisites [][]int) []int {
@@ -199,11 +188,9 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 }
 ```
 
-### **TypeScript**
-
 ```ts
 function findOrder(numCourses: number, prerequisites: number[][]): number[] {
-    const g: number[][] = new Array(numCourses).fill(0).map(() => []);
+    const g: number[][] = Array.from({ length: numCourses }, () => []);
     const indeg: number[] = new Array(numCourses).fill(0);
     for (const [a, b] of prerequisites) {
         g[b].push(a);
@@ -211,7 +198,7 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
     }
     const q: number[] = [];
     for (let i = 0; i < numCourses; ++i) {
-        if (indeg[i] == 0) {
+        if (indeg[i] === 0) {
             q.push(i);
         }
     }
@@ -220,7 +207,7 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
         const i = q.shift()!;
         ans.push(i);
         for (const j of g[i]) {
-            if (--indeg[j] == 0) {
+            if (--indeg[j] === 0) {
                 q.push(j);
             }
         }
@@ -229,7 +216,46 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
 }
 ```
 
-### **C#**
+```rust
+impl Solution {
+    pub fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
+        let n = num_courses as usize;
+        let mut adjacency = vec![vec![]; n];
+        let mut entry = vec![0; n];
+        // init
+        for iter in prerequisites.iter() {
+            let (a, b) = (iter[0], iter[1]);
+            adjacency[b as usize].push(a);
+            entry[a as usize] += 1;
+        }
+        // construct deque & reslut
+        let mut deque = std::collections::VecDeque::new();
+        for index in 0..n {
+            if entry[index] == 0 {
+                deque.push_back(index);
+            }
+        }
+        let mut result = vec![];
+        // bfs
+        while !deque.is_empty() {
+            let head = deque.pop_front().unwrap();
+            result.push(head as i32);
+            // update degree of entry
+            for &out_entry in adjacency[head].iter() {
+                entry[out_entry as usize] -= 1;
+                if entry[out_entry as usize] == 0 {
+                    deque.push_back(out_entry as usize);
+                }
+            }
+        }
+        if result.len() == n {
+            result
+        } else {
+            vec![]
+        }
+    }
+}
+```
 
 ```cs
 public class Solution {
@@ -266,10 +292,6 @@ public class Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

@@ -10,7 +10,7 @@ func minDifficulty(jobDifficulty []int, d int) int {
 	}
 	f[0][0] = 0
 	for i := 1; i <= n; i++ {
-		for j := 1; j <= d; j++ {
+		for j := 1; j <= min(d, i); j++ {
 			mx := 0
 			for k := i; k > 0; k-- {
 				mx = max(mx, jobDifficulty[k-1])
@@ -22,18 +22,4 @@ func minDifficulty(jobDifficulty []int, d int) int {
 		return -1
 	}
 	return f[n][d]
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }

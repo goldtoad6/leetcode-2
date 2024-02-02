@@ -35,30 +35,32 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1: Simulation
 
-### **Python3**
+We notice that an even number divisible by $3$ must be a multiple of $6$. Therefore, we only need to traverse the array, count the sum and the number of all multiples of $6$, and then calculate the average.
+
+The time complexity is $O(n)$, where $n$ is the length of the array. The space complexity is $O(1)$.
+
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def averageValue(self, nums: List[int]) -> int:
         s = n = 0
-        for v in nums:
-            if v % 6 == 0:
-                s += v
+        for x in nums:
+            if x % 6 == 0:
+                s += x
                 n += 1
         return 0 if n == 0 else s // n
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int averageValue(int[] nums) {
         int s = 0, n = 0;
-        for (int v : nums) {
-            if (v % 6 == 0) {
-                s += v;
+        for (int x : nums) {
+            if (x % 6 == 0) {
+                s += x;
                 ++n;
             }
         }
@@ -67,16 +69,14 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     int averageValue(vector<int>& nums) {
         int s = 0, n = 0;
-        for (int v : nums) {
-            if (v % 6 == 0) {
-                s += v;
+        for (int x : nums) {
+            if (x % 6 == 0) {
+                s += x;
                 ++n;
             }
         }
@@ -85,14 +85,12 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func averageValue(nums []int) int {
-	s, n := 0, 0
-	for _, v := range nums {
-		if v%6 == 0 {
-			s += v
+	var s, n int
+	for _, x := range nums {
+		if x%6 == 0 {
+			s += x
 			n++
 		}
 	}
@@ -103,72 +101,76 @@ func averageValue(nums []int) int {
 }
 ```
 
-### **C**
-
-```c
-int averageValue(int *nums, int numsSize) {
-    int sum = 0;
-    int n = 0;
-    for (int i = 0; i < numsSize; i++) {
-        if (nums[i] % 6 == 0) {
-            sum += nums[i];
-            n++;
-        }
-    }
-
-    if (n == 0) {
-        return 0;
-    }
-    return sum / n;
-}
-```
-
-### **TypeScript**
-
 ```ts
 function averageValue(nums: number[]): number {
-    let sum = 0;
+    let s = 0;
     let n = 0;
-    for (const num of nums) {
-        if (num % 6 === 0) {
-            sum += num;
-            n++;
+    for (const x of nums) {
+        if (x % 6 === 0) {
+            s += x;
+            ++n;
         }
     }
-
-    if (n === 0) {
-        return 0;
-    }
-    return Math.floor(sum / n);
+    return n === 0 ? 0 : ~~(s / n);
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
     pub fn average_value(nums: Vec<i32>) -> i32 {
-        let mut sum = 0;
+        let mut s = 0;
         let mut n = 0;
-        for num in nums.iter() {
-            if num % 6 == 0 {
-                sum += num;
+        for x in nums.iter() {
+            if x % 6 == 0 {
+                s += x;
                 n += 1;
             }
         }
-
         if n == 0 {
             return 0;
         }
-        sum / n
+        s / n
     }
 }
 ```
 
-### **...**
-
-```
-
+```c
+int averageValue(int* nums, int numsSize) {
+    int s = 0, n = 0;
+    for (int i = 0; i < numsSize; ++i) {
+        if (nums[i] % 6 == 0) {
+            s += nums[i];
+            ++n;
+        }
+    }
+    return n == 0 ? 0 : s / n;
+}
 ```
 
 <!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
+```rust
+impl Solution {
+    pub fn average_value(nums: Vec<i32>) -> i32 {
+        let filtered_nums: Vec<i32> = nums
+            .iter()
+            .cloned()
+            .filter(|&n| n % 6 == 0)
+            .collect();
+
+        if filtered_nums.is_empty() {
+            return 0;
+        }
+
+        filtered_nums.iter().sum::<i32>() / (filtered_nums.len() as i32)
+    }
+}
+```
+
+<!-- tabs:end -->
+
+<!-- end -->

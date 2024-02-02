@@ -43,13 +43,9 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -60,17 +56,6 @@ class Solution:
             ans.append(nums[i + n])
         return ans
 ```
-
-```python
-class Solution:
-    def shuffle(self, nums: List[int], n: int) -> List[int]:
-        nums[::2], nums[1::2] = nums[:n], nums[n:]
-        return nums
-```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -84,20 +69,6 @@ class Solution {
     }
 }
 ```
-
-### **TypeScript**
-
-```ts
-function shuffle(nums: number[], n: number): number[] {
-    let ans = [];
-    for (let i = 0; i < n; i++) {
-        ans.push(nums[i], nums[n + i]);
-    }
-    return ans;
-}
-```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -113,8 +84,6 @@ public:
 };
 ```
 
-### **Go**
-
 ```go
 func shuffle(nums []int, n int) []int {
 	var ans []int
@@ -126,24 +95,15 @@ func shuffle(nums []int, n int) []int {
 }
 ```
 
-### **C**
-
-```c
-/**
- * Note: The returned array must be malloced, assume caller calls free().
- */
-int *shuffle(int *nums, int numsSize, int n, int *returnSize) {
-    int *res = (int *) malloc(sizeof(int) * n * 2);
-    for (int i = 0; i < n; i++) {
-        res[2 * i] = nums[i];
-        res[2 * i + 1] = nums[i + n];
+```ts
+function shuffle(nums: number[], n: number): number[] {
+    let ans = [];
+    for (let i = 0; i < n; i++) {
+        ans.push(nums[i], nums[n + i]);
     }
-    *returnSize = n * 2;
-    return res;
+    return ans;
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -159,6 +119,34 @@ impl Solution {
 }
 ```
 
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* shuffle(int* nums, int numsSize, int n, int* returnSize) {
+    int* res = (int*) malloc(sizeof(int) * n * 2);
+    for (int i = 0; i < n; i++) {
+        res[2 * i] = nums[i];
+        res[2 * i + 1] = nums[i + n];
+    }
+    *returnSize = n * 2;
+    return res;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二
+
+<!-- tabs:start -->
+
+```python
+class Solution:
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
+        nums[::2], nums[1::2] = nums[:n], nums[n:]
+        return nums
+```
+
 ```rust
 impl Solution {
     pub fn shuffle(mut nums: Vec<i32>, n: i32) -> Vec<i32> {
@@ -166,11 +154,7 @@ impl Solution {
         for i in 0..n * 2 {
             let mut j = i;
             while nums[i] > 0 {
-                j = if j < n {
-                    2 * j
-                } else {
-                    2 * (j - n) + 1
-                };
+                j = if j < n { 2 * j } else { 2 * (j - n) + 1 };
                 nums.swap(i, j);
                 nums[j] *= -1;
             }
@@ -183,10 +167,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

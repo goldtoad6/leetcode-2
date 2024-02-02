@@ -56,9 +56,9 @@ In both cases, there are five consecutive &#39;T&#39;s.
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
@@ -77,8 +77,6 @@ class Solution:
 
         return max(get('T', k), get('F', k))
 ```
-
-### **Java**
 
 ```java
 class Solution {
@@ -101,8 +99,6 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
@@ -120,8 +116,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func maxConsecutiveAnswers(answerKey string, k int) int {
@@ -143,16 +137,7 @@ func maxConsecutiveAnswers(answerKey string, k int) int {
 	}
 	return max(get('T', k), get('F', k))
 }
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 ```
-
-### **TypeScript**
 
 ```ts
 function maxConsecutiveAnswers(answerKey: string, k: number): number {
@@ -173,8 +158,6 @@ function maxConsecutiveAnswers(answerKey: string, k: number): number {
     return Math.max(getMaxCount('T'), getMaxCount('F'));
 }
 ```
-
-### **Rust**
 
 ```rust
 impl Solution {
@@ -202,10 +185,6 @@ impl Solution {
 }
 ```
 
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

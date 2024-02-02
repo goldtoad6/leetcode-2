@@ -53,21 +53,15 @@
 
 ## 解法
 
-<!-- 这里可写通用的实现逻辑 -->
+### 方法一：哈希表
 
-**方法一：哈希表**
+我们可以用哈希表 $m$ 存放数组值以及对应的下标。
 
-我们可以用哈希表（字典） $m$ 存放数组值以及对应的下标。
-
-遍历数组 `nums`，当发现 `target - nums[i]` 在哈希表中，说明找到了目标值，返回 `target - nums[i]` 的下标和 `i` 即可。
+遍历数组 `nums`，当发现 `target - nums[i]` 在哈希表中，说明找到了目标值，返回 `target - nums[i]` 的下标以及 $i$ 即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是数组 `nums` 的长度。
 
 <!-- tabs:start -->
-
-### **Python3**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```python
 class Solution:
@@ -79,10 +73,6 @@ class Solution:
                 return [m[y], i]
             m[x] = i
 ```
-
-### **Java**
-
-<!-- 这里可写当前语言的特殊实现逻辑 -->
 
 ```java
 class Solution {
@@ -100,14 +90,12 @@ class Solution {
 }
 ```
 
-### **C++**
-
 ```cpp
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> m;
-        for (int i = 0; ; ++i) {
+        for (int i = 0;; ++i) {
             int x = nums[i];
             int y = target - x;
             if (m.count(y)) {
@@ -118,8 +106,6 @@ public:
     }
 };
 ```
-
-### **Go**
 
 ```go
 func twoSum(nums []int, target int) []int {
@@ -135,7 +121,41 @@ func twoSum(nums []int, target int) []int {
 }
 ```
 
-### **JavaScript**
+```ts
+function twoSum(nums: number[], target: number): number[] {
+    const m: Map<number, number> = new Map();
+
+    for (let i = 0; ; ++i) {
+        const x = nums[i];
+        const y = target - x;
+
+        if (m.has(y)) {
+            return [m.get(y)!, i];
+        }
+
+        m.set(x, i);
+    }
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+impl Solution {
+    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        let mut map = HashMap::new();
+        for (i, item) in nums.iter().enumerate() {
+            if map.contains_key(item) {
+                return vec![i as i32, map[item]];
+            } else {
+                let x = target - nums[i];
+                map.insert(x, i as i32);
+            }
+        }
+        unreachable!()
+    }
+}
+```
 
 ```js
 /**
@@ -156,8 +176,6 @@ var twoSum = function (nums, target) {
 };
 ```
 
-### **C#**
-
 ```cs
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
@@ -176,7 +194,42 @@ public class Solution {
 }
 ```
 
-### **Swift**
+```php
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @param Integer $target
+     * @return Integer[]
+     */
+    function twoSum($nums, $target) {
+        foreach ($nums as $key => $x) {
+            $y = $target - $x;
+            if (isset($hashtable[$y])) {
+                return [$hashtable[$y], $key];
+            }
+            $hashtable[$x] = $key;
+        }
+    }
+}
+```
+
+```scala
+import scala.collection.mutable
+
+object Solution {
+  def twoSum(nums: Array[Int], target: Int): Array[Int] = {
+    var map = new mutable.HashMap[Int, Int]()
+    for (i <- 0 to nums.length) {
+      if (map.contains(target - nums(i))) {
+        return Array(map(target - nums(i)), i)
+      } else {
+        map += (nums(i) -> i)
+      }
+    }
+    Array(0, 0)
+  }
+}
+```
 
 ```swift
 class Solution {
@@ -196,26 +249,19 @@ class Solution {
 }
 ```
 
-### **Rust**
-
-```rust
-use std::collections::HashMap;
-
-pub fn soluation(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut map = HashMap::new();
-    for (i, item) in nums.iter().enumerate() {
-        if map.contains_key(item) {
-            return vec![i as i32, map[item]];
-        } else {
-            let x = target - nums[i];
-            map.insert(x, i as i32);
-        }
-    }
-    unreachable!()
-}
+```rb
+# @param {Integer[]} nums
+# @param {Integer} target
+# @return {Integer[]}
+def two_sum(nums, target)
+  nums.each_with_index do |x, idx|
+    if nums.include? target - x
+      return [idx, nums.index(target - x)] if nums.index(target - x) != idx
+    end
+    next
+  end
+end
 ```
-
-### **Nim**
 
 ```nim
 import std/enumerate
@@ -232,33 +278,6 @@ proc twoSum(nums: seq[int], target: int): seq[int] =
                 return @[idx, tdx]
 ```
 
-### **PHP**
-
-```php
-class Solution {
-
-    /**
-     * @param Integer[] $nums
-     * @param Integer $target
-     * @return Integer[]
-     */
-    function twoSum($nums, $target) {
-        $len = count($nums);
-        for ($i = 0; $i < $len; $i++) {
-            for ($j = 1 + $i; $j < $len; $j++) {
-                if ($nums[$i] + $nums[$j] == $target) {
-                    return [$i, $j];
-                }
-            }
-        }
-    }
-}
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->

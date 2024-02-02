@@ -47,50 +47,36 @@
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class Solution:
     def maxEqualRowsAfterFlips(self, matrix: List[List[int]]) -> int:
         cnt = Counter()
         for row in matrix:
-            t = []
-            for v in row:
-                if row[0] == 1:
-                    v ^= 1
-                t.append(str(v))
-            s = ''.join(t)
-            cnt[s] += 1
+            t = tuple(row) if row[0] == 0 else tuple(x ^ 1 for x in row)
+            cnt[t] += 1
         return max(cnt.values())
 ```
-
-### **Java**
 
 ```java
 class Solution {
     public int maxEqualRowsAfterFlips(int[][] matrix) {
-        Map<String, Integer> map = new HashMap<>();
-        for (int[] row : matrix) {
-            if (row[0] == 1) {
-                for (int i = 0; i < row.length; ++i) {
-                    row[i] ^= 1;
-                }
+        Map<String, Integer> cnt = new HashMap<>();
+        int ans = 0, n = matrix[0].length;
+        for (var row : matrix) {
+            char[] cs = new char[n];
+            for (int i = 0; i < n; ++i) {
+                cs[i] = (char) (row[0] ^ row[i]);
             }
-            StringBuilder sb = new StringBuilder();
-            for (int x : row) {
-                sb.append(x);
-            }
-            String s = sb.toString();
-            map.put(s, map.getOrDefault(s, 0) + 1);
+            ans = Math.max(ans, cnt.merge(String.valueOf(cs), 1, Integer::sum));
         }
-        return map.values().stream().max(Integer::compareTo).get();
+        return ans;
     }
 }
 ```
-
-### **C++**
 
 ```cpp
 class Solution {
@@ -99,52 +85,54 @@ public:
         unordered_map<string, int> cnt;
         int ans = 0;
         for (auto& row : matrix) {
-            string s = "";
-            for (int v : row) {
-                if (row[0] == 1) v ^= 1;
-                s += to_string(v);
+            string s;
+            for (int x : row) {
+                s.push_back('0' + (row[0] == 0 ? x : x ^ 1));
             }
-            ++cnt[s];
-            ans = max(ans, cnt[s]);
+            ans = max(ans, ++cnt[s]);
         }
         return ans;
     }
 };
 ```
 
-### **Go**
-
 ```go
-func maxEqualRowsAfterFlips(matrix [][]int) int {
-	ans := 0
+func maxEqualRowsAfterFlips(matrix [][]int) (ans int) {
 	cnt := map[string]int{}
 	for _, row := range matrix {
 		s := []byte{}
-		for _, v := range row {
+		for _, x := range row {
 			if row[0] == 1 {
-				v ^= 1
+				x ^= 1
 			}
-			s = append(s, byte(v+'0'))
+			s = append(s, byte(x)+'0')
 		}
 		t := string(s)
 		cnt[t]++
 		ans = max(ans, cnt[t])
 	}
-	return ans
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return
 }
 ```
 
-### **...**
-
-```
-
+```ts
+function maxEqualRowsAfterFlips(matrix: number[][]): number {
+    const cnt = new Map<string, number>();
+    let ans = 0;
+    for (const row of matrix) {
+        if (row[0] === 1) {
+            for (let i = 0; i < row.length; i++) {
+                row[i] ^= 1;
+            }
+        }
+        const s = row.join('');
+        cnt.set(s, (cnt.get(s) || 0) + 1);
+        ans = Math.max(ans, cnt.get(s)!);
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->
+
+<!-- end -->

@@ -45,13 +45,12 @@ myHashSet.contains(2); // return False, (already removed)</pre>
 
 ## Solutions
 
-<!-- tabs:start -->
+### Solution 1
 
-### **Python3**
+<!-- tabs:start -->
 
 ```python
 class MyHashSet:
-
     def __init__(self):
         self.data = [False] * 1000001
 
@@ -72,9 +71,134 @@ class MyHashSet:
 # param_3 = obj.contains(key)
 ```
 
+```java
+class MyHashSet {
+    private boolean[] data = new boolean[1000001];
+
+    public MyHashSet() {
+    }
+
+    public void add(int key) {
+        data[key] = true;
+    }
+
+    public void remove(int key) {
+        data[key] = false;
+    }
+
+    public boolean contains(int key) {
+        return data[key];
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet obj = new MyHashSet();
+ * obj.add(key);
+ * obj.remove(key);
+ * boolean param_3 = obj.contains(key);
+ */
+```
+
+```cpp
+class MyHashSet {
+public:
+    bool data[1000001];
+
+    MyHashSet() {
+        memset(data, false, sizeof data);
+    }
+
+    void add(int key) {
+        data[key] = true;
+    }
+
+    void remove(int key) {
+        data[key] = false;
+    }
+
+    bool contains(int key) {
+        return data[key];
+    }
+};
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
+```
+
+```go
+type MyHashSet struct {
+	data []bool
+}
+
+func Constructor() MyHashSet {
+	data := make([]bool, 1000010)
+	return MyHashSet{data}
+}
+
+func (this *MyHashSet) Add(key int) {
+	this.data[key] = true
+}
+
+func (this *MyHashSet) Remove(key int) {
+	this.data[key] = false
+}
+
+func (this *MyHashSet) Contains(key int) bool {
+	return this.data[key]
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Add(key);
+ * obj.Remove(key);
+ * param_3 := obj.Contains(key);
+ */
+```
+
+```ts
+class MyHashSet {
+    data: Array<boolean>;
+    constructor() {
+        this.data = new Array(10 ** 6 + 1).fill(false);
+    }
+
+    add(key: number): void {
+        this.data[key] = true;
+    }
+
+    remove(key: number): void {
+        this.data[key] = false;
+    }
+
+    contains(key: number): boolean {
+        return this.data[key];
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * var obj = new MyHashSet()
+ * obj.add(key)
+ * obj.remove(key)
+ * var param_3 = obj.contains(key)
+ */
+```
+
+<!-- tabs:end -->
+
+### Solution 2
+
+<!-- tabs:start -->
+
 ```python
 class MyHashSet:
-
     def __init__(self):
         self.size = 1000
         self.data = [[] for _ in range(self.size)]
@@ -104,38 +228,6 @@ class MyHashSet:
 # obj.add(key)
 # obj.remove(key)
 # param_3 = obj.contains(key)
-```
-
-### **Java**
-
-```java
-class MyHashSet {
-    private boolean[] data = new boolean[1000001];
-
-    public MyHashSet() {
-
-    }
-
-    public void add(int key) {
-        data[key] = true;
-    }
-
-    public void remove(int key) {
-        data[key] = false;
-    }
-
-    public boolean contains(int key) {
-        return data[key];
-    }
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet obj = new MyHashSet();
- * obj.add(key);
- * obj.remove(key);
- * boolean param_3 = obj.contains(key);
- */
 ```
 
 ```java
@@ -192,39 +284,6 @@ class MyHashSet {
  */
 ```
 
-### **C++**
-
-```cpp
-class MyHashSet {
-public:
-    bool data[1000001];
-
-    MyHashSet() {
-        memset(data, false, sizeof data);
-    }
-
-    void add(int key) {
-        data[key] = true;
-    }
-
-    void remove(int key) {
-        data[key] = false;
-    }
-
-    bool contains(int key) {
-        return data[key];
-    }
-};
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet* obj = new MyHashSet();
- * obj->add(key);
- * obj->remove(key);
- * bool param_3 = obj->contains(key);
- */
-```
-
 ```cpp
 class MyHashSet {
 private:
@@ -232,8 +291,8 @@ private:
     vector<list<int>> data;
 
 public:
-    MyHashSet(): data(size) {
-
+    MyHashSet()
+        : data(size) {
     }
 
     void add(int key) {
@@ -273,39 +332,6 @@ public:
  * obj->add(key);
  * obj->remove(key);
  * bool param_3 = obj->contains(key);
- */
-```
-
-### **Go**
-
-```go
-type MyHashSet struct {
-	data []bool
-}
-
-func Constructor() MyHashSet {
-	data := make([]bool, 1000010)
-	return MyHashSet{data}
-}
-
-func (this *MyHashSet) Add(key int) {
-	this.data[key] = true
-}
-
-func (this *MyHashSet) Remove(key int) {
-	this.data[key] = false
-}
-
-func (this *MyHashSet) Contains(key int) bool {
-	return this.data[key]
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * obj := Constructor();
- * obj.Add(key);
- * obj.Remove(key);
- * param_3 := obj.Contains(key);
  */
 ```
 
@@ -358,41 +384,6 @@ func (this *MyHashSet) hash(key int) int {
  */
 ```
 
-### **TypeScript**
-
-```ts
-class MyHashSet {
-    data: Array<boolean>;
-    constructor() {
-        this.data = new Array(10 ** 6 + 1).fill(false);
-    }
-
-    add(key: number): void {
-        this.data[key] = true;
-    }
-
-    remove(key: number): void {
-        this.data[key] = false;
-    }
-
-    contains(key: number): boolean {
-        return this.data[key];
-    }
-}
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * var obj = new MyHashSet()
- * obj.add(key)
- * obj.remove(key)
- * var param_3 = obj.contains(key)
- */
-```
-
-### **...**
-
-```
-
-```
-
 <!-- tabs:end -->
+
+<!-- end -->
