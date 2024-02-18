@@ -22,6 +22,40 @@
 
 ## 往期竞赛
 
+#### 第 385 场周赛(2024-02-18 10:30, 90 分钟) 参赛人数 2352
+
+- [3042. 统计前后缀下标对 I](/solution/3000-3099/3042.Count%20Prefix%20and%20Suffix%20Pairs%20I/README.md)
+- [3043. 最长公共前缀的长度](/solution/3000-3099/3043.Find%20the%20Length%20of%20the%20Longest%20Common%20Prefix/README.md)
+- [3044. 出现频率最高的素数](/solution/3000-3099/3044.Most%20Frequent%20Prime/README.md)
+- [3045. 统计前后缀下标对 II](/solution/3000-3099/3045.Count%20Prefix%20and%20Suffix%20Pairs%20II/README.md)
+
+#### 第 124 场双周赛(2024-02-17 22:30, 90 分钟) 参赛人数 1861
+
+- [3038. 相同分数的最大操作数目 I](/solution/3000-3099/3038.Maximum%20Number%20of%20Operations%20With%20the%20Same%20Score%20I/README.md)
+- [3039. 进行操作使字符串为空](/solution/3000-3099/3039.Apply%20Operations%20to%20Make%20String%20Empty/README.md)
+- [3040. 相同分数的最大操作数目 II](/solution/3000-3099/3040.Maximum%20Number%20of%20Operations%20With%20the%20Same%20Score%20II/README.md)
+- [3041. 修改数组后最大化数组中的连续元素数目](/solution/3000-3099/3041.Maximize%20Consecutive%20Elements%20in%20an%20Array%20After%20Modification/README.md)
+
+#### 第 384 场周赛(2024-02-11 10:30, 90 分钟) 参赛人数 1652
+
+- [3033. 修改矩阵](/solution/3000-3099/3033.Modify%20the%20Matrix/README.md)
+- [3034. 匹配模式数组的子数组数目 I](/solution/3000-3099/3034.Number%20of%20Subarrays%20That%20Match%20a%20Pattern%20I/README.md)
+- [3035. 回文字符串的最大数量](/solution/3000-3099/3035.Maximum%20Palindromes%20After%20Operations/README.md)
+- [3036. 匹配模式数组的子数组数目 II](/solution/3000-3099/3036.Number%20of%20Subarrays%20That%20Match%20a%20Pattern%20II/README.md)
+
+#### 第 383 场周赛(2024-02-04 10:30, 90 分钟) 参赛人数 2691
+
+- [3028. 边界上的蚂蚁](/solution/3000-3099/3028.Ant%20on%20the%20Boundary/README.md)
+- [3029. 将单词恢复初始状态所需的最短时间 I](/solution/3000-3099/3029.Minimum%20Time%20to%20Revert%20Word%20to%20Initial%20State%20I/README.md)
+- [3030. 找出网格的区域平均强度](/solution/3000-3099/3030.Find%20the%20Grid%20of%20Region%20Average/README.md)
+- [3031. 将单词恢复初始状态所需的最短时间 II](/solution/3000-3099/3031.Minimum%20Time%20to%20Revert%20Word%20to%20Initial%20State%20II/README.md)
+
+#### 第 123 场双周赛(2024-02-03 22:30, 90 分钟) 参赛人数 2209
+
+- [3025. 人员站位的方案数 I](/solution/3000-3099/3025.Find%20the%20Number%20of%20Ways%20to%20Place%20People%20I/README.md)
+- [3026. 最大好子数组和](/solution/3000-3099/3026.Maximum%20Good%20Subarray%20Sum/README.md)
+- [3027. 人员站位的方案数 II](/solution/3000-3099/3027.Find%20the%20Number%20of%20Ways%20to%20Place%20People%20II/README.md)
+
 #### 第 382 场周赛(2024-01-28 10:30, 90 分钟) 参赛人数 3134
 
 - [3019. 按键变更的次数](/solution/3000-3099/3019.Number%20of%20Changing%20Keys/README.md)
