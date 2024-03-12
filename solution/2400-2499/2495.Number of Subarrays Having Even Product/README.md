@@ -2,13 +2,13 @@
 
 [English Version](/solution/2400-2499/2495.Number%20of%20Subarrays%20Having%20Even%20Product/README_EN.md)
 
+<!-- tags:数组,数学,动态规划 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
 
-<p>给定一个整数数组 <code>nums</code>，返回<em>具有偶数乘积的 </em><code>nums</code><em> 子数组的数目</em>。</p>
-
-<p><strong>子数组&nbsp;</strong>是数组中连续的非空元素序列。</p>
+<p>给定一个整数数组 <code>nums</code>，返回<em>具有偶数乘积的 </em><code>nums</code><em> <span data-keyword="subarray">子数组</span>的数目</em>。</p>
 
 <p>&nbsp;</p>
 
@@ -51,7 +51,7 @@
 
 因此，我们可以遍历数组，记录最近一个偶数的下标 `last`，则以当前元素结尾的子数组中，乘积为偶数的子数组个数为 `last + 1`，累加到结果中即可。
 
-时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 为数组 `nums` 的长度。
+时间复杂度 $O(n)$，其中 $n$ 为数组 `nums` 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
 

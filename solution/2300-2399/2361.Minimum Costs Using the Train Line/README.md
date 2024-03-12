@@ -2,6 +2,8 @@
 
 [English Version](/solution/2300-2399/2361.Minimum%20Costs%20Using%20the%20Train%20Line/README_EN.md)
 
+<!-- tags:数组,动态规划 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
@@ -92,8 +94,6 @@ $$
 最后返回 $cost$ 即可。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 表示车站的数量。
-
-我们注意到 $f[i]$ 和 $g[i]$ 的状态转移方程中，我们只需要用到 $f[i-1]$ 和 $g[i-1]$，因此我们可以使用两个变量 $f$ 和 $g$ 分别记录 $f[i-1]$ 和 $g[i-1]$ 的值，这样可以将空间复杂度优化到 $O(1)$。
 
 <!-- tabs:start -->
 
@@ -191,7 +191,7 @@ function minimumCosts(regular: number[], express: number[], expressCost: number)
 
 <!-- tabs:end -->
 
-### 方法二
+我们注意到 $f[i]$ 和 $g[i]$ 的状态转移方程中，我们只需要用到 $f[i-1]$ 和 $g[i-1]$，因此我们可以使用两个变量 $f$ 和 $g$ 分别记录 $f[i-1]$ 和 $g[i-1]$ 的值，这样可以将空间复杂度优化到 $O(1)$。
 
 <!-- tabs:start -->
 

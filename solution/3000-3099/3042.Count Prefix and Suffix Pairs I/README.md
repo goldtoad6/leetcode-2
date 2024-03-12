@@ -2,6 +2,8 @@
 
 [English Version](/solution/3000-3099/3042.Count%20Prefix%20and%20Suffix%20Pairs%20I/README_EN.md)
 
+<!-- tags:字典树,数组,字符串,字符串匹配,哈希函数,滚动哈希 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
@@ -62,24 +64,209 @@ i = 2 且 j = 3 ，因为 isPrefixAndSuffix("ma", "mama") 为 true 。
 
 ## 解法
 
-### 方法一
+### 方法一：枚举
+
+我们可以枚举所有的下标对 $(i, j)$，其中 $i \lt j$，然后判断 `words[i]` 是否是 `words[j]` 的前缀和后缀，若是则计数加一。
+
+时间复杂度 $O(n^2 \times m)$，其中 $n$ 和 $m$ 分别为 `words` 的长度和字符串的最大长度。
 
 <!-- tabs:start -->
 
 ```python
-
+class Solution:
+    def countPrefixSuffixPairs(self, words: List[str]) -> int:
+        ans = 0
+        for i, s in enumerate(words):
+            for t in words[i + 1 :]:
+                ans += t.endswith(s) and t.startswith(s)
+        return ans
 ```
 
 ```java
-
+class Solution {
+    public int countPrefixSuffixPairs(String[] words) {
+        int ans = 0;
+        int n = words.length;
+        for (int i = 0; i < n; ++i) {
+            String s = words[i];
+            for (int j = i + 1; j < n; ++j) {
+                String t = words[j];
+                if (t.startsWith(s) && t.endsWith(s)) {
+                    ++ans;
+                }
+            }
+        }
+        return ans;
+    }
+}
 ```
 
 ```cpp
-
+class Solution {
+public:
+    int countPrefixSuffixPairs(vector<string>& words) {
+        int ans = 0;
+        int n = words.size();
+        for (int i = 0; i < n; ++i) {
+            string s = words[i];
+            for (int j = i + 1; j < n; ++j) {
+                string t = words[j];
+                if (t.find(s) == 0 && t.rfind(s) == t.length() - s.length()) {
+                    ++ans;
+                }
+            }
+        }
+        return ans;
+    }
+};
 ```
 
 ```go
+func countPrefixSuffixPairs(words []string) (ans int) {
+	for i, s := range words {
+		for _, t := range words[i+1:] {
+			if strings.HasPrefix(t, s) && strings.HasSuffix(t, s) {
+				ans++
+			}
+		}
+	}
+	return
+}
+```
 
+```ts
+function countPrefixSuffixPairs(words: string[]): number {
+    let ans = 0;
+    for (let i = 0; i < words.length; ++i) {
+        const s = words[i];
+        for (const t of words.slice(i + 1)) {
+            if (t.startsWith(s) && t.endsWith(s)) {
+                ++ans;
+            }
+        }
+    }
+    return ans;
+}
+```
+
+<!-- tabs:end -->
+
+### 方法二：字典树
+
+我们可以把字符串数组中的每个字符串 $s$ 当作一个字符对的列表，其中每个字符对 $(s[i], s[m - i - 1])$ 表示字符串 $s$ 的前缀和后缀的第 $i$ 个字符对。
+
+我们可以使用字典树来存储所有的字符对，然后对于每个字符串 $s$，我们在字典树中查找所有的字符对 $(s[i], s[m - i - 1])$，并将其计数加到答案中。
+
+时间复杂度 $O(n \times m)$，空间复杂度 $O(n \times m)$。其中 $n$ 和 $m$ 分别为 `words` 的长度和字符串的最大长度。
+
+<!-- tabs:start -->
+
+```python
+class Node:
+    __slots__ = ["children", "cnt"]
+
+    def __init__(self):
+        self.children = {}
+        self.cnt = 0
+
+
+class Solution:
+    def countPrefixSuffixPairs(self, words: List[str]) -> int:
+        ans = 0
+        trie = Node()
+        for s in words:
+            node = trie
+            for p in zip(s, reversed(s)):
+                if p not in node.children:
+                    node.children[p] = Node()
+                node = node.children[p]
+                ans += node.cnt
+            node.cnt += 1
+        return ans
+```
+
+```java
+class Node {
+    Map<Integer, Node> children = new HashMap<>();
+    int cnt;
+}
+
+class Solution {
+    public int countPrefixSuffixPairs(String[] words) {
+        int ans = 0;
+        Node trie = new Node();
+        for (String s : words) {
+            Node node = trie;
+            int m = s.length();
+            for (int i = 0; i < m; ++i) {
+                int p = s.charAt(i) * 32 + s.charAt(m - i - 1);
+                node.children.putIfAbsent(p, new Node());
+                node = node.children.get(p);
+                ans += node.cnt;
+            }
+            ++node.cnt;
+        }
+        return ans;
+    }
+}
+```
+
+```cpp
+class Node {
+public:
+    unordered_map<int, Node*> children;
+    int cnt;
+
+    Node()
+        : cnt(0) {}
+};
+
+class Solution {
+public:
+    int countPrefixSuffixPairs(vector<string>& words) {
+        int ans = 0;
+        Node* trie = new Node();
+        for (const string& s : words) {
+            Node* node = trie;
+            int m = s.length();
+            for (int i = 0; i < m; ++i) {
+                int p = s[i] * 32 + s[m - i - 1];
+                if (node->children.find(p) == node->children.end()) {
+                    node->children[p] = new Node();
+                }
+                node = node->children[p];
+                ans += node->cnt;
+            }
+            ++node->cnt;
+        }
+        return ans;
+    }
+};
+```
+
+```go
+type Node struct {
+	children map[int]*Node
+	cnt      int
+}
+
+func countPrefixSuffixPairs(words []string) (ans int) {
+	trie := &Node{children: make(map[int]*Node)}
+	for _, s := range words {
+		node := trie
+		m := len(s)
+		for i := 0; i < m; i++ {
+			p := int(s[i])*32 + int(s[m-i-1])
+			if _, ok := node.children[p]; !ok {
+				node.children[p] = &Node{children: make(map[int]*Node)}
+			}
+			node = node.children[p]
+			ans += node.cnt
+		}
+		node.cnt++
+	}
+	return
+}
 ```
 
 <!-- tabs:end -->

@@ -2,6 +2,8 @@
 
 [中文文档](/solution/2300-2399/2355.Maximum%20Number%20of%20Books%20You%20Can%20Take/README.md)
 
+<!-- tags:Stack,Array,Dynamic Programming,Monotonic Stack -->
+
 ## Description
 
 <p>You are given a <strong>0-indexed</strong> integer array <code>books</code> of length <code>n</code> where <code>books[i]</code> denotes the number of books on the <code>i<sup>th</sup></code> shelf of a bookshelf.</p>
@@ -62,7 +64,11 @@ It can be proven that 13 is the maximum number of books you can take.
 
 ## Solutions
 
-### Solution 1
+### Solution 1: Simulation
+
+We directly compare each row and column of the matrix $grid$. If they are equal, then it is a pair of equal row-column pairs, and we increment the answer by one.
+
+The time complexity is $O(n^3)$, where $n$ is the number of rows or columns in the matrix $grid$. The space complexity is $O(1)$.
 
 <!-- tabs:start -->
 

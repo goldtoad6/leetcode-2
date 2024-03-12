@@ -2,11 +2,13 @@
 
 [English Version](/solution/0200-0299/0266.Palindrome%20Permutation/README_EN.md)
 
+<!-- tags:位运算,哈希表,字符串 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
 
-<p>给你一个字符串 <code>s</code> ，如果该字符串的某个排列是 <strong>回文</strong> ，则返回 <code>true</code> ；否则，返回<em> </em><code>false</code><em> </em>。</p>
+<p>给你一个字符串 <code>s</code> ，如果该字符串的某个排列是 <span data-keyword="palindrome-string">回文串</span> ，则返回 <code>true</code> ；否则，返回<em> </em><code>false</code><em> </em>。</p>
 
 <p>&nbsp;</p>
 

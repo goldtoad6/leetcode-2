@@ -2,6 +2,8 @@
 
 [中文文档](/solution/0200-0299/0232.Implement%20Queue%20using%20Stacks/README.md)
 
+<!-- tags:Stack,Design,Queue -->
+
 ## Description
 
 <p>Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (<code>push</code>, <code>peek</code>, <code>pop</code>, and <code>empty</code>).</p>
@@ -258,7 +260,7 @@ class MyQueue {
 
     peek(): number {
         this.move();
-        return this.stk2[this.stk2.length - 1];
+        return this.stk2.at(-1);
     }
 
     empty(): boolean {
@@ -268,7 +270,7 @@ class MyQueue {
     move(): void {
         if (!this.stk2.length) {
             while (this.stk1.length) {
-                this.stk2.push(this.stk1.pop());
+                this.stk2.push(this.stk1.pop()!);
             }
         }
     }

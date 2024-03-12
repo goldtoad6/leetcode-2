@@ -22,11 +22,39 @@
 
 ## 往期竞赛
 
-#### 第 385 场周赛(2024-02-18 10:30, 90 分钟) 参赛人数 2352
+#### 第 388 场周赛(2024-03-10 10:30, 90 分钟) 参赛人数 4291
+
+- [3074. 重新分装苹果](/solution/3000-3099/3074.Apple%20Redistribution%20into%20Boxes/README.md)
+- [3075. 幸福值最大化的选择方案](/solution/3000-3099/3075.Maximize%20Happiness%20of%20Selected%20Children/README.md)
+- [3076. 数组中的最短非公共子字符串](/solution/3000-3099/3076.Shortest%20Uncommon%20Substring%20in%20an%20Array/README.md)
+- [3077. K 个不相交子数组的最大能量值](/solution/3000-3099/3077.Maximum%20Strength%20of%20K%20Disjoint%20Subarrays/README.md)
+
+#### 第 387 场周赛(2024-03-03 10:30, 90 分钟) 参赛人数 3694
+
+- [3069. 将元素分配到两个数组中 I](/solution/3000-3099/3069.Distribute%20Elements%20Into%20Two%20Arrays%20I/README.md)
+- [3070. 元素和小于等于 k 的子矩阵的数目](/solution/3000-3099/3070.Count%20Submatrices%20with%20Top-Left%20Element%20and%20Sum%20Less%20Than%20k/README.md)
+- [3071. 在矩阵上写出字母 Y 所需的最少操作次数](/solution/3000-3099/3071.Minimum%20Operations%20to%20Write%20the%20Letter%20Y%20on%20a%20Grid/README.md)
+- [3072. 将元素分配到两个数组中 II](/solution/3000-3099/3072.Distribute%20Elements%20Into%20Two%20Arrays%20II/README.md)
+
+#### 第 125 场双周赛(2024-03-02 22:30, 90 分钟) 参赛人数 2599
+
+- [3065. 超过阈值的最少操作数 I](/solution/3000-3099/3065.Minimum%20Operations%20to%20Exceed%20Threshold%20Value%20I/README.md)
+- [3066. 超过阈值的最少操作数 II](/solution/3000-3099/3066.Minimum%20Operations%20to%20Exceed%20Threshold%20Value%20II/README.md)
+- [3067. 在带权树网络中统计可连接服务器对数目](/solution/3000-3099/3067.Count%20Pairs%20of%20Connectable%20Servers%20in%20a%20Weighted%20Tree%20Network/README.md)
+- [3068. 最大节点价值之和](/solution/3000-3099/3068.Find%20the%20Maximum%20Sum%20of%20Node%20Values/README.md)
+
+#### 第 386 场周赛(2024-02-25 10:30, 90 分钟) 参赛人数 2731
+
+- [3046. 分割数组](/solution/3000-3099/3046.Split%20the%20Array/README.md)
+- [3047. 求交集区域内的最大正方形面积](/solution/3000-3099/3047.Find%20the%20Largest%20Area%20of%20Square%20Inside%20Two%20Rectangles/README.md)
+- [3048. 标记所有下标的最早秒数 I](/solution/3000-3099/3048.Earliest%20Second%20to%20Mark%20Indices%20I/README.md)
+- [3049. 标记所有下标的最早秒数 II](/solution/3000-3099/3049.Earliest%20Second%20to%20Mark%20Indices%20II/README.md)
+
+#### 第 385 场周赛(2024-02-18 10:30, 90 分钟) 参赛人数 2382
 
 - [3042. 统计前后缀下标对 I](/solution/3000-3099/3042.Count%20Prefix%20and%20Suffix%20Pairs%20I/README.md)
 - [3043. 最长公共前缀的长度](/solution/3000-3099/3043.Find%20the%20Length%20of%20the%20Longest%20Common%20Prefix/README.md)
-- [3044. 出现频率最高的素数](/solution/3000-3099/3044.Most%20Frequent%20Prime/README.md)
+- [3044. 出现频率最高的质数](/solution/3000-3099/3044.Most%20Frequent%20Prime/README.md)
 - [3045. 统计前后缀下标对 II](/solution/3000-3099/3045.Count%20Prefix%20and%20Suffix%20Pairs%20II/README.md)
 
 #### 第 124 场双周赛(2024-02-17 22:30, 90 分钟) 参赛人数 1861
@@ -52,6 +80,7 @@
 
 #### 第 123 场双周赛(2024-02-03 22:30, 90 分钟) 参赛人数 2209
 
+- [3024. 三角形类型](/solution/3000-3099/3024.Type%20of%20Triangle/README.md)
 - [3025. 人员站位的方案数 I](/solution/3000-3099/3025.Find%20the%20Number%20of%20Ways%20to%20Place%20People%20I/README.md)
 - [3026. 最大好子数组和](/solution/3000-3099/3026.Maximum%20Good%20Subarray%20Sum/README.md)
 - [3027. 人员站位的方案数 II](/solution/3000-3099/3027.Find%20the%20Number%20of%20Ways%20to%20Place%20People%20II/README.md)
@@ -2944,7 +2973,7 @@
 
 - [0867. 转置矩阵](/solution/0800-0899/0867.Transpose%20Matrix/README.md)
 - [0865. 具有所有最深节点的最小子树](/solution/0800-0899/0865.Smallest%20Subtree%20with%20all%20the%20Deepest%20Nodes/README.md)
-- [0866. 回文素数](/solution/0800-0899/0866.Prime%20Palindrome/README.md)
+- [0866. 回文质数](/solution/0800-0899/0866.Prime%20Palindrome/README.md)
 - [0864. 获取所有钥匙的最短路径](/solution/0800-0899/0864.Shortest%20Path%20to%20Get%20All%20Keys/README.md)
 
 #### 第 91 场周赛(2018-07-01 09:30, 90 分钟) 参赛人数 578

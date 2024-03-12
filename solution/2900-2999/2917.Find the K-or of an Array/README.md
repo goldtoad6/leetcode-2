@@ -2,6 +2,8 @@
 
 [English Version](/solution/2900-2999/2917.Find%20the%20K-or%20of%20an%20Array/README_EN.md)
 
+<!-- tags:位运算,数组 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
@@ -145,6 +147,24 @@ function findKOr(nums: number[], k: number): number {
         }
     }
     return ans;
+}
+```
+
+```cs
+public class Solution {
+    public int FindKOr(int[] nums, int k) {
+        int ans = 0;
+        for (int i = 0; i < 32; ++i) {
+            int cnt = 0;
+            foreach (int x in nums) {
+                cnt += (x >> i & 1);
+            }
+            if (cnt >= k) {
+                ans |= 1 << i;
+            }
+        }
+        return ans;
+    }
 }
 ```
 

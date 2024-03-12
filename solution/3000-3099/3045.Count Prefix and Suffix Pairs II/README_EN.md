@@ -2,6 +2,8 @@
 
 [中文文档](/solution/3000-3099/3045.Count%20Prefix%20and%20Suffix%20Pairs%20II/README.md)
 
+<!-- tags:Trie,Array,String,String Matching,Hash Function,Rolling Hash -->
+
 ## Description
 
 <p>You are given a <strong>0-indexed</strong> string array <code>words</code>.</p>
@@ -59,24 +61,148 @@ Therefore, the answer is 0.</pre>
 
 ## Solutions
 
-### Solution 1
+### Solution 1: Trie
+
+We can treat each string $s$ in the string array as a list of character pairs, where each character pair $(s[i], s[m - i - 1])$ represents the $i$th character pair of the prefix and suffix of string $s$.
+
+We can use a trie to store all the character pairs, and then for each string $s$, we search for all the character pairs $(s[i], s[m - i - 1])$ in the trie, and add their counts to the answer.
+
+The time complexity is $O(n \times m)$, and the space complexity is $O(n \times m)$. Here, $n$ and $m$ are the lengths of `words` and the maximum length of the strings, respectively.
 
 <!-- tabs:start -->
 
 ```python
+class Node:
+    __slots__ = ["children", "cnt"]
 
+    def __init__(self):
+        self.children = {}
+        self.cnt = 0
+
+
+class Solution:
+    def countPrefixSuffixPairs(self, words: List[str]) -> int:
+        ans = 0
+        trie = Node()
+        for s in words:
+            node = trie
+            for p in zip(s, reversed(s)):
+                if p not in node.children:
+                    node.children[p] = Node()
+                node = node.children[p]
+                ans += node.cnt
+            node.cnt += 1
+        return ans
 ```
 
 ```java
+class Node {
+    Map<Integer, Node> children = new HashMap<>();
+    int cnt;
+}
 
+class Solution {
+    public long countPrefixSuffixPairs(String[] words) {
+        long ans = 0;
+        Node trie = new Node();
+        for (String s : words) {
+            Node node = trie;
+            int m = s.length();
+            for (int i = 0; i < m; ++i) {
+                int p = s.charAt(i) * 32 + s.charAt(m - i - 1);
+                node.children.putIfAbsent(p, new Node());
+                node = node.children.get(p);
+                ans += node.cnt;
+            }
+            ++node.cnt;
+        }
+        return ans;
+    }
+}
 ```
 
 ```cpp
+class Node {
+public:
+    unordered_map<int, Node*> children;
+    int cnt;
 
+    Node()
+        : cnt(0) {}
+};
+
+class Solution {
+public:
+    long long countPrefixSuffixPairs(vector<string>& words) {
+        long long ans = 0;
+        Node* trie = new Node();
+        for (const string& s : words) {
+            Node* node = trie;
+            int m = s.length();
+            for (int i = 0; i < m; ++i) {
+                int p = s[i] * 32 + s[m - i - 1];
+                if (node->children.find(p) == node->children.end()) {
+                    node->children[p] = new Node();
+                }
+                node = node->children[p];
+                ans += node->cnt;
+            }
+            ++node->cnt;
+        }
+        return ans;
+    }
+};
 ```
 
 ```go
+type Node struct {
+	children map[int]*Node
+	cnt      int
+}
 
+func countPrefixSuffixPairs(words []string) (ans int64) {
+	trie := &Node{children: make(map[int]*Node)}
+	for _, s := range words {
+		node := trie
+		m := len(s)
+		for i := 0; i < m; i++ {
+			p := int(s[i])*32 + int(s[m-i-1])
+			if _, ok := node.children[p]; !ok {
+				node.children[p] = &Node{children: make(map[int]*Node)}
+			}
+			node = node.children[p]
+			ans += int64(node.cnt)
+		}
+		node.cnt++
+	}
+	return
+}
+```
+
+```ts
+class Node {
+    children: Map<number, Node> = new Map<number, Node>();
+    cnt: number = 0;
+}
+
+function countPrefixSuffixPairs(words: string[]): number {
+    let ans: number = 0;
+    const trie: Node = new Node();
+    for (const s of words) {
+        let node: Node = trie;
+        const m: number = s.length;
+        for (let i: number = 0; i < m; ++i) {
+            const p: number = s.charCodeAt(i) * 32 + s.charCodeAt(m - i - 1);
+            if (!node.children.has(p)) {
+                node.children.set(p, new Node());
+            }
+            node = node.children.get(p)!;
+            ans += node.cnt;
+        }
+        ++node.cnt;
+    }
+    return ans;
+}
 ```
 
 <!-- tabs:end -->

@@ -2,11 +2,13 @@
 
 [English Version](/solution/2500-2599/2533.Number%20of%20Good%20Binary%20Strings/README_EN.md)
 
+<!-- tags:动态规划 -->
+
 ## 题目描述
 
 <!-- 这里写题目描述 -->
 
-<p><span style="">给你四个整数 </span><code>minLenght</code>、<code>maxLength</code>、<code>oneGroup</code><span style=""> 和 </span><code>zeroGroup</code><span style=""> 。</span></p>
+<p><span style="">给你四个整数 </span><code>minLength</code>、<code>maxLength</code>、<code>oneGroup</code><span style=""> 和 </span><code>zeroGroup</code><span style=""> 。</span></p>
 
 <p><strong>好 </strong>二进制字符串满足下述条件：</p>
 
