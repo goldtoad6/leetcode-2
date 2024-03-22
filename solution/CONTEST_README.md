@@ -22,6 +22,20 @@
 
 ## 往期竞赛
 
+#### 第 389 场周赛(2024-03-17 10:30, 90 分钟) 参赛人数 4561
+
+- [3083. 字符串及其反转中是否存在同一子字符串](/solution/3000-3099/3083.Existence%20of%20a%20Substring%20in%20a%20String%20and%20Its%20Reverse/README.md)
+- [3084. 统计以给定字符开头和结尾的子字符串总数](/solution/3000-3099/3084.Count%20Substrings%20Starting%20and%20Ending%20with%20Given%20Character/README.md)
+- [3085. 成为 K 特殊字符串需要删除的最少字符数](/solution/3000-3099/3085.Minimum%20Deletions%20to%20Make%20String%20K-Special/README.md)
+- [3086. 拾起 K 个 1 需要的最少行动次数](/solution/3000-3099/3086.Minimum%20Moves%20to%20Pick%20K%20Ones/README.md)
+
+#### 第 126 场双周赛(2024-03-16 22:30, 90 分钟) 参赛人数 3234
+
+- [3079. 求出加密整数的和](/solution/3000-3099/3079.Find%20the%20Sum%20of%20Encrypted%20Integers/README.md)
+- [3080. 执行操作标记数组中的元素](/solution/3000-3099/3080.Mark%20Elements%20on%20Array%20by%20Performing%20Queries/README.md)
+- [3081. 替换字符串中的问号使分数最小](/solution/3000-3099/3081.Replace%20Question%20Marks%20in%20String%20to%20Minimize%20Its%20Value/README.md)
+- [3082. 求出所有子序列的能量和](/solution/3000-3099/3082.Find%20the%20Sum%20of%20the%20Power%20of%20All%20Subsequences/README.md)
+
 #### 第 388 场周赛(2024-03-10 10:30, 90 分钟) 参赛人数 4291
 
 - [3074. 重新分装苹果](/solution/3000-3099/3074.Apple%20Redistribution%20into%20Boxes/README.md)
@@ -1278,7 +1292,7 @@
 #### 第 66 场双周赛(2021-11-27 22:30, 90 分钟) 参赛人数 2803
 
 - [2085. 统计出现过一次的公共字符串](/solution/2000-2099/2085.Count%20Common%20Words%20With%20One%20Occurrence/README.md)
-- [2086. 从房屋收集雨水需要的最少水桶数](/solution/2000-2099/2086.Minimum%20Number%20of%20Food%20Buckets%20to%20Feed%20the%20Hamsters/README.md)
+- [2086. 喂食仓鼠的最小食物桶数](/solution/2000-2099/2086.Minimum%20Number%20of%20Food%20Buckets%20to%20Feed%20the%20Hamsters/README.md)
 - [2087. 网格图中机器人回家的最小代价](/solution/2000-2099/2087.Minimum%20Cost%20Homecoming%20of%20a%20Robot%20in%20a%20Grid/README.md)
 - [2088. 统计农场中肥沃金字塔的数目](/solution/2000-2099/2088.Count%20Fertile%20Pyramids%20in%20a%20Land/README.md)
 
