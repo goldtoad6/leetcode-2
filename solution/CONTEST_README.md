@@ -18,9 +18,30 @@
 
 ## 赛后估分网站
 
--   https://lccn.lbao.site
+如果你想在比赛结束后估算自己的积分变化，可以访问网站 [LeetCode Contest Rating Predictor](https://lccn.lbao.site/)。
 
 ## 往期竞赛
+
+#### 第 391 场周赛(2024-03-31 10:30, 90 分钟) 参赛人数 4180
+
+- [3099. 哈沙德数](/solution/3000-3099/3099.Harshad%20Number/README.md)
+- [3100. 换水问题 II](/solution/3100-3199/3100.Water%20Bottles%20II/README.md)
+- [3101. 交替子数组计数](/solution/3100-3199/3101.Count%20Alternating%20Subarrays/README.md)
+- [3102. 最小化曼哈顿距离](/solution/3100-3199/3102.Minimize%20Manhattan%20Distances/README.md)
+
+#### 第 127 场双周赛(2024-03-30 22:30, 90 分钟) 参赛人数 2950
+
+- [3095. 或值至少 K 的最短子数组 I](/solution/3000-3099/3095.Shortest%20Subarray%20With%20OR%20at%20Least%20K%20I/README.md)
+- [3096. 得到更多分数的最少关卡数目](/solution/3000-3099/3096.Minimum%20Levels%20to%20Gain%20More%20Points/README.md)
+- [3097. 或值至少为 K 的最短子数组 II](/solution/3000-3099/3097.Shortest%20Subarray%20With%20OR%20at%20Least%20K%20II/README.md)
+- [3098. 求出所有子序列的能量和](/solution/3000-3099/3098.Find%20the%20Sum%20of%20Subsequence%20Powers/README.md)
+
+#### 第 390 场周赛(2024-03-24 10:30, 90 分钟) 参赛人数 4817
+
+- [3090. 每个字符最多出现两次的最长子字符串](/solution/3000-3099/3090.Maximum%20Length%20Substring%20With%20Two%20Occurrences/README.md)
+- [3091. 执行操作使数据元素之和大于等于 K](/solution/3000-3099/3091.Apply%20Operations%20to%20Make%20Sum%20of%20Array%20Greater%20Than%20or%20Equal%20to%20k/README.md)
+- [3092. 最高频率的 ID](/solution/3000-3099/3092.Most%20Frequent%20IDs/README.md)
+- [3093. 最长公共后缀查询](/solution/3000-3099/3093.Longest%20Common%20Suffix%20Queries/README.md)
 
 #### 第 389 场周赛(2024-03-17 10:30, 90 分钟) 参赛人数 4561
 

@@ -21,9 +21,30 @@ For top 10 users (excluding LCCN users), your LeetCode ID will be colored orange
 
 ## Rating Predictor
 
-Get your rating changes right after the completion of LeetCode contests, https://lccn.lbao.site
+If you want to estimate your score changes after the contest ends, you can visit the website [LeetCode Contest Rating Predictor](https://lccn.lbao.site/).
 
 ## Past Contests
+
+#### Weekly Contest 391
+
+- [3099. Harshad Number](/solution/3000-3099/3099.Harshad%20Number/README_EN.md)
+- [3100. Water Bottles II](/solution/3100-3199/3100.Water%20Bottles%20II/README_EN.md)
+- [3101. Count Alternating Subarrays](/solution/3100-3199/3101.Count%20Alternating%20Subarrays/README_EN.md)
+- [3102. Minimize Manhattan Distances](/solution/3100-3199/3102.Minimize%20Manhattan%20Distances/README_EN.md)
+
+#### Biweekly Contest 127
+
+- [3095. Shortest Subarray With OR at Least K I](/solution/3000-3099/3095.Shortest%20Subarray%20With%20OR%20at%20Least%20K%20I/README_EN.md)
+- [3096. Minimum Levels to Gain More Points](/solution/3000-3099/3096.Minimum%20Levels%20to%20Gain%20More%20Points/README_EN.md)
+- [3097. Shortest Subarray With OR at Least K II](/solution/3000-3099/3097.Shortest%20Subarray%20With%20OR%20at%20Least%20K%20II/README_EN.md)
+- [3098. Find the Sum of Subsequence Powers](/solution/3000-3099/3098.Find%20the%20Sum%20of%20Subsequence%20Powers/README_EN.md)
+
+#### Weekly Contest 390
+
+- [3090. Maximum Length Substring With Two Occurrences](/solution/3000-3099/3090.Maximum%20Length%20Substring%20With%20Two%20Occurrences/README_EN.md)
+- [3091. Apply Operations to Make Sum of Array Greater Than or Equal to k](/solution/3000-3099/3091.Apply%20Operations%20to%20Make%20Sum%20of%20Array%20Greater%20Than%20or%20Equal%20to%20k/README_EN.md)
+- [3092. Most Frequent IDs](/solution/3000-3099/3092.Most%20Frequent%20IDs/README_EN.md)
+- [3093. Longest Common Suffix Queries](/solution/3000-3099/3093.Longest%20Common%20Suffix%20Queries/README_EN.md)
 
 #### Weekly Contest 389
 
