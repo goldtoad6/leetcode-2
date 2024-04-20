@@ -1,4 +1,4 @@
-# [3087. 查找热门话题标签](https://leetcode.cn/problems/find-trending-hashtags)
+# [3087. 查找热门话题标签 🔒](https://leetcode.cn/problems/find-trending-hashtags)
 
 [English Version](/solution/3000-3099/3087.Find%20Trending%20Hashtags/README_EN.md)
 
@@ -23,9 +23,9 @@ tweet_id 是这张表的主键 (值互不相同的列)。
 这张表的每一行都包含 user_id, tweet_id, tweet_date 和 tweet。
 </pre>
 
-<p>编写一个解决方案来找到&nbsp;<code>2024</code>&nbsp;年 <strong>二月&nbsp;</strong>的 <strong>前</strong>&nbsp;<code>3</code>&nbsp;热门话题 <strong>标签</strong>。</p>
+<p>编写一个解决方案来找到&nbsp;<code>2024</code>&nbsp;年 <strong>二月&nbsp;</strong>的 <strong>前</strong>&nbsp;<code>3</code>&nbsp;热门话题 <strong>标签</strong>。每条推文只包含一个标签。</p>
 
-<p>返回结果表，根据标签的数量和标签&nbsp;<strong>降序</strong> 排序。</p>
+<p>返回结果表，根据标签的数量和名称&nbsp;<strong>降序</strong> 排序。</p>
 
 <p>结果格式如下所示。</p>
 

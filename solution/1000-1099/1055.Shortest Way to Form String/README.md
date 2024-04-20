@@ -1,4 +1,4 @@
-# [1055. 形成字符串的最短路径](https://leetcode.cn/problems/shortest-way-to-form-string)
+# [1055. 形成字符串的最短路径 🔒](https://leetcode.cn/problems/shortest-way-to-form-string)
 
 [English Version](/solution/1000-1099/1055.Shortest%20Way%20to%20Form%20String/README_EN.md)
 
@@ -55,7 +55,7 @@
 
 遍历结束后，返回子序列数量即可。
 
-时间复杂度 $O(m \times n)$，空间复杂度 $O(1)$。其中 $m$ 和 $n$ 分别为字符串 `source` 和 `target` 的长度。
+时间复杂度 $O(m \times n)$，其中 $m$ 和 $n$ 分别为字符串 `source` 和 `target` 的长度。空间复杂度 $O(1)$。
 
 <!-- tabs:start -->
 
