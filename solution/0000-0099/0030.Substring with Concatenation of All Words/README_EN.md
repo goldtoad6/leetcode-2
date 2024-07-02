@@ -1,20 +1,32 @@
+---
+comments: true
+difficulty: Hard
+edit_url: https://github.com/doocs/leetcode/edit/main/solution/0000-0099/0030.Substring%20with%20Concatenation%20of%20All%20Words/README_EN.md
+tags:
+    - Hash Table
+    - String
+    - Sliding Window
+---
+
+<!-- problem:start -->
+
 # [30. Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words)
 
 [中文文档](/solution/0000-0099/0030.Substring%20with%20Concatenation%20of%20All%20Words/README.md)
 
-<!-- tags:Hash Table,String,Sliding Window -->
-
 ## Description
+
+<!-- description:start -->
 
 <p>You are given a string <code>s</code> and an array of strings <code>words</code>. All the strings of <code>words</code> are of <strong>the same length</strong>.</p>
 
-<p>A <strong>concatenated string</strong>&nbsp;is a string that exactly contains all the strings of any permutation of <code>words</code> concatenated.</p>
+<p>A <strong>concatenated string</strong> is a string that exactly contains all the strings of any permutation of <code>words</code> concatenated.</p>
 
 <ul>
 	<li>For example, if <code>words = [&quot;ab&quot;,&quot;cd&quot;,&quot;ef&quot;]</code>, then <code>&quot;abcdef&quot;</code>, <code>&quot;abefcd&quot;</code>, <code>&quot;cdabef&quot;</code>, <code>&quot;cdefab&quot;</code>, <code>&quot;efabcd&quot;</code>, and <code>&quot;efcdab&quot;</code> are all concatenated strings. <code>&quot;acdbef&quot;</code> is not a concatenated string because it is not the concatenation of any permutation of <code>words</code>.</li>
 </ul>
 
-<p>Return an array of&nbsp;<em>the starting indices</em> of all the concatenated substrings in<em> </em><code>s</code>. You can return the answer in <strong>any order</strong>.</p>
+<p>Return an array of <em>the starting indices</em> of all the concatenated substrings in <code>s</code>. You can return the answer in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
@@ -27,8 +39,7 @@
 <p><strong>Explanation:</strong></p>
 
 <p>The substring starting at 0 is <code>&quot;barfoo&quot;</code>. It is the concatenation of <code>[&quot;bar&quot;,&quot;foo&quot;]</code> which is a permutation of <code>words</code>.<br />
-The substring starting at 9 is <code>&quot;foobar&quot;</code>. It is the concatenation of <code>[&quot;foo&quot;,&quot;bar&quot;]</code> which is a permutation of <code>words</code>.<br />
-The output order does not matter. Returning <code>[9,0]</code> is fine too.</p>
+The substring starting at 9 is <code>&quot;foobar&quot;</code>. It is the concatenation of <code>[&quot;foo&quot;,&quot;bar&quot;]</code> which is a permutation of <code>words</code>.</p>
 </div>
 
 <p><strong class="example">Example 2:</strong></p>
@@ -67,7 +78,11 @@ The substring starting at 12 is <code>&quot;thefoobar&quot;</code>. It is the co
 	<li><code>s</code> and <code>words[i]</code> consist of lowercase English letters.</li>
 </ul>
 
+<!-- description:end -->
+
 ## Solutions
+
+<!-- solution:start -->
 
 ### Solution 1: Hash Table + Sliding Window
 
@@ -80,6 +95,8 @@ Each time, we extract the string $s[r:r+k]$. If $s[r:r+k]$ is not in the hash ta
 The time complexity is $O(m \times k)$, and the space complexity is $O(n \times k)$. Here, $m$ and $n$ are the lengths of the string $s$ and the string array $words$ respectively, and $k$ is the length of the words in the string array $words$.
 
 <!-- tabs:start -->
+
+#### Python3
 
 ```python
 class Solution:
@@ -111,6 +128,8 @@ class Solution:
                     ans.append(l)
         return ans
 ```
+
+#### Java
 
 ```java
 class Solution {
@@ -153,6 +172,8 @@ class Solution {
 }
 ```
 
+#### C++
+
 ```cpp
 class Solution {
 public:
@@ -194,6 +215,8 @@ public:
 };
 ```
 
+#### Go
+
 ```go
 func findSubstring(s string, words []string) (ans []int) {
 	cnt := map[string]int{}
@@ -227,6 +250,8 @@ func findSubstring(s string, words []string) (ans []int) {
 	return
 }
 ```
+
+#### TypeScript
 
 ```ts
 function findSubstring(s: string, words: string[]): number[] {
@@ -268,6 +293,8 @@ function findSubstring(s: string, words: string[]): number[] {
     return ans;
 }
 ```
+
+#### C#
 
 ```cs
 public class Solution {
@@ -312,6 +339,8 @@ public class Solution {
     }
 }
 ```
+
+#### PHP
 
 ```php
 class Solution {
@@ -371,9 +400,15 @@ class Solution {
 
 <!-- tabs:end -->
 
+<!-- solution:end -->
+
+<!-- solution:start -->
+
 ### Solution 2
 
 <!-- tabs:start -->
+
+#### C++
 
 ```cpp
 class Solution {
@@ -405,4 +440,6 @@ public:
 
 <!-- tabs:end -->
 
-<!-- end -->
+<!-- solution:end -->
+
+<!-- problem:end -->

@@ -1,8 +1,18 @@
+---
+comments: true
+difficulty: Easy
+edit_url: https://github.com/doocs/leetcode/edit/main/lcci/04.04.Check%20Balance/README_EN.md
+---
+
+<!-- problem:start -->
+
 # [04.04. Check Balance](https://leetcode.cn/problems/check-balance-lcci)
 
 [中文文档](/lcci/04.04.Check%20Balance/README.md)
 
 ## Description
+
+<!-- description:start -->
 
 <p>Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.</p>
 
@@ -50,7 +60,11 @@ return&nbsp;false.</pre>
 
 <p>&nbsp;</p>
 
+<!-- description:end -->
+
 ## Solutions
+
+<!-- solution:start -->
 
 ### Solution 1: Recursion (Post-order Traversal)
 
@@ -66,6 +80,8 @@ In the main function, we only need to call $dfs(root)$, and check whether its re
 The time complexity is $O(n)$, and the space complexity is $O(n)$, where $n$ is the number of nodes in the binary tree.
 
 <!-- tabs:start -->
+
+#### Python3
 
 ```python
 # Definition for a binary tree node.
@@ -88,6 +104,8 @@ class Solution:
 
         return dfs(root) >= 0
 ```
+
+#### Java
 
 ```java
 /**
@@ -118,6 +136,8 @@ class Solution {
 }
 ```
 
+#### C++
+
 ```cpp
 /**
  * Definition for a binary tree node.
@@ -146,6 +166,8 @@ public:
     }
 };
 ```
+
+#### Go
 
 ```go
 /**
@@ -179,6 +201,8 @@ func abs(x int) int {
 }
 ```
 
+#### TypeScript
+
 ```ts
 /**
  * Definition for a binary tree node.
@@ -210,6 +234,44 @@ function isBalanced(root: TreeNode | null): boolean {
 }
 ```
 
+#### Swift
+
+```swift
+/* class TreeNode {
+*    var val: Int
+*    var left: TreeNode?
+*    var right: TreeNode?
+*
+*    init(_ val: Int) {
+*        self.val = val
+*        self.left = nil
+*        self.right = nil
+*    }
+*  }
+*/
+
+class Solution {
+    func isBalanced(_ root: TreeNode?) -> Bool {
+        return dfs(root) >= 0
+    }
+
+    private func dfs(_ root: TreeNode?) -> Int {
+        guard let root = root else {
+            return 0
+        }
+
+        let leftHeight = dfs(root.left)
+        let rightHeight = dfs(root.right)
+        if leftHeight < 0 || rightHeight < 0 || abs(leftHeight - rightHeight) > 1 {
+            return -1
+        }
+        return max(leftHeight, rightHeight) + 1
+    }
+}
+```
+
 <!-- tabs:end -->
 
-<!-- end -->
+<!-- solution:end -->
+
+<!-- problem:end -->
